@@ -17,6 +17,10 @@ allprojects {
         jcenter()
     }
 }
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':mblog')
+}
 
 task clean(type: Delete) {
     delete rootProject.buildDir
