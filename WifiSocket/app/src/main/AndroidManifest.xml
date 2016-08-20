@@ -22,6 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name="com.android.wifi.socket.Activity.WifControlActivity"/>
+        <receiver android:name="com.android.wifi.socket.receive.WifiBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

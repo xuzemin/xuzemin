@@ -1,9 +1,9 @@
-package com.android.wifi.socket.wifisocket;
+package com.android.wifi.socket.util;
 
 /**
  * Created by Administrator on 2016/8/18.
  */
-public class Utils {
+public class timeUtils {
     private static long lastClickTime;
     public static boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();

@@ -58,6 +58,20 @@
             android:text="@string/wifi_list"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/conntect_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        >
+
+        <TextView
+            android:id="@+id/connected_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_marginTop="@dimen/wifi_list_size_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

@@ -23,18 +23,27 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.wifi.socket.wifisocket.R;
 import com.android.wifi.socket.wifisocket.WifiAdmin;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
     private String TAG = "MainActivity";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
+    private String passwork = "xzm19910424";
+    private String wifiname = "T";
     private List<ScanResult> list;
+    private TextView connect_wifi;
+    private NetworkInfo networkInfo;
+    private List<ScanResult> scanlist;
+    private RelativeLayout conntect_layout;
     private ScanResult scanResult;
     private List<WifiConfiguration> wifiConfigurationList;
     private ListView listView;
@@ -52,14 +61,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.handleMessage(msg);
             switch (msg.what){
                 case 0 :
-                    wifiAdapter = new WifiAdapter(MainActivity.this);
+                    wifiAdapter = new WifiAdapter(MainActivity.this,scanlist);
                     listView.setAdapter(wifiAdapter);
                     break;
                 case 1:
-
+                    conntect_layout.setVisibility(View.VISIBLE);
+                    connect_wifi.setText(networkInfo.getExtraInfo());
                     break;
                 case 2:
-
+                    connect_wifi.setText("");
+                    conntect_layout.setVisibility(View.INVISIBLE);
                     break;
             }
         }
@@ -76,19 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         wifi_state.setChecked(false);
                         thread_Wait();
                         break;
-                    case WifiManager.WIFI_STATE_DISABLING:
-                        Log.d(TAG, "WIFI_STATE_DISABLING");
-                        break;
                     case WifiManager.WIFI_STATE_ENABLED:
                         Log.d(TAG, "WIFI_STATE_ENABLED");
                         wifi_state.setChecked(true);
                         start_Scan();
-                        break;
-                    case WifiManager.WIFI_STATE_ENABLING:
-                        Log.d(TAG, "WIFI_STATE_ENABLING");
-                        break;
-                    case WifiManager.WIFI_STATE_UNKNOWN:
-                        Log.d(TAG, "WIFI_STATE_UNKNOWN");
                         break;
                     default:
                         break;
@@ -97,14 +99,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)){
                 NetworkInfo.State state = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
                 Log.e(TAG,"state"+state);
-                String str = "CONNECTED";
-                Log.e(TAG,"state="+state+";str = "+str);
                 if(state.toString().equals("CONNECTED")){
                     Log.e(TAG,"state="+true);
+                    networkInfo = mConnectivityManager.getActiveNetworkInfo();
                     handler.sendEmptyMessage(CONNECT_SUCCES);
+                    Log.e(TAG,"networkInfo"+networkInfo.toString());
                 }else if(state.toString().equals("DISCONNECTED")){
                     Log.e(TAG,"state="+false);
                     handler.sendEmptyMessage(CONNECT_FAIL);
+                    if(networkInfo!=null) {
+                        Log.e(TAG,"networkInfo"+networkInfo.toString());
+                        deleteWifiConfig(IsConfiguration(networkInfo.getExtraInfo()));
+                    }
+                    networkInfo = null;
                 }else{
                     Log.e(TAG,"state="+state.toString());
                 }
@@ -120,6 +127,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         listView = (ListView)findViewById(R.id.listview);
         listView.setOnItemClickListener(this);
         registerWIFI();
+        connect_wifi = (TextView) findViewById(R.id.connected_wifi);
+        conntect_layout = (RelativeLayout) findViewById(R.id.conntect_layout);
+        conntect_layout.setVisibility(View.INVISIBLE);
         wifiadmin = new WifiAdmin(this);
         wifi_state.setChecked(false);
         wifi_state.setOnClickListener(this);
@@ -132,13 +142,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.wifistate:
                 Log.e(TAG,""+wifi_state.isChecked());
                 if(!wifi_state.isChecked()){
-                    wifiadmin.closeWifi();
-                    Log.e(TAG,"正在关闭Wifi");
                     Toast.makeText(this,"正在关闭Wifi",Toast.LENGTH_LONG).show();
+                    wifi_state.setClickable(false);
+                    listView.setVisibility(View.INVISIBLE);
+                    listView.setEnabled(false);
+                    wifiadmin.closeWifi();
+                    wifi_state.setClickable(true);
                 }else{
-                    wifiadmin.openWifi();
+                    wifi_state.setClickable(false);
                     Toast.makeText(this,"正在打开Wifi",Toast.LENGTH_LONG).show();
-                    Log.e(TAG,"正在打开Wifi");
+                    wifiadmin.openWifi();
+                    listView.setEnabled(true);
+                    listView.setVisibility(View.VISIBLE);
+                    wifi_state.setClickable(true);
                 }
                 break;
             case R.id.wifi:
@@ -176,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     wifiadmin.startScan();
                     list = wifiadmin.getWifiList();
+                    getshowlist();
                     if (list != null) {
                         handler.sendEmptyMessage(SCAN_OK);
                     }
@@ -191,14 +208,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wifiConfigurationList = wifiadmin.getConfiguration();
-        scanResult=list.get(i);
-        int networkid = IsConfiguration(scanResult.SSID);
-        if(-1 != networkid){
-            if(ConnectWifi(networkid)){
+        scanResult=scanlist.get(i);
+        int isConfiguration = IsConfiguration(scanResult.SSID);
+        Log.e(TAG,"点击");
+        if(-1 != isConfiguration){
+            Log.e(TAG,"已有密码");
+            if(ConnectWifi(isConfiguration)){
                 //打开缓冲动画
             }
         }else{
-            inputTitleDialog(networkid);
+            Log.e(TAG,"设置密码");
+            int add_config = AddWifiConfig(list,scanResult.SSID,passwork);
+            Log.e(TAG,"add_config增加密码结果"+add_config);
+            if(-1!= add_config ){
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        while(-1 == IsConfiguration(scanResult.SSID)){
+                            thread(3000);
+                        };
+                        Log.e(TAG,"增加密码成功后id"+IsConfiguration(scanResult.SSID));
+                        ConnectWifi(IsConfiguration(scanResult.SSID));
+                        //启动缓冲动画
+                    }
+                }.start();
+            }else{
+                Toast.makeText(this,"连接失败，路由密码错误",Toast.LENGTH_LONG).show();
+                Log.e(TAG,"设置失败");
+            }
         }
     }
 
@@ -207,9 +245,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public class WifiAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
-
-        public WifiAdapter(Context context){
+        private List<ScanResult> list;
+        public WifiAdapter(Context context,List<ScanResult> list){
             this.mInflater = LayoutInflater.from(context);
+            this.list = list;
         }
         @Override
         public int getCount() {
@@ -290,44 +329,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return wifiId;
     }
-
-    /**
-     * input passwork
-     */
-    private void inputTitleDialog(int networkid) {
-        Toast.makeText(this,"请输入密码",Toast.LENGTH_LONG).show();
-        final EditText inputServer = new EditText(this);
-        inputServer.setFocusable(true);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.pass_edit_Title)).setView(inputServer).setNegativeButton(
-                getString(R.string.cancel), null);
-        builder.setPositiveButton(getString(R.string.connect),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String inputName = inputServer.getText().toString();
-                        Log.e(TAG,"inputTitleDialog"+inputName);
-                        int add_config = AddWifiConfig(list,scanResult.SSID,inputName);
-                        if(-1!= add_config ){
-                            new Thread(){
-                                @Override
-                                public void run() {
-                                    super.run();
-                                    int networkid = IsConfiguration(scanResult.SSID);
-                                    while(-1 == networkid){
-                                        thread(3000);
-                                        networkid = IsConfiguration(scanResult.SSID);
-                                    };
-                                    ConnectWifi(networkid);
-                                    //启动缓冲动画
-                                }
-                            }.start();
-                            Log.e(TAG,"正在连接");
-                        }else{
-                            Log.e(TAG,"设置失败");
-                        }
-                    }
-                });
-        builder.show();
+    public void deleteWifiConfig(int networkId){
+        boolean flag = wifiadmin.getWifiManager().removeNetwork(networkId);
+        Log.e(TAG,"flag= " +flag);
     }
 
     /**
@@ -337,16 +341,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public boolean ConnectWifi(int wifiId){
         wifiConfigurationList = wifiadmin.getConfiguration();
-        Toast.makeText(this,"正在连接",Toast.LENGTH_LONG).show();
         for(int i = 0; i < wifiConfigurationList.size(); i++){
             WifiConfiguration wifi = wifiConfigurationList.get(i);
-            Log.e(TAG,"wifi.networkId "+wifi.SSID+":"+wifi.networkId);
-            Log.i("ConnectWifi",String.valueOf(wifi.status));
+            Log.e(TAG,"wifiId"+wifiId+"wifi.neitworkId"+wifi.networkId);
             if(wifi.networkId == wifiId){
-                while(!(wifiadmin.getWifiManager().enableNetwork(wifiId, true))){
-                    Log.i("ConnectWifi",String.valueOf(wifiConfigurationList.get(wifiId).status));
+                Log.e(TAG,"wifi.status"+wifi.status);
+                if(wifi.status==0){
+                    Log.e("avg","已经连接");
+//                    Toast.makeText(this,"已经连接",Toast.LENGTH_LONG).show();
+                    return false;
+                }else if(wifi.status == 1 ){
+                    Log.e("avg","正在连接");
+//                    Toast.makeText(this,"正在连接",Toast.LENGTH_LONG).show();
+                    while(!(wifiadmin.getWifiManager().enableNetwork(wifiId, true))){
+                        //status:0--已经连接，1--不可连接，2--可以连接
+                        Log.e("net","enableNetwork = "+String.valueOf(wifiConfigurationList.get(wifiId).status));
+                    }
+                    Log.e("avg","结束");
+                    return true;
+                }else{
+                    Log.e("avg","无法连接该网络");
+//                    Toast.makeText(this,"无法连接该网络",Toast.LENGTH_LONG).show();
+                    return false;
                 }
-                return true;
             }
         }
         return false;
@@ -356,6 +373,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Thread.sleep(t);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+    public void getshowlist(){
+        scanlist = new ArrayList<>();
+        for(int i = 0 ; i < list.size();i++){
+            if(list.get(i).SSID.length() > 4) {
+                String SSID = list.get(i).SSID.substring(0, 1);
+                if (SSID.equals(wifiname)) {
+                    scanlist.add(list.get(i));
+                }
+            }
         }
     }
 }

@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.wifi.socket.util.timeUtils;
 import com.android.wifi.socket.wifisocket.R;
-import com.android.wifi.socket.wifisocket.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        if (Utils.isFastDoubleClick()) {
+        if (timeUtils.isFastDoubleClick()) {
             return ;
         }
         switch (view.getId()) {

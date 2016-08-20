@@ -51,8 +51,8 @@ public class WifiAdmin {
 
     public void closeWifi() {
         if (mWifiManager.isWifiEnabled()) {
-        mWifiManager.setWifiEnabled(false);
-    }
+            mWifiManager.setWifiEnabled(false);
+        }
     }
 
     public int checkState() {
@@ -194,7 +194,6 @@ public class WifiAdmin {
         }
         if (Type == 3) // WIFICIPHER_WPA
         {
-
             Log.i(TAG, "Type =3.");
             config.preSharedKey = "\"" + Password + "\"";
 
