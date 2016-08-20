@@ -7,4 +7,5 @@
     <dimen name="wifi_list_size">30sp</dimen>
     <dimen name="wifi_list_item_size">20sp</dimen>
     <dimen name="wifi_list_size_top">20dp</dimen>
+    <dimen name="wifi_list_text_top">15dp</dimen>
 </resources>

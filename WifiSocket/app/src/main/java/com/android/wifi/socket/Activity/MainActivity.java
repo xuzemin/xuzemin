@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private IntentFilter mWifiFilter;
     private String passwork = "xzm19910424";
     private String wifiname = "T";
+    private String lastSSID,CurrentSSID;
     private List<ScanResult> list;
     private TextView connect_wifi;
     private NetworkInfo networkInfo;
@@ -66,11 +67,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case 1:
                     conntect_layout.setVisibility(View.VISIBLE);
-                    connect_wifi.setText(networkInfo.getExtraInfo());
+                    if(networkInfo!=null) {
+                        String str = networkInfo.getExtraInfo();
+                        connect_wifi.setText(str.substring(1,str.length()-1));
+                    }
                     break;
                 case 2:
                     connect_wifi.setText("");
-                    conntect_layout.setVisibility(View.INVISIBLE);
+                    conntect_layout.setVisibility(View.GONE);
                     break;
             }
         }
@@ -98,19 +102,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)){
                 NetworkInfo.State state = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
-                Log.e(TAG,"state"+state);
+                networkInfo = mConnectivityManager.getActiveNetworkInfo();
                 if(state.toString().equals("CONNECTED")){
-                    Log.e(TAG,"state="+true);
-                    networkInfo = mConnectivityManager.getActiveNetworkInfo();
-                    handler.sendEmptyMessage(CONNECT_SUCCES);
-                    Log.e(TAG,"networkInfo"+networkInfo.toString());
-                }else if(state.toString().equals("DISCONNECTED")){
-                    Log.e(TAG,"state="+false);
-                    handler.sendEmptyMessage(CONNECT_FAIL);
-                    if(networkInfo!=null) {
-                        Log.e(TAG,"networkInfo"+networkInfo.toString());
-                        deleteWifiConfig(IsConfiguration(networkInfo.getExtraInfo()));
+                    if(networkInfo !=null && CurrentSSID!=null){
+                        if((CurrentSSID).equals(networkInfo.getExtraInfo())){
+                            Toast.makeText(MainActivity.this,"指定网络连接成功",Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(MainActivity.this,WifControlActivity.class));
+                            if(!lastSSID.equals(CurrentSSID)) {
+                                deletepasswork(lastSSID);
+                                lastSSID = CurrentSSID;
+                            }
+                        }
+                    }else{
+                        Toast.makeText(MainActivity.this,"非指定网络连接",Toast.LENGTH_LONG).show();
                     }
+                    handler.sendEmptyMessage(CONNECT_SUCCES);
+                }else if(state.toString().equals("DISCONNECTED")){
+                    Toast.makeText(MainActivity.this,"网络断开",Toast.LENGTH_LONG).show();
+                    handler.sendEmptyMessage(CONNECT_FAIL);
                     networkInfo = null;
                 }else{
                     Log.e(TAG,"state="+state.toString());
@@ -134,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wifi_state.setChecked(false);
         wifi_state.setOnClickListener(this);
         mConnectivityManager = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
     }
     @Override
     public void onClick(View view) {
@@ -171,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        deletepasswork(lastSSID);
+        deletepasswork(CurrentSSID);
         unregisterReceiver(mWifiConnectReceiver);
     }
 
@@ -211,6 +221,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         scanResult=scanlist.get(i);
         int isConfiguration = IsConfiguration(scanResult.SSID);
         Log.e(TAG,"点击");
+        CurrentSSID = "\""+scanResult.SSID+"\"";
+        if(!CurrentSSID.equals(lastSSID)){
+            deletepasswork(lastSSID);
+            lastSSID = CurrentSSID;
+        }
         if(-1 != isConfiguration){
             Log.e(TAG,"已有密码");
             if(ConnectWifi(isConfiguration)){
@@ -234,7 +249,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }.start();
             }else{
-                Toast.makeText(this,"连接失败，路由密码错误",Toast.LENGTH_LONG).show();
                 Log.e(TAG,"设置失败");
             }
         }
@@ -288,27 +302,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * passwork is config ?
-     * @param SSID
-     * @return
-     */
     public int IsConfiguration(String SSID){
         wifiConfigurationList = wifiadmin.getConfiguration();
-        for(int i = 0; i < wifiConfigurationList.size(); i++){
-            if(wifiConfigurationList.get(i).SSID.equals("\""+SSID+"\"")){//地址相同
-                return wifiConfigurationList.get(i).networkId;
+        if(wifiConfigurationList!=null && wifiConfigurationList.size() > 0) {
+            for (int i = 0; i < wifiConfigurationList.size(); i++) {
+                if (wifiConfigurationList.get(i).SSID.equals("\"" + SSID + "\"")) {//地址相同
+                    return wifiConfigurationList.get(i).networkId;
+                }
+            }
+        }
+        return -1;
+    }
+    public int NetinfoConfiguration(String SSID){
+        wifiConfigurationList = wifiadmin.getConfiguration();
+        if(wifiConfigurationList!=null && wifiConfigurationList.size() > 0) {
+            for (int i = 0; i < wifiConfigurationList.size(); i++) {
+                if (wifiConfigurationList.get(i).SSID.equals(SSID)) {//地址相同
+                    return wifiConfigurationList.get(i).networkId;
+                }
             }
         }
         return -1;
     }
 
-    /**
-     * config wifi passwork
-     * @param ssid
-     * @param pwd
-     * @return
-     */
     public int AddWifiConfig(List<ScanResult> wifiList,String ssid,String pwd){
         int wifiId = -1;
         for(int i = 0;i < wifiList.size(); i++){
@@ -331,7 +347,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void deleteWifiConfig(int networkId){
         boolean flag = wifiadmin.getWifiManager().removeNetwork(networkId);
-        Log.e(TAG,"flag= " +flag);
+        Log.e(TAG,"flag= " +flag+"networkid = "+ networkId);
+        wifiConfigurationList = wifiadmin.getConfiguration();
+        Log.e(TAG,wifiConfigurationList.toString());
     }
 
     /**
@@ -343,26 +361,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wifiConfigurationList = wifiadmin.getConfiguration();
         for(int i = 0; i < wifiConfigurationList.size(); i++){
             WifiConfiguration wifi = wifiConfigurationList.get(i);
-            Log.e(TAG,"wifiId"+wifiId+"wifi.neitworkId"+wifi.networkId);
             if(wifi.networkId == wifiId){
                 Log.e(TAG,"wifi.status"+wifi.status);
-                if(wifi.status==0){
-                    Log.e("avg","已经连接");
-//                    Toast.makeText(this,"已经连接",Toast.LENGTH_LONG).show();
-                    return false;
-                }else if(wifi.status == 1 ){
-                    Log.e("avg","正在连接");
+                if(wifi.status == 0){
+                    Log.e(TAG,"正在连接");
 //                    Toast.makeText(this,"正在连接",Toast.LENGTH_LONG).show();
                     while(!(wifiadmin.getWifiManager().enableNetwork(wifiId, true))){
                         //status:0--已经连接，1--不可连接，2--可以连接
-                        Log.e("net","enableNetwork = "+String.valueOf(wifiConfigurationList.get(wifiId).status));
                     }
-                    Log.e("avg","结束");
                     return true;
-                }else{
-                    Log.e("avg","无法连接该网络");
-//                    Toast.makeText(this,"无法连接该网络",Toast.LENGTH_LONG).show();
+                }else if(wifi.status == 1 ){
+                    Log.e(TAG,"无法连接");
+//                    Toast.makeText(this,"无法连接",Toast.LENGTH_LONG).show();
+                    return true;
+                }else if(wifi.status == 2){
+                    Log.e(TAG,"已经连接");
+                    while(!(wifiadmin.getWifiManager().enableNetwork(wifiId, true))){
+                        //status:0--已经连接，1--不可连接，2--可以连接
+                    }
+//                    Toast.makeText(this,"已经连接",Toast.LENGTH_LONG).show();
                     return false;
+                }else{
+
                 }
             }
         }
@@ -383,6 +403,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (SSID.equals(wifiname)) {
                     scanlist.add(list.get(i));
                 }
+            }
+        }
+    }
+    public void deletepasswork(String SSID){
+        String deleteSSID = SSID;
+        if(deleteSSID!=null) {
+            int IsInWIfiConfig = NetinfoConfiguration(deleteSSID);
+            if(-1!=IsInWIfiConfig){
+                deleteWifiConfig(IsInWIfiConfig);
             }
         }
     }

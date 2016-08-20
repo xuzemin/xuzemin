@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -58,20 +57,36 @@
             android:text="@string/wifi_list"/>
     </RelativeLayout>
     <RelativeLayout
+        style="@style/corner_all"
         android:id="@+id/conntect_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
         >
+        <TextView
+            android:id="@+id/textview"
+            style="@style/corner_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connect_wifi"
+            android:textSize="@dimen/wifi_list_text_top"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            />
 
         <TextView
+            android:layout_below="@+id/textview"
+            android:textColor="@color/black"
+            android:textSize="@dimen/wifi_list_item_size"
+            style="@style/corner_all"
             android:id="@+id/connected_wifi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/app_name"/>
     </RelativeLayout>
     <RelativeLayout
+        style="@style/corner_all"
         android:layout_marginTop="@dimen/wifi_list_size_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

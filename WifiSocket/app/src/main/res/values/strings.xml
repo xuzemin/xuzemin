@@ -19,4 +19,9 @@
     <string name="wifi_list">Wifi热点列表</string>
     <string name="pass_edit">请输入密码</string>
     <string name="pass_edit_Title">请输入密码</string>
+    <string name="connect_wifi">已连接</string>
+    <string name="up">上</string>
+    <string name="down">下</string>
+    <string name="left">左</string>
+    <string name="right">右</string>
 </resources>

@@ -1,5 +1,12 @@
 package com.android.wifi.socket.Activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,20 +15,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.wifi.socket.util.timeUtils;
 import com.android.wifi.socket.wifisocket.R;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -32,28 +32,22 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
     private static String TAG = "WifControlActivity";
     private int Server_HOST_PORT = 58888;
     private int Client_HOST_PORT = 58000;
-    private EditText ip, message;
-    private TextView messageText;
-    private Socket socket =null;
-    private PrintWriter out = null;
-    private BufferedReader read;
+    private String IP = "192.168.18.111";
     private int CONNECT_OK = 0;
+    private IntentFilter mWifiFilter;
     private DatagramSocket socket_;
-    public Button connect,cancel,send;
+    public Button connect,cancel,up,down,left,right;
+    private ConnectivityManager mConnectivityManager;
     private Handler handle = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
                 case 0:
-                    message.setVisibility(View.VISIBLE);
-                    send.setVisibility(View.VISIBLE);
-                    messageText.setVisibility(View.VISIBLE);
+
                     break;
                 case 1:
-                    message.setText("");
                     connect.setEnabled(true);
-                    send.setEnabled(false);
                     break;
             }
         }
@@ -66,17 +60,13 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
         }
         switch (view.getId()) {
             case R.id.button_connect:
-//                connect();
-                send_udp();
+                send_connect();
                 connect.setEnabled(false);
                 cancel.setText("断开");
                 break;
             case R.id.button_cancel:
                 cancel.setText("取消");
                 connect.setEnabled(true);
-                message.setVisibility(View.INVISIBLE);
-                send.setVisibility(View.INVISIBLE);
-                messageText.setVisibility(View.INVISIBLE);
                 break;
         }
     }
@@ -84,16 +74,36 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (view.getId()) {
-            case R.id.send:
+            case R.id.up:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    send.setBackgroundResource(R.color.colorAccent);
-//                    send("up"+message.getText().toString().trim());
-                    send_up();
+//                    send_up();
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    send.setBackgroundResource(R.color.colorPrimaryDark);
-//                    send("stop"+message.getText().toString().trim());
-                    send_down();
+//                    send_stop();
+                }
+                break;
+            case R.id.down:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    send_down();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    send_stop();
+                }
+                break;
+            case R.id.left:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    send_left();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    send_stop();
+                }
+                break;
+            case R.id.right:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    send_right();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    send_stop();
                 }
                 break;
         }
@@ -103,62 +113,40 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wifi_layout);
-        ip = (EditText) findViewById(R.id.connect_ip);
-        message = (EditText) findViewById(R.id.message);
         connect = (Button) findViewById(R.id.button_connect);
         cancel = (Button) findViewById(R.id.button_cancel);
-        send = (Button) findViewById(R.id.send);
-        messageText = (TextView)findViewById(R.id.messageText);
         connect.setOnClickListener(this);
         cancel.setOnClickListener(this);
-        send.setOnTouchListener(this);
-
-        message.setVisibility(View.INVISIBLE);
-        send.setVisibility(View.INVISIBLE);
-        messageText.setVisibility(View.INVISIBLE);
+        up = (Button) findViewById(R.id.up);
+        up.setOnTouchListener(this);
+        down = (Button) findViewById(R.id.down);
+        down.setOnTouchListener(this);
+        left = (Button) findViewById(R.id.left);
+        left.setOnTouchListener(this);
+        right = (Button) findViewById(R.id.right);
+        right.setOnTouchListener(this);
+        registerWIFI();
+        connect.setEnabled(false);
+        cancel.setText("断开");
+        mConnectivityManager = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     public void toastText(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        connect();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(mWifiConnectReceiver);
     }
-    //    public void connect() {
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                super.run();
-//                try
-//                {
-//                    Log.e(TAG, "连接" + ip.getText().toString().trim());
-//                    socket = new Socket(ip.getText().toString().trim(), Server_HOST_PORT);
-//                    Log.e(TAG, "连接成功");
-//                    Log.e(TAG, "连接成功"+socket.isConnected());
-//                    handle.sendEmptyMessage(CONNECT_OK);
-//                    recive_udp();
-//                    read = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//                    String content;
-//                    while ((content = read.readLine()) != null) {
-//                        Log.e(TAG, "接受成功");
-//                        Log.e(TAG, read.readLine().toString());
-//                        Log.e(TAG,"recieve ok"+content);
-//                    }
-//                }
-//                catch(IOException e)
-//                {
-//                    Log.e(TAG, e.toString());
-//                    cancel.setText("取消");
-//                    connect.setEnabled(true);
-//                }
-//            }
-//        }.start();
-//
-//    }
-    private void send_udp(){
+    private void connect(){
         new Thread() {
             @Override
             public void run() {
@@ -167,7 +155,7 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
                     socket_ = new DatagramSocket(Client_HOST_PORT);
                     String str = "connect";
                     byte data[] = str.getBytes();
-                    DatagramPacket package_udp = new DatagramPacket(data, data.length,InetAddress.getByName("192.168.1.32"),Server_HOST_PORT);
+                    DatagramPacket package_udp = new DatagramPacket(data, data.length,InetAddress.getByName(IP),Server_HOST_PORT);
                     socket_.send(package_udp);
                     handle.sendEmptyMessage(CONNECT_OK);
                     while(true) {
@@ -182,21 +170,23 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
             }
         }.start();
     }
+    private void send_connect() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "connect";
+                senddata(str);
+            }
+        }.start();
+    }
     private void send_up() {
         new Thread() {
             @Override
             public void run() {
                 super.run();
                 String str = "up";
-                byte data[] = str.getBytes();
-                try {
-                    DatagramPacket packa = new DatagramPacket(data, data.length, InetAddress.getByName("192.168.18.111"), Server_HOST_PORT);
-                    socket_.send(packa);
-                }catch (UnknownHostException e ){
-                    Log.e(TAG, e.toString());
-                } catch (IOException e) {
-                    Log.e(TAG, e.toString());
-                }
+                senddata(str);
             }
         }.start();
     }
@@ -205,32 +195,42 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void run() {
                 super.run();
-                String str = "stop";
-                byte data[] = str.getBytes();
-                try {
-                    DatagramPacket packa = new DatagramPacket(data, data.length, InetAddress.getByName("192.168.18.111"), Server_HOST_PORT);
-                    socket_.send(packa);
-                }catch (UnknownHostException e ){
-                    Log.e(TAG, e.toString());
-                } catch (IOException e) {
-                    Log.e(TAG, e.toString());
-                }
+                String str = "down";
+                senddata(str);
             }
         }.start();
     }
-    //    private void send(String str ) {
-//        try {
-//            Log.e(TAG, "连接成功"+socket.isConnected());
-//            out = new PrintWriter(new BufferedWriter(
-//                    new OutputStreamWriter(socket.getOutputStream())), true);
-//            out.println(str+"\r\n");
-//            Log.e(TAG,"发送成功");
-//        }catch (IOException e){
-//            Log.e(TAG, e.toString());
-//        }
-//    }
+    private void send_left() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "left";
+                senddata(str);
+            }
+        }.start();
+    }
+    private void send_right() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "right";
+                senddata(str);
+            }
+        }.start();
+    }
+    private void send_stop() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "stop";
+                senddata(str);
+            }
+        }.start();
+    }
     public void ReceiveServerSocketData() {
-        DatagramSocket socket_recieve;
         try {
             //实例化的端口号要和发送时的socket一致，否则收不到data
             Log.e(TAG, "接受开始");
@@ -246,5 +246,51 @@ public class WifControlActivity extends AppCompatActivity implements View.OnClic
         } catch (IOException e) {
             Log.e(TAG, e.toString());
         }
+    }
+    private void senddata(String str){
+        byte data[] = str.getBytes();
+        try {
+            DatagramPacket packa = new DatagramPacket(data, data.length, InetAddress.getByName(IP), Server_HOST_PORT);
+            socket_.send(packa);
+        }catch (UnknownHostException e ){
+            Log.e(TAG, e.toString());
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+    private BroadcastReceiver mWifiConnectReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e(TAG,""+intent.getAction());
+            if (intent.getAction().equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
+                int message = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
+                switch (message) {
+                    case WifiManager.WIFI_STATE_DISABLED:
+                        Log.d(TAG, "WIFI_STATE_DISABLED");
+                        finish();
+                        break;
+                    case WifiManager.WIFI_STATE_ENABLED:
+                        Log.d(TAG, "WIFI_STATE_ENABLED");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)){
+                NetworkInfo.State state = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+                if(state.toString().equals("CONNECTED")){
+
+                }else if(state.toString().equals("DISCONNECTED")){
+                    finish();
+                }else{
+                    Log.e(TAG,"state="+state.toString());
+                }
+            }
+        }
+    };
+    private void registerWIFI() {
+        mWifiFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        mWifiFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(mWifiConnectReceiver, mWifiFilter);
     }
 }
