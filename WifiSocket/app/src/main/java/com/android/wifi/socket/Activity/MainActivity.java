@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.wifi.socket.service.WifiConnectService;
 import com.android.wifi.socket.wifisocket.R;
 import com.android.wifi.socket.wifisocket.WifiAdmin;
 
@@ -37,20 +40,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG = "MainActivity";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
-    private String passwork = "xzm19910424";
-    private String wifiname = "T";
+    private String passwork = "13662282";
+    private String wifiname = "";
     private String lastSSID,CurrentSSID;
+
     private List<ScanResult> list;
     private TextView connect_wifi;
     private NetworkInfo networkInfo;
     private List<ScanResult> scanlist;
     private RelativeLayout conntect_layout;
     private ScanResult scanResult;
+    private Intent intent;
     private List<WifiConfiguration> wifiConfigurationList;
     private ListView listView;
     private WifiAdapter wifiAdapter;
     private StringBuffer stringBuffer;
     private Switch wifi_state;
+    private long exitTime = 0;
     private boolean isscaning = false;
     private int SCAN_OK = 0;
     private ConnectivityManager mConnectivityManager;
@@ -143,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wifi_state.setChecked(false);
         wifi_state.setOnClickListener(this);
         mConnectivityManager = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
     }
     @Override
     public void onClick(View view) {
@@ -179,11 +186,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        deletepasswork(lastSSID);
-        deletepasswork(CurrentSSID);
-        unregisterReceiver(mWifiConnectReceiver);
     }
 
+    public void startservice(){
+        if(CurrentSSID!=null){
+            int IsInWIfiConfig = NetinfoConfiguration(CurrentSSID);
+            Log.e(TAG,"IsInWIfiConfig"+IsInWIfiConfig);
+            Bundle bundle = new Bundle();
+            bundle.putInt("IsInWIfiConfig",IsInWIfiConfig);
+            intent=new Intent(this,WifiConnectService.class);
+            intent.putExtras(bundle);
+            startService(intent);
+        }
+    }
     public void start_Scan() {
         isscaning = true;
         new Thread() {
@@ -241,8 +256,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         super.run();
                         while(-1 == IsConfiguration(scanResult.SSID)){
-                            thread(3000);
-                        };
+                            thread(2*1000);
+                        }
                         Log.e(TAG,"增加密码成功后id"+IsConfiguration(scanResult.SSID));
                         ConnectWifi(IsConfiguration(scanResult.SSID));
                         //启动缓冲动画
@@ -329,7 +344,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int wifiId = -1;
         for(int i = 0;i < wifiList.size(); i++){
             ScanResult wifi = wifiList.get(i);
-            Log.e(TAG,"wifi.SSID ="+wifi.SSID + "ssid="+ssid);
             if(wifi.SSID.equals(ssid)){
                 WifiConfiguration wifiCong = new WifiConfiguration();
                 wifiCong.SSID = "\""+wifi.SSID+"\"";//\"转义字符，代表"
@@ -347,9 +361,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     public void deleteWifiConfig(int networkId){
         boolean flag = wifiadmin.getWifiManager().removeNetwork(networkId);
-        Log.e(TAG,"flag= " +flag+"networkid = "+ networkId);
         wifiConfigurationList = wifiadmin.getConfiguration();
-        Log.e(TAG,wifiConfigurationList.toString());
     }
 
     /**
@@ -366,28 +378,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(wifi.status == 0){
                     Log.e(TAG,"正在连接");
 //                    Toast.makeText(this,"正在连接",Toast.LENGTH_LONG).show();
-                    while(!(wifiadmin.getWifiManager().enableNetwork(wifiId, true))){
-                        //status:0--已经连接，1--不可连接，2--可以连接
-                    }
+                    wifiadmin.getWifiManager().enableNetwork(wifiId, true);
                     return true;
                 }else if(wifi.status == 1 ){
                     Log.e(TAG,"无法连接");
+                    wifiadmin.getWifiManager().enableNetwork(wifiId, true);
 //                    Toast.makeText(this,"无法连接",Toast.LENGTH_LONG).show();
                     return true;
                 }else if(wifi.status == 2){
                     Log.e(TAG,"已经连接");
-                    while(!(wifiadmin.getWifiManager().enableNetwork(wifiId, true))){
-                        //status:0--已经连接，1--不可连接，2--可以连接
-                    }
+                    wifiadmin.getWifiManager().enableNetwork(wifiId, true);
+//                    while(!(wifiadmin.getWifiManager().enableNetwork(wifiId, true))){
+//                        //status:0--已经连接，1--不可连接，2--可以连接
+//                    }
 //                    Toast.makeText(this,"已经连接",Toast.LENGTH_LONG).show();
                     return false;
                 }else{
+                    wifiadmin.getWifiManager().enableNetwork(wifiId, true);
 
                 }
             }
         }
         return false;
     }
+
     private void thread(int t ){
         try {
             Thread.sleep(t);
@@ -395,17 +409,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
     public void getshowlist(){
         scanlist = new ArrayList<>();
         for(int i = 0 ; i < list.size();i++){
             if(list.get(i).SSID.length() > 4) {
-                String SSID = list.get(i).SSID.substring(0, 1);
+                String SSID = list.get(i).SSID.substring(0, 0);
                 if (SSID.equals(wifiname)) {
                     scanlist.add(list.get(i));
                 }
             }
         }
     }
+
     public void deletepasswork(String SSID){
         String deleteSSID = SSID;
         if(deleteSSID!=null) {
@@ -414,5 +430,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 deleteWifiConfig(IsInWIfiConfig);
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                Log.e(TAG,"lastSSID"+lastSSID);
+                Log.e(TAG,"CurrentSSID"+CurrentSSID);
+//                deletepasswork(lastSSID);
+//                deletepasswork(CurrentSSID);
+
+                startservice();
+                unregisterReceiver(mWifiConnectReceiver);
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
