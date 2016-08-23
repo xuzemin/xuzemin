@@ -25,7 +25,8 @@
         </activity>
         <activity android:name="com.android.wifi.socket.Activity.WifControlActivity"/>
         <service android:name="com.android.wifi.socket.service.WifiConnectService"
-            android:enabled="true"/>
+            android:enabled="true"
+            android:process="com.han.han"/>
         <receiver android:name="com.android.wifi.socket.recieve.WifiBroadcastReciever">
             <intent-filter>
                 <action android:name="arui.alarm.action" />

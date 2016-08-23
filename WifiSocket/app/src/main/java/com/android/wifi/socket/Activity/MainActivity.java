@@ -1,10 +1,8 @@
 package com.android.wifi.socket.Activity;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -21,12 +19,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -44,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG = "MainActivity";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
-    private String passwork = "13662282";
+    private String passwork = "xzm19910424";
     private String wifiname = "";
     private String lastSSID,CurrentSSID;
 
@@ -67,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int CONNECT_SUCCES = 1;
     private int CONNECT_FAIL = 2;
     private boolean flag =false;
+
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
