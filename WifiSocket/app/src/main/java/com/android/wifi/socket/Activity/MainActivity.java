@@ -2,10 +2,12 @@ package com.android.wifi.socket.Activity;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -13,11 +15,13 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ConnectivityManager mConnectivityManager;
     private int CONNECT_SUCCES = 1;
     private int CONNECT_FAIL = 2;
+    private boolean flag =false;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                 }
             }
+
             if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)){
                 NetworkInfo.State state = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
                 networkInfo = mConnectivityManager.getActiveNetworkInfo();
@@ -133,6 +139,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
+
+    private ServiceConnection conn = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // TODO Auto-generated method stub
+            WifiConnectService.MyBinder binder = (WifiConnectService.MyBinder)service;
+            WifiConnectService bindService = binder.getService();
+            bindService.MyMethod();
+            flag = true;
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +175,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wifi_state.setChecked(false);
         wifi_state.setOnClickListener(this);
         mConnectivityManager = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
+        Intent intent = new Intent(MainActivity.this,WifiConnectService.class);
+        bindService(intent, conn, Context.BIND_AUTO_CREATE);
+    }
+    private void unBind(){
+        if(flag == true){
+            Log.i(TAG, "BindService-->unBind()");
+            unbindService(conn);
+            flag = false;
+        }
     }
     @Override
     public void onClick(View view) {
@@ -181,11 +215,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mWifiFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         mWifiFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         registerReceiver(mWifiConnectReceiver, mWifiFilter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     public void startservice(){
@@ -439,11 +468,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                Log.e(TAG,"lastSSID"+lastSSID);
-                Log.e(TAG,"CurrentSSID"+CurrentSSID);
-//                deletepasswork(lastSSID);
-//                deletepasswork(CurrentSSID);
-
                 startservice();
                 unregisterReceiver(mWifiConnectReceiver);
                 finish();
@@ -453,4 +477,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
 }
