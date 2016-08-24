@@ -1,23 +1,12 @@
-package net.nmss.nice.activity;
+package com.android.wifi.socket.Activity;
 
 import java.io.File;
 import java.util.Random;
 
+import com.android.wifi.socket.util.ImageLoaderUtils;
+import com.android.wifi.socket.util.LogUtil;
+import com.android.wifi.socket.widght.MyProgressDialog;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import net.nmss.nice.utils.NiceConstants;
-import net.nmss.nice.utils.UrlHelper;
-import net.nmss.nice.AppManager;
-import net.nmss.nice.R;
-import net.nmss.nice.bean.NiceUserInfo;
-import net.nmss.nice.utils.AsyncHttpRequestUtil;
-import net.nmss.nice.utils.ImageLoaderUtils;
-import net.nmss.nice.utils.LogUtil;
-import net.nmss.nice.utils.NetWorkHelper;
-import net.nmss.nice.utils.PreferenUtil;
-import net.nmss.nice.widget.MyProgressDialog;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -64,16 +53,6 @@ public class BaseActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		chkLocation();
-		NiceUserInfo info = NiceUserInfo.getInstance();
-		String newUid = info.getUId();
-		if (newUid == null || newUid.length() == 0) {
-			PreferenUtil pUtil = new PreferenUtil(this);
-			String oldUid = pUtil.getUID();
-			info.setUId(oldUid);
-		}
-		LogUtil.i("displayBriefMemory", "onResume()");
-		displayBriefMemory();
 		super.onResume();
 	}
 
@@ -81,12 +60,6 @@ public class BaseActivity extends FragmentActivity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		PreferenUtil pUtil = new PreferenUtil(this);
-		String newUid = NiceUserInfo.getInstance().getUId();
-		String oldUid = pUtil.getUID();
-		if (newUid != null && newUid.length() != 0 && !newUid.equals(oldUid)) {
-			pUtil.setUid(newUid);
-		}
 	}
 
 	@Override
@@ -109,10 +82,6 @@ public class BaseActivity extends FragmentActivity {
 				+ "时就看成低内存运行");
 	}
 
-	public void initSlidingMenu() {
-
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
@@ -127,19 +96,6 @@ public class BaseActivity extends FragmentActivity {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-
-	public int chkVersion() {
-		PreferenUtil preferenUtil = new PreferenUtil(this);
-		int oldVersionCode = preferenUtil.getversionCode();
-		int newVersionCode = getVersionCode();
-		if (newVersionCode > oldVersionCode) {
-			preferenUtil.setVersionCode(newVersionCode);
-			return SplashActivity.GOTOWELCOME;
-		} else {
-			return SplashActivity.GOTOFIRST;
-		}
 	}
 
 	public void showProgress() {
@@ -187,54 +143,15 @@ public class BaseActivity extends FragmentActivity {
 		} else {
 			long nowTime = System.currentTimeMillis();
 			if (nowTime - lastTime <= 2500) {
-				saveUserHeadPicUrl();
-				parseLogin();
 				ImageLoaderUtils.getInstance().clearMemoryCache();
 				ImageLoaderUtils.getInstance().clearDiscCache();
 				ImageLoaderUtils.getInstance().stop();
-				AsyncHttpRequestUtil.dispose(this);
-				AppManager.getInstance().exit(this);
 			} else {
 				count = 0;
 			}
 		}
 	}
 
-	protected void saveUserHeadPicUrl() {
-		NiceUserInfo info = NiceUserInfo.getInstance();
-		String headUrl = info.getHead_pic();
-		PreferenUtil util = new PreferenUtil(this);
-		if (headUrl != null) {
-			util.setUserHeadPic(headUrl);
-		}
-	}
-
-	private void parseLogin() {
-		RequestParams params = new RequestParams();
-		params.put(NiceConstants.UID, NiceUserInfo.getInstance().getUId());
-		String url = UrlHelper.getAbsoluteUrl("newsApp/loginOut");
-		AsyncHttpRequestUtil.get(url, params, new AsyncHttpResponseHandler() {
-			@Override
-			public void onStart() {
-				// TODO 自动生成的方法存根
-				LogUtil.i("parseLogin", "onStart");
-				super.onStart();
-			}
-
-			@Override
-			public void onSuccess(int statusCode, String content) {
-				// TODO 自动生成的方法存根
-				LogUtil.i("parseLogin", "onSuccess");
-			}
-
-			@Override
-			public void onFinish() {
-				// TODO 自动生成的方法存根
-				LogUtil.i("parseLogin", "onFinish");
-				super.onFinish();
-			}
-		});
-	}
 
 	public int getVersionCode() {
 		// 获取packagemanager的实例
@@ -276,18 +193,6 @@ public class BaseActivity extends FragmentActivity {
 		return versionCode;
 	}
 
-	private void chkLocation() {
-		NiceUserInfo info = NiceUserInfo.getInstance();
-		String latitude = info.getLatitude();
-		String longitude = info.getLongitude();
-		LogUtil.i(LOG_TAG, "latitude:" + latitude);
-		LogUtil.i(LOG_TAG, "longitude:" + longitude);
-		if ("0.0".equals(latitude) || "0.0".equals(longitude)) {
-			((NiceApplication) getApplication()).requestLocation();
-			LogUtil.i(LOG_TAG, "requestLocation");
-		}
-	}
-
 	/**
 	 * 获取手机IMEI
 	 */
@@ -311,15 +216,6 @@ public class BaseActivity extends FragmentActivity {
 		return ua;
 	}
 
-	public boolean chkNetConnect() {
-		boolean isConn = NetWorkHelper.checkNetState(this);
-		if (!isConn) {
-			Toast.makeText(this, getString(R.string.net_not_conn),
-					Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		return true;
-	}
 
 	public String getETText(TextView et) {
 		String str = et.getText().toString();
@@ -377,45 +273,6 @@ public class BaseActivity extends FragmentActivity {
 				"application/vnd.android.package-archive");
 		startActivity(intent);
 
-	}
-
-	public void getResolution() {
-		DisplayMetrics mDisplayMetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
-		NiceConstants.W = mDisplayMetrics.widthPixels;
-		NiceConstants.H = mDisplayMetrics.heightPixels;
-		LogUtil.e(LOG_TAG, "Width = " + NiceConstants.W);
-		LogUtil.e(LOG_TAG, "Height = " + NiceConstants.H);
-/*		if ((W == 480 && H == 640) || (W == 240 && H == 320)
-				|| (W == 320 && H == 480) || (W == 600 && H == 800)) {
-			NiceConstants.rate = "small";
-		} else if ((W == 480 && H == 800) || (W == 480 && H == 854)
-				|| (W == 540 && H == 960)) {
-			NiceConstants.rate = "middle";
-		} else if ((W == 1080 && H == 1920) || (W == 720 && H == 1280)
-				|| (W == 800 && H == 1280)|| (W == 1080 && H == 1776)) {
-			NiceConstants.rate = "high";
-		}else{
-			NiceConstants.rate = "other";
-		}
-		LogUtil.e(LOG_TAG, "分辨率为:" + NiceConstants.rate);*/
-	}
-	
-	public void getLoginInfo(){
-		//获取SharedPreferences对象
-		NiceConstants.LoginType = "游客";
-		Random random = new Random();
-		NiceUserInfo userInfo = NiceUserInfo.getInstance();
-		userInfo.setName("游客" + random.nextInt(1000));
-		userInfo.setPwd("");
-		userInfo.setUId("0");
-		userInfo.setDeclaration("到此一游");
-		PreferenUtil preferenUtil = new PreferenUtil(
-				BaseActivity.this);
-		preferenUtil.setVisitName(userInfo.getName());
-		preferenUtil.setVisitPwd(userInfo.getPwd());
-		preferenUtil.setVisitUid(userInfo.getUId());
-		preferenUtil.setVisitDel(userInfo.getDeclaration());
 	}
 
 }

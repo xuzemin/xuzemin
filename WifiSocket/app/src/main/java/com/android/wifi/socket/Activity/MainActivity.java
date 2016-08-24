@@ -12,7 +12,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -42,7 +41,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener,View.OnTouchListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener,View.OnTouchListener{
     private String TAG = "MainActivity";
     private int Server_HOST_PORT = 58888;
     private int Client_HOST_PORT = 58000;
@@ -89,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case 1:
                     resetTimeTask();
+                    showProgress();
                     connect();
                     isOutoftime = false;
                     timer = new Timer(true);
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case 3:
                     Log.e(TAG,"连接超时");
+                    hideProgress();
                     isOutoftime = true;
                     cancel.setText("取消");
                     connect.setEnabled(true);
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (message) {
                     case WifiManager.WIFI_STATE_DISABLED:
                         Log.e(TAG,"CurrentSSID"+CurrentSSID);
+                        hideProgress();
                         if(CurrentSSID != null){
                             isdeleted = true;
                             Log.e(TAG,"CurrentSSID"+CurrentSSID);
@@ -157,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         wifi_state.setChecked(false);
                         break;
                     case WifiManager.WIFI_STATE_ENABLED:
+                        hideProgress();
                         deletepass();
                         Log.d(TAG, "WIFI_STATE_ENABLED");
                         wifi_state.setChecked(true);
@@ -168,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)){
+                hideProgress();
                 NetworkInfo.State state = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
                 networkInfo = mConnectivityManager.getActiveNetworkInfo();
                 Log.e(TAG,"isdeleted"+isdeleted);
@@ -255,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         switch (view.getId()){
             case R.id.wifistate:
+                showProgress();
                 Log.e(TAG,""+wifi_state.isChecked());
                 if(!wifi_state.isChecked()){
                     Toast.makeText(this,"正在关闭Wifi",Toast.LENGTH_LONG).show();
@@ -274,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.button_connect:
+                showProgress();
                 isOutoftime = false;
                 send_connect();
                 connect.setEnabled(false);
@@ -342,6 +348,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         scanResult=scanlist.get(i);
         int isConfiguration = IsConfiguration(scanResult.SSID);
         Log.e(TAG,"点击");
+        showProgress();
         CurrentSSID = "\""+scanResult.SSID+"\"";
         if(!CurrentSSID.equals(lastSSID)){
             deletepasswork(lastSSID);
@@ -349,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(-1 != isConfiguration){
             Log.e(TAG,"已有密码");
+            hideProgress();
             if(ConnectWifi(isConfiguration)){
                 //打开缓冲动画
             }
@@ -371,6 +379,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }.start();
             }else{
                 Log.e(TAG,"设置失败");
+                hideProgress();
+                Toast.makeText(this,"",Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -578,6 +588,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
@@ -707,6 +718,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String result = new String(packet.getData(), packet.getOffset(),
                     packet.getLength());
             Log.e(TAG, "收到的数据"+result.toString());
+            hideProgress();
             Message msg = new Message();
             msg.what = RECIEVE;
             msg.obj = result;
