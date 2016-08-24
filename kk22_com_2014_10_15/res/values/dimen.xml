@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 常用字体大小 -->
+    <dimen name="main_text_super_large">26sp</dimen>
+    <dimen name="main_text_large">22sp</dimen>
+    <dimen name="main_text_mid">18sp</dimen>
+    <dimen name="main_text_small">16sp</dimen>
+    
+    <!-- 标题栏属性 -->
+    <dimen name="title_hight">50dp</dimen>
+    <dimen name="title_text_large">22sp</dimen>
+    <dimen name="title_text_mid">18sp</dimen>
+    <dimen name="title_text_small">16sp</dimen>
+    <dimen name="title_from_left_right">8dp</dimen>
+    <dimen name="title_padding">4dp</dimen>
+    
+    <!-- tab属性 -->
+    <dimen name="tab_text_size">11sp</dimen>
+    <dimen name="tab_text_from_top">3dp</dimen>
+    
+    <!-- wheel字体 -->
+    <dimen name="wheel_view_text_size">20sp</dimen>
+    
+    <!-- EditText属性 -->
+    <dimen name="et_height">40dp</dimen>
+    <dimen name="et_padding">10dp</dimen>
+    <dimen name="et_padding_small">10dp</dimen>
+    <dimen name="et_text_size">18dp</dimen>
+    
+    <!-- Button属性 -->
+    <dimen name="btn_height">40dp</dimen>
+    <dimen name="btn_text_size">20sp</dimen>
+    
+    <!-- RelativeLayout属性 -->
+    <dimen name="rl_height">48dp</dimen>
+    <dimen name="rl_from_left_right">16dp</dimen>
+    
+    <!-- LinearLayout属性 -->
+    <dimen name="linear_height">40dp</dimen>
+    <dimen name="linear_text_size">20dp</dimen>
+    
+    <!-- Style属性值 -->
+    <dimen name="cell_height">44.0dip</dimen>
+    <dimen name="main_font">16.0dip</dimen>
+    
+    <!-- 头像大小 -->
+    <dimen name="head_img_size">80dp</dimen>
+    <dimen name="head_img_size_small">60dp</dimen>
+</resources>

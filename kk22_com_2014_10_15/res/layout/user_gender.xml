@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/title_left_bt"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_hight"
+        android:background="@color/title_backgroud"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/title_left_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/title_from_left_right"
+            android:scaleType="center"
+            android:text="@string/back"
+            android:textColor="@color/title_back_color_selector"
+            android:textSize="@dimen/main_text_mid"
+            android:gravity="center"
+            android:drawableLeft="@drawable/global_back_btn_selector" />
+
+        <TextView
+            android:id="@+id/title_center_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/write_information"
+            android:textColor="@color/title_text_color"
+            android:textSize="@dimen/title_text_large" />
+
+        <TextView
+            android:id="@+id/title_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/title_from_left_right"
+            android:text="@string/finish"
+            android:textColor="@color/title_back_color_selector"
+            android:textSize="@dimen/title_text_mid" />
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/user_property_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0"
+        android:gravity="center"
+        android:text="@string/sex"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_text_large" />
+
+    <RadioGroup
+        android:id="@+id/gender_group"
+        android:layout_width="fill_parent"
+        android:layout_height="209.0dip"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/male_selector"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/female_selector"
+            android:button="@null"
+            android:checked="true" />
+    </RadioGroup>
+    
+
+</LinearLayout>

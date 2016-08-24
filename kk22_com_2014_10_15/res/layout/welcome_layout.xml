@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+	<android.support.v4.view.ViewPager
+	    android:id="@+id/vp_welcome"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"/>
+	<LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginBottom="15dp"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:orientation="horizontal">
+	    <View 
+	        android:id="@+id/view_dot_one_welcome"
+	        android:layout_width="10dp"
+	        android:layout_height="10dp"
+	        android:layout_margin="5dp"
+	        android:background="@drawable/welcome_dot_normal"/>
+	    <View 
+	        android:id="@+id/view_dot_two_welcome"
+	        android:layout_width="10dp"
+	        android:layout_height="10dp"
+	        android:layout_margin="5dp"
+	        android:background="@drawable/welcome_dot_press"/>
+	     <View 
+	        android:id="@+id/view_dot_three_welcome"
+	        android:layout_width="10dp"
+	        android:layout_height="10dp"
+	        android:layout_margin="5dp"
+	        android:background="@drawable/welcome_dot_press"/>
+	     <!-- View 
+	        android:id="@+id/view_dot_four_welcome"
+	        android:layout_width="10dp"
+	        android:layout_height="10dp"
+	        android:layout_margin="5dp"
+	        android:background="@drawable/welcome_dot_press"/> -->
+	</LinearLayout>
+</RelativeLayout>

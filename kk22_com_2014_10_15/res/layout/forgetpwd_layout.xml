@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke" >
+
+    <RelativeLayout
+        android:id="@+id/title_left_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:minHeight="@dimen/title_hight"
+        android:background="@color/title_backgroud">
+
+        <TextView
+            android:id="@+id/img_forget_pwd_title_left_img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/title_from_left_right"
+            android:contentDescription="@string/app_name"
+            android:onClick="doClick"
+            android:clickable="true"
+            android:drawableLeft="@drawable/global_back_btn_selector" 
+            android:gravity="center"
+            android:text="@string/back"
+            android:textColor="@color/title_back_color_selector"
+            android:textSize="@dimen/title_text_mid"/>
+
+        <TextView
+            android:id="@+id/title_center_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/forget_password"
+            android:textColor="@color/title_text_color"
+            android:textSize="@dimen/title_text_large" />
+    </RelativeLayout>
+
+    <!-- 发送重置请求 -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_left_bt" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll_reset_pwd_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="visible" >
+
+                <EditText
+                    android:id="@+id/et_forgetpwd_input_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_bg_login_et"
+                    android:hint="@string/phone_num"
+                    android:padding="@dimen/et_padding"
+                    android:singleLine="true"
+                    android:inputType="phone"
+                    android:textSize="@dimen/et_text_size"
+                    android:textColorHint="@color/hint_text_color" />
+
+                <Button
+                    android:id="@+id/btn_forgetpwd_reset_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dp"
+                    android:background="@drawable/redbtn_selector"
+                    android:minHeight="@dimen/btn_height"
+                    android:onClick="doClick"
+                    android:text="@string/reset_password"
+                    android:textColor="@color/btn_text_color"
+                    android:textSize="@dimen/btn_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_forgetpwd_is_get_sms_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:onClick="doClick"
+                    android:text="@string/is_get_random_code"
+                    android:textColor="@color/text_color_selector"
+                    android:textSize="@dimen/main_text_small"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 发送重置请求 -->
+
+            <TextView
+                android:id="@+id/tv_forgetpwd_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="@string/forget_pwd_text"
+                android:textColor="@color/red"
+                android:textSize="@dimen/title_text_mid"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_reset_2_pwd_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="gone" >
+
+                <EditText
+                    android:id="@+id/et_forgetpwd_telephone_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_bg_login_et"
+                    android:hint="@string/phone_num"
+                    android:gravity="center"
+                    android:padding="@dimen/et_padding"
+                    android:singleLine="true"
+                    android:textColorHint="@color/hint_text_color" />
+                
+                
+                <EditText
+                    android:id="@+id/et_forgetpwd_smscode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="-2dp"
+                    android:background="@drawable/shape_bg_login_et"
+                    android:gravity="center"
+                    android:hint="@string/sms_code"
+                    android:padding="@dimen/et_padding"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:textColorHint="@color/hint_text_color" />
+
+                <EditText
+                    android:id="@+id/et_forgetpwd_new_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="-2dp"
+                    android:background="@drawable/shape_bg_login_et"
+                    android:gravity="center"
+                    android:hint="@string/new_pwd"
+                    android:padding="10.0dp"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/hint_text_color" />
+
+                <EditText
+                    android:id="@+id/et_forgetpwd_sure_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="-2dp"
+                    android:background="@drawable/shape_bg_login_et"
+                    android:gravity="center"
+                    android:hint="@string/sure_pwd"
+                    android:padding="@dimen/et_padding"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/hint_text_color" />
+
+                <Button
+                    android:id="@+id/btn_forgetpwd_reset_pwd_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dp"
+                    android:background="@drawable/redbtn_selector"
+                    android:minHeight="@dimen/btn_height"
+                    android:onClick="doClick"
+                    android:text="@string/reset_password"
+                    android:textColor="@color/btn_text_color"
+                    android:textSize="@dimen/btn_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_forgetpwd_resend_sms_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:clickable="true"
+                    android:onClick="doClick"
+                    android:text="@string/resend_smscode"
+                    android:textColor="@color/text_color_selector"
+                    android:textSize="@dimen/title_text_mid"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

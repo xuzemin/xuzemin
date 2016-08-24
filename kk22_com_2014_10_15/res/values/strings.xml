@@ -1,0 +1,128 @@
+<resources>
+
+    <!-- 常用 -->
+    <string name="app_name">柠檬瘦身</string>
+    <string name="welcome_last_page_text">开启瘦生活</string>
+    <string name="net_not_conn">网络未连接，请连接后使用</string>
+    
+    <!-- 登陆注册 -->
+    <string name="login">登陆</string>
+    <string name="register">没有账号!快速注册</string>
+	<string name="back">返回</string>
+	<string name="finish">完成</string>
+	<string name="phone_num">"  手机号码"</string>
+    <string name="random_num">"  验证码"</string>
+    <string name="get_random_num">获取验证码</string>
+    <string name="pwd_num">" 6-12位密码"</string>
+    <string name="quick_register">一键注册</string>
+    <string name="login_username_hit">"  用户名/手机/邮箱"</string>
+    <string name="login_userpwd_hit">"  密码"</string>
+    <string name="weixin_login">"  用微信账号登录"</string>
+    <string name="QQ_login">"   用Q Q账号登录"</string>
+    <string name="try_login">游客试玩</string>
+    
+    <!-- 忘记密码 -->
+	<string name="forget_password">忘记密码？</string>
+    <string name="reset_password">重置密码</string>
+    <string name="is_get_random_code">已接收到短信验证码?</string>
+    <string name="forget_pwd_text">短信已经发送，请注意查收。</string>
+    <string name="sms_code">验证码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="sure_pwd">重复新密码</string>
+    <string name="resend_smscode">重新发送短信验证码</string>
+	
+	<!--用户个人资料-->
+	<string name="information">个人信息</string>
+	<string name="head">头像</string>
+	<string name="name">用户名/昵称</string>
+	<string name="declaration">美丽宣言</string>
+	<string name="telephone">手机号码</string>
+	<string name="sex">性别</string>
+	<string name="area">地区</string>
+	<string name="birthday">出生日期</string>
+	<string name="height">身高(cm)</string>
+	<string name="weigth">体重(kg)</string>
+	<string name="current_weigth">当前体重</string>
+	<string name="target_weigth">目标体重</string>
+	<string name="target_time">目标体重达成日期</string>
+	<string name="write">请填写</string>
+	<string name="write_information">完善个人信息</string>
+	<string name="limit">不能超过50字哦～～</string>
+
+	<!--tab按钮文字-->	
+	<string name="tab_one">柠檬中心</string>
+	<string name="tab_two">圈子</string>
+	<string name="tab_three">柠檬宝典</string>
+	<string name="tab_four">我</string>
+
+	<!-- 帖子文字 -->
+	<string name="relay">推荐</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
+    
+    <!-- 主页文字 -->
+    <string name="homepage">个人主页</string>
+    <string name="dynamic">动态</string>
+    <string name="masonry">砖石</string>
+    <string name="friends">好友</string>
+    <string name="fans">粉丝</string>
+    
+    <!-- 测试数字 -->
+    <string name="test_num">8</string>
+    
+    <string name="one_month_service">专业瘦身顾问为您量身定制一套瘦身方案，
+		并推荐搭配营养餐，
+		从目标出发，科学帮您减肥。	</string>
+	
+    <string name="exchange_success">我们公司客服工作人员将会在一个工作日内与您
+	    联系，以确认详细的邮寄地址。
+	    请耐心等待，祝您生活愉快！</string>
+	    
+    <string name="three_month_service">专业瘦身顾问为您量身定制瘦身方案，
+		并根据进度进行方案调整，
+		专业营养师为您调配三餐。	</string>
+	
+    <string name="six_month_service">专业瘦身顾问为您量身定制三套瘦身方案，
+		专业营养师为您调配三餐，并有调理专家为您做
+		健康调理，让您的瘦身健康稳固。	</string>
+	
+    <string name="one_year_service">专业瘦身顾问以及专业营养师全程跟踪，
+		阶段性为您定制个性化的调理方案，并有塑形美体
+		专家贴身指导服务，为您打造完美健康曲线	</string>
+	
+    <string name="auricular_service">35年肥胖临床经验中医以及152位瘦身专家团队全程不限次数跟踪指导服务，
+	           再配合美国高科技YES耳穴检测（减肥套餐包）的使用，
+	           阶段性为您调整瘦身方案，深层调理，改变您易胖体质。	</string>
+	
+    <string name="auricular_service_content">
+        美国高科技YES耳穴检测套餐包+3个月YES VIP贴心指导服务
+	+35年肥胖临床经验中医不限次数指导服务	</string>
+	
+    <string name="auricular_service_forbid">
+      	患有II级及II级以上心脏病、心血管等相关疾病的人不宜购买使用
+	</string>
+    <string name="pk_btn">立即PK</string>
+    <string name="pk_result">PK结果</string>
+    <string name="pk_continue">继续PK</string>
+    <string name="fat_burn">燃脂运动就是燃烧脂肪的运动，需要满足下面三个必要条件:</string>
+    <string name="fat_burn_01">该运动要达到中低强度的运动心率;</string>
+    <string name="fat_burn_02">中低强度运动心率的运动要持续45分钟以上;</string>
+    <string name="fat_burn_03">运动必须是大肌肉群的运动，如慢跑、游泳、健身操等。</string>
+    <string name="metabolism_01">基础代谢是指人体在清醒而又极端安静的状态下，不受肌肉活动、环境温度、食物及精神紧张等影响时的能量代谢率;</string>
+    <string name="metabolism_02">基础代谢对减肥有非常大的影响，每天适量的运动有助于提高身体的基础代谢率，而节食（极端是绝食）会降低人的基础代谢率。</string>
+    <string name="healthy_weight_title">健康体重不同于标准体重，它是一个范围值，其原理是通过BMI身体质量指数反向推算;</string>
+    <string name="health_02">健康范围的身体质量指数在18.5到24之间，结合身高，就可以计算出健康体重范围。</string>
+    <string name="select_curriculum_01_info">您输入的基本情况下,请仔细确认，
+        下面部分的饮食情况非常重要，请认真填写。</string>
+    <string name="select_curriculum_10_info">        饮食是减肥中非常重要的一个环节，请选择最符合您实际情况的选项。 
+        先来看看你每天的饮食情况吧？以下填写的是一天的饮食情况哦：</string>
+    <string name="select_curriculum_100_info">        恭喜您完成了饮食相关的评测题！接下来是了解您运动方面的情况，请继续耐心填写哦。</string>
+    <string name="tv_sp1_info">        如：5km/h以上的快走、慢跑、慢速游泳、减肥健康操、低冲击舞蹈、网球、滑雪等。</string>
+    <string name="tv_sp2_info">        如：快速游泳、10km/h的跑步、快速跳绳、足球比赛等。</string>
+    <string name="tv_sp3_info">        *运动时间不包括热身、拉伸、局部运动、按摩等活动时间。</string>
+    <string name="tv_submit_curriculum_info">       恭喜你！您已经完成了全部的YES减肥评测，辛苦了！\n接下来的两个工作日内，你的减肥顾问会为您量身制定减肥方案。到时候可以在"我的YES"查看。\n
+       等待方案期间，您可以先看一下食物库、瘦身工具等使用详解，这些都将帮助你更顺利的接受服务，进行健康减肥。\n
+       相信您一定能在顾问的专业指导下顺利减肥，加油。</string>
+
+    <string name="summary">"     “一起瘦吧”是由调理网(www.kk22.com)倾情打造的一款时尚健康减肥软件，是智能手机上最好用的、最快速的、最科学的减肥应用，为您量身定制专属瘦身方案，让您在快乐中瘦身，在运动中减肥，在健康生活中感“瘦”魅力。"</string>
+</resources>

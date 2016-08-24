@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 常用颜色值 -->
+    <color name="white">#ffffff</color>
+    <color name="blue">#00979e</color>
+    <color name="black">#ff000000</color>
+    <color name="gray">#999999</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#169649</color>
+    <color name="yellow">#ffca80</color>
+    <color name="whitesmoke">#f6f6f6</color>
+    <color name="transparent">#00000000</color>
+    <color name="divider">#ffc0c0c0</color>
+    <color name="icon_color">#57698D</color>
+	<color name="light_gray">#eeeeee</color>    
+    
+    <!-- 标题栏背景色、字体颜色 -->
+    <color name="title_backgroud">#169649</color>
+    <color name="title_text_color">#FFFFFF</color>
+
+    <!-- tab字体颜色 -->
+    <color name="tab_text_color">#169649</color>
+    
+    <!-- 主要内容背景色 -->
+    <color name="main_content_bg">#fff2f0eb</color>
+    
+    <!-- 字体点击后颜色 -->
+    <color name="text_color_press">#f6f6f6</color>
+    
+    <!-- 提示字体颜色 -->
+    <color name="hint_text_color">#ff999999</color>
+    
+    <!-- 按钮字体颜色 -->
+    <color name="btn_text_color">#ffffffff</color>
+    
+    <!-- 线条颜色 -->
+    <color name="line_color">#DEDEDE</color>
+    
+    <!-- 下拉列表线条 -->
+    <color name="timeline_divider">#50e0d8d2</color>
+    
+    <!-- 话题、昵称颜色 -->
+    <color name="theme_color">#9fb5ce</color>
+    
+    <color name="font_color">#333333</color>
+    
+    <color name="linec_color">#cccccc</color>
+    
+    <color name="usenamecolor">#d1af15</color>
+    
+    <color name="press">#d8d8d8</color>
+</resources>

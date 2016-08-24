@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
+    android:orientation="horizontal" >
+
+	<RelativeLayout
+	    android:id="@+id/hea"
+	    android:layout_width="80dp"
+        android:layout_height="60dp">
+    <ImageView
+        android:id="@+id/head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/at" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_toRightOf="@+id/hea" >
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="柠檬"
+            android:textColor="@color/usenamecolor"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/username"
+            android:text="关注了你"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/createtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/username"
+            android:layout_alignBottom="@+id/username"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:text="10-06 16:00"
+            android:textColor="@color/gray"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.3dp"
+            android:layout_below="@+id/message"
+            android:background="@color/linec_color" />
+</RelativeLayout>

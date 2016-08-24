@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke" >
+
+    <RelativeLayout
+        android:id="@+id/title_left_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/title_backgroud" 
+        android:minHeight="@dimen/title_hight">
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/title_from_left_right"
+            android:clickable="true"
+            android:drawableLeft="@drawable/global_back_btn_selector"
+            android:gravity="center"
+            android:onClick="doClick"
+            android:text="@string/back"
+            android:textColor="@color/title_back_color_selector"
+            android:textSize="@dimen/title_text_mid" />
+
+        <TextView
+            android:id="@+id/tv_title_center_content_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/login"
+            android:textColor="@color/title_text_color"
+            android:textSize="@dimen/title_text_large" />
+
+        <requestFocus />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout_mid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_left_bt"
+        android:padding="10dp" >
+
+        <EditText
+            android:id="@+id/et_login_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bg_login_et"
+            android:drawableLeft="@drawable/login_account"
+            android:hint="@string/login_username_hit"
+            android:minHeight="@dimen/et_height"
+            android:padding="@dimen/et_padding_small">
+        </EditText>
+
+        <EditText
+            android:id="@+id/et_login_userpwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_login_username"
+            android:background="@drawable/shape_bg_login_et"
+            android:drawableLeft="@drawable/login_password"
+            android:hint="@string/login_userpwd_hit"
+            android:inputType="textPassword"
+            android:minHeight="@dimen/et_height"
+            android:onClick="doClick"
+            android:padding="@dimen/et_padding_small">
+        </EditText>
+
+        <Button
+            android:id="@+id/btn_login_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_login_userpwd"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/redbtn_selector"
+            android:minHeight="@dimen/btn_height"
+            android:onClick="doClick"
+            android:text="@string/login"
+            android:textColor="@color/btn_text_color"
+            android:textSize="@dimen/btn_text_size"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login_login"
+            android:gravity="right"
+            android:minHeight="@dimen/linear_height"
+            android:orientation="horizontal"
+            android:paddingTop="15dp" >
+
+            <TextView
+                android:id="@+id/tv_login_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:clickable="true"
+                android:onClick="doClick"
+                android:text="@string/forget_password"
+                android:textColor="@color/text_color_selector"
+                android:textSize="@dimen/main_text_small"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/relativelayout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativelayout_mid"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/tv_login_quick_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rl_height"
+            android:background="@drawable/shape_bg_login_et"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/linear_height"
+            android:onClick="doClick"
+            android:text="@string/register"
+            android:textColor="@color/login_text_color_selector"
+            android:textSize="@dimen/main_text_small"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/btn_login_weixin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_bg_login_et"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/rl_height"
+            android:onClick="doClick"
+            android:visibility="visible" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/weixin_icon"
+                android:text="@string/weixin_login"
+                android:textColor="@color/login_text_color_selector"
+                android:textSize="@dimen/main_text_small"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btn_login_qq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bg_login_et"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/rl_height"
+            android:onClick="doClick" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/qq_icon"
+                android:gravity="center"
+                android:text="@string/QQ_login"
+                android:textColor="@color/login_text_color_selector"
+                android:textSize="@dimen/main_text_small"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tv_try_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bg_login_et"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/rl_height"
+            android:onClick="doClick" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/try_login"
+                android:textColor="@color/login_text_color_selector"
+                android:textSize="@dimen/main_text_small"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

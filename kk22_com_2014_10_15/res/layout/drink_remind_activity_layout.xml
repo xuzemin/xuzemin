@@ -1,0 +1,501 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke" >
+
+    <RelativeLayout
+        android:id="@+id/rl_message_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:background="@color/title_backgroud"
+        android:minHeight="@dimen/title_hight"
+        android:padding="@dimen/title_padding">
+    	
+        <ImageView 
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/global_back_btn_selector"
+            />
+        <TextView 
+            android:id="@+id/circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/image"
+            android:text="喝水提醒"
+            android:textColor="@color/title_text_color"
+            android:textSize="@dimen/title_text_mid"/>
+       
+    </RelativeLayout>
+
+     <ScrollView
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:layout_below="@+id/rl_message_top"
+         android:scrollbars="vertical" >
+    <LinearLayout 
+        	android:layout_width="fill_parent"
+        	android:orientation="vertical"
+        	android:layout_height="fill_parent">
+		 <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/light_gray"
+        android:text="身体代谢需要水的参与，每日摄入充足的水分有助维持身体高代谢状态，更有利于减肥噢~"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+        <RelativeLayout
+            android:id="@+id/first"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/firstTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第一杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/firstT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/firstText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="06:30"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="清晨一杯水可以唤醒肠道，助你排毒哦~"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:background="@color/light_gray"
+        android:textSize="20sp"
+        />
+         <RelativeLayout
+            android:id="@+id/second"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/secondTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第二杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/secondT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/secondText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="08:30"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="工作前来一杯水吧，新的一天，加油！"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:background="@color/light_gray"
+        android:textSize="20sp"
+        />
+        <RelativeLayout
+            android:id="@+id/third"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/thirdTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第三杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/thirdT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/ThirdText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="11:00"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="工作一上午累了吗？喝一杯水，放松一下。。。"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+         <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:background="@color/light_gray"
+        android:textSize="20sp"
+        />
+         <RelativeLayout
+            android:id="@+id/four"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/fourTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第四杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/fourT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/fourText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="15:30"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="餐后半小时，可以来杯水了哦~"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+          <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:background="@color/light_gray"
+        android:textSize="20sp"
+        />
+         <RelativeLayout
+            android:id="@+id/five"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/fiveTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第五杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/fiveT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/fiveText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="15:30"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="餐后半小时，可以来杯水了哦~"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+         <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:background="@color/light_gray"
+        android:textSize="20sp"
+        />
+         <RelativeLayout
+            android:id="@+id/six"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/sixTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第六杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/sixT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/sixText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="15:30"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="现在喝杯水，免得等下晚餐吃太多哦"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+         <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:background="@color/light_gray"
+        android:textSize="20sp"
+        />
+         <RelativeLayout
+            android:id="@+id/seven"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/sevenTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第七杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/sevenT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/sevenText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="19:40"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="运动前半小时喝杯水，有助于提高代谢~"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+         <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:background="@color/light_gray"
+        android:textSize="20sp"
+        />
+         <RelativeLayout
+            android:id="@+id/eight"
+            android:layout_width="fill_parent"
+            android:background="@color/white"
+            android:layout_height="80dp" >
+
+            <TextView
+                android:id="@+id/eightTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="第八杯水"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ToggleButton
+                android:id="@+id/eightT"
+                style="@style/ToggleButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dp"
+                android:background="@drawable/togglebutton_remind_sl"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:id="@+id/eightText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="15:30"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"/>
+        <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:text="睡前一小时来一杯，让咱们睡觉时不缺水"
+        android:textSize="20sp"
+        android:textColor="@color/gray"
+        />
+    </LinearLayout>
+	</ScrollView>
+</RelativeLayout>
