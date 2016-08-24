@@ -1,11 +1,9 @@
 package com.android.wifi.socket.Activity;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -13,44 +11,55 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.wifi.socket.service.WifiConnectService;
+import com.android.wifi.socket.util.timeUtils;
 import com.android.wifi.socket.wifisocket.R;
 import com.android.wifi.socket.wifisocket.WifiAdmin;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener,View.OnTouchListener{
     private String TAG = "MainActivity";
+    private int Server_HOST_PORT = 58888;
+    private int Client_HOST_PORT = 58000;
+    private String IP = "192.168.18.111";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
-    private String passwork = "xzm19910424";
+    private String passwork = "13662282";
     private String wifiname = "";
-    private String lastSSID,CurrentSSID;
-
+    private String lastSSID = null;
+    private String CurrentSSID = null;
+    public Button connect,cancel,up,down,left,right;
     private List<ScanResult> list;
-    private TextView connect_wifi;
+    private DatagramSocket socket_;
     private NetworkInfo networkInfo;
     private List<ScanResult> scanlist;
-    private RelativeLayout conntect_layout;
+    private LinearLayout linearLayout_wifilist,linearLayout_control;
     private ScanResult scanResult;
-    private Intent intent;
     private List<WifiConfiguration> wifiConfigurationList;
     private ListView listView;
     private WifiAdapter wifiAdapter;
@@ -62,8 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ConnectivityManager mConnectivityManager;
     private int CONNECT_SUCCES = 1;
     private int CONNECT_FAIL = 2;
-    private boolean flag =false;
-
+    private int OUTOFTIME = 3;
+    private int RECIEVE = 4;
+    private Timer timer;
+    private boolean isOutoftime = false;
+    private TimerTask task ;
+    private boolean isdeleted = false;
 
     private Handler handler = new Handler(){
         @Override
@@ -75,19 +88,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     listView.setAdapter(wifiAdapter);
                     break;
                 case 1:
-                    conntect_layout.setVisibility(View.VISIBLE);
-                    if(networkInfo!=null) {
-                        String str = networkInfo.getExtraInfo();
-                        connect_wifi.setText(str.substring(1,str.length()-1));
-                    }
+                    resetTimeTask();
+                    connect();
+                    isOutoftime = false;
+                    timer = new Timer(true);
+                    timer.schedule(task,10*1000);
+                    cancel.setText("断开");
+                    connect.setEnabled(false);
                     break;
                 case 2:
-                    connect_wifi.setText("");
-                    conntect_layout.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    Log.e(TAG,"连接超时");
+                    isOutoftime = true;
+                    cancel.setText("取消");
+                    connect.setEnabled(true);
+                    removeButton();
+                    Toast.makeText(MainActivity.this,"连接超时",Toast.LENGTH_LONG).show();
+                    break;
+                case 4:
+                    if(!isOutoftime){
+                        if(msg.obj.equals("get")){
+                            showButton();
+                            resetTimeTask();
+                            timer = new Timer(true);
+                            timer.schedule(task,10*1000);
+                            send_heartbeat();
+                        }else if(msg.obj.equals("heartbeat")){
+                            resetTimeTask();
+                            timer = new Timer(true);
+                            timer.schedule(task,10*1000);
+                            send_heartbeat();
+                        }
+                    }
                     break;
             }
         }
     };
+    public void resetTimeTask(){
+        if (task != null){
+            task.cancel();
+        }
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = OUTOFTIME;
+                handler.sendMessage(message);
+            }
+        };
+    }
     private BroadcastReceiver mWifiConnectReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -96,11 +146,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int message = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, -1);
                 switch (message) {
                     case WifiManager.WIFI_STATE_DISABLED:
+                        Log.e(TAG,"CurrentSSID"+CurrentSSID);
+                        if(CurrentSSID != null){
+                            isdeleted = true;
+                            Log.e(TAG,"CurrentSSID"+CurrentSSID);
+                            wifiadmin.openWifi();
+                        }
                         Log.d(TAG, "WIFI_STATE_DISABLED");
-                        wifi_state.setChecked(false);
                         thread_Wait();
+                        wifi_state.setChecked(false);
                         break;
                     case WifiManager.WIFI_STATE_ENABLED:
+                        deletepass();
                         Log.d(TAG, "WIFI_STATE_ENABLED");
                         wifi_state.setChecked(true);
                         start_Scan();
@@ -113,83 +170,95 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)){
                 NetworkInfo.State state = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
                 networkInfo = mConnectivityManager.getActiveNetworkInfo();
+                Log.e(TAG,"isdeleted"+isdeleted);
+                if(isdeleted){
+                    deletepass();
+                    isdeleted = false;
+                }
                 if(state.toString().equals("CONNECTED")){
                     if(networkInfo !=null && CurrentSSID!=null){
                         if((CurrentSSID).equals(networkInfo.getExtraInfo())){
                             Toast.makeText(MainActivity.this,"指定网络连接成功",Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(MainActivity.this,WifControlActivity.class));
+                            linearLayout_wifilist.setVisibility(View.GONE);
+                            linearLayout_control.setVisibility(View.VISIBLE);
                             if(!lastSSID.equals(CurrentSSID)) {
                                 deletepasswork(lastSSID);
                                 lastSSID = CurrentSSID;
                             }
+                            handler.sendEmptyMessage(CONNECT_SUCCES);
                         }
                     }else{
+                        deletepass();
+                        linearLayout_wifilist.setVisibility(View.VISIBLE);
+                        linearLayout_control.setVisibility(View.GONE);
                         Toast.makeText(MainActivity.this,"非指定网络连接",Toast.LENGTH_LONG).show();
                     }
-                    handler.sendEmptyMessage(CONNECT_SUCCES);
                 }else if(state.toString().equals("DISCONNECTED")){
-                    Toast.makeText(MainActivity.this,"网络断开",Toast.LENGTH_LONG).show();
+                    deletepass();
+                    linearLayout_wifilist.setVisibility(View.VISIBLE);
+                    linearLayout_control.setVisibility(View.GONE);
                     handler.sendEmptyMessage(CONNECT_FAIL);
                     networkInfo = null;
                 }else{
+                    deletepass();
                     Log.e(TAG,"state="+state.toString());
                 }
             }
         }
     };
-
-    private ServiceConnection conn = new ServiceConnection() {
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            // TODO Auto-generated method stub
-
+    public void deletepass(){
+        if(deletepasswork(CurrentSSID)){
+            CurrentSSID = null;
         }
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            // TODO Auto-generated method stub
-            WifiConnectService.MyBinder binder = (WifiConnectService.MyBinder)service;
-            WifiConnectService bindService = binder.getService();
-            bindService.MyMethod();
-            flag = true;
+        if(deletepasswork(lastSSID)){
+            lastSSID = null;
         }
-
-    };
-
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        findViewById(R.id.wifi).setOnClickListener(this);
         wifi_state = (Switch)findViewById(R.id.wifistate);
         listView = (ListView)findViewById(R.id.listview);
         listView.setOnItemClickListener(this);
         registerWIFI();
-        connect_wifi = (TextView) findViewById(R.id.connected_wifi);
-        conntect_layout = (RelativeLayout) findViewById(R.id.conntect_layout);
-        conntect_layout.setVisibility(View.INVISIBLE);
+        linearLayout_wifilist = (LinearLayout) findViewById(R.id.layout_wifilist);
+        linearLayout_control = (LinearLayout)findViewById(R.id.layout_control);
         wifiadmin = new WifiAdmin(this);
         wifi_state.setChecked(false);
         wifi_state.setOnClickListener(this);
         mConnectivityManager = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        Intent intent = new Intent(MainActivity.this,WifiConnectService.class);
-        bindService(intent, conn, Context.BIND_AUTO_CREATE);
-    }
-    private void unBind(){
-        if(flag == true){
-            Log.i(TAG, "BindService-->unBind()");
-            unbindService(conn);
-            flag = false;
-        }
+
+        connect = (Button) findViewById(R.id.button_connect);
+        cancel = (Button) findViewById(R.id.button_cancel);
+        connect.setOnClickListener(this);
+        cancel.setOnClickListener(this);
+        up = (Button) findViewById(R.id.up);
+        up.setOnTouchListener(this);
+        down = (Button) findViewById(R.id.down);
+        down.setOnTouchListener(this);
+        left = (Button) findViewById(R.id.left);
+        left.setOnTouchListener(this);
+        right = (Button) findViewById(R.id.right);
+        right.setOnTouchListener(this);
+        connect.setEnabled(false);
+        cancel.setText("断开");
+        linearLayout_wifilist.setVisibility(View.VISIBLE);
+        linearLayout_control.setVisibility(View.GONE);
+        removeButton();
     }
     @Override
     public void onClick(View view) {
+        if (timeUtils.isFastDoubleClick()) {
+            return ;
+        }
         switch (view.getId()){
             case R.id.wifistate:
                 Log.e(TAG,""+wifi_state.isChecked());
                 if(!wifi_state.isChecked()){
                     Toast.makeText(this,"正在关闭Wifi",Toast.LENGTH_LONG).show();
+                    deletepass();
                     wifi_state.setClickable(false);
                     listView.setVisibility(View.INVISIBLE);
                     listView.setEnabled(false);
@@ -204,10 +273,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     wifi_state.setClickable(true);
                 }
                 break;
-            case R.id.wifi:
-                startActivity(new Intent(MainActivity.this,WifControlActivity.class));
+            case R.id.button_connect:
+                isOutoftime = false;
+                send_connect();
+                connect.setEnabled(false);
+                cancel.setText("断开");
+
+                break;
+            case R.id.button_cancel:
+                deletepass();
+                cancel.setText("取消");
+                connect.setEnabled(true);
                 break;
         }
+    }
+    public void removeButton(){
+        up.setVisibility(View.INVISIBLE);
+        down.setVisibility(View.INVISIBLE);
+        left.setVisibility(View.INVISIBLE);
+        right.setVisibility(View.INVISIBLE);
+    }
+    public void showButton(){
+        up.setVisibility(View.VISIBLE);
+        down.setVisibility(View.VISIBLE);
+        left.setVisibility(View.VISIBLE);
+        right.setVisibility(View.VISIBLE);
     }
     private void registerWIFI() {
         mWifiFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -215,17 +305,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerReceiver(mWifiConnectReceiver, mWifiFilter);
     }
 
-    public void startservice(){
-        if(CurrentSSID!=null){
-            int IsInWIfiConfig = NetinfoConfiguration(CurrentSSID);
-            Log.e(TAG,"IsInWIfiConfig"+IsInWIfiConfig);
-            Bundle bundle = new Bundle();
-            bundle.putInt("IsInWIfiConfig",IsInWIfiConfig);
-            intent=new Intent(this,WifiConnectService.class);
-            intent.putExtras(bundle);
-            startService(intent);
-        }
-    }
     public void start_Scan() {
         isscaning = true;
         new Thread() {
@@ -294,6 +373,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e(TAG,"设置失败");
             }
         }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (view.getId()) {
+            case R.id.up:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    send_up();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    send_stop();
+                }
+                break;
+            case R.id.down:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    send_down();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    send_stop();
+                }
+                break;
+            case R.id.left:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    send_left();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    send_stop();
+                }
+                break;
+            case R.id.right:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                    send_right();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    send_stop();
+                }
+                break;
+        }
+        return true;
     }
 
     /**
@@ -386,9 +504,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return wifiId;
     }
-    public void deleteWifiConfig(int networkId){
+    public boolean deleteWifiConfig(int networkId){
         boolean flag = wifiadmin.getWifiManager().removeNetwork(networkId);
-        wifiConfigurationList = wifiadmin.getConfiguration();
+        return flag;
     }
 
     /**
@@ -449,14 +567,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void deletepasswork(String SSID){
+    public boolean deletepasswork(String SSID){
         String deleteSSID = SSID;
         if(deleteSSID!=null) {
             int IsInWIfiConfig = NetinfoConfiguration(deleteSSID);
             if(-1!=IsInWIfiConfig){
-                deleteWifiConfig(IsInWIfiConfig);
+                return deleteWifiConfig(IsInWIfiConfig);
             }
         }
+        return false;
     }
 
     @Override
@@ -466,7 +585,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                startservice();
+                deletepass();
                 unregisterReceiver(mWifiConnectReceiver);
                 finish();
                 System.exit(0);
@@ -476,5 +595,139 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        deletepass();
+    }
 
+    public void connect(){
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    socket_ = new DatagramSocket(Client_HOST_PORT);
+                    String str = "connect";
+                    byte data[] = str.getBytes();
+                    DatagramPacket package_udp = new DatagramPacket(data, data.length, InetAddress.getByName(IP),Server_HOST_PORT);
+                    socket_.send(package_udp);
+
+
+                    while(true) {
+                        ReceiveServerSocketData();
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    Log.e(TAG, e.toString());
+                }
+
+            }
+        }.start();
+    }
+    public void send_connect() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "connect";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void send_up() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "up";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void send_down() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "down";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void send_left() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "left";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void send_right() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "right";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void send_stop() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "stop";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void send_heartbeat() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "heartbeat";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void ReceiveServerSocketData() {
+        try {
+            //实例化的端口号要和发送时的socket一致，否则收不到data
+            Log.e(TAG, "接受开始");
+            byte data[] = new byte[1024];
+            DatagramPacket packet = new DatagramPacket(data, data.length);
+            socket_.receive(packet);
+            //把接收到的data转换为String字符串
+            String result = new String(packet.getData(), packet.getOffset(),
+                    packet.getLength());
+            Log.e(TAG, "收到的数据"+result.toString());
+            Message msg = new Message();
+            msg.what = RECIEVE;
+            msg.obj = result;
+            handler.sendMessage(msg);
+        } catch (SocketException e) {
+            Log.e(TAG, e.toString());
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+
+    }
+    public void senddata(String str){
+        byte data[] = str.getBytes();
+        try {
+            DatagramPacket packa = new DatagramPacket(data, data.length, InetAddress.getByName(IP), Server_HOST_PORT);
+            socket_.send(packa);
+        }catch (UnknownHostException e ){
+            Log.e(TAG, e.toString());
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
 }
+
