@@ -380,34 +380,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.up:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                    send_up();
+                    send_up();
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                    send_stop();
+                    send_stop();
                 }
                 break;
             case R.id.down:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                    send_down();
+                    send_down();
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                    send_stop();
+                    send_stop();
                 }
                 break;
             case R.id.left:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                    send_left();
+                    send_left();
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                    send_stop();
+                    send_stop();
                 }
                 break;
             case R.id.right:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                    send_right();
+                    send_right();
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//                    send_stop();
+                    send_stop();
                 }
                 break;
         }
