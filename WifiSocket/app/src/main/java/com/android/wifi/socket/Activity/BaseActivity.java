@@ -1,7 +1,6 @@
 package com.android.wifi.socket.Activity;
 
 import java.io.File;
-import java.util.Random;
 
 import com.android.wifi.socket.util.ImageLoaderUtils;
 import com.android.wifi.socket.util.LogUtil;
@@ -17,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;

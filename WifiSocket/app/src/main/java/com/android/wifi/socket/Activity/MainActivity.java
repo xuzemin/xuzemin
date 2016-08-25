@@ -45,10 +45,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     private String TAG = "MainActivity";
     private int Server_HOST_PORT = 58888;
     private int Client_HOST_PORT = 58000;
-    private String IP = "192.168.18.111";
+    private String IP = "192.168.1.122";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
-    private String passwork = "13662282";
+    private String passwork = "12345678";
     private String wifiname = "";
     private String lastSSID = null;
     private String CurrentSSID = null;
@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     private int SCAN_OK = 0;
     private ConnectivityManager mConnectivityManager;
     private int CONNECT_SUCCES = 1;
-    private int CONNECT_FAIL = 2;
+    private int STARTCONNECT = 2;
     private int OUTOFTIME = 3;
     private int RECIEVE = 4;
     private Timer timer;
@@ -92,15 +92,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     connect();
                     isOutoftime = false;
                     timer = new Timer(true);
-                    timer.schedule(task,10*1000);
+                    timer.schedule(task,5*1000);
                     cancel.setText("断开");
                     connect.setEnabled(false);
                     break;
                 case 2:
+                    resetTimeTask2();
+                    timer = new Timer(true);
+                    timer.schedule(task,5*1000);
                     break;
                 case 3:
                     Log.e(TAG,"连接超时");
-                    hideProgress();
                     isOutoftime = true;
                     cancel.setText("取消");
                     connect.setEnabled(true);
@@ -109,17 +111,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     break;
                 case 4:
                     if(!isOutoftime){
-                        if(msg.obj.equals("get")){
+                        if(msg.obj.equals("get")|| msg.obj.equals("heartbeat")){
                             showButton();
                             resetTimeTask();
                             timer = new Timer(true);
-                            timer.schedule(task,10*1000);
-                            send_heartbeat();
-                        }else if(msg.obj.equals("heartbeat")){
-                            resetTimeTask();
-                            timer = new Timer(true);
-                            timer.schedule(task,10*1000);
-                            send_heartbeat();
+                            timer.schedule(task,5*1000);
                         }
                     }
                     break;
@@ -133,9 +129,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         task = new TimerTask() {
             @Override
             public void run() {
-                Message message = new Message();
-                message.what = OUTOFTIME;
-                handler.sendMessage(message);
+                send_heartbeat();
+                handler.sendEmptyMessage(STARTCONNECT);
+            }
+        };
+    }
+    public void resetTimeTask2() {
+        if (task != null) {
+            task.cancel();
+        }
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(OUTOFTIME);
             }
         };
     }
@@ -201,7 +207,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     deletepass();
                     linearLayout_wifilist.setVisibility(View.VISIBLE);
                     linearLayout_control.setVisibility(View.GONE);
-                    handler.sendEmptyMessage(CONNECT_FAIL);
                     networkInfo = null;
                 }else{
                     deletepass();
@@ -284,7 +289,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                 send_connect();
                 connect.setEnabled(false);
                 cancel.setText("断开");
-
                 break;
             case R.id.button_cancel:
                 deletepass();
@@ -348,7 +352,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         scanResult=scanlist.get(i);
         int isConfiguration = IsConfiguration(scanResult.SSID);
         Log.e(TAG,"点击");
-        showProgress();
         CurrentSSID = "\""+scanResult.SSID+"\"";
         if(!CurrentSSID.equals(lastSSID)){
             deletepasswork(lastSSID);
