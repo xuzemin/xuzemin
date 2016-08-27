@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     private String IP = "192.168.1.122";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
-    private String passwork = "12345678";
+    private String passwork = "13662282";
     private String wifiname = "";
     private String lastSSID = null;
     private String CurrentSSID = null;

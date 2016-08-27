@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:background="@drawable/shape_no_corner_without_bottom"
+    android:background="@mipmap/guide1"
     >
     <LinearLayout
         android:id="@+id/layout_wifilist"
@@ -43,8 +43,8 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/wifi_list_size_top"
         style="@style/corner_all"
+        android:background="@drawable/shape_bottom_corner_no_top_line"
         android:layout_height="wrap_content">
         <TextView
             style="@style/corner_all"
@@ -54,50 +54,20 @@
             android:textSize="@dimen/wifi_list_size"
             android:text="@string/wifi_list"/>
     </RelativeLayout>
-    <!--<RelativeLayout-->
-        <!--style="@style/corner_all"-->
-        <!--android:id="@+id/conntect_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:visibility="visible"-->
-        <!--&gt;-->
-        <!--<TextView-->
-            <!--android:id="@+id/textview"-->
-            <!--style="@style/corner_all"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/connect_wifi"-->
-            <!--android:textSize="@dimen/wifi_list_text_top"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--/>-->
-
-        <!--<TextView-->
-            <!--android:layout_below="@+id/textview"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textSize="@dimen/wifi_list_item_size"-->
-            <!--style="@style/corner_all"-->
-            <!--android:id="@+id/connected_wifi"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:text="@string/app_name"/>-->
-    <!--</RelativeLayout>-->
     <RelativeLayout
         style="@style/corner_all"
-        android:layout_marginTop="@dimen/wifi_list_size_top"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"
-            />
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bottom_corner_no_top_line"
+        android:layout_marginBottom="@dimen/listview_bottom">
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:dividerHeight="2px"
+            android:cacheColorHint="@android:color/transparent"
+            android:fastScrollEnabled="true"
+            android:divider="@null"
             style="@style/corner_all"
             />
     </RelativeLayout>
@@ -121,7 +91,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
-                android:background="@drawable/shape_bottom_corner_no_top_line"
+                android:background="@drawable/item_selector"
                 style="@style/corner_all"
                 android:id="@+id/button_connect"
                 android:layout_width="wrap_content"
@@ -130,7 +100,7 @@
                 android:layout_weight="1"
                 android:textSize="@dimen/TextView_size"/>
             <Button
-                android:background="@drawable/shape_bottom_corner_no_top_line"
+                android:background="@drawable/item_selector"
                 style="@style/corner_all"
                 android:id="@+id/button_cancel"
                 android:layout_width="wrap_content"
@@ -155,7 +125,7 @@
                 android:visibility="invisible"
                 />
             <Button
-                android:background="@drawable/shape_bottom_corner_no_top_line"
+                android:background="@drawable/item_selector"
                 style="@style/corner_all"
                 android:id="@+id/up"
                 android:layout_weight="1"
@@ -180,7 +150,7 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content">
             <Button
-                android:background="@drawable/shape_bottom_corner_no_top_line"
+                android:background="@drawable/item_selector"
                 style="@style/corner_all"
                 android:id="@+id/left"
                 android:layout_weight="1"
@@ -189,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/left"/>
             <Button
-                android:background="@drawable/shape_bottom_corner_no_top_line"
+                android:background="@drawable/item_selector"
                 style="@style/corner_all"
                 android:id="@+id/down"
                 android:layout_weight="1"
@@ -198,10 +168,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/down"/>
             <Button
-                android:background="@drawable/shape_bottom_corner_no_top_line"
                 style="@style/corner_all"
                 android:id="@+id/right"
                 android:layout_weight="1"
+                android:background="@drawable/item_selector"
                 android:layout_width="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_height="wrap_content"

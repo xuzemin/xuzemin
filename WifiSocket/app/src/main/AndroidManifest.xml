@@ -15,15 +15,20 @@
         android:supportsRtl="true"
         android:persistent="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.android.wifi.socket.Activity.MainActivity"
-            android:launchMode="singleTask">
+        <activity android:name="com.android.wifi.socket.Activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.android.wifi.socket.Activity.WifControlActivity"/>
+        <activity android:name="com.android.wifi.socket.Activity.MainActivity"
+            android:launchMode="singleTask"
+            >
+        </activity>
+
+
         <service android:name="com.android.wifi.socket.service.WifiConnectService"
             android:enabled="true"
             android:process="com.han.han"/>
@@ -32,9 +37,6 @@
                 <action android:name="arui.alarm.action" />
             </intent-filter>
         </receiver>
-
-
-
     </application>
 
 </manifest>
