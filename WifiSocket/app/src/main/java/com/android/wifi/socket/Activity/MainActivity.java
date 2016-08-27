@@ -107,6 +107,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     cancel.setText("取消");
                     connect.setEnabled(true);
                     removeButton();
+                    send_cancel();
                     Toast.makeText(MainActivity.this,"连接超时",Toast.LENGTH_LONG).show();
                     break;
                 case 4:
@@ -116,6 +117,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                             resetTimeTask();
                             timer = new Timer(true);
                             timer.schedule(task,5*1000);
+                        }else if (msg.obj.equals("isconnected")){
+                            removeButton();
+                            Toast.makeText(MainActivity.this,"已有设备连接",Toast.LENGTH_LONG).show();
                         }
                     }
                     break;
@@ -264,6 +268,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         }
         switch (view.getId()){
             case R.id.wifistate:
+                send_cancel();
                 showProgress();
                 Log.e(TAG,""+wifi_state.isChecked());
                 if(!wifi_state.isChecked()){
@@ -291,6 +296,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                 cancel.setText("断开");
                 break;
             case R.id.button_cancel:
+                send_cancel();
                 deletepass();
                 cancel.setText("取消");
                 connect.setEnabled(true);
@@ -706,6 +712,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
             public void run() {
                 super.run();
                 String str = "heartbeat";
+                senddata(str);
+            }
+        }.start();
+    }
+    public void send_cancel() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String str = "cancel";
                 senddata(str);
             }
         }.start();
