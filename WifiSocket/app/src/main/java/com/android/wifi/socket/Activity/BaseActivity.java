@@ -1,5 +1,6 @@
 package com.android.wifi.socket.Activity;
 
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -8,9 +9,10 @@ import android.view.KeyEvent;
 import com.android.wifi.socket.util.LogUtil;
 import com.android.wifi.socket.util.PreferenUtil;
 import com.android.wifi.socket.widght.MyProgressDialog;
+import com.android.wifi.socket.wifisocket.R;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends Activity {
 	private String LOG_TAG = "BaseActivity";
 	private MyProgressDialog progressDialog;
 	protected SlidingMenu sm;
@@ -67,7 +69,7 @@ public class BaseActivity extends FragmentActivity {
 
 		try {
 			if (progressDialog == null) {
-				progressDialog = new MyProgressDialog(this);
+				progressDialog = new MyProgressDialog(this, R.style.CustomProgressDialog);
 			}
 			if (!progressDialog.isShowing() && !this.isFinishing())
 				progressDialog.show();
