@@ -14,7 +14,8 @@ import com.android.wifi.socket.wifisocket.R;
  */
 public class SplashActivity extends BaseActivity{
     private Handler handler;
-    private int IsanimOK = 0;
+    public static final int GOTOWELCOME = 1;
+    public static final int GOTOFIRST = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +27,13 @@ public class SplashActivity extends BaseActivity{
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what){
-                    case 0:
-                        startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                    case 1:
+                        startActivity(new Intent(SplashActivity.this,WelcomeActivity.class));
                         SplashActivity.this.finish();
                         break;
                     case 2:
+                        startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                        SplashActivity.this.finish();
                         break;
                     default:
                         break;
@@ -53,8 +56,15 @@ public class SplashActivity extends BaseActivity{
 
             @Override
             public void onAnimationEnd(Animation arg0) {
-                    handler.sendEmptyMessage(IsanimOK);
+                int newVersion = chkVersion();
+                if (newVersion == SplashActivity.GOTOWELCOME) {
+                    handler.sendEmptyMessage(GOTOWELCOME);
+                    return;
+                }else{
+                    handler.sendEmptyMessage(GOTOFIRST);
+                }
             }
         });
     }
+
 }

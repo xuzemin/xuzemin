@@ -102,6 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     timer.schedule(task,5*1000);
                     break;
                 case 3:
+                    hideProgress();
                     Log.e(TAG,"连接超时");
                     isOutoftime = true;
                     cancel.setText("取消");
@@ -111,6 +112,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     Toast.makeText(MainActivity.this,"连接超时",Toast.LENGTH_LONG).show();
                     break;
                 case 4:
+                    hideProgress();
                     if(!isOutoftime){
                         if(msg.obj.equals("get")|| msg.obj.equals("heartbeat")){
                             showButton();
@@ -232,6 +234,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        init();
+        connect.setEnabled(false);
+        cancel.setText("断开");
+        linearLayout_wifilist.setVisibility(View.VISIBLE);
+        linearLayout_control.setVisibility(View.GONE);
+        removeButton();
+    }
+
+    public void init(){
         wifi_state = (Switch)findViewById(R.id.wifistate);
         listView = (ListView)findViewById(R.id.listview);
         listView.setOnItemClickListener(this);
@@ -255,12 +266,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         left.setOnTouchListener(this);
         right = (Button) findViewById(R.id.right);
         right.setOnTouchListener(this);
-        connect.setEnabled(false);
-        cancel.setText("断开");
-        linearLayout_wifilist.setVisibility(View.VISIBLE);
-        linearLayout_control.setVisibility(View.GONE);
-        removeButton();
     }
+
     @Override
     public void onClick(View view) {
         if (timeUtils.isFastDoubleClick()) {
@@ -289,8 +296,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                 }
                 break;
             case R.id.button_connect:
+                resetTimeTask();
                 showProgress();
                 isOutoftime = false;
+                timer = new Timer(true);
+                timer.schedule(task,5*1000);
+
                 send_connect();
                 connect.setEnabled(false);
                 cancel.setText("断开");
@@ -356,6 +367,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         wifiConfigurationList = wifiadmin.getConfiguration();
         scanResult=scanlist.get(i);
+        showProgress();
         int isConfiguration = IsConfiguration(scanResult.SSID);
         Log.e(TAG,"点击");
         CurrentSSID = "\""+scanResult.SSID+"\"";
@@ -563,6 +575,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                 }
             }
         }
+        hideProgress();
         return false;
     }
 

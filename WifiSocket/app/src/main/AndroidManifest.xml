@@ -27,6 +27,10 @@
             android:launchMode="singleTask"
             >
         </activity>
+        <activity android:name="com.android.wifi.socket.Activity.WelcomeActivity"
+            android:launchMode="singleTask"
+            >
+        </activity>
 
 
         <service android:name="com.android.wifi.socket.service.WifiConnectService"

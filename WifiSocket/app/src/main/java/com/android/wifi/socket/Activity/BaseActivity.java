@@ -1,13 +1,17 @@
 package com.android.wifi.socket.Activity;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
-
+import com.android.wifi.socket.util.LogUtil;
+import com.android.wifi.socket.util.PreferenUtil;
 import com.android.wifi.socket.widght.MyProgressDialog;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 public class BaseActivity extends FragmentActivity {
+	private String LOG_TAG = "BaseActivity";
 	private MyProgressDialog progressDialog;
 	protected SlidingMenu sm;
 
@@ -80,6 +84,37 @@ public class BaseActivity extends FragmentActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int chkVersion() {
+		PreferenUtil preferenUtil = new PreferenUtil(this);
+		int oldVersionCode = preferenUtil.getversionCode();
+		int newVersionCode = getVersionCode();
+		if (newVersionCode > oldVersionCode) {
+			preferenUtil.setVersionCode(newVersionCode);
+			return SplashActivity.GOTOWELCOME;
+		} else {
+			return SplashActivity.GOTOFIRST;
+		}
+	}
+	public int getVersionCode() {
+		// 获取packagemanager的实例
+		PackageManager packageManager = getPackageManager();
+		// getPackageName()是你当前类的包名，0代表是获取版本信息
+		PackageInfo packInfo = null;
+		try {
+			packInfo = packageManager.getPackageInfo(getPackageName(), 0);
+		} catch (PackageManager.NameNotFoundException e) {
+			LogUtil.exception(e);
+		}
+
+		int versionCode = 1;
+		if (packInfo != null) {
+			versionCode = packInfo.versionCode;
+			// NiceUserInfo.getInstance().setVersionCode(packInfo.packageName);
+		}
+		LogUtil.i(LOG_TAG, "packInfo.versionCode:" + versionCode);
+		return versionCode;
 	}
 
 }
