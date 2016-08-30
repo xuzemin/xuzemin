@@ -1,0 +1,2 @@
+dashgo/dashgo_bringup:dashgo/dashgo_description:dashgo/dashgo_nav:dashgo/mpu6050_serial_to_imu:rplidar_ros
+-DCATKIN_DEVEL_PREFIX=/home/pi/dashgo_ws/devel -DCMAKE_INSTALL_PREFIX=/home/pi/dashgo_ws/install -G Unix Makefiles

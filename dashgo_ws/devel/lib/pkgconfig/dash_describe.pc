@@ -1,0 +1,8 @@
+prefix=/home/pi/dashgo_ws/devel
+
+Name: dash_describe
+Description: Description of dash_describe
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/pi/dashgo_ws/devel/lib 
+Requires: 
