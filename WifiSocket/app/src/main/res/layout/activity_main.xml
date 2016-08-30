@@ -14,63 +14,64 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
         >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        style="@style/corner_all"
-        android:background="@drawable/shape_bottom_corner_no_top_line"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开启wifi"
-            android:layout_centerVertical="true"
-            style="@style/corner_all"
-            android:textSize="@dimen/wifi_list_size"/>
-
-        <Switch
-            style="@style/corner_all"
-            android:id="@+id/wifistate"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        style="@style/corner_all"
-        android:background="@drawable/shape_bottom_corner_no_top_line"
-        android:layout_height="wrap_content">
-        <TextView
-            style="@style/corner_all"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/wifi_list_size"
-            android:text="@string/wifi_list"/>
-    </RelativeLayout>
-    <RelativeLayout
-        style="@style/corner_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_bottom_corner_no_top_line"
-        android:layout_marginBottom="@dimen/listview_bottom">
-        <ListView
-            android:id="@+id/listview"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="2px"
-            android:cacheColorHint="@android:color/transparent"
-            android:fastScrollEnabled="true"
-            android:divider="@null"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
             style="@style/corner_all"
-            />
-    </RelativeLayout>
+            android:background="@drawable/shape_bottom_corner_no_top_line"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开启wifi"
+                android:layout_centerVertical="true"
+                style="@style/corner_all"
+                android:textSize="@dimen/wifi_list_size"/>
+
+            <Switch
+                style="@style/corner_all"
+                android:id="@+id/wifistate"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            style="@style/corner_all"
+            android:background="@drawable/shape_bottom_corner_no_top_line"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/corner_all"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/wifi_list_size"
+                android:text="@string/wifi_list"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/corner_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bottom_corner_no_top_line"
+            android:layout_marginBottom="@dimen/listview_bottom">
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="2px"
+                android:cacheColorHint="@android:color/transparent"
+                android:fastScrollEnabled="true"
+                android:divider="@null"
+                style="@style/corner_all"
+                />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -159,14 +160,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/left"/>
             <Button
-                android:background="@drawable/item_selector"
                 style="@style/corner_all"
-                android:id="@+id/down"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
-                android:text="@string/down"/>
+                android:visibility="invisible"
+                />
             <Button
                 style="@style/corner_all"
                 android:id="@+id/right"
@@ -177,6 +177,43 @@
                 android:layout_height="wrap_content"
                 android:text="@string/right"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <Button
+                android:background="@drawable/item_selector"
+                style="@style/corner_all"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"
+                />
+            <Button
+                android:background="@drawable/item_selector"
+                style="@style/corner_all"
+                android:id="@+id/down"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:text="@string/down"/>
+            <Button
+                style="@style/corner_all"
+                android:layout_weight="1"
+                android:background="@drawable/item_selector"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>
