@@ -23,9 +23,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
 import com.android.wifi.socket.util.timeUtils;
 import com.android.wifi.socket.wifisocket.R;
 import com.android.wifi.socket.wifisocket.WifiAdmin;
@@ -45,9 +48,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     private String TAG = "MainActivity";
     private int Server_HOST_PORT = 58888;
     private int Client_HOST_PORT = 58000;
-    private String IP = "192.168.1.122";
+    private String IP = "192.168.18.122";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
+    private LinearLayout button_layout;
+    private RelativeLayout robot_layout;
     private String passwork = "13662282";
     private String wifiname = "";
     private String lastSSID = null;
@@ -63,7 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     private ListView listView;
     private WifiAdapter wifiAdapter;
     private StringBuffer stringBuffer;
-    private Switch wifi_state;
+    private ToggleButton wifi_state;
     private long exitTime = 0;
     private boolean isscaning = false;
     private int SCAN_OK = 0;
@@ -93,8 +98,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     isOutoftime = false;
                     timer = new Timer(true);
                     timer.schedule(task,5*1000);
-                    cancel.setText("断开");
                     connect.setEnabled(false);
+                    connect.setBackgroundResource(R.mipmap.connect_pressed);
                     break;
                 case 2:
                     resetTimeTask2();
@@ -105,10 +110,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     hideProgress();
                     Log.e(TAG,"连接超时");
                     isOutoftime = true;
-                    cancel.setText("取消");
                     connect.setEnabled(true);
+                    connect.setBackgroundResource(R.mipmap.connect_state);
                     removeButton();
-                    senddata("cancel");
                     Toast.makeText(MainActivity.this,"连接超时",Toast.LENGTH_LONG).show();
                     break;
                 case 4:
@@ -236,28 +240,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         setContentView(R.layout.activity_main);
         init();
         connect.setEnabled(false);
-        cancel.setText("断开");
         linearLayout_wifilist.setVisibility(View.VISIBLE);
         linearLayout_control.setVisibility(View.GONE);
         removeButton();
     }
 
     public void init(){
-        wifi_state = (Switch)findViewById(R.id.wifistate);
+        wifi_state = (ToggleButton)findViewById(R.id.wifistate);
+        wifi_state.setOnClickListener(this);
         listView = (ListView)findViewById(R.id.listview);
         listView.setOnItemClickListener(this);
         registerWIFI();
         linearLayout_wifilist = (LinearLayout) findViewById(R.id.layout_wifilist);
         linearLayout_control = (LinearLayout)findViewById(R.id.layout_control);
         wifiadmin = new WifiAdmin(this);
-        wifi_state.setChecked(false);
         wifi_state.setOnClickListener(this);
         mConnectivityManager = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         connect = (Button) findViewById(R.id.button_connect);
         cancel = (Button) findViewById(R.id.button_cancel);
-        connect.setOnClickListener(this);
-        cancel.setOnClickListener(this);
+        connect.setOnTouchListener(this);
+        cancel.setOnTouchListener(this);
         up = (Button) findViewById(R.id.up);
         up.setOnTouchListener(this);
         down = (Button) findViewById(R.id.down);
@@ -266,6 +269,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         left.setOnTouchListener(this);
         right = (Button) findViewById(R.id.right);
         right.setOnTouchListener(this);
+        button_layout = (LinearLayout) findViewById(R.id.button_layout);
+        robot_layout = (RelativeLayout) findViewById(R.id.robot_layout);
     }
 
     @Override
@@ -277,9 +282,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
             case R.id.wifistate:
                 senddata("cancel");
                 showProgress();
-                Log.e(TAG,""+wifi_state.isChecked());
                 if(!wifi_state.isChecked()){
-                    Toast.makeText(this,"正在关闭Wifi",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,"正在关闭Wifi",Toast.LENGTH_LONG).show();
                     deletepass();
                     wifi_state.setClickable(false);
                     listView.setVisibility(View.INVISIBLE);
@@ -288,43 +292,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     wifi_state.setClickable(true);
                 }else{
                     wifi_state.setClickable(false);
-                    Toast.makeText(this,"正在打开Wifi",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,"正在打开Wifi",Toast.LENGTH_LONG).show();
                     wifiadmin.openWifi();
                     listView.setEnabled(true);
                     listView.setVisibility(View.VISIBLE);
                     wifi_state.setClickable(true);
                 }
                 break;
-            case R.id.button_connect:
-                resetTimeTask();
-                showProgress();
-                isOutoftime = false;
-                timer = new Timer(true);
-                timer.schedule(task,5*1000);
-
-                senddata("connect");
-                connect.setEnabled(false);
-                cancel.setText("断开");
-                break;
-            case R.id.button_cancel:
-                senddata("cancel");
-                deletepass();
-                cancel.setText("取消");
-                connect.setEnabled(true);
-                break;
         }
     }
     public void removeButton(){
-        up.setVisibility(View.INVISIBLE);
-        down.setVisibility(View.INVISIBLE);
-        left.setVisibility(View.INVISIBLE);
-        right.setVisibility(View.INVISIBLE);
+        button_layout.setVisibility(View.GONE);
+        robot_layout.setVisibility(View.VISIBLE);
     }
     public void showButton(){
-        up.setVisibility(View.VISIBLE);
-        down.setVisibility(View.VISIBLE);
-        left.setVisibility(View.VISIBLE);
-        right.setVisibility(View.VISIBLE);
+        button_layout.setVisibility(View.VISIBLE);
+        robot_layout.setVisibility(View.GONE);
     }
     private void registerWIFI() {
         mWifiFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -409,36 +392,69 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (view.getId()) {
+            case R.id.button_connect:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    connect.setBackgroundResource(R.mipmap.connect_pressed);
+                    resetTimeTask();
+                    showProgress();
+                    isOutoftime = false;
+                    timer = new Timer(true);
+                    timer.schedule(task,5*1000);
+                    senddata("connect");
+                    connect.setEnabled(false);
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    connect.setBackgroundResource(R.mipmap.connect_state);
+                }
+                break;
+            case R.id.button_cancel:
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    cancel.setBackgroundResource(R.mipmap.cancel_pressed);
+                    senddata("cancel");
+                    deletepass();
+                    connect.setEnabled(true);
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    cancel.setBackgroundResource(R.mipmap.cancel_state);
+                }
             case R.id.up:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    up.setBackgroundResource(R.mipmap.up_pressed);
                     senddata("up");
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     senddata("stop");
+                    up.setBackgroundResource(R.mipmap.up_normal);
                 }
                 break;
             case R.id.down:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     senddata("down");
+                    down.setBackgroundResource(R.mipmap.down_pressed);
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     senddata("stop");
+                    down.setBackgroundResource(R.mipmap.down_normal);
                 }
                 break;
             case R.id.left:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     senddata("left");
+                    left.setBackgroundResource(R.mipmap.left_pressed);
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     senddata("stop");
+                    left.setBackgroundResource(R.mipmap.left_normal);
                 }
                 break;
             case R.id.right:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    senddata("down");
+                    senddata("right");
+                    right.setBackgroundResource(R.mipmap.right_pressed);
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     senddata("stop");
+                    right.setBackgroundResource(R.mipmap.right_normal);
                 }
                 break;
         }

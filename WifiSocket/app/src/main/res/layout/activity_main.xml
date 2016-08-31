@@ -17,6 +17,7 @@
         android:layout_marginTop="10dp"
         >
         <RelativeLayout
+            android:background="@mipmap/wifi_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -28,23 +29,23 @@
                 android:layout_height="wrap_content"
                 android:text="开启wifi"
                 android:layout_centerVertical="true"
-                style="@style/corner_all"
                 android:textSize="@dimen/wifi_list_size"/>
 
-            <Switch
-                style="@style/corner_all"
+            <ToggleButton
                 android:id="@+id/wifistate"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
+                android:textOn=""
+                android:textOff=""
+                android:button="@drawable/toggle_btn"
                 android:layout_height="wrap_content"
-                android:checked="false"
                 />
         </RelativeLayout>
         <RelativeLayout
+            android:background="@mipmap/wifi_state"
             android:layout_width="match_parent"
             style="@style/corner_all"
-            android:background="@drawable/shape_bottom_corner_no_top_line"
             android:layout_height="wrap_content">
             <TextView
                 style="@style/corner_all"
@@ -91,14 +92,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
-                android:background="@drawable/btn_connect_socket_select"
+                android:background="@mipmap/connect_state"
                 android:id="@+id/button_connect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 />
             <Button
-                android:background="@drawable/btn_cancel_socket_select"
+                android:background="@mipmap/cancel_state"
                 android:id="@+id/button_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,9 +111,10 @@
             android:layout_height="20dp"
             />
         <RelativeLayout
+            android:id="@+id/robot_layout"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:visibility="gone"
             >
             <ImageView
                 android:layout_width="wrap_content"
@@ -122,6 +124,8 @@
                 />
         </RelativeLayout>
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
@@ -135,7 +139,7 @@
                 >
                 <Button
                     android:id="@+id/left"
-                    android:background="@drawable/btn_left_socket_select"
+                    android:background="@mipmap/left_normal"
                     android:layout_width="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_height="wrap_content"
@@ -147,7 +151,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <Button
-                    android:background="@drawable/btn_up_socket_select"
+                    android:background="@mipmap/up_normal"
                     android:id="@+id/up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -158,7 +162,7 @@
                     android:layout_height="10dp"
                     />
                 <Button
-                    android:background="@drawable/btn_down_socket_select"
+                    android:background="@mipmap/down_normal"
                     android:id="@+id/down"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
@@ -171,7 +175,7 @@
                 android:layout_height="match_parent">
                 <Button
                     android:id="@+id/right"
-                    android:background="@drawable/btn_right_socket_select"
+                    android:background="@mipmap/right_normal"
                     android:layout_width="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_height="wrap_content"
