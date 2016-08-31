@@ -10,6 +10,7 @@
     android:background="@mipmap/background"
     >
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/layout_wifilist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="开启wifi"
+                style="@style/corner_all"
                 android:layout_centerVertical="true"
                 android:textSize="@dimen/wifi_list_size"/>
 
@@ -35,9 +37,11 @@
                 android:id="@+id/wifistate"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:textOn=""
                 android:textOff=""
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:button="@drawable/toggle_btn"
                 android:layout_height="wrap_content"
                 />
@@ -79,15 +83,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin_TOP"
         android:orientation="vertical"
         >
         <LinearLayout
             style="@style/corner_all"
             android:layout_below="@+id/layout1"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -106,81 +107,68 @@
                 android:layout_weight="1"
                 />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            />
         <RelativeLayout
             android:id="@+id/robot_layout"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             >
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@mipmap/robot_state"
                 />
         </RelativeLayout>
-        <LinearLayout
-            android:visibility="gone"
+        <RelativeLayout
             android:id="@+id/button_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:orientation="horizontal"
+            android:layout_height="200dp"
             >
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
-                <Button
-                    android:id="@+id/left"
-                    android:background="@mipmap/left_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_height="wrap_content"
-                    />
-            </RelativeLayout>
+                android:layout_alignParentLeft="true"
+                ></RelativeLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:id="@+id/linearLayout">
                 <Button
                     android:background="@mipmap/up_normal"
                     android:id="@+id/up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     />
                 <Button
                     android:background="@mipmap/down_normal"
                     android:id="@+id/down"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     />
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="match_parent">
-                <Button
-                    android:id="@+id/right"
-                    android:background="@mipmap/right_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_height="wrap_content"
-                    />
-            </RelativeLayout>
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:layout_height="match_parent"></RelativeLayout>
+
+            <Button
+                android:id="@+id/left"
+                android:background="@mipmap/up"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/linearLayout" />
+
+            <Button
+                android:id="@+id/right"
+                android:background="@mipmap/right_normal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/linearLayout" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

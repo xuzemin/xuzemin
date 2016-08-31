@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
     private String IP = "192.168.18.122";
     private WifiAdmin wifiadmin;
     private IntentFilter mWifiFilter;
-    private LinearLayout button_layout;
+    private RelativeLayout button_layout;
     private RelativeLayout robot_layout;
     private String passwork = "13662282";
     private String wifiname = "";
@@ -269,7 +269,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         left.setOnTouchListener(this);
         right = (Button) findViewById(R.id.right);
         right.setOnTouchListener(this);
-        button_layout = (LinearLayout) findViewById(R.id.button_layout);
+        button_layout = (RelativeLayout) findViewById(R.id.button_layout);
         robot_layout = (RelativeLayout) findViewById(R.id.robot_layout);
     }
 
