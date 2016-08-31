@@ -125,11 +125,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             >
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                ></RelativeLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,11 +147,12 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_height="match_parent"></RelativeLayout>
+                android:layout_height="match_parent">
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/left"
-                android:background="@mipmap/up"
+                android:background="@mipmap/left_normal"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerVertical="true"
