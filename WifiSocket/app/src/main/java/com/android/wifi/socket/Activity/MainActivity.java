@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     cancel.setText("取消");
                     connect.setEnabled(true);
                     removeButton();
-                    send_cancel();
+                    senddata("cancel");
                     Toast.makeText(MainActivity.this,"连接超时",Toast.LENGTH_LONG).show();
                     break;
                 case 4:
@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         task = new TimerTask() {
             @Override
             public void run() {
-                send_heartbeat();
+                senddata("heartbeat");
                 handler.sendEmptyMessage(STARTCONNECT);
             }
         };
@@ -275,7 +275,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         }
         switch (view.getId()){
             case R.id.wifistate:
-                send_cancel();
+                senddata("cancel");
                 showProgress();
                 Log.e(TAG,""+wifi_state.isChecked());
                 if(!wifi_state.isChecked()){
@@ -302,12 +302,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                 timer = new Timer(true);
                 timer.schedule(task,5*1000);
 
-                send_connect();
+                senddata("connect");
                 connect.setEnabled(false);
                 cancel.setText("断开");
                 break;
             case R.id.button_cancel:
-                send_cancel();
+                senddata("cancel");
                 deletepass();
                 cancel.setText("取消");
                 connect.setEnabled(true);
@@ -411,34 +411,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         switch (view.getId()) {
             case R.id.up:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    send_up();
+                    senddata("up");
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    send_stop();
+                    senddata("stop");
                 }
                 break;
             case R.id.down:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    send_down();
+                    senddata("down");
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    send_stop();
+                    senddata("stop");
                 }
                 break;
             case R.id.left:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    send_left();
+                    senddata("left");
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    send_stop();
+                    senddata("stop");
                 }
                 break;
             case R.id.right:
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    send_right();
+                    senddata("down");
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    send_stop();
+                    senddata("stop");
                 }
                 break;
         }
@@ -645,8 +645,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     byte data[] = str.getBytes();
                     DatagramPacket package_udp = new DatagramPacket(data, data.length, InetAddress.getByName(IP),Server_HOST_PORT);
                     socket_.send(package_udp);
-
-
                     while(true) {
                         ReceiveServerSocketData();
                     }
@@ -656,86 +654,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
                     Log.e(TAG, e.toString());
                 }
 
-            }
-        }.start();
-    }
-    public void send_connect() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "connect";
-                senddata(str);
-            }
-        }.start();
-    }
-    public void send_up() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "up";
-                senddata(str);
-            }
-        }.start();
-    }
-    public void send_down() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "down";
-                senddata(str);
-            }
-        }.start();
-    }
-    public void send_left() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "left";
-                senddata(str);
-            }
-        }.start();
-    }
-    public void send_right() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "right";
-                senddata(str);
-            }
-        }.start();
-    }
-    public void send_stop() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "stop";
-                senddata(str);
-            }
-        }.start();
-    }
-    public void send_heartbeat() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "heartbeat";
-                senddata(str);
-            }
-        }.start();
-    }
-    public void send_cancel() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                String str = "cancel";
-                senddata(str);
             }
         }.start();
     }
@@ -762,16 +680,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,A
         }
 
     }
-    public void senddata(String str){
-        byte data[] = str.getBytes();
-        try {
-            DatagramPacket packa = new DatagramPacket(data, data.length, InetAddress.getByName(IP), Server_HOST_PORT);
-            socket_.send(packa);
-        }catch (UnknownHostException e ){
-            Log.e(TAG, e.toString());
-        } catch (IOException e) {
-            Log.e(TAG, e.toString());
-        }
+    public void senddata(final String str){
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                byte data[] = str.getBytes();
+                try {
+                    if (socket_ != null){
+                        DatagramPacket packa = new DatagramPacket(data, data.length, InetAddress.getByName(IP), Server_HOST_PORT);
+                        socket_.send(packa);
+                    }
+                }catch (UnknownHostException e ){
+                    Log.e(TAG, e.toString());
+                } catch (IOException e) {
+                    Log.e(TAG, e.toString());
+                }
+            }
+        }.start();
     }
 }
 
