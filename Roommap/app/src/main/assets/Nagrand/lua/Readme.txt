@@ -1,2 +1,2 @@
-锘緼ndroid
-璇锋妸鎵�鏈夋枃浠舵斁鍦⊿D鍗＄殑nagrand/lua鐩綍涓嬶紝濡傛灉娌℃湁锛岃鍒涘缓!
+Android
+请把所有文件放在SD卡的nagrand/lua目录下，如果没有，请创建!

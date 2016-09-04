@@ -22,17 +22,5 @@
             android:textSize="20dp"
             android:layout_marginLeft="8dp"
             />
-        <Button
-            android:id="@+id/for3d"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3d"
-            />
-        <Button
-            android:id="@+id/for2d"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2d"
-            />
     </LinearLayout>
 </RelativeLayout>

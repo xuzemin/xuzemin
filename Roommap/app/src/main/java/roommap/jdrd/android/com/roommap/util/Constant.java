@@ -5,5 +5,5 @@ package roommap.jdrd.android.com.roommap.util;
  */
 public class Constant {
     public static final String LUA_NAME = "Nagrand/lua";
-    public static String APP_KEY = "bed9d322b8824040a3fee4e7064da9d3";
+    public static String APP_KEY = "d0754fb05bca4277ac0bd9cf0449922d";
 }
