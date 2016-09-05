@@ -40,7 +40,7 @@ model {
         main {
             jni {
                 dependencies {
-                    library file("../../../package/Android/libs/armeabi-v7a/libEasyAR.so") abi "armeabi-v7a"
+                    library file("src/main/libs/armeabi-v7a/libEasyAR.so") abi "armeabi-v7a"
                 }
             }
         }
@@ -48,7 +48,8 @@ model {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: '../../../package/Android/libs')
+    compile fileTree(dir: '../../../package/Android/libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:20.0.0'
+    compile files('src/main/libs/EasyAR.jar')
 }
