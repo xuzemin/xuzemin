@@ -1,36 +1,36 @@
-C:/Users/Administrator/Desktop/Opencv/app/src/main/obj/local/armeabi/objs/OpenCV/com_android_jdrd_opencv_OpenCVHelper.o: \
- C:/Users/Administrator/Desktop/Opencv/app/src/main/jni/com_android_jdrd_opencv_OpenCVHelper.cpp \
- C:/Users/Administrator/Desktop/Opencv/app/src/main/jni/com_android_jdrd_opencv_OpenCVHelper.h \
+/Users/xuzemin/xuzemin/Opencv/app/src/main/obj/local/armeabi/objs/OpenCV/com_android_jdrd_opencv_OpenCVHelper.o: \
+ /Users/xuzemin/xuzemin/Opencv/app/src/main/jni/com_android_jdrd_opencv_OpenCVHelper.cpp \
+ /Users/xuzemin/xuzemin/Opencv/app/src/main/jni/com_android_jdrd_opencv_OpenCVHelper.h \
  ../../../../native/jni/include/opencv2/opencv.hpp \
  ../../../../native/jni/include/opencv2/core.hpp \
  ../../../../native/jni/include/opencv2/core/cvdef.h \
  ../../../../native/jni/include/opencv2/hal/defs.h \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cmath \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/algorithm \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cmath \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/algorithm \
  ../../../../native/jni/include/opencv2/core/version.hpp \
  ../../../../native/jni/include/opencv2/core/base.hpp \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/climits \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/climits \
  ../../../../native/jni/include/opencv2/core/cvstd.hpp \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cstddef \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cstring \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cctype \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/string \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cstddef \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cstring \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cctype \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/string \
  ../../../../native/jni/include/opencv2/core/ptr.inl.hpp \
  ../../../../native/jni/include/opencv2/hal.hpp \
  ../../../../native/jni/include/opencv2/core/sse_utils.hpp \
  ../../../../native/jni/include/opencv2/core/traits.hpp \
  ../../../../native/jni/include/opencv2/core/matx.hpp \
  ../../../../native/jni/include/opencv2/core/types.hpp \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cfloat \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/vector \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cfloat \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/vector \
  ../../../../native/jni/include/opencv2/core/mat.hpp \
  ../../../../native/jni/include/opencv2/core/bufferpool.hpp \
  ../../../../native/jni/include/opencv2/core/mat.inl.hpp \
  ../../../../native/jni/include/opencv2/core/persistence.hpp \
  ../../../../native/jni/include/opencv2/core/operations.hpp \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cstdio \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cstdio \
  ../../../../native/jni/include/opencv2/core/cvstd.inl.hpp \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/complex \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/complex \
  ../../../../native/jni/include/opencv2/core/utility.hpp \
  ../../../../native/jni/include/opencv2/core/core_c.h \
  ../../../../native/jni/include/opencv2/core/types_c.h \
@@ -51,7 +51,7 @@ C:/Users/Administrator/Desktop/Opencv/app/src/main/obj/local/armeabi/objs/OpenCV
  ../../../../native/jni/include/opencv2/objdetect.hpp \
  ../../../../native/jni/include/opencv2/objdetect/detection_based_tracker.hpp \
  ../../../../native/jni/include/opencv2/objdetect/objdetect_c.h \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/deque \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/deque \
  ../../../../native/jni/include/opencv2/calib3d.hpp \
  ../../../../native/jni/include/opencv2/core/affine.hpp \
  ../../../../native/jni/include/opencv2/calib3d/calib3d_c.h \
@@ -62,10 +62,10 @@ C:/Users/Administrator/Desktop/Opencv/app/src/main/obj/local/armeabi/objs/OpenCV
  ../../../../native/jni/include/opencv2/imgcodecs/imgcodecs_c.h \
  ../../../../native/jni/include/opencv2/videoio/videoio_c.h \
  ../../../../native/jni/include/opencv2/ml.hpp \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/map \
- C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/iostream
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/map \
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream
 
-C:/Users/Administrator/Desktop/Opencv/app/src/main/jni/com_android_jdrd_opencv_OpenCVHelper.h:
+/Users/xuzemin/xuzemin/Opencv/app/src/main/jni/com_android_jdrd_opencv_OpenCVHelper.h:
 
 ../../../../native/jni/include/opencv2/opencv.hpp:
 
@@ -75,25 +75,25 @@ C:/Users/Administrator/Desktop/Opencv/app/src/main/jni/com_android_jdrd_opencv_O
 
 ../../../../native/jni/include/opencv2/hal/defs.h:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cmath:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cmath:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/algorithm:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/algorithm:
 
 ../../../../native/jni/include/opencv2/core/version.hpp:
 
 ../../../../native/jni/include/opencv2/core/base.hpp:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/climits:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/climits:
 
 ../../../../native/jni/include/opencv2/core/cvstd.hpp:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cstddef:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cstddef:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cstring:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cstring:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cctype:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cctype:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/string:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/string:
 
 ../../../../native/jni/include/opencv2/core/ptr.inl.hpp:
 
@@ -107,9 +107,9 @@ C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cx
 
 ../../../../native/jni/include/opencv2/core/types.hpp:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cfloat:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cfloat:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/vector:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/vector:
 
 ../../../../native/jni/include/opencv2/core/mat.hpp:
 
@@ -121,11 +121,11 @@ C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cx
 
 ../../../../native/jni/include/opencv2/core/operations.hpp:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/cstdio:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/cstdio:
 
 ../../../../native/jni/include/opencv2/core/cvstd.inl.hpp:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/complex:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/complex:
 
 ../../../../native/jni/include/opencv2/core/utility.hpp:
 
@@ -167,7 +167,7 @@ C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cx
 
 ../../../../native/jni/include/opencv2/objdetect/objdetect_c.h:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/deque:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/deque:
 
 ../../../../native/jni/include/opencv2/calib3d.hpp:
 
@@ -189,6 +189,6 @@ C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cx
 
 ../../../../native/jni/include/opencv2/ml.hpp:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/map:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/map:
 
-C:/Users/Administrator/AppData/Local/Android/sdk/ndk-bundle/build//../sources/cxx-stl/gnu-libstdc++/4.9/include/iostream:
+/Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream:
