@@ -14,7 +14,7 @@ else
 include $(OPENCV_MK_PATH)
 endif
 
-LOCAL_MODULE := OpenCV
+LOCAL_MODULE := openCVLibrary300
 
 LOCAL_SRC_FILES := com_android_jdrd_opencv_OpenCVHelper.cpp
 
