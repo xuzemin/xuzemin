@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT jintArray JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_gray
   (JNIEnv *, jclass, jintArray, jint, jint);
 
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    test
+ * Signature: (I[Ljava/lang/String;)I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_test
+  (JNIEnv *,jclass, jint, jobjectArray);
+
 #ifdef __cplusplus
 }
 #endif
