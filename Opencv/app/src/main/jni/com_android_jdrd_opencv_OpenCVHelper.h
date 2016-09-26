@@ -18,10 +18,82 @@ JNIEXPORT jintArray JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_gray
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
  * Method:    test
- * Signature: (I[Ljava/lang/String;)I
+ * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_test
-  (JNIEnv *,jclass, jint, jobjectArray);
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    get
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    send
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    open
+ * Signature: ([B)I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_open
+  (JNIEnv *, jclass, jbyteArray);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    qbuf
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_qbuf
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    streamon
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_streamon
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    streamoff
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_streamoff
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    dqbuf
+ * Signature: ([B)I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_dqbuf
+  (JNIEnv *, jclass, jbyteArray);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    release
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_release
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    init
+ * Signature: (III)I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
+  (JNIEnv *, jclass, jint, jint, jint);
 
 #ifdef __cplusplus
 }
