@@ -2,22 +2,11 @@ package com.android.jdrd.opencv;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.hardware.input.InputManager;
-import android.nfc.Tag;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity{
     private ImageView img;
@@ -56,6 +45,21 @@ public class MainActivity extends AppCompatActivity{
                 Log.e("MainAcitivity","return"+i);
             }
         });
+        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.send();
+                Log.e("MainAcitivity","return"+i);
+            }
+        });
+        findViewById(R.id.button5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.send();
+                Log.e("MainAcitivity","return"+i);
+            }
+        });
+
     }
 
 

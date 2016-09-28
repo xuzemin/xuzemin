@@ -63,7 +63,11 @@
  ../../../../native/jni/include/opencv2/videoio/videoio_c.h \
  ../../../../native/jni/include/opencv2/ml.hpp \
  /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/map \
- /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream
+ /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream \
+ /Users/xuzemin/xuzemin/Opencv/app/src/main/jni/jpeg/jpeglib.h \
+ /Users/xuzemin/xuzemin/Opencv/app/src/main/jni/jpeg/jconfig.h \
+ /Users/xuzemin/xuzemin/Opencv/app/src/main/jni/jpeg/jmorecfg.h \
+ /Users/xuzemin/xuzemin/Opencv/app/src/main/jni/ImageProc.h
 
 /Users/xuzemin/xuzemin/Opencv/app/src/main/jni/com_android_jdrd_opencv_OpenCVHelper.h:
 
@@ -192,3 +196,11 @@
 /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/map:
 
 /Users/xuzemin/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/iostream:
+
+/Users/xuzemin/xuzemin/Opencv/app/src/main/jni/jpeg/jpeglib.h:
+
+/Users/xuzemin/xuzemin/Opencv/app/src/main/jni/jpeg/jconfig.h:
+
+/Users/xuzemin/xuzemin/Opencv/app/src/main/jni/jpeg/jmorecfg.h:
+
+/Users/xuzemin/xuzemin/Opencv/app/src/main/jni/ImageProc.h:

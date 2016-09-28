@@ -47,6 +47,14 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
   (JNIEnv *, jclass);
 
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    getyun
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getyun
+                       (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif
