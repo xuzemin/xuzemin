@@ -20,7 +20,7 @@ using namespace cv;
 #define LOG printf
 #endif
 #define CAMERA_DEVICE "/dev/video0"
-#define CAPTURE_FILE "data/data/com.android.jdrd.opencv/frame.yuv420"
+#define CAPTURE_FILE "data/data/com.android.jdrd.opencv/frame.yuv"
 #define VIDEO_WIDTH 720
 #define VIDEO_HEIGHT 480
 #define  LOG_TAG    "WebCam"
@@ -74,18 +74,10 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
         (JNIEnv *, jclass);
 
-JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
-        (JNIEnv *, jclass);
-
-JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getyun
+JNIEXPORT jobject JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
         (JNIEnv *, jclass);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
-        (JNIEnv *, jclass);
-
-JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_prepare
-        (JNIEnv *, jclass);
-JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_start
         (JNIEnv *, jclass);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
@@ -214,22 +206,51 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
+JNIEXPORT jobject JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
         JNIEnv *env, jclass obj){
+    jclass stucls = env->FindClass("org/feixun/jni/Student");
+    jmethodID constrocMID = env->GetMethodID(stucls,"<init>","(ILjava/lang/String;)V");
+
+//    jclass stu_cls = env->GetObjectClass(obj_stu);
+//    if(stu_cls == NULL)
+//    {
+//        cout << "GetObjectClass failed \n" ;
+//        return nullptr;
+//    }
+//    jfieldID ageFieldID = env->GetFieldID(stu_cls,"mat","I");
     // Get frame
     ret = ioctl(fd, VIDIOC_DQBUF, &buf);
     if (ret < 0) {
         LOG("	 (%d)\n", ret);
-        return ret;
+        return 0;
     }
     // Process the frame
-    FILE *fp = fopen(CAPTURE_FILE, "wb");
-    if (fp < 0) {
-        LOG("open frame data file failed\n");
-        return -1;
+//    FILE *fp = fopen(CAPTURE_FILE, "wb");
+//    if (fp < 0) {
+//        LOG("open frame data file failed\n");
+//        return 0;
+//    }
+//    fwrite(framebuf[buf.index].start, 1, buf.length, fp);
+    int w = 1280;
+    int h = 720;
+    int bufLen = w*h*3/2;
+    int iCount = 0;
+//    unsigned char* pYuvBuf = new unsigned char[bufLen];
+    for(int i=0; i<200; i++)
+    {
+//        fread(pYuvBuf, bufLen*sizeof(unsigned char), 1, fp);
+        cv::Mat yuvImg;
+        yuvImg.create(h*3/2, w, CV_8UC1);
+        memcpy(yuvImg.data, framebuf[buf.index].start, bufLen*sizeof(unsigned char));
+        cv::Mat rgbImg;
+        cv::cvtColor(yuvImg, rgbImg, CV_YUV2BGR_I420);
+        cv::imshow("img", yuvImg);
+        cv::waitKey(1);
+        printf("%d n", iCount++);
     }
-    fwrite(framebuf[buf.index].start, 1, buf.length, fp);
-    fclose(fp);
+
+//    delete[] pYuvBuf;
+//    fclose(fp);
 
     LOG("Capture one frame saved in %s\n", CAPTURE_FILE);
 
@@ -237,12 +258,16 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
 
     LOG("Capture one frame saved in test.jpg\n");
 
+
+//    jobject stu_ojb = env->NewObject(stucls,constrocMID,11,str);
+
     // Re-queen buffer
     ret = ioctl(fd, VIDIOC_QBUF, &buf);
     if (ret < 0) {
         LOG("VIDIOC_QBUF failed (%d)\n", ret);
-        return ret;
+        return 0;
     }
+
     LOG("Camera test Done.\n");
     return 0;
 

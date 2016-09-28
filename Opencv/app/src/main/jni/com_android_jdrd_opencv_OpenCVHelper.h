@@ -60,7 +60,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
  * Method:    getdata
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
+JNIEXPORT jobject JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
   (JNIEnv *, jclass);
 
 #ifdef __cplusplus
