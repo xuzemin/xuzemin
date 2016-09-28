@@ -17,6 +17,22 @@ JNIEXPORT jintArray JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_gray
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    init
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    stop
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
  * Method:    test
  * Signature: ()I
  */
@@ -46,14 +62,6 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
   (JNIEnv *, jclass);
-
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    getyun
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getyun
-                       (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

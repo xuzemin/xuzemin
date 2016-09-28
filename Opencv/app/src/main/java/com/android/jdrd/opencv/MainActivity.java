@@ -34,28 +34,28 @@ public class MainActivity extends AppCompatActivity{
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int i = OpenCVHelper.get();
+                int i = OpenCVHelper.send();
                 Log.e("MainAcitivity","return"+i);
             }
         });
         findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int i = OpenCVHelper.send();
+                int i = OpenCVHelper.init();
                 Log.e("MainAcitivity","return"+i);
             }
         });
         findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int i = OpenCVHelper.send();
+                int i = OpenCVHelper.getdata();
                 Log.e("MainAcitivity","return"+i);
             }
         });
         findViewById(R.id.button5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int i = OpenCVHelper.send();
+                int i = OpenCVHelper.stop();
                 Log.e("MainAcitivity","return"+i);
             }
         });

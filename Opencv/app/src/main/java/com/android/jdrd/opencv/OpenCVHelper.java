@@ -10,8 +10,6 @@ public class OpenCVHelper {
     public static native int[] gray(int[] buf, int w, int h);
 
     public static native int init();
-    public static native int prepare();
-    public static native int start();
     public static native int stop();
 
     public static native int test();

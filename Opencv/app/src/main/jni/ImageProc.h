@@ -37,22 +37,24 @@
 #endif
 
 #define VIDEO_FORMAT V4L2_PIX_FMT_YUV420    //这里是输出的数据格式，要是摄像头支持jpeg的，可以直接把数据
-				   //V4L2_PIX_FMT_MJPEG         //保存为jpg格式的图片，如果是yuv的则需要转换，转换在下篇介绍。
-                   //V4L2_PIX_FMT_JPEG			   //这里主要是把yuv格式保存为文件
-                   //V4L2_PIX_FMT_YUYV
-                   //V4L2_PIX_FMT_YUV420
-                   //V4L2_PIX_FMT_RGB32
+//V4L2_PIX_FMT_MJPEG         //保存为jpg格式的图片，如果是yuv的则需要转换，转换在下篇介绍。
+//V4L2_PIX_FMT_JPEG			   //这里主要是把yuv格式保存为文件
+//V4L2_PIX_FMT_YUYV
+//V4L2_PIX_FMT_YUV420
+//V4L2_PIX_FMT_RGB32
 #define BUFFER_COUNT 4
 
 struct buffer {
-        void *                  start;
-        size_t                  length;
+    void *                  start;
+    size_t                  length;
 };
 
 static char            dev_name[16];
 static int              fd              = -1;
 struct buffer *         buffers         = NULL;
 static unsigned int     n_buffers       = 0;
+static int i, ret;
+static struct v4l2_buffer buf;
 static int uinp_fd = -1;
 int camerabase = -1;
 struct uinput_user_dev uinp; // uInput device structure
