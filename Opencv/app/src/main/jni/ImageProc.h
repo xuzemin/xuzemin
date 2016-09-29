@@ -25,8 +25,6 @@
 
 #define CLEAR(x) memset (&(x), 0, sizeof (x))
 
-#define IMG_WIDTH 640
-#define IMG_HEIGHT 480
 
 #define ERROR_LOCAL -1
 #define SUCCESS_LOCAL 0
@@ -36,37 +34,18 @@
 #define LOG printf
 #endif
 
-#define VIDEO_FORMAT V4L2_PIX_FMT_YUV420    //这里是输出的数据格式，要是摄像头支持jpeg的，可以直接把数据
+#define VIDEO_FORMAT V4L2_PIX_FMT_YUYV    //这里是输出的数据格式，要是摄像头支持jpeg的，可以直接把数据
 //V4L2_PIX_FMT_MJPEG         //保存为jpg格式的图片，如果是yuv的则需要转换，转换在下篇介绍。
 //V4L2_PIX_FMT_JPEG			   //这里主要是把yuv格式保存为文件
 //V4L2_PIX_FMT_YUYV
 //V4L2_PIX_FMT_YUV420
 //V4L2_PIX_FMT_RGB32
-#define BUFFER_COUNT 4
+#define BUFFER_COUNT 1
 
-struct buffer {
-    void *                  start;
-    size_t                  length;
-};
-
-static char            dev_name[16];
-static int              fd              = -1;
-struct buffer *         buffers         = NULL;
-static unsigned int     n_buffers       = 0;
-static int i, ret;
-static struct v4l2_buffer buf;
-static int uinp_fd = -1;
-int camerabase = -1;
-struct uinput_user_dev uinp; // uInput device structure
-struct input_event event;
-int *rgb = NULL;
-int *ybuf = NULL;
-
-int yuv_tbl_ready=0;
-int y1192_tbl[256];
-int v1634_tbl[256];
-int v833_tbl[256];
-int u400_tbl[256];
-int u2066_tbl[256];
-
+#define IMG_WIDTH 640
+#define IMG_HEIGHT 480
+#define VIDEO_WIDTH 720
+#define VIDEO_HEIGHT 480
+void  yuyv_2_rgb888( char * pointer,char * frame_buffer);
 int displayyuv();
+void yuyv422toABGRY(unsigned char *src);

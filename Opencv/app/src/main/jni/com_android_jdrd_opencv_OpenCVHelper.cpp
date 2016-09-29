@@ -21,8 +21,6 @@ using namespace cv;
 #endif
 #define CAMERA_DEVICE "/dev/video0"
 #define CAPTURE_FILE "data/data/com.android.jdrd.opencv/frame.yuv"
-#define VIDEO_WIDTH 720
-#define VIDEO_HEIGHT 480
 #define  LOG_TAG    "WebCam"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
@@ -32,36 +30,22 @@ using namespace cv;
 struct fimc_buffer {
     int length;
     void *start;
-} framebuf[BUFFER_COUNT];
+} framebuf[BUFFER_COUNT],buffer[BUFFER_COUNT];
+struct buffer {
+    void *                  start;
+    size_t                  length;
+};
+struct v4l2_requestbuffers reqbuf;
+struct v4l2_buffer buf;
+char            dev_name[16];
+int              fd              = -1;
+unsigned int     n_buffers       = 0;
+int i, ret;
+int uinp_fd = -1;
+int camerabase = -1;
+struct uinput_user_dev uinp; // uInput device structure
+struct input_event event;
 
-int displayyuv()
-{
-    int w = VIDEO_WIDTH;
-    int h = VIDEO_HEIGHT;
-    printf("yuv file w: %d, h: %d \n", w, h);
-    FILE* pFileIn = fopen(CAPTURE_FILE, "rb+");
-    if (pFileIn < 0) {
-        LOG("open frame data file failed\n");
-        return -1;
-    }
-    int bufLen = w*h*3/2;
-    unsigned char* pYuvBuf = new unsigned char[bufLen];
-    int iCount = 0;
-    for(int i=0; i<200; i++)
-    {
-        fread(pYuvBuf, bufLen*sizeof(unsigned char), 1, pFileIn);
-        cv::Mat yuvImg;
-        yuvImg.create(h*3/2, w, CV_8UC1);
-        memcpy(yuvImg.data, pYuvBuf, bufLen*sizeof(unsigned char));
-        cv::Mat rgbImg;
-        cv::cvtColor(yuvImg, rgbImg, CV_YUV2BGR_I420);
-        cv::imshow("img", yuvImg);
-        cv::waitKey(1);
-        printf("%d \n", iCount++);
-    }
-    delete[] pYuvBuf;
-    fclose(pFileIn);
-}
 JNIEXPORT jintArray JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_gray(
         JNIEnv *env, jclass obj, jintArray buf, int w, int h);
 
@@ -74,8 +58,8 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
         (JNIEnv *, jclass);
 
-JNIEXPORT jobject JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
-        (JNIEnv *, jclass);
+JNIEXPORT jint  JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
+        (JNIEnv *, jclass,jlong);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
         (JNIEnv *, jclass);
@@ -87,7 +71,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
         (JNIEnv *env, jclass obj){
     // Open Device
-    fd = open(CAMERA_DEVICE, O_RDWR, 0);
+    fd = open(CAMERA_DEVICE,  O_RDWR | O_NONBLOCK, 0);
     if (fd < 0) {
         LOG("Open %s failed\n", CAMERA_DEVICE);
         return -1;
@@ -99,6 +83,20 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
         LOG("VIDIOC_QUERYCAP failed (%d)\n", ret);
         return ret;
     }
+    struct v4l2_cropcap cropcap;
+    struct v4l2_crop crop;
+    CLEAR (cropcap);
+    cropcap.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    ret = ioctl(fd, VIDIOC_QUERYCAP, &cropcap);
+    if (ret == 0) {
+            crop.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    		crop.c = cropcap.defrect;
+            LOGI("VIDIOC_QUERYCAP failed (%d)\n", ret);
+            ret = ioctl(fd, VIDIOC_QUERYCAP, &cap);
+            if(-1 == ret)
+            return ret;
+    }
+
     // Print capability infomations
     LOG("Capability Informations:\n");
     LOG(" driver: %s\n", cap.driver);
@@ -108,7 +106,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
     LOG(" capabilities: %08X\n", cap.capabilities);
 
     ///////////////////////
-    struct v4l2_fmtdesc fmtdesc; fmtdesc.index=0; fmtdesc.type=V4L2_BUF_TYPE_VIDEO_CAPTURE; printf("Support format:\n");
+    struct v4l2_fmtdesc fmtdesc; fmtdesc.index=0; fmtdesc.type=V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
     while(ioctl(fd, VIDIOC_ENUM_FMT, &fmtdesc) != -1)
     {
@@ -118,40 +116,51 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
     /////////////////////
     // Set Stream Format
     struct v4l2_format fmt;
+    CLEAR (fmt);
     memset(&fmt, 0, sizeof(fmt));
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    fmt.fmt.pix.width = VIDEO_WIDTH;
-    fmt.fmt.pix.height = VIDEO_HEIGHT;
+    fmt.fmt.pix.width = IMG_WIDTH;
+    fmt.fmt.pix.height = IMG_HEIGHT;
     fmt.fmt.pix.pixelformat = VIDEO_FORMAT;
     fmt.fmt.pix.field = V4L2_FIELD_INTERLACED;
     ret = ioctl(fd, VIDIOC_S_FMT, &fmt);
     if (ret < 0) {
-        LOG("VIDIOC_S_FMT failed (%d)\n", ret);
+        LOGI("VIDIOC_S_FMT failed (%d)\n", ret);
         return ret;
     }
+    unsigned int min;
+    min = fmt.fmt.pix.width * 2;
+    	if (fmt.fmt.pix.bytesperline < min)
+    		fmt.fmt.pix.bytesperline = min;
+    	min = fmt.fmt.pix.bytesperline * fmt.fmt.pix.height;
+    	if (fmt.fmt.pix.sizeimage < min)
+    		fmt.fmt.pix.sizeimage = min;
+
     // Get Stream Format
     ret = ioctl(fd, VIDIOC_G_FMT, &fmt);
     if (ret < 0) {
-        LOG("VIDIOC_G_FMT failed (%d)\n", ret);
+        LOGI("VIDIOC_G_FMT failed (%d)\n", ret);
         return ret;
     }
     // Print Stream Format
-    LOG("Stream Format Informations:\n");
-    LOG(" type: %d\n", fmt.type);
-    LOG(" width: %d\n", fmt.fmt.pix.width);
-    LOG(" height: %d\n", fmt.fmt.pix.height);
+    LOGI("Stream Format Informations:\n");
+    LOGI(" type: %d\n", fmt.type);
+    LOGI(" width: %d\n", fmt.fmt.pix.width);
+    LOGI(" height: %d\n", fmt.fmt.pix.height);
+    LOGI(" pixelformat: %d %d\n", fmt.fmt.pix.pixelformat, VIDEO_FORMAT);
     char fmtstr[8];
     memset(fmtstr, 0, 8);
     memcpy(fmtstr, &fmt.fmt.pix.pixelformat, 4);
-    LOG(" pixelformat: %s\n", fmtstr);
-    LOG(" field: %d\n", fmt.fmt.pix.field);
-    LOG(" bytesperline: %d\n", fmt.fmt.pix.bytesperline);
-    LOG(" sizeimage: %d\n", fmt.fmt.pix.sizeimage);
-    LOG(" colorspace: %d\n", fmt.fmt.pix.colorspace);
-    LOG(" priv: %d\n", fmt.fmt.pix.priv);
-    LOG(" raw_date: %s\n", fmt.fmt.raw_data);
+    LOGI(" pixelformat: %s\n", fmtstr);
+    LOGI(" field: %d\n", fmt.fmt.pix.field);
+    LOGI(" bytesperline: %d\n", fmt.fmt.pix.bytesperline);
+    LOGI(" sizeimage: %d\n", fmt.fmt.pix.sizeimage);
+    LOGI(" colorspace: %d\n", fmt.fmt.pix.colorspace);
+    LOGI(" priv: %d\n", fmt.fmt.pix.priv);
+    LOGI(" raw_date: %s\n", fmt.fmt.raw_data);
     // Request buffers
-    struct v4l2_requestbuffers reqbuf;
+
+    CLEAR (reqbuf);
     reqbuf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     reqbuf.memory = V4L2_MEMORY_MMAP;
     reqbuf.count = BUFFER_COUNT;
@@ -162,6 +171,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
     }
     // Queen buffers
     for(i=0; i<BUFFER_COUNT; i++) {
+        CLEAR (buf);
         // Query buffer
         buf.index = i;
         buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
@@ -206,69 +216,41 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
     return 0;
 }
 
-JNIEXPORT jobject JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
-        JNIEnv *env, jclass obj){
-    jclass stucls = env->FindClass("org/feixun/jni/Student");
-    jmethodID constrocMID = env->GetMethodID(stucls,"<init>","(ILjava/lang/String;)V");
+JNIEXPORT jint  JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
+        JNIEnv *env, jclass obj,jlong rgba){
+        cv::Mat* mat_rgba = (cv::Mat*) rgba;
 
-//    jclass stu_cls = env->GetObjectClass(obj_stu);
-//    if(stu_cls == NULL)
-//    {
-//        cout << "GetObjectClass failed \n" ;
-//        return nullptr;
-//    }
-//    jfieldID ageFieldID = env->GetFieldID(stu_cls,"mat","I");
+         LOGI("getdata start %s\n", CAPTURE_FILE);
+        // Queen buffers
     // Get frame
     ret = ioctl(fd, VIDIOC_DQBUF, &buf);
     if (ret < 0) {
-        LOG("	 (%d)\n", ret);
-        return 0;
+        LOGI("	 (%d)\n", ret);
+        return -12;
     }
-    // Process the frame
-//    FILE *fp = fopen(CAPTURE_FILE, "wb");
-//    if (fp < 0) {
-//        LOG("open frame data file failed\n");
-//        return 0;
-//    }
-//    fwrite(framebuf[buf.index].start, 1, buf.length, fp);
+
     int w = 1280;
     int h = 720;
-    int bufLen = w*h*3/2;
-    int iCount = 0;
+    int bufLen = w*h;
 //    unsigned char* pYuvBuf = new unsigned char[bufLen];
-    for(int i=0; i<200; i++)
-    {
-//        fread(pYuvBuf, bufLen*sizeof(unsigned char), 1, fp);
-        cv::Mat yuvImg;
-        yuvImg.create(h*3/2, w, CV_8UC1);
-        memcpy(yuvImg.data, framebuf[buf.index].start, bufLen*sizeof(unsigned char));
-        cv::Mat rgbImg;
-        cv::cvtColor(yuvImg, rgbImg, CV_YUV2BGR_I420);
-        cv::imshow("img", yuvImg);
-        cv::waitKey(1);
-        printf("%d n", iCount++);
-    }
 
-//    delete[] pYuvBuf;
-//    fclose(fp);
-
-    LOG("Capture one frame saved in %s\n", CAPTURE_FILE);
-
-    //write_JPEG_file("test.jpg", framebuf[buf.index].start, 100, 720, 625);
-
-    LOG("Capture one frame saved in test.jpg\n");
-
-
-//    jobject stu_ojb = env->NewObject(stucls,constrocMID,11,str);
+        LOGI("Mat %s\n", CAPTURE_FILE);
+        //cv::Mat yuvImg;
+        //yuvImg.create(h*3/2, w, CV_8UC1);
+        mat_rgba->create(h, w, CV_8UC1);
+        LOGI("framebuf  buf.index %d\n", buf.index);
+        memcpy(mat_rgba->data,framebuf[buf.index].start,mat_rgba->step * mat_rgba->rows);
+        //yuyv_2_rgb888((char *)framebuf[0].start,(char *)mat_rgba->data);
+        LOGI("Capture one frame saved in test.jpg\n");
 
     // Re-queen buffer
     ret = ioctl(fd, VIDIOC_QBUF, &buf);
     if (ret < 0) {
-        LOG("VIDIOC_QBUF failed (%d)\n", ret);
-        return 0;
+        LOGI("VIDIOC_QBUF failed (%d)\n", ret);
+        return -13;
     }
 
-    LOG("Camera test Done.\n");
+    LOGI("Camera test Done.\n");
     return 0;
 
 }
@@ -301,7 +283,6 @@ JNIEXPORT jintArray JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_gray(
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_test(
         JNIEnv *env, jclass obj) {
-
     int fd;
     int version;
     fd = open("/dev/input/event3", O_RDWR);

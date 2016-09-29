@@ -1,6 +1,9 @@
 package com.android.jdrd.opencv;
 
+
 import org.opencv.core.Mat;
+
+import java.util.ArrayList;
 
 /**
  * Created by xuzemin on 16/9/8.
@@ -17,6 +20,6 @@ public class OpenCVHelper {
     public static native int test();
     public static native int get();
     public static native int send();
-    public static native Mat getdata();
+    public static native int getdata(long gray);
 
 }
