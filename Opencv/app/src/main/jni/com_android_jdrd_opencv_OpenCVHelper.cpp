@@ -59,13 +59,72 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
         (JNIEnv *, jclass);
 
 JNIEXPORT jint  JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
-        (JNIEnv *, jclass,jlong);
+        (JNIEnv *, jclass, jlong);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
         (JNIEnv *, jclass);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
         (JNIEnv *, jclass);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownPress
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    keydown_institute
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownInstitute
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    keyup_press
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpPress
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    keyup_institute
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpInstitute
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    keyleft_press
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftPress
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    keyleft
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftInstitute
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    keyright_press
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_android_jdrd_opencv_OpenCVHelper
+ * Method:    keyright_institute
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitute
+  (JNIEnv *, jclass);
 
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
@@ -166,7 +225,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
     reqbuf.count = BUFFER_COUNT;
     ret = ioctl(fd , VIDIOC_REQBUFS, &reqbuf);
     if(ret < 0) {
-        LOG("VIDIOC_REQBUFS failed (%d)\n", ret);
+        LOGI("VIDIOC_REQBUFS failed (%d)\n", ret);
         return ret;
     }
     // Queen buffers
@@ -178,29 +237,29 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
         buf.memory = V4L2_MEMORY_MMAP;
         ret = ioctl(fd , VIDIOC_QUERYBUF, &buf);
         if(ret < 0) {
-            LOG("VIDIOC_QUERYBUF (%d) failed (%d)\n", i, ret);
+            LOGI("VIDIOC_QUERYBUF (%d) failed (%d)\n", i, ret);
             return ret;
         }
         // mmap buffer
         framebuf[i].length = buf.length;
         framebuf[i].start = (char *) mmap(0, buf.length, PROT_READ|PROT_WRITE, MAP_SHARED, fd, buf.m.offset);
         if (framebuf[i].start == MAP_FAILED) {
-            LOG("mmap (%d) failed: %s\n", i, strerror(errno));
+            LOGI("mmap (%d) failed: %s\n", i, strerror(errno));
             return -1;
         }
         // Queen buffer
         ret = ioctl(fd , VIDIOC_QBUF, &buf);
         if (ret < 0) {
-            LOG("VIDIOC_QBUF (%d) failed (%d)\n", i, ret);
+            LOGI("VIDIOC_QBUF (%d) failed (%d)\n", i, ret);
             return -1;
         }
-        LOG("Frame buffer %d: address=0x%x, length=%d\n", i, (unsigned int)framebuf[i].start, framebuf[i].length);
+        LOGI("Frame buffer %d: address=0x%x, length=%d\n", i, (unsigned int)framebuf[i].start, framebuf[i].length);
     }
     // Stream On
     enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     ret = ioctl(fd, VIDIOC_STREAMON, &type);
     if (ret < 0) {
-        LOG("VIDIOC_STREAMON failed (%d)\n", ret);
+        LOGI("VIDIOC_STREAMON failed (%d)\n", ret);
         return ret;
     }
     return 0;
@@ -229,8 +288,8 @@ JNIEXPORT jint  JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
         return -12;
     }
 
-    int w = 1280;
-    int h = 720;
+    int w = IMG_WIDTH*2;
+    int h = IMG_HEIGHT;
     int bufLen = w*h;
 //    unsigned char* pYuvBuf = new unsigned char[bufLen];
 
@@ -499,4 +558,265 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
     event.value = 0;
     write(fd, &event, sizeof(event));
     return 0;
+}
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownPress
+        (JNIEnv *env, jclass obj){
+    int fd;
+    int version;
+    fd = open("/dev/input/event4", O_RDWR);
+    if(fd < 0) {
+        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+        return 2;
+    }
+    if (ioctl(fd, EVIOCGVERSION, &version)) {
+        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+        return 3;
+    }
+    memset(&event, 0, sizeof(event));
+        event.type = 0x01;
+        event.code = 0x04;
+        event.value = 0x70051;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x01;
+        event.code = 0x6c;
+        event.value = 0x01;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x0;
+        event.code = 0x0;
+        event.value = 0x0;
+        write(fd, &event, sizeof(event));
+        close(fd);
+        return fd;
+}
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownInstitute
+  (JNIEnv *env, jclass obj)
+{
+        int fd;
+            int version;
+            fd = open("/dev/input/event4", O_RDWR);
+            if(fd < 0) {
+                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+                return 2;
+            }
+            if (ioctl(fd, EVIOCGVERSION, &version)) {
+                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+                return 3;
+            }
+            memset(&event, 0, sizeof(event));
+                // Report BUTTON CLICK - PRESS event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x04;
+                event.code = 0x04;
+                event.value = 0x70051;
+                write(fd, &event, sizeof(event));
+
+                event.type = 0x01;
+                event.code = 0x6c;
+                event.value = 0x0;
+                write(fd, &event, sizeof(event));
+                // Report BUTTON CLICK - RELEASE event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x0;
+                event.code = 0x0;
+                event.value = 0x0;
+                close(fd);
+                return fd;
+}
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpPress
+        (JNIEnv *env, jclass obj){
+    int fd;
+    int version;
+    fd = open("/dev/input/event4", O_RDWR);
+    if(fd < 0) {
+        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+        return 2;
+    }
+    if (ioctl(fd, EVIOCGVERSION, &version)) {
+        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+        return 3;
+    }
+    memset(&event, 0, sizeof(event));
+        event.type = 0x01;
+        event.code = 0x04;
+        event.value = 0x70052;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x01;
+        event.code = 0x67;
+        event.value = 0x01;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x0;
+        event.code = 0x0;
+        event.value = 0x0;
+        write(fd, &event, sizeof(event));
+        close(fd);
+        return fd;
+}
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpInstitute
+  (JNIEnv *env, jclass obj)
+{
+        int fd;
+            int version;
+            fd = open("/dev/input/event4", O_RDWR);
+            if(fd < 0) {
+                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+                return 2;
+            }
+            if (ioctl(fd, EVIOCGVERSION, &version)) {
+                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+                return 3;
+            }
+            memset(&event, 0, sizeof(event));
+                // Report BUTTON CLICK - PRESS event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x04;
+                event.code = 0x04;
+                event.value = 0x70052;
+                write(fd, &event, sizeof(event));
+
+                event.type = 0x01;
+                event.code = 0x67;
+                event.value = 0x0;
+                write(fd, &event, sizeof(event));
+                // Report BUTTON CLICK - RELEASE event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x0;
+                event.code = 0x0;
+                event.value = 0x0;
+                close(fd);
+                return fd;
+}
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
+        (JNIEnv *env, jclass obj){
+    int fd;
+    int version;
+    fd = open("/dev/input/event4", O_RDWR);
+    if(fd < 0) {
+        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+        return 2;
+    }
+    if (ioctl(fd, EVIOCGVERSION, &version)) {
+        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+        return 3;
+    }
+    memset(&event, 0, sizeof(event));
+        event.type = 0x01;
+        event.code = 0x04;
+        event.value = 0x7004f;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x01;
+        event.code = 0x6a;
+        event.value = 0x01;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x0;
+        event.code = 0x0;
+        event.value = 0x0;
+        write(fd, &event, sizeof(event));
+        close(fd);
+        return fd;
+}
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitute
+  (JNIEnv *env, jclass obj)
+{
+        int fd;
+            int version;
+            fd = open("/dev/input/event4", O_RDWR);
+            if(fd < 0) {
+                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+                return 2;
+            }
+            if (ioctl(fd, EVIOCGVERSION, &version)) {
+                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+                return 3;
+            }
+            memset(&event, 0, sizeof(event));
+                // Report BUTTON CLICK - PRESS event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x04;
+                event.code = 0x04;
+                event.value = 0x7004f;
+                write(fd, &event, sizeof(event));
+
+                event.type = 0x01;
+                event.code = 0x6a;
+                event.value = 0x0;
+                write(fd, &event, sizeof(event));
+                // Report BUTTON CLICK - RELEASE event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x0;
+                event.code = 0x0;
+                event.value = 0x0;
+                close(fd);
+                return fd;
+}
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftPress
+        (JNIEnv *env, jclass obj){
+    int fd;
+    int version;
+    fd = open("/dev/input/event4", O_RDWR);
+    if(fd < 0) {
+        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+        return 2;
+    }
+    if (ioctl(fd, EVIOCGVERSION, &version)) {
+        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+        return 3;
+    }
+    memset(&event, 0, sizeof(event));
+        event.type = 0x01;
+        event.code = 0x04;
+        event.value = 0x70050;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x01;
+        event.code = 0x52;
+        event.value = 0x01;
+        write(fd, &event, sizeof(event));
+
+        event.type = 0x0;
+        event.code = 0x0;
+        event.value = 0x0;
+        write(fd, &event, sizeof(event));
+        close(fd);
+        return fd;
+}
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftInstitute
+  (JNIEnv *env, jclass obj)
+{
+        int fd;
+            int version;
+            fd = open("/dev/input/event4", O_RDWR);
+            if(fd < 0) {
+                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+                return 2;
+            }
+            if (ioctl(fd, EVIOCGVERSION, &version)) {
+                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+                return 3;
+            }
+            memset(&event, 0, sizeof(event));
+                // Report BUTTON CLICK - PRESS event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x04;
+                event.code = 0x04;
+                event.value = 0x70050;
+                write(fd, &event, sizeof(event));
+
+                event.type = 0x01;
+                event.code = 0x52;
+                event.value = 0x0;
+                write(fd, &event, sizeof(event));
+                // Report BUTTON CLICK - RELEASE event
+                memset(&event, 0, sizeof(event));
+                event.type = 0x0;
+                event.code = 0x0;
+                event.value = 0x0;
+                close(fd);
+                return fd;
 }

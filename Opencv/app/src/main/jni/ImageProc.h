@@ -44,8 +44,6 @@
 
 #define IMG_WIDTH 640
 #define IMG_HEIGHT 480
-#define VIDEO_WIDTH 720
-#define VIDEO_HEIGHT 480
 void  yuyv_2_rgb888( char * pointer,char * frame_buffer);
 int displayyuv();
 void yuyv422toABGRY(unsigned char *src);
