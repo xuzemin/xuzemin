@@ -114,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainAcitivity", "return" + i);
             }
         });
+        findViewById(R.id.button17).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.keyReturn();
+                Log.e("MainAcitivity", "return" + i);
+            }
+        });
         findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

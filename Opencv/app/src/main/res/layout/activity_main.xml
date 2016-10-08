@@ -54,12 +54,17 @@
         android:id="@+id/button15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="keyrightpress"/>
+        android:text="keyRightPress"/>
     <Button
         android:id="@+id/button16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="keyrightinstitute"/>
+        android:text="keyRightInstitute"/>
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="keyretrun"/>
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"

@@ -30,5 +30,5 @@ public class OpenCVHelper {
     public static native int keyLeftInstitute();
     public static native int keyRightPress();
     public static native int keyRightInstitute();
-
+    public static native int keyReturn();
 }

@@ -127,6 +127,9 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitu
   (JNIEnv *, jclass);
 
 
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyReturn
+  (JNIEnv *, jclass);
+
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
         (JNIEnv *env, jclass obj){
     // Open Device
@@ -523,36 +526,31 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
     event.code = REL_X;
     event.value = 100;
     write(fd, &event, sizeof(event));
-
     event.type = EV_REL;
     event.code = REL_Y;
     event.value = 100;
     write(fd, &event, sizeof(event));
-
     event.type = EV_SYN;
     event.code = SYN_REPORT;
     event.value = 0;
     write(fd, &event, sizeof(event));
-
     // Report BUTTON CLICK - PRESS event
     memset(&event, 0, sizeof(event));
     event.type = EV_KEY;
     event.code = BTN_LEFT;
     event.value = 1;
     write(fd, &event, sizeof(event));
-
+    memset(&event, 0, sizeof(event));
     event.type = EV_SYN;
     event.code = SYN_REPORT;
     event.value = 0;
     write(fd, &event, sizeof(event));
-
-    // Report BUTTON CLICK - RELEASE event
     memset(&event, 0, sizeof(event));
     event.type = EV_KEY;
     event.code = BTN_LEFT;
     event.value = 0;
-
     write(fd, &event, sizeof(event));
+    memset(&event, 0, sizeof(event));
     event.type = EV_SYN;
     event.code = SYN_REPORT;
     event.value = 0;
@@ -573,17 +571,17 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownPress
         close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
         return 3;
     }
-    memset(&event, 0, sizeof(event));
-        event.type = 0x01;
+        memset(&event, 0, sizeof(event));
+        event.type = 0x04;
         event.code = 0x04;
         event.value = 0x70051;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x01;
         event.code = 0x6c;
         event.value = 0x01;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x0;
         event.code = 0x0;
         event.value = 0x0;
@@ -605,23 +603,21 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownInstitut
                 close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
                 return 3;
             }
-            memset(&event, 0, sizeof(event));
-                // Report BUTTON CLICK - PRESS event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x04;
                 event.code = 0x04;
                 event.value = 0x70051;
                 write(fd, &event, sizeof(event));
-
+                memset(&event, 0, sizeof(event));
                 event.type = 0x01;
                 event.code = 0x6c;
                 event.value = 0x0;
                 write(fd, &event, sizeof(event));
-                // Report BUTTON CLICK - RELEASE event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x0;
                 event.code = 0x0;
                 event.value = 0x0;
+                write(fd, &event, sizeof(event));
                 close(fd);
                 return fd;
 }
@@ -638,17 +634,17 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpPress
         close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
         return 3;
     }
-    memset(&event, 0, sizeof(event));
-        event.type = 0x01;
+        memset(&event, 0, sizeof(event));
+        event.type = 0x04;
         event.code = 0x04;
         event.value = 0x70052;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x01;
         event.code = 0x67;
         event.value = 0x01;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x0;
         event.code = 0x0;
         event.value = 0x0;
@@ -670,23 +666,21 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpInstitute
                 close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
                 return 3;
             }
-            memset(&event, 0, sizeof(event));
-                // Report BUTTON CLICK - PRESS event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x04;
                 event.code = 0x04;
                 event.value = 0x70052;
                 write(fd, &event, sizeof(event));
-
+                memset(&event, 0, sizeof(event));
                 event.type = 0x01;
                 event.code = 0x67;
                 event.value = 0x0;
                 write(fd, &event, sizeof(event));
-                // Report BUTTON CLICK - RELEASE event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x0;
                 event.code = 0x0;
                 event.value = 0x0;
+                write(fd, &event, sizeof(event));
                 close(fd);
                 return fd;
 }
@@ -703,17 +697,17 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
         close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
         return 3;
     }
-    memset(&event, 0, sizeof(event));
-        event.type = 0x01;
+        memset(&event, 0, sizeof(event));
+        event.type = 0x04;
         event.code = 0x04;
         event.value = 0x7004f;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x01;
         event.code = 0x6a;
         event.value = 0x01;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x0;
         event.code = 0x0;
         event.value = 0x0;
@@ -735,23 +729,21 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitu
                 close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
                 return 3;
             }
-            memset(&event, 0, sizeof(event));
-                // Report BUTTON CLICK - PRESS event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x04;
                 event.code = 0x04;
                 event.value = 0x7004f;
                 write(fd, &event, sizeof(event));
-
+                memset(&event, 0, sizeof(event));
                 event.type = 0x01;
                 event.code = 0x6a;
                 event.value = 0x0;
                 write(fd, &event, sizeof(event));
-                // Report BUTTON CLICK - RELEASE event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x0;
                 event.code = 0x0;
                 event.value = 0x0;
+                write(fd, &event, sizeof(event));
                 close(fd);
                 return fd;
 }
@@ -768,17 +760,17 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftPress
         close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
         return 3;
     }
-    memset(&event, 0, sizeof(event));
-        event.type = 0x01;
+        memset(&event, 0, sizeof(event));
+        event.type = 0x04;
         event.code = 0x04;
         event.value = 0x70050;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x01;
-        event.code = 0x52;
+        event.code = 0x69;
         event.value = 0x01;
         write(fd, &event, sizeof(event));
-
+        memset(&event, 0, sizeof(event));
         event.type = 0x0;
         event.code = 0x0;
         event.value = 0x0;
@@ -800,23 +792,69 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftInstitut
                 close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
                 return 3;
             }
-            memset(&event, 0, sizeof(event));
-                // Report BUTTON CLICK - PRESS event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x04;
                 event.code = 0x04;
                 event.value = 0x70050;
                 write(fd, &event, sizeof(event));
-
+                memset(&event, 0, sizeof(event));
                 event.type = 0x01;
-                event.code = 0x52;
+                event.code = 0x69;
                 event.value = 0x0;
                 write(fd, &event, sizeof(event));
-                // Report BUTTON CLICK - RELEASE event
                 memset(&event, 0, sizeof(event));
                 event.type = 0x0;
                 event.code = 0x0;
                 event.value = 0x0;
+                write(fd, &event, sizeof(event));
+                close(fd);
+                return fd;
+}
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyReturn
+  (JNIEnv *env, jclass obj)
+{
+            int fd;
+            int version;
+            fd = open("/dev/input/event4", O_RDWR);
+            if(fd < 0) {
+                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
+                return 2;
+            }
+            if (ioctl(fd, EVIOCGVERSION, &version)) {
+                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
+                return 3;
+            }
+                memset(&event, 0, sizeof(event));
+                event.type = 0x04;
+                event.code = 0x04;
+                event.value = 0x70028;
+                write(fd, &event, sizeof(event));
+                memset(&event, 0, sizeof(event));
+                event.type = 0x01;
+                event.code = 0x1c;
+                event.value = 0x1;
+                write(fd, &event, sizeof(event));
+                memset(&event, 0, sizeof(event));
+                event.type = 0x0;
+                event.code = 0x0;
+                event.value = 0x0;
+                write(fd, &event, sizeof(event));
+                memset(&event, 0, sizeof(event));
+                event.type = 0x04;
+                event.code = 0x04;
+                event.value = 0x70028;
+                write(fd, &event, sizeof(event));
+                memset(&event, 0, sizeof(event));
+                event.type = 0x01;
+                event.code = 0x1c;
+                event.value = 0x0;
+                write(fd, &event, sizeof(event));
+                memset(&event, 0, sizeof(event));
+                event.type = 0x0;
+                event.code = 0x0;
+                event.value = 0x0;
+                write(fd, &event, sizeof(event));
                 close(fd);
                 return fd;
 }

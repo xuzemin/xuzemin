@@ -127,6 +127,9 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitute
   (JNIEnv *, jclass);
 
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyReturn
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif
