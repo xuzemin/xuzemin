@@ -7,27 +7,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    gray
- * Signature: ([III)[I
- */
+//灰度化图片
 JNIEXPORT jintArray JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_gray
   (JNIEnv *, jclass, jintArray, jint, jint);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    init
- * Signature: ()I
- */
+//初始化打开摄像头
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    stop
- * Signature: ()I
- */
+//释放关闭摄像头
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
   (JNIEnv *, jclass);
 
@@ -47,6 +35,9 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_test
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get
   (JNIEnv *, jclass);
 
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_closeget
+        (JNIEnv *, jclass);
+
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
  * Method:    send
@@ -55,80 +46,62 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    getdata
- * Signature: (J)I
- */
+//获取一帧图片
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keydown_press
- * Signature: ()I
- */
+//向下按下
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownPress
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keydown_institute
- * Signature: ()I
- */
+//向下松开
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownInstitute
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keyup_press
- * Signature: ()I
- */
+//向上按下
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpPress
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keyup_institute
- * Signature: ()I
- */
+//向上松开
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpInstitute
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keyleft_press
- * Signature: ()I
- */
+//向左按下
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftPress
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keyleft
- * Signature: ()I
- */
+//向左松开
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftInstitute
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keyright_press
- * Signature: ()I
- */
+//向右按下
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
   (JNIEnv *, jclass);
 
-/*
- * Class:     com_android_jdrd_opencv_OpenCVHelper
- * Method:    keyright_institute
- * Signature: ()I
- */
+//向右松开
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitute
   (JNIEnv *, jclass);
-
+//回车
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyReturn
   (JNIEnv *, jclass);
+//打开USB权限
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_openUsb
+        (JNIEnv *,jclass,jstring, jint, jint);
+//初始化鼠标按键
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_initMouse
+        (JNIEnv *,jclass);
+//发送鼠标移动
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_sendData
+        (JNIEnv *,jclass,jint , jint ,jint);
+//发送鼠标绝对值移动
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_sendABSData
+        (JNIEnv *,jclass,jint , jint ,jint);
+//发送鼠标按下松开
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_MousePress
+        (JNIEnv *,jclass,jint);
+//关闭鼠标驱动
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_closeMouse
+        (JNIEnv *,jclass);
 
 #ifdef __cplusplus
 }

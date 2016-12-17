@@ -16,10 +16,27 @@
         android:layout_height="wrap_content"
         />
     <Button
+        android:id="@+id/initmouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="initmouse"/>
+    <Button
+        android:id="@+id/sendevent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sendevent"/>
+    <Button
+        android:id="@+id/sendABSData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sendABSData"/>
+
+    <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="init"/>
+
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
@@ -80,4 +97,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="关闭"/>
+    <Button
+        android:id="@+id/open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="打开设备节点"/>
 </LinearLayout>

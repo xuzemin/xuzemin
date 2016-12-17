@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -51,6 +52,36 @@ public class MainActivity extends AppCompatActivity {
         result.setPixels(resultPixes, 0, w, 0, 0, w, h);
         img = (ImageView) findViewById(R.id.img);
         img.setImageBitmap(result);
+
+        findViewById(R.id.initmouse).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.initMouse();
+                Log.e("MainAcitivity", "return" + i);
+            }
+        });
+        findViewById(R.id.sendevent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.sendData(10,10,0);
+                Log.e("MainAcitivity", "return" + i);
+            }
+        });
+        findViewById(R.id.sendABSData).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.sendABSData(300,300,1);
+                Log.e("MainAcitivity", "return" + i);
+            }
+        });
+
+        findViewById(R.id.open).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.get();
+                Log.e("MainAcitivity", "return" + i);
+            }
+        });
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +152,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainAcitivity", "return" + i);
             }
         });
+
+        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = OpenCVHelper.get();
+                Log.e("MainAcitivity", "return" + i);
+            }
+        });
+
         findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

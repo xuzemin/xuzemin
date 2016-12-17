@@ -10,6 +10,8 @@
 #include <malloc.h>
 #include <linux/fb.h>
 #include <syslog.h>
+#include <termios.h>
+#include <unistd.h>
 #include <jpeg/jpeglib.h>
 #include "ImageProc.h"
 using namespace cv;
@@ -42,6 +44,7 @@ int              fd              = -1;
 unsigned int     n_buffers       = 0;
 int i, ret;
 int uinp_fd = -1;
+int uinp_mouse_fd = -1;
 int camerabase = -1;
 struct uinput_user_dev uinp; // uInput device structure
 struct input_event event;
@@ -53,6 +56,9 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_test
         (JNIEnv *, jclass);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get
+        (JNIEnv *, jclass);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_closeget
         (JNIEnv *, jclass);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
@@ -68,7 +74,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
         (JNIEnv *, jclass);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownPress
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
@@ -76,7 +82,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownPress
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownInstitute
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
@@ -84,7 +90,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownInstitut
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpPress
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
@@ -92,7 +98,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpPress
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpInstitute
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
@@ -100,7 +106,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpInstitute
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftPress
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
@@ -108,7 +114,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftPress
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftInstitute
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
@@ -116,7 +122,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftInstitut
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 /*
  * Class:     com_android_jdrd_opencv_OpenCVHelper
@@ -124,11 +130,29 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
  * Signature: ()I
  */
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitute
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
 
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyReturn
-  (JNIEnv *, jclass);
+        (JNIEnv *, jclass);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_openUsb
+        (JNIEnv *, jclass);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_initMouse
+        (JNIEnv *,jclass);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_sendData
+        (JNIEnv *,jclass,jint , jint ,jint);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_sendABSData
+        (JNIEnv *,jclass,jint , jint ,jint);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_MousePress
+        (JNIEnv *,jclass,jint);
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_closeMouse
+        (JNIEnv *,jclass);
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
         (JNIEnv *env, jclass obj){
@@ -151,11 +175,11 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
     cropcap.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     ret = ioctl(fd, VIDIOC_QUERYCAP, &cropcap);
     if (ret == 0) {
-            crop.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    		crop.c = cropcap.defrect;
-            LOGI("VIDIOC_QUERYCAP failed (%d)\n", ret);
-            ret = ioctl(fd, VIDIOC_QUERYCAP, &cap);
-            if(-1 == ret)
+        crop.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+        crop.c = cropcap.defrect;
+        LOGI("VIDIOC_QUERYCAP failed (%d)\n", ret);
+        ret = ioctl(fd, VIDIOC_QUERYCAP, &cap);
+        if(-1 == ret)
             return ret;
     }
 
@@ -192,11 +216,11 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_init
     }
     unsigned int min;
     min = fmt.fmt.pix.width * 2;
-    	if (fmt.fmt.pix.bytesperline < min)
-    		fmt.fmt.pix.bytesperline = min;
-    	min = fmt.fmt.pix.bytesperline * fmt.fmt.pix.height;
-    	if (fmt.fmt.pix.sizeimage < min)
-    		fmt.fmt.pix.sizeimage = min;
+    if (fmt.fmt.pix.bytesperline < min)
+        fmt.fmt.pix.bytesperline = min;
+    min = fmt.fmt.pix.bytesperline * fmt.fmt.pix.height;
+    if (fmt.fmt.pix.sizeimage < min)
+        fmt.fmt.pix.sizeimage = min;
 
     // Get Stream Format
     ret = ioctl(fd, VIDIOC_G_FMT, &fmt);
@@ -280,10 +304,10 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_stop
 
 JNIEXPORT jint  JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
         JNIEnv *env, jclass obj,jlong rgba){
-        cv::Mat* mat_rgba = (cv::Mat*) rgba;
+    cv::Mat* mat_rgba = (cv::Mat*) rgba;
 
-         LOGI("getdata start %s\n", CAPTURE_FILE);
-        // Queen buffers
+    LOGI("getdata start %s\n", CAPTURE_FILE);
+    // Queen buffers
     // Get frame
     ret = ioctl(fd, VIDIOC_DQBUF, &buf);
     if (ret < 0) {
@@ -296,14 +320,14 @@ JNIEXPORT jint  JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_getdata(
     int bufLen = w*h;
 //    unsigned char* pYuvBuf = new unsigned char[bufLen];
 
-        LOGI("Mat %s\n", CAPTURE_FILE);
-        //cv::Mat yuvImg;
-        //yuvImg.create(h*3/2, w, CV_8UC1);
-        mat_rgba->create(h, w, CV_8UC1);
-        LOGI("framebuf  buf.index %d\n", buf.index);
-        memcpy(mat_rgba->data,framebuf[buf.index].start,mat_rgba->step * mat_rgba->rows);
-        //yuyv_2_rgb888((char *)framebuf[0].start,(char *)mat_rgba->data);
-        LOGI("Capture one frame saved in test.jpg\n");
+    LOGI("Mat %s\n", CAPTURE_FILE);
+    //cv::Mat yuvImg;
+    //yuvImg.create(h*3/2, w, CV_8UC1);
+    mat_rgba->create(h, w, CV_8UC1);
+    LOGI("framebuf  buf.index %d\n", buf.index);
+    memcpy(mat_rgba->data,framebuf[buf.index].start,mat_rgba->step * mat_rgba->rows);
+    //yuyv_2_rgb888((char *)framebuf[0].start,(char *)mat_rgba->data);
+    LOGI("Capture one frame saved in test.jpg\n");
 
     // Re-queen buffer
     ret = ioctl(fd, VIDIOC_QBUF, &buf);
@@ -368,58 +392,19 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_test(
         //fprintf(stderr, "write event failed, %s\n", strerror(errno));
         return -1;
     }
-    event.type = 0x01;
-    event.code = 0x0111;
-    event.value = 0x01;
-    ret = write(fd, &event, sizeof(event));
-    if(ret < (ssize_t) sizeof(event)) {
-        close(fd);
-        //fprintf(stderr, "write event failed, %s\n", strerror(errno));
-        return -2;
-    }
-    event.type = 0x0;
-    event.code = 0x0;
-    event.value = 0x0;
-    ret = write(fd, &event, sizeof(event));
-    if(ret < (ssize_t) sizeof(event)) {
-        close(fd);
-        //fprintf(stderr, "write event failed, %s\n", strerror(errno));
-        return -3;
-    }        	    event.type = 0x04;
-    event.code = 0x04;
-    event.value = 0x90002;
-    ret = write(fd, &event, sizeof(event));
-    if(ret < (ssize_t) sizeof(event)) {
-        close(fd);
-        //fprintf(stderr, "write event failed, %s\n", strerror(errno));
-        return -4;
-    }        	    event.type = 0x01;
-    event.code = 0x0111;
-    event.value = 0x0;
-    ret = write(fd, &event, sizeof(event));
-    if(ret < (ssize_t) sizeof(event)) {
-        close(fd);
-        //fprintf(stderr, "write event failed, %s\n", strerror(errno));
-        return -5;
-    }        	    event.type = 0x0;
-    event.code = 0x0;
-    event.value = 0x0;
-    ret = write(fd, &event, sizeof(event));
-    if(ret < (ssize_t) sizeof(event)) {
-        close(fd);
-        //fprintf(stderr, "write event failed, %s\n", strerror(errno));
-        return -6;
-    }
-    close(fd);
-    return 0;
+
 }
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get(
         JNIEnv *env, jclass obj) {
-
-
-
     // Open the input device
+    if(uinp_fd != -1){
+        /* Destroy the input device */
+        ioctl(uinp_fd, UI_DEV_DESTROY);
+        /* Close the UINPUT device */
+        close(uinp_fd);
+        uinp_fd = -1;
+    }
     uinp_fd = open("/dev/uinput", O_WRONLY | O_NDELAY);
     if (uinp_fd < 0)
     {
@@ -429,7 +414,7 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get(
     }
 
     memset(&uinp,0,sizeof(uinp)); // Intialize the uInput device to NULL
-    strncpy(uinp.name, "PolyVision Touch Screen", UINPUT_MAX_NAME_SIZE);
+    strncpy(uinp.name, "KeyMap", UINPUT_MAX_NAME_SIZE);
     uinp.id.version = 5;
     uinp.id.bustype = BUS_USB;
 
@@ -460,401 +445,392 @@ JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_get(
         return -1;
     }
 
-    // send_click_events(); // Send mouse event
-    memset(&event, 0, sizeof(event));
-    event.type = EV_REL;
-    event.code = REL_X;
-    event.value = 100;
-    write(uinp_fd, &event, sizeof(event));
-
-    event.type = EV_REL;
-    event.code = REL_Y;
-    event.value = 100;
-    write(uinp_fd, &event, sizeof(event));
-
-    event.type = EV_SYN;
-    event.code = SYN_REPORT;
-    event.value = 0;
-    write(uinp_fd, &event, sizeof(event));
-
-    // Report BUTTON CLICK - PRESS event
-    memset(&event, 0, sizeof(event));
-    event.type = EV_KEY;
-    event.code = BTN_LEFT;
-    event.value = 1;
-    write(uinp_fd, &event, sizeof(event));
-
-    event.type = EV_SYN;
-    event.code = SYN_REPORT;
-    event.value = 0;
-    write(uinp_fd, &event, sizeof(event));
-
-    // Report BUTTON CLICK - RELEASE event
-    memset(&event, 0, sizeof(event));
-    event.type = EV_KEY;
-    event.code = BTN_LEFT;
-    event.value = 0;
-
-    write(uinp_fd, &event, sizeof(event));
-    event.type = EV_SYN;
-    event.code = SYN_REPORT;
-    event.value = 0;
-    write(uinp_fd, &event, sizeof(event));
-    /* Destroy the input device */
-    //ioctl(uinp_fd, UI_DEV_DESTROY);
-
-    /* Close the UINPUT device */
-    //close(uinp_fd);
     return 0;
+}
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_closeget
+        (JNIEnv *env, jclass obj){
+    ioctl(uinp_fd, UI_DEV_DESTROY);
+    /* Close the UINPUT device */
+    close(uinp_fd);
+    uinp_fd = -1;
+    return uinp_fd;
 }
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_send
         (JNIEnv *env, jclass obj){
-    int fd;
-    int version;
-    fd = open("/dev/input/event4", O_RDWR);
-    if(fd < 0) {
-        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-        return 2;
-    }
-    if (ioctl(fd, EVIOCGVERSION, &version)) {
-        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-        return 3;
-    }
+
     memset(&event, 0, sizeof(event));
     event.type = EV_REL;
     event.code = REL_X;
     event.value = 100;
-    write(fd, &event, sizeof(event));
+    write(uinp_fd, &event, sizeof(event));
     event.type = EV_REL;
     event.code = REL_Y;
     event.value = 100;
-    write(fd, &event, sizeof(event));
+    write(uinp_fd, &event, sizeof(event));
     event.type = EV_SYN;
     event.code = SYN_REPORT;
     event.value = 0;
-    write(fd, &event, sizeof(event));
+    write(uinp_fd, &event, sizeof(event));
     // Report BUTTON CLICK - PRESS event
     memset(&event, 0, sizeof(event));
     event.type = EV_KEY;
     event.code = BTN_LEFT;
     event.value = 1;
-    write(fd, &event, sizeof(event));
+    write(uinp_fd, &event, sizeof(event));
     memset(&event, 0, sizeof(event));
     event.type = EV_SYN;
     event.code = SYN_REPORT;
     event.value = 0;
-    write(fd, &event, sizeof(event));
+    write(uinp_fd, &event, sizeof(event));
     memset(&event, 0, sizeof(event));
     event.type = EV_KEY;
     event.code = BTN_LEFT;
     event.value = 0;
-    write(fd, &event, sizeof(event));
+    write(uinp_fd, &event, sizeof(event));
     memset(&event, 0, sizeof(event));
     event.type = EV_SYN;
     event.code = SYN_REPORT;
     event.value = 0;
-    write(fd, &event, sizeof(event));
+    write(uinp_fd, &event, sizeof(event));
     return 0;
 }
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownPress
         (JNIEnv *env, jclass obj){
-    int fd;
-    int version;
-    fd = open("/dev/input/event4", O_RDWR);
-    if(fd < 0) {
-        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-        return 2;
-    }
-    if (ioctl(fd, EVIOCGVERSION, &version)) {
-        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-        return 3;
-    }
-        memset(&event, 0, sizeof(event));
-        event.type = 0x04;
-        event.code = 0x04;
-        event.value = 0x70051;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x01;
-        event.code = 0x6c;
-        event.value = 0x01;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x0;
-        event.code = 0x0;
-        event.value = 0x0;
-        write(fd, &event, sizeof(event));
-        close(fd);
-        return fd;
+
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x6c;
+    event.value = 1;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+    return uinp_fd;
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyDownInstitute
-  (JNIEnv *env, jclass obj)
+        (JNIEnv *env, jclass obj)
 {
-        int fd;
-            int version;
-            fd = open("/dev/input/event4", O_RDWR);
-            if(fd < 0) {
-                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-                return 2;
-            }
-            if (ioctl(fd, EVIOCGVERSION, &version)) {
-                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-                return 3;
-            }
-                memset(&event, 0, sizeof(event));
-                event.type = 0x04;
-                event.code = 0x04;
-                event.value = 0x70051;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x01;
-                event.code = 0x6c;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x0;
-                event.code = 0x0;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                close(fd);
-                return fd;
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x6c;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+
+    return uinp_fd;
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpPress
         (JNIEnv *env, jclass obj){
-    int fd;
-    int version;
-    fd = open("/dev/input/event4", O_RDWR);
-    if(fd < 0) {
-        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-        return 2;
-    }
-    if (ioctl(fd, EVIOCGVERSION, &version)) {
-        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-        return 3;
-    }
-        memset(&event, 0, sizeof(event));
-        event.type = 0x04;
-        event.code = 0x04;
-        event.value = 0x70052;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x01;
-        event.code = 0x67;
-        event.value = 0x01;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x0;
-        event.code = 0x0;
-        event.value = 0x0;
-        write(fd, &event, sizeof(event));
-        close(fd);
-        return fd;
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x67;
+    event.value = 1;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+    return uinp_fd;
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyUpInstitute
-  (JNIEnv *env, jclass obj)
+        (JNIEnv *env, jclass obj)
 {
-        int fd;
-            int version;
-            fd = open("/dev/input/event4", O_RDWR);
-            if(fd < 0) {
-                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-                return 2;
-            }
-            if (ioctl(fd, EVIOCGVERSION, &version)) {
-                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-                return 3;
-            }
-                memset(&event, 0, sizeof(event));
-                event.type = 0x04;
-                event.code = 0x04;
-                event.value = 0x70052;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x01;
-                event.code = 0x67;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x0;
-                event.code = 0x0;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                close(fd);
-                return fd;
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x67;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+    return uinp_fd;
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightPress
         (JNIEnv *env, jclass obj){
-    int fd;
-    int version;
-    fd = open("/dev/input/event4", O_RDWR);
-    if(fd < 0) {
-        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-        return 2;
-    }
-    if (ioctl(fd, EVIOCGVERSION, &version)) {
-        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-        return 3;
-    }
-        memset(&event, 0, sizeof(event));
-        event.type = 0x04;
-        event.code = 0x04;
-        event.value = 0x7004f;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x01;
-        event.code = 0x6a;
-        event.value = 0x01;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x0;
-        event.code = 0x0;
-        event.value = 0x0;
-        write(fd, &event, sizeof(event));
-        close(fd);
-        return fd;
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x6a;
+    event.value = 1;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+    return uinp_fd;
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyRightInstitute
-  (JNIEnv *env, jclass obj)
+        (JNIEnv *env, jclass obj)
 {
-        int fd;
-            int version;
-            fd = open("/dev/input/event4", O_RDWR);
-            if(fd < 0) {
-                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-                return 2;
-            }
-            if (ioctl(fd, EVIOCGVERSION, &version)) {
-                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-                return 3;
-            }
-                memset(&event, 0, sizeof(event));
-                event.type = 0x04;
-                event.code = 0x04;
-                event.value = 0x7004f;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x01;
-                event.code = 0x6a;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x0;
-                event.code = 0x0;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                close(fd);
-                return fd;
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x6a;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+    return uinp_fd;
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftPress
         (JNIEnv *env, jclass obj){
-    int fd;
-    int version;
-    fd = open("/dev/input/event4", O_RDWR);
-    if(fd < 0) {
-        close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-        return 2;
-    }
-    if (ioctl(fd, EVIOCGVERSION, &version)) {
-        close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-        return 3;
-    }
-        memset(&event, 0, sizeof(event));
-        event.type = 0x04;
-        event.code = 0x04;
-        event.value = 0x70050;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x01;
-        event.code = 0x69;
-        event.value = 0x01;
-        write(fd, &event, sizeof(event));
-        memset(&event, 0, sizeof(event));
-        event.type = 0x0;
-        event.code = 0x0;
-        event.value = 0x0;
-        write(fd, &event, sizeof(event));
-        close(fd);
-        return fd;
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x69;
+    event.value = 1;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+    return uinp_fd;
 }
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyLeftInstitute
-  (JNIEnv *env, jclass obj)
+        (JNIEnv *env, jclass obj)
 {
-        int fd;
-            int version;
-            fd = open("/dev/input/event4", O_RDWR);
-            if(fd < 0) {
-                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-                return 2;
-            }
-            if (ioctl(fd, EVIOCGVERSION, &version)) {
-                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-                return 3;
-            }
-                memset(&event, 0, sizeof(event));
-                event.type = 0x04;
-                event.code = 0x04;
-                event.value = 0x70050;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x01;
-                event.code = 0x69;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x0;
-                event.code = 0x0;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                close(fd);
-                return fd;
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x69;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+    return uinp_fd;
 }
 
 JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_keyReturn
-  (JNIEnv *env, jclass obj)
+        (JNIEnv *env, jclass obj)
 {
-            int fd;
-            int version;
-            fd = open("/dev/input/event4", O_RDWR);
-            if(fd < 0) {
-                close(fd);//fprintf(stderr, "could not open %s, %s\n", argv[optind], strerror(errno));
-                return 2;
-            }
-            if (ioctl(fd, EVIOCGVERSION, &version)) {
-                close(fd);//fprintf(stderr, "could not get driver version for %s, %s\n", argv[optind], strerror(errno));
-                return 3;
-            }
-                memset(&event, 0, sizeof(event));
-                event.type = 0x04;
-                event.code = 0x04;
-                event.value = 0x70028;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x01;
-                event.code = 0x1c;
-                event.value = 0x1;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x0;
-                event.code = 0x0;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x04;
-                event.code = 0x04;
-                event.value = 0x70028;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x01;
-                event.code = 0x1c;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                memset(&event, 0, sizeof(event));
-                event.type = 0x0;
-                event.code = 0x0;
-                event.value = 0x0;
-                write(fd, &event, sizeof(event));
-                close(fd);
-                return fd;
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x1c;
+    event.value = 1;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x1c;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_fd, &event, sizeof(event));
+    return uinp_fd;
+}
+
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_openUsb
+        (JNIEnv *env, jclass obj){
+    LOGI("---------%s-----------\n", __FUNCTION__);
+    speed_t speed;
+    int fd;
+    fd = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
+    if(fd < 0)
+    {
+        LOGI("open : %s\n", strerror(errno));
+        return -1;
+    }
+    struct termios cfg;
+    cfmakeraw(&cfg);
+    cfsetispeed(&cfg, speed);
+    cfsetospeed(&cfg, speed);
+
+    close(fd);
+
+    return 0;
+}
+
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_initMouse
+        (JNIEnv *env, jclass obj){
+    if(uinp_mouse_fd != -1){
+        /* Destroy the input device */
+        ioctl(uinp_mouse_fd, UI_DEV_DESTROY);
+        /* Close the UINPUT device */
+        close(uinp_mouse_fd);
+        uinp_mouse_fd = -1;
+    }
+    uinp_mouse_fd = open("/dev/uinput", O_WRONLY | O_NDELAY);
+    if (uinp_mouse_fd < 0)
+    {
+        close(uinp_mouse_fd);
+        return -1;
+    }
+    struct uinput_user_dev device;
+    memset(&device,0,sizeof(device)); // Intialize the uInput device to NULL
+    strncpy(device.name, "Mouse", UINPUT_MAX_NAME_SIZE);
+    device.id.version = 5;
+    device.id.bustype = BUS_USB;
+
+    // Setup the uinput device
+    ioctl(uinp_mouse_fd, UI_SET_EVBIT, EV_KEY);
+    ioctl(uinp_mouse_fd, UI_SET_EVBIT, EV_REL);
+    ioctl(uinp_mouse_fd, UI_SET_RELBIT, REL_X);
+    ioctl(uinp_mouse_fd, UI_SET_RELBIT, REL_Y);
+    ioctl(uinp_mouse_fd, UI_SET_EVBIT, EV_ABS);
+    ioctl(uinp_mouse_fd, UI_SET_ABSBIT, ABS_X);
+    ioctl(uinp_mouse_fd, UI_SET_ABSBIT, ABS_Y);
+    ioctl(uinp_mouse_fd, UI_SET_ABSBIT, ABS_PRESSURE);
+
+    device.absmin[ABS_X] = 0;
+    device.absmax[ABS_X] = 65535; //sam 把屏幕设为0-65535
+    device.absmin[ABS_Y] = 0;
+    device.absmax[ABS_Y] = 65535;
+    device.absmin[ABS_PRESSURE] = 0;
+    device.absmax[ABS_PRESSURE] = 0xfff;
+
+    int i =0;
+    for (i=0; i < 256; i++) {
+        ioctl(uinp_mouse_fd, UI_SET_KEYBIT, i);
+    }
+
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_MOUSE);
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_TOUCH);
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_MOUSE);
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_LEFT);
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_MIDDLE);
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_RIGHT);
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_FORWARD);
+    ioctl(uinp_mouse_fd, UI_SET_KEYBIT, BTN_BACK);
+
+    write(uinp_mouse_fd, &device, sizeof(device));
+    if (ioctl(uinp_mouse_fd, UI_DEV_CREATE))
+    {
+        printf("Unable to create UINPUT device.");
+        return -2;
+    }
+
+    return uinp_mouse_fd;
+}
+
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_sendData
+        (JNIEnv *env, jclass obj , jint mouse_x , jint mouse_y ,jint mouse_press){
+    memset(&event, 0, sizeof(event));
+    event.type = EV_REL;
+    event.code = REL_X;
+    event.value = mouse_x;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_REL;
+    event.code = REL_Y;
+    event.value = mouse_y;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = mouse_press;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    return uinp_mouse_fd;
+}
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_sendABSData
+        (JNIEnv *env, jclass obj , jint mouse_x , jint mouse_y ,jint mouse_press){
+    memset(&event, 0, sizeof(event));
+    event.type = EV_ABS;
+    event.code = ABS_X;
+    event.value = mouse_x;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_ABS;
+    event.code = ABS_Y;
+    event.value = mouse_y;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x14A;
+    event.value = 1;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = 0x0;
+    event.code = 0x0;
+    event.value = 0x0;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = 0x14A;
+    event.value = 0;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = 0x0;
+    event.code = 0x0;
+    event.value = 0x0;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    return uinp_mouse_fd;
+}
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_MousePress
+        (JNIEnv *env, jclass obj , jint mouse_press){
+    memset(&event, 0, sizeof(event));
+    event.type = EV_KEY;
+    event.code = BTN_LEFT;
+    event.value = mouse_press;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    memset(&event, 0, sizeof(event));
+    event.type = EV_SYN;
+    event.code = SYN_REPORT;
+    event.value = 0;
+    write(uinp_mouse_fd, &event, sizeof(event));
+
+    return uinp_mouse_fd;
+}
+
+JNIEXPORT jint JNICALL Java_com_android_jdrd_opencv_OpenCVHelper_closeMouse
+        (JNIEnv *env, jclass obj ){
+    /* Destroy the input device */
+    ioctl(uinp_mouse_fd, UI_DEV_DESTROY);
+    /* Close the UINPUT device */
+    close(uinp_mouse_fd);
+    uinp_mouse_fd = -1;
+
+    return uinp_mouse_fd;
 }
