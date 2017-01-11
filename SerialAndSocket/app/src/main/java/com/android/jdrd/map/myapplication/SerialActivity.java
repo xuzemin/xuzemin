@@ -60,8 +60,12 @@ public class SerialActivity extends Activity {
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("SerialActivity", "content"+editText.getText().toString().trim());
-                mSerialPortUtil.sendCmds(editText.getText().toString()+'\r');
+                if(!editText.getText().toString().trim().equals("")){
+                    Log.e("SerialActivity", "content"+editText.getText().toString().trim());
+                    mSerialPortUtil.sendCmds(editText.getText().toString()+'\r'+'\n');
+                    editText.setText("");
+                }
+
 //                mSerialPortUtil.sendCmds("q\r\n");
 //                byte[] byte_1 = {'q','\r','\n'};
 //                byte[] byte_2  =  editText.getText().toString().trim().getBytes();
@@ -70,6 +74,7 @@ public class SerialActivity extends Activity {
 //                System.arraycopy(byte_1, 0, byte_3, byte_2.length, byte_1.length);
 //                mSerialPortUtil.sendBuffer(byte_1);
 //                mSerialPortUtil.sendBuffer(editText.getText().toString().getBytes());
+
             }
         });
     }
