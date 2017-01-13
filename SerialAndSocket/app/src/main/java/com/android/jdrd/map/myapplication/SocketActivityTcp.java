@@ -54,10 +54,12 @@ public class SocketActivityTcp extends Activity implements Runnable{
         setContentView(R.layout.activity_socket);
         editText = (EditText)this.findViewById(R.id.editTextSocket);
         textView = (TextView)this.findViewById(R.id.textViewSocket);
-        ip = (TextView)this.findViewById(R.id.ip);
-        ip.setText("服务器地址"+Constant.Server_IP);
-        port = (TextView)this.findViewById(R.id.port);
-        port.setText("端口"+Constant.HOST_PORT);
+//        ip = (TextView)this.findViewById(R.id.ip);
+//        ip.setText("服务器地址"+Constant.Server_IP);
+//        port = (TextView)this.findViewById(R.id.port);
+//        port.setText("端口"+Constant.HOST_PORT);
+
+
         findViewById(R.id.buttonSocket).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,22 +78,26 @@ public class SocketActivityTcp extends Activity implements Runnable{
                 }
             }
         });
-        //启动线程，接收服务器发送过来的数据
+        //启动通讯连接
         new Thread(SocketActivityTcp.this).start();
     }
+    //新线程 连接以及获取流
     public void run() {
         try {
+            //socket 连接
             socket = new Socket(Constant.Server_IP, Constant.HOST_PORT);
+            //获得输入流
             in = new BufferedReader(new InputStreamReader(socket
-                    .getInputStream()));
+                    .getInputStream(),"UTF-8"));
+            //获得输出流
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    socket.getOutputStream())), true);
+                    socket.getOutputStream(),"UTF-8")), true);
             getdata();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-
+    //启动新线程循环接受数据
     public void getdata(){
         new Thread(new Runnable() {
             @Override

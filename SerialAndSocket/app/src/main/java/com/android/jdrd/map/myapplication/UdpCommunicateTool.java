@@ -4,7 +4,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -36,9 +39,9 @@ public class UdpCommunicateTool {
         }
     }
 
-    public static void sendData(String str, final DatagramSocket bigscreen_socket, final Handler handler) {
-        byte data[] = str.getBytes();
+    public static void sendData(String str, final DatagramSocket socket, final Handler handler) {
         try {
+            byte[] data = str.getBytes("UTF-8");
             // 创建一个DatagramPacket 对象，并指定要讲这个数据包发送到网络当中的哪个地址，以及端口号
             final DatagramPacket packa = new DatagramPacket(data, data.length,
                     InetAddress.getByName(Constant.Server_IP), Constant.Server_HOST_PORT);
@@ -47,10 +50,10 @@ public class UdpCommunicateTool {
                 public void run() {
                     super.run();
                     try {
-                        if (bigscreen_socket == null) {
+                        if (socket == null) {
                             handler.sendEmptyMessage(Constant.COMMUNCITY_REEOR);
                         } else {
-                            bigscreen_socket.send(packa);
+                            socket.send(packa);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -59,6 +62,8 @@ public class UdpCommunicateTool {
             }.start();
         } catch (UnknownHostException e) {
             Log.e(TAG, e.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 }

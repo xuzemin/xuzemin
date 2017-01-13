@@ -65,17 +65,13 @@ public class SerialActivity extends Activity {
                     mSerialPortUtil.sendCmds(editText.getText().toString()+'\r'+'\n');
                     editText.setText("");
                 }
-
-//                mSerialPortUtil.sendCmds("q\r\n");
-//                byte[] byte_1 = {'q','\r','\n'};
-//                byte[] byte_2  =  editText.getText().toString().trim().getBytes();
-//                byte[] byte_3 = new byte[byte_2.length+byte_1.length];
-//                System.arraycopy(byte_2, 0, byte_3, 0, byte_2.length);
-//                System.arraycopy(byte_1, 0, byte_3, byte_2.length, byte_1.length);
-//                mSerialPortUtil.sendBuffer(byte_1);
-//                mSerialPortUtil.sendBuffer(editText.getText().toString().getBytes());
-
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSerialPortUtil.closeSerialPort();
     }
 }

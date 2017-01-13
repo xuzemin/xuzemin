@@ -110,10 +110,11 @@ JNIEXPORT jobject JNICALL Java_com_skyworth_splicing_SerialPort_open(JNIEnv *env
     int fd;  
     speed_t speed;  
     jobject mFileDescriptor;  
-  
+
     LOGD("init native Check arguments");  
     /* Check arguments */  
-    {  
+    {
+        //获取波特率
         speed = getBaudrate(baudrate);  
         if (speed == -1) {  
             /* TODO: throw an exception */  
@@ -128,9 +129,11 @@ JNIEXPORT jobject JNICALL Java_com_skyworth_splicing_SerialPort_open(JNIEnv *env
         jboolean iscopy;  
         const char *path_utf = env->GetStringUTFChars(path, &iscopy);  
         LOGD("Opening serial port %s", path_utf);  
-//      fd = open(path_utf, O_RDWR | O_DIRECT | O_SYNC);  
+//      fd = open(path_utf, O_RDWR | O_DIRECT | O_SYNC);
+        //打开串口设备节点
         fd = open(path_utf, O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);  
-        LOGD("open() fd = %d", fd);  
+        LOGD("open() fd = %d", fd);
+        //数据类型转换
         env->ReleaseStringUTFChars(path, path_utf);  
         if (fd == -1) {  
             /* Throw an exception */  
@@ -143,17 +146,20 @@ JNIEXPORT jobject JNICALL Java_com_skyworth_splicing_SerialPort_open(JNIEnv *env
     LOGD("init native Configure device!");  
     /* Configure device */  
     {  
-        struct termios cfg;  
+        struct termios cfg;
+
+        //获取终端
         if (tcgetattr(fd, &cfg)) {  
             LOGE("Configure device tcgetattr() failed 1");  
             close(fd);  
             return NULL;  
         }  
-  
-        cfmakeraw(&cfg);  
+        //将终端设置为原始模式，该模式下所有的输入数据以字节为单位被处理。在原始模式下，终端是不可回显的，而且所有特定的终端输入/输出模式不可用。
+        cfmakeraw(&cfg);
+        //设置波特率
         cfsetispeed(&cfg, speed);  
         cfsetospeed(&cfg, speed);  
-  
+        //设置终端参数
         if (tcsetattr(fd, TCSANOW, &cfg)) {  
             LOGE("Configure device tcsetattr() failed 2");  
             close(fd);  
@@ -163,11 +169,16 @@ JNIEXPORT jobject JNICALL Java_com_skyworth_splicing_SerialPort_open(JNIEnv *env
     }  
   
     /* Create a corresponding file descriptor */  
-    {  
-        jclass cFileDescriptor = env->FindClass("java/io/FileDescriptor");  
-        jmethodID iFileDescriptor = env->GetMethodID(cFileDescriptor,"<init>", "()V");  
-        jfieldID descriptorID = env->GetFieldID(cFileDescriptor,"descriptor", "I");  
-        mFileDescriptor = env->NewObject(cFileDescriptor,iFileDescriptor);  
+    {
+        //获取io流类
+        jclass cFileDescriptor = env->FindClass("java/io/FileDescriptor");
+        //获取io流类方法
+        jmethodID iFileDescriptor = env->GetMethodID(cFileDescriptor,"<init>", "()V");
+        //获取io流类参数
+        jfieldID descriptorID = env->GetFieldID(cFileDescriptor,"descriptor", "I");
+        //实例化io流类
+        mFileDescriptor = env->NewObject(cFileDescriptor,iFileDescriptor);
+        //设置io流类参数为串口设备id
         env->SetIntField(mFileDescriptor, descriptorID, (jint) fd);  
     }  
   
@@ -190,7 +201,8 @@ JNIEXPORT jint JNICALL Java_com_skyworth_splicing_SerialPort_close(JNIEnv * env,
     jobject mFd = env->GetObjectField(thiz, mFdID);  
     jint descriptor = env->GetIntField(mFd, descriptorID);  
   
-    LOGD("close(fd = %d)", descriptor);  
+    LOGD("close(fd = %d)", descriptor);
+    //销毁io流操作类
     close(descriptor);  
     return 1;  
 }  

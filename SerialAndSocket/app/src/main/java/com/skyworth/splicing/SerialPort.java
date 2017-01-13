@@ -22,11 +22,13 @@ public class SerialPort {
 	private FileOutputStream mFileOutputStream;
 
 	public SerialPort(File device, int baudrate) throws SecurityException, IOException {
+		//设置串口设备节点和波特率
 		mFd = open(device.getAbsolutePath(), baudrate);
 		if (mFd == null) {
 			Log.e("SerialPortUtil",mFd.toString());
 			throw new IOException();
 		}
+		//获取输入输出流
 		mFileInputStream = new FileInputStream(mFd);
 		mFileOutputStream = new FileOutputStream(mFd);
 	}

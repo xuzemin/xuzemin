@@ -45,10 +45,11 @@ public class SerialPortUtil {
 
 	private void onCreate() {
 		try {
+			//实例串口对象并获取输入输出流
 			mSerialPort = new SerialPort(new File(path), baudrate);
 			mOutputStream = mSerialPort.getOutputStream();
 			mInputStream = mSerialPort.getInputStream();
-			
+			//开启循环通过输入流接受数据
 			mReadThread = new ReadThread();
 			isStop = false;
 			mReadThread.start();
@@ -56,7 +57,7 @@ public class SerialPortUtil {
 			e.printStackTrace();
 		}
 	}
-
+	//通过输出流发送数据
 	public boolean sendCmds(String cmd) {
 		boolean result = true;
 		byte[] mBuffer = cmd.getBytes();
@@ -75,28 +76,28 @@ public class SerialPortUtil {
 		return result;
 	}
 
-	public boolean sendBuffer(byte[] mBuffer) {
-		boolean result = true;
-//		String tail = "";
-		byte[] tailBuffer = {'\r'};
-		byte[] mBufferTemp = new byte[mBuffer.length+tailBuffer.length];
-		System.arraycopy(mBuffer, 0, mBufferTemp, 0, mBuffer.length);
-		System.arraycopy(tailBuffer, 0, mBufferTemp, mBuffer.length, tailBuffer.length);
-		try {
-			if (mOutputStream != null) {
-				mOutputStream.write(mBufferTemp);
-				mOutputStream.flush();
-				Log.e(TAG,"mBufferTemp"+mBufferTemp);
-			} else {
-				result = false;
-			}
-		} catch (IOException e) {
-			Log.e(TAG,"e"+e.toString());
-			e.printStackTrace();
-			result = false;
-		}
-		return result;
-	}
+//	public boolean sendBuffer(byte[] mBuffer) {
+//		boolean result = true;
+////		String tail = "";
+//		byte[] tailBuffer = {'\r'};
+//		byte[] mBufferTemp = new byte[mBuffer.length+tailBuffer.length];
+//		System.arraycopy(mBuffer, 0, mBufferTemp, 0, mBuffer.length);
+//		System.arraycopy(tailBuffer, 0, mBufferTemp, mBuffer.length, tailBuffer.length);
+//		try {
+//			if (mOutputStream != null) {
+//				mOutputStream.write(mBufferTemp);
+//				mOutputStream.flush();
+//				Log.e(TAG,"mBufferTemp"+mBufferTemp);
+//			} else {
+//				result = false;
+//			}
+//		} catch (IOException e) {
+//			Log.e(TAG,"e"+e.toString());
+//			e.printStackTrace();
+//			result = false;
+//		}
+//		return result;
+//	}
 
 	private class ReadThread extends Thread {
 
