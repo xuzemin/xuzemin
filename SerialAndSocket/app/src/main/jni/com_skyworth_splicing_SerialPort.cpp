@@ -119,7 +119,7 @@ JNIEXPORT jobject JNICALL Java_com_skyworth_splicing_SerialPort_open(JNIEnv *env
         if (speed == -1) {  
             /* TODO: throw an exception */  
             LOGE("Invalid baudrate");  
-            return NULL;  
+            return NULL;
         }  
     }  
   
@@ -157,7 +157,7 @@ JNIEXPORT jobject JNICALL Java_com_skyworth_splicing_SerialPort_open(JNIEnv *env
         //将终端设置为原始模式，该模式下所有的输入数据以字节为单位被处理。在原始模式下，终端是不可回显的，而且所有特定的终端输入/输出模式不可用。
         cfmakeraw(&cfg);
         //设置波特率
-        cfsetispeed(&cfg, speed);  
+        cfsetispeed(&cfg, speed);  //termios结构指针
         cfsetospeed(&cfg, speed);  
         //设置终端参数
         if (tcsetattr(fd, TCSANOW, &cfg)) {  

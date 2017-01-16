@@ -28,8 +28,9 @@ public class UdpCommunicateTool {
             DatagramPacket packet = new DatagramPacket(data, data.length);
             socket.receive(packet);
             // 把接收到的data转换为String字符串
+            //DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet.getData(),packet.getOffset(),packet.getLength()));
             String result = new String(packet.getData(), packet.getOffset(),
-                    packet.getLength());
+                    packet.getLength(),"GBK");
             Message msg =  Message.obtain(handler,from_where,result);
             msg.sendToTarget();
         } catch (SocketException e) {
@@ -41,7 +42,8 @@ public class UdpCommunicateTool {
 
     public static void sendData(String str, final DatagramSocket socket, final Handler handler) {
         try {
-            byte[] data = str.getBytes("UTF-8");
+            byte[] data = str.getBytes("GBK");
+
             // 创建一个DatagramPacket 对象，并指定要讲这个数据包发送到网络当中的哪个地址，以及端口号
             final DatagramPacket packa = new DatagramPacket(data, data.length,
                     InetAddress.getByName(Constant.Server_IP), Constant.Server_HOST_PORT);

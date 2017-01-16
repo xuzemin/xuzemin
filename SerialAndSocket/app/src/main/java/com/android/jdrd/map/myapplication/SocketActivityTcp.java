@@ -88,10 +88,10 @@ public class SocketActivityTcp extends Activity implements Runnable{
             socket = new Socket(Constant.Server_IP, Constant.HOST_PORT);
             //获得输入流
             in = new BufferedReader(new InputStreamReader(socket
-                    .getInputStream(),"UTF-8"));
+                    .getInputStream(),"GBK"));
             //获得输出流
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    socket.getOutputStream(),"UTF-8")), true);
+                    socket.getOutputStream(),"GBK")), true);
             getdata();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -108,10 +108,7 @@ public class SocketActivityTcp extends Activity implements Runnable{
                     int temp = 0;
                     // 从InputStream当中读取客户端所发送的数据
                     while ((temp = inputStream.read(buffer)) != -1) {
-                        System.out.println(new String(buffer, 0, temp));
-                        Log.e(TAG, "content"+new String(buffer, 0, temp));
-                        content = new String(buffer, 0, temp);
-                        Log.e(TAG, "content"+content);
+                        content = new String(buffer, 0, temp,"GBK");
                         Message msg =  Message.obtain(handler,GETDATA,content);
                         msg.sendToTarget();
                     }

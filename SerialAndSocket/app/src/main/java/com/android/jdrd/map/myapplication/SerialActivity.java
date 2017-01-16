@@ -46,13 +46,13 @@ public class SerialActivity extends Activity {
         TextView = (TextView) this.findViewById(R.id.textView);
         editText = (EditText) this.findViewById(R.id.editText);
         mSerialPortUtil = SerialPortUtil.getInstance();
+        //设置数据监听事件
         mSerialPortUtil.setOnDataReceiveListener(new SerialPortUtil.OnDataReceiveListener() {
             @Override
             public void onDataReceive(byte[] buffer, int size) {
                 // TODO Auto-generated method stub
 //                TextView.setText(new String(buffer,0,size));
                 content = new String(buffer, 0, size);
-                Log.e("","content"+content);
                 Message msg =  Message.obtain(handler,GETDATA,content);
                 msg.sendToTarget();
             }

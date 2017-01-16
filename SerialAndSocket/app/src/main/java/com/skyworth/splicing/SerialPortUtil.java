@@ -23,11 +23,17 @@ public class SerialPortUtil {
 	private static SerialPortUtil portUtil;
 	private OnDataReceiveListener onDataReceiveListener = null;
 	private boolean isStop = false;
-
+	/**
+	 * 创建数据接受接口
+	 */
 	public interface OnDataReceiveListener {
 		public void onDataReceive(byte[] buffer, int size);
 	}
 
+	/**
+	 * 获取数据接受监听
+	 * @param dataReceiveListener
+     */
 	public void setOnDataReceiveListener(
 			OnDataReceiveListener dataReceiveListener) {
 		onDataReceiveListener = dataReceiveListener;
@@ -57,7 +63,12 @@ public class SerialPortUtil {
 			e.printStackTrace();
 		}
 	}
-	//通过输出流发送数据
+
+	/***
+	 * 通过输出流发送数据
+	 * @param cmd
+	 * @return
+     */
 	public boolean sendCmds(String cmd) {
 		boolean result = true;
 		byte[] mBuffer = cmd.getBytes();
@@ -115,6 +126,7 @@ public class SerialPortUtil {
 //							String str = new String(buffer, 0, size);
 //							Logger.d("length is:"+size+",data is:"+new String(buffer, 0, size));
 						if (null != onDataReceiveListener) {
+							//监听返回数据
 							onDataReceiveListener.onDataReceive(buffer, size);
 							Log.e(TAG,"buffer"+buffer);
 						}
