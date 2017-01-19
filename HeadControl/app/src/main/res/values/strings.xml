@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">HeadControl</string>
+
+
+
+
+
+    <string name="button_clearlast">清除上一个</string>
+    <string name="button_clearall">清除所有</string>
+    <string name="button_left">左</string>
+    <string name="button_right">右</string>
+    <string name="button_up">上</string>
+    <string name="button_down">下</string>
+    <string name="button_move">移动</string>
+    <string name="button_rote">旋转</string>
+</resources>

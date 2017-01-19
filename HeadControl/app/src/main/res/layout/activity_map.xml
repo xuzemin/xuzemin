@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    tools:context="com.android.jdrd.headcontrol.activity.MapActivity">
+
+    <com.android.jdrd.headcontrol.view.MyView
+        android:id="@+id/surfaceview"
+        android:layout_width="600dp"
+        android:layout_height="900dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.0dp"/>
+    <Button
+        android:id="@+id/button_clearlast"
+        android:text="@string/button_clearlast"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_clearall"
+        android:text="@string/button_clearall"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_left"
+        android:text="@string/button_left"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_right"
+        android:text="@string/button_right"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_up"
+        android:text="@string/button_up"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_down"
+        android:text="@string/button_down"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="1234567890"
+        android:maxLength="3"
+        android:id="@+id/bitmap_center_x"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="1234567890"
+        android:maxLength="3"
+        android:id="@+id/bitmap_center_y"/>
+    <Button
+        android:id="@+id/button_move"
+        android:text="@string/button_move"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_rote"
+        android:text="@string/button_rote"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
