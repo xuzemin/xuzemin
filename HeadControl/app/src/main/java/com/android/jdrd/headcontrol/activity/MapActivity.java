@@ -1,13 +1,20 @@
 package com.android.jdrd.headcontrol.activity;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Movie;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.view.MyView;
+
+import java.io.InputStream;
 
 
 public class MapActivity extends AppCompatActivity {
@@ -17,6 +24,9 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_map);
 
         surfaceview=(MyView)findViewById(R.id.surfaceview);
@@ -27,9 +37,9 @@ public class MapActivity extends AppCompatActivity {
         findViewById(R.id.button_clearlast).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(surfaceview !=null&&surfaceview.xs.size()>=1){
-                    surfaceview.xs.remove(surfaceview.xs.size()-1);
-                    surfaceview.ys.remove(surfaceview.ys.size()-1);
+                if(surfaceview !=null&&surfaceview.point_xs.size()>=1){
+                    surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
+                    surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
                 }
             }
         });
@@ -37,8 +47,8 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(surfaceview !=null){
-                    surfaceview.xs.removeAllElements();
-                    surfaceview.ys.removeAllElements();
+                    surfaceview.point_xs.removeAllElements();
+                    surfaceview.point_ys.removeAllElements();
                 }
             }
         });
@@ -101,7 +111,19 @@ public class MapActivity extends AppCompatActivity {
             }
         });
         surfaceview.bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.tuzi);
+
+        InputStream is = getResources().openRawResource(R.mipmap.tuzi);
+        surfaceview.gifMovie = Movie.decodeStream(is);
+//        if (surfaceview.gifMovie != null) {
+//            surfaceview.testbitmap= BitmapFactory.decodeStream(i s);
+////            gifImageWidth = bitmap.getWidth();
+////            gifImageHeight = bitmap.getHeight();
+//            surfaceview.testbitmap.recycle();
+//        }
+        surfaceview.bitmap = Bitmap.createBitmap(surfaceview.bitmap,0,0,100,100);
         bitmap_width = surfaceview.bitmap.getWidth();
         bitmap_height= surfaceview.bitmap.getHeight();
+        Log.e("MyView","bitmap_width = " +bitmap_width+" bitmap_height = "+bitmap_height);
+        Log.e("MyView","surfaceview.gifMovie.width() = " +surfaceview.gifMovie.width()+" surfaceview.gifMovie.height() = "+surfaceview.gifMovie.height());
     }
 }
