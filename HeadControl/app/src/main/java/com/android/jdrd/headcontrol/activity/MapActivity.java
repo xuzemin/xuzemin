@@ -1,5 +1,6 @@
 package com.android.jdrd.headcontrol.activity;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Movie;
@@ -17,16 +18,14 @@ import com.android.jdrd.headcontrol.view.MyView;
 import java.io.InputStream;
 
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends Activity {
     private MyView surfaceview=null;
     private int bitmap_width = 0,bitmap_height= 0;
     private EditText bitmap_edit_x,bitmap_edit_y;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_map);
 
         surfaceview=(MyView)findViewById(R.id.surfaceview);
@@ -66,7 +65,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (surfaceview.bitmap != null) {
-                    if (surfaceview.bitmap_x + bitmap_width/2 < 600) {
+                    if (surfaceview.bitmap_x + bitmap_width/2 < 290) {
                         surfaceview.bitmap_x += 10;
                     }
                 }
@@ -86,7 +85,7 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (surfaceview.bitmap != null) {
-                    if (surfaceview.bitmap_y + bitmap_height/2 <= 900) {
+                    if (surfaceview.bitmap_y + bitmap_height/2 <= 440) {
                         surfaceview.bitmap_y += 10;
                     }
                 }

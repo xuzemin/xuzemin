@@ -127,7 +127,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         // TODO Auto-generated method stub
         if(event.getAction()==MotionEvent.ACTION_DOWN){
-            if( event.getX() > 100 && event.getX() < 500 && event.getY() > 100 && event.getY() < 800 ){
+            if( event.getX() > 10 && event.getX() < 290 && event.getY() > 10 && event.getY() < 440 ){
                 point_xs.add(event.getX());
                 point_ys.add(event.getY());
             }
@@ -146,10 +146,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     if(temp == 20){
                         temp = 0;
                         paint = true;
-                        Log.e("MyView","paint");
                     }else{
                         temp ++;
-                        Log.e("MyView","paint"+temp);
                     }
                     Canvas c=holder.lockCanvas();
                     doDraw(c);
