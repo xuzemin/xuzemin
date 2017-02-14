@@ -25,7 +25,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_xs=new Vector<Float>();
     public Vector<Float> point_ys=new Vector<Float>();
     public Paint p;
-    public int Scale = 100;
+    public int Scale = 25;
+    public float scale = 1,mount_x = 0,mount_y = 0;
     public int myview_width,myview_height;
     public Vector<Float> path_xs=new Vector<Float>();
     public Vector<Float> path_ys=new Vector<Float>();
@@ -70,7 +71,12 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public void doDraw(Canvas canvas) {
         // TODO Auto-generated method stub
         super.onDraw(canvas);
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale,scale);
+        matrix.postTranslate(mount_x,mount_y);
+        canvas.concat(matrix);
         canvas.drawColor(Color.WHITE);//这里是绘制背景
+
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿
         p.setColor(Color.BLACK);
@@ -111,11 +117,12 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         }
         drawtable(canvas);
         if(bitmap!=null){
-            Matrix matrix = new Matrix();
+            matrix = new Matrix();
             matrix.setTranslate(bitmap_x,bitmap_y);
             matrix.postRotate(rote, center_x,center_y);
             canvas.drawBitmap(bitmap,matrix,null);
         }
+
         showGifImage(canvas);
     }
 
@@ -173,13 +180,11 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 0.5);
 
-        Contact.debugLog("myview_height/Scale = "+ myview_height/Scale);
 
         for(int y=0;y <= (myview_height/Scale) ; y++) {
             canvas.drawLine(20,y*Scale+20,620,y*Scale+20,p);
         }
 
-        Contact.debugLog("myview_width/Scale = "+ myview_width/Scale);
 
         for(int y=0;y <= (myview_width/Scale);y++) {
             canvas.drawLine(y*Scale+20,20,y*Scale+20,1020,p);
