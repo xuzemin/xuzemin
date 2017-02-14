@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    style="@style/CustomDialogStyle"
+    android:background="@mipmap/tanchuchaung3"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/tanchuchaung3"
+        android:id="@+id/imageView" />
+
+    <LinearLayout
+        android:id="@+id/ll_Dialog_Main"
+        android:layout_width="233dp"
+        android:layout_height="280dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView">
+
+        <LinearLayout
+            android:id="@+id/ll_Dialog_Top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/ll_Dialog_Left"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal">
+                <!--开始-->
+                <com.jdrd.setting.common.MyTimerPicker1
+                    android:id="@+id/mtp_Start_Hour1"
+                    android:layout_width="30dp"
+                    android:layout_height="60dp"/>
+                <TextView
+                    android:id="@+id/tv_start_Hour1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_toRightOf="@id/mtp_Start_Hour1"
+                    android:text="："
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <com.jdrd.setting.common.MyTimerPicker1
+                    android:id="@+id/mtp_Start_Minute1"
+                    android:layout_width="30dp"
+                    android:layout_height="60dp"
+                    android:layout_toRightOf="@id/tv_start_Hour1" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_Dialog_Right"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!--结束-->
+                <com.jdrd.setting.common.MyTimePicker
+                    android:id="@+id/mtp_End_Hour1"
+                    android:layout_width="30dp"
+                    android:layout_height="60dp"
+                    android:layout_toRightOf="@id/mtp_Start_Minute1"
+                    android:layout_marginRight="20dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_End_Hour1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_toRightOf="@id/mtp_End_Hour1"
+                    android:text="："
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <com.jdrd.setting.common.MyTimePicker
+                    android:id="@+id/mtp_End_Minute1"
+                    android:layout_width="30dp"
+                    android:layout_height="60dp"
+                    android:layout_toRightOf="@id/tv_End_Hour1" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <!--下面-->
+        <LinearLayout
+            android:id="@+id/ll_Dialog_Bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_ImageView_queding_no"
+                    android:layout_width="194dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/queding_no"/>
+                <ImageView
+                    android:id="@+id/iv_ImageView_queding_per"
+                    android:layout_width="194dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/queding_per"
+                    android:visibility="gone"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp">
+                <ImageView
+                    android:id="@+id/iv_ImageView_quxiao_no"
+                    android:layout_width="194dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/quxiao_no"/>
+                <ImageView
+                    android:id="@+id/iv_ImageView_quxiao_per"
+                    android:layout_width="194dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/quxiao_per"
+                    android:visibility="gone"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

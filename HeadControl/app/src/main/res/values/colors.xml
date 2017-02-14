@@ -149,4 +149,10 @@
     <color name="darkblue">#00008B</color><!--暗蓝色 -->
     <color name="navy">#000080</color><!--海军色 -->
     <color name="black">#000000</color><!--黑色 -->
+    <color name="divider_line">#1d86b7</color>
+    <color name="btn_true">#B3313033</color>
+    <color name="btn_false">#80313033</color>
+    <color name="left_text_color">#D6FBFE</color>
+    <color name="right_title_background_color">#3A47A8</color>
+    <color name="right_button_background_color">#3768C8</color>
 </resources>
