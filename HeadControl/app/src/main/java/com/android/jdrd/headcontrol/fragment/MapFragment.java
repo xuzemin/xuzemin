@@ -1,11 +1,16 @@
 package com.android.jdrd.headcontrol.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Movie;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -20,14 +25,42 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.activity.WelcomeActivity;
 import com.android.jdrd.headcontrol.common.BaseFragment;
 import com.android.jdrd.headcontrol.util.Contact;
 import com.android.jdrd.headcontrol.view.MyView;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.Vector;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 /**
  * Created by Administrator on 2017/2/7.
@@ -35,23 +68,26 @@ import java.util.Vector;
 
 public class MapFragment extends BaseFragment implements View.OnClickListener {
 
-    private MyView surfaceview=null;
+    private MyReceiver receiver = null;
+    private MyView surfaceview = null;
     private int bitmap_width = 0,bitmap_height= 0;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
     private Spinner planchooce,serchtime,scope,angle,gametime;
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
-    private int plannumber,serchtimenumber,scopenumber,anglenumber,gametimenumber;
+    private float plannumber,serchtimenumber,scopenumber,anglenumber,gametimenumber;
     private Context context;
     private double nLenStart = 0;
     private EditText point_x,point_y;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> map_Plan;
+    private IntentFilter filter;
     private float eventx,eventy;
     public static boolean Istouch = false ,Isplan = false;
     //路线模式布局、路线模式详细设置；
     private LinearLayout linear_plan,linear_plan_info,linear_point,linear_roam;
-    private HashMap<String,Vector<String>> arrayPlan;
-    private HashMap<String,HashMap<String,Vector<String>>> arrayPlanLists;
+    private HashMap<String,Vector<Float>> arrayhash;
+    private Vector<Float> arrayserchtime,arrayscope,arrayangle,arraygametime;
+    private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
     public  MapFragment(){
         super();
     }
@@ -60,10 +96,24 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
+                    if(surfaceview !=null&&surfaceview.point_xs.size()>=1){
+                        surfaceview.point_xs.removeAllElements();
+                        surfaceview.point_ys.removeAllElements();
+                        arrayserchtime.removeAllElements();
+                        arrayscope.removeAllElements();
+                        arrayangle.removeAllElements();
+                        arraygametime.removeAllElements();
+                    }
+                    linear_plan_info.setVisibility(View.GONE);
+                    Istouch = false;
                     Contact.debugLog("btn_sure");
                     break;
                 case 2:
                     Contact.debugLog("btn_cancle");
+                    break;
+                case 3:
+                    Contact.debugLog("btn_warn_sure");
+                default:
                     break;
             }
             super.handleMessage(msg);
@@ -86,6 +136,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         surfaceview=(MyView)findViewById(R.id.surfaceview);
         surfaceview.myview_height = 1000;
         surfaceview.myview_width = 600;
+        receiver=new MyReceiver();
+        filter=new IntentFilter();
+        filter.addAction("com.jdrd.fragment.Map");
+        context.registerReceiver(receiver,filter);
     }
 
     @Override
@@ -101,7 +155,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 
         Contact.debugLog("bitmap_width = " + bitmap_width +" bitmap_height = "+bitmap_height);
         Contact.debugLog("surfaceview.gifMovie.width() = " +surfaceview.gifMovie.width()+" surfaceview.gifMovie.height() = "+surfaceview.gifMovie.height());
-
 
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
@@ -119,10 +172,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         linear_plan_info = (LinearLayout) findViewById(R.id.relative_plan_info);
         linear_point = (LinearLayout)findViewById(R.id.linearlayout_point);
         linear_roam = (LinearLayout)findViewById(R.id.linearlayout_roam);
-        findViewById(R.id.button_plan_back).setOnClickListener(this);
         findViewById(R.id.button_clearlast).setOnClickListener(this);
         findViewById(R.id.button_clearall).setOnClickListener(this);
         findViewById(R.id.button_plan).setOnClickListener(this);
+        findViewById(R.id.button_plan_stop).setOnClickListener(this);
         findViewById(R.id.button_pointchooce).setOnClickListener(this);
         findViewById(R.id.button_pathplan).setOnClickListener(this);
         findViewById(R.id.button_cruise).setOnClickListener(this);
@@ -147,15 +200,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     if(Istouch){
                         if( event.getX() > 20 && event.getX() < 620 && event.getY() > 20 && event.getY() < 1020 ){
                             float a,b;
-                            a = (event.getX() - 20 - surfaceview.mount_x )/ surfaceview.scale;
-                            b = ((event.getY() - 20 - surfaceview.mount_y )/surfaceview.scale);
+                            a = (event.getX() - 20 - surfaceview.translate_x )/ surfaceview.scale;
+                            b = ((event.getY() - 20 - surfaceview.translate_y )/surfaceview.scale);
                             int x = (int) a % surfaceview.Scale;
                             int x_int = (int) a / surfaceview.Scale ;
                             Contact.debugLog("surfaceview.Scale = " + surfaceview.Scale);
-                            Contact.debugLog("x = " +x+" x_int = "+x_int);
                             int y =(int)  b % surfaceview.Scale ;
                             int y_int = (int) b / surfaceview.Scale;
-                            Contact.debugLog("x = " +x+" x_int = "+x_int);
 
                             if(x > (surfaceview.Scale/2)){
                                 a = surfaceview.Scale * (x_int +1) +20;
@@ -170,14 +221,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                             surfaceview.point_xs.add(a);
                             surfaceview.point_ys.add(b);
                         }
-                        Contact.debugLog("x = " +event.getX()+" y = "+event.getY());
                         Istouch = false;
                     }else{
 
                     }
                 }else if(n==MotionEvent.ACTION_MOVE&&1 == nCnt){
-                    surfaceview.mount_x += (event.getX() - eventx)/5;
-                    surfaceview.mount_y += (event.getY() - eventy)/5;
+                    surfaceview.translate_x += (event.getX() - eventx)/5;
+                    surfaceview.translate_y += (event.getY() - eventy)/5;
                     eventx = event.getX();
                     eventy = event.getY();
                 }
@@ -240,30 +290,98 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //清除所有
             case R.id.button_clearall:
-                if(surfaceview !=null){
+                if(surfaceview!=null){
                     surfaceview.point_xs.removeAllElements();
                     surfaceview.point_ys.removeAllElements();
+                    arrayserchtime.removeAllElements();
+                    arrayscope.removeAllElements();
+                    arrayangle.removeAllElements();
+                    arraygametime.removeAllElements();
                 }
                 break;
             //规划新路线
             case R.id.button_plan:
+                arrayserchtime = new Vector<Float>();
+                arrayscope = new Vector<Float>();
+                arrayangle = new Vector<Float>();
+                arraygametime = new Vector<Float>();
+
+                if(surfaceview!=null){
+                    surfaceview.point_xs.removeAllElements();
+                    surfaceview.point_ys.removeAllElements();
+                    arrayserchtime.removeAllElements();
+                    arrayscope.removeAllElements();
+                    arrayangle.removeAllElements();
+                    arraygametime.removeAllElements();
+                }
+
                 Istouch = true;
                 linear_plan_info.setVisibility(View.VISIBLE);
                 break;
-            //下一步
-            case R.id.button_savenext:
-                Istouch = true;
+            //停止执行
+            case R.id.button_plan_stop:
 
-                break;
-            //规划完毕
-            case R.id.button_saveall:
-                linear_plan_info.setVisibility(View.GONE);
                 break;
             //执行路线
             case R.id.button_execut:
                 if(Istouch){
                     Contact.showWarntext(context,handler);
                 }
+                Contact.showWarn(context,handler);
+                break;
+            //下一步
+            case R.id.button_savenext:
+                if(!Istouch){
+                    arrayserchtime.add(serchtimenumber);
+                    arrayscope.add(scopenumber);
+                    arrayangle.add(anglenumber);
+                    arraygametime.add(gametimenumber);
+
+                    Istouch = true;
+                    Toast.makeText(context,"请选取一个新的目标点",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context,"没有选取一个新的目标点",Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            //规划完毕
+            case R.id.button_saveall:
+                if(!Istouch){
+                    arrayserchtime.add(serchtimenumber);
+                    arrayscope.add(scopenumber);
+                    arrayangle.add(anglenumber);
+                    arraygametime.add(gametimenumber);
+                }
+
+                arrayhash = new HashMap<>();
+                arrayhash.put("point_xs",surfaceview.point_xs);
+                arrayhash.put("point_ys",surfaceview.point_ys);
+                arrayhash.put("arrayserchtime",arrayserchtime);
+                arrayhash.put("arrayscope",arrayscope);
+                arrayhash.put("arrayangle",arrayangle);
+                arrayhash.put("arraygametime",arraygametime);
+                arrayPlanLists.put("first",arrayhash);
+                arrayPlanLists.put("two",arrayhash);
+
+                writeXML(arrayPlanLists);
+
+                InputStream inputStream;
+                try {
+                    inputStream = context.getAssets().open(Contact.filePath);
+                    readXML(inputStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                surfaceview.point_xs.removeAllElements();
+                surfaceview.point_ys.removeAllElements();
+                arrayserchtime.removeAllElements();
+                arrayscope.removeAllElements();
+                arrayangle.removeAllElements();
+                arraygametime.removeAllElements();
+
+                linear_plan_info.setVisibility(View.GONE);
+
 
                 break;
             //漫游模式
@@ -282,11 +400,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 linear_point.setVisibility(View.VISIBLE);
                 break;
             case R.id.button_return:
-                Contact.debugLog("还原" + surfaceview.scale + surfaceview.mount_x +surfaceview.mount_y);
+                Contact.debugLog("还原" + surfaceview.scale + surfaceview.translate_x +surfaceview.translate_y);
                 surfaceview.scale = 1;
-                surfaceview.mount_x = 0;
-                surfaceview.mount_y = 0;
-                Contact.debugLog("还原" + surfaceview.scale + surfaceview.mount_x +surfaceview.mount_y);
+                surfaceview.translate_x = 0;
+                surfaceview.translate_y = 0;
+                Contact.debugLog("还原" + surfaceview.scale + surfaceview.translate_x +surfaceview.translate_y);
                 break;
             //点选下一步
             case R.id.button_next:
@@ -302,9 +420,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //开始漫游
             case R.id.button_roam_start:
+
                 break;
             //停止漫游
             case R.id.button_roam_stop:
+
                 break;
 
         }
@@ -314,7 +434,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 
         public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                    long arg3) {
-            Contact.debugLog("OnItemSelectedListener = "+arg2);
             plannumber = arg2;
         }
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -404,7 +523,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     private void getUpPoint(float native_x,float native_y){
         if(native_x <= 0 && native_x >= -600 && native_y >= -760 && native_y <=240){
             surfaceview.bitmap_x = native_x * -100;
-            surfaceview.bitmap_x = native_y *100 + 760;
+            surfaceview.bitmap_y = native_y *100 + 760;
         }
     }
     //发往底层
@@ -419,4 +538,153 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         surfaceview.rote = -angle-45;
     }
 
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            float a = 0,b = 0;
+//            Bundle bundle=intent.getExtras();
+//            int count=bundle.getInt("count");
+//            Contact.debugLog("OnItemSelectedListener = "+bundle.toString());
+            getUpPoint(a,b);
+        }
+    }
+    private void sendBundle(){
+        float a = 0,b = 0;
+        setNativePoint(a,b);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        context.unregisterReceiver(receiver);
+    }
+
+    public void writeXML(HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.newDocument();
+            Element planLists = document.createElement("planLists");
+
+            Iterator<Map.Entry<String, HashMap<String,Vector<Float>>>> iter = arrayPlanLists.entrySet().iterator();
+            while(iter.hasNext()){
+                HashMap<String,Vector<Float>> planList = new HashMap<>();
+                Map.Entry entry = (Map.Entry) iter.next();
+                String key = (String) entry.getKey();
+                planList = (HashMap<String, Vector<Float>>) entry.getValue();
+
+                Element keysElement = document.createElement("key");
+                keysElement.setAttribute("key",key);
+
+                Vector<Float> point_xs = planList.get("point_xs");
+                Vector<Float> point_ys = planList.get("point_ys");
+                Vector<Float> arrayserchtime = planList.get("arrayserchtime");
+                Vector<Float> arrayscope = planList.get("arrayscope");
+                Vector<Float> arrayangle = planList.get("arrayangle");
+                Vector<Float> arraygametime = planList.get("arraygametime");
+                Element point_xs_ = document.createElement("point_xs");
+                Element point_ys_ = document.createElement("point_ys");
+                Element arrayserchtime_ = document.createElement("arrayserchtime");
+                Element arrayscope_ = document.createElement("arrayscope");
+                Element arrayangle_ = document.createElement("arrayangle");
+                Element arraygametime_ = document.createElement("arraygametime");
+
+                for(int x = 0;x < point_xs.size();x ++){
+                    Element item_xs = document.createElement("item_xs");
+                    item_xs.setTextContent(point_xs.elementAt(x)+"");
+                    Element item_ys = document.createElement("item_ys");
+                    item_ys.setTextContent(point_ys.elementAt(x)+"");
+                    Element item_serchtime = document.createElement("item_serchtime");
+                    item_serchtime.setTextContent(arrayserchtime.elementAt(x)+"");
+                    Element item_scope = document.createElement("item_scope");
+                    item_scope.setTextContent(arrayscope.elementAt(x)+"");
+                    Element item_angle = document.createElement("item_angle");
+                    item_angle.setTextContent(arrayangle.elementAt(x)+"");
+                    Element item_gametime = document.createElement("item_gametime");
+                    item_gametime.setTextContent(arraygametime.elementAt(x)+"");
+                    point_xs_.appendChild(item_xs);
+                    point_ys_.appendChild(item_ys);
+                    arrayserchtime_.appendChild(item_serchtime);
+                    arrayscope_.appendChild(item_scope);
+                    arrayangle_.appendChild(item_angle);
+                    arraygametime_.appendChild(item_gametime);
+                }
+                keysElement.appendChild(point_xs_);
+                keysElement.appendChild(point_ys_);
+                keysElement.appendChild(arrayserchtime_);
+                keysElement.appendChild(arrayscope_);
+                keysElement.appendChild(arrayangle_);
+                keysElement.appendChild(arraygametime_);
+
+                planLists.appendChild(keysElement);
+            }
+
+            document.appendChild(planLists);
+
+            TransformerFactory transfactory = TransformerFactory.newInstance();
+            Transformer transformer = transfactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");// 设置输出采用的编码方式
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");// 是否自动添加额外的空白
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");// 是否忽略XML声明
+            FileOutputStream fos = new FileOutputStream(Contact.filePath);
+            Source source = new DOMSource(document);
+            Result result = new StreamResult(fos);
+            transformer.transform(source, result);
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readXML(InputStream inputStream) {
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document parse = builder.parse(inputStream);
+
+            Element root = parse.getDocumentElement();
+            NodeList planLists = root.getElementsByTagName("planLists");
+            Contact.debugLog("item.getElementsByTagName(\"key\") = "+planLists.toString());
+
+            arrayPlanLists = new HashMap<>();
+            for (int i = 0; i < planLists.getLength(); i++) {
+                arrayhash = new HashMap<>();
+
+                Element item = (Element) planLists.item(i);
+                String key = item.getAttribute("key");
+                NodeList nodes = item.getElementsByTagName("key");
+                Contact.debugLog("item.getElementsByTagName(\"key\") = "+nodes.toString());
+                for (int j = 0; j < nodes.getLength(); j++) {
+                    Node node =  nodes.item(j);
+//                    String key = node.get
+                    if(node.getNodeType() == Node.ELEMENT_NODE){
+                        if ("point_xs".equals(node.getNodeName())) {
+
+                        }
+                    }
+                }
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

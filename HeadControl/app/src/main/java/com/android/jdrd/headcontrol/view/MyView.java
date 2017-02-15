@@ -26,7 +26,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_ys=new Vector<Float>();
     public Paint p;
     public int Scale = 25;
-    public float scale = 1,mount_x = 0,mount_y = 0;
+    public float scale = 1,translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
     public Vector<Float> path_xs=new Vector<Float>();
     public Vector<Float> path_ys=new Vector<Float>();
@@ -73,7 +73,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         super.onDraw(canvas);
         Matrix matrix = new Matrix();
         matrix.postScale(scale,scale);
-        matrix.postTranslate(mount_x,mount_y);
+        matrix.postTranslate(translate_x,translate_y);
         canvas.concat(matrix);
         canvas.drawColor(Color.WHITE);//这里是绘制背景
 
