@@ -36,6 +36,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -204,7 +205,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                             b = ((event.getY() - 20 - surfaceview.translate_y )/surfaceview.scale);
                             int x = (int) a % surfaceview.Scale;
                             int x_int = (int) a / surfaceview.Scale ;
-                            Contact.debugLog("surfaceview.Scale = " + surfaceview.Scale);
                             int y =(int)  b % surfaceview.Scale ;
                             int y_int = (int) b / surfaceview.Scale;
 
@@ -246,14 +246,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     double nLenEnd = Math.sqrt((double)xlen*xlen + (double)ylen * ylen);
                     if(nLenEnd > nLenStart)//通过两个手指开始距离和结束距离，来判断放大缩小
                     {
-                        Contact.debugLog("放大");
                         if(surfaceview.scale < 2) {
                             surfaceview.scale = (float) (surfaceview.scale + 0.2);
                         }
                     }
                     else
                     {
-                        Contact.debugLog("缩小");
                         if(surfaceview.scale > 1){
                             surfaceview.scale = (float) (surfaceview.scale - 0.2);
                         }
@@ -362,16 +360,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 arrayhash.put("arraygametime",arraygametime);
                 arrayPlanLists.put("first",arrayhash);
                 arrayPlanLists.put("two",arrayhash);
-
-                writeXML(arrayPlanLists);
-
-                InputStream inputStream;
-                try {
-                    inputStream = context.getAssets().open(Contact.filePath);
-                    readXML(inputStream);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                writeXML();
+                readXML();
 
                 surfaceview.point_xs.removeAllElements();
                 surfaceview.point_ys.removeAllElements();
@@ -379,9 +369,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 arrayscope.removeAllElements();
                 arrayangle.removeAllElements();
                 arraygametime.removeAllElements();
-
                 linear_plan_info.setVisibility(View.GONE);
-
 
                 break;
             //漫游模式
@@ -400,11 +388,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 linear_point.setVisibility(View.VISIBLE);
                 break;
             case R.id.button_return:
-                Contact.debugLog("还原" + surfaceview.scale + surfaceview.translate_x +surfaceview.translate_y);
                 surfaceview.scale = 1;
                 surfaceview.translate_x = 0;
                 surfaceview.translate_y = 0;
-                Contact.debugLog("还原" + surfaceview.scale + surfaceview.translate_x +surfaceview.translate_y);
                 break;
             //点选下一步
             case R.id.button_next:
@@ -452,7 +438,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         scope.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Contact.debugLog("OnItemSelectedListener = "+position);
                 scopenumber = position;
             }
             @Override
@@ -469,7 +454,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         serchtime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Contact.debugLog("OnItemSelectedListener = "+position);
                 serchtimenumber = position;
             }
             @Override
@@ -486,7 +470,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         angle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Contact.debugLog("OnItemSelectedListener = "+position);
                 anglenumber = position;
             }
             @Override
@@ -503,7 +486,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         gametime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Contact.debugLog("OnItemSelectedListener = "+position);
                 gametimenumber = position;
             }
             @Override
@@ -559,7 +541,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         context.unregisterReceiver(receiver);
     }
 
-    public void writeXML(HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists) {
+    public void writeXML() {
+        Contact.debugLog("arrayPlanLists = "+arrayPlanLists.toString());
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -642,35 +625,36 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    public void readXML(InputStream inputStream) {
-
+    public void readXML() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document parse = builder.parse(inputStream);
-
+            File file = new File(Contact.filePath);
+            Document parse = null;
+            if (!file.exists()) {
+                parse = builder.parse(context.getAssets().open("map.xml"));
+            }else{
+                parse = builder.parse(file);
+            }
+            parse.normalize();
             Element root = parse.getDocumentElement();
-            NodeList planLists = root.getElementsByTagName("planLists");
-            Contact.debugLog("item.getElementsByTagName(\"key\") = "+planLists.toString());
+            NodeList planLists = root.getElementsByTagName("key");
 
             arrayPlanLists = new HashMap<>();
             for (int i = 0; i < planLists.getLength(); i++) {
                 arrayhash = new HashMap<>();
-
                 Element item = (Element) planLists.item(i);
                 String key = item.getAttribute("key");
-                NodeList nodes = item.getElementsByTagName("key");
-                Contact.debugLog("item.getElementsByTagName(\"key\") = "+nodes.toString());
-                for (int j = 0; j < nodes.getLength(); j++) {
-                    Node node =  nodes.item(j);
-//                    String key = node.get
-                    if(node.getNodeType() == Node.ELEMENT_NODE){
-                        if ("point_xs".equals(node.getNodeName())) {
-
-                        }
-                    }
-                }
+                NodeList nodes = item.getElementsByTagName("item_xs");
+                getFloat(item,"item_xs","point_xs");
+                getFloat(item,"item_ys","point_ys");
+                getFloat(item,"item_serchtime","arrayserchtime");
+                getFloat(item,"item_scope","arrayscope");
+                getFloat(item,"item_angle","arrayangle");
+                getFloat(item,"item_gametime","arraygametime");
+                arrayPlanLists.put(key,arrayhash);
             }
+            Contact.debugLog("arrayPlanLists = "+arrayPlanLists.toString());
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -678,13 +662,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
+    }
+    public void getFloat(Element item,String keys,String key){
+        NodeList nodes = item.getElementsByTagName(keys);
+        Vector<Float> floats=new Vector<Float>();
+        for (int j = 0; j < nodes.getLength(); j++) {
+            Node node =  nodes.item(j);
+            String string = node.getFirstChild().getNodeValue();
+            floats.add(Float.valueOf(string));
+        }
+        arrayhash.put(key,floats);
     }
 }

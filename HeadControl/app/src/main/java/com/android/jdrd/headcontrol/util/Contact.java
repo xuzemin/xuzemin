@@ -1,5 +1,6 @@
 package com.android.jdrd.headcontrol.util;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
@@ -14,8 +15,7 @@ import com.android.jdrd.headcontrol.dialog.CustomDialog;
 public class Contact {
     public static boolean isDebug = true;
     public static String TAG = "HeadControl";
-    public static String filePath = "data/data/com.android.jdrd.headcontrol/map.xml";
-
+    public static String filePath = "data/data/com.android.jdrd.headcontrol/cache/map.xml";
 
     public static void debugLog(String string){
         if(isDebug){
