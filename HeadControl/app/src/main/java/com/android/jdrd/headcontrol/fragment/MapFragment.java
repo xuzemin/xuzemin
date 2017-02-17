@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.activity.WelcomeActivity;
 import com.android.jdrd.headcontrol.common.BaseFragment;
+import com.android.jdrd.headcontrol.dialog.MyDialog;
 import com.android.jdrd.headcontrol.util.Contact;
 import com.android.jdrd.headcontrol.view.MyView;
 
@@ -83,12 +84,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     private ArrayList<String> map_Plan;
     private IntentFilter filter;
     private float eventx,eventy;
-    public static boolean Istouch = false ,Isplan = false;
+    public static boolean Istouch = false;
     //路线模式布局、路线模式详细设置；
     private LinearLayout linear_plan,linear_plan_info,linear_point,linear_roam;
     private HashMap<String,Vector<Float>> arrayhash;
-    private Vector<Float> arrayserchtime,arrayscope,arrayangle,arraygametime;
+    private Vector<Float> xs,ys,arrayserchtime,arrayscope,arrayangle,arraygametime;
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
+    private Vector<String> strings = new Vector<>();
     public  MapFragment(){
         super();
     }
@@ -141,6 +143,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         filter=new IntentFilter();
         filter.addAction("com.jdrd.fragment.Map");
         context.registerReceiver(receiver,filter);
+        readXML();
     }
 
     @Override
@@ -153,9 +156,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 
         bitmap_width = surfaceview.bitmap.getWidth();
         bitmap_height= surfaceview.bitmap.getHeight();
-
-        Contact.debugLog("bitmap_width = " + bitmap_width +" bitmap_height = "+bitmap_height);
-        Contact.debugLog("surfaceview.gifMovie.width() = " +surfaceview.gifMovie.width()+" surfaceview.gifMovie.height() = "+surfaceview.gifMovie.height());
 
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
@@ -188,6 +188,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         findViewById(R.id.button_roam_start).setOnClickListener(this);
         findViewById(R.id.button_roam_stop).setOnClickListener(this);
         findViewById(R.id.button_return).setOnClickListener(this);
+        findViewById(R.id.button_remove).setOnClickListener(this);
 
         surfaceview.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -246,7 +247,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     double nLenEnd = Math.sqrt((double)xlen*xlen + (double)ylen * ylen);
                     if(nLenEnd > nLenStart)//通过两个手指开始距离和结束距离，来判断放大缩小
                     {
-                        if(surfaceview.scale < 2) {
+                        if(surfaceview.scale < 3) {
                             surfaceview.scale = (float) (surfaceview.scale + 0.2);
                         }
                     }
@@ -260,17 +261,30 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 return true;
             }
         });
-
-        map_Plan = new ArrayList<>();
-        map_Plan.add("默认路线");
-        map_Plan.add("路线一");
-        map_Plan.add("路线二");
-        map_Plan.add("路线三");
-
-        adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,map_Plan);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        planchooce.setAdapter(adapter);
-        planchooce.setOnItemSelectedListener(new SpinnerSelectedListener());
+        updatekey();
+        planchooce.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                plannumber = position;
+                Contact.debugLog("plannumber = "+plannumber);
+                HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+                Contact.debugLog("  onItemSelected  arrayPlanLists = "+arrayPlanLists.toString());
+                Contact.debugLog(" onItemSelected arrayhash = "+arrayhash.toString());
+//                    xs = array.get("point_xs");
+//                    ys = array.get("point_ys");
+//                    arrayserchtime = array.get("arrayserchtime");
+//                    arrayscope = array.get("arrayscope");
+//                    arrayangle = array.get("arrayangle");
+//                    arraygametime = array.get("arraygametime");
+                surfaceview.point_xs = array.get("point_xs");
+                surfaceview.point_ys = array.get("point_ys");
+                Contact.debugLog("arrayPlanLists = "+arrayPlanLists.toString());
+                Contact.debugLog("arrayhash = "+arrayhash.toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         init();
     }
@@ -280,41 +294,61 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         switch (v.getId()){
             //清除上一步
             case R.id.button_clearlast:
-                Istouch = true;
                 if(surfaceview !=null&&surfaceview.point_xs.size()>=1){
-                    surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
-                    surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
+                    if(Istouch){
+                        surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
+                        surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
+                        xs.remove(surfaceview.point_ys.size()-1);
+                        ys.remove(surfaceview.point_ys.size()-1);
+                        arrayserchtime.remove(surfaceview.point_ys.size()-1);
+                        arrayscope.remove(surfaceview.point_ys.size()-1);
+                        arrayangle.remove(surfaceview.point_ys.size()-1);
+                        arraygametime.remove(surfaceview.point_ys.size()-1);
+                    }else{
+                        surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
+                        surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
+                    }
                 }
+                Istouch = true;
                 break;
             //清除所有
             case R.id.button_clearall:
                 if(surfaceview!=null){
-                    surfaceview.point_xs.removeAllElements();
-                    surfaceview.point_ys.removeAllElements();
-                    arrayserchtime.removeAllElements();
-                    arrayscope.removeAllElements();
-                    arrayangle.removeAllElements();
-                    arraygametime.removeAllElements();
+                    surfaceview.point_xs = new Vector<>();
+                    surfaceview.point_ys = new Vector<>();
+                    xs = new Vector<>();
+                    ys = new Vector<>();
+                    arrayserchtime = new Vector<>();
+                    arrayscope = new Vector<>();
+                    arrayangle = new Vector<>();
+                    arraygametime = new Vector<>();
                 }
+                Istouch = true;
                 break;
             //规划新路线
             case R.id.button_plan:
+                Contact.debugLog("规划新路线 = "+arrayPlanLists.toString());
                 arrayserchtime = new Vector<Float>();
                 arrayscope = new Vector<Float>();
                 arrayangle = new Vector<Float>();
                 arraygametime = new Vector<Float>();
+                xs = new Vector<Float>();
+                ys = new Vector<Float>();
+                Contact.debugLog("规划新路线 = surfaceview.point_xs"+surfaceview.point_xs.toString());
 
-                if(surfaceview!=null){
-                    surfaceview.point_xs.removeAllElements();
-                    surfaceview.point_ys.removeAllElements();
-                    arrayserchtime.removeAllElements();
-                    arrayscope.removeAllElements();
-                    arrayangle.removeAllElements();
-                    arraygametime.removeAllElements();
-                }
+                surfaceview.point_xs = new Vector<Float>();
+                surfaceview.point_ys = new Vector<Float>();
+                Contact.debugLog("规划新路线 = surfaceview.point_xs"+surfaceview.point_xs.toString());
 
+                Contact.debugLog("规划新路线 = "+arrayPlanLists.toString());
                 Istouch = true;
                 linear_plan_info.setVisibility(View.VISIBLE);
+                break;
+            //删除当前路线
+            case R.id.button_remove:
+                arrayPlanLists.remove(strings.get((int) plannumber));
+                writeXML();
+                updatekey();
                 break;
             //停止执行
             case R.id.button_plan_stop:
@@ -324,17 +358,20 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             case R.id.button_execut:
                 if(Istouch){
                     Contact.showWarntext(context,handler);
+                }else{
+                    Contact.showWarn(context,handler);
                 }
-                Contact.showWarn(context,handler);
                 break;
             //下一步
             case R.id.button_savenext:
+                Contact.debugLog("下一步 = "+arrayPlanLists.toString());
                 if(!Istouch){
                     arrayserchtime.add(serchtimenumber);
                     arrayscope.add(scopenumber);
                     arrayangle.add(anglenumber);
                     arraygametime.add(gametimenumber);
-
+                    xs.add(surfaceview.point_xs.elementAt(arrayserchtime.size()-1));
+                    ys.add(surfaceview.point_ys.elementAt(arrayserchtime.size()-1));
                     Istouch = true;
                     Toast.makeText(context,"请选取一个新的目标点",Toast.LENGTH_SHORT).show();
                 }else{
@@ -349,27 +386,19 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     arrayscope.add(scopenumber);
                     arrayangle.add(anglenumber);
                     arraygametime.add(gametimenumber);
+                    xs.add(surfaceview.point_xs.elementAt(arrayserchtime.size()-1));
+                    ys.add(surfaceview.point_ys.elementAt(arrayserchtime.size()-1));
                 }
 
                 arrayhash = new HashMap<>();
-                arrayhash.put("point_xs",surfaceview.point_xs);
-                arrayhash.put("point_ys",surfaceview.point_ys);
+                arrayhash.put("point_xs",xs);
+                arrayhash.put("point_ys",ys);
                 arrayhash.put("arrayserchtime",arrayserchtime);
                 arrayhash.put("arrayscope",arrayscope);
                 arrayhash.put("arrayangle",arrayangle);
                 arrayhash.put("arraygametime",arraygametime);
-                arrayPlanLists.put("first",arrayhash);
-                arrayPlanLists.put("two",arrayhash);
-                writeXML();
-                readXML();
 
-                surfaceview.point_xs.removeAllElements();
-                surfaceview.point_ys.removeAllElements();
-                arrayserchtime.removeAllElements();
-                arrayscope.removeAllElements();
-                arrayangle.removeAllElements();
-                arraygametime.removeAllElements();
-                linear_plan_info.setVisibility(View.GONE);
+                dialog();
 
                 break;
             //漫游模式
@@ -416,16 +445,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener {
-
-        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-                                   long arg3) {
-            plannumber = arg2;
-        }
-        public void onNothingSelected(AdapterView<?> arg0) {
-
-        }
-    }
 
     private void init(){
         map_Plan = new ArrayList<>();
@@ -530,6 +549,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             getUpPoint(a,b);
         }
     }
+
     private void sendBundle(){
         float a = 0,b = 0;
         setNativePoint(a,b);
@@ -541,8 +561,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         context.unregisterReceiver(receiver);
     }
 
-    public void writeXML() {
-        Contact.debugLog("arrayPlanLists = "+arrayPlanLists.toString());
+    //xml写入
+    public synchronized void writeXML() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -554,6 +574,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 HashMap<String,Vector<Float>> planList = new HashMap<>();
                 Map.Entry entry = (Map.Entry) iter.next();
                 String key = (String) entry.getKey();
+
                 planList = (HashMap<String, Vector<Float>>) entry.getValue();
 
                 Element keysElement = document.createElement("key");
@@ -624,8 +645,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             e.printStackTrace();
         }
     }
-
-    public void readXML() {
+    //xml读取
+    public synchronized  void readXML() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -639,8 +660,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             parse.normalize();
             Element root = parse.getDocumentElement();
             NodeList planLists = root.getElementsByTagName("key");
-
-            arrayPlanLists = new HashMap<>();
+            arrayPlanLists  = new HashMap<>();
             for (int i = 0; i < planLists.getLength(); i++) {
                 arrayhash = new HashMap<>();
                 Element item = (Element) planLists.item(i);
@@ -654,7 +674,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 getFloat(item,"item_gametime","arraygametime");
                 arrayPlanLists.put(key,arrayhash);
             }
-            Contact.debugLog("arrayPlanLists = "+arrayPlanLists.toString());
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -664,6 +683,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         } finally {
         }
     }
+
     public void getFloat(Element item,String keys,String key){
         NodeList nodes = item.getElementsByTagName(keys);
         Vector<Float> floats=new Vector<Float>();
@@ -673,5 +693,60 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             floats.add(Float.valueOf(string));
         }
         arrayhash.put(key,floats);
+    }
+
+    //获取路线key名称
+    public Vector<String> getKey(){
+        Iterator<Map.Entry<String, HashMap<String,Vector<Float>>>> iter = arrayPlanLists.entrySet().iterator();
+        Vector<String> strings = new Vector<>();
+        while(iter.hasNext()) {
+            HashMap<String, Vector<Float>> planList = new HashMap<>();
+            Map.Entry entry = (Map.Entry) iter.next();
+            String key = (String) entry.getKey();
+            strings.add(key);
+        }
+        return strings;
+    }
+    public void updatekey(){
+        strings = getKey();
+        adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,strings);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        planchooce.setAdapter(adapter);
+    }
+    private MyDialog dialog ;
+    private EditText editText;
+    private void dialog() {
+        dialog = new MyDialog(context);
+        editText = (EditText) dialog.getEditText();
+        dialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //dosomething youself
+                Contact.debugLog("arrayhash 22222222= "+arrayhash.toString());
+                arrayPlanLists.put(editText.getText().toString().trim(),arrayhash);
+                Contact.debugLog("arrayPlanLists 22222222= "+arrayPlanLists.toString());
+                writeXML();
+
+                surfaceview.point_xs.removeAllElements();
+                surfaceview.point_ys.removeAllElements();
+                arrayserchtime.removeAllElements();
+                arrayscope.removeAllElements();
+                arrayangle.removeAllElements();
+                arraygametime.removeAllElements();
+                linear_plan_info.setVisibility(View.GONE);
+
+                readXML();
+                updatekey();
+                dialog.dismiss();
+            }
+        });
+        dialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Toast.makeText(context,"请继续规划路线",Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.show();
     }
 }

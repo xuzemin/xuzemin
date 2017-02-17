@@ -123,6 +123,7 @@ public class CustomDialog extends Dialog {
         }
 
         public CustomDialog create() {
+
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme

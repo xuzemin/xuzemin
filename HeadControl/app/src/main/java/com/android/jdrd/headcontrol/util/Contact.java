@@ -45,7 +45,6 @@ public class Contact {
     }
     public static void showWarn(Context context, final Handler handler){
         CustomDialog dialog = new CustomDialog(context);
-        dialog.setCanceledOnTouchOutside(false);
         dialog.builder.setTitle("提醒")
                 .setMessage("正在执行路线")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {

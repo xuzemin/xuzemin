@@ -123,7 +123,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawBitmap(bitmap,matrix,null);
         }
 
-        showGifImage(canvas);
+//        showGifImage(canvas);
     }
 
 
@@ -140,6 +140,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     }else{
                         temp ++;
                     }
+
                     Canvas c=holder.lockCanvas();
                     doDraw(c);
                     holder.unlockCanvasAndPost(c);
