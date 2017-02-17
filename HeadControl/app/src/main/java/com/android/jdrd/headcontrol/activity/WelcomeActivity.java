@@ -17,6 +17,7 @@ import com.android.jdrd.headcontrol.common.BaseFragment;
 import com.android.jdrd.headcontrol.fragment.BatteryFragment;
 import com.android.jdrd.headcontrol.fragment.CleanFragment;
 import com.android.jdrd.headcontrol.fragment.MapFragment;
+import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,10 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        //启动后台通讯服务
+        Intent serverSocket = new Intent(this, ServerSocketUtil.class);
+        startService(serverSocket);
 
 
         list = new ArrayList<>();

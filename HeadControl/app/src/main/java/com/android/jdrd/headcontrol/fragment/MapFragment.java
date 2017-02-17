@@ -70,6 +70,7 @@ import javax.xml.transform.stream.StreamResult;
 
 public class MapFragment extends BaseFragment implements View.OnClickListener {
 
+    private Intent intent;
     private MyReceiver receiver = null;
     private MyView surfaceview = null;
     private int bitmap_width = 0,bitmap_height= 0;
@@ -84,16 +85,25 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     private ArrayList<String> map_Plan;
     private IntentFilter filter;
     private float eventx,eventy;
-    public static boolean Istouch = false;
+    public static boolean Istouch = false,Isplan = false;
     //路线模式布局、路线模式详细设置；
     private LinearLayout linear_plan,linear_plan_info,linear_point,linear_roam;
     private HashMap<String,Vector<Float>> arrayhash;
     private Vector<Float> xs,ys,arrayserchtime,arrayscope,arrayangle,arraygametime;
+    private Vector<Float> xs_tmp = new Vector<>();
+    private Vector<Float> ys_tmp  = new Vector<>();
+    private Vector<Float> arrayserchtime_tmp = new Vector<>();
+    private Vector<Float> arrayscope_tmp = new Vector<>();
+    private Vector<Float> arrayangle_tmp = new Vector<>();
+    private Vector<Float> arraygametime_tmp = new Vector<>();
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
     private Vector<String> strings = new Vector<>();
     public  MapFragment(){
         super();
     }
+
+    private Thread thread = null ;
+
     public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -116,6 +126,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     break;
                 case 3:
                     Contact.debugLog("btn_warn_sure");
+                    thread.interrupt();
+                    thread = null;
                 default:
                     break;
             }
@@ -199,33 +211,39 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 if(n==MotionEvent.ACTION_DOWN && 1 == nCnt){
                     eventx = event.getX();
                     eventy = event.getY();
-                    if(Istouch){
-                        if( event.getX() > 20 && event.getX() < 620 && event.getY() > 20 && event.getY() < 1020 ){
-                            float a,b;
-                            a = (event.getX() - 20 - surfaceview.translate_x )/ surfaceview.scale;
-                            b = ((event.getY() - 20 - surfaceview.translate_y )/surfaceview.scale);
-                            int x = (int) a % surfaceview.Scale;
-                            int x_int = (int) a / surfaceview.Scale ;
-                            int y =(int)  b % surfaceview.Scale ;
-                            int y_int = (int) b / surfaceview.Scale;
+                        if (Istouch) {
+                            if (eventx > 20 && eventx < 620 && eventy > 20 && eventy < 1020) {
+                                float a, b;
+                                a = (event.getX() - 20 - surfaceview.translate_x) / surfaceview.scale;
+                                b = ((event.getY() - 20 - surfaceview.translate_y) / surfaceview.scale);
+                                int x = (int) a % surfaceview.Scale;
+                                int x_int = (int) a / surfaceview.Scale;
+                                int y = (int) b % surfaceview.Scale;
+                                int y_int = (int) b / surfaceview.Scale;
 
-                            if(x > (surfaceview.Scale/2)){
-                                a = surfaceview.Scale * (x_int +1) +20;
-                            }else {
-                                a = surfaceview.Scale * x_int +20;
+                                if (x > (surfaceview.Scale / 2)) {
+                                    a = surfaceview.Scale * (x_int + 1) + 20;
+                                } else {
+                                    a = surfaceview.Scale * x_int + 20;
+                                }
+                                if (y > (surfaceview.Scale / 2)) {
+                                    b = surfaceview.Scale * (y_int + 1) + 20;
+                                } else {
+                                    b = surfaceview.Scale * y_int + 20;
+                                }
+
+                                if(Isplan){
+                                    surfaceview.point_xs.add(a);
+                                    surfaceview.point_ys.add(b);
+                                }else{
+                                    setNativePoint(a - 20,b - 20);
+                                }
+
                             }
-                            if(y > (surfaceview.Scale/2)){
-                                b = surfaceview.Scale * (y_int +1) +20;
-                            }else {
-                                b = surfaceview.Scale * y_int +20;
-                            }
-                            surfaceview.point_xs.add(a);
-                            surfaceview.point_ys.add(b);
+                            Istouch = false;
+                        } else {
+
                         }
-                        Istouch = false;
-                    }else{
-
-                    }
                 }else if(n==MotionEvent.ACTION_MOVE&&1 == nCnt){
                     surfaceview.translate_x += (event.getX() - eventx)/5;
                     surfaceview.translate_y += (event.getY() - eventy)/5;
@@ -268,18 +286,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 plannumber = position;
                 Contact.debugLog("plannumber = "+plannumber);
                 HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
-                Contact.debugLog("  onItemSelected  arrayPlanLists = "+arrayPlanLists.toString());
-                Contact.debugLog(" onItemSelected arrayhash = "+arrayhash.toString());
-//                    xs = array.get("point_xs");
-//                    ys = array.get("point_ys");
-//                    arrayserchtime = array.get("arrayserchtime");
-//                    arrayscope = array.get("arrayscope");
-//                    arrayangle = array.get("arrayangle");
-//                    arraygametime = array.get("arraygametime");
                 surfaceview.point_xs = array.get("point_xs");
                 surfaceview.point_ys = array.get("point_ys");
-                Contact.debugLog("arrayPlanLists = "+arrayPlanLists.toString());
-                Contact.debugLog("arrayhash = "+arrayhash.toString());
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -323,7 +331,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     arrayangle = new Vector<>();
                     arraygametime = new Vector<>();
                 }
-                Istouch = true;
+
+                Istouch = false;
+                linear_plan_info.setVisibility(View.GONE);
+
                 break;
             //规划新路线
             case R.id.button_plan:
@@ -352,13 +363,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //停止执行
             case R.id.button_plan_stop:
-
+                sendBundle(51,6646);
                 break;
             //执行路线
             case R.id.button_execut:
                 if(Istouch){
                     Contact.showWarntext(context,handler);
                 }else{
+                    startPlan();
                     Contact.showWarn(context,handler);
                 }
                 break;
@@ -403,6 +415,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //漫游模式
             case R.id.button_cruise:
+                Isplan = false;
+                Istouch = true;
                 setVisible();
                 linear_roam.setVisibility(View.VISIBLE);
                 break;
@@ -410,6 +424,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             case R.id.button_pathplan:
                 setVisible();
                 linear_plan.setVisibility(View.VISIBLE);
+                Istouch = false;
+                Isplan = true;
                 break;
             //点选模式
             case R.id.button_pointchooce:
@@ -530,8 +546,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     //发往底层
     private void setNativePoint(float up_x,float up_y){
         if(up_x >= 0 && up_x <=600 && up_y >= 0 && up_y <= 1000){
-            float native_x = up_x / -100 ;
-            float native_y = (float) ((up_y / 100) - 7.6);
+            sendBundle(up_x / -100 ,(float) ((up_y / 100) - 7.6));
         }
     }
     //设置方向
@@ -543,16 +558,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             float a = 0,b = 0;
-//            Bundle bundle=intent.getExtras();
+
+            Bundle bundle=intent.getExtras();
 //            int count=bundle.getInt("count");
-//            Contact.debugLog("OnItemSelectedListener = "+bundle.toString());
+            Contact.debugLog("OnItemSelectedListener = "+bundle.toString());
             getUpPoint(a,b);
+
         }
     }
 
-    private void sendBundle(){
-        float a = 0,b = 0;
-        setNativePoint(a,b);
+    private void sendBundle(float a,float b){
+        intent = new Intent();
+        intent.putExtra("msg", "x = "+a+"y = "+b);
+        Contact.debugLog("msg = "+intent.getExtras());
+        intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
+        context.sendBroadcast(intent);
     }
 
     @Override
@@ -708,6 +728,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         return strings;
     }
     public void updatekey(){
+        Istouch = false;
         strings = getKey();
         adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,strings);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -733,6 +754,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 arrayscope.removeAllElements();
                 arrayangle.removeAllElements();
                 arraygametime.removeAllElements();
+
                 linear_plan_info.setVisibility(View.GONE);
 
                 readXML();
@@ -748,5 +770,26 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             }
         });
         dialog.show();
+    }
+    public void startPlan(){
+        if(thread == null){
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+                    xs_tmp = array.get("point_xs");
+                    ys_tmp  = array.get("point_ys");
+                    arrayserchtime_tmp = array.get("arrayserchtime");
+                    arrayscope_tmp = array.get("arrayscope");
+                    arrayangle_tmp = array.get("arrayangle");
+                    Contact.debugLog("规划新路线 = "+arrayPlanLists.toString());
+                    arraygametime_tmp = array.get("arraygametime");
+                    for(int i = 0 ; i < xs_tmp.size() ; i ++){
+                        sendBundle(102,20156);
+                    }
+                }
+            });
+            thread.start();
+        }
     }
 }
