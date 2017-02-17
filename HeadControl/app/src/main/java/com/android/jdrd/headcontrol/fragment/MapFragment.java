@@ -31,6 +31,8 @@ import com.android.jdrd.headcontrol.dialog.MyDialog;
 import com.android.jdrd.headcontrol.util.Contact;
 import com.android.jdrd.headcontrol.view.MyView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -49,6 +51,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -85,7 +89,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     private ArrayList<String> map_Plan;
     private IntentFilter filter;
     private float eventx,eventy;
-    public static boolean Istouch = false,Isplan = false;
+    public static boolean Istouch = false,Isplan = false,IsFind = false;
     //路线模式布局、路线模式详细设置；
     private LinearLayout linear_plan,linear_plan_info,linear_point,linear_roam;
     private HashMap<String,Vector<Float>> arrayhash;
@@ -96,6 +100,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     private Vector<Float> arrayscope_tmp = new Vector<>();
     private Vector<Float> arrayangle_tmp = new Vector<>();
     private Vector<Float> arraygametime_tmp = new Vector<>();
+    private Timer timer;
+    private TimerTask task;
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
     private Vector<String> strings = new Vector<>();
     public  MapFragment(){
@@ -128,6 +134,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     Contact.debugLog("btn_warn_sure");
                     thread.interrupt();
                     thread = null;
+                case 4:
+                    synchronized (thread) {
+                        thread.notify();
+                    }
+                    IsFind = true;
+
+                    break;
                 default:
                     break;
             }
@@ -211,39 +224,37 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 if(n==MotionEvent.ACTION_DOWN && 1 == nCnt){
                     eventx = event.getX();
                     eventy = event.getY();
-                        if (Istouch) {
-                            if (eventx > 20 && eventx < 620 && eventy > 20 && eventy < 1020) {
-                                float a, b;
-                                a = (event.getX() - 20 - surfaceview.translate_x) / surfaceview.scale;
-                                b = ((event.getY() - 20 - surfaceview.translate_y) / surfaceview.scale);
-                                int x = (int) a % surfaceview.Scale;
-                                int x_int = (int) a / surfaceview.Scale;
-                                int y = (int) b % surfaceview.Scale;
-                                int y_int = (int) b / surfaceview.Scale;
-
-                                if (x > (surfaceview.Scale / 2)) {
-                                    a = surfaceview.Scale * (x_int + 1) + 20;
-                                } else {
-                                    a = surfaceview.Scale * x_int + 20;
-                                }
-                                if (y > (surfaceview.Scale / 2)) {
-                                    b = surfaceview.Scale * (y_int + 1) + 20;
-                                } else {
-                                    b = surfaceview.Scale * y_int + 20;
-                                }
-
-                                if(Isplan){
-                                    surfaceview.point_xs.add(a);
-                                    surfaceview.point_ys.add(b);
-                                }else{
-                                    setNativePoint(a - 20,b - 20);
-                                }
-
+                    if (Istouch) {
+                        if (eventx > 20 && eventx < 620 && eventy > 20 && eventy < 1020) {
+                            float a, b;
+                            a = (event.getX() - 20 - surfaceview.translate_x) / surfaceview.scale;
+                            b = ((event.getY() - 20 - surfaceview.translate_y) / surfaceview.scale);
+                            int x = (int) a % surfaceview.Scale;
+                            int x_int = (int) a / surfaceview.Scale;
+                            int y = (int) b % surfaceview.Scale;
+                            int y_int = (int) b / surfaceview.Scale;
+                            if (x > (surfaceview.Scale / 2)) {
+                                a = surfaceview.Scale * (x_int + 1) + 20;
+                            } else {
+                                a = surfaceview.Scale * x_int + 20;
                             }
-                            Istouch = false;
-                        } else {
+                            if (y > (surfaceview.Scale / 2)) {
+                                b = surfaceview.Scale * (y_int + 1) + 20;
+                            } else {
+                                b = surfaceview.Scale * y_int + 20;
+                            }
+                            if(Isplan){
+                                surfaceview.point_xs.add(a);
+                                surfaceview.point_ys.add(b);
+                            }else{
+                                sendNativePoint(a,b);
+                            }
 
                         }
+                        Istouch = false;
+                    } else {
+
+                    }
                 }else if(n==MotionEvent.ACTION_MOVE&&1 == nCnt){
                     surfaceview.translate_x += (event.getX() - eventx)/5;
                     surfaceview.translate_y += (event.getY() - eventy)/5;
@@ -283,11 +294,15 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         planchooce.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                plannumber = position;
-                Contact.debugLog("plannumber = "+plannumber);
-                HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
-                surfaceview.point_xs = array.get("point_xs");
-                surfaceview.point_ys = array.get("point_ys");
+                if(Istouch){
+                    Contact.showWarntext(context,handler);
+                }else {
+                    plannumber = position;
+                    Contact.debugLog("plannumber = " + plannumber);
+                    HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+                    surfaceview.point_xs = array.get("point_xs");
+                    surfaceview.point_ys = array.get("point_ys");
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -338,32 +353,44 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //规划新路线
             case R.id.button_plan:
-                Contact.debugLog("规划新路线 = "+arrayPlanLists.toString());
-                arrayserchtime = new Vector<Float>();
-                arrayscope = new Vector<Float>();
-                arrayangle = new Vector<Float>();
-                arraygametime = new Vector<Float>();
-                xs = new Vector<Float>();
-                ys = new Vector<Float>();
-                Contact.debugLog("规划新路线 = surfaceview.point_xs"+surfaceview.point_xs.toString());
+                if(Istouch){
+                    Contact.showWarntext(context,handler);
+                }else {
+                    Contact.debugLog("规划新路线 = " + arrayPlanLists.toString());
+                    arrayserchtime = new Vector<Float>();
+                    arrayscope = new Vector<Float>();
+                    arrayangle = new Vector<Float>();
+                    arraygametime = new Vector<Float>();
+                    xs = new Vector<Float>();
+                    ys = new Vector<Float>();
+                    Contact.debugLog("规划新路线 = surfaceview.point_xs" + surfaceview.point_xs.toString());
 
-                surfaceview.point_xs = new Vector<Float>();
-                surfaceview.point_ys = new Vector<Float>();
-                Contact.debugLog("规划新路线 = surfaceview.point_xs"+surfaceview.point_xs.toString());
+                    surfaceview.point_xs = new Vector<Float>();
+                    surfaceview.point_ys = new Vector<Float>();
+                    Contact.debugLog("规划新路线 = surfaceview.point_xs" + surfaceview.point_xs.toString());
 
-                Contact.debugLog("规划新路线 = "+arrayPlanLists.toString());
-                Istouch = true;
-                linear_plan_info.setVisibility(View.VISIBLE);
+                    Contact.debugLog("规划新路线 = " + arrayPlanLists.toString());
+                    Istouch = true;
+                    linear_plan_info.setVisibility(View.VISIBLE);
+                }
                 break;
             //删除当前路线
             case R.id.button_remove:
-                arrayPlanLists.remove(strings.get((int) plannumber));
-                writeXML();
-                updatekey();
+                if(Istouch){
+                    Contact.showWarntext(context,handler);
+                }else {
+                    arrayPlanLists.remove(strings.get((int) plannumber));
+                    writeXML();
+                    updatekey();
+                }
                 break;
             //停止执行
             case R.id.button_plan_stop:
-                sendBundle(51,6646);
+                if(Istouch){
+                    Contact.showWarntext(context,handler);
+                }else {
+                    handler.sendEmptyMessage(4);
+                }
                 break;
             //执行路线
             case R.id.button_execut:
@@ -371,7 +398,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     Contact.showWarntext(context,handler);
                 }else{
                     startPlan();
-                    Contact.showWarn(context,handler);
+//                    Contact.showWarn(context,handler);
                 }
                 break;
             //下一步
@@ -481,8 +508,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         });
         map_Plan = new ArrayList<>();
         map_Plan.add("1分钟");
-        map_Plan.add("5分钟");
-        map_Plan.add("10分钟");
+        map_Plan.add("2分钟");
+        map_Plan.add("3分钟");
         adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,map_Plan);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         serchtime.setAdapter(adapter);
@@ -544,9 +571,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         }
     }
     //发往底层
-    private void setNativePoint(float up_x,float up_y){
+    private void sendNativePoint(float up_x,float up_y){
         if(up_x >= 0 && up_x <=600 && up_y >= 0 && up_y <= 1000){
-            sendBundle(up_x / -100 ,(float) ((up_y / 100) - 7.6));
+//            up_x = (up_x -20) / -100;
+//            up_y = (float) (((up_y-20) / 100) - 7.6);
+            JSONObject object = new JSONObject();
+            try {
+                object.put("x",(up_x -20) / -100);
+                object.put("y",(float) (((up_y-20) / 100) - 7.6));
+                sendBundle(Contact.Command,Contact.Navigation,object.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
     //设置方向
@@ -557,20 +593,49 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     public class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            float a = 0,b = 0;
-
             Bundle bundle=intent.getExtras();
-//            int count=bundle.getInt("count");
             Contact.debugLog("OnItemSelectedListener = "+bundle.toString());
-            getUpPoint(a,b);
+            pasreJson(bundle.toString());
+        }
+    }
+    public void pasreJson(String string){
+        JSONObject object ;
+        try {
+            object = new JSONObject(string);
+            String type = object.getString(Contact.Type);
+            String funtion = object.getString(Contact.Function);
+            String data = object.getString(Contact.Data);
 
+//            getUpPoint(a,b);
+            if(type.equals(Contact.State)){
+                if(funtion.equals("")){
+
+                }
+            }else if(type.equals(Contact.Param)){
+                if(funtion.equals("")){
+
+                }
+            }else if(type.equals(Contact.Command)){
+                if(funtion.equals("")){
+
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
-    private void sendBundle(float a,float b){
+    private void sendBundle(String type,String function,String data){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(Contact.Type,type);
+            jsonObject.put(Contact.Function,function);
+            jsonObject.put(Contact.Data,data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         intent = new Intent();
-        intent.putExtra("msg", "x = "+a+"y = "+b);
-        Contact.debugLog("msg = "+intent.getExtras());
+        intent.putExtra("msg", jsonObject.toString());
         intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
         context.sendBroadcast(intent);
     }
@@ -777,19 +842,80 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void run() {
                     HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+                    Contact.debugLog("array = " + array.toString());
                     xs_tmp = array.get("point_xs");
                     ys_tmp  = array.get("point_ys");
                     arrayserchtime_tmp = array.get("arrayserchtime");
                     arrayscope_tmp = array.get("arrayscope");
                     arrayangle_tmp = array.get("arrayangle");
-                    Contact.debugLog("规划新路线 = "+arrayPlanLists.toString());
                     arraygametime_tmp = array.get("arraygametime");
-                    for(int i = 0 ; i < xs_tmp.size() ; i ++){
-                        sendBundle(102,20156);
+                    for(int i = 0 ; i < xs_tmp.size() ; i ++) {
+                        Contact.debugLog("thread = " + i);
+                        sendNativePoint(xs_tmp.get(i),ys_tmp.get(i));
+                        synchronized (thread){
+                            try {
+                                thread.wait();
+                                //到达对应地点notify
+
+                                //发送 找人时间以及机器人旋转以及找人范围
+                                Contact.debugLog("发送 找人时间以及机器人旋转以及找人范围 = "+i);
+                                arrayscope_tmp.get(i);
+                                arrayangle_tmp.get(i);
+
+                                resetTimer();
+                                if(arrayserchtime_tmp.get(i) == 0){
+                                    Contact.debugLog("arrayserchtime_tmp = " + 0);
+                                    timer.schedule(task, 1 * 60 * 1000);
+                                }else if(arrayserchtime_tmp.get(i) == 1){
+                                    Contact.debugLog("arrayserchtime_tmp = " + 1);
+                                    timer.schedule(task, 2 * 60 * 1000);
+                                }else if(arrayserchtime_tmp.get(i) == 2){
+                                    Contact.debugLog("arrayserchtime_tmp = " + 2);
+                                    timer.schedule(task, 3 * 60 * 1000);
+                                }
+                                Contact.debugLog("如果有找到人则到达指定位置 = "+i);
+                                IsFind = false;
+                                thread.wait();
+                                //如果有找到人则到达指定位置
+                                Contact.debugLog("如果有找到人则到达指定位置 = "+i);
+                                if(IsFind){
+                                    IsFind = false;
+                                    Contact.debugLog("互动时间 = "+i);
+                                    resetTimer();
+                                    if(arraygametime_tmp.get(i) == 0){
+                                        Contact.debugLog("arraygametime_tmp = " + 0);
+                                        timer.schedule(task, 3 * 60 * 1000);
+                                    }else if(arraygametime_tmp.get(i) == 1){
+                                        Contact.debugLog("arraygametime_tmp = " + 1);
+                                        timer.schedule(task, 6 * 60 * 1000);
+                                    }else if(arraygametime_tmp.get(i) == 2){
+                                        Contact.debugLog("arraygametime_tmp = " + 2);
+                                        timer.schedule(task, 9 * 60 * 1000);
+                                    }
+                                }
+                                thread.wait();
+                                Contact.debugLog("返回路线位置 = "+xs_tmp.get(i)+ys_tmp.get(i));
+                                sendNativePoint(xs_tmp.get(i),ys_tmp.get(i));
+                                thread.wait();
+                                //返回后进行下一个地点
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        Contact.debugLog("thread = "+i);
                     }
                 }
             });
             thread.start();
         }
+    }
+    public void resetTimer(){
+        timer = new Timer();
+        task = new TimerTask() {
+            public void run () {
+                handler.sendEmptyMessage(4);
+            }
+        };
     }
 }
