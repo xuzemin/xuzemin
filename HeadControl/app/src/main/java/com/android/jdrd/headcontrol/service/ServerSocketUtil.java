@@ -11,6 +11,9 @@ import android.util.Log;
 import com.android.jdrd.headcontrol.util.Constant;
 import com.android.jdrd.headcontrol.util.Contact;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -131,6 +134,19 @@ public class ServerSocketUtil extends Service {
         str = "*" + str + "#";
         out.write(str.getBytes());
     }
+
+    public static String getJSONString(String str) {
+        JSONObject object = null;
+        String jsonString = null;
+        try {
+            object = new JSONObject(msg);
+            jsonString = object.getString("str");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonString;
+    }
+
 
     @Override
     public IBinder onBind(Intent intent) {

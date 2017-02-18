@@ -1,9 +1,11 @@
 package com.android.jdrd.headcontrol.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -35,6 +37,8 @@ public class BatteryFragment extends BaseFragment {
     ImageView mImageView_Battery_Power;//电池图标
     TextView mTextView_Level;//剩余电量
 
+
+
     ImageView mImageView_Switch_Open;
     ImageView mImageView_Switch_Close;
 
@@ -52,6 +56,8 @@ public class BatteryFragment extends BaseFragment {
     int warn_modified;
     int progres_warn;
 
+    private BatteryReceiver receiver = null;
+
     public  BatteryFragment(){
         super();
     }
@@ -64,8 +70,17 @@ public class BatteryFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//给当前的fragment绘制UI布局，可以使用线程更新UI
         mView=inflater.inflate(R.layout.fragment_battery,container,false);
+
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+         receiver = new BatteryReceiver();
+        getActivity().registerReceiver(receiver,filter);
+
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+
 
     @Override
     public void initView() {
@@ -243,6 +258,23 @@ public class BatteryFragment extends BaseFragment {
         dialog.show();
     }
 
+    @Override
+    public void onDestroy() {
+         super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
+    }
 
+    private class BatteryReceiver extends BroadcastReceiver{
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        int current = intent.getExtras().getInt("level");// 获得当前电量
+        int total = intent.getExtras().getInt("scale");//获得总电量
+        int percent = current*100/total;
+        mTextView_Level.setText(percent+"%");
+    }
+
+
+}
 
 }
