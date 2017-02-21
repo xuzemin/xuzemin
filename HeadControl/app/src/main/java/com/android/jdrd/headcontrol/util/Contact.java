@@ -23,6 +23,12 @@ public class Contact {
     public static String State = "state";
     public static String Param = "param";
     public static String Navigation = "navigation";
+    public static String Peoplesearch = "peoplesearch";
+    public static String StartSearch = "startsearch";
+    public static String StopSearch = "stopsearch";
+    public static String Result = "result";
+    public static String Camera = "3dcamera";
+
     public static void debugLog(String string){
         if(isDebug){
             Log.e(TAG,string);

@@ -53,7 +53,6 @@ public class ServerSocketUtil extends Service {
         filter.addAction("android.intent.action.searchPeople");
         registerReceiver(receiver, filter);
 
-
     }
 
 
@@ -78,13 +77,15 @@ public class ServerSocketUtil extends Service {
 
         serverSocket = new ServerSocket(port);
 
-
         while (true) {
+
             socket = serverSocket.accept();
+
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+
                     try {
                         in = socket.getInputStream();
                         out = socket.getOutputStream();

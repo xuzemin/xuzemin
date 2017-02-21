@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,6 +22,7 @@ import com.android.jdrd.headcontrol.fragment.BatteryFragment;
 import com.android.jdrd.headcontrol.fragment.CleanFragment;
 import com.android.jdrd.headcontrol.fragment.MapFragment;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
+import com.android.jdrd.headcontrol.util.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +35,8 @@ import java.util.List;
 
 public class WelcomeActivity extends Activity {
 
-    public boolean isMap = false;
-
+    public boolean IsMap = false;
+    public static boolean IsClean = false;
     RelativeLayout mRelativeLayout_Exit;//设置栏
     ImageView mImageView_Exit;//设置栏中的返回键
     TextView mTextView_Exit;//“设置”
@@ -51,6 +56,35 @@ public class WelcomeActivity extends Activity {
     MyClickListener mMyClickListener;
     List<BaseFragment> list;
 
+    public Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    MapFragment.Istouch = false;
+                    MapFragment.Isplan = false;
+                    if(IsClean){
+                        changeClean();
+                    }else{
+                        changeBattery();
+                        IsMap = false;
+                    }
+                    break;
+                case 2:
+                    IsMap = true;
+                    //do nothing
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +93,10 @@ public class WelcomeActivity extends Activity {
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
+
+
+        Intent testActivity = new Intent(this, TestActivity.class);
+        startActivity(testActivity);
 
 
         list = new ArrayList<>();
@@ -94,7 +132,9 @@ public class WelcomeActivity extends Activity {
     protected void onResume() {
         super.onResume();
         initView();
-        initData();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            initData();
+        }
         initEvent();
     }
 
@@ -122,8 +162,8 @@ public class WelcomeActivity extends Activity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     private void initData() {
-
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
         transaction_battery.replace(R.id.ll_right, list.get(0), "batteryFragment");
@@ -131,12 +171,12 @@ public class WelcomeActivity extends Activity {
         mMyClickListener = new MyClickListener();
     }
 
+
     private void initEvent() {
 
         mRelativeLayout_Battery.setOnClickListener(mMyClickListener);
         mRelativeLayout_Clean.setOnClickListener(mMyClickListener);
         mRelativeLayout_Map.setOnClickListener(mMyClickListener);
-
 
     }
 
@@ -159,7 +199,6 @@ public class WelcomeActivity extends Activity {
     }
 
     public class MyClickListener implements View.OnClickListener {
-
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -170,42 +209,38 @@ public class WelcomeActivity extends Activity {
                     break;
                 //点击了电源栏
                 case R.id.rl_Battery:
-                    setClickable();
-                    setBackgroundColor();
-                    mRelativeLayout_Battery.setClickable(false);
-                    //电源栏
-                    mRelativeLayout_Battery.setBackgroundColor(android.graphics.Color.parseColor("#80313033"));
-                    mImageView_Battery.setImageResource(R.mipmap.dianyuan_per);
-                    mImageView_Battery_you.setImageResource(R.mipmap.you_per);
-                    FragmentManager fragmentManager_battery = getFragmentManager();
-                    FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
-                    transaction_battery.replace(R.id.ll_right, list.get(0), "batteryFragment");
-                    transaction_battery.commit();
+                    IsClean = false;
+                    if(IsMap){
+                        if(MapFragment.Istouch || MapFragment.Isplan){
+                            Contact.showWarntext(WelcomeActivity.this,handler);
+                        }else{
+                            changeBattery();
+                            IsMap = false;
+                        }
+                    }else{
+                        changeBattery();
+                        IsMap = false;
+                    }
                     break;
-
                 case R.id.rl_Clean:
-//                    setClickable();
-                    setBackgroundColor();
-                    mRelativeLayout_Clean.setClickable(false);
-                    mRelativeLayout_Clean.setBackgroundColor(android.graphics.Color.parseColor("#80313033"));
-                    mImageView_Clean.setImageResource(R.mipmap.qingjie_per);
-                    mImageView_Clean_you.setImageResource(R.mipmap.you_per);
-                    FragmentManager fragmentManager_Clean = getFragmentManager();
-                    FragmentTransaction transaction_clean = fragmentManager_Clean.beginTransaction();
-                    transaction_clean.replace(R.id.ll_right, list.get(1), "cleanFragment");
-                    transaction_clean.commit();
+                    IsClean = true;
+                    if(IsMap){
+                        if(MapFragment.Istouch || MapFragment.Isplan){
+                            Contact.showWarntext(WelcomeActivity.this,handler);
+                        }else{
+                            changeClean();
+                            IsMap = false;
+                        }
+                    }else{
+                        changeClean();
+                        IsMap = false;
+                    }
                     break;
                 case R.id.rl_Map:
-                    setClickable();
-                    setBackgroundColor();
-                    mRelativeLayout_Map.setClickable(false);
-                    mRelativeLayout_Map.setBackgroundColor(android.graphics.Color.parseColor("#80313033"));
-                    mImageView_Map.setImageResource(R.mipmap.qingjie_per);
-                    mImageView_Map_you.setImageResource(R.mipmap.you_per);
-                    FragmentManager fragmentManager_Map = getFragmentManager();
-                    FragmentTransaction transaction_map = fragmentManager_Map.beginTransaction();
-                    transaction_map.replace(R.id.ll_right, list.get(02), "cleanFragment");
-                    transaction_map.commit();
+                    if(!IsMap){
+                        IsMap = true;
+                        changeMap();
+                    }
                     break;
             }
         }
@@ -230,5 +265,42 @@ public class WelcomeActivity extends Activity {
         mRelativeLayout_Map.setBackgroundColor(android.graphics.Color.parseColor("#B3313033"));
         mImageView_Map.setImageResource(R.mipmap.qingjie_no);
         mImageView_Map_you.setImageResource(R.mipmap.you_no);
+    }
+    private void changeBattery(){
+        setClickable();
+        setBackgroundColor();
+        mRelativeLayout_Battery.setClickable(false);
+        //电源栏
+        mRelativeLayout_Battery.setBackgroundColor(android.graphics.Color.parseColor("#80313033"));
+        mImageView_Battery.setImageResource(R.mipmap.dianyuan_per);
+        mImageView_Battery_you.setImageResource(R.mipmap.you_per);
+        FragmentManager fragmentManager_battery = getFragmentManager();
+        FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
+        transaction_battery.replace(R.id.ll_right, list.get(0), "batteryFragment");
+        transaction_battery.commit();
+    }
+    private void changeClean() {
+        setClickable();
+        setBackgroundColor();
+        mRelativeLayout_Clean.setClickable(false);
+        mRelativeLayout_Clean.setBackgroundColor(android.graphics.Color.parseColor("#80313033"));
+        mImageView_Clean.setImageResource(R.mipmap.qingjie_per);
+        mImageView_Clean_you.setImageResource(R.mipmap.you_per);
+        FragmentManager fragmentManager_Clean = getFragmentManager();
+        FragmentTransaction transaction_clean = fragmentManager_Clean.beginTransaction();
+        transaction_clean.replace(R.id.ll_right, list.get(1), "cleanFragment");
+        transaction_clean.commit();
+    }
+    private void changeMap(){
+        setClickable();
+        setBackgroundColor();
+        mRelativeLayout_Map.setClickable(false);
+        mRelativeLayout_Map.setBackgroundColor(android.graphics.Color.parseColor("#80313033"));
+        mImageView_Map.setImageResource(R.mipmap.qingjie_per);
+        mImageView_Map_you.setImageResource(R.mipmap.you_per);
+        FragmentManager fragmentManager_Map = getFragmentManager();
+        FragmentTransaction transaction_map = fragmentManager_Map.beginTransaction();
+        transaction_map.replace(R.id.ll_right, list.get(02), "cleanFragment");
+        transaction_map.commit();
     }
 }

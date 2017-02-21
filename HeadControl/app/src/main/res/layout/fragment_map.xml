@@ -198,12 +198,10 @@
             />
         <EditText
             android:id="@+id/point_x"
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
         <EditText
             android:id="@+id/point_y"
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
         <Button
