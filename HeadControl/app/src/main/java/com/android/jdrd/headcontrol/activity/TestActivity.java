@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.android.jdrd.headcontrol.util.Contact;
+import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class TestActivity extends Activity {
 
@@ -38,10 +41,10 @@ public class TestActivity extends Activity {
         startService(intent);
 
 
-//        receiver = new MyReceiver();
-//        filter=new IntentFilter();
-//        filter.addAction("com.jdrd.fragment.Map");
-//        registerReceiver(receiver, filter);
+        receiver = new MyReceiver();
+        filter=new IntentFilter();
+        filter.addAction("com.jdrd.fragment.Map");
+        registerReceiver(receiver, filter);
 
 
         findViewById(R.id.startSearchPeople).setOnClickListener(new View.OnClickListener() {
@@ -56,13 +59,28 @@ public class TestActivity extends Activity {
         findViewById(R.id.buttonSocket).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!editText.getText().toString().trim().equals("")){
+
+                try {
+                    Gson gson = new Gson();
+                    Map map  = new LinkedHashMap();
+                    map.put("type", "command");
+                    map.put("function", "peoplesearch");
+                    map.put("data", "");
+                    String s = gson.toJson(map);
+                    ServerSocketUtil.sendDateToClient(s);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                /*if(!editText.getText().toString().trim().equals("")){
                     try {
                         ServerSocketUtil.sendDateToClient(editText.getText().toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
+                }*/
+
             }
         });
 
@@ -81,8 +99,13 @@ public class TestActivity extends Activity {
                     textView.setText(msg);
                 }
             });
-
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
 }

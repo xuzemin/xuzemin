@@ -24,8 +24,7 @@ public class Contact {
     public static String Param = "param";
     public static String Navigation = "navigation";
     public static String Peoplesearch = "peoplesearch";
-    public static String StartSearch = "startsearch";
-    public static String StopSearch = "stopsearch";
+    public static String StopSearch = "stop";
     public static String Result = "result";
     public static String Camera = "3dcamera";
 

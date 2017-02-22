@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.util.Contact;
 
 import java.util.Vector;
@@ -25,17 +26,17 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_xs=new Vector<Float>();
     public Vector<Float> point_ys=new Vector<Float>();
     public Paint p;
-    public int Scale = 25;
+    public int Scale = 50;
     public float scale = 1,translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
     public Vector<Float> path_xs=new Vector<Float>();
     public Vector<Float> path_ys=new Vector<Float>();
-    public Bitmap bitmap = null;
+    public Bitmap bitmap = null,rotbitmap = null;
     public float bitmap_x = 0 , bitmap_y = 0;
     public float center_x = 0 , center_y = 0;
-    public int rote = 0;
+    public int rote = 45;
     public Movie gifMovie;
-    public boolean paint = false,Ishave = false;
+    public boolean paint = false,Ishave = false,Isplan = true,Ispath = false;
     public int temp = 0;
     public MyView(Context context, AttributeSet attr) {
         super(context,attr);
@@ -79,32 +80,39 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿
-        p.setColor(Color.BLACK);
+        p.setColor(getResources().getColor(R.color.chartreuse));
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth((float) 2.0);
+        p.setStrokeWidth((float) 3.0);
         for(int i=0;i<point_xs.size();i++) {
-            canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 5, p);
-            canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
-            if (i >= 1) {
-                canvas.drawLine(point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
+            if(Isplan){
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 5, p);
+                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+                if (i >= 1) {
+                    canvas.drawLine(point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
+                }
+            }else{
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 10, p);
+                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
             }
         }
         center_x = bitmap.getWidth()/2+bitmap_x;
         center_y = bitmap.getHeight()/2+bitmap_y;
-        if(paint){
-            Ishave = false;
-            if(path_xs!=null) {
-                for (int i = 0; i < path_xs.size(); i++) {
-                    if (path_xs.elementAt(i) == center_x && path_ys.elementAt(i) == center_y) {
-                        Ishave = true;
+        if(Ispath){
+            if(paint){
+                Ishave = false;
+                if(path_xs!=null) {
+                    for (int i = 0; i < path_xs.size(); i++) {
+                        if (path_xs.elementAt(i) == center_x && path_ys.elementAt(i) == center_y) {
+                            Ishave = true;
+                        }
                     }
                 }
+                if(!Ishave){
+                    path_xs.add(bitmap.getWidth()/2+bitmap_x);
+                    path_ys.add(bitmap.getHeight()/2+bitmap_y);
+                }
+                paint = false;
             }
-            if(!Ishave){
-                path_xs.add(bitmap.getWidth()/2+bitmap_x);
-                path_ys.add(bitmap.getHeight()/2+bitmap_y);
-            }
-            paint = false;
         }
         p.setColor(Color.BLUE);
         p.setStyle(Paint.Style.STROKE);
@@ -116,11 +124,17 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         drawtable(canvas);
-        if(bitmap!=null){
+        if(rotbitmap!=null){
             matrix = new Matrix();
             matrix.setTranslate(bitmap_x,bitmap_y);
             matrix.postRotate(rote, center_x,center_y);
-            canvas.drawBitmap(bitmap,matrix,null);
+            canvas.drawBitmap(rotbitmap,matrix,null);
+        }
+        if(bitmap!=null) {
+            matrix = new Matrix();
+            matrix.setTranslate(bitmap_x,bitmap_y);
+            matrix.postRotate(0, center_x,center_y);
+            canvas.drawBitmap(bitmap, matrix, null);
         }
 
 //        showGifImage(canvas);
@@ -182,13 +196,12 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setStrokeWidth((float) 0.5);
 
 
-        for(int y=0;y <= (myview_height/Scale) ; y++) {
-            canvas.drawLine(20,y*Scale+20,620,y*Scale+20,p);
+        for(int y=0;y <= (myview_width/Scale) ; y++) {
+            canvas.drawLine(20,y*Scale+20,1020,y*Scale+20,p);
         }
 
-
         for(int y=0;y <= (myview_width/Scale);y++) {
-            canvas.drawLine(y*Scale+20,20,y*Scale+20,1020,p);
+            canvas.drawLine(y*Scale+20,20,y*Scale+20,620,p);
         }
     }
 }

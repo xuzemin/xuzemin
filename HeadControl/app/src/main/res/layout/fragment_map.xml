@@ -9,8 +9,9 @@
     <com.android.jdrd.headcontrol.view.MyView
         android:layout_marginLeft="30dp"
         android:id="@+id/surfaceview"
-        android:layout_width="640dp"
-        android:layout_height="1040dp"
+        android:layout_width="1040dp"
+        android:layout_height="640dp"
+        android:layout_gravity="center"
         />
     <LinearLayout
         android:id="@+id/linearlayout_map"
@@ -130,15 +131,6 @@
             android:text="@string/scope"/>
         <Spinner
             android:id="@+id/scope"
-            style="@style/MySpiner"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/MyTextView"
-            android:text="@string/angle"/>
-        <Spinner
-            android:id="@+id/angle"
             style="@style/MySpiner"
             />
         <TextView
