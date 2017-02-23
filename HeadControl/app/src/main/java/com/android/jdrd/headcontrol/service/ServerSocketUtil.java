@@ -113,31 +113,36 @@ public class ServerSocketUtil extends Service {
         String str2 = "*" + str + "#";
 
         try {
+            Contact.debugLog("ip"+ip);
+            if(ip !=null) {
+                if (ip.equals("/192.168.88.101")) {
+                    if (out1 != null) {
+                        out1.write(str2.getBytes());
+                    }
+                    if (out2 != null) {
+                        out2.write(str2.getBytes());
+                    }
 
-            if (ip.equals("/192.168.1.100")) {
-                if (out1 != null) {
-                    out1.write(str2.getBytes());
-                }
-                if (out2 != null) {
-                    out2.write(str2.getBytes());
-                }
+                } else if (ip.equals("/192.168.1.102")) {
+                    if (out1 != null) {
+                        out1.write(str2.getBytes());
+                    }
+                    if (out2 != null) {
+                        out2.write(str2.getBytes());
+                    }
 
-            } else if (ip.equals("/192.168.1.102")) {
-                if (out1 != null) {
-                    out1.write(str2.getBytes());
+                } else {
+                    Contact.debugLog("IP不对");
                 }
-                if (out2 != null) {
-                    out2.write(str2.getBytes());
-                }
-
-            } else {
-                Contact.debugLog("IP不对");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
+
 
     class Task implements Runnable {
         private Socket socket;
@@ -151,7 +156,7 @@ public class ServerSocketUtil extends Service {
             ip = socket.getInetAddress().toString();
             Contact.debugLog(ip);
 
-            if ("/192.168.1.100".equals(ip)) {
+            if ("/192.168.88.101".equals(ip)) {
                 socket1 = socket;
             } else if ("/192.168.1.102".equals(ip)) {
                 socket2 = socket;
@@ -161,7 +166,7 @@ public class ServerSocketUtil extends Service {
 
             try {
 
-                if (ip.equals("/192.168.1.100")) {
+                if (ip.equals("/192.168.88.101")) {
                     in1 = socket1.getInputStream();
                     out1 = socket1.getOutputStream();
                     new Thread(new Runnable() {

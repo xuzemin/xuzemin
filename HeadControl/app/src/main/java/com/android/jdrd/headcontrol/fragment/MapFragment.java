@@ -103,6 +103,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     private Vector<Float> arrayangle_tmp = new Vector<>();
     private Vector<Float> arraygametime_tmp = new Vector<>();
     private Timer timer;
+    private int tasknumber;
     private TimerTask task;
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
     private Vector<String> strings = new Vector<>();
@@ -133,13 +134,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     Contact.debugLog("btn_cancle");
                     break;
                 case 3:
-                    sendBundle(Contact.Command,Contact.StopSearch,"");
+                    Contact.getContact().sendBundle(Contact.Command,Contact.StopSearch,"");
                     Contact.debugLog("btn_warn_sure"+thread.isAlive());
                     if(thread.isAlive()){
                         thread = new Thread();
                     }
                     Contact.debugLog("btn_warn_sure"+thread.isAlive());
-                    sendBundle(Contact.Command,Contact.StopSearch,"");
+                    Contact.getContact().sendBundle(Contact.Command,Contact.StopSearch,"");
                     break;
                 case 4:
                     resetTimer();
@@ -422,9 +423,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 if(Istouch){
                     Contact.showWarntext(context,handler);
                 }else {
-                    arrayPlanLists.remove(strings.get((int) plannumber));
-                    writeXML();
-                    updatekey();
+                    if(arrayPlanLists.size() > 0){
+                        arrayPlanLists.remove(strings.get((int) plannumber));
+                        writeXML();
+                        updatekey();
+                    }
                 }
 
                 break;
@@ -434,7 +437,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 //                findViewById(R.id.button_execut).setClickable(true);
 //                findViewById(R.id.button_plan_stop).setClickable(false);
                 handler.sendEmptyMessage(4);
-//                sendCamera();
 //                if(Istouch){
 //                    Contact.showWarntext(context,handler);
 //                }else {
@@ -535,7 +537,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                     map.put("point_x",Float.valueOf(point_x.getText().toString().trim()));
                     map.put("point_y",Float.valueOf(point_y.getText().toString().trim()));
                     map.put("angle",0);
-                    sendBundle(Contact.Command,Contact.Navigation,map);
+                    Contact.getContact().sendBundle(Contact.Command,Contact.Navigation,map);
 
                 }else{
                     Toast.makeText(context,"请输入正确的坐标",Toast.LENGTH_SHORT).show();
@@ -675,7 +677,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         map.put("point_y",a);
         Contact.debugLog( "y"+a);
         map.put("angle",angle);
-        sendBundle(Contact.Command,Contact.Navigation,map);
+        Contact.getContact().sendBundle(Contact.Command,Contact.Navigation,map);
 //        }
     }
 
@@ -702,10 +704,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         String flag = jsonObject.getString(Contact.Result);
                         if(flag.equals("success")){
                             Toast.makeText(context,"success",Toast.LENGTH_SHORT).show();
-                            handler.sendEmptyMessage(4);
+                            if(tasknumber == 0 || tasknumber ==3){
+                                handler.sendEmptyMessage(4);
+                            }
                         }else if(flag.equals("fail")){
-                            Toast.makeText(context,"success",Toast.LENGTH_SHORT).show();
-                            handler.sendEmptyMessage(4);
+                            Toast.makeText(context,"fail",Toast.LENGTH_SHORT).show();
+                            if(tasknumber == 0 || tasknumber == 3) {
+                                handler.sendEmptyMessage(4);
+                            }
                         }else if(flag.equals("navigating")){
 
                         }
@@ -715,16 +721,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         JSONObject jsonObject = new JSONObject(data);
                         String str =  jsonObject.getString("result");
                         if(str.equals("body")){
+                            Contact.getContact().sendBundle(Contact.Command,Contact.StopSearch,"");
                             IsFind = true;
                             try {
                                 resetTimer();
-                                ServerSocketUtil.sendDateToClient(string);
+                                if(tasknumber == 1){
+                                    ServerSocketUtil.sendDateToClient(string);
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }else if(str.equals("nobody")){
                         }else if(str.equals("away")){
-                            handler.sendEmptyMessage(4);
+                            if(tasknumber == 1) {
+                                handler.sendEmptyMessage(4);
+                            }
                         }
                     }
                 }else if(type.equals(Contact.Param)){
@@ -742,46 +753,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    private void sendBundle(String type,String function,Map data){
-        try {
-            Gson gson = new Gson();
-            Map map = new LinkedHashMap();
-            map.put("type", type);
-            map.put("function", function);
-            map.put("data", data);
-            String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s);
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendBundle(String type,String function,String data){
-        try {
-            Gson gson = new Gson();
-            Map map = new LinkedHashMap();
-            map.put(Contact.Type, type);
-            map.put(Contact.Function, function);
-            map.put(Contact.Data, data);
-            String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void sendBundle(String type,String function,Float data){
-        try {
-            Gson gson = new Gson();
-            Map map = new LinkedHashMap();
-            map.put(Contact.Type, type);
-            map.put(Contact.Function, function);
-            map.put(Contact.Data, data);
-            String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     //xml写入
     public synchronized void writeXML() {
@@ -933,6 +904,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         Istouch = false;
         strings = getKey();
         if(strings !=null && context!=null){
+            surfaceview.point_xs.removeAllElements();
+            surfaceview.point_ys.removeAllElements();
             adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,strings);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             planchooce.setAdapter(adapter);
@@ -972,87 +945,102 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     }
     public void startPlan(){
         thread = null;
-            thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
-                    Contact.debugLog("array = " + array.toString());
-                    xs_tmp = array.get("point_xs");
-                    ys_tmp  = array.get("point_ys");
-                    arrayserchtime_tmp = array.get("arrayserchtime");
-                    arrayscope_tmp = array.get("arrayscope");
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+                Contact.debugLog("array = " + array.toString());
+                xs_tmp = array.get("point_xs");
+                ys_tmp  = array.get("point_ys");
+                arrayserchtime_tmp = array.get("arrayserchtime");
+                arrayscope_tmp = array.get("arrayscope");
 //                    arrayangle_tmp = array.get("arrayangle");
-                    arraygametime_tmp = array.get("arraygametime");
-                    int i = 0;
-                    while(i < xs_tmp.size()){
-                        Contact.debugLog("thread = " + i);
-                        sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
-                        synchronized (thread){
-                            try {
-                                thread.wait();
-                                //到达对应地点notify
-                                //发送 找人时间以及机器人旋转以及找人范围
-                                Contact.debugLog("发送 找人时间以及机器人旋转以及找人范围 = "+i);
+                arraygametime_tmp = array.get("arraygametime");
+                int i = 0;
+                while(i < xs_tmp.size()){
+                    Contact.debugLog("thread = " + i);
+                    Contact.getContact().sendBundle(Contact.Command,Contact.StopSearch,"");
+
+                    sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
+                    synchronized (thread){
+                        try {
+                            tasknumber = 0;
+                            //前往地图标注地点
+                            Contact.debugLog("tasknumber = " + tasknumber);
+                            thread.wait();
+                            //到达对应地点notify
+                            //发送 找人时间以及机器人旋转以及找人范围
+                            Contact.debugLog("发送 找人时间以及机器人旋转以及找人范围 = "+i);
+                            resetTimer();
+                            if(arrayserchtime_tmp.get(i) == 0){
+                                Contact.debugLog("arrayserchtime_tmp = " + 0);
+                                timer.schedule(task, 1 * 60 * 1000);
+                            }else if(arrayserchtime_tmp.get(i) == 1){
+                                Contact.debugLog("arrayserchtime_tmp = " + 1);
+                                timer.schedule(task, 2 * 60 * 1000);
+                            }else if(arrayserchtime_tmp.get(i) == 2){
+                                Contact.debugLog("arrayserchtime_tmp = " + 2);
+                                timer.schedule(task, 3 * 60 * 1000);
+                            }
+                            Contact.getContact().sendCamera(arrayscope_tmp.get(i),context);
+                            Contact.getContact().sendBundle(Contact.Command,Contact.Peoplesearch,"");
+                            Contact.debugLog("如果有找到人则到达指定位置 = "+i);
+                            IsFind = false;
+                            tasknumber = 1;
+                            Contact.debugLog("tasknumber = " + tasknumber);
+                            //互动中 找人
+                            thread.wait();
+
+                            //如果有找到人则到达指定位置
+                            Contact.debugLog("如果有找到人则到达指定位置 = "+i);
+                            if(IsFind){
                                 IsFind = false;
-                                resetTimer();
-                                if(arrayserchtime_tmp.get(i) == 0){
-                                    Contact.debugLog("arrayserchtime_tmp = " + 0);
+                                Contact.debugLog("互动时间 = "+i);
+                                resetTimer2();
+                                if(arraygametime_tmp.get(i) == 0){
+                                    Contact.debugLog("arraygametime_tmp = " + 0);
                                     timer.schedule(task, 1 * 60 * 1000);
-                                }else if(arrayserchtime_tmp.get(i) == 1){
-                                    Contact.debugLog("arrayserchtime_tmp = " + 1);
+                                }else if(arraygametime_tmp.get(i) == 1){
+                                    Contact.debugLog("arraygametime_tmp = " + 1);
                                     timer.schedule(task, 2 * 60 * 1000);
-                                }else if(arrayserchtime_tmp.get(i) == 2){
-                                    Contact.debugLog("arrayserchtime_tmp = " + 2);
+                                }else if(arraygametime_tmp.get(i) == 2){
+                                    Contact.debugLog("arraygametime_tmp = " + 2);
                                     timer.schedule(task, 3 * 60 * 1000);
                                 }
-                                sendCamera(arrayscope_tmp.get(i));
-                                sendBundle(Contact.Command,Contact.Peoplesearch,"");
-                                Contact.debugLog("如果有找到人则到达指定位置 = "+i);
 
+                                tasknumber = 2;
+                                Contact.debugLog("tasknumber = " + tasknumber);
+                                //互动中
                                 thread.wait();
-
-                                //如果有找到人则到达指定位置
-                                Contact.debugLog("如果有找到人则到达指定位置 = "+i);
-                                if(IsFind){
-                                    IsFind = false;
-                                    Contact.debugLog("互动时间 = "+i);
-                                    resetTimer2();
-                                    if(arraygametime_tmp.get(i) == 0){
-                                        Contact.debugLog("arraygametime_tmp = " + 0);
-                                        timer.schedule(task, 1 * 60 * 1000);
-                                    }else if(arraygametime_tmp.get(i) == 1){
-                                        Contact.debugLog("arraygametime_tmp = " + 1);
-                                        timer.schedule(task, 2 * 60 * 1000);
-                                    }else if(arraygametime_tmp.get(i) == 2){
-                                        Contact.debugLog("arraygametime_tmp = " + 2);
-                                        timer.schedule(task, 3 * 60 * 1000);
-                                    }
-                                    thread.wait();
-                                }
-                                Contact.debugLog("返回路线位置 = "+xs_tmp.get(i)+ys_tmp.get(i));
-
-                                sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
-
-                                thread.wait();
-
-                                //返回后进行下一个地点
-                                i++;
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
                             }
+
+                            Contact.debugLog("返回路线位置 = "+xs_tmp.get(i)+ys_tmp.get(i));
+                            Contact.getContact().sendBundle(Contact.Command,Contact.StopSearch,"");
+                            //返回原点
+                            sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
+                            tasknumber = 3;
+                            Contact.debugLog("tasknumber = " + tasknumber);
+                            thread.wait();
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                        Contact.debugLog("thread = "+i);
                     }
+                    //返回后进行下一个地点
+                    i++;
+                    Contact.debugLog("thread = "+i);
                 }
-            });
-            thread.start();
+            }
+        });
+        thread.start();
     }
 
     public void resetTimer(){
         timer = new Timer();
         task = new TimerTask() {
             public void run () {
-                sendBundle(Contact.Command,Contact.StopSearch,"");
+                Contact.getContact().sendCamera(Float.valueOf(3),context);
+                Contact.getContact().sendBundle(Contact.Command,Contact.StopSearch,"");
                 handler.sendEmptyMessage(4);
             }
         };
@@ -1061,23 +1049,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         timer = new Timer();
         task = new TimerTask() {
             public void run () {
-//                sendBundle(Contact.Command,Contact.StopSearch,"");
                 handler.sendEmptyMessage(4);
             }
         };
-    }
-    public void sendCamera(Float scope){
-        Intent intent = new Intent();
-        if(scope == 0){
-            intent.putExtra("msg", "远");
-        }else if(scope == 1){
-            intent.putExtra("msg", "中");
-        }else if(scope == 2){
-            intent.putExtra("msg", "近");
-        }else{
-            intent.putExtra("msg", "关闭");
-        }
-        intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
-        context.sendBroadcast(intent);
     }
 }
