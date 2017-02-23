@@ -20,36 +20,24 @@
         android:layout_height="match_parent"
         >
         <Button
+            style="@style/MapButton"
             android:id="@+id/button_pointchooce"
             android:text="@string/button_pointchooce"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
             />
         <Button
+            style="@style/MapButton"
             android:id="@+id/button_pathplan"
             android:text="@string/button_pathplan"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
             />
         <Button
+            style="@style/MapButton"
             android:id="@+id/button_cruise"
             android:text="@string/button_cruise"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
             />
         <Button
+            style="@style/MapButton"
             android:id="@+id/button_return"
             android:text="@string/button_return"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
             />
     </LinearLayout>
     <LinearLayout
@@ -69,44 +57,29 @@
             style="@style/MySpiner"
             />
         <Button
+            style="@style/MapButton"
             android:id="@+id/button_execut"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="执行路线"
-            android:textColor="@color/black"
             />
         <Button
             android:id="@+id/button_plan_stop"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="@string/button_plan_back"
-            android:textColor="@color/black"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_plan"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="@string/button_plan"
-            android:textColor="@color/black"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_remove"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="@string/button_remove"
-            android:textColor="@color/black"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_plan_back"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="@string/back"
-            android:textColor="@color/black"
+            style="@style/MapButton"
             />
     </LinearLayout>
     <LinearLayout
@@ -145,30 +118,27 @@
         <Button
             android:id="@+id/button_savenext"
             android:text="@string/savenext"
-            style="@style/MyButton"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_clearlast"
             android:text="@string/button_clearlast"
-            style="@style/MyButton"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_saveall"
             android:text="@string/button_saveall"
-            style="@style/MyButton"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_clearall"
             android:text="@string/button_clearall"
-            style="@style/MyButton"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_plan_info_back"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="@string/back"
-            android:textColor="@color/black"
+            style="@style/MapButton"
             />
     </LinearLayout>
     <LinearLayout
@@ -185,8 +155,7 @@
         <Button
             android:id="@+id/button_next"
             android:text="@string/savenext"
-            style="@style/MyButton"
-            android:layout_height="100dp"
+            style="@style/MapButton"
             />
         <EditText
             android:id="@+id/point_x"
@@ -199,16 +168,12 @@
         <Button
             android:id="@+id/button_move"
             android:text="@string/move"
-            style="@style/MyButton"
-            android:layout_height="100dp"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_point_back"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="@string/back"
-            android:textColor="@color/black"
+            style="@style/MapButton"
             />
     </LinearLayout>
     <LinearLayout
@@ -220,22 +185,17 @@
         <Button
             android:id="@+id/button_roam_start"
             android:text="@string/roam_start"
-            style="@style/MyButton"
-            android:layout_height="100dp"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_roam_stop"
             android:text="@string/roam_stop"
-            style="@style/MyButton"
-            android:layout_height="100dp"
+            style="@style/MapButton"
             />
         <Button
             android:id="@+id/button_roam_back"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:textSize="25sp"
             android:text="@string/back"
-            android:textColor="@color/black"
+            style="@style/MapButton"
             />
     </LinearLayout>
 </LinearLayout>
