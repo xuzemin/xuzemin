@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Movie;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -82,13 +83,13 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setAntiAlias(true); //反锯齿
         p.setColor(getResources().getColor(R.color.chartreuse));
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth((float) 3.0);
+        p.setStrokeWidth((float) 5.0);
         for(int i=0;i<point_xs.size();i++) {
             if(Isplan){
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 5, p);
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 3, p);
                 canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
-                    canvas.drawLine(point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
+                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
                 }
             }else{
                 canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 10, p);
@@ -120,7 +121,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         for(int i=0;i<path_xs.size();i++) {
 //            canvas.drawCircle(path_xs.elementAt(i), path_ys.elementAt(i), 3, p);
             if (i >= 1) {
-                canvas.drawLine(path_xs.elementAt(i-1),path_ys.elementAt(i-1),path_xs.elementAt(i),path_ys.elementAt(i),p);
+                drawAL(canvas,path_xs.elementAt(i-1),path_ys.elementAt(i-1),path_xs.elementAt(i),path_ys.elementAt(i),p);
             }
         }
         drawtable(canvas);
@@ -203,5 +204,54 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         for(int y=0;y <= (myview_width/Scale);y++) {
             canvas.drawLine(y*Scale+20,20,y*Scale+20,620,p);
         }
+    }
+
+    public void drawAL(Canvas canvas,float sx, float sy, float ex, float ey,Paint p)
+    {
+        double H = 20; // 箭头高度
+        double L = 5; // 底边的一半
+        int x3 = 0;
+        int y3 = 0;
+        int x4 = 0;
+        int y4 = 0;
+        double awrad = Math.atan(L / H); // 箭头角度
+        double arraow_len = Math.sqrt(L * L + H * H); // 箭头的长度
+        double[] arrXY_1 = rotateVec(ex - sx, ey - sy, awrad, true, arraow_len);
+        double[] arrXY_2 = rotateVec(ex - sx, ey - sy, -awrad, true, arraow_len);
+        double x_3 = ex - arrXY_1[0]; // (x3,y3)是第一端点
+        double y_3 = ey - arrXY_1[1];
+        double x_4 = ex - arrXY_2[0]; // (x4,y4)是第二端点
+        double y_4 = ey - arrXY_2[1];
+        Double X3 = new Double(x_3);
+        x3 = X3.intValue();
+        Double Y3 = new Double(y_3);
+        y3 = Y3.intValue();
+        Double X4 = new Double(x_4);
+        x4 = X4.intValue();
+        Double Y4 = new Double(y_4);
+        y4 = Y4.intValue();
+        // 画线
+        canvas.drawLine(sx, sy, ex, ey,p);
+        Path triangle = new Path();
+        triangle.moveTo(ex, ey);
+        triangle.lineTo(x3, y3);
+        triangle.lineTo(x4, y4);
+        triangle.close();
+        canvas.drawPath(triangle,p);
+    }
+    public double[] rotateVec(float px, float py, double ang, boolean isChLen, double newLen)
+    {
+        double mathstr[] = new double[2];
+        // 矢量旋转函数，参数含义分别是x分量、y分量、旋转角、是否改变长度、新长度
+        double vx = px * Math.cos(ang) - py * Math.sin(ang);
+        double vy = px * Math.sin(ang) + py * Math.cos(ang);
+        if (isChLen) {
+            double d = Math.sqrt(vx * vx + vy * vy);
+            vx = vx / d * newLen;
+            vy = vy / d * newLen;
+            mathstr[0] = vx;
+            mathstr[1] = vy;
+        }
+        return mathstr;
     }
 }

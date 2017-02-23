@@ -65,11 +65,12 @@ public class ServerSocketUtil extends Service {
 
             String camera = intent.getStringExtra("camera");
             Contact.debugLog("收到摄像头数据" + camera);
-
-            try {
-                sendDateToClient(camera);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(camera !=null){
+                try {
+                    sendDateToClient(camera);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
