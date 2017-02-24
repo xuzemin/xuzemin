@@ -60,7 +60,7 @@
         <item name="android:layout_width">200dp</item>
     </style>
     <style name="MySpiner">
-        <item name="android:background">@mipmap/you_anniu_no</item>
+        <item name="android:background">@drawable/btn_spiner_selector</item>
         <item name="android:layout_width">200dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:gravity">center</item>
