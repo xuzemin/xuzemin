@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="500dp"
+    android:layout_height="300dp"
     android:layout_gravity="center"
-    android:background="@mipmap/bg02"
+    android:background="@mipmap/bg10"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
-        android:layout_height="40.0dip"
-        android:layout_marginTop="15dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="设置号码"
+        android:text="@string/finishplan"
         android:textColor="#fffffb"
         android:textSize="20sp"
         android:visibility="visible" />
@@ -24,35 +24,39 @@
 
     <EditText
         android:id="@+id/number"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:gravity="left|center"
-        android:hint="号码" />
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:hint="路线1" />
     <!-- </LinearLayout> -->
 
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="60.0dip"
+        android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal" >
 
         <Button
             android:id="@+id/positiveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:background="@drawable/btn_map_selector"
+            android:text="@string/sure"
             android:gravity="center" />
 
         <Button
             android:id="@+id/negativeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20.0dip"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:background="@drawable/btn_map_selector"
+            android:layout_marginLeft="40dp"
+            android:text="@string/cancel"
             android:gravity="center" />
     </LinearLayout>
 

@@ -31,11 +31,11 @@
         <service
             android:name=".service.ServerSocketUtil"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
 
         <activity
             android:name=".activity.TestActivity"
-            android:label="@string/title_activity_test"></activity>
+            android:label="@string/title_activity_test"/>
     </application>
 
 </manifest>

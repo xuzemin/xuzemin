@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">HeadControl</string>
 
+    <string name="map">导航模块</string>
+
     <string name="button_left">左</string>
     <string name="button_right">右</string>
     <string name="button_up">上</string>
@@ -31,6 +33,7 @@
     <string name="roam_start">开始漫游</string>
     <string name="roam_stop">停止漫游</string>
     <string name="button_saveall">规划完毕</string>
+    <string name="finishplan">请设置路线名称</string>
     <string name="warn">提醒</string>
 
     <string name="sure">确定</string>

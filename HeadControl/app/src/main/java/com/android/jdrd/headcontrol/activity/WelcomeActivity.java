@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,7 +24,7 @@ import com.android.jdrd.headcontrol.fragment.BatteryFragment;
 import com.android.jdrd.headcontrol.fragment.CleanFragment;
 import com.android.jdrd.headcontrol.fragment.MapFragment;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
-import com.android.jdrd.headcontrol.util.Contact;
+import com.android.jdrd.headcontrol.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,16 +90,20 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 隐藏标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 隐藏状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_welcome);
 
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
 
-
         Intent testActivity = new Intent(this, TestActivity.class);
         startActivity(testActivity);
-
 
         list = new ArrayList<>();
         BatteryFragment batteryFragment = new BatteryFragment(WelcomeActivity.this);
@@ -126,6 +132,7 @@ public class WelcomeActivity extends Activity {
             //第一次进入app
             handler.sendEmptyMessage(1);
         }*/
+//        this.getWindow().getDecorView().setSystemUiVisibility(View.GONE);
     }
 
     @Override
@@ -212,7 +219,7 @@ public class WelcomeActivity extends Activity {
                     IsClean = false;
                     if(IsMap){
                         if(MapFragment.Istouch || MapFragment.Isplan){
-                            Contact.showWarntext(WelcomeActivity.this,handler);
+                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
                         }else{
                             changeBattery();
                             IsMap = false;
@@ -226,7 +233,7 @@ public class WelcomeActivity extends Activity {
                     IsClean = true;
                     if(IsMap){
                         if(MapFragment.Istouch || MapFragment.Isplan){
-                            Contact.showWarntext(WelcomeActivity.this,handler);
+                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
                         }else{
                             changeClean();
                             IsMap = false;
@@ -303,4 +310,19 @@ public class WelcomeActivity extends Activity {
         transaction_map.replace(R.id.ll_right, list.get(02), "cleanFragment");
         transaction_map.commit();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            return true;
+        }else if(keyCode == KeyEvent.KEYCODE_MENU){
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    public void onAttachedToWindow() {
+//        this.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION);
+        super.onAttachedToWindow();
+    }
+
 }

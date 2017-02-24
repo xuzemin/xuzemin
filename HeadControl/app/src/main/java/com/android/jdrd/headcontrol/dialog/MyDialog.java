@@ -6,6 +6,8 @@ package com.android.jdrd.headcontrol.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.inputmethodservice.Keyboard;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -69,5 +71,13 @@ public class MyDialog extends Dialog {
      */
     public void setOnNegativeListener(View.OnClickListener listener){
         negativeButton.setOnClickListener(listener);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

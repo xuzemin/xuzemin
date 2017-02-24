@@ -14,7 +14,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.android.jdrd.headcontrol.R;
-import com.android.jdrd.headcontrol.util.Contact;
 
 import java.util.Vector;
 
@@ -30,11 +29,11 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public int Scale = 50;
     public float scale = 1,translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
-    public Vector<Float> path_xs=new Vector<Float>();
-    public Vector<Float> path_ys=new Vector<Float>();
+    public Vector<Double> path_xs=new Vector<Double>();
+    public Vector<Double> path_ys=new Vector<Double>();
     public Bitmap bitmap = null,rotbitmap = null;
-    public float bitmap_x = 0 , bitmap_y = 0;
-    public float center_x = 0 , center_y = 0;
+    public Double bitmap_x = 0.0 , bitmap_y = 0.0;
+    public Double center_x = 0.0 , center_y = 0.0;
     public int rote = 45;
     public Movie gifMovie;
     public boolean paint = false,Ishave = false,Isplan = true,Ispath = false;
@@ -77,16 +76,16 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         matrix.postScale(scale,scale);
         matrix.postTranslate(translate_x,translate_y);
         canvas.concat(matrix);
-        canvas.drawColor(Color.WHITE);//这里是绘制背景
+        canvas.drawColor(getResources().getColor(R.color.darkgray));//这里是绘制背景
 
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿
-        p.setColor(getResources().getColor(R.color.chartreuse));
+        p.setColor(getResources().getColor(R.color.path));
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 5.0);
         for(int i=0;i<point_xs.size();i++) {
             if(Isplan){
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 3, p);
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 9, p);
                 canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
                     drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
@@ -127,14 +126,14 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         drawtable(canvas);
         if(rotbitmap!=null){
             matrix = new Matrix();
-            matrix.setTranslate(bitmap_x,bitmap_y);
-            matrix.postRotate(rote, center_x,center_y);
+            matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
+            matrix.postRotate(rote, Float.valueOf(String.valueOf(center_x)),Float.valueOf(String.valueOf(center_y)));
             canvas.drawBitmap(rotbitmap,matrix,null);
         }
         if(bitmap!=null) {
             matrix = new Matrix();
-            matrix.setTranslate(bitmap_x,bitmap_y);
-            matrix.postRotate(0, center_x,center_y);
+            matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
+            matrix.postRotate(0,Float.valueOf(String.valueOf(center_x)),Float.valueOf(String.valueOf(center_y)));
             canvas.drawBitmap(bitmap, matrix, null);
         }
 
@@ -184,7 +183,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         int relTime = (int) ((now - mMovieStart) % duration);
         gifMovie.setTime(relTime);
         //在指定的位置进行绘制，这里是左上角
-        gifMovie.draw(canvas, bitmap_x, bitmap_y);
+        gifMovie.draw(canvas,Float.valueOf(String.valueOf(bitmap_x)), Float.valueOf(String.valueOf(bitmap_y)));
         if ((now - mMovieStart) >= duration) {
             mMovieStart = 0;
             return true;
@@ -192,21 +191,18 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         return false;
     }
     private void drawtable(Canvas canvas){
-        p.setColor(Color.GRAY);
+        p.setColor(Color.BLACK);
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 0.5);
-
-
         for(int y=0;y <= (myview_width/Scale) ; y++) {
             canvas.drawLine(20,y*Scale+20,1020,y*Scale+20,p);
         }
-
         for(int y=0;y <= (myview_width/Scale);y++) {
             canvas.drawLine(y*Scale+20,20,y*Scale+20,620,p);
         }
     }
 
-    public void drawAL(Canvas canvas,float sx, float sy, float ex, float ey,Paint p)
+    public void drawAL(Canvas canvas,double sx, double sy, double ex, double ey,Paint p)
     {
         double H = 20; // 箭头高度
         double L = 5; // 底边的一半
@@ -231,15 +227,15 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         Double Y4 = new Double(y_4);
         y4 = Y4.intValue();
         // 画线
-        canvas.drawLine(sx, sy, ex, ey,p);
+        canvas.drawLine((float)sx, (float)sy, (float)ex, (float)ey,p);
         Path triangle = new Path();
-        triangle.moveTo(ex, ey);
+        triangle.moveTo((float) ex, (float) ey);
         triangle.lineTo(x3, y3);
         triangle.lineTo(x4, y4);
         triangle.close();
         canvas.drawPath(triangle,p);
     }
-    public double[] rotateVec(float px, float py, double ang, boolean isChLen, double newLen)
+    public double[] rotateVec(double px, double py, double ang, boolean isChLen, double newLen)
     {
         double mathstr[] = new double[2];
         // 矢量旋转函数，参数含义分别是x分量、y分量、旋转角、是否改变长度、新长度

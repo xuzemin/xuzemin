@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
-import com.android.jdrd.headcontrol.util.Contact;
+import com.android.jdrd.headcontrol.util.Constant;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class TestActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String msg = intent.getStringExtra("msg");
-            Contact.debugLog("收到了距离角度： " + msg);
+            Constant.debugLog("收到了距离角度： " + msg);
 
             runOnUiThread(new Runnable() {
                 @Override

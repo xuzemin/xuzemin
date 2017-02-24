@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 
 import com.android.jdrd.headcontrol.util.Constant;
-import com.android.jdrd.headcontrol.util.Contact;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,7 +63,7 @@ public class ServerSocketUtil extends Service {
         public void onReceive(Context context, Intent intent) {
 
             String camera = intent.getStringExtra("camera");
-            Contact.debugLog("收到摄像头数据" + camera);
+            Constant.debugLog("收到摄像头数据" + camera);
             if(camera !=null){
                 try {
                     sendDateToClient(camera);
@@ -79,10 +78,10 @@ public class ServerSocketUtil extends Service {
 
         serverSocket = new ServerSocket(port);
         Socket socket;
-        Contact.debugLog("serverSocket is create....");
+        Constant.debugLog("serverSocket is create....");
 
         while (true) {
-            Contact.debugLog("waiting for connect....");
+            Constant.debugLog("waiting for connect....");
             socket = serverSocket.accept();
             new Thread(new Task(socket)).start();
         }
@@ -114,7 +113,7 @@ public class ServerSocketUtil extends Service {
         String str2 = "*" + str + "#";
 
         try {
-            Contact.debugLog("ip"+ip);
+            Constant.debugLog("ip"+ip);
             if(ip !=null) {
                 if (ip.equals("/192.168.88.101")) {
                     if (out1 != null) {
@@ -133,7 +132,7 @@ public class ServerSocketUtil extends Service {
                     }
 
                 } else {
-                    Contact.debugLog("IP不对");
+                    Constant.debugLog("IP不对");
                 }
             }
         } catch (IOException e) {
@@ -155,14 +154,14 @@ public class ServerSocketUtil extends Service {
         @Override
         public void run() {
             ip = socket.getInetAddress().toString();
-            Contact.debugLog(ip);
+            Constant.debugLog(ip);
 
             if ("/192.168.88.101".equals(ip)) {
                 socket1 = socket;
             } else if ("/192.168.1.102".equals(ip)) {
                 socket2 = socket;
             } else {
-                Contact.debugLog("IP不对");
+                Constant.debugLog("IP不对");
             }
 
             try {
@@ -189,7 +188,7 @@ public class ServerSocketUtil extends Service {
                     }).start();
 
                 } else {
-                    Contact.debugLog("流为空");
+                    Constant.debugLog("流为空");
                 }
 
             } catch (IOException e) {
@@ -217,9 +216,9 @@ public class ServerSocketUtil extends Service {
             msg = new String(buffer, 0, len);
 
             if (msg != null) {
-                Contact.debugLog("msg = " + msg.toString() + "  ip地址： " + ip);
+                Constant.debugLog("msg = " + msg.toString() + "  ip地址： " + ip);
             } else {
-                Contact.debugLog("hehe, msg为空");
+                Constant.debugLog("hehe, msg为空");
             }
 
             intent.putExtra("msg", msg);
