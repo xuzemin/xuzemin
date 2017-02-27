@@ -392,23 +392,23 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //规划新路线
             case R.id.button_plan:
-                    Constant.debugLog("规划新路线 = " + arrayPlanLists.toString());
-                    arrayserchtime = new Vector<Float>();
-                    arrayscope = new Vector<Float>();
+                Constant.debugLog("规划新路线 = " + arrayPlanLists.toString());
+                arrayserchtime = new Vector<Float>();
+                arrayscope = new Vector<Float>();
 //                    arrayangle = new Vector<Float>();
-                    arraygametime = new Vector<Float>();
-                    xs = new Vector<Float>();
-                    ys = new Vector<Float>();
-                    Constant.debugLog("规划新路线 = surfaceview.point_xs" + surfaceview.point_xs.toString());
+                arraygametime = new Vector<Float>();
+                xs = new Vector<Float>();
+                ys = new Vector<Float>();
+                Constant.debugLog("规划新路线 = surfaceview.point_xs" + surfaceview.point_xs.toString());
 
-                    surfaceview.point_xs = new Vector<Float>();
-                    surfaceview.point_ys = new Vector<Float>();
-                    Constant.debugLog("规划新路线 = surfaceview.point_xs" + surfaceview.point_xs.toString());
+                surfaceview.point_xs = new Vector<Float>();
+                surfaceview.point_ys = new Vector<Float>();
+                Constant.debugLog("规划新路线 = surfaceview.point_xs" + surfaceview.point_xs.toString());
 
-                    Constant.debugLog("规划新路线 = " + arrayPlanLists.toString());
-                    Istouch = true;
-                    linear_plan_info.setVisibility(View.VISIBLE);
-                    linear_plan.setVisibility(View.GONE);
+                Constant.debugLog("规划新路线 = " + arrayPlanLists.toString());
+                Istouch = true;
+                linear_plan_info.setVisibility(View.VISIBLE);
+                linear_plan.setVisibility(View.GONE);
                 break;
             //删除当前路线
             case R.id.button_remove:
@@ -421,7 +421,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         updatekey();
                     }
                 }
-
                 break;
             //停止执行
             case R.id.button_plan_stop:
@@ -516,13 +515,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 Constant.debugLog( "button_move");
                 if(point_x.getText()!=null&& !point_x.getText().toString().equals("") && point_y.getText()!=null&& !point_y.getText().equals("")){
                     sendNativePoint(Float.valueOf(point_x.getText().toString().trim()),Float.valueOf(point_y.getText().toString().trim()),0);
-
                     Map map  = new LinkedHashMap();
                     map.put("point_x",Float.valueOf(point_x.getText().toString().trim()));
                     map.put("point_y",Float.valueOf(point_y.getText().toString().trim()));
                     map.put("angle",0);
                     Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
-
                 }else{
                     Toast.makeText(context,"请输入正确的坐标",Toast.LENGTH_SHORT).show();
                 }
@@ -547,16 +544,19 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 Isplan = false;
                 break;
             case R.id.button_plan_info_back:
-                    Constant.getConstant().showWarntext(context, handler);
+                Constant.getConstant().showWarntext(context, handler);
                 break;
             case R.id.button_point_back:
                 Istouch = false;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_point.setVisibility(View.GONE);
+                surfaceview.point_xs.removeAllElements();
+                surfaceview.point_ys.removeAllElements();
                 break;
             case R.id.button_roam_back:
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_roam.setVisibility(View.GONE);
+
                 break;
         }
     }
@@ -641,8 +641,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     //底层获取
     private void getUpPoint(double native_x,double native_y){
         if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
-            surfaceview.bitmap_y = native_x * -100 - 60 +20;
-            surfaceview.bitmap_x = native_y * -100 + 300 + 20;
+            surfaceview.bitmap_y = native_x * -100 - 30 + 20;
+            surfaceview.bitmap_x = native_y * -100 + 270 + 20;
         }
     }
 
@@ -657,10 +657,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
         Map map  = new LinkedHashMap();
-        float a = (float) (up_y / -100 + 0.6);
+        float a = (float) ((up_y-20) / -100 +0.3);
         map.put("point_x",a);
         Constant.debugLog( "x"+a);
-        a = (float) (((up_x / -100) + 3.0));
+        a = (float) ((((up_x-20) / -100) + 2.7));
         map.put("point_y",a);
         Constant.debugLog( "y"+a);
         map.put("angle",angle);
@@ -694,6 +694,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         getUpPoint(jsonObject.getDouble("x"),jsonObject.getDouble("y"));
                         getAngle(jsonObject.getInt("angle"));
                         if(flag.equals("success")){
+                            Toast.makeText(context,"success",Toast.LENGTH_SHORT).show();
                             if(tasknumber == 0  ){
                                 //到达新地点
                                 tasknumber = 1;
@@ -707,6 +708,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                                 handler.sendEmptyMessage(4);
                             }
                         }else if(flag.equals("fail")){
+                            Toast.makeText(context,"fail",Toast.LENGTH_SHORT).show();
                             if(tasknumber == 0  ) {
                                 //到达新地点
                                 tasknumber = 1;
@@ -723,6 +725,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         JSONObject jsonObject = new JSONObject(data);
                         String str =  jsonObject.getString("result");
                         if(str.equals("body")){
+                            Toast.makeText(context,"body",Toast.LENGTH_SHORT).show();
                             if(task!=null){
                                 task.cancel();
                             }
@@ -738,10 +741,15 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                             }
                         }else if(str.equals("nobody")){
                         }else if(str.equals("away")){
-                            if(task!=null ){
-                                task.cancel();
+                            if(tasknumber == 3){
+                                tasknumber = 4 ;
+                                Toast.makeText(context,"away",Toast.LENGTH_SHORT).show();
+                                if(task!=null ){
+                                    task.cancel();
+                                }
+                                Constant.getConstant().sendCamera(Float.valueOf(3),context);
+                                handler.sendEmptyMessage(4);
                             }
-                            handler.sendEmptyMessage(4);
                         }
                     }else if(funtion.equals(Constant.Peoplesearch)){
                         if(data.equals("foundpeople")){
@@ -982,7 +990,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                             resetTimer();
                             if(arrayserchtime_tmp.get(i) == 0){
                                 Constant.debugLog("arrayserchtime_tmp = " + 0);
-                                timer.schedule(task, 1 * 10 * 1000);
+                                timer.schedule(task, 1 * 60 * 1000);
                             }else if(arrayserchtime_tmp.get(i) == 1){
                                 Constant.debugLog("arrayserchtime_tmp = " + 1);
                                 timer.schedule(task, 2 * 60 * 1000);
@@ -1007,7 +1015,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                                 resetTimer2();
                                 if(arraygametime_tmp.get(i) == 0){
                                     Constant.debugLog("arraygametime_tmp = " + 0);
-                                    timer.schedule(task, 1 * 10 * 1000);
+                                    timer.schedule(task, 1 * 60 * 1000);
                                 }else if(arraygametime_tmp.get(i) == 1){
                                     Constant.debugLog("arraygametime_tmp = " + 1);
                                     timer.schedule(task, 2 * 60 * 1000);
