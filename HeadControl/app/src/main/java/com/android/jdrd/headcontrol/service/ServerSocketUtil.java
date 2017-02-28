@@ -64,13 +64,16 @@ public class ServerSocketUtil extends Service {
 
             String camera = intent.getStringExtra("camera");
             Constant.debugLog("收到摄像头数据" + camera);
-            if(camera !=null){
+
+            if (camera != null) {
                 try {
                     sendDateToClient(camera);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+
+
         }
     }
 
@@ -115,7 +118,7 @@ public class ServerSocketUtil extends Service {
         try {
             Constant.debugLog("ip"+ip);
             if(ip !=null) {
-                if (ip.equals("/192.168.88.101")) {
+                if (ip.equals("/192.168.1.100")) {
                     if (out1 != null) {
                         out1.write(str2.getBytes());
                     }
@@ -156,7 +159,7 @@ public class ServerSocketUtil extends Service {
             ip = socket.getInetAddress().toString();
             Constant.debugLog(ip);
 
-            if ("/192.168.88.101".equals(ip)) {
+            if ("/192.168.1.100".equals(ip)) {
                 socket1 = socket;
             } else if ("/192.168.1.102".equals(ip)) {
                 socket2 = socket;
@@ -166,7 +169,7 @@ public class ServerSocketUtil extends Service {
 
             try {
 
-                if (ip.equals("/192.168.88.101")) {
+                if (ip.equals("/192.168.1.100")) {
                     in1 = socket1.getInputStream();
                     out1 = socket1.getOutputStream();
                     new Thread(new Runnable() {

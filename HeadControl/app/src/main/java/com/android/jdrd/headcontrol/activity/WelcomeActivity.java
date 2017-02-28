@@ -19,6 +19,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,7 +41,7 @@ import java.util.List;
  * Created by Administrator on 2016/10/23 0023.
  */
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends Activity implements Animation.AnimationListener{
 
     public boolean IsMap = false;
     public static boolean IsClean = false;
@@ -52,6 +54,12 @@ public class WelcomeActivity extends Activity {
     ImageView mImageView_Clean;//清洁图标
 
     ImageView mImageView_Map;//电源图标
+
+
+    private RelativeLayout rl_TitleList;
+    boolean flag;
+    private View fragment;
+
 
     MyClickListener mMyClickListener;
     List<Fragment> list;
@@ -94,7 +102,7 @@ public class WelcomeActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_welcome01);
+        setContentView(R.layout.activity_welcome);
 
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
@@ -137,6 +145,13 @@ public class WelcomeActivity extends Activity {
         mImageView_Clean = (ImageView) findViewById(R.id.iv_Clean);
 
         mImageView_Map = (ImageView) findViewById(R.id.iv_Map);
+
+        fragment=findViewById(R.id.fragment);
+        rl_TitleList = (RelativeLayout) findViewById(R.id.rl_TitleList);
+
+
+
+
     }
 
 
@@ -144,7 +159,7 @@ public class WelcomeActivity extends Activity {
     private void initData() {
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
-        transaction_battery.replace(R.id.ll_right, list.get(2), "MapFragment");
+        transaction_battery.add(R.id.ll_right, list.get(0), "batteryFragment");
         transaction_battery.commit();
         mMyClickListener = new MyClickListener();
     }
@@ -152,9 +167,12 @@ public class WelcomeActivity extends Activity {
 
     private void initEvent() {
 
-//        mImageView_Battery.setOnClickListener(mMyClickListener);
-//        mImageView_Clean.setOnClickListener(mMyClickListener);
-//        mImageView_Map.setOnClickListener(mMyClickListener);
+        mImageView_Battery.setOnClickListener(mMyClickListener);
+        mImageView_Clean.setOnClickListener(mMyClickListener);
+        mImageView_Map.setOnClickListener(mMyClickListener);
+
+        rl_TitleList.setOnClickListener(mMyClickListener);
+
     }
 
 
@@ -173,6 +191,27 @@ public class WelcomeActivity extends Activity {
         Intent intent = new Intent("com.jiadu.broadcast.setting.touch");
         sendBroadcast(intent);
         return super.dispatchTouchEvent(ev);
+    }
+//动画需实现的接口
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+//  开启动画时 是否显示隐藏 做标记
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        rl_TitleList.clearAnimation();
+        if (flag){
+            flag = false;
+        }else {
+            flag = true;
+            fragment.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 
     public class MyClickListener implements View.OnClickListener {
@@ -219,6 +258,13 @@ public class WelcomeActivity extends Activity {
                         changeMap();
                     }
                     break;
+
+                case R.id.rl_TitleList:
+                    startAnimation();
+                    break;
+
+
+
             }
         }
     }
@@ -243,7 +289,7 @@ public class WelcomeActivity extends Activity {
         setClickable();
         setBackgroundColor();
         //电源栏
-        mImageView_Battery.setImageResource(R.mipmap.dianyuan_per);
+        mImageView_Battery.setImageResource(R.mipmap.dianyuan_pre);
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
         transaction_battery.replace(R.id.ll_right, list.get(0), "batteryFragment");
@@ -254,7 +300,7 @@ public class WelcomeActivity extends Activity {
     private void changeClean() {
         setClickable();
         setBackgroundColor();
-        mImageView_Clean.setImageResource(R.mipmap.qingjie_per);
+        mImageView_Clean.setImageResource(R.mipmap.qingjie_pre);
         FragmentManager fragmentManager_Clean = getFragmentManager();
         FragmentTransaction transaction_clean = fragmentManager_Clean.beginTransaction();
         transaction_clean.replace(R.id.ll_right, list.get(1), "cleanFragment");
@@ -286,5 +332,35 @@ public class WelcomeActivity extends Activity {
 //        this.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION);
         super.onAttachedToWindow();
     }
+
+//左边动画
+    private void startAnimation(){
+        if (flag){
+            fragment.setVisibility(View.VISIBLE);
+            TranslateAnimation translate = new TranslateAnimation(Animation.ABSOLUTE,-fragment.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+                    );
+            translate.setDuration(500);//动画时间500毫秒
+            translate.setFillAfter(true);//动画出来控件可以点击
+            translate.setAnimationListener(WelcomeActivity.this);
+            rl_TitleList.startAnimation(translate);//开始动画
+        }else {
+            TranslateAnimation translate = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,-fragment.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f);
+            translate.setDuration(500);
+            translate.setFillAfter(false);//设置动画结束后控件不可点击
+            translate.setAnimationListener(WelcomeActivity.this);
+            rl_TitleList.startAnimation(translate);
+
+
+        }
+    }
+
+
+
 
 }

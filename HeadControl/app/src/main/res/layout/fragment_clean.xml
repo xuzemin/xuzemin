@@ -69,7 +69,7 @@
                             <!--存放添加时间列表-->
                             <!--第一组时间-->
                             <RelativeLayout
-                                android:layout_width="468dp"
+                                android:layout_width="760dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"

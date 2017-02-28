@@ -21,7 +21,6 @@ import java.util.Map;
 
 public class TestActivity extends Activity {
 
-    private String TAG = "SocketActivity";
     private TextView textView;
     private EditText editText;
 
@@ -40,6 +39,8 @@ public class TestActivity extends Activity {
         Intent intent = new Intent(this, ServerSocketUtil.class);
         startService(intent);
 
+        //new WifiStaticIpUtil(this).getNetworkInformation();
+
 
         receiver = new MyReceiver();
         filter=new IntentFilter();
@@ -52,6 +53,7 @@ public class TestActivity extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
+                intent.putExtra("msg", "远");
                 sendBroadcast(intent);
             }
         });

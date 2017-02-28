@@ -8,6 +8,17 @@
     tools:context="com.android.jdrd.headcontrol.activity.WelcomeActivity"
     android:background="@mipmap/bg">
 
+    <LinearLayout
+        android:id="@+id/ll_left"
+        android:layout_width="380dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <fragment
+            android:name="com.android.jdrd.headcontrol.fragment.TitleListFragment"
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_right"

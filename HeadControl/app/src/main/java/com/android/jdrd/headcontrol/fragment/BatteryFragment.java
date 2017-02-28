@@ -15,13 +15,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.activity.WelcomeActivity;
 import com.android.jdrd.headcontrol.common.BaseFragment;
 import com.android.jdrd.headcontrol.dialog.WarningDialog;
 import com.android.jdrd.headcontrol.entity.Battery3;
@@ -31,7 +35,7 @@ import com.google.gson.Gson;
  * Created by Administrator on 2016/10/23 0023.
  */
 
-public class BatteryFragment extends BaseFragment {
+public class BatteryFragment extends BaseFragment implements Animation.AnimationListener{
 
     Button mButton_Save;//保存按钮
     ImageView mImageView_Battery_Power;//电池图标
@@ -56,6 +60,11 @@ public class BatteryFragment extends BaseFragment {
     int progres_warn;
     IntentFilter filter;
     private BatteryReceiver receiver = null;
+
+    private RelativeLayout ll_right_bar1;
+    boolean flag;
+    private View ll_right_bar;
+
 
     public BatteryFragment() {
         super();
@@ -84,6 +93,9 @@ public class BatteryFragment extends BaseFragment {
         mImageView_Switch_Close = (ImageView) findViewById(R.id.iv_Battery_Switch_Close);
         mTextView_Warn = (TextView) findViewById(R.id.tv_Battery_Warn);
         mSeekBar = (SeekBar) findViewById(R.id.sb_SeekBar);
+
+        ll_right_bar1 = (RelativeLayout)findViewById(R.id.ll_right_bar1);
+        ll_right_bar = findViewById(R.id.ll_right_bar);
     }
 
     @Override
@@ -169,6 +181,28 @@ public class BatteryFragment extends BaseFragment {
         mButton_Save.setOnClickListener(mMyClickListener);
         mImageView_Switch_Open.setOnClickListener(mMyClickListener);
         mImageView_Switch_Close.setOnClickListener(mMyClickListener);
+        ll_right_bar1.setOnClickListener(mMyClickListener);
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        ll_right_bar1.clearAnimation();
+        if (flag){
+            flag = false;
+        }else {
+            flag = true;
+            ll_right_bar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 
     public class MyClickListener implements View.OnClickListener {
@@ -188,6 +222,10 @@ public class BatteryFragment extends BaseFragment {
                     mImageView_Switch_Open.setVisibility(View.VISIBLE);
                     mImageView_Switch_Close.setVisibility(View.GONE);
                     mSeekBar.setEnabled(true);
+                    break;
+
+                case R.id.ll_right_bar1:
+                    startAnimationRight();
                     break;
             }
         }
@@ -270,6 +308,34 @@ public class BatteryFragment extends BaseFragment {
             mTextView_Level.setText("剩余"+percent + "%"+"电量");
         }
 
+
+    }
+
+    //右边动画
+    private void startAnimationRight(){
+        if (flag){
+            ll_right_bar.setVisibility(View.VISIBLE);
+            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,ll_right_bar.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0F
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            translateAnimation.setAnimationListener(BatteryFragment.this);
+            ll_right_bar1.startAnimation(translateAnimation);
+
+        }else {
+            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,ll_right_bar.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(false);
+            translateAnimation.setAnimationListener(BatteryFragment.this);
+            ll_right_bar1.startAnimation(translateAnimation);
+        }
 
     }
 

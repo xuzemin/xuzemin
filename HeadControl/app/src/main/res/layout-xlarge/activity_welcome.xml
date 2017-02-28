@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/bg"
-    android:orientation="vertical"
-    tools:context="com.android.jdrd.headcontrol.activity.WelcomeActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/bg"
+                android:orientation="vertical"
+                tools:context="com.android.jdrd.headcontrol.activity.WelcomeActivity">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1009dp"
+        android:layout_marginBottom="28dp"
         android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="150dp"
+            android:orientation="vertical"></LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_left"
@@ -25,7 +33,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_Exit"
-                android:layout_width="match_parent"
+                android:layout_width="230dp"
                 android:layout_height="28dp"
                 android:background="@mipmap/dingbu"
                 android:clickable="true"
@@ -56,6 +64,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_TitleList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -68,35 +77,20 @@
                     android:background="@mipmap/zuolan"
                     tools:layout="@layout/fragment_title" />
 
+                <ImageView
+                    android:layout_width="53dp"
+                    android:layout_height="49dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="100dp"
+                    android:layout_toRightOf="@+id/fragment"
+                    android:background="@mipmap/zuo_xs" />
+
 
             </RelativeLayout>
 
-
         </LinearLayout>
 
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="15dp"
-            android:layout_weight="1">
-
-
-            <LinearLayout
-                android:id="@+id/ll_right"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:orientation="vertical"></LinearLayout>
-
-            <ImageView
-                android:layout_width="53dp"
-                android:layout_height="49dp"
-                android:layout_alignParentBottom="true"
-                android:background="@mipmap/zuo_xs" />
-        </RelativeLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/bottomlin"
@@ -107,5 +101,4 @@
         android:layout_marginTop="7dp"
         android:background="@mipmap/dingbu" />
 </RelativeLayout>
-
 

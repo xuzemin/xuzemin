@@ -14,7 +14,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="@mipmap/dingbu"
             android:gravity="center"
             android:text="电源"
@@ -43,10 +43,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:background="@mipmap/bg"
+                        android:layout_marginTop="26dp"
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="703dp"
+                            android:layout_width="1050dp"
                             android:layout_height="276dp"
                             android:padding="10dp"
                             android:layout_margin="8dp"
@@ -55,7 +56,7 @@
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="42dp"
+                                android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:paddingLeft="8dp">
 
@@ -63,27 +64,50 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="清洁时间设置"
-                                    android:textColor="@color/white"
-                                    android:textSize="20sp" />
+                                    android:layout_marginTop="39dp"
+                                    android:layout_marginBottom="49dp"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="33sp" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@mipmap/tianji_pre"
+                                    android:layout_marginRight="34dp"
+                                    android:layout_marginEnd="25dp"
+                                    android:id="@+id/imageView2"
+                                    android:layout_marginTop="31dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentEnd="true"/>
                             </RelativeLayout>
                             <!--存放添加时间列表-->
                             <!--第一组时间-->
                             <RelativeLayout
-                                android:layout_width="468dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
+                                android:layout_width="1340dp"
+                                android:layout_height="109dp"
+                                android:layout_marginLeft="34dp"
+                                android:layout_marginRight="34dp"
                                 android:background="@mipmap/kuang"
+
                                 android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/shijian"
+                                    android:layout_marginLeft="38dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/tv_Clean_Start_Hour1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="53dp"
+                                    android:layout_marginLeft="180dp"
                                     android:text="08"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp" />
+                                    android:layout_centerVertical="true"
+                                    android:textSize="42sp" />
 
                                 <TextView
                                     android:id="@+id/tv_Start1"
@@ -91,8 +115,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_toRightOf="@+id/tv_Clean_Start_Hour1"
                                     android:text=":"
+                                    android:layout_centerVertical="true"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp" />
+                                    android:textSize="42sp" />
 
                                 <TextView
                                     android:id="@+id/tv_Clean_Start_Minute1"
@@ -100,8 +125,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_toRightOf="@+id/tv_Start1"
                                     android:text="00"
+                                    android:layout_centerVertical="true"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp" />
+                                    android:textSize="42sp" />
 
                                 <TextView
                                     android:id="@+id/tv_Clean_End_Hour1"
@@ -110,8 +136,9 @@
                                     android:layout_marginLeft="22dp"
                                     android:layout_toRightOf="@+id/tv_Clean_Start_Minute1"
                                     android:text="09"
+                                    android:layout_centerVertical="true"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp" />
+                                    android:textSize="42sp" />
 
                                 <TextView
                                     android:id="@+id/tv_End_maohao1"
@@ -119,8 +146,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_toRightOf="@+id/tv_Clean_End_Hour1"
                                     android:text=":"
+                                    android:layout_centerVertical="true"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp" />
+                                    android:textSize="42sp" />
 
                                 <TextView
                                     android:id="@+id/tv_Clean_End_Minute1"
@@ -128,8 +156,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_toRightOf="@+id/tv_End_maohao1"
                                     android:text="00"
+                                    android:layout_centerVertical="true"
                                     android:textColor="@color/white"
-                                    android:textSize="16sp" />
+                                    android:textSize="42sp" />
 
                                 <ImageView
                                     android:id="@+id/iv_Clean_bianji1"
@@ -166,7 +195,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
@@ -184,7 +213,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="500dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
                                 android:orientation="horizontal">
@@ -194,6 +223,7 @@
                                     android:layout_weight="1"
                                     android:layout_height="200dp"
                                     android:layout_marginTop="9dp"
+                                    android:layout_gravity="center|center_vertical"
                                     android:background="@mipmap/xuanzebeijing_clean">
 
                                     <ImageView
@@ -223,19 +253,19 @@
                                     android:background="@mipmap/xuanzebeijing_clean">
 
                                     <ImageView
-                                        android:id="@+id/iv_Clean_biaozhun_no"
-                                        android:layout_width="130dp"
-                                        android:layout_height="71dp"
-                                        android:layout_gravity="center"
-                                        android:src="@mipmap/biaozhun_no" />
-
-                                    <ImageView
                                         android:id="@+id/iv_Clean_biaozhun_per"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:src="@mipmap/biaozhun_per"
                                         android:visibility="gone" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_Clean_biaozhun_no"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="190dp"
+                                        android:layout_gravity="center"
+                                        android:src="@mipmap/biaozhun_no" />
                                 </FrameLayout>
                                 <FrameLayout
                                     android:layout_width="0dp"
@@ -296,7 +326,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="234dp"
                 android:layout_height="match_parent"
                 android:background="@mipmap/zuolan"
                 android:orientation="vertical">
@@ -306,19 +336,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:paddingTop="5dp"
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:layout_marginTop="24dp"
+                    android:text="剩余100%电量"
+                    android:textSize="26sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingTop="5dp"
+                    android:layout_marginTop="24dp"
                     android:text="可运行10个小时"
                     android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textSize="26sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
