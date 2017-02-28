@@ -61,11 +61,11 @@
     </style>
     <style name="MySpiner">
         <item name="android:background">@drawable/btn_spiner_selector</item>
-        <item name="android:layout_width">200dp</item>
-        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">232dp</item>
+        <item name="android:layout_height">96dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">26sp</item>
     </style>
     <style name="Dialog" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item>
@@ -126,9 +126,9 @@
     <style name="MapButton">
         <item name="android:background">@drawable/btn_map_selector</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_height">100dp</item>
-        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:layout_width">232dp</item>
     </style>
 </resources>

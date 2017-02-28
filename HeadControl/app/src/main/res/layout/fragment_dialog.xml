@@ -1,63 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="500dp"
-    android:layout_height="300dp"
-    android:layout_gravity="center"
-    android:background="@mipmap/bg10"
-    android:orientation="vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="793dp"
+    android:layout_height="366dp"
+    android:orientation="vertical"
+    android:background="@mipmap/tanchukuang"
+    >
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="107dp"
+            android:text="@string/finishplan"
+            android:gravity="center"
+            android:textColor="#E8E8E8"
+            android:textSize="29sp"
+            />
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="667dp"
+            android:layout_height="94dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginRight="65dp"
+            android:background="@mipmap/wenzikuang"
+            android:textColor="#000000"
+            android:paddingLeft="40dp"
+            android:hint="@string/hintplan"
+            android:textSize="27sp"
+            android:textColorHint="#7D7D7D"
+            />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:text="@string/finishplan"
-        android:textColor="#fffffb"
-        android:textSize="20sp"
-        android:visibility="visible" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="87dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal"
+            >
 
-    <!--   <LinearLayout
-          android:id="@+id/contentView"
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content" > -->
+            <Button
+                android:id="@+id/positiveButton"
+                android:layout_width="296dp"
+                android:layout_height="87dp"
+                android:layout_marginLeft="65dp"
+                android:background="@drawable/btn_sure_selector"
+                android:gravity="center" />
 
-    <EditText
-        android:id="@+id/number"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:hint="路线1" />
-    <!-- </LinearLayout> -->
-
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/positiveButton"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:background="@drawable/btn_map_selector"
-            android:text="@string/sure"
-            android:gravity="center" />
-
-        <Button
-            android:id="@+id/negativeButton"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:background="@drawable/btn_map_selector"
-            android:layout_marginLeft="40dp"
-            android:text="@string/cancel"
-            android:gravity="center" />
-    </LinearLayout>
-
+            <Button
+                android:id="@+id/negativeButton"
+                android:layout_width="296dp"
+                android:layout_height="87dp"
+                android:background="@drawable/btn_cancel_selector"
+                android:layout_marginLeft="78dp"
+                android:layout_marginRight="65dp"
+                android:gravity="center"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
 </LinearLayout>

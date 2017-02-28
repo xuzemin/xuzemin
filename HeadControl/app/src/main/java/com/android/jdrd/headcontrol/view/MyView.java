@@ -2,18 +2,21 @@ package com.android.jdrd.headcontrol.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.util.Constant;
 
 import java.util.Vector;
 
@@ -36,8 +39,10 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Double center_x = 0.0 , center_y = 0.0;
     public int rote = 45;
     public Movie gifMovie;
+    public int current_plan_number = 3;
     public boolean paint = false,Ishave = false,Isplan = true,Ispath = false;
     public int temp = 0;
+    private Bitmap startpoint = BitmapFactory.decodeResource(getResources(), R.mipmap.qi);
     public MyView(Context context, AttributeSet attr) {
         super(context,attr);
         // TODO Auto-generated constructor stub
@@ -83,18 +88,20 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setColor(getResources().getColor(R.color.path));
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 5.0);
-        for(int i=0;i<point_xs.size();i++) {
-            if(Isplan){
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 9, p);
-                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
-                if (i >= 1) {
-                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
-                }
-            }else{
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 10, p);
-                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
-            }
-        }
+//        for(int i=0;i<point_xs.size();i++) {
+//            if(Isplan){
+//                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 9, p);
+//                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+//                if( i == 0){
+//                    canvas.drawBitmap(startpoint,point_xs.elementAt(i)-startpoint.getWidth()/2,point_ys.elementAt(i)-startpoint.getHeight()/2,p);
+//                }else if (i >= 1) {
+//                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
+//                }
+//            }else{
+//                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 10, p);
+//                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+//            }
+//        }
         center_x = bitmap.getWidth()/2+bitmap_x;
         center_y = bitmap.getHeight()/2+bitmap_y;
         if(Ispath){
@@ -124,6 +131,32 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         drawtable(canvas);
+        p=new Paint(); //笔触
+        p.setAntiAlias(true); //反锯齿
+        p.setColor(getResources().getColor(R.color.path));
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth((float) 5.0);
+        for(int i=0;i<point_xs.size();i++) {
+            if(Isplan){
+                if(i < current_plan_number){
+                    p.setColor(getResources().getColor(R.color.origen));
+                }else{
+                    p.setColor(getResources().getColor(R.color.path));
+                }
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 9, p);
+                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+                if (i >= 1) {
+                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
+                }
+                if(i == point_xs.size() -1){
+                    canvas.drawBitmap(startpoint,point_xs.elementAt(0)-startpoint.getWidth()/2,point_ys.elementAt(0)-startpoint.getHeight()/2,p);
+                }
+            }else{
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 10, p);
+                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+            }
+        }
+
         if(rotbitmap!=null){
             matrix = new Matrix();
             matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
@@ -138,6 +171,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
 //        showGifImage(canvas);
+
     }
 
 
@@ -191,14 +225,38 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         return false;
     }
     private void drawtable(Canvas canvas){
-        p.setColor(Color.BLACK);
+        p.setColor(Color.GRAY);
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth((float) 0.5);
-        for(int y=0;y <= (myview_width/Scale) ; y++) {
-            canvas.drawLine(20,y*Scale+20,1020,y*Scale+20,p);
+        p.setTextSize(20);
+        p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
+        int x = 0;
+        for(int y=0;y <= (myview_height/Scale) ; y++) {
+            if( y % 3 == 0){
+                p.setStrokeWidth((float) 3.0);
+                x = y / 3;
+                if(x != 0){
+                    canvas.drawText(x+"",Float.valueOf(15),Float.valueOf(y*Scale+45),p);
+                }else{
+                    canvas.drawText(x+"",Float.valueOf(15),Float.valueOf(y*Scale+30),p);
+                }
+                canvas.drawLine(40,y*Scale+40,myview_width+40,y*Scale+40,p);
+            }else{
+                p.setStrokeWidth((float) 1.0);
+                canvas.drawLine(40,y*Scale+40,myview_width+40,y*Scale+40,p);
+            }
         }
         for(int y=0;y <= (myview_width/Scale);y++) {
-            canvas.drawLine(y*Scale+20,20,y*Scale+20,620,p);
+            if( y % 3 == 0){
+                p.setStrokeWidth((float) 3.0);
+                canvas.drawLine(y*Scale+40,40,y*Scale+40,myview_height+40,p);
+                x = y / 3;
+                if(x != 0){
+                    canvas.drawText(x+"",Float.valueOf(y*Scale+35),Float.valueOf(30),p);
+                }
+            }else{
+                p.setStrokeWidth((float) 1.0);
+                canvas.drawLine(y*Scale+40,40,y*Scale+40,myview_height+40,p);
+            }
         }
     }
 

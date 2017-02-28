@@ -232,9 +232,9 @@ public class CleanFragment extends BaseFragment {
                             mTextView_End_Minute1.setText("0"+ String.valueOf(end_minute));
                         }
                     }else{
-                    mTextView_End_Minute1.setText(bundle.getString("end_minute_handler"));
-                }
-                   break;
+                        mTextView_End_Minute1.setText(bundle.getString("end_minute_handler"));
+                    }
+                    break;
 
             }
 
@@ -252,7 +252,7 @@ public class CleanFragment extends BaseFragment {
                     }else {
                         save();
                     }
-                  break;
+                    break;
                 case R.id.iv_Clean_Switch_Open:
                     mImageView_Switch_Open.setVisibility(View.GONE);
                     mImageView_Switch_Close.setVisibility(View.VISIBLE);
@@ -261,14 +261,14 @@ public class CleanFragment extends BaseFragment {
                 case R.id.iv_Clean_Switch_Close:
                     mImageView_Switch_Open.setVisibility(View.VISIBLE);
                     mImageView_Switch_Close.setVisibility(View.GONE);
-                  break;
+                    break;
                 case R.id.iv_Clean_bianji1:
                     mImageView_bianji1.setImageResource(R.mipmap.bianji_per);
 //                    showDialogxinjia();
                     SelfDialog selfDialog=new SelfDialog(getActivity(),handler,start_hour,start_minute,end_hour,end_minute);
                     selfDialog.show();
 
-                     break;
+                    break;
                 case R.id.iv_Clean_yaguang_no:
                     type_modified=1;
                     mImageView_yaguang_per.setVisibility(View.VISIBLE);

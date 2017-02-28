@@ -23,6 +23,7 @@
     <string name="scope">找人范围</string>
     <string name="angle">转弯角度</string>
     <string name="gametime">互动时间</string>
+    <string name="hintplan">路线1</string>
     <string name="button_clearlast">清除当前</string>
     <string name="button_clearall">清除所有</string>
 

@@ -38,7 +38,6 @@ public class BatteryFragment extends BaseFragment {
     TextView mTextView_Level;//剩余电量
 
 
-
     ImageView mImageView_Switch_Open;
     ImageView mImageView_Switch_Close;
 
@@ -55,46 +54,41 @@ public class BatteryFragment extends BaseFragment {
     float voltage;
     int warn_modified;
     int progres_warn;
-
+    IntentFilter filter;
     private BatteryReceiver receiver = null;
 
-    public  BatteryFragment(){
+    public BatteryFragment() {
         super();
     }
 
     @SuppressLint("ValidFragment")
-    public BatteryFragment(Context context){
+    public BatteryFragment(Context context) {
         super(context);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//给当前的fragment绘制UI布局，可以使用线程更新UI
-        mView=inflater.inflate(R.layout.fragment_battery,container,false);
-
-
-        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-         receiver = new BatteryReceiver();
-        getActivity().registerReceiver(receiver,filter);
-
-
+        mView = inflater.inflate(R.layout.fragment_battery, container, false);
+        receiver = new BatteryReceiver();
+        filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 
-
     @Override
     public void initView() {
-        mButton_Save= (Button) findViewById(R.id.btn_Battery_Save);
-        mImageView_Battery_Power= (ImageView) findViewById(R.id.iv_Battery_Power);
-        mTextView_Level= (TextView) findViewById(R.id.tv_Battery_Level);
-        mImageView_Switch_Open= (ImageView) findViewById(R.id.iv_Battery_Switch_Open);
-        mImageView_Switch_Close= (ImageView) findViewById(R.id.iv_Battery_Switch_Close);
-        mTextView_Warn= (TextView) findViewById(R.id.tv_Battery_Warn);
-        mSeekBar= (SeekBar) findViewById(R.id.sb_SeekBar);
+        mButton_Save = (Button) findViewById(R.id.btn_Battery_Save);
+        mImageView_Battery_Power = (ImageView) findViewById(R.id.iv_Battery_Power);
+        mTextView_Level = (TextView) findViewById(R.id.tv_Battery_Level);
+        mImageView_Switch_Open = (ImageView) findViewById(R.id.iv_Battery_Switch_Open);
+        mImageView_Switch_Close = (ImageView) findViewById(R.id.iv_Battery_Switch_Close);
+        mTextView_Warn = (TextView) findViewById(R.id.tv_Battery_Warn);
+        mSeekBar = (SeekBar) findViewById(R.id.sb_SeekBar);
     }
 
     @Override
     public void initData() {
+        getActivity().registerReceiver(receiver, filter);
         mMyClickListener = new MyClickListener();
         //查询数据库中的信息并显示在UI界面上
         mContentResolver = getActivity().getContentResolver();
@@ -177,11 +171,11 @@ public class BatteryFragment extends BaseFragment {
         mImageView_Switch_Close.setOnClickListener(mMyClickListener);
     }
 
-    public class  MyClickListener implements View.OnClickListener{
+    public class MyClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.btn_Battery_Save:
                     save();
                     break;
@@ -199,28 +193,29 @@ public class BatteryFragment extends BaseFragment {
         }
     }
 
-    private void save(){
+    private void save() {
         //发送广播信息通知小屏上报Ros系统
-        Intent intent=new Intent("com.jiadu.broadcast.setting.battery");
-        Gson gson=new Gson() ;
-        Battery3 battery3=new Battery3();
+        Intent intent = new Intent("com.jiadu.broadcast.setting.battery");
+        Gson gson = new Gson();
+        Battery3 battery3 = new Battery3();
         battery3.setType("param");
         battery3.setFunction("power");
-        Battery3.DataBean dataBean=new Battery3.DataBean();
+        Battery3.DataBean dataBean = new Battery3.DataBean();
         dataBean.setLowpower(warn_modified);
         battery3.setData(dataBean);
         String str = gson.toJson(battery3);
-        Log.e("tag",str);
-        intent.putExtra("battery",str);
+        Log.e("tag", str);
+        intent.putExtra("battery", str);
         getActivity().sendBroadcast(intent);
         // 注册一个针对ContentProvider的ContentObserver用来观察内容提供者的数据变化
         final Uri uri = Uri.parse("content://com.jiadu.provider/battery");
-        getActivity().getContentResolver().registerContentObserver(uri,true,new MyContentObserver(new Handler()));
+        getActivity().getContentResolver().registerContentObserver(uri, true, new MyContentObserver(new Handler()));
     }
 
-    public class  MyContentObserver extends ContentObserver {
+    public class MyContentObserver extends ContentObserver {
         Handler mHandler;
         Runnable mRunnable;
+
         /**
          * Creates a content observer.
          *
@@ -228,11 +223,11 @@ public class BatteryFragment extends BaseFragment {
          */
         public MyContentObserver(Handler handler) {
             super(handler);
-            mHandler=new Handler();
-            mRunnable=new Runnable() {
+            mHandler = new Handler();
+            mRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("tag","电源数据内容变化了...");
+                    Log.d("tag", "电源数据内容变化了...");
                 }
             };
         }
@@ -240,7 +235,7 @@ public class BatteryFragment extends BaseFragment {
         @Override
         public void onChange(boolean selfChange) {
             mHandler.removeCallbacks(mRunnable);
-            mHandler.postDelayed(mRunnable,100);
+            mHandler.postDelayed(mRunnable, 100);
             super.onChange(selfChange);
         }
     }
@@ -260,21 +255,22 @@ public class BatteryFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-         super.onDestroy();
+
+        super.onDestroy();
         getActivity().unregisterReceiver(receiver);
     }
 
-    private class BatteryReceiver extends BroadcastReceiver{
+    private class BatteryReceiver extends BroadcastReceiver {
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        int current = intent.getExtras().getInt("level");// 获得当前电量
-        int total = intent.getExtras().getInt("scale");//获得总电量
-        int percent = current*100/total;
-        mTextView_Level.setText(percent+"%");
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int current = intent.getExtras().getInt("level");// 获得当前电量
+            int total = intent.getExtras().getInt("scale");//获得总电量
+            int percent = current * 100 / total;
+            mTextView_Level.setText("剩余"+percent + "%"+"电量");
+        }
+
+
     }
-
-
-}
 
 }

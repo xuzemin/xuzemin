@@ -36,7 +36,7 @@ public class MyDialog extends Dialog {
     private void setCustomDialog() {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog, null);
         title = (TextView) mView.findViewById(R.id.title);
-        editText = (EditText) mView.findViewById(R.id.number);
+        editText = (EditText) mView.findViewById(R.id.editText);
         positiveButton = (Button) mView.findViewById(R.id.positiveButton);
         negativeButton = (Button) mView.findViewById(R.id.negativeButton);
         super.setContentView(mView);

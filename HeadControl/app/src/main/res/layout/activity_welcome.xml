@@ -4,27 +4,48 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    tools:context="com.android.jdrd.headcontrol.activity.WelcomeActivity"
-    android:background="@mipmap/bg">
+    android:background="@mipmap/bg"
+    android:orientation="vertical"
+    tools:context="com.android.jdrd.headcontrol.activity.WelcomeActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:src="@mipmap/dingbu" />
 
     <LinearLayout
-        android:id="@+id/ll_left"
-        android:layout_width="380dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <fragment
-            android:name="com.android.jdrd.headcontrol.fragment.TitleListFragment"
-            android:id="@+id/fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_right"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:id="@+id/ll_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.android.jdrd.headcontrol.fragment.TitleListFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@mipmap/zuolan"
+                tools:layout="@layout/fragment_title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:orientation="vertical">>
+        </LinearLayout>
+
+
+    </LinearLayout>
 </LinearLayout>
+
+

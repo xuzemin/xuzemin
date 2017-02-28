@@ -24,6 +24,7 @@
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,11 +32,12 @@
         <service
             android:name=".service.ServerSocketUtil"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <activity
             android:name=".activity.TestActivity"
-            android:label="@string/title_activity_test"/>
+            android:label="@string/title_activity_test" />
+        <activity android:name=".fragment.CleanFragment1"></activity>
     </application>
 
 </manifest>

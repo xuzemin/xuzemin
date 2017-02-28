@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     android:background="@mipmap/bg10"
     >
-    <com.android.jdrd.headcontrol.view.MyView
-        android:layout_marginLeft="30dp"
-        android:id="@+id/surfaceview"
-        android:layout_width="1040dp"
-        android:layout_height="640dp"
-        android:layout_gravity="center"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <com.android.jdrd.headcontrol.view.MyView
+            android:id="@+id/surfaceview"
+            android:layout_width="1580dp"
+            android:layout_height="980dp"
+            />
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/linearlayout_map"
         android:layout_width="wrap_content"
@@ -121,6 +123,7 @@
         <Button
             android:id="@+id/button_savenext"
             android:text="@string/savenext"
+            android:visibility="gone"
             style="@style/MapButton"
             />
         <Button
@@ -163,12 +166,13 @@
             />
         <EditText
             android:id="@+id/point_x"
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_width="232dp"
+            android:layout_height="96dp" />
         <EditText
             android:id="@+id/point_y"
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_width="232dp"
+            android:layout_height="96dp"
+            />
         <Button
             android:id="@+id/button_move"
             android:text="@string/move"
@@ -203,4 +207,4 @@
             style="@style/MapButton"
             />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

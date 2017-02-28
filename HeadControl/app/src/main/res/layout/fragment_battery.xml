@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/bg">
+        android:background="@mipmap/bg"
+        android:visibility="gone">
+
         <LinearLayout
             android:id="@+id/ll_Battery_Main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/ll_Battery_Top"
                 android:layout_width="match_parent"
@@ -21,17 +25,18 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@color/right_title_background_color"
                     android:gravity="center">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:gravity="center"
                         android:text="电源配置信息"
-                        android:textSize="36sp"
-                        android:gravity="center" />
+                        android:textColor="@color/white"
+                        android:textSize="36sp" />
                 </LinearLayout>
 
                 <Button
@@ -39,10 +44,10 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_save_background"
+                    android:gravity="center"
                     android:text="保存"
                     android:textColor="@color/white"
-                    android:textSize="36sp"
-                    android:gravity="center" />
+                    android:textSize="36sp" />
 
             </LinearLayout>
 
@@ -55,57 +60,59 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="450dp"
-                    android:background="@mipmap/bg02"
                     android:layout_marginLeft="24dp"
-                    android:layout_marginTop="24dp"
                     android:layout_marginRight="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@mipmap/bg02"
                     android:gravity="center">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="horizontal">
                         <!--android:layout_width="300dp"
                             android:layout_height="100dp" -->
                         <ImageView
                             android:id="@+id/iv_Battery_Power"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/power10"
-                            />
+                            android:src="@mipmap/power10" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:gravity="center"
+                            android:orientation="vertical"
                             android:paddingLeft="8dp">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="电量还剩"
                                 android:textColor="@color/white"
-                                android:textSize="29sp"
-                                />
+                                android:textSize="29sp" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <TextView
-                                    android:id="@+id/tv_Battery_Level"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
                                     android:textColor="@color/white"
-                                    android:textSize="51sp"
-                                    android:paddingTop="5dp"/>
+                                    android:textSize="51sp" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
                                     android:text="%"
                                     android:textColor="@color/white"
                                     android:textSize="51sp"
-                                    android:visibility="gone"
-                                    android:paddingTop="5dp"/>
+                                    android:visibility="gone" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -115,34 +122,36 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:background="@mipmap/bg03"
                     android:layout_marginLeft="24dp"
-                    android:layout_marginTop="24dp"
                     android:layout_marginRight="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@mipmap/bg03"
                     android:orientation="vertical">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:paddingLeft="24px"
                         android:paddingRight="24px"
                         android:paddingTop="24px">
+
                         <TextView
                             android:id="@+id/tv_Battery_Setting"
                             android:layout_width="wrap_content"
                             android:layout_height="42dp"
                             android:text="电源警告设置"
-                            android:textSize="33sp"
                             android:textColor="@color/white"
-                            />
+                            android:textSize="33sp" />
+
                         <TextView
                             android:id="@+id/tv_Battery_Warn"
-                            android:layout_toRightOf="@+id/tv_Battery_Setting"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="33sp"
+                            android:layout_toRightOf="@+id/tv_Battery_Setting"
                             android:paddingLeft="24px"
                             android:textColor="@color/white"
-                            />
+                            android:textSize="33sp" />
+
                         <FrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -154,16 +163,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:scaleType="fitXY"
-                                android:src="@mipmap/kai"
-                                />
+                                android:src="@mipmap/kai" />
+
                             <ImageView
                                 android:id="@+id/iv_Battery_Switch_Close"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:scaleType="fitXY"
                                 android:src="@mipmap/guan"
-                                android:visibility="gone"
-                                />
+                                android:visibility="gone" />
                         </FrameLayout>
                     </RelativeLayout>
 
@@ -174,9 +182,9 @@
 
                         <SeekBar
                             android:id="@+id/sb_SeekBar"
+                            style="@style/Widget.SeekBar.Normal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.SeekBar.Normal" />
+                            android:layout_height="wrap_content" />
 
                     </RelativeLayout>
 
@@ -185,10 +193,11 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="24px"
                         android:paddingRight="24px">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/kedu"/>
+                            android:src="@mipmap/kedu" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -197,4 +206,130 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@mipmap/dingbu"
+            android:gravity="center"
+            android:text="电源"
+            android:textColor="#E8E8E8"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/bg"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+
+                    >
+                <RelativeLayout
+                    android:layout_width="1386dp"
+                    android:layout_height="523dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@mipmap/bg02"
+                    android:gravity="center|center_horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="910dp"
+                        android:layout_height="335dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="100dp"
+                        android:layout_marginRight="100dp"
+                        android:background="@mipmap/dianchi" />
+
+                </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="53dp"
+                        android:layout_height="49dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+
+                        android:background="@mipmap/you_yc_no" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--** -->
+
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_right_bar"
+                android:layout_width="234dp"
+                android:layout_height="1009dp"
+                android:background="@mipmap/zuolan"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_Battery_Level"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:text="剩余100%电量"
+                    android:textColor="#E8E8E8"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="5dp"
+                    android:text="可运行10个小时"
+                    android:textColor="#E8E8E8"
+                    android:textSize="26sp" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp"
+                    android:background="@drawable/btn_background"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/iv_Map1"
+                        android:layout_width="168dp"
+                        android:layout_height="70dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="left"
+                        android:clickable="true"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/tuichu_no"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
