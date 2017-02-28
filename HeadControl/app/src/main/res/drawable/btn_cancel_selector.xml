@@ -2,6 +2,6 @@
 <selector
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true"
-        android:drawable="@mipmap/quxiao_pre" />
-    <item android:drawable="@mipmap/quxiao_no" />
+        android:drawable="@mipmap/map_quxiao_pre" />
+    <item android:drawable="@mipmap/map_quxiao_no" />
 </selector>
