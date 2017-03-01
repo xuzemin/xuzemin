@@ -126,7 +126,7 @@ public class ServerSocketUtil extends Service {
                         out2.write(str2.getBytes());
                     }
 
-                } else if (ip.equals("/192.168.1.102")) {
+                } else if (ip.equals("/192.168.88.101")) {
                     if (out1 != null) {
                         out1.write(str2.getBytes());
                     }
@@ -161,7 +161,7 @@ public class ServerSocketUtil extends Service {
 
             if ("/192.168.1.100".equals(ip)) {
                 socket1 = socket;
-            } else if ("/192.168.1.102".equals(ip)) {
+            } else if ("/192.168.88.101".equals(ip)) {
                 socket2 = socket;
             } else {
                 Constant.debugLog("IP不对");
@@ -179,7 +179,7 @@ public class ServerSocketUtil extends Service {
                         }
                     }).start();
 
-                } else if (ip.equals("/192.168.1.102")) {
+                } else if (ip.equals("/192.168.88.101")) {
                     in2 = socket2.getInputStream();
                     out2 = socket2.getOutputStream();
 

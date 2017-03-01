@@ -70,8 +70,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 
     private MyReceiver receiver = new MyReceiver();
     private IntentFilter filter =new IntentFilter();
-    private MyView surfaceview = null;
-    private int bitmap_width = 0,bitmap_height= 0;
+    private static MyView surfaceview = null;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
     private Spinner planchooce,serchtime,scope,angle,gametime;
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
@@ -136,6 +135,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         Constant.debugLog("btn_warn_sure"+thread.isAlive());
                         Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                     }
+                    sendNativePoint(0,0,90);
                     break;
                 case 4:
                     if(thread!=null){
@@ -169,6 +169,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//给当前的fragment绘制UI布局，可以使用线程更新UI
         mView=inflater.inflate(R.layout.fragment_map,container,false);
         return super.onCreateView(inflater, container, savedInstanceState);
+
     }
 
     @Override
@@ -195,8 +196,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         scope = (Spinner) findViewById(R.id.scope);
 //        angle = (Spinner) findViewById(R.id.angle);
         gametime = (Spinner) findViewById(R.id.gametime);
-        point_x = (EditText) findViewById(R.id.point_x);
-        point_y = (EditText) findViewById(R.id.point_y);
+//        point_x = (EditText) findViewById(R.id.point_x);
+//        point_y = (EditText) findViewById(R.id.point_y);
     }
 
     @SuppressLint("WrongViewCast")
@@ -218,7 +219,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         findViewById(R.id.button_saveall).setOnClickListener(this);
         findViewById(R.id.button_execut).setOnClickListener(this);
         findViewById(R.id.button_next).setOnClickListener(this);
-        findViewById(R.id.button_move).setOnClickListener(this);
+//        findViewById(R.id.button_move).setOnClickListener(this);
         findViewById(R.id.button_roam_start).setOnClickListener(this);
         findViewById(R.id.button_roam_stop).setOnClickListener(this);
         findViewById(R.id.button_return).setOnClickListener(this);
@@ -337,6 +338,17 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        filter.addAction("com.jdrd.fragment.Map");
+//        if(context!=null && receiver != null && filter != null){
+//            context.registerReceiver(receiver,filter);
+//        }
+//        init();
+//        updatekey();
+//    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -346,16 +358,37 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         }
         init();
         updatekey();
-
+        if(dialog != null){
+            dialog.dismiss();
+        }
+        linearlayout_map.setVisibility(View.VISIBLE);
+        linear_roam.setVisibility(View.GONE);
+        linear_plan.setVisibility(View.GONE);
+        linear_plan_info.setVisibility(View.GONE);
+        linear_point.setVisibility(View.GONE);
+        Istouch = false;
+        Isplan = false;
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+            Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,"");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        dialog.dismiss();
         if(context!=null && receiver !=null) {
             context.unregisterReceiver(receiver);
         }
+        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
     }
 
     @Override
@@ -459,14 +492,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //规划完毕
             case R.id.button_saveall:
-                if(!Istouch){
                     arrayserchtime.add(serchtimenumber);
                     arrayscope.add(scopenumber);
 //                    arrayangle.add(anglenumber);
                     arraygametime.add(gametimenumber);
                     xs.add(surfaceview.point_xs.elementAt(arrayserchtime.size()-1));
                     ys.add(surfaceview.point_ys.elementAt(arrayserchtime.size()-1));
-                }
                 if(surfaceview.point_xs.size()> 0 ){
                     arrayhash = new HashMap<>();
                     arrayhash.put("point_xs",xs);
@@ -517,21 +548,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             case R.id.button_next:
                 Istouch = true;
                 break;
-            //点选移动
-            case R.id.button_move:
-                Constant.debugLog( "button_move");
-                if(point_x.getText()!=null&& !point_x.getText().toString().equals("") && point_y.getText()!=null&& !point_y.getText().equals("")){
-                    sendNativePoint(Float.valueOf(point_x.getText().toString().trim()),Float.valueOf(point_y.getText().toString().trim()),0);
-                    Map map  = new LinkedHashMap();
-                    map.put("point_x",Float.valueOf(point_x.getText().toString().trim()) * -1);
-                    map.put("point_y",Float.valueOf(point_y.getText().toString().trim()) * -1 + 2.4 );
-                    map.put("angle",0);
-                    Constant.debugLog("map"+map.toString());
-                    Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
-                }else{
-                    Toast.makeText(context,"请输入正确的坐标",Toast.LENGTH_SHORT).show();
-                }
-                break;
+//            //点选移动
+//            case R.id.button_move:
+//                Constant.debugLog( "button_move");
+//                if(point_x.getText()!=null&& !point_x.getText().toString().equals("") && point_y.getText()!=null&& !point_y.getText().equals("")){
+//                    sendNativePoint(Float.valueOf(point_x.getText().toString().trim()),Float.valueOf(point_y.getText().toString().trim()),0);
+//                    Map map  = new LinkedHashMap();
+//                    map.put("point_x",Float.valueOf(point_x.getText().toString().trim()) * -1);
+//                    map.put("point_y",Float.valueOf(point_y.getText().toString().trim()) * -1 + 2.4 );
+//                    map.put("angle",0);
+//                    Constant.debugLog("map"+map.toString());
+//                    Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+//                }else{
+//                    Toast.makeText(context,"请输入正确的坐标",Toast.LENGTH_SHORT).show();
+//                }
+//                break;
             //开始漫游
             case R.id.button_roam_start:
                 findViewById(R.id.button_roam_stop).setClickable(true);
@@ -781,7 +812,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-
     //xml写入
     public synchronized void writeXML() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -941,6 +971,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             planchooce.setAdapter(adapter);
         }
     }
+
     private MyDialog dialog ;
     private EditText editText;
     private void dialog() {
@@ -974,6 +1005,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         });
         dialog.show();
     }
+
     public void startPlan(){
         thread = null;
         thread = new Thread(new Runnable() {
@@ -989,7 +1021,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 arraygametime_tmp = array.get("arraygametime");
                 int i = 0;
                 while(i < xs_tmp.size()){
-                    surfaceview.current_plan_number = i;
                     Constant.debugLog("thread = " + i);
                     sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
                     synchronized (thread){
@@ -998,6 +1029,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                             //前往地图标注地点
                             Constant.debugLog("tasknumber = " + tasknumber);
                             thread.wait();
+                            i++;
+                            surfaceview.current_plan_number = i;
                             //到达对应地点notify
                             if(arrayserchtime_tmp.get(i) != 0){
                                 //发送 找人时间以及机器人旋转以及找人范围
@@ -1053,15 +1086,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         }
                     }
                     //返回后进行下一个地点
-                    i++;
                     Constant.debugLog("thread = "+i);
                 }
+                handler.sendEmptyMessage(3);
                 tasknumber = -1;
                 thread = new Thread();
             }
         });
         thread.start();
     }
+
     public void startRoam(){
         thread = null;
         thread = new Thread(new Runnable() {
@@ -1088,6 +1122,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                         }
                     }
                 }
+
             }
         });
         thread.start();
@@ -1109,6 +1144,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             }
         };
     }
+
     public void resetTimer2(){
         if (task != null){
             task.cancel();  //将原任务从队列中移除
@@ -1118,8 +1154,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
             public void run () {
                 //互动触发
                 tasknumber = 4;
+                Constant.getConstant().sendCamera(Float.valueOf(3),context);
                 Constant.debugLog("task1");
                 handler.sendEmptyMessage(4);
+
             }
         };
     }

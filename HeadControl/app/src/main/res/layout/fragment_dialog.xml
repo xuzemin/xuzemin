@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="793dp"
-    android:layout_height="366dp"
-    android:orientation="vertical"
-    android:background="@mipmap/tanchukuang"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
+    <LinearLayout
+        android:layout_width="793dp"
+        android:layout_height="366dp"
+        android:gravity="center"
+        android:background="@mipmap/tanchukuang"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/title"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="107dp"
             android:text="@string/finishplan"
             android:gravity="center"
@@ -17,42 +20,40 @@
             />
         <EditText
             android:id="@+id/editText"
-            android:layout_width="667dp"
+            android:layout_width="match_parent"
             android:layout_height="94dp"
             android:layout_marginLeft="65dp"
             android:layout_marginRight="65dp"
             android:background="@mipmap/wenzikuang"
             android:textColor="#000000"
-            android:paddingLeft="40dp"
-            android:hint="@string/hintplan"
+            android:paddingLeft="50dp"
+            android:hint="@string/finishplan"
             android:textSize="27sp"
             android:textColorHint="#7D7D7D"
             />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="87dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="40dp"
+        android:layout_weight="1"
+        >
+        <Button
+            android:id="@+id/positiveButton"
+            android:layout_width="296dp"
             android:layout_height="87dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="40dp"
-            android:orientation="horizontal"
-            >
-
-            <Button
-                android:id="@+id/positiveButton"
-                android:layout_width="296dp"
-                android:layout_height="87dp"
-                android:layout_marginLeft="65dp"
-                android:background="@drawable/btn_sure_selector"
-                android:gravity="center" />
-
-            <Button
-                android:id="@+id/negativeButton"
-                android:layout_width="296dp"
-                android:layout_height="87dp"
-                android:background="@drawable/btn_cancel_selector"
-                android:layout_marginLeft="78dp"
-                android:layout_marginRight="65dp"
-                android:gravity="center"
-                tools:ignore="RtlHardcoded" />
-        </LinearLayout>
+            android:layout_marginLeft="65dp"
+            android:background="@drawable/btn_sure_selector"
+            />
+        <Button
+            android:id="@+id/negativeButton"
+            android:layout_width="296dp"
+            android:layout_height="87dp"
+            android:background="@drawable/btn_cancel_selector"
+            android:layout_marginLeft="78dp"
+            android:layout_marginRight="65dp"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

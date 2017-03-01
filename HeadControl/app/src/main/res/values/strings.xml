@@ -2,6 +2,7 @@
     <string name="app_name">HeadControl</string>
 
     <string name="map">导航模块</string>
+    <string name="map_top">地图</string>
 
     <string name="button_left">左</string>
     <string name="button_right">右</string>

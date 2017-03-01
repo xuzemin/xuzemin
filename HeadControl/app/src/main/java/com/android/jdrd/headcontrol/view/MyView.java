@@ -143,7 +143,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 }else{
                     p.setColor(getResources().getColor(R.color.path));
                 }
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 9, p);
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 5, p);
                 canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
                     drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
@@ -225,8 +225,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         return false;
     }
     private void drawtable(Canvas canvas){
-        p.setColor(Color.GRAY);
-        p.setStyle(Paint.Style.STROKE);
+        p.setColor(getResources().getColor(R.color.lightslategray));
+        p.setStyle(Paint.Style.FILL);
         p.setTextSize(20);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         int x = 0;
