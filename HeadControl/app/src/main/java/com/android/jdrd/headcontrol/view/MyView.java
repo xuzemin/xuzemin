@@ -39,7 +39,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Double center_x = 0.0 , center_y = 0.0;
     public int rote = 45;
     public Movie gifMovie;
-    public int current_plan_number = 3;
+    public int current_plan_number = -1;
     public boolean paint = false,Ishave = false,Isplan = true,Ispath = false;
     public int temp = 0;
     private Bitmap startpoint = BitmapFactory.decodeResource(getResources(), R.mipmap.qi);

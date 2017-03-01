@@ -110,7 +110,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         list.add(cleanFragment);
         list.add(mapFragment);
 
-        this.getWindow().getDecorView().setSystemUiVisibility(View.GONE);
+//        this.getWindow().getDecorView().setSystemUiVisibility(View.GONE);
     }
 
     @Override
