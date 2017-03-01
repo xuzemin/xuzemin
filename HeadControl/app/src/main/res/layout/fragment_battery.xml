@@ -210,7 +210,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/bg"
         android:orientation="vertical">
 
 
@@ -232,7 +231,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="234dp"
                 android:layout_weight="1"
-                android:background="@mipmap/bg"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -272,9 +270,17 @@
                 android:id="@+id/ll_right_bar1"
                 android:layout_width="290dp"
                 android:layout_height="1009dp"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal">
+                android:layout_alignParentRight="true">
+                <RelativeLayout
+                    android:layout_width="290dp"
+                    android:layout_height="1009dp"
+                    android:layout_alignParentRight="true">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="1009dp"
+                        android:layout_alignParentRight="true">
                 <ImageView
+                    android:id="@+id/imgViewBtnRight"
                     android:layout_width="53dp"
                     android:layout_height="49dp"
                     android:layout_alignParentBottom="true"
@@ -284,6 +290,7 @@
                     android:layout_width="234dp"
                     android:layout_height="1009dp"
                     android:layout_alignParentRight="true"
+
                     android:background="@mipmap/zuolan"
                     android:orientation="vertical">
 
@@ -331,6 +338,8 @@
 
 
                 </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
             </RelativeLayout>
 
         </RelativeLayout>

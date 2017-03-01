@@ -125,7 +125,7 @@
     </style>
     <style name="MapButton">
         <item name="android:background">@drawable/btn_map_selector</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">#E8E8E8</item>
         <item name="android:textSize">26sp</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_height">96dp</item>

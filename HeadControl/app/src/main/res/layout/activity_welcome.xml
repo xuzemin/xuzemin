@@ -74,10 +74,10 @@
                     android:name="com.android.jdrd.headcontrol.fragment.TitleListFragment"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/zuolan"
                     tools:layout="@layout/fragment_title" />
 
                 <ImageView
+                    android:id="@+id/imgViewBtnLift"
                     android:layout_width="53dp"
                     android:layout_height="49dp"
                     android:layout_alignParentBottom="true"

@@ -13,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -66,7 +70,7 @@ import javax.xml.transform.stream.StreamResult;
  * Created by Administrator on 2017/2/7.
  */
 
-public class MapFragment extends BaseFragment implements View.OnClickListener {
+public class MapFragment extends BaseFragment implements View.OnClickListener,Animation.AnimationListener{
 
     private MyReceiver receiver = new MyReceiver();
     private IntentFilter filter =new IntentFilter();
@@ -76,14 +80,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
     private float plannumber =0,serchtimenumber =0,scopenumber =0,anglenumber,gametimenumber =0;
     private Context context;
+    private ImageView imgViewmapnRight;
+    private RelativeLayout map_right_Ralative;
     private double nLenStart = 0;
     private EditText point_x,point_y;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> map_Plan;
     private float eventx,eventy;
-    public static boolean Istouch = false,Isplan = false,IsFind = false,IsAway = false;
+    public static boolean Istouch = false,Isplan = false,IsFind = false,IsAway = false,IsRight = false;
     //路线模式布局、路线模式详细设置；
-    private LinearLayout linearlayout_map,linear_plan,linear_plan_info,linear_point,linear_roam;
+    private LinearLayout linearlayout_map,linear_plan,linear_plan_info,linear_point,linear_roam,linearlayout_all;
     private HashMap<String,Vector<Float>> arrayhash;
     private Vector<Float> xs,ys,arrayserchtime,arrayscope,arrayangle,arraygametime;
     private Vector<Float> xs_tmp = new Vector<>();
@@ -201,11 +207,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
     @SuppressLint("WrongViewCast")
     @Override
     public void initEvent() {
+
+        imgViewmapnRight = (ImageView) findViewById(R.id.imgViewmapnRight);
+        map_right_Ralative = (RelativeLayout) findViewById(R.id.map_right_Ralative);
+        linearlayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
         linearlayout_map = (LinearLayout) findViewById(R.id.linearlayout_map);
         linear_plan = (LinearLayout) findViewById(R.id.relative_plan);
         linear_plan_info = (LinearLayout) findViewById(R.id.relative_plan_info);
         linear_point = (LinearLayout)findViewById(R.id.linearlayout_point);
         linear_roam = (LinearLayout)findViewById(R.id.linearlayout_roam);
+        imgViewmapnRight.setOnClickListener(this);
         findViewById(R.id.button_clearlast).setOnClickListener(this);
         findViewById(R.id.button_clearall).setOnClickListener(this);
         findViewById(R.id.button_plan).setOnClickListener(this);
@@ -213,7 +224,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         findViewById(R.id.button_pointchooce).setOnClickListener(this);
         findViewById(R.id.button_pathplan).setOnClickListener(this);
         findViewById(R.id.button_cruise).setOnClickListener(this);
-        findViewById(R.id.button_savenext).setOnClickListener(this);
+//        findViewById(R.id.button_savenext).setOnClickListener(this);
         findViewById(R.id.button_saveall).setOnClickListener(this);
         findViewById(R.id.button_execut).setOnClickListener(this);
         findViewById(R.id.button_next).setOnClickListener(this);
@@ -465,21 +476,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 findViewById(R.id.button_plan_stop).setClickable(true);
 //                Constant.getConstant().showWarn(context,handler);
                 break;
-            //下一步
-            case R.id.button_savenext:
-                if(!Istouch){
-                    arrayserchtime.add(serchtimenumber);
-                    arrayscope.add(scopenumber);
-//                    arrayangle.add(anglenumber);
-                    arraygametime.add(gametimenumber);
-                    xs.add(surfaceview.point_xs.lastElement());
-                    ys.add(surfaceview.point_ys.lastElement());
-                    Istouch = true;
-                    Toast.makeText(context,"请选取一个新的目标点",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(context,"没有选取一个新的目标点",Toast.LENGTH_SHORT).show();
-                }
-                break;
+//            //下一步
+//            case R.id.button_savenext:
+//                if(!Istouch){
+//                    arrayserchtime.add(serchtimenumber);
+//                    arrayscope.add(scopenumber);
+////                    arrayangle.add(anglenumber);
+//                    arraygametime.add(gametimenumber);
+//                    xs.add(surfaceview.point_xs.lastElement());
+//                    ys.add(surfaceview.point_ys.lastElement());
+//                    Istouch = true;
+//                    Toast.makeText(context,"请选取一个新的目标点",Toast.LENGTH_SHORT).show();
+//                }else{
+//                    Toast.makeText(context,"没有选取一个新的目标点",Toast.LENGTH_SHORT).show();
+//                }
+//                break;
             //规划完毕
             case R.id.button_saveall:
                     xs=surfaceview.point_xs;
@@ -582,6 +593,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_roam.setVisibility(View.GONE);
 
+                break;
+            case R.id.imgViewmapnRight:
+                startAnimationRight();
                 break;
         }
     }
@@ -708,6 +722,29 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
         map.put("angle",90);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
 //        }
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        map_right_Ralative.clearAnimation();
+        if (IsRight){
+            IsRight = false;
+            imgViewmapnRight.setImageResource(R.mipmap.you_yc);
+        }else {
+            IsRight = true;
+            linearlayout_all.setVisibility(View.GONE);
+            imgViewmapnRight.setImageResource(R.mipmap.you_xs);
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 
     public class MyReceiver extends BroadcastReceiver {
@@ -1150,5 +1187,32 @@ public class MapFragment extends BaseFragment implements View.OnClickListener {
 
             }
         };
+    }
+    //右边动画
+    private void startAnimationRight(){
+        if (IsRight){
+            linearlayout_all.setVisibility(View.VISIBLE);
+            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,linearlayout_all.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0F
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            translateAnimation.setAnimationListener(MapFragment.this);
+            map_right_Ralative.startAnimation(translateAnimation);
+
+        }else {
+            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,linearlayout_all.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(false);
+            translateAnimation.setAnimationListener(MapFragment.this);
+            map_right_Ralative.startAnimation(translateAnimation);
+        }
+
     }
 }

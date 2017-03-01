@@ -35,6 +35,7 @@ import com.android.jdrd.headcontrol.util.Constant;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * http://www.cnblogs.com/smyhvae/p/3983234.html
  * Created by Administrator on 2016/10/23 0023.
@@ -47,12 +48,18 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     RelativeLayout mRelativeLayout_Exit;//设置栏
     ImageView mImageView_Exit;//设置栏中的返回键
     TextView mTextView_Exit;//“设置”
+
     ImageView mImageView_Battery;//电源图标
+
     ImageView mImageView_Clean;//清洁图标
+
     ImageView mImageView_Map;//电源图标
+
+
     private RelativeLayout rl_TitleList;
-    boolean flag;
+    boolean flag = false;
     private View fragment;
+    private ImageView imgViewBtnLift;
 
     MyClickListener mMyClickListener;
     List<Fragment> list;
@@ -76,6 +83,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     //do nothing
                     break;
                 case 3:
+
                     break;
                 case 4:
                     break;
@@ -102,6 +110,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
 
 //        Intent testActivity = new Intent(this, TestActivity.class);
 //        startActivity(testActivity);
+
         list = new ArrayList<>();
         BatteryFragment batteryFragment = new BatteryFragment(WelcomeActivity.this);
         CleanFragment cleanFragment = new CleanFragment(WelcomeActivity.this);
@@ -139,23 +148,28 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
 
         fragment=findViewById(R.id.fragment);
         rl_TitleList = (RelativeLayout) findViewById(R.id.rl_TitleList);
+        imgViewBtnLift = (ImageView) findViewById(R.id.imgViewBtnLift);
+
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     private void initData() {
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
-        transaction_battery.replace(R.id.ll_right, list.get(2), "MapFragment");
+        transaction_battery.replace(R.id.ll_right, list.get(0), "batteryFragment");
         transaction_battery.commit();
         mMyClickListener = new MyClickListener();
     }
 
 
     private void initEvent() {
+
         mImageView_Battery.setOnClickListener(mMyClickListener);
         mImageView_Clean.setOnClickListener(mMyClickListener);
         mImageView_Map.setOnClickListener(mMyClickListener);
+
         rl_TitleList.setOnClickListener(mMyClickListener);
 
     }
@@ -176,9 +190,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         Intent intent = new Intent("com.jiadu.broadcast.setting.touch");
         sendBroadcast(intent);
         return super.dispatchTouchEvent(ev);
-
     }
-
 //动画需实现的接口
     @Override
     public void onAnimationStart(Animation animation) {
@@ -190,9 +202,11 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         rl_TitleList.clearAnimation();
         if (flag){
             flag = false;
+            imgViewBtnLift.setImageResource(R.mipmap.zuo_yc);
         }else {
             flag = true;
             fragment.setVisibility(View.GONE);
+            imgViewBtnLift.setImageResource(R.mipmap.zuo_xs);
         }
     }
 
@@ -250,6 +264,8 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     startAnimation();
                     break;
 
+
+
             }
         }
     }
@@ -299,7 +315,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Map.setImageResource(R.mipmap.ditu_pre);
         FragmentManager fragmentManager_Map = getFragmentManager();
         FragmentTransaction transaction_map = fragmentManager_Map.beginTransaction();
-        transaction_map.replace(R.id.ll_right, list.get(2), "cleanFragment");
+        transaction_map.replace(R.id.ll_right, list.get(02), "cleanFragment");
         transaction_map.commit();
         mImageView_Map.setEnabled(false);
     }
@@ -341,7 +357,11 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             translate.setAnimationListener(WelcomeActivity.this);
             rl_TitleList.startAnimation(translate);
 
+
         }
     }
+
+
+
 
 }

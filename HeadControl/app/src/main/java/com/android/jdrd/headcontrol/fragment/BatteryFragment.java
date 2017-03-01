@@ -64,6 +64,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
     private RelativeLayout ll_right_bar1;
     boolean flag;
     private View ll_right_bar;
+    private ImageView imgViewBtnRight;
 
 
     public BatteryFragment() {
@@ -96,6 +97,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
 
         ll_right_bar1 = (RelativeLayout)findViewById(R.id.ll_right_bar1);
         ll_right_bar = findViewById(R.id.ll_right_bar);
+        imgViewBtnRight = (ImageView) findViewById(R.id.imgViewBtnRight);
     }
 
     @Override
@@ -194,9 +196,11 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         ll_right_bar1.clearAnimation();
         if (flag){
             flag = false;
+            imgViewBtnRight.setImageResource(R.mipmap.you_yc);
         }else {
             flag = true;
             ll_right_bar.setVisibility(View.GONE);
+            imgViewBtnRight.setImageResource(R.mipmap.you_xs);
         }
     }
 
