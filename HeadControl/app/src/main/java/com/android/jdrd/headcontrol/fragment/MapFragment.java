@@ -177,7 +177,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         this.context = context;
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//给当前的fragment绘制UI布局，可以使用线程更新UI
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //给当前的fragment绘制UI布局，可以使用线程更新UI
         mView=inflater.inflate(R.layout.fragment_map,container,false);
         return super.onCreateView(inflater, container, savedInstanceState);
 
@@ -186,8 +187,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void initView() {
         surfaceview=(MyView)findViewById(R.id.surfaceview);
-        surfaceview.myview_height = 1000;
-        surfaceview.myview_width = 2000;
+        surfaceview.myview_height = 900;
+        surfaceview.myview_width = 1800;
     }
 
     @Override
@@ -804,30 +805,30 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         if(up_x >= 90 && up_x <=810 && up_y >= 90 && up_y <= 450){
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
-        Map map  = new LinkedHashMap();
-        double a = ((up_y ) / - 90 / surfaceview.scale);
-        map.put("point_x",a);
-        Constant.debugLog( "x"+a);
-        a = (up_x  ) / - 90 /surfaceview.scale + 2.4 ;
-        map.put("point_y",a);
-        Constant.debugLog( "y"+a);
-        map.put("angle",angle);
-        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+            Map map  = new LinkedHashMap();
+            double a = ((up_y ) / - 90 / surfaceview.scale);
+            map.put("point_x",a);
+            Constant.debugLog( "x"+a);
+            a = (up_x  ) / - 90 /surfaceview.scale + 2.4 ;
+            map.put("point_y",a);
+            Constant.debugLog( "y"+a);
+            map.put("angle",angle);
+            Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
         }
     }
     private void sendNativePointtrue(float up_x,float up_y ,int angle){
         if(up_x >= 90 && up_x <=810 && up_y >= 90 && up_y <= 450){
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
-        Map map  = new LinkedHashMap();
-        double a = ((up_y ) / - 150 / surfaceview.scale);
-        map.put("point_x",a);
-        Constant.debugLog( "x"+a);
-        a = (up_x  ) / - 150 /surfaceview.scale + 2.4 ;
-        map.put("point_y",a);
-        Constant.debugLog( "y"+a);
-        map.put("angle",angle);
-        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+            Map map  = new LinkedHashMap();
+            double a = ((up_y ) / - 150 / surfaceview.scale);
+            map.put("point_x",a);
+            Constant.debugLog( "x"+a);
+            a = (up_x  ) / - 150 /surfaceview.scale + 2.4 ;
+            map.put("point_y",a);
+            Constant.debugLog( "y"+a);
+            map.put("angle",angle);
+            Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
         }
     }
     //发往底层
