@@ -29,8 +29,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_xs=new Vector<Float>();
     public Vector<Float> point_ys=new Vector<Float>();
     public Paint p;
-    public int Scale = 100;
-    public float scalenumber = 2,scalepoint = 5;
+    public int Scale = 50;
+    public float scalenumber = 1,scalepoint = 5;
     public float scaleTextSize = 3 ;
     public float scale = 1,translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
@@ -80,7 +80,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         // TODO Auto-generated method stub
         super.onDraw(canvas);
         Matrix matrix = new Matrix();
-        matrix.postScale(scale,scale);
+//        matrix.postScale(scale,scale);
         matrix.postTranslate(translate_x,translate_y);
         canvas.concat(matrix);
         canvas.drawColor(getResources().getColor(R.color.darkgray));//这里是绘制背景

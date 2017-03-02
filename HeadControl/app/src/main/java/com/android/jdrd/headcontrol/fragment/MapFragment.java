@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jdrd.headcontrol.R;
@@ -82,13 +83,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private float plannumber =0,serchtimenumber =0,scopenumber =0,anglenumber,gametimenumber =0;
     private Context context;
     private ImageView imgViewmapnRight;
+    private TextView bilici;
     private RelativeLayout map_right_Ralative;
     private double nLenStart = 0;
-    //    private EditText point_x,point_y;
+    private EditText point_x,point_y,go_point_x,go_point_y;
     private ArrayAdapter<String> adapter;
+    private int scale = 1;
     private ArrayList<String> map_Plan;
     private float eventx,eventy;
-    public static boolean Istouch = false,Isplan = false,IsFind = false,IsAway = false,IsRight = false;
+    private static float return_x = -2,return_y = -3 , a = 0, b = 0;
+    public static boolean Istouch = false,Isplan = false,IsFind = false,IsAway = false,IsRight = false,IsSetReturn = false;
     //路线模式布局、路线模式详细设置；
     private LinearLayout linearlayout_map,linear_plan,linear_plan_info,linear_point,linear_roam,linearlayout_all;
     private HashMap<String,Vector<Float>> arrayhash;
@@ -201,14 +205,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         scope = (Spinner) findViewById(R.id.scope);
 //        angle = (Spinner) findViewById(R.id.angle);
         gametime = (Spinner) findViewById(R.id.gametime);
-//        point_x = (EditText) findViewById(R.id.point_x);
-//        point_y = (EditText) findViewById(R.id.point_y);
+        point_x = (EditText) findViewById(R.id.point_x);
+        point_y = (EditText) findViewById(R.id.point_y);
+        go_point_x = (EditText) findViewById(R.id.go_point_x);
+        go_point_y = (EditText) findViewById(R.id.go_point_y);
     }
 
     @SuppressLint("WrongViewCast")
     @Override
     public void initEvent() {
-
+        bilici = (TextView) findViewById(R.id.bilici);
         imgViewmapnRight = (ImageView) findViewById(R.id.imgViewmapnRight);
         map_right_Ralative = (RelativeLayout) findViewById(R.id.map_right_Ralative);
         linearlayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
@@ -218,6 +224,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         linear_point = (LinearLayout)findViewById(R.id.linearlayout_point);
         linear_roam = (LinearLayout)findViewById(R.id.linearlayout_roam);
         imgViewmapnRight.setOnClickListener(this);
+        findViewById(R.id.button_choose).setOnClickListener(this);
+        findViewById(R.id.go_button_choose).setOnClickListener(this);
         findViewById(R.id.button_clearlast).setOnClickListener(this);
         findViewById(R.id.button_clearall).setOnClickListener(this);
         findViewById(R.id.button_plan).setOnClickListener(this);
@@ -233,6 +241,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         findViewById(R.id.button_roam_start).setOnClickListener(this);
         findViewById(R.id.button_roam_stop).setOnClickListener(this);
         findViewById(R.id.button_return).setOnClickListener(this);
+        findViewById(R.id.button_setreturn).setOnClickListener(this);
         findViewById(R.id.button_remove).setOnClickListener(this);
         findViewById(R.id.button_plan_back).setOnClickListener(this);
         findViewById(R.id.button_plan_info_back).setOnClickListener(this);
@@ -251,9 +260,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Constant.debugLog(eventx+"    "+eventy);
                     if (Istouch) {
                         if (eventx > 70 && eventx < surfaceview.myview_width - 80 && eventy > 70 && eventy < surfaceview.myview_width - 80) {
-                            float a, b;
-                            a = (event.getX()  - surfaceview.translate_x) / surfaceview.scale - 40;
-                            b = ((event.getY()  - surfaceview.translate_y) / surfaceview.scale) - 40;
+                            a = (event.getX()  - surfaceview.translate_x)  - 40;
+                            b = (event.getY()  - surfaceview.translate_y)  - 40;
                             Constant.debugLog(a+"    "+b);
                             int x = (int) a % surfaceview.Scale;
                             int x_int = (int) a / surfaceview.Scale;
@@ -270,7 +278,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 b = surfaceview.Scale * y_int + 40;
                             }
                             Constant.debugLog(a+"    "+b);
-                            if(Isplan){
+                            if(IsSetReturn){
+                                return_x = a;
+                                return_y = b;
+                                IsSetReturn = false;
+                                Isplan = false;
+                                Istouch = false;
+                            }else if(Isplan){
                                 Istouch = false;
                                 surfaceview.point_xs.add(a);
                                 surfaceview.point_ys.add(b);
@@ -296,50 +310,68 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
                     }
                 }else if(n==MotionEvent.ACTION_MOVE&&1 == nCnt){
-                    surfaceview.translate_x += (event.getX() - eventx);
-                    surfaceview.translate_y += (event.getY() - eventy);
-                    eventx = event.getX();
-                    eventy = event.getY();
+//                    surfaceview.translate_x += (event.getX() - eventx);
+//                    surfaceview.translate_y += (event.getY() - eventy);
+//                    eventx = event.getX();
+//                    eventy = event.getY();
                 }
 
                 //放大缩小
                 if( (n&MotionEvent.ACTION_MASK) == MotionEvent.ACTION_POINTER_DOWN && 2 == nCnt)//<span style="color:#ff0000;">2表示两个手指</span>
                 {
-                    int xlen = Math.abs((int)event.getX(0) - (int)event.getX(1));
-                    int ylen = Math.abs((int)event.getY(0) - (int)event.getY(1));
-
-                    nLenStart = Math.sqrt((double)xlen*xlen + (double)ylen * ylen);
+//                    int xlen = Math.abs((int)event.getX(0) - (int)event.getX(1));
+//                    int ylen = Math.abs((int)event.getY(0) - (int)event.getY(1));
+//                    nLenStart = Math.sqrt((double)xlen*xlen + (double)ylen * ylen);
                 }else if( (n&MotionEvent.ACTION_MASK) == MotionEvent.ACTION_POINTER_UP  && 2 == nCnt)
                 {
                     int xlen = Math.abs((int)event.getX(0) - (int)event.getX(1));
                     int ylen = Math.abs((int)event.getY(0) - (int)event.getY(1));
                     double nLenEnd = Math.sqrt((double)xlen*xlen + (double)ylen * ylen);
-                    if(nLenEnd > nLenStart)//通过两个手指开始距离和结束距离，来判断放大缩小
-                    {
-                        if(surfaceview.scale < 4) {
-                            surfaceview.scale = (float) (surfaceview.scale * 2 );
-                            surfaceview.Scale = surfaceview.Scale / 2;
-                            surfaceview.scalenumber = surfaceview.scalenumber / 2;
-                            surfaceview.scalepoint = surfaceview.scalepoint / 2;
-//                            surfaceview.bitmap = Bitmap.createBitmap(surfaceview.bitmap,0,0,100,100);
-//                            surfaceview.rotbitmap = Bitmap.createBitmap(surfaceview.bitmap,0,0,100,100);
-                            Constant.debugLog("scale" + surfaceview.scale +"surfaceview.Scale" +surfaceview.Scale +"surfaceview.scalenumber"+surfaceview.scalenumber);
-                        }
-                        nLenStart = nLenEnd;
-                    }
-                    else
-                    {
-                        if(surfaceview.scale > 1){
-                            surfaceview.translate_x = 0;
-                            surfaceview.translate_y = 0;
-                            surfaceview.scale = (float) (surfaceview.scale / 2);
-                            surfaceview.Scale = surfaceview.Scale * 2;
-                            surfaceview.scalepoint = surfaceview.scalepoint * 2;
-                            surfaceview.scalenumber = surfaceview.scalenumber * 2;
-                            Constant.debugLog("scale" + surfaceview.scale +"surfaceview.Scale" +surfaceview.Scale +"surfaceview.scalenumber"+surfaceview.scalenumber);
-                        }
-                        nLenStart = nLenEnd;
-                    }
+//                    if(nLenEnd > nLenStart)//通过两个手指开始距离和结束距离，来判断放大缩小
+//                    {
+//                        if(surfaceview.scale < 4) {
+//                            surfaceview.scale = (float) (surfaceview.scale * 2 );
+////                            scale = scale * 2;
+//                            for(int i = 0 ; i < surfaceview.point_xs.size();i++){
+//                                surfaceview.point_xs.setElementAt((surfaceview.point_xs.elementAt(i) -40) * 2 +40,i);
+//                                surfaceview.point_ys.setElementAt((surfaceview.point_ys.elementAt(i) -40) * 2 +40,i);
+//                            }
+//                            surfaceview.myview_height = surfaceview.myview_height * 2;
+//                            surfaceview.myview_width = surfaceview.myview_width * 2;
+////                            surfaceview.Scale = surfaceview.Scale / 2;
+//                            surfaceview.scalenumber = surfaceview.scalenumber / 2;
+////                            surfaceview.scalepoint = surfaceview.scalepoint / 2;
+//                        }
+//                        nLenStart = nLenEnd;
+//                    }
+//                    else
+//                    {
+//                        if(surfaceview.scale > 1){
+//                            surfaceview.translate_x = 0;
+//                            surfaceview.translate_y = 0;
+//
+//                            surfaceview.myview_height = surfaceview.myview_height / 2;
+//                            surfaceview.myview_width = surfaceview.myview_width / 2;
+////                            surfaceview.Scale = surfaceview.Scale / 2;
+////                            scale = scale / 2;
+//                            for(int i = 0 ; i < surfaceview.point_xs.size();i++){
+//                                surfaceview.point_xs.setElementAt((surfaceview.point_xs.elementAt(i) -40) / 2 +40,i);
+//                                surfaceview.point_ys.setElementAt((surfaceview.point_ys.elementAt(i) -40) / 2 +40,i);
+//                            }
+//                            surfaceview.scale = (float) (surfaceview.scale / 2);
+////                            surfaceview.Scale = surfaceview.Scale * 2;
+////                            surfaceview.scalepoint = surfaceview.scalepoint * 2;
+//                            surfaceview.scalenumber = surfaceview.scalenumber * 2;
+//                        }
+//                        nLenStart = nLenEnd;
+//                    }
+//                    if(surfaceview.scale == 1){
+//                        bilici.setText("2/3米");
+//                    }else if(surfaceview.scale == 2){
+//                        bilici.setText("1/3米");
+//                    }else if(surfaceview.scale == 4){
+//                        bilici.setText("1/6米");
+//                    }
                 }
                 return true;
             }
@@ -356,6 +388,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
                     surfaceview.point_xs = array.get("point_xs");
                     surfaceview.point_ys = array.get("point_ys");
+                    set_surface();
                 }
             }
             @Override
@@ -511,6 +544,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                break;
             //规划完毕
             case R.id.button_saveall:
+                reset_surface();
                 xs=surfaceview.point_xs;
                 ys=surfaceview.point_ys;
                 if(surfaceview.point_xs.size()> 0 ){
@@ -555,13 +589,19 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Isplan = false;
                 break;
             case R.id.button_return:
+                reset_surface();
                 surfaceview.scale = 1;
-                surfaceview.translate_x = 0;
                 surfaceview.Scale = 100;
                 surfaceview.scalenumber = 2;
-                surfaceview.scaleTextSize = 3;
+                surfaceview.translate_x = 0;
                 surfaceview.translate_y = 0;
-                surfaceview.scalepoint = 3;
+
+                surfaceview.myview_height = 900;
+                surfaceview.myview_width = 900;
+                break;
+            case R.id.button_setreturn:
+                Istouch = true;
+                IsSetReturn = true;
                 break;
             //点选下一步
             case R.id.button_next:
@@ -618,6 +658,48 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             case R.id.imgViewmapnRight:
                 startAnimationRight();
+                break;
+            case R.id.button_choose:
+                if(!point_x.getText().toString().equals("") && !point_y.getText().toString().equals("") ){
+                    Istouch = false;
+                    a = Float.valueOf(point_x.getText().toString().trim());
+                    b = Float.valueOf(point_y.getText().toString().trim());
+                    a = a * surfaceview.Scale * 3 +40;
+                    b = b * surfaceview.Scale * 3 +40;
+                    surfaceview.point_xs.add(a);
+                    surfaceview.point_ys.add(b);
+                    arrayserchtime.add(serchtimenumber);
+                    arrayscope.add(scopenumber);
+//                    arrayangle.add(anglenumber);
+                    arraygametime.add(gametimenumber);
+                    xs.add(surfaceview.point_xs.lastElement());
+                    ys.add(surfaceview.point_ys.lastElement());
+                    Istouch = true;
+                    surfaceview.Isplan = true;
+                    point_x.setText("");
+                    point_y.setText("");
+                }else{
+                    Toast.makeText(context,"请输入下一个目标的坐标",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.go_button_choose:
+                if(!go_point_x.getText().toString().equals("") && !go_point_x.getText().toString().equals("") ){
+                    a = Float.valueOf(go_point_x.getText().toString().trim());
+                    b = Float.valueOf(go_point_x.getText().toString().trim());
+                    a = a * surfaceview.Scale * 3 +40;
+                    b = b * surfaceview.Scale * 3 +40;
+                    Constant.debugLog("a" +a + "b"+b);
+                    sendNativePoint(a,b,0);
+                    surfaceview.point_xs.removeAllElements();
+                    surfaceview.point_ys.removeAllElements();
+                    surfaceview.point_xs.add(a);
+                    surfaceview.point_ys.add(b);
+                    surfaceview.Isplan = false;
+                    go_point_x.setText("");
+                    go_point_y.setText("");
+                }else{
+                    Toast.makeText(context,"请输入坐标",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -706,8 +788,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //底层获取
     private void getUpPoint(double native_x,double native_y){
         if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
-            surfaceview.bitmap_y = ( native_x * -150) ;
-            surfaceview.bitmap_x = ( native_y * -150 )+360 ;
+            surfaceview.bitmap_y = ( native_x * -150) * surfaceview.scale ;
+            surfaceview.bitmap_x = (( native_y * -150 )+360) * surfaceview.scale ;
             Constant.debugLog("surfaceview.bitmap_y" +surfaceview.bitmap_y +"surfaceview.bitmap_x"+surfaceview.bitmap_x);
         }
     }
@@ -723,10 +805,25 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
         Map map  = new LinkedHashMap();
-        double a = ((up_y - 40) / - 150);
+        double a = ((up_y - 40) / - 150 / surfaceview.scale);
         map.put("point_x",a);
         Constant.debugLog( "x"+a);
-        a = (up_x - 40 ) / - 150 + 2.4 ;
+        a = (up_x - 40 ) / - 150 /surfaceview.scale + 2.4 ;
+        map.put("point_y",a);
+        Constant.debugLog( "y"+a);
+        map.put("angle",angle);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+//        }
+    }
+    private void sendNativePointtrue(float up_x,float up_y ,int angle){
+//        if(up_x >= 20 && up_x <=620 && up_y >= 20 && up_y <= 1020){
+//            up_x = (up_x -20) / -100;
+//            up_y = (float) (((up_y-20) / 100) - 7.6);
+        Map map  = new LinkedHashMap();
+        double a = ((up_y - 40) / - 150 / surfaceview.scale);
+        map.put("point_x",a);
+        Constant.debugLog( "x"+a);
+        a = (up_x - 40 ) / - 150 /surfaceview.scale + 2.4 ;
         map.put("point_y",a);
         Constant.debugLog( "y"+a);
         map.put("angle",angle);
@@ -739,8 +836,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
         Map map  = new LinkedHashMap();
-        map.put("point_x",-2);
-        map.put("point_y",1);
+        map.put("point_x",return_x);
+        map.put("point_y",return_y);
         map.put("angle",90);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
 //        }
@@ -1077,7 +1174,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 int i = 0;
                 while(i < xs_tmp.size()){
                     Constant.debugLog("thread = " + i);
-                    sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
+                    sendNativePointtrue(xs_tmp.get(i),ys_tmp.get(i),0);
                     synchronized (thread){
                         try {
                             tasknumber = 0;
@@ -1126,7 +1223,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     thread.wait();
                                 }
                                 //返回原点
-                                sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
+                                sendNativePointtrue(xs_tmp.get(i),ys_tmp.get(i),0);
                                 ////4444444
                                 thread.wait();
                             }
@@ -1156,13 +1253,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     tasknumber = -1;
                     Random random=new Random();
                     float x = 0 , y = 0;
-                    while(x  < 240 || x >800){
-                        x = random.nextInt(1000);
+                    while(x  < 240 || x >1200){
+                        x = random.nextInt(1200);
                     }
-                    while(y  < 100 || y >500){
-                        y = random.nextInt(600);
+                    while(y  < 200 || y >700){
+                        y = random.nextInt(900);
                     }
-                    sendNativePoint(x,y,0);
+                    sendNativePointtrue(x,y,0);
                     tasknumber = 20;
                     synchronized (thread) {
                         try {
@@ -1237,4 +1334,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         }
 
     }
+    public void reset_surface(){
+        if(surfaceview.scale != 1){
+            for(int i = 0 ; i < surfaceview.point_xs.size();i++){
+                surfaceview.point_xs.setElementAt((surfaceview.point_xs.elementAt(i) -40) / surfaceview.scale +40,i);
+                surfaceview.point_ys.setElementAt((surfaceview.point_ys.elementAt(i) -40) / surfaceview.scale +40,i);
+            }
+        }
+    }
+    public void set_surface(){
+        if(surfaceview.scale != 1){
+            for(int i = 0 ; i < surfaceview.point_xs.size();i++){
+                surfaceview.point_xs.setElementAt((surfaceview.point_xs.elementAt(i) -40) * surfaceview.scale +40,i);
+                surfaceview.point_ys.setElementAt((surfaceview.point_ys.elementAt(i) -40) * surfaceview.scale +40,i);
+            }
+        }
+    }
+
 }
