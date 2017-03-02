@@ -29,7 +29,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_xs=new Vector<Float>();
     public Vector<Float> point_ys=new Vector<Float>();
     public Paint p;
-    public int Scale = 50;
+    public int Scale = 90;
     public float scalenumber = 1,scalepoint = 5;
     public float scaleTextSize = 3 ;
     public float scale = 1,translate_x = 0,translate_y = 0;
@@ -235,32 +235,32 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         int x = 0;
         for(int y=0;y <= (myview_height/Scale) ; y++) {
-            if( y % 3 == 0){
-                p.setStrokeWidth((float) scaleTextSize);
-                x = y / 3;
-                if(x != 0){
-                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+45),p);
-                }else{
-                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
+//            if( y % 3 == 0){
+//                p.setStrokeWidth((float) scaleTextSize);
+//                x = y / 3;
+                if(y != 0){
+                    canvas.drawText(y+1+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
+//                }else{
+//                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
                 }
-                canvas.drawLine(40,y*Scale+40,myview_width+40,y*Scale+40,p);
-            }else{
-                p.setStrokeWidth((float) scaleTextSize /3);
-                canvas.drawLine(40,y*Scale+40,myview_width+40,y*Scale+40,p);
-            }
+                canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
+//            }else{
+//                p.setStrokeWidth((float) scaleTextSize /3);
+//                canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
+//            }
         }
         for(int y=0;y <= (myview_width/Scale);y++) {
-            if( y % 3 == 0){
-                p.setStrokeWidth((float) scaleTextSize);
-                canvas.drawLine(y*Scale+40,40,y*Scale+40,myview_height+40,p);
-                x = y / 3;
-                if(x != 0){
-                    canvas.drawText(x * scalenumber+"",Float.valueOf(y*Scale+35),Float.valueOf(30),p);
-                }
-            }else{
-                p.setStrokeWidth((float) scaleTextSize /3);
-                canvas.drawLine(y*Scale+40,40,y*Scale+40,myview_height+40,p);
-            }
+//            if( y % 3 == 0){
+//                p.setStrokeWidth((float) scaleTextSize);
+                canvas.drawLine(y*Scale,0,y*Scale,myview_height,p);
+//                x = y / 3;
+//                if(x != 0){
+                    canvas.drawText(y+1+"",Float.valueOf(y*Scale+5),Float.valueOf(30),p);
+//                }
+//            }else{
+//                p.setStrokeWidth((float) scaleTextSize /3);
+//                canvas.drawLine(y*Scale,0,y*Scale,myview_height,p);
+//            }
         }
     }
 

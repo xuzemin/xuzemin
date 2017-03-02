@@ -54,14 +54,14 @@ public class Constant {
         dialog.setCanceledOnTouchOutside(false);
         dialog.builder.setTitle("提醒")
                 .setMessage("是否离开并删除路线规划")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton("", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         Constant.debugLog("确定");
                         handler.sendEmptyMessage(1);
                     }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -74,7 +74,7 @@ public class Constant {
         CustomDialog dialog = new CustomDialog(context);
         dialog.builder.setTitle("提醒")
                 .setMessage("正在执行路线,点击确定按钮停止")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton("", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
