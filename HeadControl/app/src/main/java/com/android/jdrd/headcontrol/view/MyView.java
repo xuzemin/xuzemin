@@ -29,7 +29,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_xs=new Vector<Float>();
     public Vector<Float> point_ys=new Vector<Float>();
     public Paint p;
-    public int Scale = 50;
+    public int Scale = 100;
+    public float scalenumber = 2,scalepoint = 5;
+    public float scaleTextSize = 3 ;
     public float scale = 1,translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
     public Vector<Double> path_xs=new Vector<Double>();
@@ -143,7 +145,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 }else{
                     p.setColor(getResources().getColor(R.color.path));
                 }
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 5, p);
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
                 canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
                     drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
@@ -159,12 +161,14 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 
         if(rotbitmap!=null){
             matrix = new Matrix();
+            matrix.postScale(1,1);
             matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
             matrix.postRotate(rote, Float.valueOf(String.valueOf(center_x)),Float.valueOf(String.valueOf(center_y)));
             canvas.drawBitmap(rotbitmap,matrix,null);
         }
         if(bitmap!=null) {
             matrix = new Matrix();
+            matrix.postScale(1,1);
             matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
             matrix.postRotate(0,Float.valueOf(String.valueOf(center_x)),Float.valueOf(String.valueOf(center_y)));
             canvas.drawBitmap(bitmap, matrix, null);
@@ -225,36 +229,36 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         return false;
     }
     private void drawtable(Canvas canvas){
-        p.setColor(getResources().getColor(R.color.lightslategray));
+        p.setColor(Color.GRAY);
         p.setStyle(Paint.Style.FILL);
         p.setTextSize(20);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         int x = 0;
         for(int y=0;y <= (myview_height/Scale) ; y++) {
             if( y % 3 == 0){
-                p.setStrokeWidth((float) 3.0);
+                p.setStrokeWidth((float) scaleTextSize);
                 x = y / 3;
                 if(x != 0){
-                    canvas.drawText(x+"",Float.valueOf(15),Float.valueOf(y*Scale+45),p);
+                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+45),p);
                 }else{
-                    canvas.drawText(x+"",Float.valueOf(15),Float.valueOf(y*Scale+30),p);
+                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
                 }
                 canvas.drawLine(40,y*Scale+40,myview_width+40,y*Scale+40,p);
             }else{
-                p.setStrokeWidth((float) 1.0);
+                p.setStrokeWidth((float) scaleTextSize /3);
                 canvas.drawLine(40,y*Scale+40,myview_width+40,y*Scale+40,p);
             }
         }
         for(int y=0;y <= (myview_width/Scale);y++) {
             if( y % 3 == 0){
-                p.setStrokeWidth((float) 3.0);
+                p.setStrokeWidth((float) scaleTextSize);
                 canvas.drawLine(y*Scale+40,40,y*Scale+40,myview_height+40,p);
                 x = y / 3;
                 if(x != 0){
-                    canvas.drawText(x+"",Float.valueOf(y*Scale+35),Float.valueOf(30),p);
+                    canvas.drawText(x * scalenumber+"",Float.valueOf(y*Scale+35),Float.valueOf(30),p);
                 }
             }else{
-                p.setStrokeWidth((float) 1.0);
+                p.setStrokeWidth((float) scaleTextSize /3);
                 canvas.drawLine(y*Scale+40,40,y*Scale+40,myview_height+40,p);
             }
         }
