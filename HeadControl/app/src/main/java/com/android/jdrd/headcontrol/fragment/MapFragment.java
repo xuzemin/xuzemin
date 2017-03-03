@@ -789,8 +789,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //底层获取
     private void getUpPoint(double native_x,double native_y){
         if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
-            surfaceview.bitmap_y = ( native_x * -90) * surfaceview.scale ;
-            surfaceview.bitmap_x = (( (native_y-2.4) * -90 )) * surfaceview.scale ;
+            surfaceview.bitmap_y = ( native_x * -90) * surfaceview.scale -surfaceview.bitmap.getHeight()/2 ;
+            surfaceview.bitmap_x = (( (native_y-2.4) * -90 )) * surfaceview.scale -surfaceview.bitmap.getHeight()/2;
             Constant.debugLog("surfaceview.bitmap_y" +surfaceview.bitmap_y +"surfaceview.bitmap_x"+surfaceview.bitmap_x);
         }
     }
