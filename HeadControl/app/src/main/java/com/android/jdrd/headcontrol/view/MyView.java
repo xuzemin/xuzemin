@@ -233,13 +233,14 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setStyle(Paint.Style.FILL);
         p.setTextSize(20);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
-        int x = 0;
+        int x = 10;
         for(int y=0;y <= (myview_height/Scale) ; y++) {
 //            if( y % 3 == 0){
 //                p.setStrokeWidth((float) scaleTextSize);
 //                x = y / 3;
-                if(y != 0){
-                    canvas.drawText(y+1+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
+                if(x != 0){
+                    canvas.drawText(x+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
+                    x--;
 //                }else{
 //                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
                 }
@@ -255,7 +256,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.drawLine(y*Scale,0,y*Scale,myview_height,p);
 //                x = y / 3;
 //                if(x != 0){
-                    canvas.drawText(y+1+"",Float.valueOf(y*Scale+5),Float.valueOf(30),p);
+                    canvas.drawText(y+"",Float.valueOf(y*Scale+5),Float.valueOf(myview_height+30),p);
 //                }
 //            }else{
 //                p.setStrokeWidth((float) scaleTextSize /3);

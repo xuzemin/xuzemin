@@ -19,7 +19,7 @@ public class Constant {
     public static int ServerPort = 12345;
     public static String ip_bigScreen = "/192.168.1.102";
     public static String ip_ros = "/192.168.1.100";
-
+    public static float Scale = 1 ;
     public static boolean isDebug = true;
     public static String TAG = "HeadControl";
     public static String filePath = "data/data/com.android.jdrd.headcontrol/cache/map.xml";
