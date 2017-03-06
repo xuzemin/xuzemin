@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <ScrollView
-        android:layout_width="150dp"
+        android:layout_width="234px"
         android:layout_height="match_parent"
         android:background="@mipmap/zuolan"
         android:fadingEdge="none">
@@ -63,8 +63,8 @@
 
                 <ImageView
                     android:id="@+id/iv_Battery"
-                    android:layout_width="234dp"
-                    android:layout_height="159dp"
+                    android:layout_width="@dimen/bar_fgTitle_left_btn_width"
+                    android:layout_height="@dimen/bar_fgTitle_left_btn_heigth"
                     android:layout_gravity="left"
                     android:clickable="true"
                     android:scaleType="fitXY"
@@ -86,8 +86,8 @@
 
                 <ImageView
                     android:id="@+id/iv_Clean"
-                    android:layout_width="234dp"
-                    android:layout_height="159dp"
+                    android:layout_width="@dimen/bar_fgTitle_left_btn_width"
+                    android:layout_height="@dimen/bar_fgTitle_left_btn_heigth"
                     android:clickable="true"
                     android:scaleType="fitXY"
                     android:src="@mipmap/qingjie_no" />
@@ -111,8 +111,8 @@
 
                 <ImageView
                     android:id="@+id/iv_Map"
-                    android:layout_width="234dp"
-                    android:layout_height="159dp"
+                    android:layout_width="@dimen/bar_fgTitle_left_btn_width"
+                    android:layout_height="@dimen/bar_fgTitle_left_btn_heigth"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left"
                     android:clickable="true"
@@ -129,7 +129,6 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="right"
                     android:clickable="true"
-                    android:src="@mipmap/you_no"
                     android:visibility="gone" />
                 <!--*******************************************************************-->
             </RelativeLayout>
@@ -149,8 +148,8 @@
 
                 <ImageView
                     android:id="@+id/iv_settings"
-                    android:layout_width="234dp"
-                    android:layout_height="159dp"
+                    android:layout_width="@dimen/bar_fgTitle_left_btn_width"
+                    android:layout_height="@dimen/bar_fgTitle_left_btn_heigth"
                     android:layout_centerVertical="true"
                     android:layout_gravity="left"
                     android:clickable="true"
@@ -174,7 +173,6 @@
                     android:layout_gravity="left"
                     android:clickable="true"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/shouqi"
                     android:layout_centerHorizontal="true"
                     android:visibility="visible" />
             </RelativeLayout>

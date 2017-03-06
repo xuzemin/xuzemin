@@ -21,12 +21,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.adapter.ChangeMapAdapter;
 import com.android.jdrd.headcontrol.common.BaseFragment;
 import com.android.jdrd.headcontrol.dialog.MyDialog;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
@@ -49,6 +51,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
@@ -76,11 +79,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
     private MyReceiver receiver = new MyReceiver();
     private IntentFilter filter =new IntentFilter();
+    private Map map;
     private static MyView surfaceview = null;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
-    private Spinner planchooce,serchtime,scope,angle,gametime;
+    private Spinner planchooce,serchtime,scope,angle,gametime,spinner_Scale,spinner_set_Scale;
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
-    private float plannumber =0,serchtimenumber =0,scopenumber =0,anglenumber,gametimenumber =0;
+    private float plannumber =0,serchtimenumber =0,scopenumber =0,anglenumber,gametimenumber =0,spinner_Scale_number= 0;
     private Context context;
     private ImageView imgViewmapnRight;
     private TextView bilici;
@@ -91,12 +95,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private int scale = 1;
     private ArrayList<String> map_Plan;
     private float eventx,eventy;
+    private ListView plan_change_list;
     private static float return_x = -2,return_y = -3 , a = 0, b = 0;
     public static boolean Istouch = false,Isplan = false,IsFind = false,IsAway = false,IsRight = false,IsSetReturn = false;
     //路线模式布局、路线模式详细设置；
-    private LinearLayout linearlayout_map,linear_plan,linear_plan_info,linear_point,linear_roam,linearlayout_all;
+    private LinearLayout linearlayout_map,linear_plan,linear_plan_info,linear_point,linear_roam,linearlayout_all,linearlayout_plan_change;
     private HashMap<String,Vector<Float>> arrayhash;
-    private Vector<Float> xs,ys,arrayserchtime,arrayscope,arrayangle,arraygametime;
+    private Vector<Float> xs,ys,arrayserchtime,arrayscope,arrayangle,arraygametime,scale_number;
     private Vector<Float> xs_tmp = new Vector<>();
     private Vector<Float> ys_tmp  = new Vector<>();
     private Vector<Float> arrayserchtime_tmp = new Vector<>();
@@ -104,6 +109,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private Vector<Float> arrayangle_tmp = new Vector<>();
     private Vector<Float> arraygametime_tmp = new Vector<>();
     private Timer timer;
+    private ChangeMapAdapter ChangeMapAdapter;
     private int tasknumber = -1;
     private TimerTask task;
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
@@ -127,7 +133,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                        arrayangle.removeAllElements();
                         arraygametime.removeAllElements();
                     }
-                    readXML();
                     updatekey();
                     linear_plan_info.setVisibility(View.GONE);
                     linear_plan.setVisibility(View.VISIBLE);
@@ -161,9 +166,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     }
                     break;
                 case 5:
-//                    synchronized (thread) {
-//                        thread.notify();
-//                    }
+//                    HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+//                    xs_tmp = array.get("point_xs");
+//                    ys_tmp = array.get("point_ys");
+//                    scale_number = array.get("scale_number");
+//                    Constant.debugLog("scale_number = " + scale_number);
+//                    surfaceview.point_xs.removeAllElements();
+//                    surfaceview.point_ys.removeAllElements();
+//                    reset_surface();
+//                    set_surface();
+//                    surfaceview.point_xs = xs_tmp;
+//                    surfaceview.point_ys = ys_tmp;
+                    Constant.debugLog("msg.obj"+msg.obj);
+                    ChangeMapAdapter.update((Integer) msg.obj,plan_change_list);
+//                    ChangeMapAdapter = new ChangeMapAdapter(arrayPlanLists,strings.get((int)plannumber),context,handler);
+//                    plan_change_list.setAdapter(ChangeMapAdapter);
                 default:
                     break;
             }
@@ -205,6 +222,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //        Contact.debugLog("bitmap_width"+bitmap_width+"bitmap_height"+bitmap_height);
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
+        spinner_Scale = (Spinner) findViewById(R.id.spinner_Scale);
+//        spinner_set_Scale = (Spinner) findViewById(R.id.spinner_set_Scale);
         scope = (Spinner) findViewById(R.id.scope);
 //        angle = (Spinner) findViewById(R.id.angle);
         gametime = (Spinner) findViewById(R.id.gametime);
@@ -217,16 +236,22 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @SuppressLint("WrongViewCast")
     @Override
     public void initEvent() {
+
+        plan_change_list = (ListView) findViewById(R.id.plan_change_list);
         bilici = (TextView) findViewById(R.id.bilici);
         imgViewmapnRight = (ImageView) findViewById(R.id.imgViewmapnRight);
         map_right_Ralative = (RelativeLayout) findViewById(R.id.map_right_Ralative);
         linearlayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
+        linearlayout_plan_change = (LinearLayout) findViewById(R.id.relative_plan_change);
         linearlayout_map = (LinearLayout) findViewById(R.id.linearlayout_map);
         linear_plan = (LinearLayout) findViewById(R.id.relative_plan);
         linear_plan_info = (LinearLayout) findViewById(R.id.relative_plan_info);
         linear_point = (LinearLayout)findViewById(R.id.linearlayout_point);
         linear_roam = (LinearLayout)findViewById(R.id.linearlayout_roam);
         imgViewmapnRight.setOnClickListener(this);
+        findViewById(R.id.plan_change).setOnClickListener(this);
+        findViewById(R.id.button_plan_change_save).setOnClickListener(this);
+        findViewById(R.id.button_plan_change_back).setOnClickListener(this);
         findViewById(R.id.button_choose).setOnClickListener(this);
         findViewById(R.id.go_button_choose).setOnClickListener(this);
         findViewById(R.id.button_clearlast).setOnClickListener(this);
@@ -285,18 +310,22 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 IsSetReturn = false;
                                 Isplan = false;
                                 Istouch = false;
-                            }else if(Isplan){
-                                Istouch = false;
-                                surfaceview.point_xs.add(a);
-                                surfaceview.point_ys.add(b);
-                                arrayserchtime.add(serchtimenumber);
-                                arrayscope.add(scopenumber);
+                            }else if(!IsSetReturn&&Isplan){
+                                if(surfaceview.point_xs.size() >0
+                                        && a == surfaceview.point_xs.get(surfaceview.point_xs.size()-1)
+                                        && b == surfaceview.point_ys.get(surfaceview.point_ys.size()-1)){
+
+                                }else {
+                                    surfaceview.point_xs.add(a);
+                                    surfaceview.point_ys.add(b);
+                                    arrayserchtime.add(serchtimenumber);
+                                    arrayscope.add(scopenumber);
 //                    arrayangle.add(anglenumber);
-                                arraygametime.add(gametimenumber);
-                                xs.add(surfaceview.point_xs.lastElement());
-                                ys.add(surfaceview.point_ys.lastElement());
-                                Istouch = true;
-                                surfaceview.Isplan = true;
+                                    arraygametime.add(gametimenumber);
+                                    xs.add(a * Constant.Scale);
+                                    ys.add(b * Constant.Scale);
+                                    surfaceview.Isplan = true;
+                                }
                             }else{
                                 sendNativePoint(a,b,0);
                                 surfaceview.point_xs.removeAllElements();
@@ -385,15 +414,72 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Constant.getConstant().showWarntext(context,handler);
                 }else {
                     plannumber = position;
-                    Constant.debugLog("plannumber = " + plannumber);
+                    Constant.Scale = 1 ;
+                    readXML();
+                    spinner_Scale.setSelection(0,true);
+                    xs_tmp.removeAllElements();
+                    ys_tmp.removeAllElements();
                     HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
-                    surfaceview.point_xs = array.get("point_xs");
-                    surfaceview.point_ys = array.get("point_ys");
-                    set_surface();
+                    xs_tmp = array.get("point_xs");
+                    ys_tmp = array.get("point_ys");
+                    scale_number = array.get("scale_number");
+                    Constant.debugLog("scale_number = " + scale_number);
+//                    Constant.Scale = scale_number.elementAt(0);
+//                    reset_surface();
+                    surfaceview.point_xs.removeAllElements();
+                    surfaceview.point_ys.removeAllElements();
+
+                    if(scale_number.elementAt(0) == 100){
+                        if(spinner_Scale_number !=3){
+                            spinner_Scale.setSelection(3,true);
+                        }else{
+                            reset_surface();
+                            Constant.Scale=100;
+                            set_surface();
+                            bilici.setText("1:100米");
+                            surfaceview.point_xs = xs_tmp;
+                            surfaceview.point_ys = ys_tmp;
+                        }
+                    }else if(scale_number.elementAt(0) == 10){
+                        if(spinner_Scale_number !=2){
+                            spinner_Scale.setSelection(2,true);
+                        }else{
+                            reset_surface();
+                            Constant.Scale=10;
+                            set_surface();
+                            bilici.setText("1:10米");
+                            surfaceview.point_xs = xs_tmp;
+                            surfaceview.point_ys = ys_tmp;
+                        }
+                    }else if(scale_number.elementAt(0) == 2){
+                        if(spinner_Scale_number !=1){
+                            spinner_Scale.setSelection(1,true);
+                        }else{
+                            reset_surface();
+                            Constant.Scale=2;
+                            set_surface();
+                            bilici.setText("1:2米");
+                            surfaceview.point_xs = xs_tmp;
+                            surfaceview.point_ys = ys_tmp;
+                        }
+
+                    }else if(scale_number.elementAt(0) == 1){
+                        if(spinner_Scale_number !=0){
+                            spinner_Scale.setSelection(0,true);
+                        }else{
+                            reset_surface();
+                            Constant.Scale=1;
+                            set_surface();
+                            bilici.setText("1:1米");
+                            surfaceview.point_xs = xs_tmp;
+                            surfaceview.point_ys = ys_tmp;
+                        }
+                    }
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -461,12 +547,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     if(surfaceview.point_xs.size() == arrayserchtime.size()){
                         surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
                         surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
-                        xs.remove(surfaceview.point_ys.size()-1);
-                        ys.remove(surfaceview.point_ys.size()-1);
-                        arrayserchtime.remove(surfaceview.point_ys.size()-1);
-                        arrayscope.remove(surfaceview.point_ys.size()-1);
+                        xs.remove(xs.size()-1);
+                        ys.remove(ys.size()-1);
+                        arrayserchtime.remove(arrayserchtime.size()-1);
+                        arrayscope.remove(arrayscope.size()-1);
 //                        arrayangle.remove(surfaceview.point_ys.size()-1);
-                        arraygametime.remove(surfaceview.point_ys.size()-1);
+                        arraygametime.remove(arraygametime.size()-1);
                     }else{
                         surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
                         surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
@@ -485,6 +571,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     arrayscope = new Vector<>();
 //                    arrayangle = new Vector<>();
                     arraygametime = new Vector<>();
+                    scale_number = new Vector<Float>();
                 }
                 break;
             //规划新路线
@@ -495,10 +582,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 arraygametime = new Vector<Float>();
                 xs = new Vector<Float>();
                 ys = new Vector<Float>();
-
+//                scale_number.setElementAt((float) Constant.Scale,0);
                 surfaceview.point_xs = new Vector<Float>();
                 surfaceview.point_ys = new Vector<Float>();
-
                 Istouch = true;
                 linear_plan_info.setVisibility(View.VISIBLE);
                 linear_plan.setVisibility(View.GONE);
@@ -509,6 +595,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Constant.getConstant().showWarntext(context,handler);
                 }else {
                     if(arrayPlanLists.size() > 0){
+                        readXML();
                         arrayPlanLists.remove(strings.get((int) plannumber));
                         writeXML();
                         updatekey();
@@ -545,11 +632,17 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                break;
             //规划完毕
             case R.id.button_saveall:
-                reset_surface();
-                xs=surfaceview.point_xs;
-                ys=surfaceview.point_ys;
+                readXML();
+                arrayhash = new HashMap<>();
+                scale_number = new Vector<>();
+                if(scale_number.size()<=0){
+                    scale_number.add(Constant.Scale);
+                }else {
+                    scale_number.setElementAt(Constant.Scale,0);
+                }
+                arrayhash.put("scale_number",scale_number);
+                Constant.debugLog("scale_number"+scale_number);
                 if(surfaceview.point_xs.size()> 0 ){
-                    arrayhash = new HashMap<>();
                     arrayhash.put("point_xs",xs);
                     arrayhash.put("point_ys",ys);
                     arrayhash.put("arrayserchtime",arrayserchtime);
@@ -575,7 +668,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 setVisible();
                 linear_plan.setVisibility(View.VISIBLE);
                 linearlayout_map.setVisibility(View.GONE);
-                readXML();
                 updatekey();
                 Istouch = false;
                 Isplan = true;
@@ -665,16 +757,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Istouch = false;
                     a = Float.valueOf(point_x.getText().toString().trim());
                     b = Float.valueOf(point_y.getText().toString().trim());
-                    a = a * surfaceview.Scale * 3 ;
-                    b = b * surfaceview.Scale * 3 ;
+                    a = a * surfaceview.Scale  ;
+                    b = b * surfaceview.Scale  ;
                     surfaceview.point_xs.add(a);
                     surfaceview.point_ys.add(b);
                     arrayserchtime.add(serchtimenumber);
                     arrayscope.add(scopenumber);
 //                    arrayangle.add(anglenumber);
                     arraygametime.add(gametimenumber);
-                    xs.add(surfaceview.point_xs.lastElement());
-                    ys.add(surfaceview.point_ys.lastElement());
+                    xs.add(a * Constant.Scale);
+                    ys.add(b * Constant.Scale);
                     Istouch = true;
                     surfaceview.Isplan = true;
                     point_x.setText("");
@@ -687,8 +779,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 if(!go_point_x.getText().toString().equals("") && !go_point_x.getText().toString().equals("") ){
                     a = Float.valueOf(go_point_x.getText().toString().trim());
                     b = Float.valueOf(go_point_x.getText().toString().trim());
-                    a = a * surfaceview.Scale * 3 ;
-                    b = b * surfaceview.Scale * 3 ;
+                    a = a * surfaceview.Scale ;
+                    b = b * surfaceview.Scale ;
                     Constant.debugLog("a" +a + "b"+b);
                     sendNativePoint(a,b,0);
                     surfaceview.point_xs.removeAllElements();
@@ -702,11 +794,39 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Toast.makeText(context,"请输入坐标",Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.plan_change:
+                if(null!=arrayPlanLists&&plannumber >= 0&&arrayPlanLists.size() > 0){
+                    linear_plan.setVisibility(View.GONE);
+                    linearlayout_plan_change.setVisibility(View.VISIBLE);
+                    ChangeMapAdapter = new ChangeMapAdapter(arrayPlanLists,strings.get((int) plannumber),context,handler);
+                    plan_change_list.setAdapter(ChangeMapAdapter);
+                }
+                break;
+            case R.id.button_plan_change_back:
+                updatekey();
+                linear_plan.setVisibility(View.VISIBLE);
+                linearlayout_plan_change.setVisibility(View.GONE);
+                break;
+
+            case R.id.button_plan_change_save:
+                xs_tmp = new Vector<>();
+                ys_tmp = new Vector<>();
+                xs_tmp = arrayPlanLists.get(strings.get((int)plannumber)).get("point_xs");
+                ys_tmp = arrayPlanLists.get(strings.get((int)plannumber)).get("point_ys");
+                reset_surface();
+                arrayPlanLists.get(strings.get((int)plannumber)).put("point_xs",xs_tmp);
+                arrayPlanLists.get(strings.get((int)plannumber)).put("point_ys",ys_tmp);
+                writeXML();
+                updatekey();
+                linear_plan.setVisibility(View.VISIBLE);
+                linearlayout_plan_change.setVisibility(View.GONE);
+                break;
         }
     }
 
 
     private void init(){
+
         map_Plan = new ArrayList<>();
         map_Plan.add("远");
         map_Plan.add("中");
@@ -723,6 +843,94 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        map_Plan = new ArrayList<>();
+        map_Plan.add("1：1米");
+        map_Plan.add("1：2米");
+        map_Plan.add("1：10米");
+        map_Plan.add("1：100米");
+        adapter = new ArrayAdapter<String>(context,R.layout.item_spinselect,map_Plan);
+        adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+        spinner_Scale.setAdapter(adapter);
+        spinner_Scale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinner_Scale_number = position;
+                Constant.debugLog(position+"");
+                switch (position){
+                    case 0:
+                        reset_surface();
+                        Constant.Scale=1;
+                        set_surface();
+                        bilici.setText("1:1米");
+                        surfaceview.point_xs = xs_tmp;
+                        surfaceview.point_ys = ys_tmp;
+                        break;
+                    case 1:
+                        reset_surface();
+                        Constant.Scale = 2;
+                        set_surface();
+                        bilici.setText("1:2米");
+                        surfaceview.point_xs = xs_tmp;
+                        surfaceview.point_ys = ys_tmp;
+                        break;
+                    case 2:
+                        reset_surface();
+                        Constant.Scale = 10;
+                        bilici.setText("1:10米");
+                        set_surface();
+                        surfaceview.point_xs = xs_tmp;
+                        surfaceview.point_ys = ys_tmp;
+                        break;
+                    case 3:
+                        reset_surface();
+                        Constant.Scale = 100;
+                        bilici.setText("1:100米");
+                        set_surface();
+                        surfaceview.point_xs = xs_tmp;
+                        surfaceview.point_ys = ys_tmp;
+                        break;
+                }
+                Constant.debugLog(surfaceview.point_xs.size()+"surfaceview.point_xs.size()");
+                Constant.debugLog(surfaceview.point_ys.size()+"surfaceview.point_ys.size()");
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+//        map_Plan = new ArrayList<>();
+//        map_Plan.add("1：1米");
+//        map_Plan.add("1：2米");
+//        map_Plan.add("1：10米");
+//        map_Plan.add("1：100米");
+//        adapter = new ArrayAdapter<String>(context,R.layout.item_spinselect,map_Plan);
+//        adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+//        spinner_set_Scale.setAdapter(adapter);
+//        spinner_set_Scale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Constant.debugLog(position+"");
+//
+//                switch (position){
+//                    case 0:
+//                        Constant.Scale=1;
+//                        break;
+//                    case 1:
+//                        Constant.Scale = 2;
+//                        break;
+//                    case 2:
+//                        Constant.Scale = 10;
+//                        break;
+//                    case 3:
+//                        Constant.Scale = 100;
+//                        break;
+//                }
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
+
         map_Plan = new ArrayList<>();
         map_Plan.add("不找人");
         map_Plan.add("找人1圈");
@@ -789,8 +997,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //底层获取
     private void getUpPoint(double native_x,double native_y){
         if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
-            surfaceview.bitmap_y = ( native_x * -90) * surfaceview.scale -surfaceview.bitmap.getHeight()/2 ;
-            surfaceview.bitmap_x = (( (native_y-2.4) * -90 )) * surfaceview.scale -surfaceview.bitmap.getHeight()/2;
+            surfaceview.bitmap_y = (native_x - 10) * -90 / Constant.Scale -surfaceview.bitmap.getHeight()/2 ;
+            surfaceview.bitmap_x = (native_y * -90 / Constant.Scale) -surfaceview.bitmap.getHeight()/2;
             Constant.debugLog("surfaceview.bitmap_y" +surfaceview.bitmap_y +"surfaceview.bitmap_x"+surfaceview.bitmap_x);
         }
     }
@@ -802,14 +1010,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
     //发往底层
     private void sendNativePoint(float up_x,float up_y ,int angle){
-        if(up_x >= 90 && up_x <=810 && up_y >= 90 && up_y <= 450){
+        if(up_x >= 0 && up_x <=1750 && up_y >= 0 && up_y <= 850){
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
-            Map map  = new LinkedHashMap();
-            double a = ((up_y ) / - 90 / surfaceview.scale);
+            map  = new LinkedHashMap();
+            double a = ((up_y ) / - 90  + 10) * Constant.Scale;
             map.put("point_x",a);
             Constant.debugLog( "x"+a);
-            a = (up_x  ) / - 90 /surfaceview.scale + 2.4 ;
+            a =  ( up_x / - 90  ) * Constant.Scale ;
             map.put("point_y",a);
             Constant.debugLog( "y"+a);
             map.put("angle",angle);
@@ -817,14 +1025,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         }
     }
     private void sendNativePointtrue(float up_x,float up_y ,int angle){
-        if(up_x >= 90 && up_x <=810 && up_y >= 90 && up_y <= 450){
+        if(up_x >= 0 && up_x <=1750 && up_y >= 0 && up_y <= 850){
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
-            Map map  = new LinkedHashMap();
-            double a = ((up_y ) / - 150 / surfaceview.scale);
+            map  = new LinkedHashMap();
+            double a = ((up_y ) / - 90  + 10) * Constant.Scale;
             map.put("point_x",a);
             Constant.debugLog( "x"+a);
-            a = (up_x  ) / - 150 /surfaceview.scale + 2.4 ;
+            a =  ( up_x / - 90  ) * Constant.Scale ;
             map.put("point_y",a);
             Constant.debugLog( "y"+a);
             map.put("angle",angle);
@@ -836,9 +1044,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //        if(up_x >= 20 && up_x <=620 && up_y >= 20 && up_y <= 1020){
 //            up_x = (up_x -20) / -100;
 //            up_y = (float) (((up_y-20) / 100) - 7.6);
-        Map map  = new LinkedHashMap();
-        map.put("point_x",return_x);
-        map.put("point_y",return_y);
+        map  = new LinkedHashMap();
+        double a = ((return_y ) / - 90  + 10) * Constant.Scale;
+        map.put("point_x",a);
+        Constant.debugLog( "x"+a);
+        a =  ( return_x / - 90  ) * Constant.Scale ;
+        map.put("point_y",a);
+        Constant.debugLog( "y"+a);
         map.put("angle",90);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
 //        }
@@ -990,13 +1202,20 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Vector<Float> arrayscope = planList.get("arrayscope");
 //                Vector<Float> arrayangle = planList.get("arrayangle");
                 Vector<Float> arraygametime = planList.get("arraygametime");
+                Vector<Float> scale_vector = planList.get("scale_number");
                 Element point_xs_ = document.createElement("point_xs");
+
+                Element scale = document.createElement("scale_number");
+
                 Element point_ys_ = document.createElement("point_ys");
                 Element arrayserchtime_ = document.createElement("arrayserchtime");
                 Element arrayscope_ = document.createElement("arrayscope");
 //                Element arrayangle_ = document.createElement("arrayangle");
                 Element arraygametime_ = document.createElement("arraygametime");
 
+                Element item_scale = document.createElement("item_scale");
+                item_scale.setTextContent(scale_vector.elementAt(0)+"");
+                scale.appendChild(item_scale);
                 for(int x = 0;x < point_xs.size();x ++){
                     Element item_xs = document.createElement("item_xs");
                     item_xs.setTextContent(point_xs.elementAt(x)+"");
@@ -1023,6 +1242,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 keysElement.appendChild(arrayscope_);
 //                keysElement.appendChild(arrayangle_);
                 keysElement.appendChild(arraygametime_);
+                keysElement.appendChild(scale);
 
                 planLists.appendChild(keysElement);
             }
@@ -1065,18 +1285,20 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             parse.normalize();
             Element root = parse.getDocumentElement();
             NodeList planLists = root.getElementsByTagName("key");
+
             arrayPlanLists  = new HashMap<>();
             for (int i = 0; i < planLists.getLength(); i++) {
                 arrayhash = new HashMap<>();
                 Element item = (Element) planLists.item(i);
                 String key = item.getAttribute("key");
-                NodeList nodes = item.getElementsByTagName("item_xs");
+//                NodeList nodes = item.getElementsByTagName("item_xs");
                 getFloat(item,"item_xs","point_xs");
                 getFloat(item,"item_ys","point_ys");
                 getFloat(item,"item_serchtime","arrayserchtime");
                 getFloat(item,"item_scope","arrayscope");
 //                getFloat(item,"item_angle","arrayangle");
                 getFloat(item,"item_gametime","arraygametime");
+                getFloat(item,"item_scale","scale_number");
                 arrayPlanLists.put(key,arrayhash);
             }
         } catch (ParserConfigurationException e) {
@@ -1114,6 +1336,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
 
     public void updatekey(){
+        readXML();
+        Constant.Scale = 1;
         Istouch = false;
         strings = getKey();
         if(strings !=null && context!=null){
@@ -1138,13 +1362,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 writeXML();
                 surfaceview.point_xs.removeAllElements();
                 surfaceview.point_ys.removeAllElements();
+                xs.removeAllElements();
+                ys.removeAllElements();
                 arrayserchtime.removeAllElements();
                 arrayscope.removeAllElements();
 //                arrayangle.removeAllElements();
                 arraygametime.removeAllElements();
                 linear_plan_info.setVisibility(View.GONE);
                 linear_plan.setVisibility(View.VISIBLE);
-                readXML();
                 updatekey();
                 dialog.dismiss();
             }
@@ -1336,20 +1561,22 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
     }
     public void reset_surface(){
-        if(surfaceview.scale != 1){
-            for(int i = 0 ; i < surfaceview.point_xs.size();i++){
-                surfaceview.point_xs.setElementAt((surfaceview.point_xs.elementAt(i) ) / surfaceview.scale ,i);
-                surfaceview.point_ys.setElementAt((surfaceview.point_ys.elementAt(i) ) / surfaceview.scale ,i);
-            }
+        Constant.debugLog("set_surface"+Constant.Scale);
+        Constant.debugLog("set_surface"+xs_tmp.size());
+        for(int i = 0 ; i < xs_tmp.size();i++){
+            xs_tmp.setElementAt((xs_tmp.elementAt(i) ) * Constant.Scale ,i);
+            ys_tmp.setElementAt((ys_tmp.elementAt(i) ) * Constant.Scale ,i);
         }
     }
     public void set_surface(){
-        if(surfaceview.scale != 1){
-            for(int i = 0 ; i < surfaceview.point_xs.size();i++){
-                surfaceview.point_xs.setElementAt((surfaceview.point_xs.elementAt(i) ) * surfaceview.scale ,i);
-                surfaceview.point_ys.setElementAt((surfaceview.point_ys.elementAt(i) ) * surfaceview.scale ,i);
-            }
+        Constant.debugLog("reset_surface"+Constant.Scale);
+        Constant.debugLog("set_surface"+xs_tmp.size());
+//        if(Constant.Scale != 1){
+        for(int i = 0 ; i < xs_tmp.size();i++){
+            xs_tmp.setElementAt((xs_tmp.elementAt(i) ) / Constant.Scale ,i);
+            ys_tmp.setElementAt((ys_tmp.elementAt(i) ) / Constant.Scale ,i);
         }
+//        }
     }
 
 }

@@ -30,6 +30,7 @@ import com.android.jdrd.headcontrol.fragment.BatteryFragment;
 import com.android.jdrd.headcontrol.fragment.CleanFragment;
 import com.android.jdrd.headcontrol.fragment.MapFragment;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
+import com.android.jdrd.headcontrol.service.SetStaticIPService;
 import com.android.jdrd.headcontrol.util.Constant;
 
 import java.util.ArrayList;
@@ -107,9 +108,12 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
-
-//        Intent testActivity = new Intent(this, TestActivity.class);
-//        startActivity(testActivity);
+        //启动socket测试Activity
+        /*Intent testActivity = new Intent(this, TestActivity.class);
+        startActivity(testActivity);*/
+        //启动静态IP设置服务
+        Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
+        startService(SetStaticIPService);
 
         list = new ArrayList<>();
         BatteryFragment batteryFragment = new BatteryFragment(WelcomeActivity.this);
@@ -315,7 +319,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Map.setImageResource(R.mipmap.ditu_pre);
         FragmentManager fragmentManager_Map = getFragmentManager();
         FragmentTransaction transaction_map = fragmentManager_Map.beginTransaction();
-        transaction_map.replace(R.id.ll_right, list.get(02), "cleanFragment");
+        transaction_map.replace(R.id.ll_right, list.get(2), "mapFragment");
         transaction_map.commit();
         mImageView_Map.setEnabled(false);
     }

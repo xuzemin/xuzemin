@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //通过SQLiteDatabase执行一个创建表的sql语句
-        db.execSQL("create table info (_id integer primary key autoincrement,name varchar(20),phone varchar(11))");
+        db.execSQL("create table headControl (_id integer primary key autoincrement,name varchar(20),phone varchar(11))");
     }
 
     //onUpgrade数据库版本号发生改变时才会执行； 特别适合做表结构的修改

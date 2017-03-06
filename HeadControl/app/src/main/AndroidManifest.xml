@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CONNECTIVITY_INTERNAL" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
@@ -37,7 +38,13 @@
         <activity
             android:name=".activity.TestActivity"
             android:label="@string/title_activity_test" />
-        <activity android:name=".fragment.CleanFragment1"></activity>
+        <activity android:name=".fragment.CleanFragment1" />
+        <activity android:name=".activity.DBTestActivity" />
+
+        <service
+            android:name=".service.SetStaticIPService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

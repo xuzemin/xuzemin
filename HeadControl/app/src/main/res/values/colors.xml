@@ -157,4 +157,7 @@
     <color name="left_text_color">#D6FBFE</color>
     <color name="right_title_background_color">#3A47A8</color>
     <color name="right_button_background_color">#3768C8</color>
+
+    <color name="title_dudutext_color">#E8E8E8</color>
+    <color name="battery_power_text_color">#FFFFFF</color>
 </resources>

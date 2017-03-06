@@ -2,4 +2,41 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--头部系统版本文字大小-->
+    <dimen name="title_text_size">15px</dimen>
+
+    <!--左右两侧 点击显示隐藏-->
+    <dimen name="bar_showHide_btn_width">55px</dimen>
+    <dimen name="bar_showHide_btn_height">51px</dimen>
+    <dimen name="bar_showHide_btn_marginBottom">10dp</dimen>
+    <dimen name="bar_showHide_width">234px</dimen>
+    <dimen name="bar_showHide_height">1024px</dimen>
+
+    <!--左侧栏功能按钮-->
+    <dimen name="bar_fgTitle_left_btn_width">236px</dimen>
+    <dimen name="bar_fgTitle_left_btn_heigth">157px</dimen>
+
+    <!--右侧栏内容-->
+    <dimen name="bar_right_text_size">27px</dimen>
+    <dimen name="bar_right_text_marginTop01">25px</dimen>
+    <dimen name="bar_right_text_marginTop02">35px</dimen>
+
+    <dimen name="bar_right_btn_close_width">162px</dimen>
+    <dimen name="bar_right_btn_close_height">64px</dimen>
+
+    <!--顶部与底部线条-->
+    <dimen name="lin_height">29px</dimen>
+    <dimen name="lin_width">1920px</dimen>
+
+    <!--电源XML-->
+    <dimen name="battery_power_bg_marginTop">25px</dimen>
+    <dimen name="battery_power_bg_height">529px</dimen>
+    <dimen name="battery_power_bg_width">1404px</dimen>
+    <dimen name="battery_power_height">327px</dimen>
+    <dimen name="battery_power_width">922px</dimen>
+    <dimen name="battery_power_text_size">111px</dimen>
+
+
+
 </resources>

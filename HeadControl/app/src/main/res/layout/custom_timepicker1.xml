@@ -4,12 +4,12 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     style="@style/CustomDialogStyle"
-    android:background="@mipmap/tanchuchaung3"
+    android:background="@mipmap/tianjiakuang"
     >
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@mipmap/tanchuchaung3"
+        android:background="@mipmap/tianjiakuang"
         android:id="@+id/imageView" />
 
     <LinearLayout
@@ -103,12 +103,12 @@
                     android:id="@+id/iv_ImageView_queding_no"
                     android:layout_width="194dp"
                     android:layout_height="24dp"
-                    android:src="@mipmap/queding_no"/>
+                    android:src="@mipmap/tk_queding_no"/>
                 <ImageView
                     android:id="@+id/iv_ImageView_queding_per"
                     android:layout_width="194dp"
                     android:layout_height="24dp"
-                    android:src="@mipmap/queding_per"
+                    android:src="@mipmap/tk_queding_pre"
                     android:visibility="gone"/>
             </FrameLayout>
             <FrameLayout
@@ -119,12 +119,12 @@
                     android:id="@+id/iv_ImageView_quxiao_no"
                     android:layout_width="194dp"
                     android:layout_height="24dp"
-                    android:src="@mipmap/quxiao_no"/>
+                    android:src="@mipmap/tk_quxiao_no"/>
                 <ImageView
                     android:id="@+id/iv_ImageView_quxiao_per"
                     android:layout_width="194dp"
                     android:layout_height="24dp"
-                    android:src="@mipmap/quxiao_per"
+                    android:src="@mipmap/tk_quxiao_pre"
                     android:visibility="gone"/>
             </FrameLayout>
         </LinearLayout>

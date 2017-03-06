@@ -63,7 +63,7 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
                     android:layout_marginTop="24dp"
-                    android:background="@mipmap/bg02"
+                    android:background="@mipmap/bg"
                     android:gravity="center">
 
                     <LinearLayout
@@ -77,7 +77,7 @@
                             android:id="@+id/iv_Battery_Power"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/power10" />
+                            android:src="@mipmap/power9" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
                     android:layout_marginTop="24dp"
-                    android:background="@mipmap/bg03"
+                    android:background="@mipmap/bg"
                     android:orientation="vertical">
 
                     <RelativeLayout
@@ -170,7 +170,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:scaleType="fitXY"
-                                android:src="@mipmap/guan"
+                                android:src="@mipmap/guang"
                                 android:visibility="gone" />
                         </FrameLayout>
                     </RelativeLayout>
@@ -241,12 +241,12 @@
                     >
 
                     <RelativeLayout
-                        android:layout_width="1386dp"
+                        android:layout_width="2762dp"
                         android:layout_height="523dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="24dp"
-                        android:background="@mipmap/bg02"
+                        android:background="@mipmap/bg"
                         android:gravity="center|center_horizontal">
 
                         <ImageView
@@ -284,7 +284,7 @@
                     android:layout_width="53dp"
                     android:layout_height="49dp"
                     android:layout_alignParentBottom="true"
-                    android:background="@mipmap/you_yc_no" />
+                    android:background="@mipmap/you_yc" />
                 <LinearLayout
                     android:id="@+id/ll_right_bar"
                     android:layout_width="234dp"

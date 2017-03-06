@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.android.jdrd.headcontrol.util.Constant;
+
 /**
  * Created by Administrator on 2017/2/27 0027.
  */
@@ -90,7 +92,7 @@ public class HeadControlDao {
                 int id = cursor.getInt(0);
                 String name_str = cursor.getString(1);
                 String phone = cursor.getString(2);
-                System.out.println("_id:"+id+";name:"+name_str+";phone:"+phone);
+                Constant.debugLog("_id:"+id+";name:"+name_str+";phone:"+phone);
 
             }
             cursor.close();//关闭结果集

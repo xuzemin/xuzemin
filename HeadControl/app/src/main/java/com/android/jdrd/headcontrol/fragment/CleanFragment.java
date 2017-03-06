@@ -15,8 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +40,7 @@ import com.android.jdrd.headcontrol.R;
  * Created by Administrator on 2016/10/25 0025.
  */
 
-public class CleanFragment extends BaseFragment {
+public class CleanFragment extends BaseFragment implements Animation.AnimationListener{
     Button mButton_Save;
     TextView mTextView_Start_Hour1;
     TextView mTextView_Start_Minute1;
@@ -75,6 +79,12 @@ public class CleanFragment extends BaseFragment {
     int type_modified=0;
 
 
+    private RelativeLayout rr_right_bar_clean;
+    boolean flag_rr_bar;
+    private RelativeLayout rr_right_bar_clean1;
+    private ImageView img_ViewBtnRightClean;
+
+
     public CleanFragment(){
         super();
     }
@@ -106,6 +116,10 @@ public class CleanFragment extends BaseFragment {
         mImageView_biaozhun_per= (ImageView) findViewById(R.id.iv_Clean_biaozhun_per);
         mImageView_liangguang_no= (ImageView) findViewById(R.id.iv_Clean_liangguang_no);
         mImageView_liangguang_per= (ImageView) findViewById(R.id.iv_Clean_liangguang_per);
+
+        rr_right_bar_clean = (RelativeLayout) findViewById(R.id.rr_right_bar_clean);
+        rr_right_bar_clean1= (RelativeLayout) findViewById(R.id.rr_right_bar_clean1);
+        img_ViewBtnRightClean = (ImageView) findViewById(R.id.img_ViewBtnRightClean);
 
     }
 
@@ -188,6 +202,12 @@ public class CleanFragment extends BaseFragment {
         mImageView_biaozhun_per.setOnClickListener(mMyClickListener);
         mImageView_liangguang_no.setOnClickListener(mMyClickListener);
         mImageView_liangguang_per.setOnClickListener(mMyClickListener);
+        rr_right_bar_clean.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnimationRight();
+            }
+        });
     }
 
     private Handler handler=new Handler(){
@@ -241,6 +261,30 @@ public class CleanFragment extends BaseFragment {
         }
     };
 
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+rr_right_bar_clean.clearAnimation();
+        if (flag_rr_bar){
+            flag_rr_bar = false;
+            img_ViewBtnRightClean.setImageResource(R.mipmap.you_yc);
+        }else {
+            flag_rr_bar = true;
+            rr_right_bar_clean1.setVisibility(View.GONE);
+            img_ViewBtnRightClean.setImageResource(R.mipmap.you_xs);
+        }
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
+
     public  class MyClickListener implements View.OnClickListener{
 
         @Override
@@ -263,7 +307,7 @@ public class CleanFragment extends BaseFragment {
                     mImageView_Switch_Close.setVisibility(View.GONE);
                     break;
                 case R.id.iv_Clean_bianji1:
-                    mImageView_bianji1.setImageResource(R.mipmap.bianji_per);
+                    mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
 //                    showDialogxinjia();
                     SelfDialog selfDialog=new SelfDialog(getActivity(),handler,start_hour,start_minute,end_hour,end_minute);
                     selfDialog.show();
@@ -311,7 +355,6 @@ public class CleanFragment extends BaseFragment {
                     mImageView_liangguang_no.setVisibility(View.VISIBLE);
                     mImageView_liangguang_per.setVisibility(View.GONE);
                     break;
-
 
             }
         }
@@ -484,6 +527,33 @@ public class CleanFragment extends BaseFragment {
             super.onChange(selfChange);
 
 
+        }
+    }
+
+
+    private void startAnimationRight(){
+        if (flag_rr_bar){
+            rr_right_bar_clean1.setVisibility(View.VISIBLE);
+            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,rr_right_bar_clean1.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0F
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            translateAnimation.setAnimationListener(CleanFragment.this);
+            rr_right_bar_clean.startAnimation(translateAnimation);
+
+        }else {
+            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,rr_right_bar_clean1.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(false);
+            translateAnimation.setAnimationListener(CleanFragment.this);
+            rr_right_bar_clean.startAnimation(translateAnimation);
         }
     }
 

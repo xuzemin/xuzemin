@@ -139,20 +139,33 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
                     mImageView_Battery_Power.setImageResource(R.mipmap.power0);
                     break;
                 case 1:
-                    mImageView_Battery_Power.setImageResource(R.mipmap.power2);
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power1);
                     break;
                 case 2:
-                    mImageView_Battery_Power.setImageResource(R.mipmap.power4);
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power2);
                     break;
                 case 3:
-                    mImageView_Battery_Power.setImageResource(R.mipmap.power6);
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power3);
                     break;
                 case 4:
-                    mImageView_Battery_Power.setImageResource(R.mipmap.power8);
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power4);
                     break;
                 case 5:
-                    mImageView_Battery_Power.setImageResource(R.mipmap.power10);
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power5);
                     break;
+                case 6:
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power6);
+                    break;
+                case 7:
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power7);
+                    break;
+                case 8:
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power8);
+                    break;
+                case 9:
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power9);
+                    break;
+
             }
 
             mSeekBar.setMax(100);

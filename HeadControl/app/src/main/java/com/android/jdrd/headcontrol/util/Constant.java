@@ -16,10 +16,24 @@ import java.util.Map;
 
 public class Constant {
 
+    //wifi静态ip参数
+    public static String dns1 = "192.168.1.1";
+    public static String dns2 = "192.168.0.1";
+    public static String gateway = "";
+    public static int prefix = 24;
+    public static String IP = "";
+    public static String IPLast = "188";
+    public static String isConnectSocket = "";
+    public static String wifiname = "HUAWEI-GDRD";
+    public static String password = "88391477";
+    //测试用WI-FI
+//    public static String wifiname = "GDRD-3F";
+//    public static String password = "88391477";
+
     public static int ServerPort = 12345;
     public static String ip_bigScreen = "/192.168.1.102";
     public static String ip_ros = "/192.168.1.100";
-
+    public static float Scale = 1 ;
     public static boolean isDebug = true;
     public static String TAG = "HeadControl";
     public static String filePath = "data/data/com.android.jdrd.headcontrol/cache/map.xml";

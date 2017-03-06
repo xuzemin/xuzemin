@@ -20,34 +20,26 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class TestActivity extends Activity {
-
     private TextView textView;
     private EditText editText;
-
     private MyReceiver receiver;
     IntentFilter filter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_socket);
-
-        editText = (EditText)this.findViewById(R.id.editTextSocket);
-        textView = (TextView)this.findViewById(R.id.textViewSocket);
-
+        //启动ServerSocketUtil服务
         Intent intent = new Intent(this, ServerSocketUtil.class);
         startService(intent);
+        //注册数据接收广播用来接收socket发来的数据
+        registerDateReceiver();
+        initView();
+    }
 
-        //new WifiStaticIpUtil(this).getNetworkInformation();
-
-
-        receiver = new MyReceiver();
-        filter=new IntentFilter();
-        filter.addAction("com.jdrd.fragment.Map");
-        registerReceiver(receiver, filter);
-
-
+    private void initView() {
+        editText = (EditText)this.findViewById(R.id.editTextSocket);
+        textView = (TextView)this.findViewById(R.id.textViewSocket);
         findViewById(R.id.startSearchPeople).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +53,6 @@ public class TestActivity extends Activity {
         findViewById(R.id.buttonSocket).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try {
                     Gson gson = new Gson();
                     Map map  = new LinkedHashMap();
@@ -74,27 +65,22 @@ public class TestActivity extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                /*if(!editText.getText().toString().trim().equals("")){
-                    try {
-                        ServerSocketUtil.sendDateToClient(editText.getText().toString());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }*/
-
             }
         });
+    }
 
+    private void registerDateReceiver() {
+        receiver = new MyReceiver();
+        filter=new IntentFilter();
+        filter.addAction("com.jdrd.fragment.Map");
+        registerReceiver(receiver, filter);
     }
 
     public class MyReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             final String msg = intent.getStringExtra("msg");
             Constant.debugLog("收到了距离角度： " + msg);
-
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
