@@ -61,8 +61,9 @@ public class ChangeMapAdapter extends BaseAdapter {
         if (convertView == null) {
             layoutTag=new LayoutTag();
             convertView = LayoutInflater.from(context).inflate(R.layout.change_plan_adapter, null);
-            layoutTag.number_xs = (TextView) convertView.findViewById(R.id.change_number_xs);
-            layoutTag.number_ys = (TextView) convertView.findViewById(R.id.change_number_ys);
+            layoutTag.number = (TextView) convertView.findViewById(R.id.number);
+            layoutTag.change_number_xs = (TextView) convertView.findViewById(R.id.change_number_xs);
+            layoutTag.change_number_ys = (TextView) convertView.findViewById(R.id.change_number_ys);
             layoutTag.x_add = (ImageButton) convertView.findViewById(R.id.point_x_add);
             layoutTag.y_add = (ImageButton) convertView.findViewById(R.id.point_y_add);
             layoutTag.x_subtract = (ImageButton) convertView.findViewById(R.id.point_x_subtract);
@@ -72,9 +73,9 @@ public class ChangeMapAdapter extends BaseAdapter {
         } else {
             layoutTag = (LayoutTag) convertView.getTag();
         }
-
-        layoutTag.number_xs.setText(arraylist.get(key).get("point_xs").get(position) / 90 +"");
-        layoutTag.number_ys.setText((10 - (arraylist.get(key).get("point_ys").get(position) / 90))+"");
+        layoutTag.number.setText("第"+(position+1)+"个目标");
+        layoutTag.change_number_xs.setText(arraylist.get(key).get("point_xs").get(position) / 90 +"");
+        layoutTag.change_number_ys.setText((10 - (arraylist.get(key).get("point_ys").get(position) / 90))+"");
         layoutTag.x_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,8 +154,9 @@ public class ChangeMapAdapter extends BaseAdapter {
         public ImageButton y_add;
         public ImageButton x_subtract;
         public ImageButton y_subtract;
-        public TextView number_xs;
-        public TextView number_ys;
+        public TextView change_number_xs;
+        public TextView number;
+        public TextView change_number_ys;
     }
     public void update(int index,ListView listview){
         Constant.debugLog(index +"int");
@@ -163,9 +165,9 @@ public class ChangeMapAdapter extends BaseAdapter {
         //得到指定位置的视图，对listview的缓存机制不清楚的可以去了解下
         View view = listview.getChildAt(index - visiblePosition);
         LayoutTag holder = (LayoutTag) view.getTag();
-        holder.number_xs = (TextView) view.findViewById(R.id.change_number_xs);
-        holder.number_ys = (TextView) view.findViewById(R.id.change_number_ys);
-        holder.number_xs.setText(arraylist.get(key).get("point_xs").get(index - visiblePosition) / 90 +"");
-        holder.number_ys.setText((10 - (arraylist.get(key).get("point_ys").get(index - visiblePosition) / 90))+"");
+        holder.change_number_xs = (TextView) view.findViewById(R.id.change_number_xs);
+        holder.change_number_ys = (TextView) view.findViewById(R.id.change_number_ys);
+        holder.change_number_xs.setText(arraylist.get(key).get("point_xs").get(index - visiblePosition) / 90 +"");
+        holder.change_number_ys.setText((10 - (arraylist.get(key).get("point_ys").get(index - visiblePosition) / 90))+"");
     }
 }

@@ -30,7 +30,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_ys=new Vector<Float>();
     public Paint p;
     public static int Scale = 90;
-    public float scalenumber = 1,scalepoint = 5;
+    public float scalenumber = 1,scalepoint = 15;
     public float scaleTextSize = 3 ;
     public float scale = 1,translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
@@ -137,7 +137,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setAntiAlias(true); //反锯齿
         p.setColor(getResources().getColor(R.color.path));
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth((float) 5.0);
+        p.setStrokeWidth((float) 2.0);
+        p.setTextSize(25);
+        p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         for(int i=0;i<point_xs.size();i++) {
             if(Isplan){
                 if(i < current_plan_number){
@@ -146,7 +148,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     p.setColor(getResources().getColor(R.color.path));
                 }
                 canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
-                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+                canvas.drawText((i+1)+"",point_xs.elementAt(i) - 7, point_ys.elementAt(i) +7,p);
+//                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
                     drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
                 }
@@ -267,8 +270,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void drawAL(Canvas canvas,double sx, double sy, double ex, double ey,Paint p)
     {
-        double H = 20; // 箭头高度
-        double L = 5; // 底边的一半
+        double H = 10; // 箭头高度
+        double L = 1; // 底边的一半
         int x3 = 0;
         int y3 = 0;
         int x4 = 0;

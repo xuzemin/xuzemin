@@ -34,6 +34,7 @@ import com.android.jdrd.headcontrol.dialog.MyDialog;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.android.jdrd.headcontrol.util.Constant;
 import com.android.jdrd.headcontrol.view.MyView;
+import com.jiadu.mapdemo.util.SerialPortUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,6 +81,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private MyReceiver receiver = new MyReceiver();
     private IntentFilter filter =new IntentFilter();
     private Map map;
+    private int IsX = 1;
+    private Double sendDegree,sendDistance,camera_degree,camera_distance;
     private static MyView surfaceview = null;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
     private Spinner planchooce,serchtime,scope,angle,gametime,spinner_Scale,spinner_set_Scale;
@@ -149,7 +152,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         }
                         Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                     }
-                    sendNativePoint();
+//                    sendNativePoint();
                     findViewById(R.id.button_execut).setClickable(true);
                     findViewById(R.id.button_plan_stop).setClickable(false);
                     break;
@@ -177,7 +180,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                    set_surface();
 //                    surfaceview.point_xs = xs_tmp;
 //                    surfaceview.point_ys = ys_tmp;
-                    Constant.debugLog("msg.obj"+msg.obj);
                     ChangeMapAdapter.update((Integer) msg.obj,plan_change_list);
 //                    ChangeMapAdapter = new ChangeMapAdapter(arrayPlanLists,strings.get((int)plannumber),context,handler);
 //                    plan_change_list.setAdapter(ChangeMapAdapter);
@@ -198,11 +200,15 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         //给当前的fragment绘制UI布局，可以使用线程更新UI
         mView=inflater.inflate(R.layout.fragment_map,container,false);
         return super.onCreateView(inflater, container, savedInstanceState);
-
     }
 
     @Override
     public void initView() {
+//        try {
+//            Constant.spu.openSerialPort();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         surfaceview=(MyView)findViewById(R.id.surfaceview);
         surfaceview.myview_height = 900;
         surfaceview.myview_width = 1800;
@@ -327,7 +333,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     surfaceview.Isplan = true;
                                 }
                             }else{
-                                sendNativePoint(a,b,0);
+//                                sendNativePoint(a,b,0);
+                                //发送坐标
                                 surfaceview.point_xs.removeAllElements();
                                 surfaceview.point_ys.removeAllElements();
                                 surfaceview.point_xs.add(a);
@@ -782,7 +789,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     a = a * surfaceview.Scale ;
                     b = b * surfaceview.Scale ;
                     Constant.debugLog("a" +a + "b"+b);
-                    sendNativePoint(a,b,0);
+//                    sendNativePoint(a,b,0);
+//                    发送坐标
                     surfaceview.point_xs.removeAllElements();
                     surfaceview.point_ys.removeAllElements();
                     surfaceview.point_xs.add(a);
@@ -994,14 +1002,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         linear_roam.setVisibility(View.GONE);
     }
 
-    //底层获取
-    private void getUpPoint(double native_x,double native_y){
-        if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
-            surfaceview.bitmap_y = (native_x - 10) * -90 / Constant.Scale -surfaceview.bitmap.getHeight()/2 ;
-            surfaceview.bitmap_x = (native_y * -90 / Constant.Scale) -surfaceview.bitmap.getHeight()/2;
-            Constant.debugLog("surfaceview.bitmap_y" +surfaceview.bitmap_y +"surfaceview.bitmap_x"+surfaceview.bitmap_x);
-        }
-    }
+//    //底层获取
+//    private void getUpPoint(double native_x,double native_y){
+//        if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
+//            surfaceview.bitmap_y = (native_x - 10) * -90 / Constant.Scale -surfaceview.bitmap.getHeight()/2 ;
+//            surfaceview.bitmap_x = (native_y * -90 / Constant.Scale) -surfaceview.bitmap.getHeight()/2;
+//            Constant.debugLog("surfaceview.bitmap_y" +surfaceview.bitmap_y +"surfaceview.bitmap_x"+surfaceview.bitmap_x);
+//        }
+//    }
 
     //设置方向
     private void getAngle(int angle){
@@ -1009,52 +1017,64 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
 
     //发往底层
-    private void sendNativePoint(float up_x,float up_y ,int angle){
-        if(up_x >= 0 && up_x <=1750 && up_y >= 0 && up_y <= 850){
-//            up_x = (up_x -20) / -100;
-//            up_y = (float) (((up_y-20) / 100) - 7.6);
-            map  = new LinkedHashMap();
-            double a = ((up_y ) / - 90  + 10) * Constant.Scale;
-            map.put("point_x",a);
-            Constant.debugLog( "x"+a);
-            a =  ( up_x / - 90  ) * Constant.Scale ;
-            map.put("point_y",a);
-            Constant.debugLog( "y"+a);
-            map.put("angle",angle);
-            Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
-        }
-    }
-    private void sendNativePointtrue(float up_x,float up_y ,int angle){
-        if(up_x >= 0 && up_x <=1750 && up_y >= 0 && up_y <= 850){
-//            up_x = (up_x -20) / -100;
-//            up_y = (float) (((up_y-20) / 100) - 7.6);
-            map  = new LinkedHashMap();
-            double a = ((up_y ) / - 90  + 10) * Constant.Scale;
-            map.put("point_x",a);
-            Constant.debugLog( "x"+a);
-            a =  ( up_x / - 90  ) * Constant.Scale ;
-            map.put("point_y",a);
-            Constant.debugLog( "y"+a);
-            map.put("angle",angle);
-            Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
-        }
-    }
-    //发往底层
-    private void sendNativePoint(){
-//        if(up_x >= 20 && up_x <=620 && up_y >= 20 && up_y <= 1020){
-//            up_x = (up_x -20) / -100;
-//            up_y = (float) (((up_y-20) / 100) - 7.6);
-        map  = new LinkedHashMap();
-        double a = ((return_y ) / - 90  + 10) * Constant.Scale;
-        map.put("point_x",a);
-        Constant.debugLog( "x"+a);
-        a =  ( return_x / - 90  ) * Constant.Scale ;
-        map.put("point_y",a);
-        Constant.debugLog( "y"+a);
-        map.put("angle",90);
-        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+//    private void sendNativePoint(float up_x,float up_y ,int angle){
+//        if(up_x >= 0 && up_x <=1750 && up_y >= 0 && up_y <= 850){
+////            up_x = (up_x -20) / -100;
+////            up_y = (float) (((up_y-20) / 100) - 7.6);
+//            map  = new LinkedHashMap();
+//            double a = ((up_y ) / - 90  + 10) * Constant.Scale;
+//            map.put("point_x",a);
+//            Constant.debugLog( "x"+a);
+//            a =  ( up_x / - 90  ) * Constant.Scale ;
+//            map.put("point_y",a);
+//            Constant.debugLog( "y"+a);
+//            map.put("angle",angle);
+//            Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
 //        }
+//    }
+//    private void sendNativePointtrue(float up_x,float up_y ,int angle){
+//        if(up_x >= 0 && up_x <=1750 && up_y >= 0 && up_y <= 850){
+////            up_x = (up_x -20) / -100;
+////            up_y = (float) (((up_y-20) / 100) - 7.6);
+//            map  = new LinkedHashMap();
+//            double a = ((up_y ) / - 90  + 10) * Constant.Scale;
+//            map.put("point_x",a);
+//            Constant.debugLog( "x"+a);
+//            a =  ( up_x / - 90  ) * Constant.Scale ;
+//            map.put("point_y",a);
+//            Constant.debugLog( "y"+a);
+//            map.put("angle",angle);
+//            Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+//        }
+//    }
+    public void send_data_distance(double distance){
+        sendDistance = distance;
+        map  = new LinkedHashMap();
+        map.put("distance",distance);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Walk,map);
     }
+    public void send_data_degree(double degree){
+        sendDegree = degree;
+        map  = new LinkedHashMap();
+        map.put("degree",degree);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Turn,map);
+    }
+//    //发往底层
+//    private void sendNativePoint(){
+////        if(up_x >= 20 && up_x <=620 && up_y >= 20 && up_y <= 1020){
+////            up_x = (up_x -20) / -100;
+////            up_y = (float) (((up_y-20) / 100) - 7.6);
+//        map  = new LinkedHashMap();
+//        double a = ((return_y ) / - 90  + 10) * Constant.Scale;
+//        map.put("point_x",a);
+//        Constant.debugLog( "x"+a);
+//        a =  ( return_x / - 90  ) * Constant.Scale ;
+//        map.put("point_y",a);
+//        Constant.debugLog( "y"+a);
+//        map.put("angle",90);
+//        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+////        }
+//    }
 
     @Override
     public void onAnimationStart(Animation animation) {
@@ -1098,61 +1118,65 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             String data = object.getString(Constant.Data);
             if(object !=null){
                 if(type.equals(Constant.State)){
-                    if(funtion.equals(Constant.Navigation)){
-                        JSONObject jsonObject = new JSONObject(data);
-                        String flag = jsonObject.getString(Constant.Result);
-                        getUpPoint(jsonObject.getDouble("x"),jsonObject.getDouble("y"));
-                        getAngle(jsonObject.getInt("angle"));
-                        if(flag.equals("success")){
-                            Toast.makeText(context,"success",Toast.LENGTH_SHORT).show();
-                            if(tasknumber == 0  ){
-                                //到达新地点
-                                tasknumber = 1;
-                                handler.sendEmptyMessage(4);
-                            }else if(tasknumber ==4){
-                                //返回新地点
-                                tasknumber = 5;
-                                handler.sendEmptyMessage(4);
-                            }else if(tasknumber == 20){
-                                tasknumber = -1;
-                                handler.sendEmptyMessage(4);
-                            }
-                        }else if(flag.equals("fail")){
-                            Toast.makeText(context,"fail",Toast.LENGTH_SHORT).show();
-                            if(tasknumber == 0  ) {
-                                //到达新地点
-                                tasknumber = 1;
-                                handler.sendEmptyMessage(4);
-                            }else if(tasknumber == 4){
-                                //返回新地点
-                                tasknumber = 5;
-                                handler.sendEmptyMessage(4);
-                            }
-                        }else if(flag.equals("navigating")){
-
-                        }
-                    }else if(funtion.equals(Constant.Camera)){
+//                    if(funtion.equals(Constant.Navigation)){
+//                        JSONObject jsonObject = new JSONObject(data);
+//                        String flag = jsonObject.getString(Constant.Result);
+////                        getUpPoint(jsonObject.getDouble("x"),jsonObject.getDouble("y"));
+////                        getAngle(jsonObject.getInt("angle"));
+//                        if(flag.equals("success")){
+//                            Toast.makeText(context,"success",Toast.LENGTH_SHORT).show();
+//                            if(tasknumber == 0  ){
+//                                //到达新地点
+//                                tasknumber = 1;
+//                                handler.sendEmptyMessage(4);
+//                            }else if(tasknumber ==4){
+//                                //返回新地点
+//                                tasknumber = 5;
+//                                handler.sendEmptyMessage(4);
+//                            }else if(tasknumber == 20){
+//                                tasknumber = -1;
+//                                handler.sendEmptyMessage(4);
+//                            }
+//                        }else if(flag.equals("fail")){
+//                            Toast.makeText(context,"fail",Toast.LENGTH_SHORT).show();
+//                            if(tasknumber == 0  ) {
+//                                //到达新地点
+//                                tasknumber = 1;
+//                                handler.sendEmptyMessage(4);
+//                            }else if(tasknumber == 4){
+//                                //返回新地点
+//                                tasknumber = 5;
+//                                handler.sendEmptyMessage(4);
+//                            }
+//                        }else if(flag.equals("navigating")){
+//
+//                        }
+//                    }
+//                    else
+                    if(funtion.equals(Constant.Camera)){
                         JSONObject jsonObject = new JSONObject(data);
                         String str =  jsonObject.getString("result");
                         if(str.equals("body")){
-                            Toast.makeText(context,"body",Toast.LENGTH_SHORT).show();
                             if(task!=null){
                                 task.cancel();
                             }
                             IsFind = true;
                             try {
-                                if(tasknumber == 1){
+                                if(tasknumber == 4){
                                     //摄像头搜索到人
-                                    tasknumber = 2;
-                                    ServerSocketUtil.sendDateToClient(string);
+                                    tasknumber = 5;
+                                    handler.sendEmptyMessage(4);
+//                                    ServerSocketUtil.sendDateToClient(string);
+                                    camera_degree = jsonObject.getDouble("degree");
+                                    camera_distance = jsonObject.getDouble("distance");
                                 }
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }else if(str.equals("nobody")){
                         }else if(str.equals("away")){
-                            if(tasknumber == 3 && IsAway){
-                                tasknumber = 4 ;
+                            if(tasknumber == 7 && IsAway){
+                                tasknumber = 8 ;
                                 Toast.makeText(context,"away",Toast.LENGTH_SHORT).show();
                                 if(task!=null ){
                                     task.cancel();
@@ -1162,13 +1186,109 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                         }
                     }else if(funtion.equals(Constant.Peoplesearch)){
-                        if(data.equals("foundpeople")){
-                            if(tasknumber == 2){
-                                //机器人找到人
-                                tasknumber = 3;
-                                handler.sendEmptyMessage(4);
+//                        if(data.equals("foundpeople")){
+//                            if(tasknumber == 2){
+//                                //机器人找到人
+//                                tasknumber = 3;
+//                                handler.sendEmptyMessage(4);
+//                            }
+//                        }
+                    }else if(funtion.equals(Constant.Turn)){
+                        JSONObject jsonObject = new JSONObject(data);
+                        String flag = jsonObject.getString(Constant.Result);
+                        double degree = jsonObject.getDouble(Constant.Degree);
+                        if(flag.equals("success")){
+                            // 返回成功走的角度
+                            if(degree == sendDegree){
+                                if(tasknumber ==0){
+                                    tasknumber = 1;
+                                    handler.sendEmptyMessage(4);
+                                }else if (tasknumber == 2){
+                                    tasknumber = 3;
+                                    handler.sendEmptyMessage(4);
+                                }else if (tasknumber == 5){
+                                    tasknumber = 6;
+                                    handler.sendEmptyMessage(4);
+                                }
+                            }else{
+                                send_data_degree(sendDegree - degree);
+                            }
+                        }else{
+                            // 返回失败走的角度
+                            if(degree == sendDegree){
+                                if(tasknumber ==0){
+                                    tasknumber = 1;
+                                    handler.sendEmptyMessage(4);
+                                }else if (tasknumber == 2){
+                                    tasknumber = 3;
+                                    handler.sendEmptyMessage(4);
+                                }else if (tasknumber == 5){
+                                    tasknumber = 6;
+                                    handler.sendEmptyMessage(4);
+                                }
+                            }else{
+                                send_data_degree(sendDegree - degree);
                             }
                         }
+
+                    }else if(funtion.equals(Constant.Walk)){
+                        JSONObject jsonObject = new JSONObject(data);
+                        String flag = jsonObject.getString(Constant.Result);
+                        double distance = jsonObject.getDouble(Constant.Distance);
+                        if(flag.equals("success")){
+                            // 返回成功走的距离
+                            if(distance == sendDistance){
+                                if(tasknumber ==1){
+                                    tasknumber = 2;
+                                    handler.sendEmptyMessage(4);
+                                }else if(tasknumber ==3){
+                                    tasknumber = 4;
+                                    handler.sendEmptyMessage(4);
+                                }else if(tasknumber ==6){
+                                    tasknumber = 7;
+                                    handler.sendEmptyMessage(4);
+                                }
+                                if(IsX==0){
+                                    Constant.Current_x += sendDistance;
+                                }else if(IsX==1){
+                                    Constant.Current_y += sendDistance;
+                                }
+                            }else{
+                                if(IsX==0){
+                                    Constant.Current_x += distance;
+                                }else if(IsX ==1){
+                                    Constant.Current_y += distance;
+                                }
+                                send_data_distance(sendDistance - distance);
+                            }
+                        }else{
+                            // 返回失败走的距离
+                            if(distance == sendDistance){
+                                if(tasknumber ==1){
+                                    tasknumber = 2;
+                                    handler.sendEmptyMessage(4);
+                                }else if(tasknumber ==3){
+                                    tasknumber = 4;
+                                    handler.sendEmptyMessage(4);
+                                }else if(tasknumber ==6){
+                                    tasknumber = 7;
+                                    handler.sendEmptyMessage(4);
+                                }
+                                if(IsX ==0){
+                                    Constant.Current_x += sendDistance;
+                                }else if(IsX ==1){
+                                    Constant.Current_y += sendDistance;
+                                }
+                            }else{
+                                if(IsX ==0){
+                                    Constant.Current_x += distance;
+                                }else if(IsX ==1){
+                                    Constant.Current_y += distance;
+                                }
+                                send_data_distance(sendDistance - distance);
+                            }
+                        }
+
                     }
                 }
             }
@@ -1400,12 +1520,35 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 int i = 0;
                 while(i < xs_tmp.size()){
                     Constant.debugLog("thread = " + i);
-                    sendNativePointtrue(xs_tmp.get(i),ys_tmp.get(i),0);
                     synchronized (thread){
                         try {
+                            //转向需要增加调整
+                            if(xs_tmp.get(i)-Constant.Current_x > 0){
+                                send_data_degree(180 - Constant.getConstant().getDegree());
+                            }else{
+                                send_data_degree(Constant.getConstant().getDegree() -180);
+                            }
+//                    sendNativePointtrue(xs_tmp.get(i),ys_tmp.get(i),0);
                             tasknumber = 0;
                             //前往地图标注地点
                             thread.wait();
+                            //1111
+                            IsX = 0;
+                            send_data_distance(xs_tmp.get(i)-Constant.Current_x);
+                            thread.wait();
+                            ///222
+                            //转向需要增加调整
+                            if(ys_tmp.get(i)-Constant.Current_y > 0){
+                                send_data_degree(90 - Constant.getConstant().getDegree());
+                            }else{
+                                send_data_degree(Constant.getConstant().getDegree() -90);
+                            }
+                            thread.wait();
+                            ///333
+                            IsX = 1;
+                            send_data_distance(ys_tmp.get(i)-Constant.Current_y);
+                            thread.wait();
+                            ///4444
 
                             surfaceview.current_plan_number = i+1 ;
                             //到达对应地点notify
@@ -1423,14 +1566,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     timer.schedule(task, 3 * 40 * 1000);
                                 }
                                 IsFind = false;
-                                //111111111
                                 Constant.getConstant().sendCamera(arrayscope_tmp.get(i),context);
-                                //222222222
                                 Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"");
                                 //互动中 找人
                                 thread.wait();
-                                //如果有找到人则到达指定位置
+                                //5555
+
                                 if(IsFind){
+
+                                    send_data_degree(camera_degree);
+                                    thread.wait();
+                                    //666
+
+                                    send_data_distance(camera_distance);
+                                    thread.wait();
+                                    ////7777
                                     IsFind = false;
                                     Constant.debugLog("互动时间 = "+i);
                                     resetTimer2();
@@ -1445,13 +1595,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                         timer.schedule(task, (long) (a * 60 * 1000));
                                         Constant.debugLog("tasknumber = " + a);
                                     }
-                                    //333333
                                     thread.wait();
+                                    //888
+                                    //返回原点
+                                    IsX = 2;
+                                    send_data_distance(camera_distance);
+                                    thread.wait();
+                                    //999
                                 }
-                                //返回原点
-                                sendNativePointtrue(xs_tmp.get(i),ys_tmp.get(i),0);
-                                ////4444444
-                                thread.wait();
                             }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -1462,7 +1613,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 }
                 findViewById(R.id.button_execut).setClickable(true);
                 findViewById(R.id.button_plan_stop).setClickable(false);
-                sendNativePoint();
+//                sendNativePoint();
                 tasknumber = -1;
                 thread = new Thread();
             }
@@ -1485,7 +1636,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     while(y  < 80 || y >450){
                         y = random.nextInt(450);
                     }
-                    sendNativePointtrue(x,y,0);
+//                    sendNativePointtrue(x,y,0);
                     tasknumber = 20;
                     synchronized (thread) {
                         try {
@@ -1510,7 +1661,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             public void run () {
                 Constant.debugLog("task");
                 //跳过找人，互动。准备返回远点
-                tasknumber = 4;
+                tasknumber = 9;
                 Constant.getConstant().sendCamera(Float.valueOf(3),context);
                 Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                 handler.sendEmptyMessage(4);
@@ -1525,11 +1676,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         timer = new Timer();
         task = new TimerTask() {
             public void run () {
-                //互动触发
-                tasknumber = 4;
+                tasknumber = 8;
                 Constant.getConstant().sendCamera(Float.valueOf(3),context);
                 handler.sendEmptyMessage(4);
-
             }
         };
     }
@@ -1571,12 +1720,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     public void set_surface(){
         Constant.debugLog("reset_surface"+Constant.Scale);
         Constant.debugLog("set_surface"+xs_tmp.size());
-//        if(Constant.Scale != 1){
         for(int i = 0 ; i < xs_tmp.size();i++){
             xs_tmp.setElementAt((xs_tmp.elementAt(i) ) / Constant.Scale ,i);
             ys_tmp.setElementAt((ys_tmp.elementAt(i) ) / Constant.Scale ,i);
         }
-//        }
     }
 
 }
