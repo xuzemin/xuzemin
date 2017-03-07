@@ -203,7 +203,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     holder.unlockCanvasAndPost(c);
                     Thread.sleep(50);
                 }catch(Exception e){
-//                    holder.unlockCanvasAndPost(c);
+                    holder.unlockCanvasAndPost(c);
                 }
             }
         }

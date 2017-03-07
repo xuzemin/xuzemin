@@ -610,10 +610,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //停止执行
             case R.id.button_plan_stop:
-//                handler.sendEmptyMessage(3);
-//                findViewById(R.id.button_execut).setClickable(true);
-//                findViewById(R.id.button_plan_stop).setClickable(false);
-                handler.sendEmptyMessage(4);
+                handler.sendEmptyMessage(3);
+                findViewById(R.id.button_execut).setClickable(true);
+                findViewById(R.id.button_plan_stop).setClickable(false);
                 break;
             //执行路线
             case R.id.button_execut:
@@ -1063,7 +1062,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         Constant.debugLog("发送角度"+ degree);
         sendDegree = degree;
         map  = new LinkedHashMap();
-        map.put("degree",degree - Constant.Current_degree);
+        map.put("degree",degree);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Turn,map);
     }
 //    //发往底层
