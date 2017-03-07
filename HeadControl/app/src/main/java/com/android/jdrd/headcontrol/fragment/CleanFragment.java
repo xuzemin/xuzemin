@@ -81,7 +81,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
 
     private RelativeLayout rr_right_bar_clean;
     boolean flag_rr_bar;
-    private RelativeLayout rr_right_bar_clean1;
+    private LinearLayout rr_right_bar_clean1;
     private ImageView img_ViewBtnRightClean;
 
 
@@ -117,9 +117,9 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         mImageView_liangguang_no= (ImageView) findViewById(R.id.iv_Clean_liangguang_no);
         mImageView_liangguang_per= (ImageView) findViewById(R.id.iv_Clean_liangguang_per);
 
-        rr_right_bar_clean = (RelativeLayout) findViewById(R.id.rr_right_bar_clean);
-        rr_right_bar_clean1= (RelativeLayout) findViewById(R.id.rr_right_bar_clean1);
-        img_ViewBtnRightClean = (ImageView) findViewById(R.id.img_ViewBtnRightClean);
+        rr_right_bar_clean = (RelativeLayout) findViewById(R.id.rr_right_bar_clean_all);
+        rr_right_bar_clean1= (LinearLayout) findViewById(R.id.rr_right_bar_clean1);
+        img_ViewBtnRightClean = (ImageView) findViewById(R.id.img_btnViewRightClean);
 
     }
 

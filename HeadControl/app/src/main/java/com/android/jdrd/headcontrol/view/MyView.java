@@ -39,7 +39,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Bitmap bitmap = null,rotbitmap = null;
     public Double bitmap_x = 0.0 , bitmap_y = 0.0;
     public Double center_x = 0.0 , center_y = 0.0;
-    public int rote = 45;
+    public float rote = 45;
     public Movie gifMovie;
     public int current_plan_number = -1;
     public boolean paint = false,Ishave = false,Isplan = true,Ispath = false;
@@ -104,6 +104,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 //                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
 //            }
 //        }
+        bitmap_x = Constant.Current_x * 90 - bitmap.getWidth()/2;
+        bitmap_y = Constant.Current_y * 90 - bitmap.getHeight()/2;
         center_x = bitmap.getWidth()/2+bitmap_x;
         center_y = bitmap.getHeight()/2+bitmap_y;
         if(Ispath){
@@ -161,17 +163,15 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
             }
         }
-
+        rote = Constant.Current_degree - 90;
         if(rotbitmap!=null){
             matrix = new Matrix();
-            matrix.postScale(1,1);
             matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
             matrix.postRotate(rote, Float.valueOf(String.valueOf(center_x)),Float.valueOf(String.valueOf(center_y)));
             canvas.drawBitmap(rotbitmap,matrix,null);
         }
         if(bitmap!=null) {
             matrix = new Matrix();
-            matrix.postScale(1,1);
             matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
             matrix.postRotate(0,Float.valueOf(String.valueOf(center_x)),Float.valueOf(String.valueOf(center_y)));
             canvas.drawBitmap(bitmap, matrix, null);
@@ -194,6 +194,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                         temp = 0;
                         paint = true;
                     }else{
+                        Constant.getConstant().getDegree();
+                        Constant.debugLog("Current_degree"+Constant.Current_degree);
                         temp ++;
                     }
                     c=holder.lockCanvas();
@@ -201,7 +203,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     holder.unlockCanvasAndPost(c);
                     Thread.sleep(50);
                 }catch(Exception e){
-                    holder.unlockCanvasAndPost(c);
+//                    holder.unlockCanvasAndPost(c);
                 }
             }
         }
@@ -241,13 +243,13 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 //            if( y % 3 == 0){
 //                p.setStrokeWidth((float) scaleTextSize);
 //                x = y / 3;
-                if(x != 0){
-                    canvas.drawText(x+"",Float.valueOf(5),Float.valueOf(y*Scale-15),p);
-                    x--;
+            if(x != 0){
+                canvas.drawText(x+"",Float.valueOf(5),Float.valueOf(y*Scale-15),p);
+                x--;
 //                }else{
 //                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
-                }
-                canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
+            }
+            canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
 //            }else{
 //                p.setStrokeWidth((float) scaleTextSize /3);
 //                canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
@@ -256,10 +258,10 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         for(int y=0;y <= (myview_width/Scale);y++) {
 //            if( y % 3 == 0){
 //                p.setStrokeWidth((float) scaleTextSize);
-                canvas.drawLine(y*Scale,0,y*Scale,myview_height,p);
+            canvas.drawLine(y*Scale,0,y*Scale,myview_height,p);
 //                x = y / 3;
 //                if(x != 0){
-                    canvas.drawText(y+"",Float.valueOf(y*Scale+5),Float.valueOf(myview_height-15),p);
+            canvas.drawText(y+"",Float.valueOf(y*Scale+5),Float.valueOf(myview_height-15),p);
 //                }
 //            }else{
 //                p.setStrokeWidth((float) scaleTextSize /3);

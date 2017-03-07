@@ -28,7 +28,6 @@ public class SerialPortUtil {
      * @return使用前需要调用openSerialPort(),否则返回null
      */
     public IMUDataBean getBean() {
-
         IMUDataBean temp = mBean;
         mBean =null;
         return temp;

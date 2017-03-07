@@ -32,9 +32,9 @@ public class Constant {
 //    public static String wifiname = "GDRD-3F";
 //    public static String password = "88391477";
 
-    public static double Current_x = 0;
-    public static double Current_y = 0;
-
+    public static double Current_x = 10;
+    public static double Current_y = 5;
+    public static float Current_degree = 90;
     public static int ServerPort = 12345;
     public static String ip_bigScreen = "/192.168.1.102";
     public static String ip_ros = "/192.168.1.100";
@@ -136,9 +136,8 @@ public class Constant {
         }
     }
 
-    public float getDegree(){
-        IMUDataBean temp = spu.getBean();
-        return temp.pose[2];
+    public void getDegree(){
+        Current_degree = spu.getBean().pose[2];
     }
 
     public void sendBundle(String type,String function,String data){
