@@ -1243,7 +1243,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         double distance = jsonObject.getDouble(Constant.Distance);
                         if(flag.equals("success")){
                             // 返回成功走的距离
-                            if(sendDistance - distance <=0.1 && distance - sendDistance <=0.1){
+//                            if(sendDistance - distance <=0.1 && distance - sendDistance <=0.1){
                                 if(tasknumber ==1){
                                     tasknumber = 2;
                                     handler.sendEmptyMessage(4);
@@ -1262,17 +1262,17 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                                }else if(IsX==1){
 //                                    Constant.Current_y += sendDistance;
 //                                }
-                            }else{
-//                                if(IsX==0){
-//                                    Constant.Current_x += distance;
-//                                }else if(IsX ==1){
-//                                    Constant.Current_y += distance;
-//                                }
-                                send_data_distance(sendDistance - distance);
-                            }
+//                            }else{
+////                                if(IsX==0){
+////                                    Constant.Current_x += distance;
+////                                }else if(IsX ==1){
+////                                    Constant.Current_y += distance;
+////                                }
+//                                send_data_distance(sendDistance - distance);
+//                            }
                         }else if(flag.equals("fail")){
                             // 返回失败走的距离
-                            if(sendDistance - distance <=0.1 && distance - sendDistance <=0.1){
+//                            if(sendDistance - distance <=0.1 && distance - sendDistance <=0.1){
                                 if(tasknumber ==1){
                                     tasknumber = 2;
                                     handler.sendEmptyMessage(4);
@@ -1296,19 +1296,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                                    Constant.Current_x += sendDistance;
 //                                    Constant.Current_y += sendDistance;
 //                                }
-                            }else{
-                                if(IsX ==0){
-                                    Constant.Current_x += distance;
-                                }else if(IsX ==1){
-                                    Constant.Current_y += distance;
-                                }
-                                send_data_distance(sendDistance - distance);
-                            }
-                        }else{
-                            Constant.Current_x += distance * Math.cos(Constant.Current_degree);
-                            Constant.Current_y += distance * Math.sin(Constant.Current_degree);
+//                            }else{
+//                                if(IsX ==0){
+//                                    Constant.Current_x += distance;
+//                                }else if(IsX ==1){
+//                                    Constant.Current_y += distance;
+//                                }
+//                                send_data_distance(sendDistance - distance);
+//                            }
+                        }else if(flag.equals("walking")){
+                            Constant.Current_x += distance * Math.cos(Constant.Current_degree * Math.PI / 180);
+                            Constant.Current_y += distance * Math.sin(Constant.Current_degree * Math.PI / 180);
                         }
-
                     }
                 }
             }
@@ -1544,7 +1543,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         try {
                             //转向需要增加调整
                             if(xs_tmp.get(i)-Constant.Current_x > 0){
-                                send_data_degree(360);
+                                send_data_degree(0);
                             }else{
                                 send_data_degree(180);
                             }
@@ -1667,7 +1666,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         }
                     }
                 }
-
             }
         });
         thread.start();
@@ -1728,7 +1726,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             translateAnimation.setAnimationListener(MapFragment.this);
             map_right_Ralative.startAnimation(translateAnimation);
         }
-
     }
     public void reset_surface(){
         Constant.debugLog("set_surface"+Constant.Scale);
@@ -1746,5 +1743,4 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             ys_tmp.setElementAt((ys_tmp.elementAt(i) ) / Constant.Scale ,i);
         }
     }
-
 }
