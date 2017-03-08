@@ -212,6 +212,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         surfaceview=(MyView)findViewById(R.id.surfaceview);
         surfaceview.myview_height = 900;
         surfaceview.myview_width = 1800;
+        Constant.Current_x = 0.0;
+        Constant.Current_y = 0.0;
     }
 
     @Override
@@ -610,9 +612,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //停止执行
             case R.id.button_plan_stop:
-                handler.sendEmptyMessage(3);
-                findViewById(R.id.button_execut).setClickable(true);
-                findViewById(R.id.button_plan_stop).setClickable(false);
+//                handler.sendEmptyMessage(3);
+                handler.sendEmptyMessage(4);
+//                findViewById(R.id.button_execut).setClickable(true);
+//                findViewById(R.id.button_plan_stop).setClickable(false);
                 break;
             //执行路线
             case R.id.button_execut:
@@ -1002,8 +1005,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
     //底层获取
     private void getUpPoint(double native_x,double native_y){
-        Constant.Current_x = -native_x/Constant.Scale;
-        Constant.Current_y = -native_y/Constant.Scale;
+        Constant.Current_x = -native_y/Constant.Scale;
+        Constant.Current_y = -native_x/Constant.Scale;
 //        if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
 //            surfaceview.bitmap_y = (native_x - 10) * -90 / Constant.Scale -surfaceview.bitmap.getHeight()/2 ;
 //            surfaceview.bitmap_x = (native_y * -90 / Constant.Scale) -surfaceview.bitmap.getHeight()/2;
@@ -1054,22 +1057,22 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         Constant.getConstant().sendBundle(Constant.Command,Constant.Walk,map);
     }
     public void send_data_degree(double degree){
-        sendDegree = degree;
+//        sendDegree = degree;
         Constant.debugLog("当前角度"+ Constant.Current_degree);
-        Constant.debugLog("需要到达角度"+ degree);
+//        Constant.debugLog("需要到达角度"+ degree);
 //        if(Constant.Current_degree >= 180 && Constant.Current_degree < 360){
 //            degree = Constant.Current_degree - degree;
 //        }else if(Constant.Current_degree >= 0 && Constant.Current_degree < 180){
-            degree = Constant.Current_degree - degree;
+//            degree = Constant.Current_degree - degree;
 //        }
 //        else if(){
 //
 //        }
-        if(degree < -180){
-            degree += 360;
-        }else if (degree > 180){
-            degree = degree - 360;
-        }
+//        if(degree < -180){
+//            degree += 360;
+//        }else if (degree > 180){
+//            degree -= 360;
+//        }
         Constant.debugLog("发送角度"+ degree);
         map  = new LinkedHashMap();
         map.put("degree", degree);
@@ -1244,19 +1247,19 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         if(flag.equals("success")){
                             // 返回成功走的距离
 //                            if(sendDistance - distance <=0.1 && distance - sendDistance <=0.1){
-                                if(tasknumber ==1){
-                                    tasknumber = 2;
-                                    handler.sendEmptyMessage(4);
-                                }else if(tasknumber ==3){
-                                    tasknumber = 4;
-                                    handler.sendEmptyMessage(4);
-                                }else if(tasknumber ==6){
-                                    tasknumber = 7;
-                                    handler.sendEmptyMessage(4);
-                                }else if(tasknumber ==7){
-                                    tasknumber = 8;
-                                    handler.sendEmptyMessage(4);
-                                }
+                            if(tasknumber ==1){
+                                tasknumber = 2;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber ==3){
+                                tasknumber = 4;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber ==6){
+                                tasknumber = 7;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber ==7){
+                                tasknumber = 8;
+                                handler.sendEmptyMessage(4);
+                            }
 //                                if(IsX==0){
 //                                    Constant.Current_x += distance;
 //                                }else if(IsX ==1){
@@ -1529,32 +1532,98 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         try {
                             //转向需要增加调整
                             if(xs_tmp.get(i)-Constant.Current_x > 0){
-                                send_data_degree(10);
+                                double degree = 10;
+                                while(Constant.Current_degree -degree > 5 && Constant.Current_degree -degree > 5){
+                                    double senddegree = Constant.Current_degree - degree;
+                                    if(senddegree < -180){
+                                        senddegree += 360;
+                                    }else if (senddegree > 180){
+                                        senddegree -= 360;
+                                    }
+                                    if(senddegree > 0){
+                                        send_data_degree(10);
+                                    }else{
+                                        send_data_degree(10);
+                                    }
+                                    tasknumber = 0;
+                                    thread.wait();
+                                }
                             }else{
-                                send_data_degree(175);
+                                double degree = 190;
+                                while(Constant.Current_degree -degree > 5 && Constant.Current_degree -degree > 5){
+                                    double senddegree = Constant.Current_degree - degree;
+                                    if(senddegree < -180){
+                                        senddegree += 360;
+                                    }else if (senddegree > 180){
+                                        senddegree -= 360;
+                                    }
+                                    if(senddegree > 0){
+                                        send_data_degree(10);
+                                    }else{
+                                        send_data_degree(10);
+                                    }
+                                    tasknumber = 0;
+                                    thread.wait();
+                                }
                             }
 //                    sendNativePointtrue(xs_tmp.get(i),ys_tmp.get(i),0);
-                            tasknumber = 0;
                             //前往地图标注地点
-                            thread.wait();
                             //1111
-                            IsX = 0;
-                            send_data_distance(xs_tmp.get(i)/90 - Constant.Current_x);
-                            thread.wait();
+                            while(xs_tmp.get(i)/90 - Constant.Current_x > 0){
+                                send_data_distance(1);
+                                Constant.debugLog("发送x坐标 = " + (xs_tmp.get(i)/90 - Constant.Current_x));
+                                tasknumber = 1;
+                                thread.wait();
+                            }
+//                            Constant.Current_x += xs_tmp.get(i)/90 - Constant.Current_x;
                             ///222
                             //转向需要增加调整
                             if(ys_tmp.get(i)-Constant.Current_y > 0){
-                                send_data_degree(90);
+                                double degree = 100;
+                                while(Constant.Current_degree -degree > 5 && Constant.Current_degree -degree > 5){
+                                    double senddegree = Constant.Current_degree - degree;
+                                    if(senddegree < -180){
+                                        senddegree += 360;
+                                    }else if (senddegree > 180){
+                                        senddegree -= 360;
+                                    }
+                                    if(senddegree > 0){
+                                        send_data_degree(10);
+                                    }else{
+                                        send_data_degree(10);
+                                    }
+                                    tasknumber = 2;
+                                    thread.wait();
+                                }
                             }else{
-                                send_data_degree(277);
+                                double degree = 280;
+                                while(Constant.Current_degree -degree > 5 && Constant.Current_degree -degree > 5){
+                                    double senddegree = Constant.Current_degree - degree;
+                                    if(senddegree < -180){
+                                        senddegree += 360;
+                                    }else if (senddegree > 180){
+                                        senddegree -= 360;
+                                    }
+                                    if(senddegree > 0){
+                                        send_data_degree(10);
+                                    }else{
+                                        send_data_degree(10);
+                                    }
+                                    tasknumber = 2;
+                                    thread.wait();
+                                }
                             }
-                            thread.wait();
                             ///333
-                            IsX = 1;
-                            send_data_distance(ys_tmp.get(i)/90-Constant.Current_y);
-                            thread.wait();
+//                            send_data_distance(ys_tmp.get(i)/90-Constant.Current_y);
+//                            Constant.debugLog("发送y坐标 = " + (ys_tmp.get(i)/90-Constant.Current_y));
+                            while(ys_tmp.get(i)/90 - Constant.Current_y >= 0){
+                                send_data_distance(1);
+                                Constant.debugLog("发送x坐标 = " + (xs_tmp.get(i)/90 - Constant.Current_x));
+                                tasknumber = 3;
+                                thread.wait();
+                            }
                             ///4444
-
+//                            Constant.Current_y += ys_tmp.get(i)/90-Constant.Current_y;
                             surfaceview.current_plan_number = i+1 ;
                             //到达对应地点notify
                             if(arrayserchtime_tmp.get(i) != 0){
@@ -1580,7 +1649,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     send_data_degree(camera_degree);
                                     thread.wait();
                                     //666
-                                    IsX = 2;
                                     send_data_distance(camera_distance);
                                     thread.wait();
                                     ////7777
@@ -1600,11 +1668,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     }
                                     thread.wait();
                                     //888
-                                    //返回原点
                                     send_data_degree(camera_degree - 180);
                                     thread.wait();
                                     //999
-                                    IsX = 2;
                                     send_data_distance(camera_distance);
                                     thread.wait();
                                     //10
@@ -1742,29 +1808,27 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 Constant.debugLog("Constant.Current_degree - sendDegree"+ (Constant.Current_degree - sendDegree));
-                if(Constant.Current_degree - sendDegree < 5 || sendDegree - Constant.Current_degree <5){
-                    Constant.debugLog("转向正确");
-//                    Toast.makeText(context,"转向正确",Toast.LENGTH_SHORT).show();
-                    if(tasknumber ==0){
-                        tasknumber = 1;
-                        handler.sendEmptyMessage(4);
-                    }else if (tasknumber == 2){
-                        tasknumber = 3;
-                        handler.sendEmptyMessage(4);
-                    }else if (tasknumber == 5){
-                        tasknumber = 6;
-                        handler.sendEmptyMessage(4);
-                    }
-                }else{
-                    Constant.debugLog("继续转向");
-//                    Toast.makeText(context,"继续转向",Toast.LENGTH_SHORT).show();
-                    send_data_degree(sendDegree);
+//                if(Constant.Current_degree - sendDegree < 5 && sendDegree - Constant.Current_degree < 5){
+//                    Constant.debugLog("转向正确");
+                if(tasknumber ==0){
+                    tasknumber = 1;
+                    handler.sendEmptyMessage(4);
+                }else if (tasknumber == 2){
+                    tasknumber = 3;
+                    handler.sendEmptyMessage(4);
+                }else if (tasknumber == 5){
+                    tasknumber = 6;
+                    handler.sendEmptyMessage(4);
                 }
+//                }else{
+//                    Constant.debugLog("继续转向");
+//                    send_data_degree(sendDegree);
+//                }
             }
         }).start();
     }
