@@ -32,8 +32,10 @@ public class Constant {
 //    public static String wifiname = "GDRD-3F";
 //    public static String password = "88391477";
 
-    public static double Current_x = 10;
-    public static double Current_y = 5;
+    public static double Current_x = 0;
+    public static double Current_y = 0;
+    public static double Current_x_sur = 0;
+    public static double Current_y_sur = 0;
     public static float Current_degree = 90;
     public static int ServerPort = 12345;
     public static String ip_bigScreen = "/192.168.1.102";

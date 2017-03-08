@@ -83,17 +83,17 @@ public class WifiAdmin {
 
     public void startScan() {//wifi扫描
         boolean scan = mWifiManager.startScan();
-        Log.i(TAG, "startScan result:" + scan);
+//        Log.i(TAG, "startScan result:" + scan);
         mWifiList = mWifiManager.getScanResults();
         mWifiConfiguration = mWifiManager.getConfiguredNetworks();
 
         if (mWifiList != null) {
-            Log.i(TAG, "startScan result:" + mWifiList.size());
+//            Log.i(TAG, "startScan result:" + mWifiList.size());
             for (int i = 0; i < mWifiList.size(); i++) {
                 ScanResult result = mWifiList.get(i);
-                Log.i(TAG, "startScan result[" + i + "]" + result.SSID + "," + result.BSSID);
+//                Log.i(TAG, "startScan result[" + i + "]" + result.SSID + "," + result.BSSID);
             }
-            Log.i(TAG, "startScan result end.");
+//            Log.i(TAG, "startScan result end.");
         } else {
             Log.i(TAG, "startScan result is null.");
         }
