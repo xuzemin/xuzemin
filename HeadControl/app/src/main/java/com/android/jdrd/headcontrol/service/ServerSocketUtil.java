@@ -218,11 +218,11 @@ public class ServerSocketUtil extends Service {
 
             msg = new String(buffer, 0, len);
 
-            if (msg != null) {
-                Constant.debugLog("msg = " + msg.toString() + "  ip地址： " + ip);
-            } else {
-                Constant.debugLog("hehe, msg为空");
-            }
+//            if (msg != null) {
+//                Constant.debugLog("msg = " + msg.toString() + "  ip地址： " + ip);
+//            } else {
+//                Constant.debugLog("hehe, msg为空");
+//            }
 
             intent.putExtra("msg", msg);
             intent.setAction("com.jdrd.fragment.Map");

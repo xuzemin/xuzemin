@@ -194,7 +194,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                         temp = 0;
                         paint = true;
                     }else{
-//                        Constant.getConstant().getDegree();
+                        Constant.getConstant().getDegree();
 //                        Constant.debugLog("Current_degree"+Constant.Current_degree);
                         temp ++;
                     }
@@ -203,7 +203,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     holder.unlockCanvasAndPost(c);
                     Thread.sleep(50);
                 }catch(Exception e){
-                    holder.unlockCanvasAndPost(c);
+//                    holder.unlockCanvasAndPost(c);
                 }
             }
         }
