@@ -15,7 +15,7 @@ public class SerialPortUtil {
      * Called when the activity is first created.
      */
 
-    private static String SERIALPORTNAME = "/dev/ttyUSB0";
+    private static String SERIALPORTNAME = "/dev/ttyUSB1";
 
     FileInputStream mInputStream;
     SerialPort mSp;
