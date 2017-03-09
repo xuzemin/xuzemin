@@ -31,7 +31,7 @@ public class Constant {
     //测试用WI-FI
 //    public static String wifiname = "GDRD-3F";
 //    public static String password = "88391477";
-
+    public static String Obstacle = "obstacle";
     public static double Current_x = 0;
     public static double Current_y = 0;
     public static double Current_x_sur = 0;
