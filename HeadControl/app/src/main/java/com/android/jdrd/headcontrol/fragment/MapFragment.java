@@ -84,8 +84,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private boolean IsX = false;
     private Double sendDegree;
     private float sendDistance;
-    private Double camera_degree;
-    private Double camera_distance;
     private static MyView surfaceview = null;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
     private Spinner planchooce,serchtime,scope,angle,gametime,spinner_Scale,spinner_set_Scale;
@@ -947,7 +945,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     }else if(funtion.equals(Constant.Walk)){
                         JSONObject jsonObject = new JSONObject(data);
                         String flag = jsonObject.getString(Constant.Result);
-                        String obstacle = jsonObject.getString(Constant.Obstacle);
+                        String reason = jsonObject.getString(Constant.Reason);
                         if(flag.equals("success")){
                             Constant.debugLog("继续转向"+string);
                             // 返回成功走的距离
@@ -982,32 +980,24 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                         }else if(flag.equals("walking")){
                             getUpPoint(jsonObject.getDouble("x"),jsonObject.getDouble("y"));
-                        }else if(flag.equals("keepwalking")){
-                            if(IsX){
-                                if(sendDistance - Constant.Current_x > 0.1){
-                                    send_data_distance(sendDistance - Constant.Current_x);
-                                }else if(sendDistance - Constant.Current_x < -0.1){
-                                    send_data_distance(Constant.Current_x - sendDistance);
-                                }
-                            }else {
-                                if(sendDistance - Constant.Current_y > 0.1){
-                                    send_data_distance(sendDistance - Constant.Current_y);
-                                }else if(sendDistance - Constant.Current_y < -0.1){
-                                    send_data_distance(Constant.Current_y - sendDistance);
+                            if(reason.equals("obstacle")){
+
+                            }else if(reason.equals("obstaclemove")){
+                                if(IsX){
+                                    if(sendDistance - Constant.Current_x > 0.1){
+                                        send_data_distance(sendDistance - Constant.Current_x);
+                                    }else if(sendDistance - Constant.Current_x < -0.1){
+                                        send_data_distance(Constant.Current_x - sendDistance);
+                                    }
+                                }else {
+                                    if(sendDistance - Constant.Current_y > 0.1){
+                                        send_data_distance(sendDistance - Constant.Current_y);
+                                    }else if(sendDistance - Constant.Current_y < -0.1){
+                                        send_data_distance(Constant.Current_y - sendDistance);
+                                    }
                                 }
                             }
                         }
-//                        else if(flag.equals("leftobstacle")){
-////                            goOnSend();
-//                        }else if(flag.equals("rightobstacle")){
-////                            goOnSend();
-//                        }else if(flag.equals("backobstacle")){
-////                            goOnSend();
-//                        }else if(flag.equals("leftobstacle")){
-////                            goOnSend();
-//                        }else{
-//
-//                        }
                     }
                 }
             }
@@ -1054,7 +1044,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Element item_scale = document.createElement("item_scale");
                 item_scale.setTextContent(scale_vector.elementAt(0)+"");
                 scale.appendChild(item_scale);
-                for(int x = 0;x < point_xs.size();x ++){
+                for(int x = 0,length = point_xs.size();x < length;x ++){
                     Element item_xs = document.createElement("item_xs");
                     item_xs.setTextContent(point_xs.elementAt(x)+"");
                     Element item_ys = document.createElement("item_ys");
@@ -1121,7 +1111,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             NodeList planLists = root.getElementsByTagName("key");
 
             arrayPlanLists  = new HashMap<>();
-            for (int i = 0; i < planLists.getLength(); i++) {
+            for (int i = 0,length = planLists.getLength(); i < length; i++) {
                 arrayhash = new HashMap<>();
                 Element item = (Element) planLists.item(i);
                 String key = item.getAttribute("key");
@@ -1146,7 +1136,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     public void getFloat(Element item,String keys,String key){
         NodeList nodes = item.getElementsByTagName(keys);
         Vector<Float> floats=new Vector<Float>();
-        for (int j = 0; j < nodes.getLength(); j++) {
+        for (int j = 0 ,length = nodes.getLength(); j < length; j++) {
             Node node =  nodes.item(j);
             String string = node.getFirstChild().getNodeValue();
             floats.add(Float.valueOf(string));

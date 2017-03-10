@@ -90,20 +90,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setColor(getResources().getColor(R.color.path));
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 5.0);
-//        for(int i=0;i<point_xs.size();i++) {
-//            if(Isplan){
-//                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 9, p);
-//                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
-//                if( i == 0){
-//                    canvas.drawBitmap(startpoint,point_xs.elementAt(i)-startpoint.getWidth()/2,point_ys.elementAt(i)-startpoint.getHeight()/2,p);
-//                }else if (i >= 1) {
-//                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
-//                }
-//            }else{
-//                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 10, p);
-//                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
-//            }
-//        }
         bitmap_x = Constant.Current_x * 90 - bitmap.getWidth()/2;
         bitmap_y = Constant.Current_y * 90 - bitmap.getHeight()/2;
         center_x = bitmap.getWidth()/2+bitmap_x;
@@ -128,7 +114,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setColor(Color.BLUE);
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 2.0);
-        for(int i=0;i<path_xs.size();i++) {
+        for(int i=0,length = path_xs.size();i<length;i++) {
 //            canvas.drawCircle(path_xs.elementAt(i), path_ys.elementAt(i), 3, p);
             if (i >= 1) {
                 drawAL(canvas,path_xs.elementAt(i-1),path_ys.elementAt(i-1),path_xs.elementAt(i),path_ys.elementAt(i),p);
@@ -142,7 +128,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setStrokeWidth((float) 2.0);
         p.setTextSize(25);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
-        for(int i=0;i<point_xs.size();i++) {
+        for(int i=0 ,length = point_xs.size();i<length;i++) {
             if(Isplan){
                 if(i < current_plan_number){
                     p.setColor(getResources().getColor(R.color.origen));
@@ -239,7 +225,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setTextSize(20);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         int x = 10;
-        for(int y=0;y <= (myview_height/Scale) ; y++) {
+        for(int y=0,length = myview_height/Scale;y <= length ; y++) {
 //            if( y % 3 == 0){
 //                p.setStrokeWidth((float) scaleTextSize);
 //                x = y / 3;
@@ -255,7 +241,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 //                canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
 //            }
         }
-        for(int y=0;y <= (myview_width/Scale);y++) {
+        for(int y=0,length = myview_width/Scale;y <= length;y++) {
 //            if( y % 3 == 0){
 //                p.setStrokeWidth((float) scaleTextSize);
             canvas.drawLine(y*Scale,0,y*Scale,myview_height,p);
