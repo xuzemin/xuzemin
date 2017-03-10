@@ -29,13 +29,19 @@ import com.android.jdrd.headcontrol.activity.WelcomeActivity;
 import com.android.jdrd.headcontrol.common.BaseFragment;
 import com.android.jdrd.headcontrol.dialog.WarningDialog;
 import com.android.jdrd.headcontrol.entity.Battery3;
+import com.android.jdrd.headcontrol.service.ServerSocketUtil;
+import com.android.jdrd.headcontrol.util.Constant;
+import com.android.jdrd.headcontrol.util.IListener;
+import com.android.jdrd.headcontrol.util.ListenerManager;
 import com.google.gson.Gson;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by Administrator on 2016/10/23 0023.
  */
 
-public class BatteryFragment extends BaseFragment implements Animation.AnimationListener{
+public class BatteryFragment extends BaseFragment implements Animation.AnimationListener,IListener{
 
     Button mButton_Save;//保存按钮
     ImageView mImageView_Battery_Power;//电池图标
@@ -66,6 +72,11 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
     private View ll_right_bar;
     private ImageView imgViewBtnRight;
 
+//电量值 及运行剩余的时间
+    private TextView tv_Battery_Level;
+    private TextView tv_Battery_runTime;
+
+    private String power01;
 
     public BatteryFragment() {
         super();
@@ -81,6 +92,9 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         mView = inflater.inflate(R.layout.fragment_battery, container, false);
         receiver = new BatteryReceiver();
         filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        //****
+        ListenerManager.getInstance().registerListtener(this);
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -104,17 +118,23 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
     public void initData() {
         getActivity().registerReceiver(receiver, filter);
         mMyClickListener = new MyClickListener();
+
+        //String jsonString = ServerSocketUtil.getJSONString("jsonString");
+       // Constant.debugLog("***********电源数据***********"+jsonString);
+       //ListenerManager.getInstance().sendBroadCast("str");
+
         //查询数据库中的信息并显示在UI界面上
         mContentResolver = getActivity().getContentResolver();
         mUri = Uri.parse("content://com.jiadu.provider/battery");
         Cursor cursor = mContentResolver.query(mUri, null, null, null, null);
         if (cursor == null) {
             //table does not exist弹出对话框（不可点击外屏消失），点确定退出,发送信息给小屏
-//            Toast.makeText(getActivity(),"系统出现异常",Toast.LENGTH_SHORT).show();
-//            showWarnDDialog();
-//            Intent intent = new Intent("com.jiadu.broadcast.setting.warn");
-//            intent.putExtra("warn", "{\"warninfo\":{\"type\":\"warn\",\"function\":\"18\",data:\"14\"}}");
-//            getActivity().sendBroadcast(intent);
+//           Toast.makeText(getActivity(),"系统出现异常",Toast.LENGTH_SHORT).show();
+           //showWarnDDialog();
+           //Intent intent = new Intent("com.jiadu.broadcast.setting.warn");
+          // intent.putExtra("warn", "{\"warninfo\":{\"type\":\"warn\",\"function\":\"18\",data:\"14\"}}");
+           // getActivity().sendBroadcast(intent);
+
         } else {
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -196,7 +216,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         mButton_Save.setOnClickListener(mMyClickListener);
         mImageView_Switch_Open.setOnClickListener(mMyClickListener);
         mImageView_Switch_Close.setOnClickListener(mMyClickListener);
-        ll_right_bar1.setOnClickListener(mMyClickListener);
+        imgViewBtnRight.setOnClickListener(mMyClickListener);
     }
 
     @Override
@@ -222,6 +242,11 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
 
     }
 
+    @Override
+    public void notifyAllActivity(String str) {
+
+    }
+
     public class MyClickListener implements View.OnClickListener {
 
         @Override
@@ -241,7 +266,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
                     mSeekBar.setEnabled(true);
                     break;
 
-                case R.id.ll_right_bar1:
+                case R.id.imgViewBtnRight:
                     startAnimationRight();
                     break;
             }
@@ -319,10 +344,19 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
 
         @Override
         public void onReceive(Context context, Intent intent) {
+
+         // String strPower =  intent.getAction();
+           String powerStr = intent.getStringExtra("msg");
+            Constant.debugLog("***********STR*内容******" + powerStr);
+            if (powerStr != null && powerStr.equals("")){
+
+            }else {
+
+            }
             int current = intent.getExtras().getInt("level");// 获得当前电量
             int total = intent.getExtras().getInt("scale");//获得总电量
             int percent = current * 100 / total;
-            mTextView_Level.setText("剩余"+percent + "%"+"电量");
+            mTextView_Level.setText(percent+"%");
         }
 
 

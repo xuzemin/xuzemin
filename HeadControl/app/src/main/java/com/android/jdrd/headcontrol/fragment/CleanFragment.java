@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +32,7 @@ import com.android.jdrd.headcontrol.common.MyTimePicker;
 import com.android.jdrd.headcontrol.common.MyTimerPicker1;
 import com.android.jdrd.headcontrol.dialog.SelfDialog;
 import com.android.jdrd.headcontrol.entity.Clean4;
+import com.android.jdrd.headcontrol.util.Constant;
 import com.google.gson.Gson;
 
 
@@ -40,13 +44,13 @@ import com.android.jdrd.headcontrol.R;
  * Created by Administrator on 2016/10/25 0025.
  */
 
-public class CleanFragment extends BaseFragment implements Animation.AnimationListener{
+public class CleanFragment extends BaseFragment implements Animation.AnimationListener,View.OnClickListener{
     Button mButton_Save;
-    TextView mTextView_Start_Hour1;
-    TextView mTextView_Start_Minute1;
-    TextView mTextView_End_Hour1;
-    TextView mTextView_End_Minute1;
-    ImageView mImageView_bianji1;
+    private  TextView mTextView_Start_Hour1;
+    private TextView mTextView_Start_Minute1;
+    private TextView mTextView_End_Hour1;
+    private TextView mTextView_End_Minute1;
+    private ImageView mImageView_bianji1;
     ImageView mImageView_Switch_Open;
     ImageView mImageView_Switch_Close;
     ImageView mImageView_yaguang_no;
@@ -55,7 +59,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     ImageView mImageView_biaozhun_per;
     ImageView mImageView_liangguang_no;
     ImageView mImageView_liangguang_per;
-    MyClickListener mMyClickListener;
+   // MyClickListener mMyClickListener;
 
 
     ContentResolver mContentResolver;
@@ -79,11 +83,22 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     int type_modified=0;
 
 
+
+//    private RelativeLayout rr_right_bar_clean;
+//    boolean flag_rr_bar;
+//    private RelativeLayout rr_right_bar_clean1;
+//    private ImageView img_ViewBtnRightClean;
+
+
     private RelativeLayout rr_right_bar_clean;
     boolean flag_rr_bar;
     private LinearLayout rr_right_bar_clean1;
     private ImageView img_ViewBtnRightClean;
 
+    private ImageView add_time_imageView;
+    private LinearLayout ll_addTimeLin;
+    private ImageView iv_Clean_del;
+    private FrameLayout fl_FrameLayout;
 
     public CleanFragment(){
         super();
@@ -102,14 +117,15 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
 
     @Override
     public void initView() {
-        mButton_Save= (Button) findViewById(R.id.btn_Clean_Save);
-        mTextView_Start_Hour1= (TextView) findViewById(R.id.tv_Clean_Start_Hour1);
-        mTextView_Start_Minute1= (TextView) findViewById(R.id.tv_Clean_Start_Minute1);
-        mTextView_End_Hour1= (TextView) findViewById(R.id.tv_Clean_End_Hour1);
-        mTextView_End_Minute1= (TextView) findViewById(R.id.tv_Clean_End_Minute1);
-        mImageView_bianji1= (ImageView) findViewById(R.id.iv_Clean_bianji1);
-        mImageView_Switch_Open= (ImageView) findViewById(R.id.iv_Clean_Switch_Open);
-        mImageView_Switch_Close= (ImageView) findViewById(R.id.iv_Clean_Switch_Close);
+        mButton_Save = (Button) findViewById(R.id.btn_Clean_Save);
+        mTextView_Start_Hour1 = (TextView) findViewById(R.id.tv_Clean_Start_Hour1);
+        mTextView_Start_Minute1 = (TextView) findViewById(R.id.tv_Clean_Start_Minute1);
+        mTextView_End_Hour1 = (TextView) findViewById(R.id.tv_Clean_End_Hour1);
+        mTextView_End_Minute1 = (TextView) findViewById(R.id.tv_Clean_End_Minute1);
+//        mImageView_bianji1= (ImageView) findViewById(R.id.iv_Clean_bianji1);
+//        mImageView_Switch_Open= (ImageView) findViewById(R.id.iv_Clean_Switch_Open);
+//        mImageView_Switch_Close= (ImageView) findViewById(R.id.iv_Clean_Switch_Close);
+        ll_addTimeLin = (LinearLayout) findViewById(R.id.ll_addTimeLin);
         mImageView_yaguang_no= (ImageView) findViewById(R.id.iv_Clean_yaguang_no);
         mImageView_yaguang_per= (ImageView) findViewById(R.id.iv_Clean_yaguang_per);
         mImageView_biaozhun_no= (ImageView) findViewById(R.id.iv_Clean_biaozhun_no);
@@ -120,11 +136,19 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         rr_right_bar_clean = (RelativeLayout) findViewById(R.id.rr_right_bar_clean_all);
         rr_right_bar_clean1= (LinearLayout) findViewById(R.id.rr_right_bar_clean1);
         img_ViewBtnRightClean = (ImageView) findViewById(R.id.img_btnViewRightClean);
+        add_time_imageView = (ImageView) findViewById(R.id.add_time_imageView);
+
+
 
     }
 
     @Override
     public void initData() {
+        if (ll_addTimeLin.getChildCount() == 0) {
+            for (int i=0;i<3;i++)
+            addItemTimeLin();
+        }
+
        /* mMyClickListener=new MyClickListener();
         //查询数据库中的信息并显示在UI界面上
         mContentResolver = getActivity().getContentResolver();
@@ -192,22 +216,34 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     }
     @Override
     public void initEvent() {
-        mButton_Save.setOnClickListener(mMyClickListener);
-        mImageView_Switch_Open.setOnClickListener(mMyClickListener);
-        mImageView_Switch_Close.setOnClickListener(mMyClickListener);
-        mImageView_bianji1.setOnClickListener(mMyClickListener);
-        mImageView_yaguang_no.setOnClickListener(mMyClickListener);
-        mImageView_yaguang_per.setOnClickListener(mMyClickListener);
-        mImageView_biaozhun_no.setOnClickListener(mMyClickListener);
-        mImageView_biaozhun_per.setOnClickListener(mMyClickListener);
-        mImageView_liangguang_no.setOnClickListener(mMyClickListener);
-        mImageView_liangguang_per.setOnClickListener(mMyClickListener);
-        rr_right_bar_clean.setOnClickListener(new View.OnClickListener() {
+        mButton_Save.setOnClickListener(this);
+//        mImageView_Switch_Open.setOnClickListener(this);
+//        mImageView_Switch_Close.setOnClickListener(this);
+        add_time_imageView.setOnClickListener(this);
+//        mImageView_bianji1.setOnClickListener(this);
+        ll_addTimeLin.setOnClickListener(this);
+        mImageView_yaguang_no.setOnClickListener(this);
+        mImageView_yaguang_per.setOnClickListener(this);
+        mImageView_biaozhun_no.setOnClickListener(this);
+        mImageView_biaozhun_per.setOnClickListener(this);
+        mImageView_liangguang_no.setOnClickListener(this);
+        mImageView_liangguang_per.setOnClickListener(this);
+
+        img_ViewBtnRightClean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startAnimationRight();
             }
         });
+        add_time_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Constant.debugLog("===========时间行添加成功==================");
+                addItemTimeLin();
+            }
+        });
+
+
     }
 
     private Handler handler=new Handler(){
@@ -217,6 +253,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
             super.handleMessage(msg);
             switch (msg.what){
                 case 1:
+                    Constant.debugLog("*********start_hour值是：*********"+start_hour);
                     Bundle bundle= msg.getData();
                     if((bundle.getString("start_hour_handler"))==null){
                         if(String.valueOf(start_hour).length()>1){
@@ -227,6 +264,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
                     }else {
                         mTextView_Start_Hour1.setText(bundle.getString("start_hour_handler"));
                     }
+
                     if((bundle.getString("start_minute_handler"))==null){
                         if(String.valueOf(start_minute).length()>1){
                             mTextView_Start_Minute1.setText(String.valueOf(start_minute));
@@ -268,7 +306,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
 
     @Override
     public void onAnimationEnd(Animation animation) {
-rr_right_bar_clean.clearAnimation();
+        rr_right_bar_clean.clearAnimation();
         if (flag_rr_bar){
             flag_rr_bar = false;
             img_ViewBtnRightClean.setImageResource(R.mipmap.you_yc);
@@ -285,85 +323,210 @@ rr_right_bar_clean.clearAnimation();
 
     }
 
-    public  class MyClickListener implements View.OnClickListener{
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_Clean_Save:
+                if(type_modified==0){
+                    Toast.makeText(getActivity(),"至少选择一种类型", Toast.LENGTH_SHORT).show();
+                }else {
+                    save();
+                }
+                break;
+//            case R.id.iv_Clean_bianji1:
+//                mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
+//                showDialogxinjia();
+//                SelfDialog selfDialog=new SelfDialog(getActivity(),handler,start_hour,start_minute,end_hour,end_minute);
+//                selfDialog.show();
+//                break;
+//            case R.id.iv_Clean_Switch_Open:
+//                mImageView_Switch_Open.setVisibility(View.GONE);
+//                mImageView_Switch_Close.setVisibility(View.VISIBLE);
+//                flag_modified=0;
+//                break;
+//            case R.id.iv_Clean_Switch_Close:
+//                mImageView_Switch_Open.setVisibility(View.VISIBLE);
+//                mImageView_Switch_Close.setVisibility(View.GONE);
+//                break;
+            case R.id.iv_Clean_yaguang_no:
+                type_modified=1;
+                mImageView_yaguang_per.setVisibility(View.VISIBLE);
+                mImageView_yaguang_no.setVisibility(View.GONE);
+                mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+                mImageView_biaozhun_per.setVisibility(View.GONE);
+                mImageView_liangguang_no.setVisibility(View.VISIBLE);
+                mImageView_liangguang_per.setVisibility(View.GONE);
+                break;
+            case R.id.iv_Clean_yaguang_per:
+                type_modified=0;
+                mImageView_yaguang_no.setVisibility(View.VISIBLE);
+                mImageView_yaguang_per.setVisibility(View.GONE);
+                break;
+            case R.id.iv_Clean_biaozhun_no:
+                type_modified=2;
+                mImageView_biaozhun_per.setVisibility(View.VISIBLE);
+                mImageView_biaozhun_no.setVisibility(View.GONE);
+                mImageView_yaguang_per.setVisibility(View.GONE);
+                mImageView_yaguang_no.setVisibility(View.VISIBLE);
+                mImageView_liangguang_no.setVisibility(View.VISIBLE);
+                mImageView_liangguang_per.setVisibility(View.GONE);
+                break;
+            case R.id.iv_Clean_biaozhun_per:
+                type_modified=0;
+                mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+                mImageView_biaozhun_per.setVisibility(View.GONE);
+                break;
+            case R.id.iv_Clean_liangguang_no:
+                type_modified=3;
+                mImageView_liangguang_per.setVisibility(View.VISIBLE);
+                mImageView_liangguang_no.setVisibility(View.GONE);
+                mImageView_biaozhun_per.setVisibility(View.GONE);
+                mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+                mImageView_yaguang_per.setVisibility(View.GONE);
+                mImageView_yaguang_no.setVisibility(View.VISIBLE);
+                break;
+            case R.id.iv_Clean_liangguang_per:
+                type_modified=0;
+                mImageView_liangguang_no.setVisibility(View.VISIBLE);
+                mImageView_liangguang_per.setVisibility(View.GONE);
+                break;
+//            case R.id.add_time_imageView:
+//                Constant.debugLog("===========时间行添加成功==================");
+//                addItemTimeLin();
+//                break;
+        }
 
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.btn_Clean_Save:
-                    if(type_modified==0){
-                        Toast.makeText(getActivity(),"至少选择一种类型", Toast.LENGTH_SHORT).show();
-                    }else {
-                        save();
-                    }
-                    break;
-                case R.id.iv_Clean_Switch_Open:
-                    mImageView_Switch_Open.setVisibility(View.GONE);
-                    mImageView_Switch_Close.setVisibility(View.VISIBLE);
-                    flag_modified=0;
-                    break;
-                case R.id.iv_Clean_Switch_Close:
-                    mImageView_Switch_Open.setVisibility(View.VISIBLE);
-                    mImageView_Switch_Close.setVisibility(View.GONE);
-                    break;
-                case R.id.iv_Clean_bianji1:
-                    mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
+    }
+
+//    public  class MyClickListener implements View.OnClickListener{
+//
+//        @Override
+//        public void onClick(View v) {
+//            switch (v.getId()){
+//                case R.id.btn_Clean_Save:
+//                    if(type_modified==0){
+//                        Toast.makeText(getActivity(),"至少选择一种类型", Toast.LENGTH_SHORT).show();
+//                    }else {
+//                        save();
+//                    }
+//                    break;
+//                case R.id.iv_Clean_Switch_Open:
+//                    mImageView_Switch_Open.setVisibility(View.GONE);
+//                    mImageView_Switch_Close.setVisibility(View.VISIBLE);
+//                    flag_modified=0;
+//                    break;
+//                case R.id.iv_Clean_Switch_Close:
+//                    mImageView_Switch_Open.setVisibility(View.VISIBLE);
+//                    mImageView_Switch_Close.setVisibility(View.GONE);
+//                    break;
+//                case R.id.iv_Clean_bianji1:
+//                    mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
 //                    showDialogxinjia();
-                    SelfDialog selfDialog=new SelfDialog(getActivity(),handler,start_hour,start_minute,end_hour,end_minute);
-                    selfDialog.show();
+//                    SelfDialog selfDialog=new SelfDialog(getActivity(),handler,start_hour,start_minute,end_hour,end_minute);
+//                    selfDialog.show();
+//                    break;
+//                case R.id.iv_Clean_yaguang_no:
+//                    type_modified=1;
+//                    mImageView_yaguang_per.setVisibility(View.VISIBLE);
+//                    mImageView_yaguang_no.setVisibility(View.GONE);
+//                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+//                    mImageView_biaozhun_per.setVisibility(View.GONE);
+//                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
+//                    mImageView_liangguang_per.setVisibility(View.GONE);
+//                    break;
+//                case R.id.iv_Clean_yaguang_per:
+//                    type_modified=0;
+//                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
+//                    mImageView_yaguang_per.setVisibility(View.GONE);
+//                    break;
+//                case R.id.iv_Clean_biaozhun_no:
+//                    type_modified=2;
+//                    mImageView_biaozhun_per.setVisibility(View.VISIBLE);
+//                    mImageView_biaozhun_no.setVisibility(View.GONE);
+//                    mImageView_yaguang_per.setVisibility(View.GONE);
+//                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
+//                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
+//                    mImageView_liangguang_per.setVisibility(View.GONE);
+//                    break;
+//                case R.id.iv_Clean_biaozhun_per:
+//                    type_modified=0;
+//                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+//                    mImageView_biaozhun_per.setVisibility(View.GONE);
+//                    break;
+//                case R.id.iv_Clean_liangguang_no:
+//                    type_modified=3;
+//                    mImageView_liangguang_per.setVisibility(View.VISIBLE);
+//                    mImageView_liangguang_no.setVisibility(View.GONE);
+//                    mImageView_biaozhun_per.setVisibility(View.GONE);
+//                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+//                    mImageView_yaguang_per.setVisibility(View.GONE);
+//                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
+//                    break;
+//                case R.id.iv_Clean_liangguang_per:
+//                    type_modified=0;
+//                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
+//                    mImageView_liangguang_per.setVisibility(View.GONE);
+//                    break;
 
-                    break;
-                case R.id.iv_Clean_yaguang_no:
-                    type_modified=1;
-                    mImageView_yaguang_per.setVisibility(View.VISIBLE);
-                    mImageView_yaguang_no.setVisibility(View.GONE);
-                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
-                    mImageView_biaozhun_per.setVisibility(View.GONE);
-                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
-                    mImageView_liangguang_per.setVisibility(View.GONE);
-                    break;
-                case R.id.iv_Clean_yaguang_per:
-                    type_modified=0;
-                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
-                    mImageView_yaguang_per.setVisibility(View.GONE);
-                    break;
-                case R.id.iv_Clean_biaozhun_no:
-                    type_modified=2;
-                    mImageView_biaozhun_per.setVisibility(View.VISIBLE);
-                    mImageView_biaozhun_no.setVisibility(View.GONE);
-                    mImageView_yaguang_per.setVisibility(View.GONE);
-                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
-                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
-                    mImageView_liangguang_per.setVisibility(View.GONE);
-                    break;
-                case R.id.iv_Clean_biaozhun_per:
-                    type_modified=0;
-                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
-                    mImageView_biaozhun_per.setVisibility(View.GONE);
-                    break;
-                case R.id.iv_Clean_liangguang_no:
-                    type_modified=3;
-                    mImageView_liangguang_per.setVisibility(View.VISIBLE);
-                    mImageView_liangguang_no.setVisibility(View.GONE);
-                    mImageView_biaozhun_per.setVisibility(View.GONE);
-                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
-                    mImageView_yaguang_per.setVisibility(View.GONE);
-                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
-                    break;
-                case R.id.iv_Clean_liangguang_per:
-                    type_modified=0;
-                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
-                    mImageView_liangguang_per.setVisibility(View.GONE);
-                    break;
+//            }
+//        }
+//    }
+
+    private void addItemTimeLin(){
+        final View viewAddItem = this.getActivity().getLayoutInflater().inflate(R.layout.add_item_cleantime,null);
+        ll_addTimeLin.addView(viewAddItem);
+        final TextView mTextView_Start_Hour1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_Start_Hour1);
+        final TextView mTextView_Start_Minute1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_Start_Minute1);
+        final TextView mTextView_End_Hour1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_End_Hour1);
+        final TextView mTextView_End_Minute1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_End_Minute1);
+        final ImageView  mImageView_bianji1= (ImageView) viewAddItem.findViewById(R.id.iv_Clean_bianji1);
+        ImageView iv_Clean_del = (ImageView) viewAddItem.findViewById(R.id.iv_Clean_del);
+        final ImageView mImageView_Switch_Open= (ImageView) viewAddItem.findViewById(R.id.iv_Clean_Switch_Open);
+        final ImageView  mImageView_Switch_Close= (ImageView) viewAddItem.findViewById(R.id.iv_Clean_Switch_Close);
+        FrameLayout  fl_FrameLayout = (FrameLayout) viewAddItem.findViewById(R.id.fl_FrameLayout);
+
+
+        mImageView_bianji1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
+                showDialogxinjia(mTextView_Start_Hour1, mTextView_Start_Minute1,
+                        mTextView_End_Hour1, mTextView_End_Minute1
+                        , mImageView_bianji1
+                );
+//                    SelfDialog selfDialog = new SelfDialog(getActivity(), handler, start_hour, start_minute, end_hour, end_minute);
+//                    selfDialog.show();
 
             }
-        }
+        });
+        iv_Clean_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll_addTimeLin.removeView(viewAddItem);
+            }
+        });
+        fl_FrameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (mImageView_Switch_Open.getVisibility() == View.GONE) {
+                    mImageView_Switch_Open.setVisibility(View.VISIBLE);
+                    mImageView_Switch_Close.setVisibility(View.GONE);
+                } else {
+                    mImageView_Switch_Open.setVisibility(View.GONE);
+                    mImageView_Switch_Close.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
 
     /**
      *  弹出时间编辑对话框
      */
-    private void showDialogxinjia(){
+    private void showDialogxinjia(final TextView mTextView_Start_Hour1, final TextView mTextView_Start_Minute1,
+                                  final TextView mTextView_End_Hour1, final TextView mTextView_End_Minute1
+            , ImageView mImageView_bianji1){
         AlertDialog.Builder timeDialog = new AlertDialog.Builder(getActivity());
         View view= this.getActivity().getLayoutInflater().inflate(R.layout.custom_timepicker1,null);
         timeDialog.setView(view);  //添加view

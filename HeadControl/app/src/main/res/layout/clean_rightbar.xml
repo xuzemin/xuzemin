@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
 
@@ -8,7 +8,7 @@
         android:id="@+id/rr_right_bar_clean_all"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@null"
+        android:layout_marginTop="28dp"
         android:layout_alignParentRight="true">
         <ImageView
             android:id="@+id/img_btnViewRightClean"
@@ -21,32 +21,50 @@
             />
         <LinearLayout
             android:id="@+id/rr_right_bar_clean1"
-            android:layout_width="234dp"
+            android:layout_width="234px"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@mipmap/zuolan"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_Clean_Level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:paddingTop="5dp"
+                android:paddingTop="@dimen/bar_right_text_marginTop01"
                 android:text="剩余100%电量"
                 android:textColor="#E8E8E8"
-                android:textSize="26sp" />
+                android:gravity="center|center_horizontal"
+                android:textSize="27px" />
 
             <TextView
+                android:id="@+id/tv_Clean_runTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:paddingTop="5dp"
+                android:gravity="center|center_horizontal"
+                android:paddingTop="@dimen/bar_right_text_marginTop02"
                 android:text="可运行10个小时"
                 android:textColor="#E8E8E8"
-                android:textSize="26sp" />
+                android:textSize="27px"/>
 
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="20dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/btn_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/tuichu_pre"
+                    android:gravity="center_vertical|bottom"
+                    />
+            </RelativeLayout>
             <!--<RelativeLayout-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="match_parent"-->

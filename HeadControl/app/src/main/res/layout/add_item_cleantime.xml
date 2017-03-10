@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_item_time"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+
+
+    <RelativeLayout
+        android:id="@+id/rr_time_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33px"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@mipmap/liebiaokuan"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="38px"
+            android:layout_marginRight="61px"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/shijian" />
+
+        <TextView
+            android:id="@+id/tv_Clean_Start_Hour1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="180dp"
+            android:text="08"
+            android:textColor="@color/white"
+            android:textSize="42sp" />
+
+        <TextView
+            android:id="@+id/tv_Start1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_Clean_Start_Hour1"
+            android:text=":"
+            android:textColor="@color/white"
+            android:textSize="42sp" />
+
+        <TextView
+            android:id="@+id/tv_Clean_Start_Minute1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_Start1"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="42sp" />
+
+        <TextView
+            android:id="@+id/tv_Clean_End_Hour1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="22dp"
+            android:layout_toRightOf="@+id/tv_Clean_Start_Minute1"
+            android:text="09"
+            android:textColor="@color/white"
+            android:textSize="42sp" />
+
+        <TextView
+            android:id="@+id/tv_End_maohao1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_Clean_End_Hour1"
+            android:text=":"
+            android:textColor="@color/white"
+            android:textSize="42sp" />
+
+        <TextView
+            android:id="@+id/tv_Clean_End_Minute1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_End_maohao1"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="42sp" />
+
+        <ImageView
+            android:id="@+id/iv_Clean_bianji1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_Clean_del"
+            android:paddingTop="5dp"
+            android:src="@mipmap/bianji_no" />
+
+        <ImageView
+            android:id="@+id/iv_Clean_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="101px"
+            android:layout_marginLeft="113px"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/fl_FrameLayout"
+            android:src="@mipmap/shanchu_no" />
+
+        <FrameLayout
+            android:id="@+id/fl_FrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="13dp"
+            android:layout_centerVertical="true"
+            >
+
+            <ImageView
+                android:id="@+id/iv_Clean_Switch_Open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@mipmap/kai" />
+
+            <ImageView
+                android:id="@+id/iv_Clean_Switch_Close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/guang"
+                />
+        </FrameLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

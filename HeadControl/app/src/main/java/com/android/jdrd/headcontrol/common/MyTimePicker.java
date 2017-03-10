@@ -25,7 +25,7 @@ public class MyTimePicker extends View {
     /**
      * text之间间距和minTextSize之比
      */
-    public static final float MARGIN_ALPHA = 2.8f;
+    public static final float MARGIN_ALPHA = 1.8f;
     /**
      * 自动回滚到中间的速度
      */

@@ -8,7 +8,6 @@
         android:id="@+id/ll_right_bar1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@null"
         android:layout_alignParentRight="true">
         <ImageView
             android:id="@+id/imgViewBtnRight"
@@ -22,7 +21,7 @@
 
         <LinearLayout
             android:id="@+id/ll_right_bar"
-            android:layout_width="234dp"
+            android:layout_width="234px"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@mipmap/zuolan"
@@ -32,23 +31,39 @@
                 android:id="@+id/tv_Battery_Level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:paddingTop="5dp"
+                android:paddingTop="@dimen/bar_right_text_marginTop01"
                 android:text="剩余100%电量"
+                android:gravity="center|center_horizontal"
                 android:textColor="#E8E8E8"
-                android:textSize="26sp" />
+                android:textSize="27px" />
 
             <TextView
+                android:id="@+id/tv_Battery_runTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:paddingTop="5dp"
+                android:paddingTop="@dimen/bar_right_text_marginTop02"
                 android:text="可运行10个小时"
                 android:textColor="#E8E8E8"
-                android:textSize="26sp" />
+                android:gravity="center|center_horizontal"
+                android:textSize="@dimen/bar_right_text_size" />
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="20dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/btn_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/tuichu_pre"
+                    android:gravity="center_vertical|bottom"
+                    />
+                </RelativeLayout>
             <!--<RelativeLayout-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="match_parent"-->
