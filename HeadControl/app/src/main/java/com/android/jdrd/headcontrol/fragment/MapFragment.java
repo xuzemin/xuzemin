@@ -945,7 +945,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     }else if(funtion.equals(Constant.Walk)){
                         JSONObject jsonObject = new JSONObject(data);
                         String flag = jsonObject.getString(Constant.Result);
-                        String reason = jsonObject.getString(Constant.Reason);
                         if(flag.equals("success")){
                             Constant.debugLog("继续转向"+string);
                             // 返回成功走的距离
@@ -980,6 +979,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                         }else if(flag.equals("walking")){
                             getUpPoint(jsonObject.getDouble("x"),jsonObject.getDouble("y"));
+                            String reason = jsonObject.getString(Constant.Reason);
                             if(reason.equals("obstacle")){
 
                             }else if(reason.equals("obstaclemove")){
@@ -1229,7 +1229,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             Constant.debugLog("第几个"+i+"左转右转"+(xs_tmp.get(i) - Constant.Current_x > 0));
                             Constant.debugLog(""+ (xs_tmp.get(i) - Constant.Current_x));
                             if(xs_tmp.get(i)/90 - Constant.Current_x > 0.1){
-                                send_data_degree(15);
+                                send_data_degree(8);
                                 thread.wait();
                                 IsX = true;
                                 sendDistance = xs_tmp.get(i)/90;
@@ -1249,7 +1249,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                             Constant.debugLog("第几个"+i+"左转右转"+(ys_tmp.get(i)-Constant.Current_y > 0));
                             if(ys_tmp.get(i)/90-Constant.Current_y > 0.1){
-                                send_data_degree(90);
+                                send_data_degree(88);
                                 thread.wait();
                                 IsX = false;
                                 sendDistance = ys_tmp.get(i)/90;
@@ -1273,13 +1273,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 resetTimer();
                                 if(arrayserchtime_tmp.get(i) == 1){
                                     Constant.debugLog("arrayserchtime_tmp = " + 0);
-                                    timer.schedule(task, 1 * 40 * 1000);
+                                    timer.schedule(task, 1 * 20 * 1000);
                                 }else if(arrayserchtime_tmp.get(i) == 2){
                                     Constant.debugLog("arrayserchtime_tmp = " + 1);
-                                    timer.schedule(task, 2 * 40 * 1000);
+                                    timer.schedule(task, 2 * 20 * 1000);
                                 }else if(arrayserchtime_tmp.get(i) == 3){
                                     Constant.debugLog("arrayserchtime_tmp = " + 2);
-                                    timer.schedule(task, 3 * 40 * 1000);
+                                    timer.schedule(task, 3 * 20 * 1000);
                                 }
                                 IsFind = false;
                                 Constant.getConstant().sendCamera(arrayscope_tmp.get(i),context);
@@ -1468,7 +1468,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(Constant.Current_degree - sendDegree < 8 && sendDegree - Constant.Current_degree < 8){
+                if(Constant.Current_degree - sendDegree < 3 && sendDegree - Constant.Current_degree < 3){
                     Constant.debugLog("转向正确");
                     if(tasknumber ==0){
                         tasknumber = 1;

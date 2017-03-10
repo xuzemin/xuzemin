@@ -231,31 +231,31 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                 //点击了电源栏
                 case R.id.iv_Battery:
                     IsClean = false;
-                    if(IsMap){
-                        if(MapFragment.Istouch || MapFragment.Isplan){
-                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
-                        }else{
+//                    if(IsMap){
+//                        if(MapFragment.Istouch || MapFragment.Isplan){
+//                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
+//                        }else{
                             changeBattery();
                             IsMap = false;
-                        }
-                    }else{
-                        changeBattery();
-                        IsMap = false;
-                    }
+//                        }
+//                    }else{
+//                        changeBattery();
+//                        IsMap = false;
+//                    }
                     break;
                 case R.id.iv_Clean:
-                    IsClean = true;
-                    if(IsMap){
-                        if(MapFragment.Istouch || MapFragment.Isplan){
-                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
-                        }else{
+//                    IsClean = true;
+//                    if(IsMap){
+//                        if(MapFragment.Istouch || MapFragment.Isplan){
+//                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
+//                        }else{
                             changeClean();
                             IsMap = false;
-                        }
-                    }else{
-                        changeClean();
-                        IsMap = false;
-                    }
+//                        }
+//                    }else{
+//                        changeClean();
+//                        IsMap = false;
+//                    }
                     break;
                 case R.id.iv_Map:
                     if(!IsMap){
@@ -263,7 +263,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                         changeMap();
                     }
                     break;
-
                 case R.id.rl_TitleList:
                     startAnimation();
                     break;
