@@ -789,7 +789,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             }
         });
         map_Plan = new ArrayList<>();
-        map_Plan.add("默认15秒");
+        map_Plan.add("默认5秒");
         map_Plan.add("与用户互动");
         int i = 0;
         while(i < 10){
@@ -831,6 +831,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map.put("distance",distance);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Walk,map);
     }
+
     public void send_data_degree(double degree){
         sendDegree = degree;
         Constant.debugLog("当前角度"+ Constant.Current_degree);
@@ -986,24 +987,24 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                         }else if(flag.equals("walking")){
                             getUpPoint(jsonObject.getDouble("x"),jsonObject.getDouble("y"));
-//                            String reason = jsonObject.getString(Constant.Reason);
-//                            if(reason.equals("obstacle")){
-//
-//                            }else if(reason.equals("obstaclemove")){
-//                                if(IsX){
-//                                    if(sendDistance - Constant.Current_x > 0.1){
-//                                        send_data_distance(sendDistance - Constant.Current_x);
-//                                    }else if(sendDistance - Constant.Current_x < -0.1){
-//                                        send_data_distance(Constant.Current_x - sendDistance);
-//                                    }
-//                                }else {
-//                                    if(sendDistance - Constant.Current_y > 0.1){
-//                                        send_data_distance(sendDistance - Constant.Current_y);
-//                                    }else if(sendDistance - Constant.Current_y < -0.1){
-//                                        send_data_distance(Constant.Current_y - sendDistance);
-//                                    }
-//                                }
-//                            }
+                            String reason = jsonObject.getString(Constant.Reason);
+                            if(reason.equals("obstacle")){
+
+                            }else if(reason.equals("obstaclemove")){
+                                if(IsX){
+                                    if(sendDistance - Constant.Current_x > 0.1){
+                                        send_data_distance(sendDistance - Constant.Current_x);
+                                    }else if(sendDistance - Constant.Current_x < -0.1){
+                                        send_data_distance(Constant.Current_x - sendDistance);
+                                    }
+                                }else {
+                                    if(sendDistance - Constant.Current_y > 0.1){
+                                        send_data_distance(sendDistance - Constant.Current_y);
+                                    }else if(sendDistance - Constant.Current_y < -0.1){
+                                        send_data_distance(Constant.Current_y - sendDistance);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -1025,10 +1026,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             while(iter.hasNext()){
                 HashMap<String,Vector<Float>> planList = new HashMap<>();
                 Map.Entry entry = (Map.Entry) iter.next();
-                String key = (String) entry.getKey();
 
                 planList = (HashMap<String, Vector<Float>>) entry.getValue();
 
+                String key = (String) entry.getKey();
                 Element keysElement = document.createElement("key");
                 keysElement.setAttribute("key",key);
 
@@ -1039,10 +1040,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                Vector<Float> arrayangle = planList.get("arrayangle");
                 Vector<Float> arraygametime = planList.get("arraygametime");
                 Vector<Float> scale_vector = planList.get("scale_number");
+
                 Element point_xs_ = document.createElement("point_xs");
-
                 Element scale = document.createElement("scale_number");
-
                 Element point_ys_ = document.createElement("point_ys");
                 Element arrayserchtime_ = document.createElement("arrayserchtime");
                 Element arrayscope_ = document.createElement("arrayscope");
@@ -1233,12 +1233,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     synchronized (thread){
                         try {
                             //转向需要增加调整
-                            send_data_degree(270);
+//                            send_data_degree(270);
                             tasknumber = 0;
                             Constant.debugLog("第几个"+i+"左转右转"+(xs_tmp.get(i) - Constant.Current_x > 0));
                             Constant.debugLog(""+ (xs_tmp.get(i) - Constant.Current_x));
                             if(xs_tmp.get(i)/90 - Constant.Current_x > 0.1){
-                                send_data_degree(8);
+                                send_data_degree(10);
                                 thread.wait();
                                 IsX = true;
                                 sendDistance = xs_tmp.get(i)/90;
@@ -1247,7 +1247,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 thread.wait();
 //                                }
                             }else if(xs_tmp.get(i)/90 - Constant.Current_x < -0.1){
-                                send_data_degree(180);
+                                send_data_degree(190);
                                 thread.wait();
                                 IsX = true;
                                 sendDistance = xs_tmp.get(i)/90;
@@ -1259,14 +1259,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             tasknumber = 2;
                             Constant.debugLog("第几个"+i+"左转右转"+(ys_tmp.get(i)-Constant.Current_y > 0));
                             if(ys_tmp.get(i)/90-Constant.Current_y > 0.1){
-                                send_data_degree(88);
+                                send_data_degree(100);
                                 thread.wait();
                                 IsX = false;
                                 sendDistance = ys_tmp.get(i)/90;
                                 send_data_distance(ys_tmp.get(i)/90 - Constant.Current_y);
                                 thread.wait();
                             }else if(ys_tmp.get(i)/90-Constant.Current_y < -0.1){
-                                send_data_degree(270);
+                                send_data_degree(280);
                                 thread.wait();
                                 IsX = false;
                                 sendDistance = ys_tmp.get(i)/90;
@@ -1305,7 +1305,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     IsAway = false;
                                     if (arraygametime_tmp.get(i) == 0) {
                                         Constant.debugLog("arraygametime_tmp = " + 0);
-                                        timer.schedule(task, 1 * 15 * 1000);
+                                        timer.schedule(task, 1 * 5 * 1000);
                                     } else if (arraygametime_tmp.get(i) == 1) {
                                         IsAway = true;
                                     } else {
@@ -1316,7 +1316,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     thread.wait();
 
                                     if (xs_tmp.get(i) / 90 - Constant.Current_x > 0.1) {
-                                        send_data_degree(8);
+                                        send_data_degree(10);
                                         thread.wait();
                                         IsX = true;
                                         sendDistance = xs_tmp.get(i) / 90;
@@ -1324,7 +1324,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                         Constant.debugLog("发送x坐标 = " + (xs_tmp.get(i) / 90 - Constant.Current_x));
                                         thread.wait();
                                     } else if (xs_tmp.get(i) / 90 - Constant.Current_x < -0.1) {
-                                        send_data_degree(180);
+                                        send_data_degree(190);
                                         thread.wait();
                                         IsX = true;
                                         sendDistance = xs_tmp.get(i) / 90;
@@ -1335,14 +1335,14 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     tasknumber = 8;
                                     Constant.debugLog("第几个" + i + "左转右转" + (ys_tmp.get(i) - Constant.Current_y > 0));
                                     if (ys_tmp.get(i) / 90 - Constant.Current_y > 0.1) {
-                                        send_data_degree(88);
+                                        send_data_degree(100);
                                         thread.wait();
                                         IsX = false;
                                         sendDistance = ys_tmp.get(i) / 90;
                                         send_data_distance(ys_tmp.get(i) / 90 - Constant.Current_y);
                                         thread.wait();
                                     } else if (ys_tmp.get(i) / 90 - Constant.Current_y < -0.1) {
-                                        send_data_degree(270);
+                                        send_data_degree(280);
                                         thread.wait();
                                         IsX = false;
                                         sendDistance = ys_tmp.get(i) / 90;
@@ -1367,7 +1367,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         for(int j = 0; j < 2;j++) {
                             tasknumber = 0;
                             if (0 - Constant.Current_x > 0.1) {
-                                send_data_degree(8);
+                                send_data_degree(10);
                                 thread.wait();
                                 tasknumber = 1;
                                 IsX = true;
@@ -1376,7 +1376,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 Constant.debugLog("发送x坐标 = " + (0 - Constant.Current_x));
                                 thread.wait();
                             } else if (0 - Constant.Current_x < -0.1) {
-                                send_data_degree(180);
+                                send_data_degree(190);
                                 thread.wait();
                                 tasknumber = 1;
                                 IsX = true;
@@ -1387,7 +1387,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                             tasknumber = 2;
                             if (0 - Constant.Current_y > 0.1) {
-                                send_data_degree(88);
+                                send_data_degree(100);
                                 thread.wait();
                                 tasknumber = 1;
                                 IsX = false;
@@ -1395,7 +1395,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 send_data_distance(0 - Constant.Current_y);
                                 thread.wait();
                             } else if (0 - Constant.Current_y < -0.1) {
-                                send_data_degree(270);
+                                send_data_degree(280);
                                 thread.wait();
                                 tasknumber = 1;
                                 IsX = false;
@@ -1404,7 +1404,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 thread.wait();
                             }
                         }
-                        send_data_degree(270);
+                        send_data_degree(280);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -1532,7 +1532,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(Constant.Current_degree - sendDegree < 3 && sendDegree - Constant.Current_degree < 3){
+//                if(Constant.Current_degree - sendDegree < 3 && sendDegree - Constant.Current_degree < 3){
                     Constant.debugLog("转向正确");
                     if(tasknumber ==0){
                         tasknumber = 1;
@@ -1547,10 +1547,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         tasknumber = 9;
                         handler.sendEmptyMessage(4);
                     }
-                }else{
-                    Constant.debugLog("继续转向");
-                    send_data_degree(sendDegree);
-                }
+//                }else{
+//                    Constant.debugLog("继续转向");
+//                    send_data_degree(sendDegree);
+//                }
             }
         }).start();
     }

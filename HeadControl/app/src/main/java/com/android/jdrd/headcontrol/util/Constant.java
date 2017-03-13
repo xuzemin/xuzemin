@@ -24,10 +24,12 @@ public class Constant {
     public static String gateway = "";
     public static int prefix = 24;
     public static String IP = "";
-    public static String IPLast = "188";
+    public static String IPLast = "106";
     public static String isConnectSocket = "";
-    public static String wifiname = "HUAWEI-GDRD";
-    public static String password = "88391477";
+    public static String wifiname = "TimeBox_8b319a";
+    public static String password = "12345678";
+//    public static String wifiname = "HUAWEI-GDRD";
+//    public static String password = "88391477";
     //测试用WI-FI
 //    public static String wifiname = "GDRD-3F";
 //    public static String password = "88391477";
