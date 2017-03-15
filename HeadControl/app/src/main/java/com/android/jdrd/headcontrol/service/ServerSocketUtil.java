@@ -1,13 +1,19 @@
 package com.android.jdrd.headcontrol.service;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.support.v7.app.NotificationCompat;
 
+import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.activity.WelcomeActivity;
 import com.android.jdrd.headcontrol.util.Constant;
+//import com.orbbec.TouchCursor.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,6 +85,9 @@ public class ServerSocketUtil extends Service {
 
     public String startServerSocket(int port) throws IOException {
 
+        //提升service进程优先级
+        setServiceForeground();
+
         serverSocket = new ServerSocket(port);
         Socket socket;
         Constant.debugLog("serverSocket is create....");
@@ -88,6 +97,20 @@ public class ServerSocketUtil extends Service {
             socket = serverSocket.accept();
             new Thread(new Task(socket)).start();
         }
+
+    }
+
+    private void setServiceForeground() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.mipmap.qi);
+        builder.setContentTitle("Socket通讯服务");
+        builder.setContentText("此服务用于通讯，请勿关闭");
+        Intent intent = new Intent();
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+        Notification notification = builder.build();
+        //启动到前台
+        startForeground(1, notification);
     }
 
     /*public static void sendDateToClient(String str, String ip) throws IOException {
@@ -112,13 +135,14 @@ public class ServerSocketUtil extends Service {
         }
     }*/
 
-    public static void sendDateToClient(String str) throws IOException {
+    public static synchronized void sendDateToClient(String str) throws IOException {
+        // TODO: 2017/3/8 0008 抛异常和捕获异常区别需确认
         String str2 = "*" + str + "#";
 
         try {
             Constant.debugLog("ip"+ip);
-            if(ip !=null) {
-                if (ip.equals("/192.168.1.100")) {
+             if(ip !=null) {
+                if (ip.equals(Constant.ip_bigScreen)) {
                     if (out1 != null) {
                         out1.write(str2.getBytes());
                     }
@@ -126,7 +150,7 @@ public class ServerSocketUtil extends Service {
                         out2.write(str2.getBytes());
                     }
 
-                } else if (ip.equals("/192.168.88.101")) {
+                } else if (ip.equals(Constant.ip_ros)) {
                     if (out1 != null) {
                         out1.write(str2.getBytes());
                     }
@@ -159,9 +183,9 @@ public class ServerSocketUtil extends Service {
             ip = socket.getInetAddress().toString();
             Constant.debugLog(ip);
 
-            if ("/192.168.1.100".equals(ip)) {
+            if (ip.equals(Constant.ip_bigScreen)) {
                 socket1 = socket;
-            } else if ("/192.168.88.101".equals(ip)) {
+            } else if (ip.equals(Constant.ip_ros)) {
                 socket2 = socket;
             } else {
                 Constant.debugLog("IP不对");
@@ -169,7 +193,7 @@ public class ServerSocketUtil extends Service {
 
             try {
 
-                if (ip.equals("/192.168.1.100")) {
+                if (ip.equals(Constant.ip_bigScreen)) {
                     in1 = socket1.getInputStream();
                     out1 = socket1.getOutputStream();
                     new Thread(new Runnable() {
@@ -179,7 +203,7 @@ public class ServerSocketUtil extends Service {
                         }
                     }).start();
 
-                } else if (ip.equals("/192.168.88.101")) {
+                } else if (ip.equals(Constant.ip_ros)) {
                     in2 = socket2.getInputStream();
                     out2 = socket2.getOutputStream();
 
@@ -201,14 +225,57 @@ public class ServerSocketUtil extends Service {
 
     }
 
+
     public void inputStreamParse(InputStream in) {
         byte[] buffer = new byte[1024];
+        int i = 0;
+
+        boolean flag = false;
+        boolean flag2 = false;
+        int len = 0;
 
         while (true) {
-            int len = 0;
             try {
-                len = in.read(buffer);
+                byte buf = (byte) in.read();
+//                Constant.debugLog("buf内容：" + buf);
+
+                    if('*' == buf) {
+                        flag = true;
+                        flag2 = true;
+                    }
+
+                    if('#' == buf) {
+                        flag = false;
+                    }
+
+                if (flag) {
+                    buffer[i] = buf;
+                    i++;
+                }else if(flag == false && flag2) {
+                    msg = new String(buffer, 1, i);
+                    msg = msg.trim();
+                    if(msg != null) {
+                        Constant.debugLog("msg的内容： " + msg);
+
+                        intent.putExtra("msg", msg);
+                        intent.setAction("com.jdrd.fragment.Map");
+                        sendBroadcast(intent);
+
+                        i = 0;
+                        for(int j = 0; j < buffer.length; j++) {
+                            buffer[j] = 0;
+                        }
+
+                        flag = false;
+                        flag2 = false;
+                    }
+                } else {
+                    Constant.debugLog("数据格式不对");
+                }
+
+
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
 
@@ -216,17 +283,16 @@ public class ServerSocketUtil extends Service {
                 break;
             }
 
-            msg = new String(buffer, 0, len);
-
-//            if (msg != null) {
-//                Constant.debugLog("msg = " + msg.toString() + "  ip地址： " + ip);
-//            } else {
-//                Constant.debugLog("hehe, msg为空");
-//            }
-
+            /*msg = new String(buffer, 0, len);
+            if (msg != null) {
+                Constant.debugLog("msg = " + msg.toString() + "  ip地址： " + ip);
+            } else {
+                Constant.debugLog("hehe, msg为空");
+            }
             intent.putExtra("msg", msg);
             intent.setAction("com.jdrd.fragment.Map");
-            sendBroadcast(intent);
+            sendBroadcast(intent);*/
+
         }
     }
 
@@ -243,8 +309,15 @@ public class ServerSocketUtil extends Service {
     }
 
     @Override
+    public void onDestroy() {
+        //若通讯服务挂掉，再次开启服务
+        Intent serverSocket = new Intent(this, ServerSocketUtil.class);
+        startService(serverSocket);
+        super.onDestroy();
+    }
+
+    @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
