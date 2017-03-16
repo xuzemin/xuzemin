@@ -1,8 +1,8 @@
-D:/xuzemin/xuzemin/SerialAndSocket/app/src/main/obj/local/mips64/objs/serial_port/com_skyworth_splicing_SerialPort.o: \
-  D:/xuzemin/xuzemin/SerialAndSocket/app/src/main/jni/com_skyworth_splicing_SerialPort.cpp \
-  D:/xuzemin/xuzemin/SerialAndSocket/app/src/main/jni/log.h \
-  D:/xuzemin/xuzemin/SerialAndSocket/app/src/main/jni/com_skyworth_splicing_SerialPort.h
+E:/xuzemin/SerialAndSocket/app/src/main/obj/local/mips64/objs/serial_port/com_skyworth_splicing_SerialPort.o: \
+  E:/xuzemin/SerialAndSocket/app/src/main/jni/com_skyworth_splicing_SerialPort.cpp \
+  E:/xuzemin/SerialAndSocket/app/src/main/jni/log.h \
+  E:/xuzemin/SerialAndSocket/app/src/main/jni/com_skyworth_splicing_SerialPort.h
 
-D:/xuzemin/xuzemin/SerialAndSocket/app/src/main/jni/log.h:
+E:/xuzemin/SerialAndSocket/app/src/main/jni/log.h:
 
-D:/xuzemin/xuzemin/SerialAndSocket/app/src/main/jni/com_skyworth_splicing_SerialPort.h:
+E:/xuzemin/SerialAndSocket/app/src/main/jni/com_skyworth_splicing_SerialPort.h:
