@@ -10,10 +10,6 @@ import android.util.Log;
 
 import java.util.List;
 
-/**
- *
- */
-
 public class WifiAdmin {
 
     private static final String TAG = "[WifiAdmin]";
@@ -38,7 +34,6 @@ public class WifiAdmin {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             Log.i(TAG, "setWifiEnabled.....end");

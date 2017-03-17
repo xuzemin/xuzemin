@@ -33,7 +33,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"
             android:layout_above="@+id/imageView"
-            android:text="@string/bilici"
+            android:text="@string/scale"
             android:gravity="center"
             android:textSize="24sp"
             android:background="@null"

@@ -193,7 +193,7 @@
             android:gravity="center"
             android:text="电源"
             android:textColor="#E8E8E8"
-            android:textSize="14sp" />
+            android:textSize="15px" />
 
         <RelativeLayout
             android:layout_width="match_parent"

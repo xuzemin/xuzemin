@@ -1,12 +1,12 @@
 package com.android.jdrd.headcontrol.dialog;
 
-/**
+/*
  * Created by Administrator on 2017/2/16.
+ * text for Map
  */
 
 import android.app.Dialog;
 import android.content.Context;
-import android.inputmethodservice.Keyboard;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +18,10 @@ import android.widget.TextView;
 import com.android.jdrd.headcontrol.R;
 
 /**
- * @Function: 自定义对话框
- * @Date: 2013-10-28
- * @Time: 下午12:37:43
- * @author Tom.Cai
+ * 自定义对话框
+ * 2013-10-28
+ * 下午12:37:43
+ *  Tom.Cai
  */
 public class MyDialog extends Dialog {
     private EditText editText;
@@ -60,14 +60,14 @@ public class MyDialog extends Dialog {
 
     /**
      * 确定键监听器
-     * @param listener
+     *
      */
     public void setOnPositiveListener(View.OnClickListener listener){
         positiveButton.setOnClickListener(listener);
     }
     /**
      * 取消键监听器
-     * @param listener
+     *
      */
     public void setOnNegativeListener(View.OnClickListener listener){
         negativeButton.setOnClickListener(listener);
@@ -75,9 +75,6 @@ public class MyDialog extends Dialog {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        return keyCode == KeyEvent.KEYCODE_BACK || super.onKeyDown(keyCode, event);
     }
 }

@@ -11,9 +11,7 @@ import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 
 import com.android.jdrd.headcontrol.R;
-import com.android.jdrd.headcontrol.activity.WelcomeActivity;
 import com.android.jdrd.headcontrol.util.Constant;
-//import com.orbbec.TouchCursor.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -235,9 +233,15 @@ public class ServerSocketUtil extends Service {
         int len = 0;
 
         while (true) {
+
+            byte buf = 0;
             try {
-                byte buf = (byte) in.read();
-//                Constant.debugLog("buf内容：" + buf);
+                buf = (byte) in.read();
+            } catch (IOException e) {
+                Constant.debugLog("异常了");
+                e.printStackTrace();
+            }
+                Constant.debugLog("buf内容：" + buf);
 
                     if('*' == buf) {
                         flag = true;
@@ -255,7 +259,8 @@ public class ServerSocketUtil extends Service {
                     msg = new String(buffer, 1, i);
                     msg = msg.trim();
                     if(msg != null) {
-                        Constant.debugLog("msg的内容： " + msg);
+                        ++len;
+                        Constant.debugLog("msg的内容： " + msg + "  次数：" +len);
 
                         intent.putExtra("msg", msg);
                         intent.setAction("com.jdrd.fragment.Map");
@@ -270,18 +275,19 @@ public class ServerSocketUtil extends Service {
                         flag2 = false;
                     }
                 } else {
+                    Constant.debugLog((char)buf + "");
                     Constant.debugLog("数据格式不对");
                 }
 
 
-            } catch (IOException e) {
+                if (buf == -1) {
+                    break;
+                }
 
+            /*} catch (IOException e) {
+                Constant.debugLog("异常了");
                 e.printStackTrace();
-            }
-
-            if (len == -1) {
-                break;
-            }
+            }*/
 
             /*msg = new String(buffer, 0, len);
             if (msg != null) {

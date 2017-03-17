@@ -14,7 +14,6 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.util.Constant;
 
@@ -22,20 +21,19 @@ import java.util.Vector;
 
 /**
  * Created by Administrator on 2017/1/18.
+ * text for surfaceView
  */
 
 public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder=null; //控制对象
-    public Vector<Float> point_xs=new Vector<Float>();
-    public Vector<Float> point_ys=new Vector<Float>();
+    public Vector<Float> point_xs=new Vector<>();
+    public Vector<Float> point_ys=new Vector<>();
     public Paint p;
-    public static int Scale = 90;
-    public float scalenumber = 1,scalepoint = 15;
-    public float scaleTextSize = 3 ;
-    public float scale = 1,translate_x = 0,translate_y = 0;
+    public float scalepoint = 15;
+    public float translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
-    public Vector<Double> path_xs=new Vector<Double>();
-    public Vector<Double> path_ys=new Vector<Double>();
+    public Vector<Double> path_xs=new Vector<>();
+    public Vector<Double> path_ys=new Vector<>();
     public Bitmap bitmap = null,rotbitmap = null;
     public Double bitmap_x = 0.0 , bitmap_y = 0.0;
     public Double center_x = 0.0 , center_y = 0.0;
@@ -78,16 +76,16 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void doDraw(Canvas canvas) {
         // TODO Auto-generated method stub
-        super.onDraw(canvas);
+        super.draw(canvas);
         Matrix matrix = new Matrix();
 //        matrix.postScale(scale,scale);
         matrix.postTranslate(translate_x,translate_y);
         canvas.concat(matrix);
-        canvas.drawColor(getResources().getColor(R.color.darkgray));//这里是绘制背景
+        canvas.drawColor(getResources().getColor(R.color.darkgray,getResources().newTheme()));//这里是绘制背景
 
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿
-        p.setColor(getResources().getColor(R.color.path));
+        p.setColor(getResources().getColor(R.color.path,getResources().newTheme()));
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 5.0);
         bitmap_x = Constant.Current_x * 90 - bitmap.getWidth()/2;
@@ -99,7 +97,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 Ishave = false;
                 if(path_xs!=null) {
                     for (int i = 0; i < path_xs.size(); i++) {
-                        if (path_xs.elementAt(i) == center_x && path_ys.elementAt(i) == center_y) {
+                        if (path_xs.elementAt(i).equals(center_x) && path_ys.elementAt(i).equals(center_y)) {
                             Ishave = true;
                         }
                     }
@@ -123,7 +121,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         drawtable(canvas);
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿
-        p.setColor(getResources().getColor(R.color.path));
+        p.setColor(getResources().getColor(R.color.path,getResources().newTheme()));
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 2.0);
         p.setTextSize(25);
@@ -131,9 +129,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         for(int i=0 ,length = point_xs.size();i<length;i++) {
             if(Isplan){
                 if(i < current_plan_number){
-                    p.setColor(getResources().getColor(R.color.origen));
+                    p.setColor(getResources().getColor(R.color.origen,getResources().newTheme()));
                 }else{
-                    p.setColor(getResources().getColor(R.color.path));
+                    p.setColor(getResources().getColor(R.color.path,getResources().newTheme()));
                 }
                 canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
                 canvas.drawText((i+1)+"",point_xs.elementAt(i) - 7, point_ys.elementAt(i) +7,p);
@@ -168,20 +166,19 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-    class MyLoop implements Runnable{
+    private class MyLoop implements Runnable{
         //熟悉游戏编程的应该很面熟吧，主循环
         @Override
         public void run() {
-            // TODO Auto-generated method stub
-            Canvas c = null;
+            Canvas c ;
             while(true){
                 try{
                     if(temp == 5){
                         temp = 0;
                         paint = true;
                     }else{
-                        Constant.getConstant().getDegree();
-                        Constant.debugLog("Current_degree"+Constant.Current_degree);
+//                        Constant.getConstant().getDegree();
+//                        Constant.debugLog("Current_degree"+Constant.Current_degree);
                         temp ++;
                     }
                     c=holder.lockCanvas();
@@ -190,6 +187,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     Thread.sleep(50);
                 }catch(Exception e){
 //                    holder.unlockCanvasAndPost(c);
+                    Constant.debugLog(e.toString());
                 }
             }
         }
@@ -224,30 +222,28 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setStyle(Paint.Style.FILL);
         p.setTextSize(20);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
-        int x = 10;
-        for(int y=0,length = myview_height/Scale;y <= length ; y++) {
+        for(int y=0,length = myview_height/Constant.SCALE_NUMBER;y <= length ; y++) {
 //            if( y % 3 == 0){
 //                p.setStrokeWidth((float) scaleTextSize);
 //                x = y / 3;
             if(y != 0){
-                canvas.drawText(y+"",Float.valueOf(5),Float.valueOf(y*Scale+20),p);
-
+                canvas.drawText(y+"",(float) 5,y*Constant.SCALE_NUMBER+20,p);
 //                }else{
 //                    canvas.drawText(x * scalenumber+"",Float.valueOf(5),Float.valueOf(y*Scale+30),p);
             }
-            canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
+            canvas.drawLine(0,y*Constant.SCALE_NUMBER,myview_width,y*Constant.SCALE_NUMBER,p);
 //            }else{
 //                p.setStrokeWidth((float) scaleTextSize /3);
 //                canvas.drawLine(0,y*Scale,myview_width,y*Scale,p);
 //            }
         }
-        for(int y=0,length = myview_width/Scale;y <= length;y++) {
+        for(int y=0,length = myview_width/Constant.SCALE_NUMBER;y <= length;y++) {
 //            if( y % 3 == 0){
 //                p.setStrokeWidth((float) scaleTextSize);
-            canvas.drawLine(y*Scale,0,y*Scale,myview_height,p);
+            canvas.drawLine(y*Constant.SCALE_NUMBER,0,y*Constant.SCALE_NUMBER,myview_height,p);
 //                x = y / 3;
 //                if(x != 0){
-            canvas.drawText(y+"",Float.valueOf(y*Scale+5),Float.valueOf(20),p);
+            canvas.drawText(y+"",y*Constant.SCALE_NUMBER+5,20,p);
 //                }
 //            }else{
 //                p.setStrokeWidth((float) scaleTextSize /3);
@@ -260,10 +256,10 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     {
         double H = 10; // 箭头高度
         double L = 1; // 底边的一半
-        int x3 = 0;
-        int y3 = 0;
-        int x4 = 0;
-        int y4 = 0;
+        int x3 ;
+        int y3 ;
+        int x4 ;
+        int y4 ;
         double awrad = Math.atan(L / H); // 箭头角度
         double arraow_len = Math.sqrt(L * L + H * H); // 箭头的长度
         double[] arrXY_1 = rotateVec(ex - sx, ey - sy, awrad, true, arraow_len);
@@ -272,13 +268,13 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         double y_3 = ey - arrXY_1[1];
         double x_4 = ex - arrXY_2[0]; // (x4,y4)是第二端点
         double y_4 = ey - arrXY_2[1];
-        Double X3 = new Double(x_3);
+        Double X3 = x_3;
         x3 = X3.intValue();
-        Double Y3 = new Double(y_3);
+        Double Y3 = y_3;
         y3 = Y3.intValue();
-        Double X4 = new Double(x_4);
+        Double X4 = x_4;
         x4 = X4.intValue();
-        Double Y4 = new Double(y_4);
+        Double Y4 = y_4;
         y4 = Y4.intValue();
         // 画线
         canvas.drawLine((float)sx, (float)sy, (float)ex, (float)ey,p);

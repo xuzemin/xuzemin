@@ -59,8 +59,8 @@ public class DBTestActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.del:
-                int del = headControlDao.del("张三");
-                Constant.debugLog("删除了" + del + "行");
+//                int del = headControlDao.del("张三");
+//                Constant.debugLog("删除了" + del + "行");
                 break;
             case R.id.update:
 //                HeadControlBean bean2 = new HeadControlBean();

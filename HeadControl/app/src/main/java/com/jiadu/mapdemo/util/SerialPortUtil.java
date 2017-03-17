@@ -9,23 +9,25 @@ import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/2/20.
+ * text for sensor
  */
 public class SerialPortUtil {
     /**
      * Called when the activity is first created.
      */
 
-    private static String SERIALPORTNAME = "/dev/ttyUSB1";
+    private static final String SERIALPORTNAME = "/dev/ttyUSB1";
 
-    FileInputStream mInputStream;
-    SerialPort mSp;
+    private FileInputStream mInputStream;
+    private SerialPort mSp;
     private boolean mFlag =true;
 
     private IMUDataBean mBean = null;
     private static SerialPortUtil spu;
 
     /**
-     * @return使用前需要调用openSerialPort(),否则返回null
+     * 获取sensor data
+     * 此方法需要在open调用之后使用
      */
     public IMUDataBean getBean() {
         IMUDataBean temp = mBean;
@@ -52,8 +54,9 @@ public class SerialPortUtil {
 
 
     /**
+     *
      * 不使用,需要close(),释放资源
-     * @throws IOException
+     *
      */
     public void openSerialPort() throws IOException,SecurityException {
 

@@ -15,6 +15,7 @@ import com.android.jdrd.headcontrol.R;
 
 /**
  * Created by Administrator on 2017/2/9.
+ * text for Map
  */
 
 public class CustomDialog extends Dialog {
@@ -24,11 +25,11 @@ public class CustomDialog extends Dialog {
         builder = new Builder(context);
     }
 
-    public CustomDialog(Context context, int theme) {
+    private  CustomDialog(Context context, int theme) {
         super(context, theme);
     }
 
-    public static class Builder {
+    private static class Builder {
         private Context context;
         private String title;
         private String message;
@@ -38,7 +39,7 @@ public class CustomDialog extends Dialog {
         private OnClickListener positiveButtonClickListener;
         private OnClickListener negativeButtonClickListener;
 
-        public Builder(Context context) {
+        private Builder(Context context) {
             this.context = context;
         }
 
@@ -50,8 +51,8 @@ public class CustomDialog extends Dialog {
         /**
          * Set the Dialog message from resource
          *
-         * @param title
-         * @return
+         * title
+         *
          */
         public Builder setMessage(int message) {
             this.message = (String) context.getText(message);
@@ -61,8 +62,7 @@ public class CustomDialog extends Dialog {
         /**
          * Set the Dialog title from resource
          *
-         * @param title
-         * @return
+         *
          */
         public Builder setTitle(int title) {
             this.title = (String) context.getText(title);
@@ -72,8 +72,7 @@ public class CustomDialog extends Dialog {
         /**
          * Set the Dialog title from String
          *
-         * @param title
-         * @return
+         *
          */
 
         public Builder setTitle(String title) {
@@ -89,8 +88,7 @@ public class CustomDialog extends Dialog {
         /**
          * Set the positive button resource and it's listener
          *
-         * @param positiveButtonText
-         * @return
+
          */
         public Builder setPositiveButton(int positiveButtonText,
                                          OnClickListener listener) {
@@ -128,9 +126,9 @@ public class CustomDialog extends Dialog {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
             final CustomDialog dialog = new CustomDialog(context, R.style.Dialog);
-            View layout = inflater.inflate(R.layout.dialog_warn, null);
+            View layout = inflater.inflate(R.layout.dialog_warn,null);
             dialog.addContentView(layout, new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             // set the dialog title
             ((TextView) layout.findViewById(R.id.title)).setText(title);
             // set the confirm button
@@ -138,7 +136,7 @@ public class CustomDialog extends Dialog {
                 ((Button) layout.findViewById(R.id.positiveButton))
                         .setText(positiveButtonText);
                 if (positiveButtonClickListener != null) {
-                    ((Button) layout.findViewById(R.id.positiveButton))
+                    (layout.findViewById(R.id.positiveButton))
                             .setOnClickListener(new View.OnClickListener() {
                                 public void onClick(View v) {
                                     positiveButtonClickListener.onClick(dialog,
@@ -156,7 +154,7 @@ public class CustomDialog extends Dialog {
                 ((Button) layout.findViewById(R.id.negativeButton))
                         .setText(negativeButtonText);
                 if (negativeButtonClickListener != null) {
-                    ((Button) layout.findViewById(R.id.negativeButton))
+                    (layout.findViewById(R.id.negativeButton))
                             .setOnClickListener(new View.OnClickListener() {
                                 public void onClick(View v) {
                                     negativeButtonClickListener.onClick(dialog,
@@ -179,8 +177,8 @@ public class CustomDialog extends Dialog {
                         .removeAllViews();
                 ((LinearLayout) layout.findViewById(R.id.content)).addView(
                         contentView, new ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.FILL_PARENT,
-                                ViewGroup.LayoutParams.FILL_PARENT));
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT));
             }
             dialog.setContentView(layout);
             return dialog;
@@ -190,9 +188,6 @@ public class CustomDialog extends Dialog {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
+        return keyCode!=KeyEvent.KEYCODE_BACK && super.onKeyDown(keyCode, event);
     }
 }
