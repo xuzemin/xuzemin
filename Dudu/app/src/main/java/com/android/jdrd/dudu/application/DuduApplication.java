@@ -6,7 +6,8 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 
 /**
- * Created by jdrd on 2017/3/23.
+ * Created by xuzemin on 2017/3/23.
+ * init for ifly
  */
 
 public class DuduApplication extends Application{
