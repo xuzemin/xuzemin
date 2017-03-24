@@ -1,0 +1,51 @@
+#BNF+IAT 1.0 UTF-8;
+!grammar call;
+!slot <move>;
+
+!slot <cmd>;
+
+!slot <movePre>;
+
+!slot <cmdPre>;
+
+!slot <market>;
+
+!slot <stop>;
+
+!slot <who>;
+
+!slot <howOld>;
+
+!slot <function>;
+
+!start <cmdStart>;
+<cmdStart>:<movePre><move>
+
+|<cmdPre><cmd>
+
+|<market>
+
+|<stop>
+
+|<who>
+
+|<howOld>
+
+|<function>;
+
+<movePre>:我想|我要|准备|开始;
+<move>:前进|后退|左转|右转;
+
+<cmdPre>:我想|我要|我想玩|我要玩|打开|关闭;
+<cmd>:游戏|地图|清洁|跳舞|电子锁|行走|返回|图库|AR相机|AR拍摄|茄子|美颜相机|拍照;
+
+<stop>:停止|停下来;
+
+<market>:推销;
+
+<who>:你是谁|你叫什么名字|名字;
+
+<howOld>:几岁|多大了|几岁了;
+
+<function>:功能;
+

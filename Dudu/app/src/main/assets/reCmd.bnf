@@ -1,0 +1,66 @@
+#BNF+IAT 1.0 UTF-8;
+!grammar call;
+!slot <movePre>;
+
+!slot <move>;
+
+!start <cmdStart>;
+
+!slot <want>;
+
+!slot <cmdPre>;
+
+!slot <cmd>;
+
+!slot <stop>;
+
+!slot <you>;
+
+!slot <name>;
+
+!slot <age>;
+
+!slot <have>;
+
+!slot <can>;
+
+!slot <moveUp>;
+
+!slot <takePhoto>;
+
+!slot <re>;
+
+<cmdStart>:<startMove>|<startPlay1>|<startPlay2>|<stop>|<market>|<re>|<who>|<howOld>|<function>|<moveUp>|<retakePhoto>;
+
+<startMove>:[<movePre>]<move>;
+<movePre>:准备|开始|继续;
+<move>:前进|后退|左转|右转;
+
+<startPlay1>:[<want>][<cmdPre>]<cmd>;
+<startPlay2>:<cmd><cmdPre>;
+<want>:我想|我要|我想玩|我要玩|给我|帮我;
+<cmdPre>:打开|关闭|关掉|显示|展示|开启|开始|结束;
+<cmd>:游戏|地图|清洁|跳舞|行走|AR相机|AR拍摄|相机|手势|扫描;
+
+<stop>:停止|停下来|家都家都;
+
+<market>:推销;
+
+<who>:[<you>]<name>;
+<you>:你;
+<name>:你是谁|叫什么|叫什么名字|名字|的名字;
+
+<howOld>:[<you>]<age>;
+<age>:几岁|多大了|几岁了;
+
+<function>:[<you>][<have>]<can>;
+<have>:有什么;
+<can>:功能|会什么|会干嘛;
+
+<moveUp>:动起来;
+
+<retakePhoto>:[<re>]<takePhoto>;
+<re>:重新;
+<takePhoto>:拍照|茄子;
+
+

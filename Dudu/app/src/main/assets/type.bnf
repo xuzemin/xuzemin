@@ -1,0 +1,6 @@
+#BNF+IAT 1.0 UTF-8;
+!grammar type;
+!slot <type>;
+!start <typeStart>;
+<typeStart>:<type>;
+<type>:安卓|windows;
