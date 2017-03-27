@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">HeadControl</string>
+
+    <string name="map">导航模块</string>
+    <string name="map_top">地图</string>
+
+    <string name="button_left">左</string>
+    <string name="button_right">右</string>
+    <string name="button_up">上</string>
+    <string name="button_down">下</string>
+
+    <string name="button_pointchooce">即时操控</string>
+    <string name="button_pathplan">路线规划</string>
+    <string name="button_cruise">漫游行走</string>
+    <string name="button_return">地图还原</string>
+    <string name="button_setreturn">设置原点</string>
+
+    <string name="button_execut">执行路线</string>
+    <string name="button_plan">规划新路线</string>
+    <string name="button_remove">删除路线</string>
+    <string name="button_plan_back">停止路线</string>
+    <string name="button_scale">请选择地图比例</string>
+    <string name="plan_change">路线调整</string>
+    <string name="button_path">请选择路线</string>
+    <string name="serchtime">找人时间</string>
+    <string name="scope">找人范围</string>
+    <string name="angle">转弯角度</string>
+    <string name="gametime">互动时间</string>
+    <string name="hintplan">路线1</string>
+    <string name="button_clearlast">清除当前</string>
+    <string name="button_clearall">清除所有</string>
+    <string name="scale">1:1米</string>
+    <string name="scale_10">1:10米</string>
+    <string name="scale_100">1:100米</string>
+    <string name="scale_2">1:2米</string>
+
+    <string name="button_point">请点击地图移动</string>
+    <string name="savenext">下一步</string>
+    <string name="move">移动</string>
+    <string name="button_choose">坐标移动</string>
+    <string name="roam_start">开始漫游</string>
+    <string name="roam_stop">停止漫游</string>
+    <string name="button_saveall">规划完毕</string>
+    <string name="finishplan">请设置路线名称</string>
+    <string name="warn">提醒</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="warn_info">正在离开路线规划，确定不保存？</string>
+    <string name="change_save">保存修改</string>
+    <string name="back">返回上一步</string>
+    <string name="title_activity_test">TestActivity</string>
+</resources>

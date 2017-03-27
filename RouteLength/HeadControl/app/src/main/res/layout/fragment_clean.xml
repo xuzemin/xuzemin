@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@mipmap/dingbu"
+            android:textColor="#E8E8E8"
+            android:gravity="center"
+            android:text="清洁"
+            android:textSize="15px" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/ll_Clean_Main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/ll_Clean_Bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dp"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:layout_width="1404px"
+                            android:layout_height="550px"
+                            android:layout_marginTop="25px"
+                            android:layout_marginBottom="25px"
+                            android:background="@mipmap/kuang_bg"
+                            android:orientation="vertical"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center|center_horizontal"
+                            >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                               >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="49px"
+                                    android:layout_marginTop="40px"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="清洁时间设置"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="33sp" />
+
+                                <ImageView
+                                    android:id="@+id/add_time_imageView"
+                                    android:layout_width="48px"
+                                    android:layout_height="48px"
+                                    android:layout_marginTop="31px"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="25dp"
+                                    android:layout_marginRight="100dp"
+                                    android:src="@mipmap/tianji_pre" />
+                            </RelativeLayout>
+                            <!--存放添加时间列表-->
+                            <!--第一组时间-->
+                            <ScrollView
+                                android:id="@+id/sv_top"
+                                android:layout_width="wrap_content"
+                                android:layout_height="390px"
+                                android:fadingEdge="none">
+                                <LinearLayout
+                                    android:id="@+id/ll_addTimeLin"
+                                    android:layout_width="1404px"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+                                    <!--<RelativeLayout-->
+                                    <!--android:id="@+id/rr_time_bar"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginTop="33px"-->
+                                    <!--android:layout_marginRight="20dp"-->
+                                    <!--android:layout_marginLeft="20dp"-->
+                                    <!--android:background="@mipmap/liebiaokuan"-->
+                                    <!--&gt;-->
+
+                                    <!--<ImageView-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginLeft="38px"-->
+                                    <!--android:layout_marginRight="61px"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:src="@mipmap/shijian" />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tv_Clean_Start_Hour1"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_marginLeft="180dp"-->
+                                    <!--android:text="08"-->
+                                    <!--android:textColor="@color/white"-->
+                                    <!--android:textSize="42sp" />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tv_Start1"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_toRightOf="@+id/tv_Clean_Start_Hour1"-->
+                                    <!--android:text=":"-->
+                                    <!--android:textColor="@color/white"-->
+                                    <!--android:textSize="42sp" />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tv_Clean_Start_Minute1"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_toRightOf="@+id/tv_Start1"-->
+                                    <!--android:text="00"-->
+                                    <!--android:textColor="@color/white"-->
+                                    <!--android:textSize="42sp" />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tv_Clean_End_Hour1"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_marginLeft="22dp"-->
+                                    <!--android:layout_toRightOf="@+id/tv_Clean_Start_Minute1"-->
+                                    <!--android:text="09"-->
+                                    <!--android:textColor="@color/white"-->
+                                    <!--android:textSize="42sp" />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tv_End_maohao1"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_toRightOf="@+id/tv_Clean_End_Hour1"-->
+                                    <!--android:text=":"-->
+                                    <!--android:textColor="@color/white"-->
+                                    <!--android:textSize="42sp" />-->
+
+                                    <!--<TextView-->
+                                    <!--android:id="@+id/tv_Clean_End_Minute1"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_toRightOf="@+id/tv_End_maohao1"-->
+                                    <!--android:text="00"-->
+                                    <!--android:textColor="@color/white"-->
+                                    <!--android:textSize="42sp" />-->
+
+                                    <!--<ImageView-->
+                                    <!--android:id="@+id/iv_Clean_bianji1"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginRight="10dp"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_toLeftOf="@+id/iv_Clean_del"-->
+                                    <!--android:paddingTop="5dp"-->
+                                    <!--android:src="@mipmap/bianji_no" />-->
+
+                                    <!--<ImageView-->
+                                    <!--android:id="@+id/iv_Clean_del"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_marginRight="101px"-->
+                                    <!--android:layout_marginLeft="113px"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--android:layout_toLeftOf="@+id/fl_FrameLayout"-->
+                                    <!--android:src="@mipmap/shanchu_no" />-->
+
+                                    <!--<FrameLayout-->
+                                    <!--android:id="@+id/fl_FrameLayout"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:layout_alignParentRight="true"-->
+                                    <!--android:layout_marginRight="13dp"-->
+                                    <!--android:layout_centerVertical="true"-->
+                                    <!--&gt;-->
+
+                                    <!--<ImageView-->
+                                    <!--android:id="@+id/iv_Clean_Switch_Open"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:src="@mipmap/kai" />-->
+
+                                    <!--<ImageView-->
+                                    <!--android:id="@+id/iv_Clean_Switch_Close"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:src="@mipmap/guang"-->
+                                    <!--/>-->
+                                    <!--</FrameLayout>-->
+                                    <!--</RelativeLayout>-->
+                                </LinearLayout>
+
+                        </ScrollView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="1404px"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom|center_vertical"
+                            android:layout_marginTop="25px"
+                            android:layout_marginBottom="25px"
+                            android:background="@mipmap/kuang_bg"
+                            android:orientation="vertical"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center|center_horizontal"
+
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="40px"
+                                android:layout_marginBottom="42px"
+                                android:text="清洁用水量"
+                                android:layout_marginLeft="20dp"
+                                android:textColor="#FFFFFF"
+                                android:textSize="33sp" />
+
+                            <!--清洁模式-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginBottom="20dp"
+                                android:orientation="horizontal">
+
+                                <FrameLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    >
+
+                                    <ImageView
+                                        android:id="@+id/iv_Clean_yaguang_no"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/yaguang_no" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_Clean_yaguang_per"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/yaguang_pre"
+                                        android:visibility="gone" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    >
+
+                                    <ImageView
+                                        android:id="@+id/iv_Clean_biaozhun_per"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/biaozhun_pre"
+                                        android:visibility="gone" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_Clean_biaozhun_no"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/biaozhun_no" />
+                                </FrameLayout>
+
+                                <FrameLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                   >
+
+                                    <ImageView
+                                        android:id="@+id/iv_Clean_liangguang_no"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/biaozhun_no" />
+
+                                    <ImageView
+                                        android:id="@+id/iv_Clean_liangguang_per"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:scaleType="fitXY"
+                                        android:src="@mipmap/biaozhun_pre"
+                                        android:visibility="gone" />
+                                </FrameLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!--319-->
+                    <LinearLayout
+                        android:visibility="gone"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:orientation="vertical"
+                         android:layout_alignParentTop="true"
+                         android:layout_alignParentLeft="true"
+                         android:layout_alignParentStart="true">
+                         <TextView
+                             android:layout_width="match_parent"
+                             android:layout_height="28dp"
+                             android:background="@mipmap/dingbu"
+                             android:gravity="center"
+                             android:text="清洁"
+                             android:textColor="#E8E8E8"
+                             android:textSize="15sp" />
+                         <Button
+                             android:visibility="gone"
+                             android:id="@+id/btn_Clean_Save"
+                             android:layout_width="40dp"
+                             android:layout_height="match_parent"
+                             android:background="@drawable/btn_save_background"
+                             android:gravity="center"
+                             android:text="保存"
+                             android:textColor="@color/white"
+                             android:textSize="12sp" />
+                     </LinearLayout>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+            <!--**-->
+
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rr_right_bar_clean"-->
+                <!--android:layout_width="290dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignParentRight="true">-->
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_alignParentRight="true">-->
+                    <!--<RelativeLayout-->
+                        <!--android:id="@+id/rr_right_bar_clean1"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_alignParentRight="true">-->
+
+
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="234dp"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:background="@mipmap/zuolan"-->
+                            <!--android:orientation="vertical">-->
+
+                            <!--<TextView-->
+                                <!--android:id="@+id/tv_Battery_Level"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginLeft="10dp"-->
+                                <!--android:layout_marginTop="24dp"-->
+                                <!--android:text="剩余100%电量"-->
+                                <!--android:textColor="@color/white"-->
+                                <!--android:textSize="26sp" />-->
+
+                            <!--<TextView-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginLeft="10dp"-->
+                                <!--android:layout_marginTop="24dp"-->
+                                <!--android:text="可运行10个小时"-->
+                                <!--android:textColor="@color/white"-->
+                                <!--android:textSize="26sp" />-->
+                        <!--</LinearLayout>-->
+                    <!--</RelativeLayout>-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/img_ViewBtnRightClean"-->
+                        <!--android:layout_width="53dp"-->
+                        <!--android:layout_height="49dp"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:background="@mipmap/you_yc"-->
+
+                        <!--/>-->
+                <!--</RelativeLayout>-->
+            <!--</RelativeLayout>-->
+
+
+
+
+
+        </LinearLayout>
+
+        <include layout="@layout/clean_rightbar"
+            >
+        </include>
+
+    </RelativeLayout>
+
+</LinearLayout>
