@@ -1,0 +1,135 @@
+#BNF+IAT 1.0 UTF-8;
+!grammar call;
+!slot <contact>;
+!slot <callPre>;
+!slot <callPhone>;
+!slot <callTo>;
+
+!slot <movePre>;
+!slot <move>;
+
+!slot <cmdPre>;
+!slot <cmd>;
+
+!slot <animation>;
+
+!slot <good>;
+
+!slot <general>;
+
+!slot <bad>;
+
+!slot <price>;
+
+!slot <goodbye>;
+
+!slot <buy>;
+
+!slot <touch>;
+
+!slot <small>;
+
+!slot <big>;
+
+!slot <hyperCrystal>;
+
+!slot <highDefinition>;
+
+!slot <black>;
+
+!slot <white>;
+
+!slot <golden>;
+
+!slot <windows>;
+
+!slot <android>;
+
+!start <callStart>;
+<callStart>:
+[<callPre>][<callTo>]<contact><callPhone>
+|[<callPre>]<callPhone>[<callTo>]<contact>
+|[<callPre>]<callPhone>
+
+|<movePre><move>
+
+|<cmdPre><cmd>
+
+|<animation>
+
+|<good>
+
+|<general>
+
+|<bad>
+
+|<price>
+
+|<goodbye>
+
+|<buy>
+
+|<touch>
+
+|<small>
+
+|<big>
+
+|<hyperCrystal>
+
+|<highDefinition>
+
+|<black>
+
+|<white>
+
+|<golden>
+
+|<windows>
+
+|<android>;
+
+<contact>:庆威|小孔;
+<callPre>:我要|我想|我想要;
+<callPhone>:打电话;
+<callTo>:给;
+
+<movePre>:我想|我要|准备|开始;
+<move>:前进|向前|后退|向后|左转|向左|右转|向右;
+
+<cmdPre>:我想|我要|我想玩|我要玩|打开|关闭;
+<cmd>:游戏|地图|清洁|跳舞|电子锁|行走|走|返回|图库;
+
+<animation>:惊讶|大哭|惊喜|期待|撒娇|再见|热情|场景|推销|停止;
+
+<good>:好的|可以|我需要|我看看|好|我想看|挺好的;
+
+<general>:随便|就这样|还行吧|无所谓|一般;
+
+<bad>:不喜欢|不用|不好|不想看|不需要|不要;
+
+<price>:多少钱|怎么卖|价格|怎么买;
+
+<goodbye>:道别|拜拜|再见;
+
+<buy>:拿一个|我要了|买|那买一台|然后呢|别的|继续说|在|我在|还在|在的|还有呢;
+
+<touch>:触摸的|触摸|看看触摸的|喜欢触摸的;
+
+<small>:小的|小|要小的|看看小的|小的怎么样;
+
+<big>:大的|大|要大的|看看大的|大的怎么样;
+
+<hyperCrystal>:超清的|看看超清的|超清的怎么样|超清;
+
+<highDefinition>:高清的|看看高清的|高清的怎么样|高清;
+
+<black>:黑色的|黑色|看看黑色的|黑色的怎么样|黑;
+
+<white>:白色的|白色|看看白色的|白色的怎么样|白;
+
+<golden>:金色的|金色|看看金色的|金色的怎么样|金;
+
+<windows>:看看windows的|windows的|看看windows的|瞧瞧windows的|windows|windows的怎么样;
+
+<android>:安卓的|看看安卓的|安卓的怎么样|瞧瞧安卓的|安卓;
