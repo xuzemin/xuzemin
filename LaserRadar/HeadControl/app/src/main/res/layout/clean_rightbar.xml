@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/rr_right_bar_clean_all"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="28dp"
+        android:layout_alignParentRight="true">
+        <ImageView
+            android:id="@+id/img_btnViewRightClean"
+            android:layout_width="53dp"
+            android:layout_height="49dp"
+            android:layout_toLeftOf="@+id/rr_right_bar_clean1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:background="@mipmap/you_yc"
+            />
+        <LinearLayout
+            android:id="@+id/rr_right_bar_clean1"
+            android:layout_width="234px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/zuolan"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_Clean_Level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/bar_right_text_marginTop01"
+                android:text="剩余100%电量"
+                android:textColor="#E8E8E8"
+                android:gravity="center|center_horizontal"
+                android:textSize="27px" />
+
+            <TextView
+                android:id="@+id/tv_Clean_runTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|center_horizontal"
+                android:paddingTop="@dimen/bar_right_text_marginTop02"
+                android:text="可运行10个小时"
+                android:textColor="#E8E8E8"
+                android:textSize="27px"/>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="20dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/btn_exit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/tuichu_pre"
+                    android:gravity="center_vertical|bottom"
+                    />
+            </RelativeLayout>
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginBottom="7dp"-->
+                <!--android:background="@drawable/btn_background"-->
+                <!--android:clickable="true">-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_Map1"-->
+                    <!--android:layout_width="168dp"-->
+                    <!--android:layout_height="70dp"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_gravity="left"-->
+                    <!--android:clickable="true"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:src="@mipmap/tuichu_no"-->
+                    <!--android:visibility="visible" />-->
+            <!--</RelativeLayout>-->
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>
