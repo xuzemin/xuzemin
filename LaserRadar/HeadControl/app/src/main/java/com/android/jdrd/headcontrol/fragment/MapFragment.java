@@ -1,6 +1,7 @@
 package com.android.jdrd.headcontrol.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -78,7 +79,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private MyReceiver receiver;
 
     private Map map ;
-    private boolean IsX = false;
+    private boolean IsSuccus = false;
 //    private Double sendDegree;
     private float sendDistance;
     private MyView surfaceview;
@@ -182,7 +183,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         //给当前的fragment绘制UI布局，可以使用线程更新UI
         mView=inflater.inflate(R.layout.fragment_map,container,false);
         return super.onCreateView(inflater, container, savedInstanceState);
-
     }
 
     @Override
@@ -455,7 +455,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 startAnimationRight();
                 findViewById(R.id.button_execut).setClickable(false);
                 findViewById(R.id.button_plan_stop).setClickable(true);
-                Constant.getConstant().showWarn(context,handler);
+                Constant.showWarn(context,handler);
                 break;
 //            //下一步
 //            case R.id.button_savenext:
@@ -793,6 +793,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         getUpPoint(jsonObject.getDouble("x"),jsonObject.getDouble("y"));
                         getAngle(jsonObject.getInt("angle"));
                         if(flag.equals("success")){
+                            IsSuccus = true;
                             Constant.debugLog("success"  +"    tasknumber"+tasknumber);
                             if(tasknumber == 0  ){
                                 //到达新地点
@@ -808,6 +809,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                         }else if(flag.equals("fail")){
                             Constant.debugLog("fail"  +"    tasknumber"+tasknumber);
+                            IsSuccus = false;
                             if(tasknumber == 0  ) {
                                 //到达新地点
                                 tasknumber = 1;
@@ -1066,16 +1068,15 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 while(i < xs_tmp.size()){
 //                    Constant.debugLog("thread = " + i);
                     sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
-                    handler.sendEmptyMessage(5);
+//                    handler.sendEmptyMessage(5);
                     synchronized (thread){
                         try {
                             tasknumber = 0;
                             //前往地图标注地点
                             thread.wait();
-
-                            surfaceview.current_plan_number = i+1 ;
+                            surfaceview.current_plan_number = i+1;
                             //到达对应地点notify
-                            if(arrayserchtime_tmp.get(i) != 0){
+                            if(arrayserchtime_tmp.get(i) != 0 && IsSuccus){
                                 //发送 找人时间以及机器人旋转以及找人范围
                                 resetTimer();
                                 if(arrayserchtime_tmp.get(i) == 1){

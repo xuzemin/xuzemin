@@ -1,6 +1,8 @@
 package com.android.jdrd.headcontrol.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -94,6 +96,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             super.handleMessage(msg);
         }
     };
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +105,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_welcome);
 
         //启动后台通讯服务
@@ -122,8 +124,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         list.add(batteryFragment);
         list.add(cleanFragment);
         list.add(mapFragment);
-
-//        this.getWindow().getDecorView().setSystemUiVisibility(View.GONE);
     }
 
     @Override
@@ -220,6 +220,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     public class MyClickListener implements View.OnClickListener {
+        @SuppressLint("NewApi")
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -230,6 +231,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     break;
                 //点击了电源栏
                 case R.id.iv_Battery:
+//                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
                     IsClean = false;
 //                    if(IsMap){
 //                        if(MapFragment.Istouch || MapFragment.Isplan){
@@ -281,6 +283,8 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void setBackgroundColor() {
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_FULLSCREEN);
         //电源栏
         mImageView_Battery.setImageResource(R.mipmap.dianyuan_no);
         //清扫栏
@@ -359,8 +363,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             translate.setFillAfter(false);//设置动画结束后控件不可点击
             translate.setAnimationListener(WelcomeActivity.this);
             rl_TitleList.startAnimation(translate);
-
-
         }
     }
 

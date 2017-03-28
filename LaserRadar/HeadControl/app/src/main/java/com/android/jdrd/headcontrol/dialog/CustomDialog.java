@@ -51,8 +51,8 @@ public class CustomDialog extends Dialog {
         /**
          * Set the Dialog message from resource
          *
-         * @param title
-         * @return
+         *
+         *
          */
         public Builder setMessage(int message) {
             this.message = (String) context.getText(message);
@@ -124,11 +124,11 @@ public class CustomDialog extends Dialog {
         }
 
         public CustomDialog create() {
-
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // instantiate the dialog with the custom Theme
             final CustomDialog dialog = new CustomDialog(context, R.style.Dialog);
+            dialog.setCanceledOnTouchOutside(false);
             View layout = inflater.inflate(R.layout.dialog_warn, null);
             dialog.addContentView(layout, new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

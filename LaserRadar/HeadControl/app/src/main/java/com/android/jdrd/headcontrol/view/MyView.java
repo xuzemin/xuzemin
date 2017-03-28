@@ -146,7 +146,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     p.setColor(getResources().getColor(R.color.path));
                 }
                 canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
-                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+                canvas.drawText((i+1)+"",point_xs.elementAt(i) - 8, point_ys.elementAt(i) +8,p);
+//                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
                     drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
                 }
@@ -229,7 +230,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 //        return false;
 //    }
     private void drawtable(Canvas canvas){
-        p.setColor(Color.GRAY);
+        p.setColor(getResources().getColor(R.color.darkslategrey));
         p.setStyle(Paint.Style.FILL);
         p.setTextSize(20);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
@@ -253,8 +254,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void drawAL(Canvas canvas,double sx, double sy, double ex, double ey,Paint p)
     {
-        double H = 10; // 箭头高度
-        double L = 1; // 底边的一半
+        double H = 20; // 箭头高度
+        double L = 6; // 底边的一半
         int x3 ;
         int y3 ;
         int x4 ;
