@@ -46,60 +46,23 @@ import java.util.List;
 
 public class WelcomeActivity extends Activity implements Animation.AnimationListener{
 
-    public boolean IsMap = false;
-    public static boolean IsClean = false;
     RelativeLayout mRelativeLayout_Exit;//设置栏
     ImageView mImageView_Exit;//设置栏中的返回键
     TextView mTextView_Exit;//“设置”
-
     ImageView mImageView_Battery;//电源图标
-
     ImageView mImageView_Clean;//清洁图标
-
     ImageView mImageView_Map;//电源图标
-
-
     private RelativeLayout rl_TitleList;
     boolean flag = false;
     private View fragment;
     private ImageView imgViewBtnLift;
-
     MyClickListener mMyClickListener;
     List<Fragment> list;
-
-    public Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 1:
-                    MapFragment.Istouch = false;
-                    MapFragment.Isplan = false;
-                    if(IsClean){
-                        changeClean();
-                    }else{
-                        changeBattery();
-                        IsMap = false;
-                    }
-                    break;
-                case 2:
-                    IsMap = true;
-                    //do nothing
-                    break;
-                case 3:
-
-                    break;
-                case 4:
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constant.debugLog(Constant.CURRENTINDEX+"onCreateCURRENTINDEX");
         // 隐藏标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 隐藏状态栏
@@ -124,6 +87,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         list.add(batteryFragment);
         list.add(cleanFragment);
         list.add(mapFragment);
+
     }
 
     @Override
@@ -131,35 +95,39 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         super.onResume();
         initView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            initData();
+            Constant.debugLog(Constant.CURRENTINDEX+"onResumeCURRENTINDEX");
+            switch (Constant.CURRENTINDEX){
+                case 0:
+                    initData_battrey();
+                    break;
+                case 1:
+                    initData_clean();
+                    break;
+                case 2:
+                    initData_map();
+                    break;
+                default:
+                    break;
+            }
         }
         initEvent();
     }
 
     private void initView() {
-
         mRelativeLayout_Exit = (RelativeLayout) findViewById(R.id.rl_Exit);
         mImageView_Exit = (ImageView) findViewById(R.id.iv_Exit);
         mTextView_Exit = (TextView) findViewById(R.id.tv_Exit);
-
         mImageView_Exit = (ImageView) findViewById(R.id.iv_Exit);
-
         mImageView_Battery = (ImageView) findViewById(R.id.iv_Battery);
-
         mImageView_Clean = (ImageView) findViewById(R.id.iv_Clean);
-
         mImageView_Map = (ImageView) findViewById(R.id.iv_Map);
-
         fragment=findViewById(R.id.fragment);
         rl_TitleList = (RelativeLayout) findViewById(R.id.rl_TitleList);
         imgViewBtnLift = (ImageView) findViewById(R.id.imgViewBtnLift);
-
-
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-    private void initData() {
+    private void initData_battrey() {
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
         transaction_battery.replace(R.id.ll_right, list.get(0), "batteryFragment");
@@ -167,15 +135,29 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mMyClickListener = new MyClickListener();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    private void initData_clean() {
+        FragmentManager fragmentManager_battery = getFragmentManager();
+        FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
+        transaction_battery.replace(R.id.ll_right, list.get(1), "cleanFragment");
+        transaction_battery.commit();
+        mMyClickListener = new MyClickListener();
+    }
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    private void initData_map() {
+        FragmentManager fragmentManager_battery = getFragmentManager();
+        FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
+        transaction_battery.replace(R.id.ll_right, list.get(2), "mapFragment");
+        transaction_battery.commit();
+        mMyClickListener = new MyClickListener();
+    }
+
 
     private void initEvent() {
-
         mImageView_Battery.setOnClickListener(mMyClickListener);
         mImageView_Clean.setOnClickListener(mMyClickListener);
         mImageView_Map.setOnClickListener(mMyClickListener);
-
         rl_TitleList.setOnClickListener(mMyClickListener);
-
     }
 
 
@@ -195,12 +177,12 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         sendBroadcast(intent);
         return super.dispatchTouchEvent(ev);
     }
-//动画需实现的接口
+    //动画需实现的接口
     @Override
     public void onAnimationStart(Animation animation) {
 
     }
-//  开启动画时 是否显示隐藏 做标记
+    //  开启动画时 是否显示隐藏 做标记
     @Override
     public void onAnimationEnd(Animation animation) {
         rl_TitleList.clearAnimation();
@@ -231,46 +213,17 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     break;
                 //点击了电源栏
                 case R.id.iv_Battery:
-//                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-                    IsClean = false;
-//                    if(IsMap){
-//                        if(MapFragment.Istouch || MapFragment.Isplan){
-//                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
-//                        }else{
-                            changeBattery();
-                            IsMap = false;
-//                        }
-//                    }else{
-//                        changeBattery();
-//                        IsMap = false;
-//                    }
+                    changeBattery();
                     break;
                 case R.id.iv_Clean:
-//                    IsClean = true;
-//                    if(IsMap){
-//                        if(MapFragment.Istouch || MapFragment.Isplan){
-//                            Constant.getConstant().showWarntext(WelcomeActivity.this,handler);
-//                        }else{
-                            changeClean();
-                            IsMap = false;
-//                        }
-//                    }else{
-//                        changeClean();
-//                        IsMap = false;
-//                    }
+                    changeClean();
                     break;
                 case R.id.iv_Map:
-                    if(!IsMap){
-                        IsMap = true;
-                        changeMap();
-                    }
+                    changeMap();
                     break;
                 case R.id.rl_TitleList:
                     startAnimation();
                     break;
-
-
-
             }
         }
     }
@@ -279,7 +232,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Map.setEnabled(true);
         mImageView_Clean.setEnabled(true);
         mImageView_Battery.setEnabled(true);
-
     }
 
     private void setBackgroundColor() {
@@ -294,6 +246,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void changeBattery() {
+        Constant.CURRENTINDEX  = 1;
         setClickable();
         setBackgroundColor();
         //电源栏
@@ -306,6 +259,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void changeClean() {
+        Constant.CURRENTINDEX  = 1;
         setClickable();
         setBackgroundColor();
         mImageView_Clean.setImageResource(R.mipmap.qingjie_pre);
@@ -317,6 +271,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void changeMap() {
+        Constant.CURRENTINDEX = 2;
         setClickable();
         setBackgroundColor();
         mImageView_Map.setImageResource(R.mipmap.ditu_pre);
@@ -329,19 +284,13 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            return true;
-        }else if(keyCode == KeyEvent.KEYCODE_MENU){
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        return keyCode == KeyEvent.KEYCODE_BACK||keyCode == KeyEvent.KEYCODE_MENU||super.onKeyDown(keyCode, event);
     }
     public void onAttachedToWindow() {
-//        this.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION);
         super.onAttachedToWindow();
     }
 
-//左边动画
+    //左边动画
     private void startAnimation(){
         if (flag){
             fragment.setVisibility(View.VISIBLE);
@@ -349,7 +298,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0f
-                    );
+            );
             translate.setDuration(500);//动画时间500毫秒
             translate.setFillAfter(true);//动画出来控件可以点击
             translate.setAnimationListener(WelcomeActivity.this);
@@ -365,8 +314,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             rl_TitleList.startAnimation(translate);
         }
     }
-
-
 
 
 }

@@ -1,7 +1,6 @@
 package com.android.jdrd.headcontrol.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,12 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.adapter.ChangeMapAdapter;
 import com.android.jdrd.headcontrol.common.BaseFragment;
+import com.android.jdrd.headcontrol.dialog.FaceDialog;
 import com.android.jdrd.headcontrol.dialog.MyDialog;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.android.jdrd.headcontrol.util.Constant;
@@ -41,10 +40,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,41 +56,34 @@ import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- * Created by Administrator on 2017/2/7.
+ * Created by xuzemin on 2017/2/7.
+ *
  */
 
 public class MapFragment extends BaseFragment implements View.OnClickListener,Animation.AnimationListener{
     //注册广播为接受通讯数据
     private MyReceiver receiver;
 
-    private Map map ;
     private boolean IsSuccus = false;
-//    private Double sendDegree;
-    private float sendDistance;
     private MyView surfaceview;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
     private Spinner planchooce,serchtime,scope,angle,gametime;
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
-    private float plannumber =0,serchtimenumber =0,scopenumber =0,anglenumber,gametimenumber =0;
+    private float plannumber =0,serchtimenumber =0,scopenumber =0,gametimenumber =0;
     private Context context;
     private ImageView imgViewmapnRight;
     private RelativeLayout map_right_Ralative;
-    private double nLenStart = 0;
     private EditText point_x,point_y,go_point_x,go_point_y;
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> map_Plan;
     private float eventx,eventy;
     private ListView plan_change_list;
     private static float a = 0, b = 0;
@@ -101,12 +91,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //路线模式布局、路线模式详细设置；
     private LinearLayout linearlayout_map,linear_plan,linear_plan_info,linear_point,linear_roam,linearlayout_all,linearlayout_plan_change;
     private HashMap<String,Vector<Float>> arrayhash;
-    private Vector<Float> xs,ys,arrayserchtime,arrayscope,arrayangle,arraygametime;
+    private Vector<Float> xs,ys,arrayserchtime,arrayscope,arraygametime;
     private Vector<Float> xs_tmp = new Vector<>();
     private Vector<Float> ys_tmp  = new Vector<>();
     private Vector<Float> arrayserchtime_tmp = new Vector<>();
     private Vector<Float> arrayscope_tmp = new Vector<>();
-//    private Vector<Float> arrayangle_tmp = new Vector<>();
     private Vector<Float> arraygametime_tmp = new Vector<>();
     private Timer timer;
     private ChangeMapAdapter ChangeMapAdapter;
@@ -337,11 +326,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void onStart() {
         super.onStart();
-//        try {
-//            Constant.spu.openSerialPort();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         receiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.jdrd.fragment.Map");
@@ -366,11 +350,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+        Constant.debugLog(Constant.CURRENTINDEX_MAP+"onResume");
     }
 
     @Override
@@ -414,7 +394,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     ys = new Vector<>();
                     arrayserchtime = new Vector<>();
                     arrayscope = new Vector<>();
-//                    arrayangle = new Vector<>();
                     arraygametime = new Vector<>();
                 }
                 break;
@@ -458,8 +437,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 startAnimationRight();
                 findViewById(R.id.button_execut).setClickable(false);
                 findViewById(R.id.button_plan_stop).setClickable(true);
-                Constant.showWarn(context,handler);
+//                Constant.showWarn(context,handler);
+                dialogFace();
                 break;
+
 //            //下一步
 //            case R.id.button_savenext:
 //                if(!Istouch){
@@ -540,6 +521,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 handler.sendEmptyMessage(3);
                 break;
             case R.id.button_plan_back:
+                Constant.CURRENTINDEX_MAP = 4;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_plan.setVisibility(View.GONE);
                 surfaceview.point_xs.removeAllElements();
@@ -547,9 +529,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Isplan = false;
                 break;
             case R.id.button_plan_info_back:
+                Constant.CURRENTINDEX_MAP = 1;
                 Constant.getConstant().showWarntext(context, handler);
                 break;
             case R.id.button_point_back:
+                Constant.CURRENTINDEX_MAP = 2;
                 Istouch = false;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_point.setVisibility(View.GONE);
@@ -557,6 +541,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 surfaceview.point_ys.removeAllElements();
                 break;
             case R.id.button_roam_back:
+                Constant.CURRENTINDEX_MAP = 3;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_roam.setVisibility(View.GONE);
                 break;
@@ -1046,6 +1031,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             }
         });
         dialog.show();
+    }
+    private FaceDialog faceDialog;
+    private void dialogFace(){
+        faceDialog = new FaceDialog(context);
+        faceDialog.setCanceledOnTouchOutside(false);
+        faceDialog.show();
     }
 
     public void startPlan(){

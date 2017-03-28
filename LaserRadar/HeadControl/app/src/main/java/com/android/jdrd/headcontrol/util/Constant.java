@@ -36,6 +36,8 @@ public class Constant {
 //    public static String password = "88391477";
     public static String Reason = "reason";
     public static double Current_x = 0;
+    public static int CURRENTINDEX = 0;
+    public static int CURRENTINDEX_MAP = 0;
     public static double Current_y = 0;
     public static double Current_x_sur = 0;
     public static double Current_y_sur = 0;
