@@ -182,7 +182,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         //熟悉游戏编程的应该很面熟吧，主循环
         @Override
         public void run() {
-            Canvas c ;
+            Canvas c = null ;
             while(true){
                 try{
                     if(temp == 5){
@@ -198,7 +198,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     holder.unlockCanvasAndPost(c);
                     Thread.sleep(50);
                 }catch(Exception e){
-//                    holder.unlockCanvasAndPost(c);
+                    if(c != null){
+                        holder.unlockCanvasAndPost(c);
+                    }
                     Constant.debugLog(e.toString());
                 }
             }

@@ -393,10 +393,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
                         xs.remove(surfaceview.point_ys.size()-1);
                         ys.remove(surfaceview.point_ys.size()-1);
-                        arrayserchtime.remove(surfaceview.point_ys.size()-1);
-                        arrayscope.remove(surfaceview.point_ys.size()-1);
-//                        arrayangle.remove(surfaceview.point_ys.size()-1);
-                        arraygametime.remove(surfaceview.point_ys.size()-1);
+                        if(arrayserchtime.size()>=1){
+                            arrayserchtime.remove(surfaceview.point_ys.size()-1);
+                            arrayscope.remove(surfaceview.point_ys.size()-1);
+                            arraygametime.remove(surfaceview.point_ys.size()-1);
+                        }
                     }else{
                         surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
                         surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
@@ -426,6 +427,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 ys = new Vector<>();
                 surfaceview.point_xs = new Vector<>();
                 surfaceview.point_ys = new Vector<>();
+                surfaceview.point_ys.removeAllElements();
+                surfaceview.point_xs.removeAllElements();
                 Istouch = true;
                 linear_plan_info.setVisibility(View.VISIBLE);
                 linear_plan.setVisibility(View.GONE);
@@ -653,7 +656,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        map_Plan = new ArrayList<>();
         map_Plan = new ArrayList<>();
         map_Plan.add("不找人");
         map_Plan.add("找人1圈");
@@ -894,13 +896,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Vector<Float> point_ys = planList.get("point_ys");
                 Vector<Float> arrayserchtime = planList.get("arrayserchtime");
                 Vector<Float> arrayscope = planList.get("arrayscope");
-//                Vector<Float> arrayangle = planList.get("arrayangle");
                 Vector<Float> arraygametime = planList.get("arraygametime");
                 Element point_xs_ = document.createElement("point_xs");
                 Element point_ys_ = document.createElement("point_ys");
                 Element arrayserchtime_ = document.createElement("arrayserchtime");
                 Element arrayscope_ = document.createElement("arrayscope");
-//                Element arrayangle_ = document.createElement("arrayangle");
                 Element arraygametime_ = document.createElement("arraygametime");
 
                 for(int x = 0;x < point_xs.size();x ++){
@@ -912,29 +912,22 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     item_serchtime.setTextContent(arrayserchtime.elementAt(x)+"");
                     Element item_scope = document.createElement("item_scope");
                     item_scope.setTextContent(arrayscope.elementAt(x)+"");
-//                    Element item_angle = document.createElement("item_angle");
-//                    item_angle.setTextContent(arrayangle.elementAt(x)+"");
                     Element item_gametime = document.createElement("item_gametime");
                     item_gametime.setTextContent(arraygametime.elementAt(x)+"");
                     point_xs_.appendChild(item_xs);
                     point_ys_.appendChild(item_ys);
                     arrayserchtime_.appendChild(item_serchtime);
                     arrayscope_.appendChild(item_scope);
-//                    arrayangle_.appendChild(item_angle);
                     arraygametime_.appendChild(item_gametime);
                 }
                 keysElement.appendChild(point_xs_);
                 keysElement.appendChild(point_ys_);
                 keysElement.appendChild(arrayserchtime_);
                 keysElement.appendChild(arrayscope_);
-//                keysElement.appendChild(arrayangle_);
                 keysElement.appendChild(arraygametime_);
-
                 planLists.appendChild(keysElement);
             }
-
             document.appendChild(planLists);
-
             TransformerFactory transfactory = TransformerFactory.newInstance();
             Transformer transformer = transfactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");// 设置输出采用的编码方式
@@ -965,16 +958,19 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             Element root = parse.getDocumentElement();
             NodeList planLists = root.getElementsByTagName("key");
             arrayPlanLists  = new HashMap<>();
+            if(planLists.getLength()==0){
+                parse = builder.parse(context.getAssets().open("map.xml"));
+                root = parse.getDocumentElement();
+                planLists = root.getElementsByTagName("key");
+            }
             for (int i = 0,length = planLists.getLength(); i < length; i++) {
                 arrayhash = new HashMap<>();
                 Element item = (Element) planLists.item(i);
                 String key = item.getAttribute("key");
-                NodeList nodes = item.getElementsByTagName("item_xs");
                 getFloat(item,"item_xs","point_xs");
                 getFloat(item,"item_ys","point_ys");
                 getFloat(item,"item_serchtime","arrayserchtime");
                 getFloat(item,"item_scope","arrayscope");
-//                getFloat(item,"item_angle","arrayangle");
                 getFloat(item,"item_gametime","arraygametime");
                 arrayPlanLists.put(key,arrayhash);
             }
@@ -1066,9 +1062,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 arraygametime_tmp = array.get("arraygametime");
                 int i = 0;
                 while(i < xs_tmp.size()){
-//                    Constant.debugLog("thread = " + i);
                     sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
-//                    handler.sendEmptyMessage(5);
                     synchronized (thread){
                         try {
                             tasknumber = 0;
