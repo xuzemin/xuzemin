@@ -244,7 +244,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 if(n==MotionEvent.ACTION_DOWN && 1 == nCnt){
                     eventx = event.getX();
                     eventy = event.getY();
-//                    Constant.debugLog(eventx+"    "+eventy);
                     if (Istouch) {
                         if (eventx > 70 && eventx < surfaceview.myview_width - 80 && eventy > 70 && eventy < surfaceview.myview_width - 80) {
                             a = (event.getX()  - surfaceview.translate_x -40)  ;
@@ -336,15 +335,36 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         updatekey();
         if(dialog != null){
             dialog.dismiss();
+            FaceDialog.getDialog(context).dismiss();
         }
-        linearlayout_map.setVisibility(View.VISIBLE);
-        linear_roam.setVisibility(View.GONE);
-        linear_plan.setVisibility(View.GONE);
-        linear_plan_info.setVisibility(View.GONE);
-        linear_point.setVisibility(View.GONE);
-        Istouch = false;
-        Isplan = false;
+        switch (Constant.CURRENTINDEX_MAP){
+            case 0:
+                setVisible();
+                linearlayout_map.setVisibility(View.VISIBLE);
+                Istouch = false;
+                Isplan = false;
+                break;
+            case 1:
+                go_Point();
+                break;
+            case 2:
+                go_Plan();
+                break;
+            case 3:
+                go_Roam();
+                break;
+            case 4:
+                go_NewPlan();
+                break;
+            case 5:
 
+                break;
+            default:
+                break;
+        }
+        if(Constant.DIALOG_SHOW){
+            dialogFace();
+        }
     }
 
     @Override
@@ -399,18 +419,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //规划新路线
             case R.id.button_plan:
-                arrayserchtime = new Vector<>();
-                arrayscope = new Vector<>();
-                arraygametime = new Vector<>();
-                xs = new Vector<>();
-                ys = new Vector<>();
-                surfaceview.point_xs = new Vector<>();
-                surfaceview.point_ys = new Vector<>();
-                surfaceview.point_ys.removeAllElements();
-                surfaceview.point_xs.removeAllElements();
-                Istouch = true;
-                linear_plan_info.setVisibility(View.VISIBLE);
-                linear_plan.setVisibility(View.GONE);
+                Constant.CURRENTINDEX_MAP = 4;
+                go_NewPlan();
                 break;
             //删除当前路线
             case R.id.button_remove:
@@ -434,10 +444,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             //执行路线
             case R.id.button_execut:
                 startPlan();
+                Constant.DIALOG_SHOW = true;
                 startAnimationRight();
                 findViewById(R.id.button_execut).setClickable(false);
                 findViewById(R.id.button_plan_stop).setClickable(true);
-//                Constant.showWarn(context,handler);
                 dialogFace();
                 break;
 
@@ -458,6 +468,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                break;
             //规划完毕
             case R.id.button_saveall:
+                Constant.CURRENTINDEX_MAP = 2;
                 readXML();
                 xs=surfaceview.point_xs;
                 ys=surfaceview.point_ys;
@@ -475,30 +486,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //漫游模式
             case R.id.button_cruise:
-                Isplan = false;
-                Istouch = true;
-                setVisible();
-                linear_roam.setVisibility(View.VISIBLE);
-                linearlayout_map.setVisibility(View.GONE);
+                Constant.CURRENTINDEX_MAP = 3;
+                go_Roam();
                 break;
             //路线规划模式
             case R.id.button_pathplan:
-                surfaceview.Isplan = true;
-                setVisible();
-                linear_plan.setVisibility(View.VISIBLE);
-                linearlayout_map.setVisibility(View.GONE);
-                updatekey();
-                Istouch = false;
-                Isplan = true;
+                Constant.CURRENTINDEX_MAP = 2;
+                go_Plan();
                 break;
             //点选模式
             case R.id.button_pointchooce:
-                surfaceview.Isplan = false;
-                Istouch = true;
-                setVisible();
-                linear_point.setVisibility(View.VISIBLE);
-                linearlayout_map.setVisibility(View.GONE);
-                Isplan = false;
+                Constant.CURRENTINDEX_MAP = 1;
+                go_Point();
                 break;
             case R.id.button_return:
                 surfaceview.translate_x = 0;
@@ -521,7 +520,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 handler.sendEmptyMessage(3);
                 break;
             case R.id.button_plan_back:
-                Constant.CURRENTINDEX_MAP = 4;
+                Constant.CURRENTINDEX_MAP = 0;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_plan.setVisibility(View.GONE);
                 surfaceview.point_xs.removeAllElements();
@@ -529,11 +528,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Isplan = false;
                 break;
             case R.id.button_plan_info_back:
-                Constant.CURRENTINDEX_MAP = 1;
+                Constant.CURRENTINDEX_MAP = 2;
                 Constant.getConstant().showWarntext(context, handler);
                 break;
             case R.id.button_point_back:
-                Constant.CURRENTINDEX_MAP = 2;
+                Constant.CURRENTINDEX_MAP = 0;
                 Istouch = false;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_point.setVisibility(View.GONE);
@@ -541,7 +540,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 surfaceview.point_ys.removeAllElements();
                 break;
             case R.id.button_roam_back:
-                Constant.CURRENTINDEX_MAP = 3;
+                Constant.CURRENTINDEX_MAP = 0;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_roam.setVisibility(View.GONE);
                 break;
@@ -594,20 +593,17 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 }
                 break;
             case R.id.plan_change:
-                if(null!=arrayPlanLists&&plannumber >= 0&&arrayPlanLists.size() > 0){
-                    linear_plan.setVisibility(View.GONE);
-                    linearlayout_plan_change.setVisibility(View.VISIBLE);
-                    ChangeMapAdapter = new ChangeMapAdapter(arrayPlanLists,strings.get((int) plannumber),context,handler);
-                    plan_change_list.setAdapter(ChangeMapAdapter);
-                }
+                Constant.CURRENTINDEX_MAP = 5;
+                go_PlanChange();
                 break;
             case R.id.button_plan_change_back:
+                Constant.CURRENTINDEX_MAP = 2;
                 updatekey();
                 linear_plan.setVisibility(View.VISIBLE);
                 linearlayout_plan_change.setVisibility(View.GONE);
                 break;
-
             case R.id.button_plan_change_save:
+                Constant.CURRENTINDEX_MAP = 2;
                 xs_tmp = new Vector<>();
                 ys_tmp = new Vector<>();
                 xs_tmp = arrayPlanLists.get(strings.get((int)plannumber)).get("point_xs");
@@ -622,7 +618,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
         }
     }
-
 
     private void init(){
         ArrayList<String> map_Plan = new ArrayList<>();
@@ -682,7 +677,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
 
     private void setVisible(){
+        linearlayout_plan_change.setVisibility(View.GONE);
         linear_plan.setVisibility(View.GONE);
+        linearlayout_map.setVisibility(View.GONE);
         linear_plan_info.setVisibility(View.GONE);
         linear_point.setVisibility(View.GONE);
         linear_roam.setVisibility(View.GONE);
@@ -989,7 +986,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
     public void updatekey(){
         readXML();
-
         Istouch = false;
         strings = getKey();
         if(strings !=null && context!=null){
@@ -1032,11 +1028,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         });
         dialog.show();
     }
-    private FaceDialog faceDialog;
     private void dialogFace(){
-        faceDialog = new FaceDialog(context);
-        faceDialog.setCanceledOnTouchOutside(false);
-        faceDialog.show();
+        FaceDialog.getDialog(context).show();
     }
 
     public void startPlan(){
@@ -1211,5 +1204,55 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             map_right_Ralative.startAnimation(translateAnimation);
         }
 
+    }
+
+    //漫游模式
+    private void go_Roam(){
+        Isplan = false;
+        Istouch = true;
+        setVisible();
+        linear_roam.setVisibility(View.VISIBLE);
+    }
+    //路线规划
+    private void go_Plan(){
+        surfaceview.Isplan = true;
+        setVisible();
+        linear_plan.setVisibility(View.VISIBLE);
+        updatekey();
+        Istouch = false;
+        Isplan = true;
+    }
+    //点选模式
+    private void go_Point() {
+        surfaceview.Isplan = false;
+        Istouch = true;
+        setVisible();
+        linear_point.setVisibility(View.VISIBLE);
+        Isplan = false;
+    }
+    //规划新路线
+    private void go_NewPlan() {
+        arrayserchtime = new Vector<>();
+        arrayscope = new Vector<>();
+        arraygametime = new Vector<>();
+        xs = new Vector<>();
+        ys = new Vector<>();
+        surfaceview.point_xs = new Vector<>();
+        surfaceview.point_ys = new Vector<>();
+        surfaceview.point_ys.removeAllElements();
+        surfaceview.point_xs.removeAllElements();
+        Istouch = true;
+        setVisible();
+        linear_plan_info.setVisibility(View.VISIBLE);
+    }
+    //路线调整
+    private void go_PlanChange() {
+        updatekey();
+        if(null!=arrayPlanLists&&plannumber >= 0&&arrayPlanLists.size() > 0){
+            linear_plan.setVisibility(View.GONE);
+            linearlayout_plan_change.setVisibility(View.VISIBLE);
+            ChangeMapAdapter = new ChangeMapAdapter(arrayPlanLists,strings.get((int) plannumber),context,handler);
+            plan_change_list.setAdapter(ChangeMapAdapter);
+        }
     }
 }

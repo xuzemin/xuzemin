@@ -13,7 +13,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="107dp"
-            android:text="@string/finishplan"
+            android:text="@string/passwork"
             android:gravity="center"
             android:textColor="#E8E8E8"
             android:textSize="29sp"
@@ -27,6 +27,7 @@
             android:background="@mipmap/wenzikuang"
             android:textColor="#000000"
             android:paddingLeft="50dp"
+            android:hint="@string/passwork"
             android:textSize="27sp"
             android:textColorHint="#7D7D7D"
             />
@@ -41,17 +42,8 @@
             android:id="@+id/positiveButton"
             android:layout_width="296dp"
             android:layout_height="87dp"
-            android:layout_marginLeft="65dp"
+            android:layout_centerInParent="true"
             android:background="@drawable/btn_sure_selector"
-            />
-        <Button
-            android:id="@+id/negativeButton"
-            android:layout_width="296dp"
-            android:layout_height="87dp"
-            android:background="@drawable/btn_cancel_selector"
-            android:layout_marginLeft="78dp"
-            android:layout_marginRight="65dp"
-            android:layout_alignParentRight="true"
             />
     </RelativeLayout>
     </LinearLayout>
