@@ -1082,7 +1082,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     IsAway = false;
                                     if(arraygametime_tmp.get(i) == 0){
                                         Constant.debugLog("arraygametime_tmp = " + 0);
-                                        timer.schedule(task, 1 * 5 * 1000);
+                                        timer.schedule(task, 15 * 1000);
                                     }else if(arraygametime_tmp.get(i) == 1){
                                         IsAway = true;
                                     }else {
