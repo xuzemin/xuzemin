@@ -31,6 +31,7 @@ public class TestActivity extends Activity {
         setContentView(R.layout.activity_socket);
         //启动ServerSocketUtil服务
         Intent intent = new Intent(this, ServerSocketUtil.class);
+
         startService(intent);
         //注册数据接收广播用来接收socket发来的数据
         registerDateReceiver();
@@ -43,16 +44,28 @@ public class TestActivity extends Activity {
         findViewById(R.id.startSearchPeople).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent();
                 intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
                 intent.putExtra("msg", "远");
                 sendBroadcast(intent);
+                try {
+                    ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         findViewById(R.id.buttonSocket).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                /*Intent intent = new Intent();
+                intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
+                intent.putExtra("msg", "关闭");
+                sendBroadcast(intent);*/
+
                 try {
                     Gson gson = new Gson();
                     Map map  = new LinkedHashMap();
@@ -60,11 +73,15 @@ public class TestActivity extends Activity {
                     map.put("function", "peoplesearch");
                     map.put("data", "");
                     String s = gson.toJson(map);
-                    ServerSocketUtil.sendDateToClient(s);
+                    ServerSocketUtil.sendDateToClient("ros", Constant.ip_ros);
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
+                /*Intent intent = new Intent(TestActivity.this, Myservice_Face.class);
+                startService(intent);*/
             }
         });
     }
@@ -80,7 +97,7 @@ public class TestActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String msg = intent.getStringExtra("msg");
-            Constant.debugLog("收到了距离角度： " + msg);
+//            Constant.debugLog("收到了距离角度： " + msg);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

@@ -132,11 +132,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     break;
                 case 3:
                     if(thread!=null){
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
                         if(thread.isAlive()){
                             thread = new Thread();
                         }
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
                     }
                     findViewById(R.id.button_execut).setClickable(true);
                     findViewById(R.id.button_plan_stop).setClickable(false);
@@ -381,7 +381,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         if(context!=null && receiver !=null) {
             context.unregisterReceiver(receiver);
         }
-        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
     }
 
     @Override
@@ -439,6 +439,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //停止执行
             case R.id.button_plan_stop:
+                Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"close",Constant.ip_bigScreen);
                 CURRENT_CRILES = false;
                 cirles = -1;
                 handler.sendEmptyMessage(3);
@@ -453,6 +454,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //执行路线
             case R.id.button_execut:
+                Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"close",Constant.ip_bigScreen);
                 plan_cirles.setClickable(false);
                 planchooce.setClickable(false);
                 plan_cirles.setBackground(getResources().getDrawable(R.mipmap.xiala_pre));
@@ -565,7 +567,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //返回远点
             case R.id.button_returnback:
-                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
                 sendNativePoint();
                 break;
             case R.id.button_choose:
@@ -749,7 +751,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map.put("point_y",a);
 //        Constant.debugLog( "y"+a);
         map.put("angle",angle);
-        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map,Constant.ip_ros);
 //        }
     }
     //发往底层
@@ -761,7 +763,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map.put("point_x",-1);
         map.put("point_y",0);
         map.put("angle",180);
-        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map,Constant.ip_ros);
 //        }
     }
 
@@ -856,7 +858,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 if(tasknumber == 1){
                                     //摄像头搜索到人
                                     tasknumber = 2;
-                                    ServerSocketUtil.sendDateToClient(string);
+                                    ServerSocketUtil.sendDateToClient(string, Constant.ip_ros);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -1142,7 +1144,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 //跳过找人，互动。准备返回远点
                 tasknumber = 4;
                 Constant.getConstant().sendCamera(Float.valueOf(3),context);
-                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
                 handler.sendEmptyMessage(4);
             }
         };
@@ -1272,7 +1274,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         //111111111
                         Constant.getConstant().sendCamera(arrayscope_tmp.get(i),context);
                         //222222222
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"");
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"",Constant.ip_ros);
                         //互动中 找人
                         thread.wait();
                         //如果有找到人则到达指定位置

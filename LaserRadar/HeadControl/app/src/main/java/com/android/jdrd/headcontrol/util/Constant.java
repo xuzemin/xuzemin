@@ -26,7 +26,7 @@ public class Constant {
     static String isConnectSocket = "";
     public static final String wifiname = "TimeBox_8b319a";
     public static final String password = "12345678";
-    //    public static final String wifiname = "HUAWEI-GDRD";
+//    public static final String wifiname = "HUAWEI-GDRD";
 //    public static final String password = "88391477";
     //测试用WI-FI
 //    public static String wifiname = "GDRD-3F";
@@ -41,7 +41,7 @@ public class Constant {
 //    public static double Current_y_sur = 0;
 //    private static float Current_degree = 90;
     public static int ServerPort = 12345;
-    public static String ip_bigScreen = "/192.168.1.102";
+    public static String ip_bigScreen = "/192.168.88.188";
     public static String ip_ros = "/192.168.88.101";
     public static float Scale = 1 ;
     private static final boolean isDebug = true;
@@ -128,7 +128,7 @@ public class Constant {
         context.sendBroadcast(intent);
     }
 
-    public void sendBundle(String type,String function,Map data){
+    public void sendBundle(String type,String function,Map data,String ip){
         try {
             Gson gson = new Gson();
             Map map = new LinkedHashMap();
@@ -136,7 +136,7 @@ public class Constant {
             map.put("function", function);
             map.put("data", data);
             String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s);
+            ServerSocketUtil.sendDateToClient(s, ip);
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -146,7 +146,7 @@ public class Constant {
 //        Current_degree = spu.getBean().pose[2];
 //    }
 
-    public void sendBundle(String type,String function,String data){
+    public void sendBundle(String type,String function,String data,String ip){
         try {
             Gson gson = new Gson();
             Map map = new LinkedHashMap();
@@ -154,12 +154,12 @@ public class Constant {
             map.put(Constant.Function, function);
             map.put(Constant.Data, data);
             String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s);
+            ServerSocketUtil.sendDateToClient(s, ip);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void sendBundle(String type,String function,Float data){
+    public void sendBundle(String type,String function,Float data,String ip){
         try {
             Gson gson = new Gson();
             Map map = new LinkedHashMap();
@@ -167,7 +167,7 @@ public class Constant {
             map.put(Constant.Function, function);
             map.put(Constant.Data, data);
             String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s);
+            ServerSocketUtil.sendDateToClient(s, ip);
         } catch (IOException e) {
             e.printStackTrace();
         }

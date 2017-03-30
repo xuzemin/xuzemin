@@ -2,21 +2,14 @@ package com.android.jdrd.headcontrol.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.RequiresApi;
-
-import android.util.Log;
-
 import android.view.KeyEvent;
-
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -77,12 +70,13 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
-        //启动socket测试Activity
-        /*Intent testActivity = new Intent(this, TestActivity.class);
-        startActivity(testActivity);*/
         //启动静态IP设置服务
         Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
         startService(SetStaticIPService);
+
+        //启动socket测试Activity
+//        Intent testActivity = new Intent(this, TestActivity.class);
+//        startActivity(testActivity);
 
         list = new ArrayList<>();
         BatteryFragment batteryFragment = new BatteryFragment(WelcomeActivity.this);
