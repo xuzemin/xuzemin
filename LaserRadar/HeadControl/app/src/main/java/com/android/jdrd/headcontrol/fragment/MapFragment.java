@@ -599,8 +599,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             case R.id.button_plan_change_back:
                 Constant.CURRENTINDEX_MAP = 2;
                 updatekey();
+                setVisible();
                 linear_plan.setVisibility(View.VISIBLE);
-                linearlayout_plan_change.setVisibility(View.GONE);
                 break;
             case R.id.button_plan_change_save:
                 Constant.CURRENTINDEX_MAP = 2;
@@ -608,13 +608,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 ys_tmp = new Vector<>();
                 xs_tmp = arrayPlanLists.get(strings.get((int)plannumber)).get("point_xs");
                 ys_tmp = arrayPlanLists.get(strings.get((int)plannumber)).get("point_ys");
-//                reset_surface();
                 arrayPlanLists.get(strings.get((int)plannumber)).put("point_xs",xs_tmp);
                 arrayPlanLists.get(strings.get((int)plannumber)).put("point_ys",ys_tmp);
                 writeXML();
                 updatekey();
+                setVisible();
                 linear_plan.setVisibility(View.VISIBLE);
-                linearlayout_plan_change.setVisibility(View.GONE);
                 break;
         }
     }
@@ -834,7 +833,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 if(task!=null ){
                                     task.cancel();
                                 }
-                                Constant.getConstant().sendCamera(Float.valueOf(3),context);
+                                Constant.getConstant().sendCamera((float) 3,context);
+                                Constant.getConstant().sendCamera((float) 3,context);
                                 handler.sendEmptyMessage(4);
                             }
                         }
@@ -1111,6 +1111,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 tasknumber = -1;
                 surfaceview.current_plan_number = 0;
                 thread = new Thread();
+                startPlan();
             }
         });
         thread.start();
@@ -1124,11 +1125,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     tasknumber = -1;
                     Random random=new Random();
                     float x = 0 , y = 0;
-                    while(x  < 240 || x >800){
-                        x = random.nextInt(1000);
+                    while(x  < 100 || x >1500){
+                        x = random.nextInt(1500);
                     }
-                    while(y  < 100 || y >500){
-                        y = random.nextInt(600);
+                    while(y  < 100 || y >900){
+                        y = random.nextInt(900);
                     }
                     sendNativePoint(x,y,0);
                     tasknumber = 20;
@@ -1247,9 +1248,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
     //路线调整
     private void go_PlanChange() {
-        updatekey();
+//        updatekey();
         if(null!=arrayPlanLists&&plannumber >= 0&&arrayPlanLists.size() > 0){
-            linear_plan.setVisibility(View.GONE);
+            setVisible();
             linearlayout_plan_change.setVisibility(View.VISIBLE);
             ChangeMapAdapter = new ChangeMapAdapter(arrayPlanLists,strings.get((int) plannumber),context,handler);
             plan_change_list.setAdapter(ChangeMapAdapter);

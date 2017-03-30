@@ -149,7 +149,6 @@ public class ServerSocketUtil extends Service {
                     if (out2 != null) {
                         out2.write(str2.getBytes());
                     }
-
                 } else if (ip.equals(Constant.ip_ros)) {
                     if (out1 != null) {
                         out1.write(str2.getBytes());
