@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -208,8 +209,71 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
                 }
             });
         }
+
+//模拟电源根据电量状态更换图片状态
+        MyThread2 myThread2 = new MyThread2();
+        myThread2.start();
     }
 
+    int time = 100;
+    boolean b = true;
+
+    class MyThread2 extends Thread {
+        @Override
+        public void run() {
+            super.run();
+
+
+            while (true) {
+                try {
+                    handler.sendEmptyMessage(1);
+                    sleep(1000 * 60 + 2);
+                    if (b) {
+                        time = time - 10;
+                        if (time == 0) {
+                            b = false;
+                        }
+                    } else {
+                        time = time + 10;
+                        if (time == 100) {
+                            b = true;
+                        }
+
+                    }
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    aaa(time);
+                    break;
+            }
+        }
+    };
+
+    public void aaa(int timeaaa) {
+        switch (timeaaa) {
+            case 100:
+                break;
+            case 90:
+                break;
+            case 80:
+                break;
+            case 70:
+                break;
+            case 60:
+                break;
+        }
+    }
 
     @Override
     public void initEvent() {

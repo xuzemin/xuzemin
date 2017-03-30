@@ -27,6 +27,7 @@
             android:background="@mipmap/wenzikuang"
             android:textColor="#000000"
             android:paddingLeft="50dp"
+            android:hint="@string/finishplan"
             android:textSize="27sp"
             android:textColorHint="#7D7D7D"
             />

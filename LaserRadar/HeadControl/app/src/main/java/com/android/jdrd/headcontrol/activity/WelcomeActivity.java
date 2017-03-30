@@ -52,6 +52,10 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     ImageView mImageView_Battery;//电源图标
     ImageView mImageView_Clean;//清洁图标
     ImageView mImageView_Map;//电源图标
+
+    ImageView mImageView_setting;//设置
+
+
     private RelativeLayout rl_TitleList;
     boolean flag = false;
     private View fragment;
@@ -121,6 +125,9 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Battery = (ImageView) findViewById(R.id.iv_Battery);
         mImageView_Clean = (ImageView) findViewById(R.id.iv_Clean);
         mImageView_Map = (ImageView) findViewById(R.id.iv_Map);
+
+        mImageView_setting = (ImageView) findViewById(R.id.iv_settings);
+
         fragment=findViewById(R.id.fragment);
         rl_TitleList = (RelativeLayout) findViewById(R.id.rl_TitleList);
         imgViewBtnLift = (ImageView) findViewById(R.id.imgViewBtnLift);
@@ -157,6 +164,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Battery.setOnClickListener(mMyClickListener);
         mImageView_Clean.setOnClickListener(mMyClickListener);
         mImageView_Map.setOnClickListener(mMyClickListener);
+        mImageView_setting.setOnClickListener(mMyClickListener);
         rl_TitleList.setOnClickListener(mMyClickListener);
     }
 
@@ -213,17 +221,27 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     break;
                 //点击了电源栏
                 case R.id.iv_Battery:
+                    startAnimation();
                     changeBattery();
                     break;
                 case R.id.iv_Clean:
+                    startAnimation();
                     changeClean();
                     break;
                 case R.id.iv_Map:
+                    startAnimation();
                     changeMap();
                     break;
                 case R.id.rl_TitleList:
                     startAnimation();
                     break;
+
+                case R.id.iv_settings:
+                    startAnimation();
+                    break;
+
+
+
             }
         }
     }
@@ -232,6 +250,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Map.setEnabled(true);
         mImageView_Clean.setEnabled(true);
         mImageView_Battery.setEnabled(true);
+        mImageView_setting.setEnabled(true);
     }
 
     private void setBackgroundColor() {
@@ -243,6 +262,8 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Clean.setImageResource(R.mipmap.qingjie_no);
         //地图栏
         mImageView_Map.setImageResource(R.mipmap.ditu_no);
+        //设置
+        mImageView_setting.setImageResource(R.mipmap.shezhi_no);
     }
 
     private void changeBattery() {
