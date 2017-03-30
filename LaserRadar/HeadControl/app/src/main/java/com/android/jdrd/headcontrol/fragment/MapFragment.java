@@ -72,11 +72,10 @@ import javax.xml.transform.stream.StreamResult;
 public class MapFragment extends BaseFragment implements View.OnClickListener,Animation.AnimationListener{
     //注册广播为接受通讯数据
     private MyReceiver receiver;
-
     private boolean IsSuccus = false;
     private MyView surfaceview;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
-    private Spinner planchooce,serchtime,scope,angle,gametime;
+    private Spinner planchooce,serchtime,scope,angle,gametime,plan_cirles;
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
     private float plannumber =0,serchtimenumber =0,scopenumber =0,gametimenumber =0;
     private Context context;
@@ -100,6 +99,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private Timer timer;
     private ChangeMapAdapter ChangeMapAdapter;
     private int tasknumber = -1;
+    private int cirles = 0;
+    private boolean CURRENT_CRILES = false;
     private TimerTask task;
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
     private Vector<String> strings = new Vector<>();
@@ -188,6 +189,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
         scope = (Spinner) findViewById(R.id.scope);
+        plan_cirles = (Spinner) findViewById(R.id.spinner_plan_cirles);
         gametime = (Spinner) findViewById(R.id.gametime);
         point_x = (EditText) findViewById(R.id.point_x);
         point_y = (EditText) findViewById(R.id.point_y);
@@ -437,12 +439,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //停止执行
             case R.id.button_plan_stop:
+                CURRENT_CRILES = false;
+                cirles = -1;
                 handler.sendEmptyMessage(3);
+                plan_cirles.setClickable(true);
+                planchooce.setClickable(true);
                 findViewById(R.id.button_execut).setClickable(true);
                 findViewById(R.id.button_plan_stop).setClickable(false);
                 break;
             //执行路线
             case R.id.button_execut:
+                plan_cirles.setClickable(false);
+                planchooce.setClickable(false);
                 startPlan();
                 Constant.DIALOG_SHOW = true;
                 startAnimationRight();
@@ -635,6 +643,27 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        map_Plan = new ArrayList<>();
+        map_Plan.add("无限循环");
+        int i = 1;
+        while(i < 10){
+            map_Plan.add("循环"+(i)+"次");
+            i++;
+        }
+        adapter = new ArrayAdapter<>(context,R.layout.item_spinselect,map_Plan);
+        adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+        plan_cirles.setAdapter(adapter);
+        plan_cirles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                cirles = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         map_Plan = new ArrayList<>();
         map_Plan.add("不找人");
         map_Plan.add("找人1圈");
@@ -655,7 +684,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map_Plan = new ArrayList<>();
         map_Plan.add("默认5秒");
         map_Plan.add("与用户互动");
-        int i = 0;
+        i = 0;
         while(i < 10){
             map_Plan.add((i+1)+"分钟");
             i++;
@@ -1038,80 +1067,25 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             @Override
             public void run() {
                 HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
-                Constant.debugLog("array = " + array.toString());
-                xs_tmp = array.get("point_xs");
-                ys_tmp  = array.get("point_ys");
-                arrayserchtime_tmp = array.get("arrayserchtime");
-                arrayscope_tmp = array.get("arrayscope");
-                arraygametime_tmp = array.get("arraygametime");
-                int i = 0;
-                while(i < xs_tmp.size()){
-                    sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
-                    synchronized (thread){
-                        try {
-                            tasknumber = 0;
-                            //前往地图标注地点
-                            thread.wait();
-                            surfaceview.current_plan_number = i+1;
-                            //到达对应地点notify
-                            if(arrayserchtime_tmp.get(i) != 0 && IsSuccus){
-                                //发送 找人时间以及机器人旋转以及找人范围
-                                resetTimer();
-                                if(arrayserchtime_tmp.get(i) == 1){
-                                    Constant.debugLog("arrayserchtime_tmp = " + 0);
-                                    timer.schedule(task, 40 * 1000);
-                                } else if (arrayserchtime_tmp.get(i) == 2) {
-                                    Constant.debugLog("arrayserchtime_tmp = " + 1);
-                                    timer.schedule(task, 2 * 40 * 1000);
-                                } else if (arrayserchtime_tmp.get(i) == 3) {
-                                    Constant.debugLog("arrayserchtime_tmp = " + 2);
-                                    timer.schedule(task, 3 * 40 * 1000);
-                                }
-                                IsFind = false;
-                                //111111111
-                                Constant.getConstant().sendCamera(arrayscope_tmp.get(i),context);
-                                //222222222
-                                Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"");
-                                //互动中 找人
-                                thread.wait();
-                                //如果有找到人则到达指定位置
-                                if(IsFind){
-                                    IsFind = false;
-                                    Constant.debugLog("互动时间 = "+i);
-                                    resetTimer2();
-                                    IsAway = false;
-                                    if(arraygametime_tmp.get(i) == 0){
-                                        Constant.debugLog("arraygametime_tmp = " + 0);
-                                        timer.schedule(task, 15 * 1000);
-                                    }else if(arraygametime_tmp.get(i) == 1){
-                                        IsAway = true;
-                                    }else {
-                                        float a = arraygametime_tmp.get(i) - 1;
-                                        timer.schedule(task, (long) (a * 60 * 1000));
-                                        Constant.debugLog("tasknumber = " + a);
-                                    }
-                                    //333333
-                                    thread.wait();
-                                }
-                                //返回原点
-                                sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
-                                ////4444444
-                                thread.wait();
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    //返回后进行下一个地点
-                    i++;
+                Constant.debugLog("cirles"+cirles);
+                if(cirles == 0){
+                    CURRENT_CRILES = true;
+                }else {
+                    CURRENT_CRILES = false;
                 }
+                Constant.debugLog("CURRENT_CRILES"+CURRENT_CRILES);
+                while(CURRENT_CRILES || cirles > 0){
+                    Constant.debugLog("cirles"+cirles);
+                    planStart(array);
+                    if(!CURRENT_CRILES){
+                        cirles--;
+                    }
+                }
+                plan_cirles.setClickable(true);
+                planchooce.setClickable(true);
                 findViewById(R.id.button_execut).setClickable(true);
                 findViewById(R.id.button_plan_stop).setClickable(false);
-                sendNativePoint();
-                tasknumber = -1;
-                surfaceview.current_plan_number = 0;
                 thread = new Thread();
-                startPlan();
             }
         });
         thread.start();
@@ -1255,5 +1229,78 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             ChangeMapAdapter = new ChangeMapAdapter(arrayPlanLists,strings.get((int) plannumber),context,handler);
             plan_change_list.setAdapter(ChangeMapAdapter);
         }
+    }
+    private void planStart(final HashMap<String, Vector<Float>> array){
+        xs_tmp = array.get("point_xs");
+        ys_tmp  = array.get("point_ys");
+        arrayserchtime_tmp = array.get("arrayserchtime");
+        arrayscope_tmp = array.get("arrayscope");
+        arraygametime_tmp = array.get("arraygametime");
+        int i = 0;
+        while(i < xs_tmp.size()){
+            sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
+            synchronized (thread){
+                try {
+                    tasknumber = 0;
+                    //前往地图标注地点
+                    thread.wait();
+                    surfaceview.current_plan_number = i+1;
+                    //到达对应地点notify
+                    if(arrayserchtime_tmp.get(i) != 0 && IsSuccus){
+                        //发送 找人时间以及机器人旋转以及找人范围
+                        resetTimer();
+                        if(arrayserchtime_tmp.get(i) == 1){
+                            Constant.debugLog("arrayserchtime_tmp = " + 0);
+                            timer.schedule(task, 40 * 1000);
+                        } else if (arrayserchtime_tmp.get(i) == 2) {
+                            Constant.debugLog("arrayserchtime_tmp = " + 1);
+                            timer.schedule(task, 2 * 40 * 1000);
+                        } else if (arrayserchtime_tmp.get(i) == 3) {
+                            Constant.debugLog("arrayserchtime_tmp = " + 2);
+                            timer.schedule(task, 3 * 40 * 1000);
+                        }
+                        IsFind = false;
+                        //111111111
+                        Constant.getConstant().sendCamera(arrayscope_tmp.get(i),context);
+                        //222222222
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"");
+                        //互动中 找人
+                        thread.wait();
+                        //如果有找到人则到达指定位置
+                        if(IsFind){
+                            IsFind = false;
+                            Constant.debugLog("互动时间 = "+i);
+                            resetTimer2();
+                            IsAway = false;
+                            if(arraygametime_tmp.get(i) == 0){
+                                Constant.debugLog("arraygametime_tmp = " + 0);
+                                timer.schedule(task, 15 * 1000);
+                            }else if(arraygametime_tmp.get(i) == 1){
+                                IsAway = true;
+                            }else {
+                                float a = arraygametime_tmp.get(i) - 1;
+                                timer.schedule(task, (long) (a * 60 * 1000));
+                                Constant.debugLog("tasknumber = " + a);
+                            }
+                            //333333
+                            thread.wait();
+                        }
+                        //返回原点
+                        sendNativePoint(xs_tmp.get(i),ys_tmp.get(i),0);
+                        ////4444444
+                        thread.wait();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            //返回后进行下一个地点
+            i++;
+        }
+        findViewById(R.id.button_execut).setClickable(true);
+        findViewById(R.id.button_plan_stop).setClickable(false);
+        sendNativePoint();
+        tasknumber = -1;
+        surfaceview.current_plan_number = 0;
     }
 }

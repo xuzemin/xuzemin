@@ -123,6 +123,10 @@
                         android:id="@+id/spinner_plan"
                         style="@style/MySpiner"
                         />
+                    <Spinner
+                        android:id="@+id/spinner_plan_cirles"
+                        style="@style/MySpiner"
+                        />
                     <Button
                         style="@style/MapButton"
                         android:id="@+id/button_execut"

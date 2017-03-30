@@ -71,7 +71,7 @@ public class FaceDialog extends Dialog {
         dialog.setOnPositiveListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editText.getText().toString().trim().equals("88391477")){
+                if(editText.getText().toString().trim().equals("")){
                     faceDialog.dismiss();
                     Constant.DIALOG_SHOW = false;
                 }else{
