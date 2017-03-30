@@ -135,7 +135,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setAntiAlias(true); //反锯齿
         p.setColor(getResources().getColor(R.color.path));
         p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth((float) 2.0);
+        p.setStrokeWidth((float) 4.0);
         p.setTextSize(25);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         for(int i=0 ,length = point_xs.size();i<length;i++) {
@@ -149,7 +149,25 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.drawText((i+1)+"",point_xs.elementAt(i) - 8, point_ys.elementAt(i) +8,p);
 //                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
-                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),point_xs.elementAt(i),point_ys.elementAt(i),p);
+                    double x_tmp,y_tmp;
+                    double x = point_xs.elementAt(i)-point_xs.elementAt(i-1);
+                    double y = point_ys.elementAt(i)-point_ys.elementAt(i-1);
+                    double Distance = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+                    if(point_xs.elementAt(i-1) > point_xs.elementAt(i)){
+                        x_tmp = point_xs.elementAt(i) + Math.abs(20 * x /Distance);
+                    }else if(point_xs.elementAt(i-1) < point_xs.elementAt(i)){
+                        x_tmp = point_xs.elementAt(i) - Math.abs(20 * x /Distance);
+                    }else{
+                        x_tmp = point_xs.elementAt(i);
+                    }
+                    if(point_ys.elementAt(i-1) > point_ys.elementAt(i)){
+                        y_tmp = point_ys.elementAt(i) + Math.abs(20 * y / Distance);
+                    } else if(point_ys.elementAt(i-1) < point_ys.elementAt(i)){
+                        y_tmp = point_ys.elementAt(i) - Math.abs(20 * y / Distance);
+                    }else{
+                        y_tmp = point_ys.elementAt(i);
+                    }
+                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i-1),x_tmp,y_tmp,p);
                 }
                 if(i == point_xs.size() -1){
                     canvas.drawBitmap(startpoint,point_xs.elementAt(0)-startpoint.getWidth()/2,point_ys.elementAt(0)-startpoint.getHeight()/2,p);
@@ -254,7 +272,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public void drawAL(Canvas canvas,double sx, double sy, double ex, double ey,Paint p)
     {
         double H = 20; // 箭头高度
-        double L = 6; // 底边的一半
+        double L = 5; // 底边的一半
         int x3 ;
         int y3 ;
         int x4 ;

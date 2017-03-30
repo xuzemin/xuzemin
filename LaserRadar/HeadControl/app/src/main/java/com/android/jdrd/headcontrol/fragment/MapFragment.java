@@ -444,18 +444,26 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 handler.sendEmptyMessage(3);
                 plan_cirles.setClickable(true);
                 planchooce.setClickable(true);
+                plan_cirles.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
+                planchooce.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
                 findViewById(R.id.button_execut).setClickable(true);
                 findViewById(R.id.button_plan_stop).setClickable(false);
+                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
+                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 break;
             //执行路线
             case R.id.button_execut:
                 plan_cirles.setClickable(false);
                 planchooce.setClickable(false);
+                plan_cirles.setBackground(getResources().getDrawable(R.mipmap.xiala_pre));
+                planchooce.setBackground(getResources().getDrawable(R.mipmap.xiala_pre));
                 startPlan();
                 Constant.DIALOG_SHOW = true;
                 startAnimationRight();
                 findViewById(R.id.button_execut).setClickable(false);
+                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
                 findViewById(R.id.button_plan_stop).setClickable(true);
+                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 dialogFace();
                 break;
 
@@ -1085,6 +1093,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 planchooce.setClickable(true);
                 findViewById(R.id.button_execut).setClickable(true);
                 findViewById(R.id.button_plan_stop).setClickable(false);
+                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
+                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 thread = new Thread();
             }
         });
@@ -1222,7 +1232,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
     //路线调整
     private void go_PlanChange() {
-//        updatekey();
         if(null!=arrayPlanLists&&plannumber >= 0&&arrayPlanLists.size() > 0){
             setVisible();
             linearlayout_plan_change.setVisibility(View.VISIBLE);
@@ -1297,6 +1306,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             //返回后进行下一个地点
             i++;
         }
+        plan_cirles.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
+        planchooce.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
         findViewById(R.id.button_execut).setClickable(true);
         findViewById(R.id.button_plan_stop).setClickable(false);
         sendNativePoint();
