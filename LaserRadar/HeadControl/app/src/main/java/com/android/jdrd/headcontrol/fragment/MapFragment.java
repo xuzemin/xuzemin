@@ -132,11 +132,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     break;
                 case 3:
                     if(thread!=null){
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                         if(thread.isAlive()){
                             thread = new Thread();
                         }
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                     }
                     findViewById(R.id.button_execut).setClickable(true);
                     findViewById(R.id.button_plan_stop).setClickable(false);
@@ -337,7 +337,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         updatekey();
         if(dialog != null){
             dialog.dismiss();
-            FaceDialog.getDialog(context).dismiss();
         }
         switch (Constant.CURRENTINDEX_MAP){
             case 0:
@@ -381,7 +380,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         if(context!=null && receiver !=null) {
             context.unregisterReceiver(receiver);
         }
-        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
     }
 
     @Override
@@ -439,7 +438,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //停止执行
             case R.id.button_plan_stop:
-                Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"close",Constant.ip_bigScreen);
+                try {
+                    ServerSocketUtil.sendDateToClient("openAD", Constant.ip_bigScreen);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 CURRENT_CRILES = false;
                 cirles = -1;
                 handler.sendEmptyMessage(3);
@@ -447,43 +450,30 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 planchooce.setClickable(true);
                 plan_cirles.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
                 planchooce.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
-                findViewById(R.id.button_execut).setClickable(true);
-                findViewById(R.id.button_plan_stop).setClickable(false);
-                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
-                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
+//                findViewById(R.id.button_execut).setClickable(true);
+//                findViewById(R.id.button_plan_stop).setClickable(false);
+//                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
+//                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 break;
             //执行路线
             case R.id.button_execut:
-                Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"close",Constant.ip_bigScreen);
+                try {
+                    ServerSocketUtil.sendDateToClient("openAR", Constant.ip_bigScreen);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 plan_cirles.setClickable(false);
                 planchooce.setClickable(false);
                 plan_cirles.setBackground(getResources().getDrawable(R.mipmap.xiala_pre));
                 planchooce.setBackground(getResources().getDrawable(R.mipmap.xiala_pre));
                 startPlan();
-                Constant.DIALOG_SHOW = true;
-                startAnimationRight();
-                findViewById(R.id.button_execut).setClickable(false);
-                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
-                findViewById(R.id.button_plan_stop).setClickable(true);
-                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 dialogFace();
+                startAnimationRight();
+//                findViewById(R.id.button_execut).setClickable(false);
+//                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
+//                findViewById(R.id.button_plan_stop).setClickable(true);
+//                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 break;
-
-//            //下一步
-//            case R.id.button_savenext:
-//                if(!Istouch){
-//                    arrayserchtime.add(serchtimenumber);
-//                    arrayscope.add(scopenumber);
-////                    arrayangle.add(anglenumber);
-//                    arraygametime.add(gametimenumber);
-//                    xs.add(surfaceview.point_xs.lastElement());
-//                    ys.add(surfaceview.point_ys.lastElement());
-//                    Istouch = true;
-//                    Toast.makeText(context,"请选取一个新的目标点",Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(context,"没有选取一个新的目标点",Toast.LENGTH_SHORT).show();
-//                }
-//                break;
             //规划完毕
             case R.id.button_saveall:
                 Constant.CURRENTINDEX_MAP = 2;
@@ -504,6 +494,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //漫游模式
             case R.id.button_cruise:
+                try {
+                    ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Constant.CURRENTINDEX_MAP = 3;
                 go_Roam();
                 break;
@@ -567,7 +562,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //返回远点
             case R.id.button_returnback:
-                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
+                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                 sendNativePoint();
                 break;
             case R.id.button_choose:
@@ -751,7 +746,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map.put("point_y",a);
 //        Constant.debugLog( "y"+a);
         map.put("angle",angle);
-        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map,Constant.ip_ros);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
 //        }
     }
     //发往底层
@@ -763,7 +758,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map.put("point_x",-1);
         map.put("point_y",0);
         map.put("angle",180);
-        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map,Constant.ip_ros);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
 //        }
     }
 
@@ -1068,6 +1063,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         dialog.show();
     }
     private void dialogFace(){
+        Constant.DIALOG_SHOW = true;
         FaceDialog.getDialog(context).show();
     }
 
@@ -1077,7 +1073,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             @Override
             public void run() {
                 HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
-                Constant.debugLog("cirles"+cirles);
                 if(cirles == 0){
                     CURRENT_CRILES = true;
                 }else {
@@ -1085,18 +1080,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 }
                 Constant.debugLog("CURRENT_CRILES"+CURRENT_CRILES);
                 while(CURRENT_CRILES || cirles > 0){
-                    Constant.debugLog("cirles"+cirles);
                     planStart(array);
                     if(!CURRENT_CRILES){
                         cirles--;
                     }
                 }
-                plan_cirles.setClickable(true);
-                planchooce.setClickable(true);
-                findViewById(R.id.button_execut).setClickable(true);
-                findViewById(R.id.button_plan_stop).setClickable(false);
-                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
-                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 thread = new Thread();
             }
         });
@@ -1141,10 +1129,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         task = new TimerTask() {
             public void run () {
                 Constant.debugLog("task");
-                //跳过找人，互动。准备返回远点
                 tasknumber = 4;
                 Constant.getConstant().sendCamera(Float.valueOf(3),context);
-                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"",Constant.ip_ros);
+                Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                 handler.sendEmptyMessage(4);
             }
         };
@@ -1274,7 +1261,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         //111111111
                         Constant.getConstant().sendCamera(arrayscope_tmp.get(i),context);
                         //222222222
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"",Constant.ip_ros);
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"");
                         //互动中 找人
                         thread.wait();
                         //如果有找到人则到达指定位置
@@ -1308,10 +1295,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             //返回后进行下一个地点
             i++;
         }
-        plan_cirles.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
-        planchooce.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
-        findViewById(R.id.button_execut).setClickable(true);
-        findViewById(R.id.button_plan_stop).setClickable(false);
         sendNativePoint();
         tasknumber = -1;
         surfaceview.current_plan_number = 0;
