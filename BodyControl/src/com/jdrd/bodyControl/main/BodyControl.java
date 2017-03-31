@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class BodyControl {
-	private static String IP_ADDR = "192.168.20.13";
+	private static String IP_ADDR = "192.168.88.106";
 	private static int PORT = 12345;
 	private static Process ARproc = null;
 	private static Process ADproc = null;
@@ -36,6 +36,8 @@ public class BodyControl {
 						close();
 					}
 				}
+				ADproc.destroy();
+				ARproc.destroy();
 				out.close(); 
 				inputStream.close();
 				socket.close();
@@ -52,9 +54,10 @@ public class BodyControl {
 			if(ARproc !=null){
 				ARproc.destroy();
 			}
-			fileLac = "E:\\Program Files (x86)\\Notepad++\\notepad++.exe";
-			ADproc = rt.exec(fileLac);
-			Thread.sleep(1000);
+			if(!ADproc.isAlive()){
+				fileLac = "C:\\Users\\Administrator\\Desktop\\FaceMask.exe";
+				ADproc = rt.exec(fileLac);
+			}
 		} catch (Exception e) {
 			System.out.println("open failure");
 		}
@@ -66,9 +69,10 @@ public class BodyControl {
 			if(ADproc != null){
 				ADproc.destroy();
 			}
-			fileLac = "E:\\Program Files (x86)\\Navicat for MySQL\\navicat.exe";
-			ARproc = rt.exec(fileLac);
-			Thread.sleep(1000);
+			if(!ARproc.isAlive()){
+				fileLac = "C:\\Users\\Administrator\\Desktop\\1234\\ZhongTai.exe";
+				ARproc = rt.exec(fileLac);
+			}
 		} catch (Exception e) {
 			System.out.println("open failure");
 		}
