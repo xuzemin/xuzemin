@@ -128,7 +128,7 @@ public class Constant {
         context.sendBroadcast(intent);
     }
 
-    public void sendBundle(String type,String function,Map data,String ip){
+    public void sendBundle(String type,String function,Map data){
         try {
             Gson gson = new Gson();
             Map map = new LinkedHashMap();
@@ -136,7 +136,7 @@ public class Constant {
             map.put("function", function);
             map.put("data", data);
             String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s, ip);
+            ServerSocketUtil.sendDateToClient(s, ip_ros);
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -146,7 +146,7 @@ public class Constant {
 //        Current_degree = spu.getBean().pose[2];
 //    }
 
-    public void sendBundle(String type,String function,String data,String ip){
+    public void sendBundle(String type,String function,String data){
         try {
             Gson gson = new Gson();
             Map map = new LinkedHashMap();
@@ -154,12 +154,12 @@ public class Constant {
             map.put(Constant.Function, function);
             map.put(Constant.Data, data);
             String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s, ip);
+            ServerSocketUtil.sendDateToClient(s, ip_ros);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void sendBundle(String type,String function,Float data,String ip){
+    public void sendBundle(String type,String function,Float data){
         try {
             Gson gson = new Gson();
             Map map = new LinkedHashMap();
@@ -167,7 +167,7 @@ public class Constant {
             map.put(Constant.Function, function);
             map.put(Constant.Data, data);
             String s = gson.toJson(map);
-            ServerSocketUtil.sendDateToClient(s, ip);
+            ServerSocketUtil.sendDateToClient(s, ip_ros);
         } catch (IOException e) {
             e.printStackTrace();
         }
