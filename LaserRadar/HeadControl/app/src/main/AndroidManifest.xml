@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.jdrd.headcontrol"
     android:versionCode="1"
-    android:versionName="1.0.0">
+    android:versionName="1.0.0"
+    >
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,8 +26,8 @@
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -37,13 +39,16 @@
         <activity
             android:name=".activity.TestActivity"
             android:label="@string/title_activity_test" />
-        <activity android:name=".fragment.CleanFragment1" />
         <activity android:name=".activity.DBTestActivity" />
 
         <service
             android:name=".service.SetStaticIPService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
+        <receiver android:name=".receiver.BootBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
-
 </manifest>
