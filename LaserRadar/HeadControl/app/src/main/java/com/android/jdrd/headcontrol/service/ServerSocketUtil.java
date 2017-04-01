@@ -227,7 +227,7 @@ public class ServerSocketUtil extends Service {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Constant.debugLog("buf内容：" + buf);
+//            Constant.debugLog("buf内容：" + buf);
 
             if ('*' == buf) {
                 flag = true;
@@ -247,7 +247,6 @@ public class ServerSocketUtil extends Service {
                 if (msg != null) {
                     ++len;
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
-                    
                     intent.putExtra("msg", msg);
                     intent.setAction("com.jdrd.fragment.Map");
                     sendBroadcast(intent);
@@ -256,7 +255,6 @@ public class ServerSocketUtil extends Service {
                     for (int j = 0; j < buffer.length; j++) {
                         buffer[j] = 0;
                     }
-
                     flag = false;
                     flag2 = false;
                 }

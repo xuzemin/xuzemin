@@ -52,14 +52,15 @@ public class FaceDialog extends Dialog {
         imageView.setImageResource(R.drawable.animationface);
         animationDrawable = (AnimationDrawable) imageView.getDrawable();
         setCanceledOnTouchOutside(false);
+        getWindow().setWindowAnimations(R.style.dialog_window);
         getWindow().setBackgroundDrawableResource(R.color.vifrification);
 
         WindowManager.LayoutParams wl = getWindow().getAttributes();
         wl.x = -50;
         getWindow().setAttributes(wl);
 
-        Animation mAnimation = AnimationUtils.loadAnimation(context,R.animator.dialog_enter_anim);
-        view.startAnimation(mAnimation);
+//        Animation mAnimation = AnimationUtils.loadAnimation(context,R.animator.dialog_enter_anim);
+//        view.startAnimation(mAnimation);
 
         View bv = this.findViewById(android.R.id.title);
         bv.setVisibility(View.GONE);

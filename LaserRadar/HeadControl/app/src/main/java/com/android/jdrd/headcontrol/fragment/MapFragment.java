@@ -388,20 +388,22 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         switch (v.getId()){
             //清除上一步
             case R.id.button_clearlast:
-                if(surfaceview !=null&&surfaceview.point_xs.size()>=1){
-                    if(surfaceview.point_xs.size() == arrayserchtime.size()){
-                        surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
-                        surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
-                        xs.remove(surfaceview.point_ys.size()-1);
-                        ys.remove(surfaceview.point_ys.size()-1);
-                        if(arrayserchtime.size()>=1){
-                            arrayserchtime.remove(surfaceview.point_ys.size()-1);
-                            arrayscope.remove(surfaceview.point_ys.size()-1);
-                            arraygametime.remove(surfaceview.point_ys.size()-1);
+                Constant.debugLog(surfaceview.point_xs.toString());
+                Constant.debugLog(surfaceview.point_ys.toString());
+                if(surfaceview.point_xs!=null){
+                    Constant.debugLog(surfaceview.point_xs.size()+"size_xs_delete");
+                    Constant.debugLog(surfaceview.point_ys.size()+"size_ys_delete");
+                    Constant.debugLog(arrayserchtime.size()+"size_xs_deletearrayserchtime");
+                    if(surfaceview !=null&&surfaceview.point_xs.size() > 0){
+                        int number = surfaceview.point_xs.size() -1;
+                        Constant.debugLog(number+"number");
+                        if(number == arrayserchtime.size()){
+                            arrayserchtime.remove(number);
+                            arrayscope.remove(number);
+                            arraygametime.remove(number);
                         }
-                    }else{
-                        surfaceview.point_xs.remove(surfaceview.point_xs.size()-1);
-                        surfaceview.point_ys.remove(surfaceview.point_ys.size()-1);
+                        surfaceview.point_xs.remove(number);
+                        surfaceview.point_ys.remove(number);
                     }
                 }
                 Istouch = true;
@@ -409,13 +411,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             //清除所有
             case R.id.button_clearall:
                 if(surfaceview!=null){
-                    surfaceview.point_xs = new Vector<>();
-                    surfaceview.point_ys = new Vector<>();
-                    xs = new Vector<>();
-                    ys = new Vector<>();
-                    arrayserchtime = new Vector<>();
-                    arrayscope = new Vector<>();
-                    arraygametime = new Vector<>();
+                    go_NewPlan();
                 }
                 break;
             //规划新路线
@@ -444,7 +440,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     e.printStackTrace();
                 }
                 CURRENT_CRILES = false;
-                cirles = -1;
                 handler.sendEmptyMessage(3);
                 plan_cirles.setClickable(true);
                 planchooce.setClickable(true);
@@ -469,9 +464,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 startPlan();
                 dialogFace();
                 startAnimationRight();
-//                findViewById(R.id.button_execut).setClickable(false);
+                findViewById(R.id.button_execut).setClickable(false);
 //                findViewById(R.id.button_execut).setBackground(getResources().getDrawable(R.mipmap.you_anniu_pre));
-//                findViewById(R.id.button_plan_stop).setClickable(true);
+                findViewById(R.id.button_plan_stop).setClickable(true);
 //                findViewById(R.id.button_plan_stop).setBackground(getResources().getDrawable(R.drawable.btn_map_selector));
                 break;
             //规划完毕
@@ -687,7 +682,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             }
         });
         map_Plan = new ArrayList<>();
-        map_Plan.add("默认5秒");
+        map_Plan.add("默认15秒");
         map_Plan.add("与用户互动");
         i = 0;
         while(i < 10){
@@ -1073,9 +1068,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             @Override
             public void run() {
                 HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+
                 if(cirles == 0){
                     CURRENT_CRILES = true;
-                }else {
+                }else if(cirles > 0){
                     CURRENT_CRILES = false;
                 }
                 Constant.debugLog("CURRENT_CRILES"+CURRENT_CRILES);
@@ -1211,10 +1207,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         arraygametime = new Vector<>();
         xs = new Vector<>();
         ys = new Vector<>();
-        surfaceview.point_xs = new Vector<>();
-        surfaceview.point_ys = new Vector<>();
         surfaceview.point_ys.removeAllElements();
         surfaceview.point_xs.removeAllElements();
+        Constant.debugLog(surfaceview.point_xs.size()+"size_xs");
         Istouch = true;
         setVisible();
         linear_plan_info.setVisibility(View.VISIBLE);

@@ -272,7 +272,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/linearlayout_point"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:visibility="gone"
                     android:layout_height="match_parent">
@@ -333,7 +333,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/linearlayout_roam"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:orientation="vertical"
                     android:visibility="gone"
                     android:layout_height="match_parent">
