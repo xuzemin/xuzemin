@@ -441,6 +441,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 }
                 CURRENT_CRILES = false;
                 handler.sendEmptyMessage(3);
+                Toast.makeText(context,"停止执行路线",Toast.LENGTH_SHORT).show();
 //                plan_cirles.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
 //                planchooce.setBackground(getResources().getDrawable(R.drawable.btn_spiner_selector));
                 break;
@@ -455,6 +456,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //                planchooce.setClickable(false);
 //                plan_cirles.setBackground(getResources().getDrawable(R.mipmap.xiala_pre));
 //                planchooce.setBackground(getResources().getDrawable(R.mipmap.xiala_pre));
+                Toast.makeText(context,"开始执行路线",Toast.LENGTH_SHORT).show();
                 startPlan();
                 dialogFace();
                 startAnimationRight();
@@ -488,6 +490,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                Toast.makeText(context,"开始自由行走",Toast.LENGTH_SHORT).show();
                 Constant.CURRENTINDEX_MAP = 3;
                 go_Roam();
                 break;
@@ -499,6 +502,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             //点选模式
             case R.id.button_pointchooce:
                 Constant.CURRENTINDEX_MAP = 1;
+                Toast.makeText(context,"开始前进",Toast.LENGTH_SHORT).show();
                 go_Point();
                 break;
             case R.id.button_return:
