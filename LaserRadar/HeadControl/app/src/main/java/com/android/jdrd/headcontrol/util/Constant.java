@@ -56,6 +56,7 @@ public class Constant {
 //    public static String Walk = "walk";
     public static String Navigation = "navigation";
     public static String Peoplesearch = "peoplesearch";
+    public static String Roamsearch = "roamsearch";
     //    public static String Turn = "turn";
     public static String StopSearch = "stop";
     public static String Result = "result";
