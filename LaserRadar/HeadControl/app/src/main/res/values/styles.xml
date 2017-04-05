@@ -132,7 +132,7 @@
         <item name="android:layout_width">232dp</item>
     </style>
     <style name="dialog_window" parent="android:Animation.Activity">
-        <!--<item name="android:windowEnterAnimation">@animator/dialog_enter_anim</item>-->
-        <!--<item name="android:windowExitAnimation">@animator/dialog_exit_anim</item>-->
+        <item name="android:windowEnterAnimation">@animator/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@animator/dialog_exit_anim</item>
     </style>
 </resources>

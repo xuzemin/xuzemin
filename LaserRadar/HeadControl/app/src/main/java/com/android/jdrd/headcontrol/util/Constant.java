@@ -113,7 +113,7 @@ public class Constant {
 //                    }
 //                }).create().show();
 //    }
-    public void sendCamera(Float scope,Context context){
+    public void sendCamera(float scope,Context context){
         Intent intent = new Intent();
         if(scope == 0){
             intent.putExtra("msg", "远");

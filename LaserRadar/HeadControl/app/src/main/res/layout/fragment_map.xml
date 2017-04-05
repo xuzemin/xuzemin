@@ -285,7 +285,7 @@
                         android:text="@string/button_point"/>
                     <Button
                         android:id="@+id/button_next"
-                        android:text="@string/savenext"
+                        android:text="@string/move"
                         style="@style/MapButton"
                         />
                     <LinearLayout
