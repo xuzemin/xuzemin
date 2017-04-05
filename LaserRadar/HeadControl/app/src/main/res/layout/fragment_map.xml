@@ -105,6 +105,11 @@
                         android:id="@+id/button_returnback"
                         android:text="@string/button_returnback"
                         />
+                    <Button
+                        style="@style/MapButton"
+                        android:id="@+id/button_setreturn"
+                        android:text="@string/button_setreturn"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/relative_plan"
@@ -220,12 +225,6 @@
                         android:id="@+id/gametime"
                         style="@style/MySpiner"
                         />
-                    <!--<Button-->
-                    <!--android:id="@+id/button_savenext"-->
-                    <!--android:text="@string/savenext"-->
-                    <!--android:visibility="gone"-->
-                    <!--style="@style/MapButton"-->
-                    <!--/>-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
@@ -311,20 +310,6 @@
                         android:text="@string/button_choose"
                         style="@style/MapButton"
                         />
-                    <!--<EditText-->
-                    <!--android:id="@+id/point_x"-->
-                    <!--android:layout_width="232dp"-->
-                    <!--android:layout_height="96dp" />-->
-                    <!--<EditText-->
-                    <!--android:id="@+id/point_y"-->
-                    <!--android:layout_width="232dp"-->
-                    <!--android:layout_height="96dp"-->
-                    <!--/>-->
-                    <!--<Button-->
-                    <!--android:id="@+id/button_move"-->
-                    <!--android:text="@string/move"-->
-                    <!--style="@style/MapButton"-->
-                    <!--/>-->
                     <Button
                         android:id="@+id/button_point_back"
                         android:text="@string/back"

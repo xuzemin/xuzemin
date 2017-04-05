@@ -224,7 +224,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         findViewById(R.id.button_pathplan).setOnClickListener(this);
         findViewById(R.id.button_cruise).setOnClickListener(this);
         findViewById(R.id.button_returnback).setOnClickListener(this);
-//        findViewById(R.id.button_savenext).setOnClickListener(this);
+        findViewById(R.id.button_setreturn).setOnClickListener(this);
         findViewById(R.id.button_saveall).setOnClickListener(this);
         findViewById(R.id.button_execut).setOnClickListener(this);
         findViewById(R.id.button_next).setOnClickListener(this);
@@ -372,7 +372,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void onResume() {
         super.onResume();
-        Constant.debugLog(Constant.CURRENTINDEX_MAP+"onResume");
     }
 
     @Override
@@ -399,8 +398,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     if(surfaceview !=null&&surfaceview.point_xs.size() > 0){
                         int number = surfaceview.point_xs.size() -1;
                         Constant.debugLog(number+"number");
-                        if(number == arrayserchtime.size()){
-                             arrayserchtime.remove(number);
+                        if(number == arrayserchtime.size()-1){
+                            arrayserchtime.remove(number);
                             arrayscope.remove(number);
                             arraygametime.remove(number);
                         }
@@ -566,6 +565,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     }
                 }
                 sendNativePoint();
+                break;
+            case R.id.button_setreturn:
+
                 break;
             case R.id.button_choose:
                 if(!point_x.getText().toString().equals("") && !point_y.getText().toString().equals("") ){
