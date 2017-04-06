@@ -44,6 +44,9 @@ public class Constant {
     public static String ip_bigScreen = "/192.168.88.188";
     public static String ip_ros = "/192.168.88.101";
     public static float Scale = 1 ;
+    public static double return_x = -1;
+    public static double return_y = 0;
+    public static int return_degree = 180;
     private static final boolean isDebug = true;
     private static final String TAG = "HeadControl";
     public static String filePath = "data/data/com.android.jdrd.headcontrol/cache/map.xml";

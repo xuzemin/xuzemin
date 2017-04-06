@@ -103,6 +103,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private int tasknumber = -1;
     private int cirles = 0;
     private boolean CURRENT_CRILES = false;
+    private boolean SETRETURN = false;
     private TimerTask task;
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
     private Vector<String> strings = new Vector<>();
@@ -567,7 +568,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 sendNativePoint();
                 break;
             case R.id.button_setreturn:
-
+                SETRETURN = true;
                 break;
             case R.id.button_choose:
                 if(!point_x.getText().toString().equals("") && !point_y.getText().toString().equals("") ){
@@ -723,14 +724,23 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
     //底层获取
     private void getUpPoint(double native_x,double native_y){
+        if(SETRETURN){
+            Constant.return_x = native_x;
+            Constant.return_y = native_y;
+        }
         if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
             surfaceview.bitmap_y = ( native_x * -150) -50;
-            surfaceview.bitmap_x = ( native_y * -150 )+360 -50 ;
+            surfaceview.bitmap_x = ( native_y * -150 )+360 -50;
         }
     }
 
     //设置方向
     private void getAngle(int angle){
+        if(SETRETURN){
+            Constant.return_degree = angle;
+            SETRETURN = false;
+            Toast.makeText(context,"设置原点成功",Toast.LENGTH_SHORT).show();
+        }
         if(angle < 360 && angle >= 0){
             surfaceview.rote =  -angle;
         }
@@ -749,9 +759,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //发往底层
     private void sendNativePoint(){
         Map map  = new LinkedHashMap();
-        map.put("point_x",-1);
-        map.put("point_y",0);
-        map.put("angle",180);
+        map.put("point_x",Constant.return_x);
+        map.put("point_y",Constant.return_y);
+        map.put("angle",Constant.return_degree);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
     }
 
