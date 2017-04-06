@@ -266,18 +266,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 b = Constant.SCALE_NUMBER * y_int + 40;
                             }
                             if(Isplan){
-                                if(surfaceview.point_xs.lastElement() != a && surfaceview.point_ys.lastElement() != b){
-                                    Istouch = false;
-                                    surfaceview.point_xs.add(a);
-                                    surfaceview.point_ys.add(b);
-                                    arrayserchtime.add(serchtimenumber);
-                                    arrayscope.add(scopenumber);
-                                    arraygametime.add(gametimenumber);
-                                    xs.add(surfaceview.point_xs.lastElement());
-                                    ys.add(surfaceview.point_ys.lastElement());
-                                    Istouch = true;
-                                    surfaceview.Isplan = true;
+                                if(surfaceview.point_xs.size() > 0 && surfaceview.point_xs.lastElement() == a && surfaceview.point_ys.lastElement() == b){
+                                    return true;
                                 }
+                                surfaceview.point_xs.add(a);
+                                surfaceview.point_ys.add(b);
+                                arrayserchtime.add(serchtimenumber);
+                                arrayscope.add(scopenumber);
+                                arraygametime.add(gametimenumber);
+                                xs.add(surfaceview.point_xs.lastElement());
+                                ys.add(surfaceview.point_ys.lastElement());
+                                Istouch = true;
+                                surfaceview.Isplan = true;
                             }else{
                                 surfaceview.point_xs.removeAllElements();
                                 surfaceview.point_ys.removeAllElements();
@@ -291,16 +291,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 
                     }
                 }
-
-//                //放大缩小
-//                if( (n&MotionEvent.ACTION_MASK) == MotionEvent.ACTION_POINTER_DOWN && 2 == nCnt)//<span style="color:#ff0000;">2表示两个手指</span>
-//                {
-//                }else if( (n&MotionEvent.ACTION_MASK) == MotionEvent.ACTION_POINTER_UP  && 2 == nCnt)
-//                {
-//                    int xlen = Math.abs((int)event.getX(0) - (int)event.getX(1));
-//                    int ylen = Math.abs((int)event.getY(0) - (int)event.getY(1));
-////                    double nLenEnd = Math.sqrt((double)xlen*xlen + (double)ylen * ylen);
-//                }
                 return true;
             }
         });
