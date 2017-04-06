@@ -38,7 +38,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Double bitmap_x = 0.0 , bitmap_y = 0.0;
     public Double center_x = 0.0 , center_y = 0.0;
     public float rote = 0;
-    public Movie gifMovie;
     public int current_plan_number = -1;
     public boolean paint = false,Ishave = false,Isplan = true,Ispath = false;
     public int temp = 0;
@@ -54,7 +53,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
                                int height) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -78,7 +76,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         // TODO Auto-generated method stub
         super.draw(canvas);
         Matrix matrix = new Matrix();
-//        matrix.postScale(scale,scale);
         matrix.postTranslate(translate_x,translate_y);
         canvas.concat(matrix);
         canvas.drawColor(getResources().getColor(R.color.darkgray));//这里是绘制背景
@@ -125,7 +122,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth((float) 2.0);
         for(int i=0,length = path_xs.size();i<length;i++) {
-//            canvas.drawCircle(path_xs.elementAt(i), path_ys.elementAt(i), 3, p);
             if (i >= 1) {
                 drawAL(canvas,path_xs.elementAt(i-1),path_ys.elementAt(i-1),path_xs.elementAt(i),path_ys.elementAt(i),p);
             }
@@ -147,7 +143,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 }
                 canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
                 canvas.drawText((i+1)+"",point_xs.elementAt(i) - 8, point_ys.elementAt(i) +8,p);
-//                canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
                 if (i >= 1) {
                     double x_tmp,y_tmp;
                     double x = point_xs.elementAt(i)-point_xs.elementAt(i-1);
@@ -191,8 +186,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawBitmap(bitmap, matrix, null);
         }
 
-//        showGifImage(canvas);
-
     }
 
 
@@ -220,32 +213,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
-
     }
-//    private long mMovieStart;
-//    private boolean showGifImage(Canvas canvas) {
-//        //得到系统时间
-//        long now = SystemClock.uptimeMillis();
-//        if (mMovieStart == 0) {
-//            // 把开始时间设置为当前时间
-//            mMovieStart = now;
-//        }
-//        int duration = gifMovie.duration();
-//        if (duration == 0) {
-//            // 如果没有持续时间就设置为100
-//            duration = 100;
-//        }
-//        // 设置间隔时间
-//        int relTime = (int) ((now - mMovieStart) % duration);
-//        gifMovie.setTime(relTime);
-//        //在指定的位置进行绘制，这里是左上角
-//        gifMovie.draw(canvas,Float.valueOf(String.valueOf(bitmap_x)), Float.valueOf(String.valueOf(bitmap_y)));
-//        if ((now - mMovieStart) >= duration) {
-//            mMovieStart = 0;
-//            return true;
-//        }
-//        return false;
-//    }
+
     private void drawtable(Canvas canvas){
         p.setColor(getResources().getColor(R.color.darkslategrey));
         p.setStyle(Paint.Style.FILL);
