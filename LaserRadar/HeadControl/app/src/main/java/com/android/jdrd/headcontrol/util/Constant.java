@@ -27,8 +27,11 @@ public class Constant {
     public static final String password = "12345678";
 //    public static final String wifiname = "HUAWEI-GDRD";
 //    public static final String password = "88391477";
-    //测试用WI-FI
+    //测试用WI-FI01
 //    public static String wifiname = "GDRD-3F";
+//    public static String password = "88391477";
+    //测试用WI-FI02
+//    public static String wifiname = "TP-LINK_Test";
 //    public static String password = "88391477";
 //    public static String Reason = "reason";
 //    public static double Current_x = 0;
@@ -36,7 +39,7 @@ public class Constant {
     public static int CURRENTINDEX_MAP = 0;
     public static boolean DIALOG_SHOW = false;
     public static int ServerPort = 12345;
-    public static String ip_bigScreen = "/192.168.88.188";
+    public static String ip_bigScreen = "/192.168.88.100";
     public static String ip_ros = "/192.168.88.101";
     public static double return_x = -1;
     public static double return_y = 0;

@@ -1,115 +1,115 @@
 package com.android.jdrd.headcontrol.activity;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.android.jdrd.headcontrol.util.Constant;
-import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-public class TestActivity extends Activity {
-    private TextView textView;
-    private EditText editText;
-    private MyReceiver receiver;
-    IntentFilter filter;
+public class TestActivity extends Activity implements View.OnClickListener {
+    private Button bt_openSearchPeople;
+    private Button bt_closeSearchPeople;
+    private Button bt_openAR;
+    private Button bt_closeAR;
+    private Button bt_openPower;
+    private Button bt_closePower;
+    private Button bt_openWater;
+    private Button bt_closeWater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_socket);
-        //启动ServerSocketUtil服务
-        Intent intent = new Intent(this, ServerSocketUtil.class);
-
-        startService(intent);
-        //注册数据接收广播用来接收socket发来的数据
-        registerDateReceiver();
+        setContentView(R.layout.activity_test);
         initView();
     }
 
     private void initView() {
-        editText = (EditText)this.findViewById(R.id.editTextSocket);
-        textView = (TextView)this.findViewById(R.id.textViewSocket);
-        findViewById(R.id.startSearchPeople).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        bt_openSearchPeople = (Button) findViewById(R.id.openSearchPeople);
+        bt_closeSearchPeople = (Button) findViewById(R.id.closeSearchPeople);
+        bt_openAR = (Button) findViewById(R.id.openAR);
+        bt_closeAR = (Button) findViewById(R.id.closeAR);
+        bt_openPower = (Button) findViewById(R.id.openBigScreenPower);
+        bt_closePower = (Button) findViewById(R.id.closeBigScreenPower);
+        bt_openWater = (Button)findViewById(R.id.openWater);
+        bt_closeWater = (Button)findViewById(R.id.closeWater);
+        bt_openSearchPeople.setOnClickListener(this);
+        bt_closeSearchPeople.setOnClickListener(this);
+        bt_openAR.setOnClickListener(this);
+        bt_closeAR.setOnClickListener(this);
+        bt_openPower.setOnClickListener(this);
+        bt_closePower.setOnClickListener(this);
+        bt_openWater.setOnClickListener(this);
+        bt_closeWater.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.openSearchPeople:
                 Intent intent = new Intent();
                 intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
                 intent.putExtra("msg", "远");
                 sendBroadcast(intent);
+                break;
+            case R.id.closeSearchPeople:
+                Intent intent2 = new Intent();
+                intent2.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
+                intent2.putExtra("msg", "关闭");
+                sendBroadcast(intent2);
+                break;
+            case R.id.openAR:
+                try {
+                    ServerSocketUtil.sendDateToClient("open", Constant.ip_bigScreen);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.closeAR:
                 try {
                     ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-        });
-
-        findViewById(R.id.buttonSocket).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                /*Intent intent = new Intent();
-                intent.setAction("com.jdrd.CursorSDKExample.TD_CAMERA");
-                intent.putExtra("msg", "关闭");
-                sendBroadcast(intent);*/
-
+                break;
+            case R.id.openBigScreenPower:
                 try {
-                    Gson gson = new Gson();
-                    Map map  = new LinkedHashMap();
-                    map.put("type", "command");
-                    map.put("function", "peoplesearch");
-                    map.put("data", "");
-                    String s = gson.toJson(map);
-                    ServerSocketUtil.sendDateToClient("ros", Constant.ip_ros);
-
+                    ServerSocketUtil.sendDateToClient("openBigScreenPower", Constant.ip_ros);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
-                /*Intent intent = new Intent(TestActivity.this, Myservice_Face.class);
-                startService(intent);*/
-            }
-        });
-    }
-
-    private void registerDateReceiver() {
-        receiver = new MyReceiver();
-        filter=new IntentFilter();
-        filter.addAction("com.jdrd.fragment.Map");
-        registerReceiver(receiver, filter);
-    }
-
-    public class MyReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String msg = intent.getStringExtra("msg");
-//            Constant.debugLog("收到了距离角度： " + msg);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    textView.setText(msg);
+                break;
+            case R.id.closeBigScreenPower:
+                try {
+                    ServerSocketUtil.sendDateToClient("closeBigScreenPower", Constant.ip_ros);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
+                break;
+            case R.id.openWater:
+                try {
+                    ServerSocketUtil.sendDateToClient("openWater", Constant.ip_ros);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.closeWater:
+                try {
+                    ServerSocketUtil.sendDateToClient("closeWater", Constant.ip_ros);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(receiver);
         super.onDestroy();
     }
 
