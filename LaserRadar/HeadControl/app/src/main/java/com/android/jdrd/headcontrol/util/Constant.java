@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
-
 import com.android.jdrd.headcontrol.dialog.CustomDialog;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.google.gson.Gson;

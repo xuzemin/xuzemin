@@ -206,6 +206,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         linear_point = (LinearLayout)findViewById(R.id.linearlayout_point);
         linear_roam = (LinearLayout)findViewById(R.id.linearlayout_roam);
         imgViewmapnRight.setOnClickListener(this);
+        findViewById(R.id.button_point_stop).setOnClickListener(this);
         findViewById(R.id.plan_change).setOnClickListener(this);
         findViewById(R.id.button_plan_change_save).setOnClickListener(this);
         findViewById(R.id.button_plan_change_back).setOnClickListener(this);
@@ -264,8 +265,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 surfaceview.point_xs.add(a);
                                 surfaceview.point_ys.add(b);
                                 arrayserchtime.add(serchtimenumber);
+                                Constant.debugLog("serchtimenumber"+serchtimenumber+"scopenumber"+scopenumber+"gametimenumber"+gametimenumber);
                                 arrayscope.add(scopenumber);
                                 arraygametime.add(gametimenumber);
+                                serchtime.setSelection(0,true);
+                                scope.setSelection(0,true);
+                                gametime.setSelection(0,true);
                                 Istouch = true;
                                 surfaceview.Isplan = true;
                             }else{
@@ -466,17 +471,17 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //开始漫游
             case R.id.button_roam_start:
-                findViewById(R.id.button_roam_stop).setClickable(true);
-                findViewById(R.id.button_roam_start).setClickable(false);
                 startRoam();
                 Toast.makeText(context,"开始漫游行走",Toast.LENGTH_SHORT).show();
                 break;
             //停止漫游
             case R.id.button_roam_stop:
-                findViewById(R.id.button_roam_stop).setClickable(false);
-                findViewById(R.id.button_roam_start).setClickable(true);
                 handler.sendEmptyMessage(3);
                 Toast.makeText(context,"停止漫游行走",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.button_point_stop:
+                handler.sendEmptyMessage(3);
+                Toast.makeText(context,"停止行走",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_plan_back:
                 Constant.CURRENTINDEX_MAP = 0;

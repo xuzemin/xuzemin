@@ -41,6 +41,7 @@
     <string name="button_choose">设置坐标点</string>
     <string name="roam_start">开始漫游</string>
     <string name="roam_stop">停止漫游</string>
+    <string name="point_stop">停止</string>
     <string name="button_saveall">规划完毕</string>
     <string name="finishplan">请设置路线名称</string>
     <string name="passwork">请输入管理员密码</string>
