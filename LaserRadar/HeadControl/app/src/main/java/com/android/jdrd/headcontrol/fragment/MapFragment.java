@@ -173,8 +173,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void initView() {
         surfaceview=(MyView)findViewById(R.id.surfaceview);
-        surfaceview.myview_height = 900;
-        surfaceview.myview_width = 1500;
+        surfaceview.myview_height = 800;
+        surfaceview.myview_width = 1600;
     }
 
     @Override
@@ -706,8 +706,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             Constant.return_y = native_y;
         }
         if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
-            surfaceview.bitmap_y = ( native_x * -150) -50;
-            surfaceview.bitmap_x = ( native_y * -150 )+360 -50;
+            surfaceview.bitmap_y = ( native_x * -1 * Constant.SCALE_NUMBER) - surfaceview.bitmap.getHeight() / 2 + 40 ;
+            surfaceview.bitmap_x = ( native_y * -1 * Constant.SCALE_NUMBER ) + 2.4 * Constant.SCALE_NUMBER - surfaceview.bitmap.getWidth() / 2 + 40 ;
         }
     }
 
@@ -726,9 +726,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //发往底层
     private void sendNativePoint(float up_x,float up_y ,int angle){
         Map map  = new LinkedHashMap();
-        double a = ((up_y - 40) / - 150);
+        double a = ((up_y - 40) / - 1 / Constant.SCALE_NUMBER);
         map.put("point_x",a);
-        a = (up_x - 40 ) / - 150 + 2.4 ;
+        a = (up_x - 40 ) / - 1 / Constant.SCALE_NUMBER + 2.4 ;
         map.put("point_y",a);
         map.put("angle",angle);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
