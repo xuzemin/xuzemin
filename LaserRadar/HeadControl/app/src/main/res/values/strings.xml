@@ -50,6 +50,6 @@
     <string name="cancel">取消</string>
     <string name="warn_info">正在离开路线规划，确定不保存？</string>
     <string name="change_save">保存修改</string>
-    <string name="back">返回上一步</string>
+    <string name="back">上一步</string>
     <string name="title_activity_test">TestActivity</string>
 </resources>

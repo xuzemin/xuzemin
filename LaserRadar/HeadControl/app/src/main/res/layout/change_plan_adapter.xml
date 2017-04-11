@@ -6,76 +6,88 @@
     android:background="@mipmap/zuobiao"
     >
     <TextView
-        android:layout_marginTop="10px"
+        android:layout_marginTop="15px"
         android:id="@+id/number"
         android:layout_width="match_parent"
-        android:layout_height="20px"
+        android:layout_height="40px"
+        android:textColor="#A5F848"
         android:gravity="center"
+        android:textSize="25sp"
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10px"
+        android:layout_marginLeft="5px"
         android:orientation="horizontal">
         <TextView
-            android:layout_marginLeft="25px"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="40px"
             android:layout_gravity="center"
             android:text="x"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="10dp"
+            android:textSize="25sp"
             />
         <ImageButton
-            android:layout_marginLeft="12px"
+            android:layout_marginLeft="8px"
             android:id="@+id/point_x_subtract"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40px"
+            android:layout_height="40px"
             android:background="@mipmap/jian"/>
         <TextView
             android:layout_marginLeft="5px"
             android:id="@+id/change_number_xs"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40px"
+            android:textSize="25sp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="#403F3F"
             android:background="@mipmap/wenzikuangmap"
             />
         <ImageButton
             android:layout_marginLeft="5px"
             android:id="@+id/point_x_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40px"
+            android:layout_height="40px"
             android:background="@mipmap/jia"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10px"
+        android:layout_marginLeft="5px"
         android:orientation="horizontal">
         <TextView
-            android:layout_marginLeft="25px"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="40px"
+            android:layout_marginLeft="10dp"
             android:gravity="center_horizontal"
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"
             android:text="y"
             />
         <ImageButton
-            android:layout_marginLeft="12px"
+            android:layout_marginLeft="8px"
             android:id="@+id/point_y_subtract"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40px"
+            android:layout_height="40px"
             android:background="@mipmap/jian"/>
         <TextView
             android:layout_marginLeft="5px"
             android:id="@+id/change_number_ys"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="#403F3F"
+            android:textSize="25sp"
             android:background="@mipmap/wenzikuangmap"
-            android:layout_height="wrap_content"
+            android:layout_height="40px"
             />
         <ImageButton
             android:layout_marginLeft="5px"
             android:id="@+id/point_y_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40px"
+            android:layout_height="40px"
             android:background="@mipmap/jia"/>
     </LinearLayout>
 </LinearLayout>

@@ -536,8 +536,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Istouch = false;
                     a = Float.valueOf(point_x.getText().toString().trim()) ;
                     b = Float.valueOf(point_y.getText().toString().trim()) ;
+                    if(a > 10){
+                        a = 10;
+                    }else if(a < 0){
+                        a = 0;
+                    }
+                    if(b > 6){
+                        b = 6;
+                    }else if(b < 0){
+                        b = 0;
+                    }
                     a = a * Constant.SCALE_NUMBER +40;
-                    b = b * Constant.SCALE_NUMBER +40 ;
+                    b = b * Constant.SCALE_NUMBER +40;
                     surfaceview.point_xs.add(a);
                     surfaceview.point_ys.add(b);
                     arrayserchtime.add(serchtimenumber);
@@ -547,6 +557,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     surfaceview.Isplan = true;
                     point_x.setText("");
                     point_y.setText("");
+                    serchtime.setSelection(0,true);
+                    scope.setSelection(0,true);
+                    gametime.setSelection(0,true);
                 }else{
                     Toast.makeText(context,"请输入下一个目标的坐标",Toast.LENGTH_SHORT).show();
                 }
@@ -555,6 +568,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 if(!go_point_x.getText().toString().equals("") && !go_point_x.getText().toString().equals("") ){
                     a = Float.valueOf(go_point_x.getText().toString().trim());
                     b = Float.valueOf(go_point_x.getText().toString().trim());
+                    if(a > 10){
+                        a = 10;
+                    }else if(a < 0){
+                        a = 0;
+                    }
+                    if(b > 6){
+                        b = 6;
+                    }else if(b < 0){
+                        b = 0;
+                    }
                     a = a * Constant.SCALE_NUMBER +40;
                     b = b * Constant.SCALE_NUMBER +40;
                     surfaceview.point_xs.removeAllElements();
