@@ -250,98 +250,7 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <!--** -->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/ll_right_bar1"-->
-                <!--android:layout_width="290dp"-->
-                <!--android:layout_height="1009dp"-->
-                <!--android:layout_alignParentRight="true">-->
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="290dp"-->
-                    <!--android:layout_height="1009dp"-->
-                    <!--android:layout_alignParentRight="true">-->
-                    <!--<RelativeLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="1009dp"-->
-                        <!--android:layout_alignParentRight="true">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/imgViewBtnRight"-->
-                    <!--android:layout_width="53dp"-->
-                    <!--android:layout_height="49dp"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@mipmap/you_yc" />-->
-
-
-
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/ll_right_bar"-->
-                    <!--android:layout_width="234dp"-->
-                    <!--android:layout_height="1009dp"-->
-                    <!--android:layout_alignParentRight="true"-->
-
-                    <!--android:background="@mipmap/zuolan"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/tv_Battery_Level"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:paddingTop="5dp"-->
-                        <!--android:text="剩余100%电量"-->
-                        <!--android:textColor="#E8E8E8"-->
-                        <!--android:textSize="26sp" />-->
-
-                    <!--<TextView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginTop="10dp"-->
-                        <!--android:paddingTop="5dp"-->
-                        <!--android:text="可运行10个小时"-->
-                        <!--android:textColor="#E8E8E8"-->
-                        <!--android:textSize="26sp" />-->
-
-
-                    <!--<RelativeLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginBottom="7dp"-->
-                        <!--android:background="@drawable/btn_background"-->
-                        <!--android:clickable="true">-->
-
-                        <!--<ImageView-->
-                            <!--android:id="@+id/iv_Map1"-->
-                            <!--android:layout_width="168dp"-->
-                            <!--android:layout_height="70dp"-->
-                            <!--android:layout_alignParentBottom="true"-->
-                            <!--android:layout_centerHorizontal="true"-->
-                            <!--android:layout_centerVertical="true"-->
-                            <!--android:layout_gravity="left"-->
-                            <!--android:clickable="true"-->
-                            <!--android:scaleType="fitXY"-->
-                            <!--android:src="@mipmap/tuichu_no"-->
-                            <!--android:visibility="visible" />-->
-                    <!--</RelativeLayout>-->
-
-
-                <!--</LinearLayout>-->
-                    <!--</RelativeLayout>-->
-                <!--</RelativeLayout>-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:orientation="vertical"-->
-                <!--&gt;-->
-
-
-
-<FrameLayout
+    <FrameLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -349,11 +258,8 @@
                     >
 
                 </include>
-</FrameLayout>
+        </FrameLayout>
 
-
-
-            <!--</RelativeLayout>-->
 
 
 

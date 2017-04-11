@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
+
 import com.android.jdrd.headcontrol.dialog.CustomDialog;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.google.gson.Gson;
@@ -38,9 +39,17 @@ public class Constant {
     public static int CURRENTINDEX = 0;
     public static int CURRENTINDEX_MAP = 0;
     public static boolean DIALOG_SHOW = false;
+    //    public static double Current_y = 0;
+//    public static double Current_x_sur = 0;
+//    public static double Current_y_sur = 0;
+//    private static float Current_degree = 90;
     public static int ServerPort = 12345;
-    public static String ip_bigScreen = "/192.168.88.100";
+//    public static String ip_bigScreen = "/192.168.88.188";
+//    public static String ip_ros = "/192.168.88.101";
+//    测试用IP
+    public static String ip_bigScreen = "/192.168.88.102";
     public static String ip_ros = "/192.168.88.101";
+    public static float Scale = 1 ;
     public static double return_x = -1;
     public static double return_y = 0;
     public static int return_degree = 180;
@@ -52,13 +61,19 @@ public class Constant {
     public static String Data = "data";
     public static String Command = "command";
     public static String State = "state";
+    //	public static String Param = "param";
+//    public static String Walk = "walk";
     public static String Navigation = "navigation";
     public static String Peoplesearch = "peoplesearch";
     public static String Roamsearch = "roamsearch";
+    //    public static String Turn = "turn";
     public static String StopSearch = "stop";
     public static String Result = "result";
+    //    public static String Distance = "distance";
+//    public static String Degree = "degree";
     public static String Camera = "3dcamera";
     private static Constant constant;
+//    private static SerialPortUtil spu  = SerialPortUtil.getInstance();
 
     public static Constant getConstant(){
         if(constant != null){
@@ -95,6 +110,19 @@ public class Constant {
             }
         }).create().show();
     }
+//    public static void showWarn(Context context, final Handler handler){
+//        CustomDialog dialog = new CustomDialog(context);
+//        dialog.builder.setTitle("提醒")
+//                .setMessage("正在执行路线,点击确定按钮停止")
+//                .setPositiveButton("", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                        Constant.debugLog("确定");
+//                        handler.sendEmptyMessage(3);
+//                    }
+//                }).create().show();
+//    }
     public void sendCamera(float scope,Context context){
         Intent intent = new Intent();
         if(scope == 0){
@@ -123,6 +151,10 @@ public class Constant {
             e.printStackTrace();
         }
     }
+
+//    public void getDegree(){
+//        Current_degree = spu.getBean().pose[2];
+//    }
 
     public void sendBundle(String type,String function,String data){
         try {

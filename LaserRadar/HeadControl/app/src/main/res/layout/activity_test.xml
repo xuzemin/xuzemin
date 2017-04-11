@@ -60,10 +60,26 @@
         android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/openWater"
+        android:id="@+id/openWaterHigh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="打开水箱电源"
+        android:text="打开水箱电源(高)"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/openWaterMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开水箱电源(中)"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/openWaterLow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开水箱电源(低)"
         android:textSize="25sp"
         android:layout_marginBottom="16dp"/>
 

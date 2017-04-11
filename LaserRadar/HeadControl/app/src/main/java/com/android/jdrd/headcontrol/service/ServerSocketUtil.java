@@ -137,7 +137,7 @@ public class ServerSocketUtil extends Service {
      * @param ip： 要发送的客户端的IP, Constant.ip_ros为小屏IP, Constant.ip_bigScreen为大屏IP
      */
     public static synchronized void sendDateToClient(String str, String ip) throws IOException {
-        Constant.debugLog("sendstr"+str);
+
         try {
             if (ip != null) {
                 if (ip.equals(Constant.ip_bigScreen)) {

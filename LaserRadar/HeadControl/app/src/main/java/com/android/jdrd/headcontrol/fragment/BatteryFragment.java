@@ -113,48 +113,46 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         ll_right_bar1 = (RelativeLayout)findViewById(R.id.ll_right_bar1);
         ll_right_bar = findViewById(R.id.ll_right_bar);
         imgViewBtnRight = (ImageView) findViewById(R.id.imgViewBtnRight);
+
     }
 
     @Override
     public void initData() {
+        Constant.debugLog("----------------initData执行-------------------");
         getActivity().registerReceiver(receiver, filter);
         mMyClickListener = new MyClickListener();
 
-        //String jsonString = ServerSocketUtil.getJSONString("jsonString");
-       // Constant.debugLog("***********电源数据***********"+jsonString);
-       //ListenerManager.getInstance().sendBroadCast("str");
 
         //查询数据库中的信息并显示在UI界面上
         mContentResolver = getActivity().getContentResolver();
-        mUri = Uri.parse("content://com.jiadu.provider/battery");
-        Cursor cursor = mContentResolver.query(mUri, null, null, null, null);
-        if (cursor == null) {
-            //table does not exist弹出对话框（不可点击外屏消失），点确定退出,发送信息给小屏
-//           Toast.makeText(getActivity(),"系统出现异常",Toast.LENGTH_SHORT).show();
-           //showWarnDDialog();
-           //Intent intent = new Intent("com.jiadu.broadcast.setting.warn");
-          // intent.putExtra("warn", "{\"warninfo\":{\"type\":\"warn\",\"function\":\"18\",data:\"14\"}}");
-           // getActivity().sendBroadcast(intent);
 
-        } else {
-            while (cursor.moveToNext()) {
-                int id = cursor.getInt(cursor.getColumnIndex("id"));
-                warn = cursor.getInt(cursor.getColumnIndex("warn"));
-                level = cursor.getInt(cursor.getColumnIndex("level"));
-                state = cursor.getInt(cursor.getColumnIndex("state"));
-                temperature = cursor.getFloat(cursor.getColumnIndex("temperature"));
-                voltage = cursor.getFloat(cursor.getColumnIndex("voltage"));
-            }
-            if (cursor != null) {
-                cursor.close();
-            }
-            Log.d("tag", "warn:" + warn + "level:" + level + "state:" + state + " temperature:" + temperature + " voltage:" + voltage);
+//        if (cursor == null) {
+//            //table does not exist弹出对话框（不可点击外屏消失），点确定退出,发送信息给小屏
+////           Toast.makeText(getActivity(),"系统出现异常",Toast.LENGTH_SHORT).show();
+//           //showWarnDDialog();
+//           //Intent intent = new Intent("com.jiadu.broadcast.setting.warn");
+//          // intent.putExtra("warn", "{\"warninfo\":{\"type\":\"warn\",\"function\":\"18\",data:\"14\"}}");
+//           // getActivity().sendBroadcast(intent);
+//
+//        } else {
+//            while (cursor.moveToNext()) {
+//                int id = cursor.getInt(cursor.getColumnIndex("id"));
+//                warn = cursor.getInt(cursor.getColumnIndex("warn"));
+//                level = cursor.getInt(cursor.getColumnIndex("level"));
+//                state = cursor.getInt(cursor.getColumnIndex("state"));
+//                temperature = cursor.getFloat(cursor.getColumnIndex("temperature"));
+//                voltage = cursor.getFloat(cursor.getColumnIndex("voltage"));
+//            }
+//            if (cursor != null) {
+//                cursor.close();
+//            }
+//            Log.d("tag", "warn:" + warn + "level:" + level + "state:" + state + " temperature:" + temperature + " voltage:" + voltage);
             mTextView_Level.setText(String.valueOf(level));
             progres_warn = warn;
             mTextView_Warn.setText(String.valueOf(progres_warn) + "%");
             mSeekBar.setProgress(progres_warn);
             warn_modified = warn;
-            int currentPower = level / 20;
+            int currentPower = level / 10;
             switch (currentPower) {
                 case 0:
                     mImageView_Battery_Power.setImageResource(R.mipmap.power0);
@@ -210,71 +208,6 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
             });
         }
 
-//模拟电源根据电量状态更换图片状态
-        MyThread2 myThread2 = new MyThread2();
-        myThread2.start();
-    }
-
-    int time = 100;
-    boolean b = true;
-
-    class MyThread2 extends Thread {
-        @Override
-        public void run() {
-            super.run();
-
-
-            while (true) {
-                try {
-                    handler.sendEmptyMessage(1);
-                    sleep(1000 * 60 + 2);
-                    if (b) {
-                        time = time - 10;
-                        if (time == 0) {
-                            b = false;
-                        }
-                    } else {
-                        time = time + 10;
-                        if (time == 100) {
-                            b = true;
-                        }
-
-                    }
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    aaa(time);
-                    break;
-            }
-        }
-    };
-
-    public void aaa(int timeaaa) {
-        switch (timeaaa) {
-            case 100:
-                break;
-            case 90:
-                break;
-            case 80:
-                break;
-            case 70:
-                break;
-            case 60:
-                break;
-        }
-    }
-
     @Override
     public void initEvent() {
         mButton_Save.setOnClickListener(mMyClickListener);
@@ -317,7 +250,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_Battery_Save:
-                    save();
+
                     break;
                 case R.id.iv_Battery_Switch_Open:
                     mImageView_Switch_Open.setVisibility(View.GONE);
@@ -337,24 +270,6 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         }
     }
 
-    private void save() {
-        //发送广播信息通知小屏上报Ros系统
-        Intent intent = new Intent("com.jiadu.broadcast.setting.battery");
-        Gson gson = new Gson();
-        Battery3 battery3 = new Battery3();
-        battery3.setType("param");
-        battery3.setFunction("power");
-        Battery3.DataBean dataBean = new Battery3.DataBean();
-        dataBean.setLowpower(warn_modified);
-        battery3.setData(dataBean);
-        String str = gson.toJson(battery3);
-        Log.e("tag", str);
-        intent.putExtra("battery", str);
-        getActivity().sendBroadcast(intent);
-        // 注册一个针对ContentProvider的ContentObserver用来观察内容提供者的数据变化
-        final Uri uri = Uri.parse("content://com.jiadu.provider/battery");
-        getActivity().getContentResolver().registerContentObserver(uri, true, new MyContentObserver(new Handler()));
-    }
 
     public class MyContentObserver extends ContentObserver {
         Handler mHandler;
@@ -384,7 +299,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         }
     }
 
-
+//电量警告弹窗
     private void showWarnDDialog() {
         final WarningDialog dialog = new WarningDialog(getActivity());
         dialog.setYesOnclickListener(new WarningDialog.onYesOnclickListener() {

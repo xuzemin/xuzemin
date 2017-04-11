@@ -31,7 +31,6 @@ import com.android.jdrd.headcontrol.common.BaseFragment;
 import com.android.jdrd.headcontrol.common.MyTimePicker;
 import com.android.jdrd.headcontrol.common.MyTimerPicker1;
 import com.android.jdrd.headcontrol.database.HeadControlBean;
-import com.android.jdrd.headcontrol.database.HeadControlDao;
 import com.android.jdrd.headcontrol.dialog.SelfDialog;
 import com.android.jdrd.headcontrol.entity.Clean4;
 import com.android.jdrd.headcontrol.util.Constant;
@@ -85,14 +84,6 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     float end_modified;
     int type_modified=0;
 
-
-
-//    private RelativeLayout rr_right_bar_clean;
-//    boolean flag_rr_bar;
-//    private RelativeLayout rr_right_bar_clean1;
-//    private ImageView img_ViewBtnRightClean;
-
-
     private RelativeLayout rr_right_bar_clean;
     boolean flag_rr_bar;
     private LinearLayout rr_right_bar_clean1;
@@ -102,7 +93,6 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     private LinearLayout ll_addTimeLin;
     private ImageView iv_Clean_del;
     private FrameLayout fl_FrameLayout;
-    HeadControlDao  dataDao;
     public CleanFragment(){
         super();
     }
@@ -125,9 +115,6 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         mTextView_Start_Minute1 = (TextView) findViewById(R.id.tv_Clean_Start_Minute1);
         mTextView_End_Hour1 = (TextView) findViewById(R.id.tv_Clean_End_Hour1);
         mTextView_End_Minute1 = (TextView) findViewById(R.id.tv_Clean_End_Minute1);
-//        mImageView_bianji1= (ImageView) findViewById(R.id.iv_Clean_bianji1);
-//        mImageView_Switch_Open= (ImageView) findViewById(R.id.iv_Clean_Switch_Open);
-//        mImageView_Switch_Close= (ImageView) findViewById(R.id.iv_Clean_Switch_Close);
         ll_addTimeLin = (LinearLayout) findViewById(R.id.ll_addTimeLin);
         mImageView_yaguang_no= (ImageView) findViewById(R.id.iv_Clean_yaguang_no);
         mImageView_yaguang_per= (ImageView) findViewById(R.id.iv_Clean_yaguang_per);
@@ -147,89 +134,12 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
 
     @Override
     public void initData() {
-        dataDao = new HeadControlDao(getActivity());
-        ArrayList<HeadControlBean> queryTime = dataDao.allquery();
-        for (int i = 0; i < queryTime.size(); i++) {
-            HeadControlBean queryTimeValue = queryTime.get(i);
-            Constant.debugLog("--------queryTime遍历时间----------：" + queryTimeValue.getTime01());
 
-            addItemTimeLin(queryTimeValue);
-            //需要判断在此进来开关是否打开
-
-        }
-
-       /* mMyClickListener=new MyClickListener();
-        //查询数据库中的信息并显示在UI界面上
-        mContentResolver = getActivity().getContentResolver();
-        mUri_Clean = Uri.parse("content://com.jiadu.provider/clean");
-        Cursor cursor_clean = mContentResolver.query(mUri_Clean, null, null, null, null);
-        while (cursor_clean.moveToNext()) {
-            int id = cursor_clean.getInt(cursor_clean.getColumnIndex("id"));
-            flag=cursor_clean.getInt(cursor_clean.getColumnIndex("flag"));
-            start = cursor_clean.getFloat(cursor_clean.getColumnIndex("start"));
-            end = cursor_clean.getFloat(cursor_clean.getColumnIndex("end"));
-            type = cursor_clean.getInt(cursor_clean.getColumnIndex("type"));
-            state = cursor_clean.getInt(cursor_clean.getColumnIndex("state"));
-            warn = cursor_clean.getInt(cursor_clean.getColumnIndex("warn"));
-            garbage = cursor_clean.getInt(cursor_clean.getColumnIndex("garbage"));
-            speed = cursor_clean.getInt(cursor_clean.getColumnIndex("speed"));
-        }
-        if(cursor_clean!=null){
-            cursor_clean.close();
-        }
-        Log.d("tag","flag:"+flag+"start:"+start+" end:"+end+" type:"+type+" state:"+state+" garbage:"+garbage+" speed:"+speed);
-        flag_modified=flag;
-        if(flag_modified==0){
-            mImageView_Switch_Open.setVisibility(View.GONE);
-            mImageView_Switch_Close.setVisibility(View.VISIBLE);
-        }
-        DecimalFormat df=new DecimalFormat("##0");
-        start_hour=(int)start;//得到开始小时
-        float result1= (start-start_hour)*100;
-        start_minute= Integer.parseInt(df.format(result1));//得到开始分钟
-        end_hour=(int)end;//得到结束小时
-        float result2=(end-end_hour)*100;
-        end_minute= Integer.parseInt(df.format(result2));//得到结束分钟
-        if(String.valueOf(start_hour).length()>1){
-            mTextView_Start_Hour1.setText(String.valueOf(start_hour));
-        }else{
-            mTextView_Start_Hour1.setText("0"+ String.valueOf(start_hour));
-        }
-        if(String.valueOf(start_minute).length()>1){
-            mTextView_Start_Minute1.setText(String.valueOf(start_minute));
-        }else {
-            mTextView_Start_Minute1.setText("0"+ String.valueOf(start_minute));
-        }
-        if(String.valueOf(end_hour).length()>1){
-            mTextView_End_Hour1.setText(String.valueOf(end_hour));
-        }else{
-            mTextView_End_Hour1.setText("0"+ String.valueOf(end_hour));
-        }
-        if(String.valueOf(end_minute).length()>1){
-            mTextView_End_Minute1.setText(String.valueOf(end_minute));
-        }else{
-            mTextView_End_Minute1.setText("0"+ String.valueOf(end_minute));
-        }
-
-
-        if(type==1){
-            mImageView_yaguang_per.setVisibility(View.VISIBLE);
-            mImageView_yaguang_no.setVisibility(View.GONE);
-        }else  if(type==2){
-            mImageView_biaozhun_per.setVisibility(View.VISIBLE);
-            mImageView_biaozhun_no.setVisibility(View.GONE);
-        }else {
-            mImageView_liangguang_per.setVisibility(View.VISIBLE);
-            mImageView_liangguang_no.setVisibility(View.GONE);
-        }*/
     }
     @Override
     public void initEvent() {
         mButton_Save.setOnClickListener(this);
-//        mImageView_Switch_Open.setOnClickListener(this);
-//        mImageView_Switch_Close.setOnClickListener(this);
         add_time_imageView.setOnClickListener(this);
-//        mImageView_bianji1.setOnClickListener(this);
         ll_addTimeLin.setOnClickListener(this);
         mImageView_yaguang_no.setOnClickListener(this);
         mImageView_yaguang_per.setOnClickListener(this);
@@ -249,23 +159,6 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
             public void onClick(View view) {
 
                 Constant.debugLog("===========时间行添加成功==================");
-                HeadControlBean addCleanBean = new HeadControlBean("09:00", "10:00", "1");
-                if (dataDao.add(addCleanBean)) {
-//                    addItemTimeLin();
-                    ArrayList<HeadControlBean> queryTime = dataDao.allquery();
-                    if (queryTime.size()>0){
-                        ll_addTimeLin.removeAllViews();
-                    }
-
-                    for (int i = 0; i < queryTime.size(); i++) {
-                        HeadControlBean queryTimeValue = queryTime.get(i);
-                        Constant.debugLog("--------queryTime遍历时间----------：" + queryTimeValue.getTime01());
-                        addItemTimeLin(queryTimeValue);
-                    }
-
-                } else {
-                    Toast.makeText(getActivity(), "添加失败", Toast.LENGTH_LONG).show();
-                }
 
             }
         });
@@ -357,24 +250,9 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
                 if(type_modified==0){
                     Toast.makeText(getActivity(),"至少选择一种类型", Toast.LENGTH_SHORT).show();
                 }else {
-                    save();
+//                    save();
                 }
                 break;
-//            case R.id.iv_Clean_bianji1:
-//                mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
-//                showDialogxinjia();
-//                SelfDialog selfDialog=new SelfDialog(getActivity(),handler,start_hour,start_minute,end_hour,end_minute);
-//                selfDialog.show();
-//                break;
-//            case R.id.iv_Clean_Switch_Open:
-//                mImageView_Switch_Open.setVisibility(View.GONE);
-//                mImageView_Switch_Close.setVisibility(View.VISIBLE);
-//                flag_modified=0;
-//                break;
-//            case R.id.iv_Clean_Switch_Close:
-//                mImageView_Switch_Open.setVisibility(View.VISIBLE);
-//                mImageView_Switch_Close.setVisibility(View.GONE);
-//                break;
             case R.id.iv_Clean_yaguang_no:
                 type_modified=1;
                 mImageView_yaguang_per.setVisibility(View.VISIBLE);
@@ -417,89 +295,12 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
                 mImageView_liangguang_no.setVisibility(View.VISIBLE);
                 mImageView_liangguang_per.setVisibility(View.GONE);
                 break;
-//            case R.id.add_time_imageView:
-//                Constant.debugLog("===========时间行添加成功==================");
-//                addItemTimeLin();
-//                break;
         }
 
     }
 
-//    public  class MyClickListener implements View.OnClickListener{
-//
-//        @Override
-//        public void onClick(View v) {
-//            switch (v.getId()){
-//                case R.id.btn_Clean_Save:
-//                    if(type_modified==0){
-//                        Toast.makeText(getActivity(),"至少选择一种类型", Toast.LENGTH_SHORT).show();
-//                    }else {
-//                        save();
-//                    }
-//                    break;
-//                case R.id.iv_Clean_Switch_Open:
-//                    mImageView_Switch_Open.setVisibility(View.GONE);
-//                    mImageView_Switch_Close.setVisibility(View.VISIBLE);
-//                    flag_modified=0;
-//                    break;
-//                case R.id.iv_Clean_Switch_Close:
-//                    mImageView_Switch_Open.setVisibility(View.VISIBLE);
-//                    mImageView_Switch_Close.setVisibility(View.GONE);
-//                    break;
-//                case R.id.iv_Clean_bianji1:
-//                    mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
-//                    showDialogxinjia();
-//                    SelfDialog selfDialog=new SelfDialog(getActivity(),handler,start_hour,start_minute,end_hour,end_minute);
-//                    selfDialog.show();
-//                    break;
-//                case R.id.iv_Clean_yaguang_no:
-//                    type_modified=1;
-//                    mImageView_yaguang_per.setVisibility(View.VISIBLE);
-//                    mImageView_yaguang_no.setVisibility(View.GONE);
-//                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
-//                    mImageView_biaozhun_per.setVisibility(View.GONE);
-//                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
-//                    mImageView_liangguang_per.setVisibility(View.GONE);
-//                    break;
-//                case R.id.iv_Clean_yaguang_per:
-//                    type_modified=0;
-//                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
-//                    mImageView_yaguang_per.setVisibility(View.GONE);
-//                    break;
-//                case R.id.iv_Clean_biaozhun_no:
-//                    type_modified=2;
-//                    mImageView_biaozhun_per.setVisibility(View.VISIBLE);
-//                    mImageView_biaozhun_no.setVisibility(View.GONE);
-//                    mImageView_yaguang_per.setVisibility(View.GONE);
-//                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
-//                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
-//                    mImageView_liangguang_per.setVisibility(View.GONE);
-//                    break;
-//                case R.id.iv_Clean_biaozhun_per:
-//                    type_modified=0;
-//                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
-//                    mImageView_biaozhun_per.setVisibility(View.GONE);
-//                    break;
-//                case R.id.iv_Clean_liangguang_no:
-//                    type_modified=3;
-//                    mImageView_liangguang_per.setVisibility(View.VISIBLE);
-//                    mImageView_liangguang_no.setVisibility(View.GONE);
-//                    mImageView_biaozhun_per.setVisibility(View.GONE);
-//                    mImageView_biaozhun_no.setVisibility(View.VISIBLE);
-//                    mImageView_yaguang_per.setVisibility(View.GONE);
-//                    mImageView_yaguang_no.setVisibility(View.VISIBLE);
-//                    break;
-//                case R.id.iv_Clean_liangguang_per:
-//                    type_modified=0;
-//                    mImageView_liangguang_no.setVisibility(View.VISIBLE);
-//                    mImageView_liangguang_per.setVisibility(View.GONE);
-//                    break;
 
-//            }
-//        }
-//    }
-
-    private void addItemTimeLin(final HeadControlBean headControlBean) {
+    private void addItemTimeLin() {
 
         final View viewAddItem = this.getActivity().getLayoutInflater().inflate(R.layout.add_item_cleantime,null);
         ll_addTimeLin.addView(viewAddItem);
@@ -513,93 +314,6 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         final ImageView  mImageView_Switch_Close= (ImageView) viewAddItem.findViewById(R.id.iv_Clean_Switch_Close);
         FrameLayout  fl_FrameLayout = (FrameLayout) viewAddItem.findViewById(R.id.fl_FrameLayout);
 
-        String a[] = headControlBean.getTime01().split(":");
-        String b[] = headControlBean.getTime02().split(":");
-        mTextView_Start_Hour1.setText(a[0]);
-        mTextView_Start_Minute1.setText(a[1]);
-        mTextView_End_Hour1.setText(b[0]);
-        mTextView_End_Minute1.setText(b[1]);
-
-        Constant.debugLog("-------**--开关是否为1或者0---**-----"+dataDao.update(headControlBean));
-        if (headControlBean.getKaiguan().equals("1")){
-            Constant.debugLog("---------headControlBean.getKaiguan()==\"1\"--------------"+headControlBean.getKaiguan());
-            mImageView_Switch_Open.setVisibility(View.VISIBLE);
-            mImageView_Switch_Close.setVisibility(View.GONE);
-        }else if(headControlBean.getKaiguan().equals("0")){
-            Constant.debugLog("-------headControlBean.getKaiguan()==\"0\"----------------"+headControlBean.getKaiguan());
-            mImageView_Switch_Open.setVisibility(View.GONE);
-            mImageView_Switch_Close.setVisibility(View.VISIBLE);
-        }
-
-        mImageView_bianji1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mImageView_bianji1.setImageResource(R.mipmap.bianji_pre);
-                showDialogxinjia(mTextView_Start_Hour1, mTextView_Start_Minute1,
-                        mTextView_End_Hour1, mTextView_End_Minute1
-                        , mImageView_bianji1,headControlBean
-                );
-//                    SelfDialog selfDialog = new SelfDialog(getActivity(), handler, start_hour, start_minute, end_hour, end_minute);
-//                    selfDialog.show();
-
-            }
-        });
-        iv_Clean_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (dataDao.del(headControlBean)>0) {
-                    ll_addTimeLin.removeView(viewAddItem);
-                    Constant.debugLog("------删除一条数据-----"+viewAddItem);
-                }else {
-                    Toast.makeText(getActivity(),"删除失败",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        fl_FrameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mImageView_Switch_Open.getVisibility() == View.GONE) {
-                    headControlBean.setKaiguan("1");
-                } else {
-                    headControlBean.setKaiguan("0");
-                }
-                if (dataDao.update(headControlBean) > 0) {
-                    switch (headControlBean.getKaiguan()) {
-
-                        case "0":
-                            mImageView_Switch_Open.setVisibility(View.GONE);
-                            mImageView_Switch_Close.setVisibility(View.VISIBLE);
-                            break;
-
-                        case "1":
-                            mImageView_Switch_Open.setVisibility(View.VISIBLE);
-                            mImageView_Switch_Close.setVisibility(View.GONE);
-                            break;
-                    }
-                }else {
-
-                }
-            }
-        });
-
-
-
-    }
-
-    /************************************2***********************************************/
-    private void addItemTimeLin(){
-        final View viewAddItem = this.getActivity().getLayoutInflater().inflate(R.layout.add_item_cleantime,null);
-        ll_addTimeLin.addView(viewAddItem);
-        final TextView mTextView_Start_Hour1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_Start_Hour1);
-        final TextView mTextView_Start_Minute1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_Start_Minute1);
-        final TextView mTextView_End_Hour1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_End_Hour1);
-        final TextView mTextView_End_Minute1= (TextView) viewAddItem.findViewById(R.id.tv_Clean_End_Minute1);
-        final ImageView  mImageView_bianji1= (ImageView) viewAddItem.findViewById(R.id.iv_Clean_bianji1);
-        ImageView iv_Clean_del = (ImageView) viewAddItem.findViewById(R.id.iv_Clean_del);
-        final ImageView mImageView_Switch_Open= (ImageView) viewAddItem.findViewById(R.id.iv_Clean_Switch_Open);
-        final ImageView  mImageView_Switch_Close= (ImageView) viewAddItem.findViewById(R.id.iv_Clean_Switch_Close);
-        FrameLayout  fl_FrameLayout = (FrameLayout) viewAddItem.findViewById(R.id.fl_FrameLayout);
-
 
         mImageView_bianji1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -609,138 +323,26 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
                         mTextView_End_Hour1, mTextView_End_Minute1
                         , mImageView_bianji1
                 );
-//                    SelfDialog selfDialog = new SelfDialog(getActivity(), handler, start_hour, start_minute, end_hour, end_minute);
-//                    selfDialog.show();
-
             }
         });
         iv_Clean_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ll_addTimeLin.removeView(viewAddItem);
             }
         });
         fl_FrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (mImageView_Switch_Open.getVisibility() == View.GONE) {
-                    mImageView_Switch_Open.setVisibility(View.VISIBLE);
-                    mImageView_Switch_Close.setVisibility(View.GONE);
+
                 } else {
-                    mImageView_Switch_Open.setVisibility(View.GONE);
-                    mImageView_Switch_Close.setVisibility(View.VISIBLE);
+
                 }
             }
         });
 
-    }
 
-    /**
-     *  弹出时间编辑对话框
-     */
-    private void showDialogxinjia(final TextView mTextView_Start_Hour1, final TextView mTextView_Start_Minute1,
-                                  final TextView mTextView_End_Hour1, final TextView mTextView_End_Minute1
-                                  , final ImageView mImageView_bianji1){
-        AlertDialog.Builder timeDialog = new AlertDialog.Builder(getActivity());
-        View view= this.getActivity().getLayoutInflater().inflate(R.layout.custom_timepicker1,null);
-        timeDialog.setView(view);  //添加view
-        final AlertDialog dialog = timeDialog.create();
-        final ImageView imageView_queding_no= (ImageView) view.findViewById(R.id.iv_ImageView_queding_no);
-        final ImageView imageView_queding_per= (ImageView) view.findViewById(R.id.iv_ImageView_queding_per);
-        final ImageView imageView_quxiao_no= (ImageView) view.findViewById(R.id.iv_ImageView_quxiao_no);
-        final ImageView imageView_quxiao_per= (ImageView) view.findViewById(R.id.iv_ImageView_quxiao_per);
-        //开始
-        final MyTimerPicker1 mMyTimePicker_Start_Hour = (MyTimerPicker1) view.findViewById(R.id.mtp_Start_Hour1);
-        final MyTimerPicker1 mMyTimePicker_Start_Minute = (MyTimerPicker1) view.findViewById(R.id.mtp_Start_Minute1);
-        //结束
-        final MyTimePicker mMyTimePicker_End_Hour = (MyTimePicker) view.findViewById(R.id.mtp_End_Hour1);
-        final MyTimePicker mMyTimePicker_End_Minute = (MyTimePicker) view.findViewById(R.id.mtp_End_Minute1);
-        imageView_queding_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView_quxiao_no.setVisibility(View.GONE);
-                imageView_quxiao_per.setVisibility(View.VISIBLE);
-                dialog.dismiss();
-            }
-        });
-        imageView_quxiao_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView_queding_no.setVisibility(View.GONE);
-                imageView_queding_per.setVisibility(View.VISIBLE);
-                dialog.dismiss();
-            }
-        });
 
-        //创建两个集合分别用来装长度 我们的MyPickerView继承view 没有void onTimeChanged(TimePicker view, int hourOfDay, int minute);
-        List<String> list_hour_start1 = new ArrayList<String>();
-        List<String> list_minute_start1 = new ArrayList<String>();
-        List<String> list_hour_end1 = new ArrayList<String>();
-        List<String> list_minute_end1 = new ArrayList<String>();
-        for (int i = 0; i < 24; i++) {
-            list_hour_start1.add(i<10?"0" + i:""+i);//添加0
-            list_hour_end1.add(i<10?"0" + i:""+i);//添加0
-        }
-        for (int i = 0; i < 60; i++) {
-            list_minute_start1.add(i < 10 ? "0" + i : "" + i);
-            list_minute_end1.add(i < 10 ? "0" + i : "" + i);
-        }
-
-        mMyTimePicker_Start_Hour.setData(list_hour_start1);
-        mMyTimePicker_Start_Hour.setSelected(start_hour);//设置默认开始小时
-        mMyTimePicker_Start_Hour.setOnSelectListener(new MyTimerPicker1.onSelectListener() {
-            @Override
-            public void onSelect(String text) {
-                //获取开始小时
-                start_hour= Integer.parseInt(text);
-                mTextView_Start_Hour1.setText(text);
-            }
-        });
-        mMyTimePicker_Start_Minute.setData(list_minute_start1);
-        mMyTimePicker_Start_Minute.setSelected(start_minute);//设置默认开始分钟
-        mMyTimePicker_Start_Minute.setOnSelectListener(new MyTimerPicker1.onSelectListener() {
-            @Override
-            public void onSelect(String text) {
-                //获取开始分钟
-                start_minute= Integer.parseInt(text);
-                mTextView_Start_Minute1.setText(String.valueOf(text));
-            }
-        });
-
-        mMyTimePicker_End_Hour.setData(list_hour_end1);
-        mMyTimePicker_End_Hour.setSelected(end_hour);//设置结束默认小时
-        mMyTimePicker_End_Hour.setOnSelectListener(new MyTimePicker.onSelectListener() {
-            @Override
-            public void onSelect(String text) {
-                //获取结束小时
-                end_hour= Integer.parseInt(text);
-                mTextView_End_Hour1.setText(String.valueOf(text));
-            }
-        });
-        mMyTimePicker_End_Minute.setData(list_minute_end1);
-        mMyTimePicker_End_Minute.setSelected(end_minute);//设置结束默认分钟
-        mMyTimePicker_End_Minute.setOnSelectListener(new MyTimePicker.onSelectListener() {
-            @Override
-            public void onSelect(String text) {
-                //获取结束分钟
-                end_minute= Integer.parseInt(text);
-                mTextView_End_Minute1.setText(String.valueOf(text));
-            }
-        });
-
-//        timeDialog.setTitle("2016");
-//        timeDialog.setIcon(null);
-//        timeDialog.setCancelable(false);
-
-//        timeDialog.setPositiveButton("确定",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // 取出MyTimePicker设定的时间就行了
-//                    }
-//                }).create();
-        dialog.show();
     }
 
 
@@ -750,7 +352,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
                                  String timeState1,timeState2,timeEnd1,timeEnd2;
     private void showDialogxinjia(final TextView mTextView_Start_Hour1, final TextView mTextView_Start_Minute1,
                                   final TextView mTextView_End_Hour1, final TextView mTextView_End_Minute1
-            , ImageView mImageView_bianji1, final HeadControlBean DataBean) {
+            , ImageView mImageView_bianji1) {
 
         timeState1=mTextView_Start_Hour1.getText().toString();
         timeState2=mTextView_Start_Minute1.getText().toString();
@@ -775,26 +377,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
             public void onClick(View v) {
                 imageView_queding_no.setVisibility(View.GONE);
                 imageView_queding_per.setVisibility(View.VISIBLE);
-               /* DataBean.setTime01(mTextView_Start_Hour1.getText() + ":" + mTextView_Start_Minute1.getText());
-                DataBean.setTime02(mTextView_End_Hour1.getText() + ":" + mTextView_End_Minute1.getText());*/
 
-                DataBean.setTime01(timeState1 + ":" + timeState2);
-                DataBean.setTime02(timeEnd1 + ":" + timeEnd2);
-
-
-                HeadControlBean  bean1=new HeadControlBean();
-                bean1.setId(DataBean.getId());
-                bean1.setTime01(DataBean.getTime01());
-                bean1.setTime02(DataBean.getTime02());
-                bean1.setKaiguan(DataBean.getKaiguan());
-                if (dataDao.update(bean1) > 0) {
-                    mTextView_Start_Hour1.setText(timeState1);
-                    mTextView_Start_Minute1.setText(timeState2);
-                    mTextView_End_Hour1.setText(timeEnd1);
-                    mTextView_End_Minute1.setText(timeEnd2);
-                } else {
-
-                }
                 dialog.dismiss();
             }
         });
@@ -822,14 +405,12 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         }
 
         mMyTimePicker_Start_Hour.setData(list_hour_start1);
-//        mMyTimePicker_Start_Hour.setSelected(start_hour);//设置默认开始小时
         mMyTimePicker_Start_Hour.setSelected( Integer.parseInt(timeState1));//设置默认开始小时
         mMyTimePicker_Start_Hour.setOnSelectListener(new MyTimerPicker1.onSelectListener() {
             @Override
             public void onSelect(String text) {
                 //获取开始小时
                 start_hour = Integer.parseInt(text);
-//                mTextView_Start_Hour1.setText(text);
                 timeState1=text;
 
             }
@@ -848,78 +429,63 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         });
 
         mMyTimePicker_End_Hour.setData(list_hour_end1);
-//        mMyTimePicker_End_Hour.setSelected(end_hour);//设置结束默认小时
         mMyTimePicker_End_Hour.setSelected(Integer.valueOf(timeEnd1));//设置结束默认小时
         mMyTimePicker_End_Hour.setOnSelectListener(new MyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
                 //获取结束小时
                 end_hour = Integer.parseInt(text);
-//                mTextView_End_Hour1.setText(String.valueOf(text));
                 timeEnd1=String.valueOf(text);
             }
         });
         mMyTimePicker_End_Minute.setData(list_minute_end1);
-//        mMyTimePicker_End_Minute.setSelected(end_minute);//设置结束默认分钟
         mMyTimePicker_End_Minute.setSelected(Integer.parseInt(timeEnd2));//设置结束默认分钟
         mMyTimePicker_End_Minute.setOnSelectListener(new MyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
                 //获取结束分钟
                 end_minute = Integer.parseInt(text);
-//                mTextView_End_Minute1.setText(String.valueOf(text));
                 timeEnd2=String.valueOf(text);
             }
         });
 
-//        timeDialog.setTitle("2016");
-//        timeDialog.setIcon(null);
-//        timeDialog.setCancelable(false);
-
-//        timeDialog.setPositiveButton("确定",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // 取出MyTimePicker设定的时间就行了
-//                    }
-//                }).create();
         dialog.show();
     }
 
     /**
      * 保存清洁配置修改后的信息
      */
-    private void save(){
-        start_hour= Integer.parseInt(mTextView_Start_Hour1.getText().toString().trim());
-        start_minute= Integer.parseInt(mTextView_Start_Minute1.getText().toString().trim());
-        end_hour= Integer.parseInt(mTextView_End_Hour1.getText().toString().trim());
-        end_minute= Integer.parseInt(mTextView_End_Minute1.getText().toString().trim());
-        start_modified=start_hour+start_minute/100f;
-        end_modified=end_hour+end_minute/100f;
-        //发送广播信息通知小屏上报Ros系统
-        Intent intent=new Intent("com.jiadu.broadcast.setting.clean");
-        Gson gson=new Gson() ;
-        Clean4 clean4=new Clean4();
-        clean4.setType("param");
-        clean4.setFunction("clean");
-        Clean4.DataBean dataBean=new Clean4.DataBean();
-        dataBean.setSurface(type_modified);
-        List list=new ArrayList();
-        Clean4.DataBean.TimerBean timerBean=new Clean4.DataBean.TimerBean();
-        timerBean.setFlag(flag_modified);
-        timerBean.setStarttime(start_modified);
-        timerBean.setEndtime(end_modified);
-        list.add(timerBean);
-        dataBean.setTimer(list);
-        clean4.setData(dataBean);
-        String str = gson.toJson(clean4);
-        Log.d("tag","str:"+str);
-        intent.putExtra("clean",str);
-        getActivity().sendBroadcast(intent);
-        // 注册一个针对ContentProvider的ContentObserver用来观察内容提供者的数据变化
-        final Uri uri = Uri.parse("content://com.jiadu.provider/clean");
-        getActivity().getContentResolver().registerContentObserver(uri,true,new MyContentObserver(new Handler()));
-    }
+//    private void save(){
+//        start_hour= Integer.parseInt(mTextView_Start_Hour1.getText().toString().trim());
+//        start_minute= Integer.parseInt(mTextView_Start_Minute1.getText().toString().trim());
+//        end_hour= Integer.parseInt(mTextView_End_Hour1.getText().toString().trim());
+//        end_minute= Integer.parseInt(mTextView_End_Minute1.getText().toString().trim());
+//        start_modified=start_hour+start_minute/100f;
+//        end_modified=end_hour+end_minute/100f;
+//        //发送广播信息通知小屏上报Ros系统
+//        Intent intent=new Intent("com.jiadu.broadcast.setting.clean");
+//        Gson gson=new Gson() ;
+//        Clean4 clean4=new Clean4();
+//        clean4.setType("param");
+//        clean4.setFunction("clean");
+//        Clean4.DataBean dataBean=new Clean4.DataBean();
+//        dataBean.setSurface(type_modified);
+//        List list=new ArrayList();
+//        Clean4.DataBean.TimerBean timerBean=new Clean4.DataBean.TimerBean();
+//        timerBean.setFlag(flag_modified);
+//        timerBean.setStarttime(start_modified);
+//        timerBean.setEndtime(end_modified);
+//        list.add(timerBean);
+//        dataBean.setTimer(list);
+//        clean4.setData(dataBean);
+//        String str = gson.toJson(clean4);
+//        Log.d("tag","str:"+str);
+//        intent.putExtra("clean",str);
+//        getActivity().sendBroadcast(intent);
+//        // 注册一个针对ContentProvider的ContentObserver用来观察内容提供者的数据变化
+//        final Uri uri = Uri.parse("content://com.jiadu.provider/clean");
+//        getActivity().getContentResolver().registerContentObserver(uri,true,new MyContentObserver(new Handler()));
+//    }
 
     public class  MyContentObserver extends ContentObserver {
         Handler mHandler;
