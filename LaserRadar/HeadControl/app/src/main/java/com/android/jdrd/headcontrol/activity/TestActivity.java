@@ -124,8 +124,9 @@ public class TestActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             case R.id.closeWater:
+                String closeWater = JsonPackage.stringToJson("command", "closeWater", "");
                 try {
-                    ServerSocketUtil.sendDateToClient("closeWater", Constant.ip_ros);
+                    ServerSocketUtil.sendDateToClient(closeWater, Constant.ip_ros);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

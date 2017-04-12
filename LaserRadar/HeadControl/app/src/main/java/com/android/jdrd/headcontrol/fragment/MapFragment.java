@@ -176,8 +176,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void initView() {
         surfaceview=(MyView)findViewById(R.id.surfaceview);
-        surfaceview.myview_height = 800;
-        surfaceview.myview_width = 1600;
+        surfaceview.myview_height = 900;
+        surfaceview.myview_width = 1500;
     }
 
     @Override

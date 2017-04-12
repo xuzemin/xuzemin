@@ -20,7 +20,7 @@ public class Constant {
     static final String dns2 = "192.168.0.1";
     static String gateway = "";
     static int prefix = 24;
-    public static final int SCALE_NUMBER = 200;
+    public static final int SCALE_NUMBER = 150;
     static String IP = "";
     static final String IPLast = "106";
     static String isConnectSocket = "";

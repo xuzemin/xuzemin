@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.activity.WelcomeActivity;
 import com.android.jdrd.headcontrol.common.BaseFragment;
+import com.android.jdrd.headcontrol.database.HeadControlBean;
+import com.android.jdrd.headcontrol.database.HeadControlDao;
 import com.android.jdrd.headcontrol.dialog.WarningDialog;
 import com.android.jdrd.headcontrol.entity.Battery3;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
@@ -46,7 +48,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
 
     Button mButton_Save;//保存按钮
     ImageView mImageView_Battery_Power;//电池图标
-    TextView mTextView_Level;//剩余电量
+    TextView mTextView_Level;//剩余电量  电量等级
 
 
     ImageView mImageView_Switch_Open;
@@ -59,6 +61,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
     ContentResolver mContentResolver;
     Uri mUri;
     int warn;//电源警告设置值
+    //int level = 100;//剩余电量  模拟数据
     int level;//剩余电量
     int state;//
     float temperature;
@@ -72,6 +75,9 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
     boolean flag;
     private View ll_right_bar;
     private ImageView imgViewBtnRight;
+
+    private Context mContext;
+
 
 //电量值 及运行剩余的时间
     private TextView tv_Battery_Level;
@@ -87,10 +93,11 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
     public BatteryFragment(Context context) {
         super(context);
     }
-
+    HeadControlDao headControlDaoBF;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {//给当前的fragment绘制UI布局，可以使用线程更新UI
         mView = inflater.inflate(R.layout.fragment_battery, container, false);
+        mContext = getActivity();
         receiver = new BatteryReceiver();
         filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         //****
@@ -113,18 +120,42 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         ll_right_bar1 = (RelativeLayout)findViewById(R.id.ll_right_bar1);
         ll_right_bar = findViewById(R.id.ll_right_bar);
         imgViewBtnRight = (ImageView) findViewById(R.id.imgViewBtnRight);
+        getActivity().registerReceiver(receiver, filter);
+        mMyClickListener = new MyClickListener();
+        headControlDaoBF = new HeadControlDao(mContext);//初始化数据库
+        BatteryThread thread = new BatteryThread();//启动线程
+        thread.start();
 
     }
-
+boolean b=true;
     @Override
     public void initData() {
         Constant.debugLog("----------------initData执行-------------------");
-        getActivity().registerReceiver(receiver, filter);
-        mMyClickListener = new MyClickListener();
 
+
+//        if (headControlDaoBF ==null){
+//            Constant.debugLog("------电源值为空------"+headControlDaoBF);
+//        }else {
+//            Constant.debugLog("--------电源值不为空------------"+headControlDaoBF);
+//        }
+//        HeadControlBean beanBF = headControlDaoBF.query("power");
+//        Constant.debugLog("*****power电源值02*****"+beanBF.toString());
+//
+//        if (beanBF ==null){
+//            beanBF = new HeadControlBean();
+//            beanBF.setFunction("power");
+//            beanBF.setDataInt(10);
+//            boolean add = headControlDaoBF.add(beanBF);
+//            if (add){
+//                Constant.debugLog("电源数据添加成功");
+//            }else {
+//                Constant.debugLog("电源添加失败");
+//            }
+//
+//        }
 
         //查询数据库中的信息并显示在UI界面上
-        mContentResolver = getActivity().getContentResolver();
+      //  mContentResolver = getActivity().getContentResolver();
 
 //        if (cursor == null) {
 //            //table does not exist弹出对话框（不可点击外屏消失），点确定退出,发送信息给小屏
@@ -147,11 +178,27 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
 //                cursor.close();
 //            }
 //            Log.d("tag", "warn:" + warn + "level:" + level + "state:" + state + " temperature:" + temperature + " voltage:" + voltage);
-            mTextView_Level.setText(String.valueOf(level));
-            progres_warn = warn;
-            mTextView_Warn.setText(String.valueOf(progres_warn) + "%");
-            mSeekBar.setProgress(progres_warn);
-            warn_modified = warn;
+
+
+        //模拟数据
+//        if (level==100)
+//            b=true;
+//        else if (level==0)
+//            b=false;
+//        if (b){
+//            level=level-1;
+//        }else {
+//            level=level+1;
+//        }
+//              level=beanBF.getDataInt();  //获取数据库值
+//            mTextView_Level.setText(String.valueOf(level)+"%");
+//            progres_warn = warn;
+//            mTextView_Warn.setText(String.valueOf(progres_warn) + "%");
+//            mSeekBar.setProgress(progres_warn);
+//            warn_modified = warn;
+
+
+
             int currentPower = level / 10;
             switch (currentPower) {
                 case 0:
@@ -182,31 +229,77 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
                     mImageView_Battery_Power.setImageResource(R.mipmap.power8);
                     break;
                 case 9:
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power8);
+                    break;
+                case 10:
                     mImageView_Battery_Power.setImageResource(R.mipmap.power9);
                     break;
 
             }
 
             mSeekBar.setMax(100);
-            mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {// 当进度发生改变时执行
-                    progres_warn = progress;
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {// 在进度开始改变时执行
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {// 停止拖动时执行
-                    warn_modified = progres_warn;
-                    mSeekBar.setProgress(progres_warn);
-                    mTextView_Warn.setText(String.valueOf(progres_warn) + "%");
-                }
-            });
+//            mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//                @Override
+//                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {// 当进度发生改变时执行
+//                    progres_warn = progress;
+//                }
+//
+//                @Override
+//                public void onStartTrackingTouch(SeekBar seekBar) {// 在进度开始改变时执行
+//
+//                }
+//
+//                @Override
+//                public void onStopTrackingTouch(SeekBar seekBar) {// 停止拖动时执行
+//                    warn_modified = progres_warn;
+//                    mSeekBar.setProgress(progres_warn);
+//                    mTextView_Warn.setText(String.valueOf(progres_warn) + "%");
+//                }
+//            });
         }
+
+    class BatteryThread extends Thread{
+        @Override
+        public void run() {
+            super.run();
+            while (true){
+
+                try {
+                    handler.sendEmptyMessage(1);
+                    //initData();
+                    sleep(5000);
+                    Constant.debugLog("===============更新=================");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    initData();
+//                    if (headControlDaoBF ==null){
+//                        Constant.debugLog("------电源值为空------"+headControlDaoBF);
+//                    }else {
+//                        Constant.debugLog("--------电源=值不为空------------"+headControlDaoBF);
+//                        Constant.debugLog("==============更新=================");
+//
+//                    }
+//                    HeadControlBean beanBF = headControlDaoBF.query("power");
+//                   level = beanBF.getDataInt();
+//                    if (0<=level && level<=10){
+//
+//                    }
+//                    Constant.debugLog("*****power电源值02*****"+beanBF.toString());
+                    break;
+            }
+        }
+    };
+
 
     @Override
     public void initEvent() {
@@ -324,18 +417,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
         @Override
         public void onReceive(Context context, Intent intent) {
 
-         // String strPower =  intent.getAction();
-           String powerStr = intent.getStringExtra("msg");
-            Constant.debugLog("***********STR*内容******" + powerStr);
-            if (powerStr != null && powerStr.equals("")){
 
-            }else {
-
-            }
-            int current = intent.getExtras().getInt("level");// 获得当前电量
-            int total = intent.getExtras().getInt("scale");//获得总电量
-            int percent = current * 100 / total;
-            mTextView_Level.setText(percent+"%");
         }
 
 
