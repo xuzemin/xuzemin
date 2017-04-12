@@ -22,8 +22,8 @@
         <com.android.jdrd.headcontrol.view.MyView
             android:id="@+id/surfaceview"
             android:layout_centerInParent="true"
-            android:layout_width="1580dp"
-            android:layout_height="980dp"
+            android:layout_width="1680dp"
+            android:layout_height="880dp"
             />
         <TextView
             android:id="@+id/bilici"
