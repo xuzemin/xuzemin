@@ -246,7 +246,7 @@ public class ServerSocketUtil extends Service {
                 msg = msg.trim();
                 if (msg != null) {
                     ++len;
-                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
+//                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
                     intent.putExtra("msg", msg);
                     intent.setAction("com.jdrd.fragment.Map");
                     sendBroadcast(intent);

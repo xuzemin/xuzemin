@@ -48,6 +48,7 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -83,6 +84,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
     private float plannumber =0,serchtimenumber =0,scopenumber =0,gametimenumber =0;
     private Context context;
+    private DecimalFormat df=new DecimalFormat(".##");
     private ImageView imgViewmapnRight;
     private RelativeLayout map_right_Ralative;
     private EditText point_x,point_y,go_point_x,go_point_y;
@@ -743,11 +745,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private void sendNativePoint(float up_x,float up_y ,int angle){
         Map map  = new LinkedHashMap();
         double a = ((up_y - 40) / - 1 / Constant.SCALE_NUMBER);
-        map.put("point_x",a);
+        map.put("point_x",df.format(a));
         a = (up_x - 40 ) / - 1 / Constant.SCALE_NUMBER + 2.4 ;
-        map.put("point_y",a);
+        map.put("point_y",df.format(a));
         map.put("angle",angle);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+        Constant.debugLog("map"+map.toString());
     }
     //发往底层
     private void sendNativePoint(){
