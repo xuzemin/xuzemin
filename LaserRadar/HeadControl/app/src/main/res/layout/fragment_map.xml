@@ -110,6 +110,11 @@
                         android:id="@+id/button_setreturn"
                         android:text="@string/button_setreturn"
                         />
+                    <Button
+                        style="@style/MapButton"
+                        android:id="@+id/button_versioncode"
+                        android:text="@string/button_versioncode"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/relative_plan"

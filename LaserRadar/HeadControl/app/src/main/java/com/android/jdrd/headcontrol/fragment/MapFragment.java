@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
@@ -129,6 +131,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 case 3:
                     if(thread!=null){
                         Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                        Constant.getConstant().sendCamera(3,context);
                         if(thread.isAlive()){
                             thread = new Thread();
                             surfaceview.current_plan_number = 0;
@@ -215,6 +218,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         findViewById(R.id.button_clearlast).setOnClickListener(this);
         findViewById(R.id.button_clearall).setOnClickListener(this);
         findViewById(R.id.button_plan).setOnClickListener(this);
+        findViewById(R.id.button_versioncode).setOnClickListener(this);
         findViewById(R.id.button_plan_stop).setOnClickListener(this);
         findViewById(R.id.button_pointchooce).setOnClickListener(this);
         findViewById(R.id.button_pathplan).setOnClickListener(this);
@@ -608,6 +612,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 updatekey();
                 setVisible();
                 linear_plan.setVisibility(View.VISIBLE);
+                break;
+            case R.id.button_versioncode:
+                PackageInfo pi = null;//getPackageName()是你当前类的包名，0代表是获取版本信息
+                try {
+                    PackageManager pm = context.getPackageManager();
+                    pi = pm.getPackageInfo(context.getPackageName(), 0);
+                    String name = pi.versionName;
+                    int code = pi.versionCode;
+                    Toast.makeText(context,"当前版本号"+name+",当前代码版本号"+code,Toast.LENGTH_SHORT).show();
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
