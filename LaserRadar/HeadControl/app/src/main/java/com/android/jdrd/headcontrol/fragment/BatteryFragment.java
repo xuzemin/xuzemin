@@ -130,29 +130,21 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
 boolean b=true;
     @Override
     public void initData() {
-        Constant.debugLog("----------------initData执行-------------------");
 
+        HeadControlBean beanBF = headControlDaoBF.query("power");
 
-//        if (headControlDaoBF ==null){
-//            Constant.debugLog("------电源值为空------"+headControlDaoBF);
-//        }else {
-//            Constant.debugLog("--------电源值不为空------------"+headControlDaoBF);
-//        }
-//        HeadControlBean beanBF = headControlDaoBF.query("power");
-//        Constant.debugLog("*****power电源值02*****"+beanBF.toString());
-//
-//        if (beanBF ==null){
-//            beanBF = new HeadControlBean();
-//            beanBF.setFunction("power");
-//            beanBF.setDataInt(10);
-//            boolean add = headControlDaoBF.add(beanBF);
-//            if (add){
-//                Constant.debugLog("电源数据添加成功");
-//            }else {
-//                Constant.debugLog("电源添加失败");
-//            }
-//
-//        }
+        if (beanBF ==null){
+            beanBF = new HeadControlBean();
+            beanBF.setFunction("power");
+            beanBF.setDataInt(100);
+            boolean add = headControlDaoBF.add(beanBF);
+            if (add){
+                Constant.debugLog("电源数据添加成功");
+            }else {
+                Constant.debugLog("电源添加失败");
+            }
+
+        }
 
         //查询数据库中的信息并显示在UI界面上
       //  mContentResolver = getActivity().getContentResolver();
@@ -190,8 +182,8 @@ boolean b=true;
 //        }else {
 //            level=level+1;
 //        }
-//              level=beanBF.getDataInt();  //获取数据库值
-//            mTextView_Level.setText(String.valueOf(level)+"%");
+              level=beanBF.getDataInt();  //获取数据库值
+            mTextView_Level.setText(String.valueOf(level)+"%");
 //            progres_warn = warn;
 //            mTextView_Warn.setText(String.valueOf(progres_warn) + "%");
 //            mSeekBar.setProgress(progres_warn);
@@ -229,7 +221,7 @@ boolean b=true;
                     mImageView_Battery_Power.setImageResource(R.mipmap.power8);
                     break;
                 case 9:
-                    mImageView_Battery_Power.setImageResource(R.mipmap.power8);
+                    mImageView_Battery_Power.setImageResource(R.mipmap.power9);
                     break;
                 case 10:
                     mImageView_Battery_Power.setImageResource(R.mipmap.power9);
