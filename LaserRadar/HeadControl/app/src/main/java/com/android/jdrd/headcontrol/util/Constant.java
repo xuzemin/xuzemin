@@ -23,6 +23,7 @@ public class Constant {
     public static final int SCALE_NUMBER = 150;
     public static final int MyView_Height = 900;
     public static final int MyView_Width = 1500;
+    public static final int rote = 14;
     static String IP = "";
     static final String IPLast = "106";
     static String isConnectSocket = "";

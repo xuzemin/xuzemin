@@ -106,6 +106,8 @@
     <color name="aquamarine">#7FFFD4</color><!--碧绿色-->
     <color name="chartreuse">#7FFF00</color><!--黄绿色 -->
     <color name="path">#A3F648</color><!--黄绿色 -->
+    <color name="point_back">#FEFEFE</color><!--黄绿色 -->
+    <color name="path_point">#89D534</color><!--黄绿色 -->
     <color name="lawngreen">#7CFC00</color><!--草绿色 -->
     <color name="mediumslateblue">#7B68EE</color><!--中暗蓝色 -->
     <color name="lightslategray">#778899</color><!--亮蓝灰 -->
@@ -151,7 +153,7 @@
     <color name="darkblue">#00008B</color><!--暗蓝色 -->
     <color name="navy">#000080</color><!--海军色 -->
     <color name="black">#000000</color><!--黑色 -->
-    <color name="point">#53940a</color><!--黑色 -->
+    <color name="point">#54950a</color><!--黑色 -->
     <color name="divider_line">#1d86b7</color>
     <color name="btn_true">#B3313033</color>
     <color name="btn_false">#80313033</color>

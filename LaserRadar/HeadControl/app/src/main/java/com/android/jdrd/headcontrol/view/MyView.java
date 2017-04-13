@@ -29,7 +29,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_xs=new Vector<>();
     public Vector<Float> point_ys=new Vector<>();
     public Paint p;
-    public float scalepoint = 20;
+    public float scalepoint = 13;
     public float translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
     public Vector<Double> path_xs=new Vector<>();
@@ -131,59 +131,75 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         p.setAntiAlias(true); //反锯齿
         p.setColor(getResources().getColor(R.color.path));
         p.setStyle(Paint.Style.FILL);
-        p.setStrokeWidth((float) 4.0);
-        p.setTextSize(25);
+        p.setStrokeWidth((float) 22.0);
+        p.setTextSize(22);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         for(int i=0 ,length = point_xs.size();i<length;i++) {
             if(Isplan){
                 if(i < current_plan_number){
                     p.setColor(getResources().getColor(R.color.origen));
                 }else{
-                    p.setColor(getResources().getColor(R.color.path));
+                    if( i % 2 ==1){
+                        p.setColor(getResources().getColor(R.color.path));
+                    }else{
+                        p.setColor(getResources().getColor(R.color.path_point));
+                    }
                 }
-                p.setColor(getResources().getColor(R.color.path));
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
-                p.setColor(getResources().getColor(R.color.point));
-                if(i >=9){
-                    canvas.drawText((i + 1) + "", point_xs.elementAt(i) - 14, point_ys.elementAt(i) + 8, p);
-                }else {
-                    canvas.drawText((i + 1) + "", point_xs.elementAt(i) - 8, point_ys.elementAt(i) + 8, p);
-                }
-                p.setColor(getResources().getColor(R.color.path));
+//                p.setColor(getResources().getColor(R.color.point));
+//                if(i >=9){
+//                    canvas.drawText((i + 1) + "", point_xs.elementAt(i) - 14, point_ys.elementAt(i) + 8, p);
+//                }else {
+//                    canvas.drawText((i + 1) + "", point_xs.elementAt(i) - 8, point_ys.elementAt(i) + 8, p);
+//                }
+//                p.setColor(getResources().getColor(R.color.path));
                 if (i >= 1) {
-                    double x_end_tmp,y_end_tmp,x_start_tmp,y_start_tmp;
-                    double x = point_xs.elementAt(i)-point_xs.elementAt(i-1);
-                    double y = point_ys.elementAt(i)-point_ys.elementAt(i-1);
-                    double Distance = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-                    if(point_xs.elementAt(i-1) > point_xs.elementAt(i)){
-                        x_end_tmp = point_xs.elementAt(i) + Math.abs(20 * x /Distance);
-                        x_start_tmp = point_xs.elementAt(i-1) - Math.abs(20 * x /Distance);
-                    }else if(point_xs.elementAt(i-1) < point_xs.elementAt(i)){
-                        x_end_tmp = point_xs.elementAt(i) - Math.abs(20 * x /Distance);
-                        x_start_tmp = point_xs.elementAt(i-1) + Math.abs(20 * x /Distance);
-                    }else{
-                        x_end_tmp = point_xs.elementAt(i);
-                        x_start_tmp = point_xs.elementAt(i-1);
-                    }
-                    if(point_ys.elementAt(i-1) > point_ys.elementAt(i)){
-                        y_end_tmp = point_ys.elementAt(i) + Math.abs(20 * y / Distance);
-                        y_start_tmp = point_ys.elementAt(i-1) - Math.abs(20 * y / Distance);
-                    } else if(point_ys.elementAt(i-1) < point_ys.elementAt(i)){
-                        y_end_tmp = point_ys.elementAt(i) - Math.abs(20 * y / Distance);
-                        y_start_tmp = point_ys.elementAt(i -1) + Math.abs(20 * y / Distance);
-                    }else{
-                        y_end_tmp = point_ys.elementAt(i);
-                        y_start_tmp = point_ys.elementAt(i -1);
-                    }
-                    drawAL(canvas,x_start_tmp,y_start_tmp,x_end_tmp,y_end_tmp,p);
-//                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i -1),point_xs.elementAt(i),point_ys.elementAt(i),p);
+//                    double x_end_tmp,y_end_tmp,x_start_tmp,y_start_tmp;
+//                    double x = point_xs.elementAt(i)-point_xs.elementAt(i-1);
+//                    double y = point_ys.elementAt(i)-point_ys.elementAt(i-1);
+//                    double Distance = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+//                    if(point_xs.elementAt(i-1) > point_xs.elementAt(i)){
+//                        x_end_tmp = point_xs.elementAt(i) + Math.abs(Constant.rote * x /Distance);
+//                        x_start_tmp = point_xs.elementAt(i-1) - Math.abs(Constant.rote * x /Distance);
+//                    }else if(point_xs.elementAt(i-1) < point_xs.elementAt(i)){
+//                        x_end_tmp = point_xs.elementAt(i) - Math.abs(Constant.rote * x /Distance);
+//                        x_start_tmp = point_xs.elementAt(i-1) + Math.abs(Constant.rote * x /Distance);
+//                    }else{
+//                        x_end_tmp = point_xs.elementAt(i);
+//                        x_start_tmp = point_xs.elementAt(i-1);
+//                    }
+//                    if(point_ys.elementAt(i-1) > point_ys.elementAt(i)){
+//                        y_end_tmp = point_ys.elementAt(i) + Math.abs(Constant.rote * y / Distance);
+//                        y_start_tmp = point_ys.elementAt(i-1) - Math.abs(Constant.rote * y / Distance);
+//                    } else if(point_ys.elementAt(i-1) < point_ys.elementAt(i)){
+//                        y_end_tmp = point_ys.elementAt(i) - Math.abs(Constant.rote * y / Distance);
+//                        y_start_tmp = point_ys.elementAt(i -1) + Math.abs(Constant.rote * y / Distance);
+//                    }else{
+//                        y_end_tmp = point_ys.elementAt(i);
+//                        y_start_tmp = point_ys.elementAt(i -1);
+//                    }
+//                    drawAL(canvas,x_start_tmp,y_start_tmp,x_end_tmp,y_end_tmp,p);
+                    drawAL(canvas,point_xs.elementAt(i-1),point_ys.elementAt(i -1),point_xs.elementAt(i),point_ys.elementAt(i),p);
                 }
                 if(i == point_xs.size() -1){
                     canvas.drawBitmap(startpoint,point_xs.elementAt(0)-startpoint.getWidth()/2,point_ys.elementAt(0)-startpoint.getHeight()/2,p);
                 }
             }else{
-                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), 10, p);
+                canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
                 canvas.drawPoint(point_xs.elementAt(i),point_ys.elementAt(i),p);
+            }
+        }
+        for(int i=0 ,length = point_xs.size();i<length;i++) {
+            if (Isplan) {
+                if(i>0){
+                    p.setColor(getResources().getColor(R.color.point));
+                    canvas.drawCircle(point_xs.elementAt(i), point_ys.elementAt(i), scalepoint, p);
+                    p.setColor(getResources().getColor(R.color.title_dudutext_color));
+                    if(i >=9){
+                        canvas.drawText((i + 1) + "", point_xs.elementAt(i) - 13, point_ys.elementAt(i) + 8, p);
+                    }else {
+                        canvas.drawText((i + 1) + "", point_xs.elementAt(i) - 7, point_ys.elementAt(i) + 8, p);
+                    }
+                }
             }
         }
 

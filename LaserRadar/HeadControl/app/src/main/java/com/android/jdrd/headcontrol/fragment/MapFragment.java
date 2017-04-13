@@ -868,7 +868,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 }else if(tasknumber == 11){
                                     IsFind = true;
                                     tasknumber = 12;
-                                    ServerSocketUtil.sendDateToClient(string, Constant.ip_ros);
+                                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                                    Map map  = new LinkedHashMap();
+                                    map.put("point_x",0);
+                                    map.put("point_y",0);
+                                    map.put("angle",0);
+                                    map.put("body_distance",jsonObject.getString("degree"));
+                                    map.put("body_angle",jsonObject.getString("distance"));
+                                    Constant.getConstant().sendCamera(0,context);
+                                    Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
+//                                    ServerSocketUtil.sendDateToClient(string, Constant.ip_ros);
                                     Constant.debugLog("camera"  +"    string"+string);
                                 }
                             } catch (IOException e) {
@@ -1126,21 +1135,27 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 while(true){
                     Random random=new Random();
                     float x = 0 , y = 0;
-                    while(x  < 100 || x >1500){
-                        x = random.nextInt(1500);
+                    while(x  < 100 || x > Constant.MyView_Width - 100){
+                        x = random.nextInt(Constant.MyView_Width - 100);
                     }
-                    while(y  < 100 || y >900){
-                        y = random.nextInt(900);
+                    while(y  < 100 || y > Constant.MyView_Height - 100){
+                        y = random.nextInt(Constant.MyView_Height - 100);
                     }
                     synchronized (thread){
                         try {
                             tasknumber = 10;
                             //前往地图标注地点
-                            sendNativePoint(x,y,0);
+//                            sendNativePoint(x,y,0);
+                            Map map  = new LinkedHashMap();
+                            map.put("point_x",x);
+                            map.put("point_y",y);
+                            map.put("angle",0);
+                            map.put("body_distance",0);
+                            map.put("body_angle",0);
                             Constant.getConstant().sendCamera(0,context);
-                            Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,"");
+                            Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
                             IsFind = false;
-                            //111
+
                             thread.wait();
                             if(IsFind){
                                 IsFind = false;

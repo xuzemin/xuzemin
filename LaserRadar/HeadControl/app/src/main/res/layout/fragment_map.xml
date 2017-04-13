@@ -125,9 +125,7 @@
                     >
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         style="@style/MyTextView"
-                        android:textColor="#E8E8E8"
                         android:text="@string/button_path"/>
                     <Spinner
                         android:id="@+id/spinner_plan"
@@ -162,12 +160,19 @@
                         style="@style/MapButton"
                         android:text="@string/plan_change"
                         />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="150px"
+                        />
                     <Button
                         android:id="@+id/button_plan_back"
                         android:text="@string/back"
                         style="@style/MapButton"
+                        android:layout_width="193px"
+                        android:layout_height="62px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_circle_selector"
                         />
-
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/relative_plan_change"
@@ -178,18 +183,32 @@
                     <ListView
                         android:id="@+id/plan_change_list"
                         android:layout_width="match_parent"
-                        android:layout_height="780px"
+                        android:layout_height="805px"
                         >
                     </ListView>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="10px"/>
                     <Button
                         android:id="@+id/button_plan_change_save"
                         android:text="@string/change_save"
                         style="@style/MapButton"
+                        android:layout_width="193px"
+                        android:layout_height="62px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_circle_selector"
                         />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="8px"/>
                     <Button
                         android:id="@+id/button_plan_change_back"
                         android:text="@string/back"
                         style="@style/MapButton"
+                        android:layout_width="193px"
+                        android:layout_height="62px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_circle_selector"
                         />
 
                 </LinearLayout>
@@ -199,78 +218,88 @@
                     android:layout_height="match_parent"
                     android:visibility="gone"
                     android:orientation="vertical">
-                    <TextView
+                    <ScrollView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/MyTextView"
-                        android:textColor="#E8E8E8"
-                        android:text="@string/serchtime"/>
-                    <Spinner
-                        android:id="@+id/serchtime"
-                        style="@style/MySpiner"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/MyTextView"
-                        android:textColor="#E8E8E8"
-                        android:text="@string/scope"/>
-                    <Spinner
-                        android:id="@+id/scope"
-                        style="@style/MySpiner"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/MyTextView"
-                        android:textColor="#E8E8E8"
-                        android:text="@string/gametime"/>
-                    <Spinner
-                        android:id="@+id/gametime"
-                        style="@style/MySpiner"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="80dp">
-                        <EditText
-                            android:id="@+id/point_x"
-                            android:layout_weight="1"
-                            android:inputType="numberDecimal"
-                            android:layout_width="wrap_content"
+                        android:layout_height="875px">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            />
-                        <EditText
-                            android:id="@+id/point_y"
-                            android:layout_weight="1"
-                            android:inputType="numberDecimal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
-                    <Button
-                        android:id="@+id/button_choose"
-                        android:text="@string/button_choose"
-                        style="@style/MapButton"
-                        />
-                    <Button
-                        android:id="@+id/button_clearlast"
-                        android:text="@string/button_clearlast"
-                        style="@style/MapButton"
-                        />
-                    <Button
-                        android:id="@+id/button_saveall"
-                        android:text="@string/button_saveall"
-                        style="@style/MapButton"
-                        />
-                    <Button
-                        android:id="@+id/button_clearall"
-                        android:text="@string/button_clearall"
-                        style="@style/MapButton"
-                        />
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/MyTextView"
+                                android:text="@string/serchtime"/>
+                            <Spinner
+                                android:id="@+id/serchtime"
+                                style="@style/MySpiner"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/MyTextView"
+                                android:text="@string/scope"/>
+                            <Spinner
+                                android:id="@+id/scope"
+                                style="@style/MySpiner"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                style="@style/MyTextView"
+                                android:text="@string/gametime"/>
+                            <Spinner
+                                android:id="@+id/gametime"
+                                style="@style/MySpiner"
+                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="80dp">
+                                <EditText
+                                    android:id="@+id/point_x"
+                                    android:layout_weight="1"
+                                    android:inputType="numberDecimal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    />
+                                <EditText
+                                    android:id="@+id/point_y"
+                                    android:layout_weight="1"
+                                    android:inputType="numberDecimal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent" />
+                            </LinearLayout>
+                            <Button
+                                android:id="@+id/button_choose"
+                                android:text="@string/button_choose"
+                                style="@style/MapButton"
+                                />
+                            <Button
+                                android:id="@+id/button_clearlast"
+                                android:text="@string/button_clearlast"
+                                style="@style/MapButton"
+                                />
+                            <Button
+                                android:id="@+id/button_saveall"
+                                android:text="@string/button_saveall"
+                                style="@style/MapButton"
+                                />
+                            <Button
+                                android:id="@+id/button_clearall"
+                                android:text="@string/button_clearall"
+                                style="@style/MapButton"
+                                />
+                        </LinearLayout>
+                    </ScrollView>
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="10px"/>
                     <Button
                         android:id="@+id/button_plan_info_back"
                         android:text="@string/back"
                         style="@style/MapButton"
+                        android:layout_width="193px"
+                        android:layout_height="62px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_circle_selector"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -281,10 +310,7 @@
                     android:layout_height="match_parent">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         style="@style/MyTextView"
-                        android:textSize="25sp"
-                        android:textColor="#E8E8E8"
                         android:text="@string/button_point"/>
                     <Button
                         android:id="@+id/button_next"
@@ -319,10 +345,17 @@
                         android:text="@string/button_choose"
                         style="@style/MapButton"
                         />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="445px"/>
                     <Button
                         android:id="@+id/button_point_back"
                         android:text="@string/back"
                         style="@style/MapButton"
+                        android:layout_width="193px"
+                        android:layout_height="62px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_circle_selector"
                         />
                 </LinearLayout>
                 <LinearLayout
@@ -341,10 +374,17 @@
                         android:text="@string/roam_stop"
                         style="@style/MapButton"
                         />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="700px"/>
                     <Button
                         android:id="@+id/button_roam_back"
                         android:text="@string/back"
                         style="@style/MapButton"
+                        android:layout_width="193px"
+                        android:layout_height="62px"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_circle_selector"
                         />
                 </LinearLayout>
             </LinearLayout>

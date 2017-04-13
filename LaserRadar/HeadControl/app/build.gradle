@@ -7,7 +7,7 @@ android {
         applicationId "com.android.jdrd.headcontrol"
         minSdkVersion 10
         targetSdkVersion 25
-        versionCode 468
+        versionCode 469
         versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
