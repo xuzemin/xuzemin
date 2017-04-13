@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 
 import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.database.HeadControlBean;
+import com.android.jdrd.headcontrol.database.HeadControlDao;
 import com.android.jdrd.headcontrol.util.Constant;
 
 import org.json.JSONException;
@@ -23,6 +25,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerSocketUtil extends Service {
+
+    private Context mContext;
 
     private static ServerSocket serverSocket;
     private static Socket socket1;
@@ -246,7 +250,8 @@ public class ServerSocketUtil extends Service {
                 msg = msg.trim();
                 if (msg != null) {
                     ++len;
-//                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
+                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
+                    savePowerData();
                     intent.putExtra("msg", msg);
                     intent.setAction("com.jdrd.fragment.Map");
                     sendBroadcast(intent);
@@ -281,6 +286,32 @@ public class ServerSocketUtil extends Service {
             intent.putExtra("msg", msg);
             intent.setAction("com.jdrd.fragment.Map");
             sendBroadcast(intent);*/
+
+        }
+    }
+
+    /**
+     * 将电量数据存入数据库中，并实时更新
+     */
+    private void savePowerData() {
+        String function = getJSONString(msg, "function");
+        if("power".equals(function)) {
+            String data = getJSONString(msg, "data");
+            int power = getJSONInt(data, "power");
+            Constant.debugLog("电量数据是： " + power);
+
+            HeadControlDao headControlDao = new HeadControlDao(getApplicationContext());
+            HeadControlBean bean  = headControlDao.query("power");
+            if(bean == null) {
+                bean = new HeadControlBean();
+                bean.setFunction("power");
+                bean.setDataInt(power);
+                headControlDao.add(bean);
+            }else {
+                bean.setFunction("power");
+                bean.setDataInt(power);
+                headControlDao.update(bean);
+            }
         }
     }
 
