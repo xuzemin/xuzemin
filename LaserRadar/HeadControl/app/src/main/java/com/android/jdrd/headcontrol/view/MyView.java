@@ -22,6 +22,7 @@ import java.util.Vector;
 
 /**
  * Created by Administrator on 2017/1/18.
+ *
  */
 
 public class MyView extends SurfaceView implements SurfaceHolder.Callback {
@@ -29,7 +30,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_xs=new Vector<>();
     public Vector<Float> point_ys=new Vector<>();
     public Paint p;
-    public float scalepoint = 13;
+    public float scalepoint = 14;
     public float translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
     public Vector<Double> path_xs=new Vector<>();

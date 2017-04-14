@@ -84,7 +84,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
     private float plannumber =0,serchtimenumber =0,scopenumber =0,gametimenumber =0;
     private Context context;
-    private DecimalFormat df=new DecimalFormat(".##");
     private ImageView imgViewmapnRight;
     private RelativeLayout map_right_Ralative;
     private EditText point_x,point_y,go_point_x,go_point_y;
@@ -745,9 +744,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private void sendNativePoint(float up_x,float up_y ,int angle){
         Map map  = new LinkedHashMap();
         double a = ((up_y - 40) / - 1 / Constant.SCALE_NUMBER);
-        map.put("point_x",df.format(a));
+        map.put("point_x",a);
         a = (up_x - 40 ) / - 1 / Constant.SCALE_NUMBER + 2.4 ;
-        map.put("point_y",df.format(a));
+        map.put("point_y",a);
         map.put("angle",angle);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
         Constant.debugLog("map"+map.toString());
@@ -865,20 +864,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     IsFind = true;
                                     tasknumber = 2;
                                     ServerSocketUtil.sendDateToClient(string, Constant.ip_ros);
-                                }else if(tasknumber == 11){
+                                }else if(tasknumber == 10){
                                     IsFind = true;
-                                    tasknumber = 12;
+                                    tasknumber = 11;
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                                     Map map  = new LinkedHashMap();
-                                    map.put("point_x",0);
-                                    map.put("point_y",0);
-                                    map.put("angle",0);
-                                    map.put("body_distance",jsonObject.getString("degree"));
-                                    map.put("body_angle",jsonObject.getString("distance"));
+                                    map.put("degree",jsonObject.getString("degree"));
+                                    map.put("distance",jsonObject.getString("distance"));
                                     Constant.getConstant().sendCamera(0,context);
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
-//                                    ServerSocketUtil.sendDateToClient(string, Constant.ip_ros);
-                                    Constant.debugLog("camera"  +"    string"+string);
+                                    Constant.debugLog("map"+map);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -894,8 +889,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 }
                                 Constant.getConstant().sendCamera(3,context);
                                 handler.sendEmptyMessage(4);
-                            }else if(tasknumber == 13 && IsAway){
-                                tasknumber = 14 ;
+                            }else if(tasknumber == 12 && IsAway){
+                                tasknumber = 13 ;
                                 Toast.makeText(context,"away",Toast.LENGTH_SHORT).show();
                                 if(task!=null ){
                                     task.cancel();
@@ -911,8 +906,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 //机器人找到人
                                 tasknumber = 3;
                                 handler.sendEmptyMessage(4);
-                            }else if(tasknumber == 12){
-                                tasknumber = 13;
+                            }else if(tasknumber == 11){
+                                tasknumber = 12;
                                 handler.sendEmptyMessage(4);
                             }
                         }
@@ -1145,15 +1140,15 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         try {
                             tasknumber = 10;
                             //前往地图标注地点
-//                            sendNativePoint(x,y,0);
-                            Map map  = new LinkedHashMap();
-                            map.put("point_x",x);
-                            map.put("point_y",y);
-                            map.put("angle",0);
-                            map.put("body_distance",0);
-                            map.put("body_angle",0);
+                            sendNativePoint(x,y,0);
+//                            Map map  = new LinkedHashMap();
+//                            map.put("point_x",x);
+//                            map.put("point_y",y);
+//                            map.put("angle",0);
+//                            map.put("body_distance",0);
+//                            map.put("body_angle",0);
                             Constant.getConstant().sendCamera(0,context);
-                            Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
+//                            Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
                             IsFind = false;
 
                             thread.wait();
@@ -1164,6 +1159,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 thread.wait();
                             }
                             Constant.getConstant().sendCamera(3,context);
+                            Thread.sleep(1000);
                             //返回原点
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -1363,24 +1359,24 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         sendNativePoint(point_x,point_y,0);
                         thread.wait();
                         //到达对应地点notify
-                        resetTimer();
-                        timer.schedule(task, 40 * 1000);
-                        IsFind = false;
-                        Constant.getConstant().sendCamera(0,context);
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"");
-                        //互动中 找人
-                        thread.wait();
-                        //如果有找到人则到达指定位置
-                        if(IsFind){
-                            IsFind = false;
-                            resetTimer2();
-                            IsAway = true;
-                            thread.wait();
-                        }
-                        Constant.getConstant().sendCamera(3,context);
-                        sendNativePoint(point_x,point_y,0);
-                        thread.wait();
-                        tasknumber = -1;
+//                        resetTimer();
+//                        timer.schedule(task, 40 * 1000);
+//                        IsFind = false;
+//                        Constant.getConstant().sendCamera(0,context);
+//                        Constant.getConstant().sendBundle(Constant.Command,Constant.Peoplesearch,"");
+//                        //互动中 找人
+//                        thread.wait();
+//                        //如果有找到人则到达指定位置
+//                        if(IsFind){
+//                            IsFind = false;
+//                            resetTimer2();
+//                            IsAway = true;
+//                            thread.wait();
+//                        }
+//                        Constant.getConstant().sendCamera(3,context);
+//                        sendNativePoint(point_x,point_y,0);
+//                        thread.wait();
+//                        tasknumber = -1;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
