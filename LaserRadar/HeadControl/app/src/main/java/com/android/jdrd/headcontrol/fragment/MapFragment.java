@@ -1130,11 +1130,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 while(true){
                     Random random=new Random();
                     float x = 0 , y = 0;
-                    while(x  < 100 || x > Constant.MyView_Width - 100){
-                        x = random.nextInt(Constant.MyView_Width - 100);
+                    while(x  < 150 || x > Constant.MyView_Width - 150){
+                        x = random.nextInt(Constant.MyView_Width - 150);
                     }
-                    while(y  < 100 || y > Constant.MyView_Height - 100){
-                        y = random.nextInt(Constant.MyView_Height - 100);
+                    while(y  < 150 || y > Constant.MyView_Height - 150){
+                        y = random.nextInt(Constant.MyView_Height - 150);
                     }
                     synchronized (thread){
                         try {
@@ -1354,7 +1354,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             public void run() {
                 synchronized (thread){
                     try {
-                        tasknumber = 10;
+                        tasknumber = 0;
                         //前往地图标注地点
                         sendNativePoint(point_x,point_y,0);
                         thread.wait();
