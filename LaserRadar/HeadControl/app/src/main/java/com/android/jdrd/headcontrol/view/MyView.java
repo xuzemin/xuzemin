@@ -31,6 +31,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_ys=new Vector<>();
     public Paint p;
     public float scalepoint = 14;
+    public int config = 0;
     public float translate_x = 0,translate_y = 0;
     public int myview_width,myview_height;
     public Vector<Double> path_xs=new Vector<>();

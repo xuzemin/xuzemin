@@ -364,6 +364,30 @@
                     android:orientation="vertical"
                     android:visibility="gone"
                     android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        style="@style/MyTextView"
+                        android:text="@string/serchtime"/>
+                    <Spinner
+                        android:id="@+id/serchtime_roam"
+                        style="@style/MySpiner"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        style="@style/MyTextView"
+                        android:text="@string/scope"/>
+                    <Spinner
+                        android:id="@+id/scope_roam"
+                        style="@style/MySpiner"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        style="@style/MyTextView"
+                        android:text="@string/gametime"/>
+                    <Spinner
+                        android:id="@+id/gametime_roam"
+                        style="@style/MySpiner"
+                        />
                     <Button
                         android:id="@+id/button_roam_start"
                         android:text="@string/roam_start"
@@ -376,7 +400,7 @@
                         />
                     <View
                         android:layout_width="wrap_content"
-                        android:layout_height="700px"/>
+                        android:layout_height="215px"/>
                     <Button
                         android:id="@+id/button_roam_back"
                         android:text="@string/back"

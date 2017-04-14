@@ -75,6 +75,7 @@ public class Constant {
     //    public static String Distance = "distance";
 //    public static String Degree = "degree";
     public static String Camera = "3dcamera";
+    public static String Obstacle = "obstacle";
     private static Constant constant;
 //    private static SerialPortUtil spu  = SerialPortUtil.getInstance();
 

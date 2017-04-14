@@ -80,9 +80,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private boolean IsSuccus = false;
     private MyView surfaceview;
     //路线选择、找人时间、找人范围、转弯角度、互动时间
-    private Spinner planchooce,serchtime,scope,angle,gametime,plan_cirles;
+    private Spinner planchooce,serchtime,scope,angle,gametime,plan_cirles,gametime_roam,scope_roam,serchtime_roam;
     //路线选择、找人时间、找人范围、转弯角度、互动时间；（对应number）
-    private float plannumber =0,serchtimenumber =0,scopenumber =0,gametimenumber =0;
+    private float plannumber =0,serchtimenumber =0,scopenumber =0,gametimenumber =0,serchtimenumber_roam =0,scopenumber_roam =0,gametimenumber_roam =0;
     private Context context;
     private ImageView imgViewmapnRight;
     private RelativeLayout map_right_Ralative;
@@ -188,6 +188,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
         scope = (Spinner) findViewById(R.id.scope);
+        gametime_roam = (Spinner) findViewById(R.id.gametime_roam);
+        scope_roam = (Spinner) findViewById(R.id.scope_roam);
+        serchtime_roam = (Spinner) findViewById(R.id.serchtime_roam);
         plan_cirles = (Spinner) findViewById(R.id.spinner_plan_cirles);
         gametime = (Spinner) findViewById(R.id.gametime);
         point_x = (EditText) findViewById(R.id.point_x);
@@ -452,11 +455,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             case R.id.button_cruise:
                 Constant.CURRENTINDEX_MAP = 3;
                 go_Roam();
+                serchtime_roam.setSelection(0,true);
+                scope_roam.setSelection(0,true);
+                gametime_roam.setSelection(0,true);
+                Istouch = false;
                 break;
             //路线规划模式
             case R.id.button_pathplan:
                 Constant.CURRENTINDEX_MAP = 2;
                 go_Plan();
+                Istouch = false;
                 break;
             //点选模式
             case R.id.button_pointchooce:
@@ -478,6 +486,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             case R.id.button_roam_start:
                 startRoam();
                 Toast.makeText(context,"开始漫游行走",Toast.LENGTH_SHORT).show();
+                dialogFace();
+                startAnimationRight();
                 break;
             //停止漫游
             case R.id.button_roam_stop:
@@ -512,11 +522,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Constant.CURRENTINDEX_MAP = 0;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_roam.setVisibility(View.GONE);
+                Istouch = false;
                 break;
             case R.id.imgViewmapnRight:
                 startAnimationRight();
                 break;
-            //返回远点
+            //返回原点
             case R.id.button_returnback:
                 Toast.makeText(context,"返回原点",Toast.LENGTH_SHORT).show();
                 if(thread!=null){
@@ -672,7 +683,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map_Plan.add("找人1圈");
         map_Plan.add("找人2圈");
         map_Plan.add("找人3圈");
-        adapter = new ArrayAdapter<String>(context,R.layout.item_spinselect,map_Plan);
+        adapter = new ArrayAdapter<>(context,R.layout.item_spinselect,map_Plan);
         adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
         serchtime.setAdapter(adapter);
         serchtime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -703,6 +714,58 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        map_Plan = new ArrayList<>();
+        map_Plan.add("不找人");
+        map_Plan.add("找人");
+        adapter = new ArrayAdapter<>(context,R.layout.item_spinselect,map_Plan);
+        adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+        serchtime_roam.setAdapter(adapter);
+        serchtime_roam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                serchtimenumber_roam = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        map_Plan = new ArrayList<>();
+        map_Plan.add("远");
+        map_Plan.add("中");
+        map_Plan.add("近");
+        adapter = new ArrayAdapter<>(context,R.layout.item_spinselect,map_Plan);
+        adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+        scope_roam.setAdapter(adapter);
+        scope_roam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                scopenumber_roam = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        map_Plan = new ArrayList<>();
+        map_Plan.add("默认15秒");
+        map_Plan.add("与用户互动");
+        i = 0;
+        while(i < 10){
+            map_Plan.add((i+1)+"分钟");
+            i++;
+        }
+        adapter = new ArrayAdapter<>(context,R.layout.item_spinselect,map_Plan);
+        adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+        gametime_roam.setAdapter(adapter);
+        gametime_roam.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                gametimenumber_roam = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
@@ -910,6 +973,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 tasknumber = 12;
                                 handler.sendEmptyMessage(4);
                             }
+                        }
+                    }else if(funtion.equals(Constant.Obstacle)){
+                        JSONObject jsonObject = new JSONObject(data);
+                        String str =  jsonObject.getString("result");
+                        if("obstacle".equals(str)){
+                            String direction = jsonObject.getString("direction");
+                            if("front".equals(direction)){
+
+                            }else if("back".equals(direction)){
+
+                            }else{
+
+                            }
+                        }else{
+
                         }
                     }
                 }
@@ -1141,21 +1219,25 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             tasknumber = 10;
                             //前往地图标注地点
                             sendNativePoint(x,y,0);
-//                            Map map  = new LinkedHashMap();
-//                            map.put("point_x",x);
-//                            map.put("point_y",y);
-//                            map.put("angle",0);
-//                            map.put("body_distance",0);
-//                            map.put("body_angle",0);
-                            Constant.getConstant().sendCamera(0,context);
-//                            Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
+                            if(serchtimenumber_roam == 1) {
+                                Constant.getConstant().sendCamera(scopenumber_roam,context);
+                            }
                             IsFind = false;
-
                             thread.wait();
                             if(IsFind){
                                 IsFind = false;
                                 resetTimer2();
-                                IsAway = true;
+                                IsAway = false;
+                                if(gametimenumber_roam == 0){
+                                    Constant.debugLog("arraygametime_tmp = " + 0);
+                                    timer.schedule(task, 15 * 1000);
+                                }else if(gametimenumber_roam == 1){
+                                    IsAway = true;
+                                }else {
+                                    float a = gametimenumber_roam - 1;
+                                    timer.schedule(task, (long) (a * 60 * 1000));
+                                    Constant.debugLog("tasknumber = " + a);
+                                }
                                 thread.wait();
                             }
                             Constant.getConstant().sendCamera(3,context);
