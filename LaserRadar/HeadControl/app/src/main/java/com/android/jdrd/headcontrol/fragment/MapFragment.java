@@ -185,6 +185,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     public void initData() {
         surfaceview.bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.touxiang);
         surfaceview.rotbitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.jiantou);
+        surfaceview.obstacle = BitmapFactory.decodeResource(getResources(), R.mipmap.luzhang);
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
         scope = (Spinner) findViewById(R.id.scope);
@@ -934,6 +935,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     Map map  = new LinkedHashMap();
                                     map.put("degree",jsonObject.getString("degree"));
                                     map.put("distance",jsonObject.getString("distance"));
+                                    
                                     Constant.getConstant().sendCamera(0,context);
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
                                     Constant.debugLog("map"+map);
@@ -979,15 +981,17 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         String str =  jsonObject.getString("result");
                         if("obstacle".equals(str)){
                             String direction = jsonObject.getString("direction");
+                            setObstacle();
+                            setBackObstacle();
                             if("front".equals(direction)){
-
+                                surfaceview.config = 1;
                             }else if("back".equals(direction)){
-
+                                surfaceview.config = 2;
                             }else{
-
+                                surfaceview.config = 3;
                             }
                         }else{
-
+                            surfaceview.config = 0;
                         }
                     }
                 }
@@ -995,6 +999,15 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setObstacle(){
+        surfaceview.obstacle_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 *2 * Math.sin(surfaceview.rote*Math.PI/180);
+        surfaceview.obstacle_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight()  * Math.cos(surfaceview.rote*Math.PI/180);
+    }
+    public void setBackObstacle(){
+        surfaceview.obstacle_back_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 *2 * Math.sin((surfaceview.rote+180)*Math.PI/180);
+        surfaceview.obstacle_back_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight() /3 *2 * Math.cos((surfaceview.rote+180)*Math.PI/180);
     }
 
     //xml写入
