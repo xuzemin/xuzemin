@@ -31,9 +31,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Float> point_ys=new Vector<>();
     public Paint p;
     public float scalepoint = 14;
-    public int config = 0;
+    public int config = 0 ;
     public float translate_x = 0,translate_y = 0;
-    public double obstacle_x,obstacle_y,obstacle_back_x,obstacle_back_y;
+    public double obstacle_x,obstacle_y,obstacle_back_x,obstacle_back_y,human_x,human_y;
     public int myview_width,myview_height;
     public Vector<Double> path_xs=new Vector<>();
     public Vector<Double> path_ys=new Vector<>();
@@ -42,7 +42,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Double center_x = 0.0 , center_y = 0.0;
     public float rote = 45;
     public int current_plan_number = -1;
-    public boolean paint = false,Ishave = false,Isplan = true,Ispath = false;
+    public boolean paint = false,Ishave = false,Isplan = true,Ispath = false,IsHuman = false;
     public int temp = 0;
     private Bitmap startpoint = BitmapFactory.decodeResource(getResources(), R.mipmap.qi);
     public MyView(Context context, AttributeSet attr) {
@@ -206,25 +206,26 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 
-        if(rotbitmap!=null){
+        if(null != rotbitmap){
             matrix = new Matrix();
             matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
             matrix.postRotate(rote-180, Float.valueOf(String.valueOf(center_x)),Float.valueOf(String.valueOf(center_y)));
             canvas.drawBitmap(rotbitmap,matrix,null);
         }
-        if(bitmap!=null) {
+        if(null != bitmap) {
             matrix = new Matrix();
             matrix.setTranslate(Float.valueOf(String.valueOf(bitmap_x)),Float.valueOf(String.valueOf(bitmap_y)));
             canvas.drawBitmap(bitmap, matrix, null);
         }
+        if(null != human){
+            if(IsHuman){
+                matrix = new Matrix();
+                matrix.setTranslate((float)human_x,(float)human_y);
+                canvas.drawBitmap(human, matrix, null);
+            }
+        }
 
         if(null != obstacle){
-//            matrix = new Matrix();
-//            matrix.setTranslate((float) obstacle_x,(float) obstacle_y);
-//            canvas.drawBitmap(obstacle, matrix, null);
-//            matrix = new Matrix();
-//            matrix.setTranslate((float) obstacle_back_x,(float) obstacle_back_y);
-//            canvas.drawBitmap(obstacle, matrix, null);
             switch (config){
                 //无障碍
                 case 0:

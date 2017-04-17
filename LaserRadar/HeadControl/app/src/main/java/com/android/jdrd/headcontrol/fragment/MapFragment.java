@@ -133,6 +133,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     if(thread!=null){
                         Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                         Constant.getConstant().sendCamera(3,context);
+                        surfaceview.IsHuman = true;
                         if(thread.isAlive()){
                             thread = new Thread();
                             surfaceview.current_plan_number = 0;
@@ -186,6 +187,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         surfaceview.bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.touxiang);
         surfaceview.rotbitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.jiantou);
         surfaceview.obstacle = BitmapFactory.decodeResource(getResources(), R.mipmap.luzhang);
+        surfaceview.human = BitmapFactory.decodeResource(getResources(), R.mipmap.luzhang);
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
         scope = (Spinner) findViewById(R.id.scope);
@@ -362,6 +364,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void onResume() {
         super.onResume();
+        setObstacle();
+        setBackObstacle();
+        surfaceview.config = 3;
     }
 
     @Override
@@ -873,7 +878,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         getAngle(jsonObject.getInt("angle"));
                         if(flag.equals("success")){
                             IsSuccus = true;
-                            Constant.debugLog("success"  +"    tasknumber"+tasknumber);
                             if(tasknumber == 0 ){
                                 //到达新地点
                                 tasknumber = 1;
@@ -893,7 +897,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 handler.sendEmptyMessage(4);
                             }
                         }else if(flag.equals("fail")){
-                            Constant.debugLog("fail"  +"    tasknumber"+tasknumber);
                             IsSuccus = false;
                             if(tasknumber == 0  ) {
                                 //到达新地点
@@ -916,26 +919,28 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     }else if(funtion.equals(Constant.Camera)){
                         JSONObject jsonObject = new JSONObject(data);
                         String str =  jsonObject.getString("result");
-                        Constant.debugLog("camera"+"tasknumber"+tasknumber);
                         if(str.equals("body")){
+                            surfaceview.human_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + Float.valueOf(jsonObject.getString("distance")) * Math.sin(Float.valueOf(jsonObject.getString("degree"))*Math.PI/180);
+                            surfaceview.human_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - Float.valueOf(jsonObject.getString("distance"))  * Math.cos(Float.valueOf(jsonObject.getString("degree"))*Math.PI/180);
                             Toast.makeText(context,"body",Toast.LENGTH_SHORT).show();
                             if(task!=null){
                                 task.cancel();
                             }
                             try {
                                 if(tasknumber == 1){
+                                    surfaceview.IsHuman = true;
                                     //摄像头搜索到人
                                     IsFind = true;
                                     tasknumber = 2;
                                     ServerSocketUtil.sendDateToClient(string, Constant.ip_ros);
                                 }else if(tasknumber == 10){
+                                    surfaceview.IsHuman = true;
                                     IsFind = true;
                                     tasknumber = 11;
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                                     Map map  = new LinkedHashMap();
                                     map.put("degree",jsonObject.getString("degree"));
                                     map.put("distance",jsonObject.getString("distance"));
-                                    
                                     Constant.getConstant().sendCamera(0,context);
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
                                     Constant.debugLog("map"+map);
@@ -945,8 +950,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }
                         }else if(str.equals("nobody")){
                         }else if(str.equals("away")){
-                            Constant.debugLog("away"  +"    tasknumber"+tasknumber);
                             if(tasknumber == 3 && IsAway){
+                                surfaceview.IsHuman = false;
                                 tasknumber = 4 ;
                                 Toast.makeText(context,"away",Toast.LENGTH_SHORT).show();
                                 if(task!=null ){
@@ -955,6 +960,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 Constant.getConstant().sendCamera(3,context);
                                 handler.sendEmptyMessage(4);
                             }else if(tasknumber == 12 && IsAway){
+                                surfaceview.IsHuman = false;
                                 tasknumber = 13 ;
                                 Toast.makeText(context,"away",Toast.LENGTH_SHORT).show();
                                 if(task!=null ){
@@ -1002,12 +1008,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
 
     public void setObstacle(){
-        surfaceview.obstacle_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 *2 * Math.sin(surfaceview.rote*Math.PI/180);
-        surfaceview.obstacle_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight()  * Math.cos(surfaceview.rote*Math.PI/180);
+        surfaceview.obstacle_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 * 2 * Math.sin(surfaceview.rote*Math.PI/180);
+        surfaceview.obstacle_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight()/3 * 2  * Math.cos(surfaceview.rote*Math.PI/180);
     }
     public void setBackObstacle(){
-        surfaceview.obstacle_back_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 *2 * Math.sin((surfaceview.rote+180)*Math.PI/180);
-        surfaceview.obstacle_back_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight() /3 *2 * Math.cos((surfaceview.rote+180)*Math.PI/180);
+        surfaceview.obstacle_back_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 * 2 * Math.sin((surfaceview.rote+180)*Math.PI/180);
+        surfaceview.obstacle_back_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight() /3 * 2 * Math.cos((surfaceview.rote+180)*Math.PI/180);
     }
 
     //xml写入
@@ -1278,6 +1284,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Constant.getConstant().sendCamera(3,context);
                 Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                 handler.sendEmptyMessage(4);
+                surfaceview.IsHuman = false;
             }
         };
     }
@@ -1293,6 +1300,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 tasknumber = 4;
                 Constant.getConstant().sendCamera(3,context);
                 handler.sendEmptyMessage(4);
+                surfaceview.IsHuman = false;
 
             }
         };
