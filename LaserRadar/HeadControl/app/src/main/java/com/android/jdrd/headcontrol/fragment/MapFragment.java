@@ -133,7 +133,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     if(thread!=null){
                         Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                         Constant.getConstant().sendCamera(3,context);
-                        surfaceview.IsHuman = true;
+                        surfaceview.IsHuman = false;
                         if(thread.isAlive()){
                             thread = new Thread();
                             surfaceview.current_plan_number = 0;
@@ -364,9 +364,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     @Override
     public void onResume() {
         super.onResume();
-        setObstacle();
-        setBackObstacle();
-        surfaceview.config = 3;
+//        setObstacle();
+//        setBackObstacle();
+//        surfaceview.config = 3;
     }
 
     @Override
@@ -869,6 +869,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             String type = object.getString(Constant.Type);
             String funtion = object.getString(Constant.Function);
             String data = object.getString(Constant.Data);
+            Constant.debugLog("message"+object.toString());
             if(object !=null){
                 if(type.equals(Constant.State)){
                     if(funtion.equals(Constant.Navigation)){
@@ -919,9 +920,19 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     }else if(funtion.equals(Constant.Camera)){
                         JSONObject jsonObject = new JSONObject(data);
                         String str =  jsonObject.getString("result");
+                        Constant.debugLog("Camera"+jsonObject.toString());
                         if(str.equals("body")){
-                            surfaceview.human_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + Float.valueOf(jsonObject.getString("distance")) * Math.sin(Float.valueOf(jsonObject.getString("degree"))*Math.PI/180);
-                            surfaceview.human_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - Float.valueOf(jsonObject.getString("distance"))  * Math.cos(Float.valueOf(jsonObject.getString("degree"))*Math.PI/180);
+                            float degree = Float.valueOf(jsonObject.getString("degree"));
+                            float distance = Float.valueOf(jsonObject.getString("distance"));
+                            Constant.debugLog("distance"+distance);
+                            Constant.debugLog("degree"+degree);
+                            if(degree > 180){
+                                degree = degree - 360;
+                            }
+//                            surfaceview.obstacle_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 * 2 * Math.sin(surfaceview.rote*Math.PI/180);
+//                            surfaceview.obstacle_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight()/3 * 2  * Math.cos(surfaceview.rote*Math.PI/180);
+                            surfaceview.human_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth() - surfaceview.obstacle.getWidth())/2 + distance / 1000 * Constant.SCALE_NUMBER * Math.sin((degree+surfaceview.rote)*Math.PI/180);
+                            surfaceview.human_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - distance / 1000 * Constant.SCALE_NUMBER * Math.cos((degree+surfaceview.rote)*Math.PI/180);
                             Toast.makeText(context,"body",Toast.LENGTH_SHORT).show();
                             if(task!=null){
                                 task.cancel();
@@ -939,8 +950,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     tasknumber = 11;
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                                     Map map  = new LinkedHashMap();
-                                    map.put("degree",jsonObject.getString("degree"));
-                                    map.put("distance",jsonObject.getString("distance"));
+                                    map.put("degree",degree);
+                                    map.put("distance",distance);
                                     Constant.getConstant().sendCamera(0,context);
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
                                     Constant.debugLog("map"+map);
@@ -985,6 +996,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     }else if(funtion.equals(Constant.Obstacle)){
                         JSONObject jsonObject = new JSONObject(data);
                         String str =  jsonObject.getString("result");
+                        Constant.debugLog("obstacle"+ jsonObject.toString());
+                        Toast.makeText(context,Constant.Obstacle+jsonObject.toString(),Toast.LENGTH_SHORT).show();
                         if("obstacle".equals(str)){
                             String direction = jsonObject.getString("direction");
                             setObstacle();
