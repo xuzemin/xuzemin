@@ -187,7 +187,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         surfaceview.bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.touxiang);
         surfaceview.rotbitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.jiantou);
         surfaceview.obstacle = BitmapFactory.decodeResource(getResources(), R.mipmap.luzhang);
-        surfaceview.human = BitmapFactory.decodeResource(getResources(), R.mipmap.luzhang);
+        surfaceview.human = BitmapFactory.decodeResource(getResources(), R.mipmap.ren);
         planchooce = (Spinner) findViewById(R.id.spinner_plan);
         serchtime = (Spinner) findViewById(R.id.serchtime);
         scope = (Spinner) findViewById(R.id.scope);
