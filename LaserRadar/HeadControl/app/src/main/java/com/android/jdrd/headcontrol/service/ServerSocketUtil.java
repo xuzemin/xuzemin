@@ -24,6 +24,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static android.R.attr.data;
+
 public class ServerSocketUtil extends Service {
 
     private Context mContext;
@@ -39,6 +41,7 @@ public class ServerSocketUtil extends Service {
     public static Intent intent;
     private MyReceiver receiver;
     IntentFilter filter;
+    private String function;
 
     @Override
     public void onCreate() {
@@ -251,7 +254,9 @@ public class ServerSocketUtil extends Service {
                 if (msg != null) {
                     ++len;
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
+                    function = getJSONString(msg, "function");
                     savePowerData();
+                    saveWaterStatus();
                     intent.putExtra("msg", msg);
                     intent.setAction("com.jdrd.fragment.Map");
                     sendBroadcast(intent);
@@ -294,7 +299,6 @@ public class ServerSocketUtil extends Service {
      * 将电量数据存入数据库中，并实时更新
      */
     private void savePowerData() {
-        String function = getJSONString(msg, "function");
         if("power".equals(function)) {
             String data = getJSONString(msg, "data");
             int power = getJSONInt(data, "power");
@@ -310,6 +314,26 @@ public class ServerSocketUtil extends Service {
             }else {
                 bean.setFunction("power");
                 bean.setDataInt(power);
+                headControlDao.update(bean);
+            }
+        }
+    }
+
+    private void saveWaterStatus() {
+        if("clean".equals(function)) {
+            int waterState = getJSONInt(msg, "data");
+            Constant.debugLog("水量状态： " + data);
+
+            HeadControlDao headControlDao = new HeadControlDao(getApplicationContext());
+            HeadControlBean bean  = headControlDao.query("clean");
+            if(bean == null) {
+                bean = new HeadControlBean();
+                bean.setFunction("clean");
+                bean.setDataInt(waterState);
+                headControlDao.add(bean);
+            }else {
+                bean.setFunction("clean");
+                bean.setDataInt(waterState);
                 headControlDao.update(bean);
             }
         }

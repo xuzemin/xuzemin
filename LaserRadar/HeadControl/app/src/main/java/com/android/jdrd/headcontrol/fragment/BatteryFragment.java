@@ -260,7 +260,7 @@ boolean b=true;
                     handler.sendEmptyMessage(1);
                     //initData();
                     sleep(5000);
-                    Constant.debugLog("===============更新=================");
+//                    Constant.debugLog("===============更新=================");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

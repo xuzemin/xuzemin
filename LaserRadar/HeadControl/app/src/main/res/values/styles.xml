@@ -69,6 +69,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">26sp</item>
     </style>
+
     <style name="Dialog" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -137,4 +138,33 @@
         <item name="android:windowEnterAnimation">@animator/dialog_enter_anim</item>
         <item name="android:windowExitAnimation">@animator/dialog_exit_anim</item>
     </style>
+
+
+    <style name="CleanTimeSpinner">
+        <item name="android:background">@drawable/btn_cleantime_selector</item>
+        <item name="android:layout_width">236dp</item>
+        <item name="android:layout_height">87dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/title_dudutext_color</item>
+        <item name="android:textSize">27sp</item>
+    </style>
+    <style name="CleanTimeStartAndsStopBtn">
+        <item name="android:background">@drawable/btn_cleantime_startandstop</item>
+        <item name="android:layout_width">193dp</item>
+        <item name="android:layout_height">62dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/title_dudutext_color</item>
+        <item name="android:textSize">27sp</item>
+
+    </style>
+
+    <string-array name="cleanTimeItem">
+        <item>1分钟</item>
+        <item>5分钟 </item>
+        <item>10分钟</item>
+        <item>20分钟</item>
+        <item>30分钟</item>
+        <item>60分钟</item>
+    </string-array>
+
 </resources>

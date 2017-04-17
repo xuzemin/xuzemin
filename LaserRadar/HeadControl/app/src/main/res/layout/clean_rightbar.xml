@@ -27,34 +27,45 @@
             android:background="@mipmap/zuolan"
             android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/clean_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/tv_Clean_Level"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/bar_right_text_marginTop01"
-                android:text="剩余100%电量"
-                android:textColor="#E8E8E8"
-                android:gravity="center|center_horizontal"
-                android:textSize="27px" />
+                android:layout_width="wrap_content"
+                android:layout_height="64px"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="#A5F848"
+                android:textSize="25px"
+                android:text="清洁时间"/>
+            <Spinner
+                android:id="@+id/select_clean_time"
+                style="@style/CleanTimeSpinner"
+                android:entries="@array/cleanTimeItem"
 
-            <TextView
-                android:id="@+id/tv_Clean_runTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|center_horizontal"
-                android:paddingTop="@dimen/bar_right_text_marginTop02"
-                android:text="可运行10个小时"
-                android:textColor="#E8E8E8"
-                android:textSize="27px"/>
+                />
 
-
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom|center_horizontal"
                 android:paddingBottom="20dp"
                 android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_clean_time_start"
+                    android:text="开始"
+                    style="@style/CleanTimeStartAndsStopBtn"
+                android:layout_marginBottom="16dp"
+                    />
+                <Button
+                    android:id="@+id/btn_clean_time_stop"
+                    android:text="暂停"
+                    style="@style/CleanTimeStartAndsStopBtn"
+                    />
+
                 <ImageView
                     android:visibility="gone"
                     android:id="@+id/btn_exit"
@@ -64,27 +75,12 @@
                     android:src="@mipmap/tuichu_pre"
                     android:gravity="center_vertical|bottom"
                     />
-            </RelativeLayout>
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginBottom="7dp"-->
-                <!--android:background="@drawable/btn_background"-->
-                <!--android:clickable="true">-->
+            </LinearLayout>
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/iv_Map1"-->
-                    <!--android:layout_width="168dp"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_gravity="left"-->
-                    <!--android:clickable="true"-->
-                    <!--android:scaleType="fitXY"-->
-                    <!--android:src="@mipmap/tuichu_no"-->
-                    <!--android:visibility="visible" />-->
-            <!--</RelativeLayout>-->
+            </LinearLayout>
+
+
+
 
 
         </LinearLayout>

@@ -45,22 +45,30 @@
                         android:orientation="vertical"
                         android:weightSum="1">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="1404px"
                             android:layout_height="550px"
                             android:layout_marginTop="25px"
                             android:layout_marginBottom="25px"
                             android:background="@mipmap/kuang_bg"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center|center_horizontal"
                             >
 
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/youshui"
+                                android:layout_centerVertical="true"
+                                android:layout_centerHorizontal="true"
+                                />
+                            <!--清洁时间定时-->
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-
-                               >
+                                android:visibility="gone"
+                                >
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -86,6 +94,7 @@
                             <!--存放添加时间列表-->
                             <!--第一组时间-->
                             <ScrollView
+                                android:visibility="gone"
                                 android:id="@+id/sv_top"
                                 android:layout_width="wrap_content"
                                 android:layout_height="390px"
@@ -220,14 +229,13 @@
                                     <!--</RelativeLayout>-->
                                 </LinearLayout>
 
-                        </ScrollView>
-                        </LinearLayout>
+                            </ScrollView>
+                        </RelativeLayout>
 
                         <LinearLayout
                             android:layout_width="1404px"
                             android:layout_height="wrap_content"
                             android:gravity="bottom|center_vertical"
-                            android:layout_marginTop="25px"
                             android:layout_marginBottom="25px"
                             android:background="@mipmap/kuang_bg"
                             android:orientation="vertical"
@@ -239,26 +247,25 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="40px"
-                                android:layout_marginBottom="42px"
+                                android:layout_marginTop="25px"
+                                android:layout_marginBottom="25px"
                                 android:text="清洁用水量"
-                                android:layout_marginLeft="20dp"
+                                android:layout_marginLeft="36dp"
                                 android:textColor="#FFFFFF"
-                                android:textSize="33sp" />
+                                android:textSize="27sp" />
 
                             <!--清洁模式-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginBottom="20dp"
+                                android:layout_marginBottom="25px"
                                 android:orientation="horizontal">
 
                                 <FrameLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
+                                    android:layout_marginLeft="25px"
                                     android:layout_weight="1"
                                     >
 
@@ -267,16 +274,14 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/yaguang_no" />
+                                        android:src="@mipmap/di_no" />
 
                                     <ImageView
                                         android:id="@+id/iv_Clean_yaguang_per"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/yaguang_pre"
+                                        android:src="@mipmap/di_per"
                                         android:visibility="gone" />
                                 </FrameLayout>
 
@@ -291,8 +296,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/biaozhun_pre"
+                                        android:src="@mipmap/zhong_per"
                                         android:visibility="gone" />
 
                                     <ImageView
@@ -300,8 +304,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/biaozhun_no" />
+                                        android:src="@mipmap/zhong_no" />
                                 </FrameLayout>
 
                                 <FrameLayout
@@ -309,23 +312,22 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                   >
+                                    android:layout_marginRight="25px"
+                                    >
 
                                     <ImageView
                                         android:id="@+id/iv_Clean_liangguang_no"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/biaozhun_no" />
+                                        android:src="@mipmap/gao_no" />
 
                                     <ImageView
                                         android:id="@+id/iv_Clean_liangguang_per"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:scaleType="fitXY"
-                                        android:src="@mipmap/biaozhun_pre"
+                                        android:src="@mipmap/gao_per"
                                         android:visibility="gone" />
                                 </FrameLayout>
 
@@ -337,31 +339,31 @@
                     <!--319-->
                     <LinearLayout
                         android:visibility="gone"
-                         android:layout_width="match_parent"
-                         android:layout_height="match_parent"
-                         android:orientation="vertical"
-                         android:layout_alignParentTop="true"
-                         android:layout_alignParentLeft="true"
-                         android:layout_alignParentStart="true">
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_height="28dp"
-                             android:background="@mipmap/dingbu"
-                             android:gravity="center"
-                             android:text="清洁"
-                             android:textColor="#E8E8E8"
-                             android:textSize="15sp" />
-                         <Button
-                             android:visibility="gone"
-                             android:id="@+id/btn_Clean_Save"
-                             android:layout_width="40dp"
-                             android:layout_height="match_parent"
-                             android:background="@drawable/btn_save_background"
-                             android:gravity="center"
-                             android:text="保存"
-                             android:textColor="@color/white"
-                             android:textSize="12sp" />
-                     </LinearLayout>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="28dp"
+                            android:background="@mipmap/dingbu"
+                            android:gravity="center"
+                            android:text="清洁"
+                            android:textColor="#E8E8E8"
+                            android:textSize="15sp" />
+                        <Button
+                            android:visibility="gone"
+                            android:id="@+id/btn_Clean_Save"
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/btn_save_background"
+                            android:gravity="center"
+                            android:text="保存"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
                 </RelativeLayout>
 
@@ -373,57 +375,57 @@
 
 
             <!--<RelativeLayout-->
-                <!--android:id="@+id/rr_right_bar_clean"-->
-                <!--android:layout_width="290dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_alignParentRight="true">-->
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_alignParentRight="true">-->
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rr_right_bar_clean1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_alignParentRight="true">-->
+            <!--android:id="@+id/rr_right_bar_clean"-->
+            <!--android:layout_width="290dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_alignParentRight="true">-->
+            <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_alignParentRight="true">-->
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/rr_right_bar_clean1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_alignParentRight="true">-->
 
 
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="234dp"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:background="@mipmap/zuolan"-->
-                            <!--android:orientation="vertical">-->
+            <!--<LinearLayout-->
+            <!--android:layout_width="234dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@mipmap/zuolan"-->
+            <!--android:orientation="vertical">-->
 
-                            <!--<TextView-->
-                                <!--android:id="@+id/tv_Battery_Level"-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginLeft="10dp"-->
-                                <!--android:layout_marginTop="24dp"-->
-                                <!--android:text="剩余100%电量"-->
-                                <!--android:textColor="@color/white"-->
-                                <!--android:textSize="26sp" />-->
+            <!--<TextView-->
+            <!--android:id="@+id/tv_Battery_Level"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="24dp"-->
+            <!--android:text="剩余100%电量"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="26sp" />-->
 
-                            <!--<TextView-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginLeft="10dp"-->
-                                <!--android:layout_marginTop="24dp"-->
-                                <!--android:text="可运行10个小时"-->
-                                <!--android:textColor="@color/white"-->
-                                <!--android:textSize="26sp" />-->
-                        <!--</LinearLayout>-->
-                    <!--</RelativeLayout>-->
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="24dp"-->
+            <!--android:text="可运行10个小时"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="26sp" />-->
+            <!--</LinearLayout>-->
+            <!--</RelativeLayout>-->
 
-                    <!--<ImageView-->
-                        <!--android:id="@+id/img_ViewBtnRightClean"-->
-                        <!--android:layout_width="53dp"-->
-                        <!--android:layout_height="49dp"-->
-                        <!--android:layout_alignParentBottom="true"-->
-                        <!--android:background="@mipmap/you_yc"-->
+            <!--<ImageView-->
+            <!--android:id="@+id/img_ViewBtnRightClean"-->
+            <!--android:layout_width="53dp"-->
+            <!--android:layout_height="49dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@mipmap/you_yc"-->
 
-                        <!--/>-->
-                <!--</RelativeLayout>-->
+            <!--/>-->
+            <!--</RelativeLayout>-->
             <!--</RelativeLayout>-->
 
 

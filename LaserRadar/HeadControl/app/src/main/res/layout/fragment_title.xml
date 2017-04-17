@@ -90,6 +90,7 @@
                     android:layout_height="@dimen/bar_fgTitle_left_btn_heigth"
                     android:clickable="true"
                     android:scaleType="fitXY"
+                    android:visibility="visible"
                     android:src="@mipmap/qingjie_no" />
                 <!--*******************************************************************-->
 
