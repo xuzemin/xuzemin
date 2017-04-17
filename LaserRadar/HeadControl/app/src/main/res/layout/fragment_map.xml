@@ -96,12 +96,6 @@
                         />
                     <Button
                         style="@style/MapButton"
-                        android:id="@+id/button_return"
-                        android:visibility="gone"
-                        android:text="@string/button_return"
-                        />
-                    <Button
-                        style="@style/MapButton"
                         android:id="@+id/button_returnback"
                         android:text="@string/button_returnback"
                         />
@@ -160,9 +154,14 @@
                         style="@style/MapButton"
                         android:text="@string/plan_change"
                         />
+                    <Button
+                        style="@style/MapButton"
+                        android:id="@+id/button_return"
+                        android:text="@string/button_returnback"
+                        />
                     <View
                         android:layout_width="wrap_content"
-                        android:layout_height="150px"
+                        android:layout_height="54px"
                         />
                     <Button
                         android:id="@+id/button_plan_back"

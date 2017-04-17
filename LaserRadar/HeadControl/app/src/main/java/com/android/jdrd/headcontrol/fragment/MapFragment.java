@@ -478,8 +478,20 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 go_Point();
                 break;
             case R.id.button_return:
-                surfaceview.translate_x = 0;
-                surfaceview.translate_y = 0;
+                Toast.makeText(context,"返回原点",Toast.LENGTH_SHORT).show();
+                if(thread!=null){
+                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                    if(thread.isAlive()){
+                        thread = new Thread();
+                        surfaceview.current_plan_number = 0;
+                    }
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                sendNativePoint();
                 break;
             //点选下一步
             case R.id.button_next:
