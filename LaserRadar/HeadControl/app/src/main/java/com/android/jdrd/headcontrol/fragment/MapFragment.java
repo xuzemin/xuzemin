@@ -367,6 +367,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
 //        setObstacle();
 //        setBackObstacle();
 //        surfaceview.config = 3;
+//        surfaceview.human_x = 1000;
+//        surfaceview.human_y = 600;
+//        surfaceview.IsHuman = true;
     }
 
     @Override
@@ -941,11 +944,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             if(degree > 180){
                                 degree = degree - 360;
                             }
-//                            surfaceview.obstacle_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth()- surfaceview.obstacle.getWidth())/2 + surfaceview.bitmap.getWidth() /3 * 2 * Math.sin(surfaceview.rote*Math.PI/180);
-//                            surfaceview.obstacle_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - surfaceview.bitmap.getHeight()/3 * 2  * Math.cos(surfaceview.rote*Math.PI/180);
                             surfaceview.human_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth() - surfaceview.obstacle.getWidth())/2 + distance / 1000 * Constant.SCALE_NUMBER * Math.sin((degree+surfaceview.rote)*Math.PI/180);
                             surfaceview.human_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - distance / 1000 * Constant.SCALE_NUMBER * Math.cos((degree+surfaceview.rote)*Math.PI/180);
-                            Toast.makeText(context,"body",Toast.LENGTH_SHORT).show();
                             if(task!=null){
                                 task.cancel();
                             }

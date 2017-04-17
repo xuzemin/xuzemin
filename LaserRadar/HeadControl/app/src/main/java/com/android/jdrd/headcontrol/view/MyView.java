@@ -42,8 +42,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Double center_x = 0.0 , center_y = 0.0;
     public float rote = 45;
     public int current_plan_number = -1;
-    public boolean paint = false,Ishave = false,Isplan = true,Ispath = false,IsHuman = false;
-    public int temp = 0;
+    public boolean paint = false,Ishave = false,Isplan = true,Ispath = false,IsHuman = false,Isshow = false;
+    public int temp = 0,showtemp = 0;
     private Bitmap startpoint = BitmapFactory.decodeResource(getResources(), R.mipmap.qi);
     public MyView(Context context, AttributeSet attr) {
         super(context,attr);
@@ -129,7 +129,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 drawAL(canvas,path_xs.elementAt(i-1),path_ys.elementAt(i-1),path_xs.elementAt(i),path_ys.elementAt(i),p);
             }
         }
+
         drawtable(canvas);
+
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿
         p.setColor(getResources().getColor(R.color.path));
@@ -226,31 +228,33 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         if(null != obstacle){
-            switch (config){
-                //无障碍
-                case 0:
-                    break;
-                //前方有障碍
-                case 1:
-                    matrix = new Matrix();
-                    matrix.setTranslate((float) obstacle_x,(float) obstacle_y);
-                    canvas.drawBitmap(obstacle, matrix, null);
-                    break;
-                //后方有障碍
-                case 2:
-                    matrix = new Matrix();
-                    matrix.setTranslate((float) obstacle_back_x,(float) obstacle_back_y);
-                    canvas.drawBitmap(obstacle, matrix, null);
-                    break;
-                //前后方都有障碍
-                case 3:
-                    matrix = new Matrix();
-                    matrix.setTranslate((float) obstacle_x,(float) obstacle_y);
-                    canvas.drawBitmap(obstacle, matrix, null);
-                    matrix = new Matrix();
-                    matrix.setTranslate((float) obstacle_back_x,(float) obstacle_back_y);
-                    canvas.drawBitmap(obstacle, matrix, null);
-                    break;
+            if(Isshow){
+                switch (config){
+                    //无障碍
+                    case 0:
+                        break;
+                    //前方有障碍
+                    case 1:
+                        matrix = new Matrix();
+                        matrix.setTranslate((float) obstacle_x,(float) obstacle_y);
+                        canvas.drawBitmap(obstacle, matrix, null);
+                        break;
+                    //后方有障碍
+                    case 2:
+                        matrix = new Matrix();
+                        matrix.setTranslate((float) obstacle_back_x,(float) obstacle_back_y);
+                        canvas.drawBitmap(obstacle, matrix, null);
+                        break;
+                    //前后方都有障碍
+                    case 3:
+                        matrix = new Matrix();
+                        matrix.setTranslate((float) obstacle_x,(float) obstacle_y);
+                        canvas.drawBitmap(obstacle, matrix, null);
+                        matrix = new Matrix();
+                        matrix.setTranslate((float) obstacle_back_x,(float) obstacle_back_y);
+                        canvas.drawBitmap(obstacle, matrix, null);
+                        break;
+                }
             }
         }
     }
@@ -269,6 +273,17 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                     }else{
                         temp ++;
                     }
+                    if(showtemp == 8){
+                        if(Isshow){
+                            Isshow = false;
+                        }else{
+                            Isshow = true;
+                        }
+                        showtemp = 0;
+                    }else{
+                        showtemp++;
+                    }
+
                     c=holder.lockCanvas();
                     doDraw(c);
                     holder.unlockCanvasAndPost(c);
@@ -283,12 +298,14 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void drawtable(Canvas canvas){
-        p.setColor(getResources().getColor(R.color.darkslategrey));
+        p = new Paint();
+        p.setColor(Color.GRAY);
+//        p.setColor(getResources().getColor(R.color.line));
         p.setStyle(Paint.Style.FILL);
         p.setTextSize(20);
+        p.setStrokeWidth((float) 3.0);
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         for(int y=0,length = myview_height/Constant.SCALE_NUMBER;y <= length ; y++) {
-                p.setStrokeWidth((float) 3.0);
                 if(y != 0){
                     canvas.drawText(y+"",15,y*Constant.SCALE_NUMBER+45,p);
                 }else{
@@ -297,7 +314,6 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
                 canvas.drawLine(40,y*Constant.SCALE_NUMBER+40,myview_width+40,y*Constant.SCALE_NUMBER+40,p);
         }
         for(int y=0,length = myview_width/Constant.SCALE_NUMBER;y <= length;y++) {
-                p.setStrokeWidth((float) 3.0);
                 canvas.drawLine(y*Constant.SCALE_NUMBER+40,40,y*Constant.SCALE_NUMBER+40,myview_height+40,p);
                 if(y != 0){
                     canvas.drawText(y+"",y*Constant.SCALE_NUMBER+35,30,p);
