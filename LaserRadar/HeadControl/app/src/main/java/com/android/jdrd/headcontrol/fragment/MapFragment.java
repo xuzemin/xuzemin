@@ -944,8 +944,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             if(degree > 180){
                                 degree = degree - 360;
                             }
-                            surfaceview.human_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth() - surfaceview.obstacle.getWidth())/2 + distance / 1000 * Constant.SCALE_NUMBER * Math.sin((degree+surfaceview.rote)*Math.PI/180);
-                            surfaceview.human_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - distance / 1000 * Constant.SCALE_NUMBER * Math.cos((degree+surfaceview.rote)*Math.PI/180);
+                            surfaceview.human_x = surfaceview.bitmap_x + (surfaceview.bitmap.getWidth() - surfaceview.obstacle.getWidth())/2 + distance / 1000 * Constant.SCALE_NUMBER * Math.sin((degree+surfaceview.rote)*Math.PI/180) ;
+                            surfaceview.human_y = surfaceview.bitmap_y + (surfaceview.bitmap.getHeight() - surfaceview.obstacle.getHeight())/2 - distance / 1000 * Constant.SCALE_NUMBER * Math.cos((degree+surfaceview.rote)*Math.PI/180) - surfaceview.human.getHeight()/2;
                             if(task!=null){
                                 task.cancel();
                             }
