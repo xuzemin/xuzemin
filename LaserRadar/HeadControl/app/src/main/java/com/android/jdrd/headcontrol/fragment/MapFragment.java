@@ -981,6 +981,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                     task.cancel();
                                 }
                                 Constant.getConstant().sendCamera(3,context);
+                                ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
                                 handler.sendEmptyMessage(4);
                             }else if(tasknumber == 12 && IsAway){
                                 surfaceview.IsHuman = false;
@@ -989,6 +990,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 if(task!=null ){
                                     task.cancel();
                                 }
+                                ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
                                 Constant.getConstant().sendCamera(3,context);
                                 handler.sendEmptyMessage(4);
                             }
@@ -1000,9 +1002,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                                 //机器人找到人
                                 tasknumber = 3;
                                 handler.sendEmptyMessage(4);
+                                ServerSocketUtil.sendDateToClient("open", Constant.ip_bigScreen);
                             }else if(tasknumber == 11){
                                 tasknumber = 12;
                                 handler.sendEmptyMessage(4);
+                                ServerSocketUtil.sendDateToClient("open", Constant.ip_bigScreen);
                             }
                         }
                     }else if(funtion.equals(Constant.Obstacle)){
@@ -1028,6 +1032,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 }
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -1326,6 +1332,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 Constant.getConstant().sendCamera(3,context);
                 handler.sendEmptyMessage(4);
                 surfaceview.IsHuman = false;
+                try {
+                    ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         };
