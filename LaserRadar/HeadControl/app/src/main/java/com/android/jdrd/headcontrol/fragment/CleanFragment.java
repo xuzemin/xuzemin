@@ -186,6 +186,14 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         mImageView_liangguang_per.setOnClickListener(this);
         btn_clean_time_start.setOnClickListener(this);
         btn_clean_time_stop.setOnClickListener(this);
+
+//        ArrayList<String> clean_Plan = new ArrayList<>();
+//        clean_Plan.add("1分钟");
+//        clean_Plan.add("2分钟");
+//        adapter = new ArrayAdapter<>(getActivity(),R.layout.item_spinnerselect_clean,clean_Plan);
+        adapter = new ArrayAdapter<>(getActivity(),R.layout.item_spinnerselect_clean,getResources().getStringArray(R.array.cleanTimeItem));
+        adapter.setDropDownViewResource(R.layout.item_dialogspinner_select);
+        select_clean_time.setAdapter(adapter);
         select_clean_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
              @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -791,4 +799,5 @@ public class timeSelectThread extends Thread{
             rr_right_bar_clean.startAnimation(translateAnimation);
         }
     }
+
 }
