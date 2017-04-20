@@ -12,11 +12,11 @@
         android:layout_alignParentRight="true">
         <ImageView
             android:id="@+id/img_btnViewRightClean"
-            android:layout_width="53dp"
-            android:layout_height="49dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/rr_right_bar_clean1"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="27dp"
             android:background="@mipmap/you_yc"
             />
         <LinearLayout
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom|center_horizontal"
-                android:paddingBottom="20dp"
+                android:paddingBottom="27dp"
                 android:orientation="vertical">
 
                 <Button

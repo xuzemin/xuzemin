@@ -77,10 +77,10 @@
 
                 <ImageView
                     android:id="@+id/imgViewBtnLift"
-                    android:layout_width="@dimen/bar_showHide_btn_width"
-                    android:layout_height="@dimen/bar_showHide_btn_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="27dp"
                     android:layout_toRightOf="@+id/fragment"
                     android:background="@mipmap/zuo_yc" />
 

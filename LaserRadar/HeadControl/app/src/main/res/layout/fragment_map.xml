@@ -58,10 +58,11 @@
 
             <ImageView
                 android:id="@+id/imgViewmapnRight"
-                android:layout_width="53dp"
-                android:layout_height="49dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/linearlayout_all"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="27px"
                 android:background="@mipmap/you_yc"
                 />
             <LinearLayout
@@ -89,11 +90,13 @@
                         android:id="@+id/button_pathplan"
                         android:text="@string/button_pathplan"
                         />
+
                     <Button
                         style="@style/MapButton"
                         android:id="@+id/button_cruise"
                         android:text="@string/button_cruise"
                         />
+
                     <Button
                         style="@style/MapButton"
                         android:id="@+id/button_returnback"
@@ -346,7 +349,7 @@
                         />
                     <View
                         android:layout_width="wrap_content"
-                        android:layout_height="445px"/>
+                        android:layout_height="438px"/>
                     <Button
                         android:id="@+id/button_point_back"
                         android:text="@string/back"

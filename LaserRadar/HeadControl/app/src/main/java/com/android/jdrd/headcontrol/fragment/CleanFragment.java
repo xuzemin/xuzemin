@@ -791,5 +791,4 @@ public class timeSelectThread extends Thread{
             rr_right_bar_clean.startAnimation(translateAnimation);
         }
     }
-
 }
