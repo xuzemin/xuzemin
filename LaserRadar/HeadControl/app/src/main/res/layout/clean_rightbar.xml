@@ -42,11 +42,10 @@
                 android:text="清洁时间"/>
             <Spinner
                 android:id="@+id/select_clean_time"
-                style="@style/CleanTimeSpinner"
+                style="@style/MySpiner"
                 android:entries="@array/cleanTimeItem"
-
                 />
-
+            <!--style="@style/CleanTimeSpinner"-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

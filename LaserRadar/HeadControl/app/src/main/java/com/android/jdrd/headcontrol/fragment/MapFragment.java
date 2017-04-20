@@ -12,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -381,7 +380,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()){

@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,6 +115,8 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     private Context context;
     private float gametimenumber=0;
     private TextView textView001;
+
+    private String saveWaterLevetChange = "";
 
     private  int saveTime;
     private  int saveTime1;
@@ -391,25 +394,25 @@ public class timeSelectThread extends Thread{
                 mImageView_biaozhun_per.setVisibility(View.GONE);
                 mImageView_liangguang_no.setVisibility(View.VISIBLE);
                 mImageView_liangguang_per.setVisibility(View.GONE);
-
-                String openWaterLow = JsonPackage.stringToJson("command", "openWater", "low");
-                try {
-                    ServerSocketUtil.sendDateToClient(openWaterLow, Constant.ip_ros);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                saveWaterLevetChange = "low";
+//                String openWaterLow = JsonPackage.stringToJson("command", "openWater", "low");
+//                try {
+//                    ServerSocketUtil.sendDateToClient(openWaterLow, Constant.ip_ros);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.iv_Clean_yaguang_per:
                 type_modified=0;
                 mImageView_yaguang_no.setVisibility(View.VISIBLE);
                 mImageView_yaguang_per.setVisibility(View.GONE);
-
-                String closeWater1 = JsonPackage.stringToJson("command", "closeWater", "");
-                try {
-                    ServerSocketUtil.sendDateToClient(closeWater1, Constant.ip_ros);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                saveWaterLevetChange = "";
+//                String closeWater1 = JsonPackage.stringToJson("command", "closeWater", "");
+//                try {
+//                    ServerSocketUtil.sendDateToClient(closeWater1, Constant.ip_ros);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.iv_Clean_biaozhun_no:
                 type_modified=2;
@@ -419,25 +422,25 @@ public class timeSelectThread extends Thread{
                 mImageView_yaguang_no.setVisibility(View.VISIBLE);
                 mImageView_liangguang_no.setVisibility(View.VISIBLE);
                 mImageView_liangguang_per.setVisibility(View.GONE);
-
-                String openWaterMiddle = JsonPackage.stringToJson("command", "openWater", "middle");
-                try {
-                    ServerSocketUtil.sendDateToClient(openWaterMiddle, Constant.ip_ros);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                saveWaterLevetChange = "middle";
+//                String openWaterMiddle = JsonPackage.stringToJson("command", "openWater", "middle");
+//                try {
+//                    ServerSocketUtil.sendDateToClient(openWaterMiddle, Constant.ip_ros);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.iv_Clean_biaozhun_per:
                 type_modified=0;
                 mImageView_biaozhun_no.setVisibility(View.VISIBLE);
                 mImageView_biaozhun_per.setVisibility(View.GONE);
-
-                String closeWater2 = JsonPackage.stringToJson("command", "closeWater", "");
-                try {
-                    ServerSocketUtil.sendDateToClient(closeWater2, Constant.ip_ros);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                saveWaterLevetChange = "";
+//                String closeWater2 = JsonPackage.stringToJson("command", "closeWater", "");
+//                try {
+//                    ServerSocketUtil.sendDateToClient(closeWater2, Constant.ip_ros);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.iv_Clean_liangguang_no:
                 type_modified=3;
@@ -447,64 +450,101 @@ public class timeSelectThread extends Thread{
                 mImageView_biaozhun_no.setVisibility(View.VISIBLE);
                 mImageView_yaguang_per.setVisibility(View.GONE);
                 mImageView_yaguang_no.setVisibility(View.VISIBLE);
-                String openWaterHigh = JsonPackage.stringToJson("command", "openWater", "high");
-                try {
-                    ServerSocketUtil.sendDateToClient(openWaterHigh, Constant.ip_ros);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                saveWaterLevetChange = "high";
+//                String openWaterHigh = JsonPackage.stringToJson("command", "openWater", "high");
+//                try {
+//                    ServerSocketUtil.sendDateToClient(openWaterHigh, Constant.ip_ros);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.iv_Clean_liangguang_per:
                 type_modified=0;
                 mImageView_liangguang_no.setVisibility(View.VISIBLE);
                 mImageView_liangguang_per.setVisibility(View.GONE);
-
-                String closeWater3 = JsonPackage.stringToJson("command", "closeWater", "");
-                try {
-                    ServerSocketUtil.sendDateToClient(closeWater3, Constant.ip_ros);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                saveWaterLevetChange = "";
+//                String closeWater3 = JsonPackage.stringToJson("command", "closeWater", "");
+//                try {
+//                    ServerSocketUtil.sendDateToClient(closeWater3, Constant.ip_ros);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 break;
 
             //开始清洁
             case R.id.btn_clean_time_start:
+                if (!TextUtils.isEmpty(saveWaterLevetChange)){//当点击开始没选择水量时
                 if (!controlThread){
                     controlThread = true;
-                    Constant.debugLog("============启动清洁时间==============");
-                    String StartWater = JsonPackage.stringToJson("command", "openWater", "high");
-                    try {
-                        ServerSocketUtil.sendDateToClient(StartWater, Constant.ip_ros);
-                        Constant.debugLog("=============时间是否下发================");
-                        timeSelect=null;
-                        timeSelect=new timeSelectThread();
-                        timeSelect.start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        Constant.debugLog("============启动清洁时间==============");
+                        String StartWater = JsonPackage.stringToJson("command", "openWater", saveWaterLevetChange);
+                        try {
+                            ServerSocketUtil.sendDateToClient(StartWater, Constant.ip_ros);
+                            Constant.debugLog("=============时间是否下发================");
+                            timeSelect=null;
+                            timeSelect=new timeSelectThread();
+                            timeSelect.start();
+
+                            mImageView_yaguang_no.setEnabled(false);
+                            mImageView_yaguang_per.setEnabled(false);
+                            mImageView_biaozhun_no.setEnabled(false);
+                            mImageView_biaozhun_per.setEnabled(false);
+                            mImageView_liangguang_no.setEnabled(false);
+                            mImageView_liangguang_per.setEnabled(false);
+                            select_clean_time.setEnabled(false);
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        Toast.makeText(getActivity(),"清洁已启动",Toast.LENGTH_SHORT).show();
                     }
-
                 }else {
+                    Toast.makeText(getActivity(),"请选择水量",Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(getActivity(),"清洁已启动",Toast.LENGTH_SHORT).show();
                 }
                 break;
             //结束清洁
             case R.id.btn_clean_time_stop:
                 if (controlThread){
                     controlThread=false;
+                    saveWaterLevetChange = "";
                     String closeWater = JsonPackage.stringToJson("command", "closeWater", "");
                     try {
                         ServerSocketUtil.sendDateToClient(closeWater, Constant.ip_ros);
                         Constant.debugLog("==========结束清洁时间==============");
+
+                        mImageView_yaguang_no.setEnabled(true);
+                        mImageView_yaguang_per.setEnabled(true);
+                        mImageView_biaozhun_no.setEnabled(true);
+                        mImageView_biaozhun_per.setEnabled(true);
+                        mImageView_liangguang_no.setEnabled(true);
+                        mImageView_liangguang_per.setEnabled(true);
+                        select_clean_time.setEnabled(true);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }else {
-                    Toast.makeText(getActivity(),"清洁功能已关闭",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"清洁功能已关闭",Toast.LENGTH_SHORT).show();
+
+
+
+                    saveClean();
                 }
                 break;
         }
 
+    }
+
+    public void saveClean(){
+//        mImageView_liangguang_per.setVisibility(View.GONE);
+        mImageView_liangguang_no.setVisibility(View.VISIBLE);
+//        mImageView_biaozhun_per.setVisibility(View.GONE);
+        mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+//        mImageView_yaguang_per.setVisibility(View.GONE);
+        mImageView_yaguang_no.setVisibility(View.VISIBLE);
     }
 
 
