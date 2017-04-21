@@ -50,7 +50,7 @@ public class Constant {
 //    public static String ip_bigScreen = "/192.168.88.188";
 //    public static String ip_ros = "/192.168.88.101";
 //    测试用IP
-    public static String ip_bigScreen = "/192.168.88.102";
+    public static String ip_bigScreen = "/192.168.88.110";
     public static String ip_ros = "/192.168.88.101";
     public static float Scale = 1 ;
     public static double return_x = -1;

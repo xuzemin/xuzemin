@@ -138,8 +138,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             surfaceview.current_plan_number = 0;
                         }
                         try {
+                            ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                         Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
