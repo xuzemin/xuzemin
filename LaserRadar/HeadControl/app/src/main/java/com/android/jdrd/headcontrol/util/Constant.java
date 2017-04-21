@@ -27,10 +27,10 @@ public class Constant {
     static String IP = "";
     static final String IPLast = "106";
     static String isConnectSocket = "";
-    public static final String wifiname = "TimeBox_8b319a";
-    public static final String password = "12345678";
-//    public static final String wifiname = "HUAWEI-GDRD";
-//    public static final String password = "88391477";
+//    public static final String wifiname = "TimeBox_8b319a";
+//    public static final String password = "12345678";
+    public static final String wifiname = "HUAWEI-GDRD";
+    public static final String password = "88391477";
     //测试用WI-FI01
 //    public static String wifiname = "GDRD-3F";
 //    public static String password = "88391477";
