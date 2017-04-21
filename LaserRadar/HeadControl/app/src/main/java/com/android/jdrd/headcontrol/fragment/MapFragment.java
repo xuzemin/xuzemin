@@ -416,6 +416,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             //规划新路线
             case R.id.button_plan:
                 Constant.CURRENTINDEX_MAP = 4;
+                serchtime.setSelection(0,true);
+                scope.setSelection(0,true);
+                gametime.setSelection(0,true);
                 go_NewPlan();
                 break;
             //删除当前路线
@@ -603,9 +606,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 }
                 break;
             case R.id.go_button_choose:
-                if(!go_point_x.getText().toString().equals("") && !go_point_x.getText().toString().equals("") ){
+                if(!go_point_x.getText().toString().equals("") && !go_point_y.getText().toString().equals("") ){
                     a = Float.valueOf(go_point_x.getText().toString().trim());
-                    b = Float.valueOf(go_point_x.getText().toString().trim());
+                    b = Float.valueOf(go_point_y.getText().toString().trim());
                     if(a > 10){
                         a = 10;
                     }else if(a < 0){
