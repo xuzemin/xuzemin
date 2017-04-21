@@ -39,6 +39,7 @@ import com.android.jdrd.headcontrol.common.BaseFragment;
 import com.android.jdrd.headcontrol.common.MyTimePicker;
 import com.android.jdrd.headcontrol.common.MyTimerPicker1;
 import com.android.jdrd.headcontrol.database.HeadControlBean;
+import com.android.jdrd.headcontrol.database.HeadControlDao;
 import com.android.jdrd.headcontrol.dialog.SelfDialog;
 import com.android.jdrd.headcontrol.entity.Clean4;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
@@ -115,14 +116,19 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     private Context context;
     private float gametimenumber=0;
     private TextView textView001;
-
-    private String saveWaterLevetChange = "";
+    private Context mContextCL;
+    private String saveWaterLevetChange = "high";
+    private ImageView img_clean_level_change;
 
     private  int saveTime;
     private  int saveTime1;
     timeSelectThread    timeSelect;
+    CleanThread cleanLevel;
     private boolean controlThread;
     String[] languages1;
+    HeadControlDao headControlDaoCL;
+    int levelClean;
+
     public CleanFragment(){
         super();
     }
@@ -135,9 +141,12 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_clean,container,false);
-
+//        mContextCL = getActivity();
       timeSelect = new timeSelectThread();
-
+        headControlDaoCL =new HeadControlDao(getActivity());
+       cleanLevel = new CleanThread();
+        cleanLevel.start();
+        Constant.debugLog("-------是否调用清洁时间方法-----1--"+cleanLevel);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -165,8 +174,16 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
         btn_clean_time_stop = (Button) findViewById(R.id.btn_clean_time_stop);
 
         select_clean_time = (Spinner) findViewById(R.id.select_clean_time);
+        img_clean_level_change = (ImageView) findViewById(R.id.img_clean_level_change);
 
-
+        type_modified=1;
+        mImageView_yaguang_per.setVisibility(View.VISIBLE);
+        mImageView_yaguang_no.setVisibility(View.GONE);
+        mImageView_biaozhun_no.setVisibility(View.VISIBLE);
+        mImageView_biaozhun_per.setVisibility(View.GONE);
+        mImageView_liangguang_no.setVisibility(View.VISIBLE);
+        mImageView_liangguang_per.setVisibility(View.GONE);
+        saveWaterLevetChange = "low";
     }
 
     @Override
@@ -343,10 +360,70 @@ public class timeSelectThread extends Thread{
                     }
                     break;
 
+                case 2:
+                    initViewCleanLevel();
+                    Constant.debugLog("------------清洁调用的方法----------");
+                    break;
             }
 
         }
+
     };
+class CleanThread extends Thread{
+    @Override
+    public void run() {
+        super.run();
+        while (true){
+            Constant.debugLog("-------线程发送消息-是否执行-------");
+            handler.sendEmptyMessage(2);
+            try {
+                Constant.debugLog("-------线程休眠-是否执行-------");
+                sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+}
+    private void initViewCleanLevel() {
+        if (headControlDaoCL ==null){
+            Constant.debugLog("***为空*****"+headControlDaoCL);
+
+        }else {
+            HeadControlBean beanCl = headControlDaoCL.query("clean");
+            Constant.debugLog("清洁数据水量"+beanCl);
+            if (beanCl ==null){
+                beanCl = new HeadControlBean();
+                beanCl.setFunction("clean");
+                beanCl.setDataInt(1);
+                boolean add = headControlDaoCL.add(beanCl);
+            }
+            levelClean =  beanCl.getDataInt();//获取数据库值
+//            levelClean =0;
+            Constant.debugLog("清洁数据库值"+levelClean);
+            if (levelClean== 1){
+                img_clean_level_change.setImageResource(R.mipmap.youshui);
+            }else if (levelClean ==0){
+                img_clean_level_change.setImageResource(R.mipmap.meishui);
+}
+
+        }
+
+//        if (beanCl == null){
+//            beanCl = new HeadControlBean();
+//            beanCl.setFunction("clean");
+//            beanCl.setDataInt(1);
+//            boolean addcl =  headControlDaoCL.add(beanCl);
+//            if (addcl){
+//                Constant.debugLog("清洁数据");
+//            }else {
+//                Constant.debugLog("清洁数据失败");
+//            }
+//        }
+
+
+    }
 
     @Override
     public void onAnimationStart(Animation animation) {
@@ -539,7 +616,7 @@ public class timeSelectThread extends Thread{
 
 
 
-                    saveClean();
+                   // saveClean();
                 }
                 break;
         }

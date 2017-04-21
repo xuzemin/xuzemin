@@ -7,8 +7,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.v7.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.database.HeadControlBean;
@@ -23,8 +26,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import static android.R.attr.data;
 
 public class ServerSocketUtil extends Service {
 
@@ -176,8 +177,16 @@ public class ServerSocketUtil extends Service {
 
         @Override
         public void run() {
-            String ip = socket.getInetAddress().toString();
+            final String ip = socket.getInetAddress().toString();
             Constant.debugLog(ip);
+
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "连接客户端IP为： " + ip, Toast.LENGTH_LONG).show();
+                }
+            });
 
             if (ip.equals(Constant.ip_bigScreen)) {
                 socket1 = socket;
@@ -322,7 +331,7 @@ public class ServerSocketUtil extends Service {
     private void saveWaterStatus() {
         if("clean".equals(function)) {
             int waterState = getJSONInt(msg, "data");
-            Constant.debugLog("水量状态： " + data);
+            Constant.debugLog("水量状态： " + waterState);
 
             HeadControlDao headControlDao = new HeadControlDao(getApplicationContext());
             HeadControlBean bean  = headControlDao.query("clean");

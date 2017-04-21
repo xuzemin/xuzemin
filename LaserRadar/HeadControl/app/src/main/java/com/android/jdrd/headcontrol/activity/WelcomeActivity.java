@@ -129,6 +129,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     private void initData_battrey() {
+        mImageView_Battery.setImageResource(R.mipmap.dianyuan_pre);
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
         transaction_battery.replace(R.id.ll_right, list.get(0), "batteryFragment");
@@ -138,6 +139,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
 
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     private void initData_clean() {
+        mImageView_Clean.setImageResource(R.mipmap.qingjie_pre);
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
         transaction_battery.replace(R.id.ll_right, list.get(1), "cleanFragment");
@@ -146,6 +148,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
     @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     private void initData_map() {
+        mImageView_Map.setImageResource(R.mipmap.ditu_pre);
         FragmentManager fragmentManager_battery = getFragmentManager();
         FragmentTransaction transaction_battery = fragmentManager_battery.beginTransaction();
         transaction_battery.replace(R.id.ll_right, list.get(2), "mapFragment");
@@ -261,7 +264,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void changeBattery() {
-        Constant.CURRENTINDEX  = 1;
+        Constant.CURRENTINDEX  = 0;
         setClickable();
         setBackgroundColor();
         //电源栏

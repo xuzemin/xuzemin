@@ -68,7 +68,7 @@
                     android:layout_gravity="left"
                     android:clickable="true"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/dianyuan_pre" />
+                    android:src="@mipmap/dianyuan_no" />
 
             </RelativeLayout>
 

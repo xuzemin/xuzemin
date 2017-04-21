@@ -35,7 +35,7 @@ public class Constant {
 //    public static String wifiname = "GDRD-3F";
 //    public static String password = "88391477";
     //测试用WI-FI02
-//    public static String wifiname = "TP-LINK_Test";
+//    public static String wifiname = "TP-LINK_ZFG02";
 //    public static String password = "88391477";
 //    public static String Reason = "reason";
 //    public static double Current_x = 0;
@@ -47,7 +47,7 @@ public class Constant {
 //    public static double Current_y_sur = 0;
 //    private static float Current_degree = 90;
     public static int ServerPort = 12345;
-//    public static String ip_bigScreen = "/192.168.88.188";
+//    public static String ip_bigScreen = "/192.168.88.110";
 //    public static String ip_ros = "/192.168.88.101";
 //    测试用IP
     public static String ip_bigScreen = "/192.168.88.110";
