@@ -49,7 +49,7 @@ public class FaceDialog extends Dialog {
     private void setCustomDialog() {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog_face, null);
         imageView = (ImageView) view.findViewById(R.id.image);
-        imageView.setImageResource(R.drawable.animationface);
+        imageView.setImageResource(R.drawable.smile);
         animationDrawable = (AnimationDrawable) imageView.getDrawable();
         setCanceledOnTouchOutside(false);
         getWindow().setWindowAnimations(R.style.dialog_window);
