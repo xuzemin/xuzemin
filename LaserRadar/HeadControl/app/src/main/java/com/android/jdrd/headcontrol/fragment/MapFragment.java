@@ -1203,17 +1203,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         dialog.setOnPositiveListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                arrayPlanLists.put(editText.getText().toString().trim(),arrayhash);
-                writeXML();
-                surfaceview.point_xs.removeAllElements();
-                surfaceview.point_ys.removeAllElements();
-                arrayserchtime.removeAllElements();
-                arrayscope.removeAllElements();
-                arraygametime.removeAllElements();
-                linear_plan_info.setVisibility(View.GONE);
-                linear_plan.setVisibility(View.VISIBLE);
-                updatekey();
-                dialog.dismiss();
+                if(!"".equals(editText.getText().toString().trim())){
+                    arrayPlanLists.put(editText.getText().toString().trim(),arrayhash);
+                    writeXML();
+                    surfaceview.point_xs.removeAllElements();
+                    surfaceview.point_ys.removeAllElements();
+                    arrayserchtime.removeAllElements();
+                    arrayscope.removeAllElements();
+                    arraygametime.removeAllElements();
+                    linear_plan_info.setVisibility(View.GONE);
+                    linear_plan.setVisibility(View.VISIBLE);
+                    updatekey();
+                    dialog.dismiss();
+                }else {
+                    Toast.makeText(context,"请输入合法的路线名称",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         dialog.setOnNegativeListener(new View.OnClickListener() {

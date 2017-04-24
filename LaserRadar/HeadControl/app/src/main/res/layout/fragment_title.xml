@@ -148,7 +148,9 @@
                 android:clickable="true">
 
                 <ImageView
+
                     android:id="@+id/iv_settings"
+
                     android:layout_width="@dimen/bar_fgTitle_left_btn_width"
                     android:layout_height="@dimen/bar_fgTitle_left_btn_heigth"
                     android:layout_centerVertical="true"
@@ -156,7 +158,7 @@
                     android:clickable="true"
                     android:scaleType="fitXY"
                     android:src="@mipmap/shezhi_no"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <RelativeLayout
