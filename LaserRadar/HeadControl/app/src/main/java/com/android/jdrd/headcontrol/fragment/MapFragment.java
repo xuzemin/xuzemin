@@ -129,9 +129,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Constant.debugLog("btn_cancle");
                     break;
                 case 3:
+                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                    Constant.getConstant().sendCamera(3,context);
                     if(thread!=null){
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
-                        Constant.getConstant().sendCamera(3,context);
                         surfaceview.IsHuman = false;
                         if(thread.isAlive()){
                             thread = new Thread();
