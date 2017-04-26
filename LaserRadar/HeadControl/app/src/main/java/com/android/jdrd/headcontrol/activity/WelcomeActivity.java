@@ -75,8 +75,8 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         startService(SetStaticIPService);
 
 //        启动socket测试Activity
-//        Intent testActivity = new Intent(this, TestActivity.class);
-//        startActivity(testActivity);
+        Intent testActivity = new Intent(this, TestActivity.class);
+        startActivity(testActivity);
 
         list = new ArrayList<>();
         BatteryFragment batteryFragment = new BatteryFragment(WelcomeActivity.this);

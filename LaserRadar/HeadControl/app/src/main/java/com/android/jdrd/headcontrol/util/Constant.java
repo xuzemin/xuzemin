@@ -29,14 +29,14 @@ public class Constant {
     static String isConnectSocket = "";
 //    public static final String wifiname = "TimeBox_8b319a";
 //    public static final String password = "12345678";
-    public static final String wifiname = "HUAWEI-GDRD";
-    public static final String password = "88391477";
+//    public static final String wifiname = "HUAWEI-GDRD";
+//    public static final String password = "88391477";
     //测试用WI-FI01
 //    public static String wifiname = "GDRD-3F";
 //    public static String password = "88391477";
     //测试用WI-FI02
-//    public static String wifiname = "TP-LINK_ZFG02";
-//    public static String password = "88391477";
+    public static String wifiname = "TP-LINK_ZFG02";
+    public static String password = "88391477";
 //    public static String Reason = "reason";
 //    public static double Current_x = 0;
     public static int CURRENTINDEX = 0;
