@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,11 +16,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.fragment.MapFragment;
 import com.android.jdrd.headcontrol.util.Constant;
 
 /**
@@ -32,16 +35,18 @@ public class FaceDialog extends Dialog {
     private ImageView imageView;
     private Context context;
     private View view;
+    private Handler handler = null;
     private static FaceDialog faceDialog;
-    public FaceDialog(Context context) {
+    public FaceDialog(Context context, Handler handler) {
         super(context);
         this.context = context;
+        this.handler = handler;
         setCustomDialog();
         animationDrawable.start();
     }
-    public static FaceDialog getDialog(Context context){
+    public static FaceDialog getDialog(Context context,Handler handler){
         if(faceDialog ==null){
-            faceDialog = new FaceDialog(context);
+            faceDialog = new FaceDialog(context,handler);
         }
         return faceDialog;
     }
@@ -90,6 +95,9 @@ public class FaceDialog extends Dialog {
                 if(editText.getText().toString().trim().equals("")){
                     faceDialog.dismiss();
                     Constant.DIALOG_SHOW = false;
+                    if(handler !=null){
+                        handler.sendEmptyMessage(3);
+                    }
                 }else{
                     Toast.makeText(context,"管理员密码错误",Toast.LENGTH_SHORT).show();
                 }

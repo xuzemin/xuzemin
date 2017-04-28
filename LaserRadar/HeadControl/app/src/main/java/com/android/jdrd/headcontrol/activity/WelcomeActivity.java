@@ -8,6 +8,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -19,8 +21,10 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.jdrd.headcontrol.R;
+import com.android.jdrd.headcontrol.dialog.FaceDialog;
 import com.android.jdrd.headcontrol.fragment.BatteryFragment;
 import com.android.jdrd.headcontrol.fragment.CleanFragment;
 import com.android.jdrd.headcontrol.fragment.MapFragment;
@@ -30,6 +34,8 @@ import com.android.jdrd.headcontrol.util.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -47,7 +53,8 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     ImageView mImageView_Map;//电源图标
 
     ImageView mImageView_setting;//设置
-
+    private static TimerTask task_outTime;
+    private static Timer timer_outTime;
 
     private RelativeLayout rl_TitleList;
     boolean flag = false;
@@ -55,6 +62,20 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     private ImageView imgViewBtnLift;
     MyClickListener mMyClickListener;
     List<Fragment> list;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 0:
+                    FaceDialog.getDialog(WelcomeActivity.this,handler).show();
+                    break;
+                case 3:
+                    resetTimer();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,8 +199,11 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     public boolean dispatchTouchEvent(MotionEvent ev) {
 //        LogUtils.log("点击发送广播");
         //监听屏幕是否处于在点击状态，若被点击则发送广播到小屏'
-        Intent intent = new Intent("com.jiadu.broadcast.setting.touch");
-        sendBroadcast(intent);
+//        Intent intent = new Intent("com.jiadu.broadcast.setting.touch");
+//        sendBroadcast(intent);
+        if(!FaceDialog.getDialog(this,handler).isShowing()){
+            resetTimer();
+        }
         return super.dispatchTouchEvent(ev);
     }
     //动画需实现的接口
@@ -232,13 +256,9 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                 case R.id.rl_TitleList:
                     startAnimation();
                     break;
-
                 case R.id.iv_settings:
                     startAnimation();
                     break;
-
-
-
             }
         }
     }
@@ -334,4 +354,26 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
 
+    public  void resetTimer(){
+        if (task_outTime != null){
+            task_outTime.cancel();  //将原任务从队列中移除
+        }
+        timer_outTime = new Timer();
+        task_outTime = new TimerTask() {
+            public void run () {
+                handler.sendEmptyMessage(0);
+            }
+        };
+        timer_outTime.schedule(task_outTime, 30 * 1000);
+    }
+
+    @Override
+    protected void onPause() {
+        if(MapFragment.thread !=null){
+            if(MapFragment.thread.isAlive()){
+                MapFragment.thread = new Thread();
+            }
+        }
+        super.onPause();
+    }
 }

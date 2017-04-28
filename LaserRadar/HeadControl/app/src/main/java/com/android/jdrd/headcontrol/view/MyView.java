@@ -41,7 +41,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Double bitmap_x = 200.0 , bitmap_y = 200.0;
     public Double center_x = 0.0 , center_y = 0.0;
     public float rote = 45;
-    public int current_plan_number = -1;
+    public static int current_plan_number = -1;
     public boolean paint = false,Ishave = false,Isplan = true,Ispath = false,IsHuman = false,Isshow = false;
     public int temp = 0,showtemp = 0;
     private Bitmap startpoint = BitmapFactory.decodeResource(getResources(), R.mipmap.qi);
