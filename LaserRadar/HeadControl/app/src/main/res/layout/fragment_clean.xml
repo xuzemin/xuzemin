@@ -61,9 +61,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:src="@mipmap/youshui"
-                                android:layout_centerVertical="true"
                                 android:layout_centerHorizontal="true"
+                                android:layout_marginTop="128dp"
                                 />
+                            <ImageView
+                                android:id="@+id/img_clean_waterState"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="27dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_below="@+id/img_clean_level_change"
+                                />
+
+
+
                             <!--清洁时间定时-->
                             <RelativeLayout
                                 android:layout_width="match_parent"

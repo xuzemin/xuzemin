@@ -102,7 +102,8 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     private RelativeLayout rr_right_bar_clean;
     boolean flag_rr_bar;
     private LinearLayout rr_right_bar_clean1;
-    private ImageView img_ViewBtnRightClean;
+    //1、 2、清洁时的出水状态是否有水流
+    private ImageView img_ViewBtnRightClean,img_clean_waterState;
 
     private Button btn_clean_time_start,btn_clean_time_stop;
     private Spinner select_clean_time;
@@ -122,6 +123,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
 
     private  int saveTime;
     private  int saveTime1;
+
     timeSelectThread    timeSelect;
     CleanThread cleanLevel;
     private boolean controlThread;
@@ -175,6 +177,9 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
 
         select_clean_time = (Spinner) findViewById(R.id.select_clean_time);
         img_clean_level_change = (ImageView) findViewById(R.id.img_clean_level_change);
+
+        img_clean_waterState = (ImageView)findViewById(R.id.img_clean_waterState);
+
 
         type_modified=1;
         mImageView_yaguang_per.setVisibility(View.VISIBLE);
@@ -403,10 +408,15 @@ class CleanThread extends Thread{
 //            levelClean =0;
             Constant.debugLog("清洁数据库值"+levelClean);
             if (levelClean== 1){
+                //有水显示图标
                 img_clean_level_change.setImageResource(R.mipmap.youshui);
+
             }else if (levelClean ==0){
+                //无水显示图标
                 img_clean_level_change.setImageResource(R.mipmap.meishui);
-}
+
+
+            }
 
         }
 
@@ -578,15 +588,19 @@ class CleanThread extends Thread{
                             mImageView_liangguang_per.setEnabled(false);
                             select_clean_time.setEnabled(false);
 
-
+                            Toast.makeText(getActivity(),"清洁已启动",Toast.LENGTH_SHORT).show();
+                            //水量充足时 出水状态
+                            //img_clean_waterState.setImageResource(R.mipmap.youshui_effluent_state);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }else {
-                        Toast.makeText(getActivity(),"清洁已启动",Toast.LENGTH_SHORT).show();
-                    }
+
+
+                }
                 }else {
                     Toast.makeText(getActivity(),"请选择水量",Toast.LENGTH_SHORT).show();
+
 
                 }
                 break;
@@ -608,11 +622,15 @@ class CleanThread extends Thread{
                         mImageView_liangguang_per.setEnabled(true);
                         select_clean_time.setEnabled(true);
 
+                        Toast.makeText(getActivity(),"清洁功能已关闭",Toast.LENGTH_SHORT).show();
+                        //水量不足 时出水状态
+                      //  img_clean_waterState.setImageResource(R.mipmap.meishui_effluentstate);
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }else {
-                    Toast.makeText(getActivity(),"清洁功能已关闭",Toast.LENGTH_SHORT).show();
 
 
 

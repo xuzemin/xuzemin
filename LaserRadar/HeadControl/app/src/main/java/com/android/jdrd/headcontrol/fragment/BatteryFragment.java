@@ -171,17 +171,6 @@ boolean b=true;
 //            }
 //            Log.d("tag", "warn:" + warn + "level:" + level + "state:" + state + " temperature:" + temperature + " voltage:" + voltage);
 
-
-        //模拟数据
-//        if (level==100)
-//            b=true;
-//        else if (level==0)
-//            b=false;
-//        if (b){
-//            level=level-1;
-//        }else {
-//            level=level+1;
-//        }
               level=beanBF.getDataInt();  //获取数据库值
             mTextView_Level.setText(String.valueOf(level)+"%");
 //            progres_warn = warn;

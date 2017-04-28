@@ -165,6 +165,27 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 case 5:
                     ChangeMapAdapter.update((Integer) msg.obj,plan_change_list);
                     break;
+                case 6:
+                    if(thread!=null){
+                        surfaceview.IsHuman = false;
+                        if(thread.isAlive()){
+                            thread = new Thread();
+                        }
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                    }
+                    Constant.getConstant().sendCamera(3,context);
+                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                    try {
+                        ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
+                        Thread.sleep(500);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    tasknumber = 30;
+                    sendNativePoint();
+                    break;
+                case 7:
+                    startRoam();
                 default:
                     break;
             }
@@ -874,6 +895,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         map.put("point_x",Constant.return_x);
         map.put("point_y",Constant.return_y);
         map.put("angle",Constant.return_degree);
+        Constant.debugLog("map"+map.toString());
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
     }
 
@@ -944,6 +966,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }else if(tasknumber == 14){
                                 tasknumber = 15;
                                 handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 30){
+                                handler.sendEmptyMessage(7);
                             }
                         }else if(flag.equals("fail")){
                             IsSuccus = false;
@@ -961,6 +985,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             }else if(tasknumber == 14){
                                 tasknumber = 15;
                                 handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 30){
+                                handler.sendEmptyMessage(7);
                             }
                         }else if(flag.equals("navigating")){
 
@@ -1287,6 +1313,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
 
     public void startRoam(){
+        resetRoamTimer();
+        timer.schedule(task, 30*60 * 1000);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -1311,7 +1339,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                             thread.wait();
                             if(IsFind){
                                 IsFind = false;
-                                resetTimer2();
+                                resetGameTimer();
                                 IsAway = false;
                                 if(gametimenumber_roam == 0){
                                     Constant.debugLog("arraygametime_tmp = " + 0);
@@ -1338,7 +1366,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         thread.start();
     }
 
-    public void resetTimer(){
+    public void resetFindTimer(){
         if (task != null){
             task.cancel();  //将原任务从队列中移除
         }
@@ -1355,7 +1383,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         };
     }
 
-    public void resetTimer2(){
+    public void resetGameTimer(){
         if (task != null){
             task.cancel();  //将原任务从队列中移除
         }
@@ -1373,6 +1401,18 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     e.printStackTrace();
                 }
 
+            }
+        };
+    }
+
+    public void resetRoamTimer(){
+        if (task != null){
+            task.cancel();  //将原任务从队列中移除
+        }
+        timer = new Timer();
+        task = new TimerTask() {
+            public void run () {
+                handler.sendEmptyMessage(6);
             }
         };
     }
@@ -1475,7 +1515,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     //到达对应地点notify
                     if (arrayserchtime_tmp.get(CurrentPoint) != 0 && IsSuccus) {
                         //发送 找人时间以及机器人旋转以及找人范围
-                        resetTimer();
+                        resetFindTimer();
                         if (arrayserchtime_tmp.get(CurrentPoint) == 1) {
                             Constant.debugLog("arrayserchtime_tmp = " + 0);
                             timer.schedule(task, 40 * 1000);
@@ -1495,7 +1535,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                         if (IsFind) {
                             IsFind = false;
                             Constant.debugLog("互动时间 = " + CurrentPoint);
-                            resetTimer2();
+                            resetGameTimer();
                             IsAway = false;
                             if (arraygametime_tmp.get(CurrentPoint) == 0) {
                                 Constant.debugLog("arraygametime_tmp = " + 0);
