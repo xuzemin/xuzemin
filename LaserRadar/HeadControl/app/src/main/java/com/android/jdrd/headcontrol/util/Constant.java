@@ -20,9 +20,9 @@ public class Constant {
     static final String dns2 = "192.168.0.1";
     static String gateway = "";
     static int prefix = 24;
-    public static final int SCALE_NUMBER = 150;
-    public static final int MyView_Height = 900;
-    public static final int MyView_Width = 1500;
+    public static final int SCALE_NUMBER = 140;
+    public static final int MyView_Height = 971;
+    public static final int MyView_Width = 1507;
     public static final int rote = 14;
     static String IP = "";
     static final String IPLast = "106";

@@ -19,7 +19,7 @@
     <string name="button_execut">执行路线</string>
     <string name="button_plan">规划新路线</string>
     <string name="button_remove">删除路线</string>
-    <string name="button_plan_back">停止路线</string>
+    <string name="button_plan_back">暂停路线</string>
     <string name="button_scale">请选择地图比例</string>
     <string name="plan_change">路线调整</string>
     <string name="button_path">请选择路线</string>

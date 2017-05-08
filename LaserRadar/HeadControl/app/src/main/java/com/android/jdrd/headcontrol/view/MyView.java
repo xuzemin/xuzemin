@@ -38,9 +38,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
     public Vector<Double> path_xs=new Vector<>();
     public Vector<Double> path_ys=new Vector<>();
     public Bitmap bitmap = null,rotbitmap = null,obstacle = null,human = null;
-    public Double bitmap_x = 200.0 , bitmap_y = 200.0;
+    public Double bitmap_x = 336.0 , bitmap_y = 120.0;
     public Double center_x = 0.0 , center_y = 0.0;
-    public float rote = 45;
+    public float rote = 0;
     public static int current_plan_number = -1;
     public boolean paint = false,Ishave = false,Isplan = true,Ispath = false,IsHuman = false,Isshow = false;
     public int temp = 0,showtemp = 0;
@@ -81,8 +81,9 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
         Matrix matrix = new Matrix();
         matrix.postTranslate(translate_x,translate_y);
         canvas.concat(matrix);
-        canvas.drawColor(getResources().getColor(R.color.darkgray));//这里是绘制背景
-
+//        canvas.drawColor(getResources().getColor(R.color.darkgray));//这里是绘制背景
+//        matrix.postRotate(180, (float) 753.5, (float) 485.5);
+        canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ditu_bg), matrix, null);
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿
         p.setColor(getResources().getColor(R.color.path));
@@ -130,7 +131,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 
-        drawtable(canvas);
+//        drawtable(canvas);
 
         p=new Paint(); //笔触
         p.setAntiAlias(true); //反锯齿

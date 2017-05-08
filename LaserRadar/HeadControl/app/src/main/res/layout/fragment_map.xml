@@ -22,13 +22,14 @@
         <com.android.jdrd.headcontrol.view.MyView
             android:id="@+id/surfaceview"
             android:layout_centerInParent="true"
-            android:layout_width="1580dp"
-            android:layout_height="980dp"
+            android:layout_width="1508px"
+            android:layout_height="972px"
             />
         <TextView
             android:id="@+id/bilici"
             android:layout_width="90dp"
             android:layout_height="30dp"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="60dp"
@@ -43,6 +44,7 @@
             android:id="@id/imageView"
             android:layout_width="90dp"
             android:layout_height="10dp"
+            android:visibility="gone"
             android:background="@mipmap/biliechi"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
@@ -155,6 +157,7 @@
                     <Button
                         android:id="@+id/plan_change"
                         style="@style/MapButton"
+                        android:visibility="gone"
                         android:text="@string/plan_change"
                         />
                     <Button
@@ -164,7 +167,7 @@
                         />
                     <View
                         android:layout_width="wrap_content"
-                        android:layout_height="54px"
+                        android:layout_height="150px"
                         />
                     <Button
                         android:id="@+id/button_plan_back"
@@ -254,6 +257,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:orientation="horizontal"
+                                android:visibility="gone"
                                 android:layout_height="80dp">
                                 <EditText
                                     android:id="@+id/point_x"
@@ -272,6 +276,7 @@
                             <Button
                                 android:id="@+id/button_choose"
                                 android:text="@string/button_choose"
+                                android:visibility="gone"
                                 style="@style/MapButton"
                                 />
                             <Button
@@ -327,6 +332,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
+                        android:visibility="gone"
                         android:layout_height="96dp">
                         <EditText
                             android:id="@+id/go_point_x"
@@ -345,11 +351,12 @@
                     <Button
                         android:id="@+id/go_button_choose"
                         android:text="@string/button_choose"
+                        android:visibility="gone"
                         style="@style/MapButton"
                         />
                     <View
                         android:layout_width="wrap_content"
-                        android:layout_height="438px"/>
+                        android:layout_height="630px"/>
                     <Button
                         android:id="@+id/button_point_back"
                         android:text="@string/back"

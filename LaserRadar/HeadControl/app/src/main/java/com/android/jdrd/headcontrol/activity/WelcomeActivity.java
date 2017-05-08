@@ -67,7 +67,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 0:
-                    FaceDialog.getDialog(WelcomeActivity.this,handler).show();
+//                    FaceDialog.getDialog(WelcomeActivity.this,handler).show();
                     break;
                 case 3:
                     resetTimer();
@@ -80,13 +80,13 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Constant.debugLog(Constant.CURRENTINDEX+"onCreateCURRENTINDEX");
-        // 隐藏标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 隐藏状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        Constant.debugLog(Constant.CURRENTINDEX+"onCreateCURRENTINDEX");
+//        // 隐藏标题栏
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        // 隐藏状态栏
         setContentView(R.layout.activity_welcome);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
@@ -271,8 +271,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void setBackgroundColor() {
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                | View.SYSTEM_UI_FLAG_FULLSCREEN);
         //电源栏
         mImageView_Battery.setImageResource(R.mipmap.dianyuan_no);
         //清扫栏
