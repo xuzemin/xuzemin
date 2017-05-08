@@ -281,8 +281,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 if(n==MotionEvent.ACTION_DOWN && 1 == nCnt){
                     eventx = event.getX();
                     eventy = event.getY();
+                    Constant.debugLog("ex"+eventx+"ey"+eventy);
                     if (Istouch) {
-                        if (eventx > 70 && eventx < surfaceview.myview_width - 80 && eventy > 70 && eventy < surfaceview.myview_height - 80) {
+                        if (eventx > 150 && eventx < surfaceview.myview_width - 80 && eventy > 150 && eventy < surfaceview.myview_height - 80) {
                             a = (event.getX()  - surfaceview.translate_x -40)  ;
                             b = (event.getY()  - surfaceview.translate_y -40) ;
                             int x = (int) a % Constant.SCALE_NUMBER;
