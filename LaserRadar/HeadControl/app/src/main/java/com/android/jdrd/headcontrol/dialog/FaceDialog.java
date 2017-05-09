@@ -44,6 +44,8 @@ public class FaceDialog extends Dialog {
         setCustomDialog();
         animationDrawable.start();
     }
+
+
     public static FaceDialog getDialog(Context context,Handler handler){
         if(faceDialog ==null){
             faceDialog = new FaceDialog(context,handler);
@@ -66,6 +68,11 @@ public class FaceDialog extends Dialog {
 
 //        Animation mAnimation = AnimationUtils.loadAnimation(context,R.animator.dialog_enter_anim);
 //        view.startAnimation(mAnimation);
+
+
+        imageView.setImageResource(R.drawable.speak);
+        animationDrawable = (AnimationDrawable) imageView.getDrawable();
+
 
         View bv = this.findViewById(android.R.id.title);
         bv.setVisibility(View.GONE);

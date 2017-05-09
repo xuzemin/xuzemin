@@ -1287,7 +1287,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
     private void dialogFace(){
         Constant.DIALOG_SHOW = true;
-//        FaceDialog.getDialog(context,handler).show();
+        FaceDialog.getDialog(context,handler).show();
     }
 
     public void startPlan(){
