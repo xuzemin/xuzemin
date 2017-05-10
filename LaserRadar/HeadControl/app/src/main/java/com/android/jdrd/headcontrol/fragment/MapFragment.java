@@ -98,7 +98,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     private Vector<Float> arrayserchtime,arrayscope,arraygametime;
     private Timer timer;
     private ChangeMapAdapter ChangeMapAdapter;
-    private static float Current_plannumber = 0;
+//    private static float Current_plannumber = 0;
+    private static String Current_key = null;
     private static int tasknumber = -1;
     private static int cirles = 0;
     private static int CurrentPoint = 0;
@@ -285,7 +286,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     if (Istouch) {
                         if (eventx > 105 && eventx < surfaceview.myview_width - 113 && eventy > 215 && eventy < surfaceview.myview_height - 113) {
                             if(eventx >= 775 && eventx <= 1195 && eventy <= 229 ){
-                            }else if(eventx >=105 &&eventx <230){
+                            }else if(eventx >= 105 &&eventx < 230 && Math.pow( eventx - 118,2)+Math.pow(971-98-eventy,2) < Math.pow(84,2) ){
+                            }else if(Math.pow( 1507 - 338 - eventx,2)+Math.pow(971-64-eventy,2) < Math.pow(120,2) ){
+                            }else if(Math.pow( 1507 - 90 - eventx,2)+Math.pow(eventy - 185,2) < Math.pow(120,2) ){
                             }else {
                                 a = (event.getX() - surfaceview.translate_x);
                                 b = (event.getY() - surfaceview.translate_y);
@@ -337,6 +340,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         planchooce.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tasknumber = 0;
+                CurrentPoint = 0;
+                MyView.current_plan_number = 0;
+                IsWait = false;
                 if(Istouch){
                     Constant.getConstant().showWarntext(context,handler);
                 }else {
@@ -344,8 +351,6 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
                     surfaceview.point_xs = array.get("point_xs");
                     surfaceview.point_ys = array.get("point_ys");
-                    tasknumber = 0;
-                    IsWait = false;
                     ((Button)findViewById(R.id.button_plan_stop)).setText("停止路线");
                 }
             }
@@ -396,9 +401,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
         }
         if(IsWait){
-            ((Button)findViewById(R.id.button_plan_stop)).setText("继续执行");
+            ((Button)findViewById(R.id.button_plan_stop)).setText("继续路线");
         }else{
-            ((Button)findViewById(R.id.button_plan_stop)).setText("暂停执行");
+            ((Button)findViewById(R.id.button_plan_stop)).setText("暂停路线");
         }
         if(Constant.DIALOG_SHOW){
             dialogFace();
@@ -462,6 +467,10 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 scope.setSelection(0,true);
                 gametime.setSelection(0,true);
                 go_NewPlan();
+                tasknumber = 0;
+                CurrentPoint = 0;
+                MyView.current_plan_number = 0;
+                IsWait = false;
                 break;
             //删除当前路线
             case R.id.button_remove:
@@ -481,10 +490,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             case R.id.button_plan_stop:
                 if(!IsWait){
                     handler.sendEmptyMessage(3);
-                    Toast.makeText(context,"暂停执行路线",Toast.LENGTH_SHORT).show();
+                    ((Button)findViewById(R.id.button_plan_stop)).setText("继续路线");
+                    Toast.makeText(context,"暂停路线",Toast.LENGTH_SHORT).show();
                 }else{
                     ((Button)findViewById(R.id.button_plan_stop)).setText("暂停执行");
-                    Toast.makeText(context,"继续执行路线",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"继续路线",Toast.LENGTH_SHORT).show();
                     startPlan();
                     dialogFace();
                     startAnimationRight();
@@ -493,16 +503,16 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 break;
             //执行路线
             case R.id.button_execut:
-                ((Button)findViewById(R.id.button_plan_stop)).setText("暂停执行");
+                ((Button)findViewById(R.id.button_plan_stop)).setText("暂停路线");
                 Toast.makeText(context,"开始执行路线",Toast.LENGTH_SHORT).show();
 //                cirles = 0;
                 tasknumber = 0;
                 CurrentPoint = 0;
                 MyView.current_plan_number = 0;
+                IsWait = false;
                 startPlan();
                 dialogFace();
                 startAnimationRight();
-                IsWait = false;
                 break;
             //规划完毕
             case R.id.button_saveall:
@@ -540,21 +550,21 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 go_Point();
                 break;
             case R.id.button_return:
-//                Toast.makeText(context,"返回原点",Toast.LENGTH_SHORT).show();
-//                if(thread!=null){
-//                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
-//                    if(thread.isAlive()){
-//                        thread = new Thread();
-//                        surfaceview.current_plan_number = 0;
-//                    }
-//                }
-//                try {
-//                    Thread.sleep(500);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                sendNativePoint();
-                handler.sendEmptyMessage(4);
+                Toast.makeText(context,"返回原点",Toast.LENGTH_SHORT).show();
+                if(thread!=null){
+                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                    if(thread.isAlive()){
+                        thread = new Thread();
+                        surfaceview.current_plan_number = 0;
+                    }
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                sendNativePoint();
+//                handler.sendEmptyMessage(4);
                 break;
             //点选下一步
             case R.id.button_next:
@@ -866,8 +876,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             Constant.return_y = native_y;
         }
         if(native_x <= 0 && native_x >= -6 && native_y >= -7.6 && native_y <=2.4){
-            surfaceview.bitmap_y = ( native_x * -1 * Constant.SCALE_NUMBER) - surfaceview.bitmap.getHeight() / 2  + 127;
-            surfaceview.bitmap_x = ( native_y * -1 * Constant.SCALE_NUMBER ) + 2.4 * Constant.SCALE_NUMBER - surfaceview.bitmap.getWidth() / 2 + 19 ;
+            surfaceview.bitmap_y = ( native_x * -1 * Constant.SCALE_NUMBER) - surfaceview.bitmap.getHeight() / 2  + 127 + 16.1 +42;
+            surfaceview.bitmap_x = ( native_y * -1 * Constant.SCALE_NUMBER ) + 2.4 * Constant.SCALE_NUMBER - surfaceview.bitmap.getWidth() / 2 + 19 +15.4 +42;
         }
     }
 
@@ -886,9 +896,9 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     //发往底层
     private void sendNativePoint(float up_x,float up_y ,int angle){
         Map map  = new LinkedHashMap();
-        double a = ((up_y - 127) / - 1 / Constant.SCALE_NUMBER);
+        double a = ((up_y - 127 - 16 - 42) / - 1 / Constant.SCALE_NUMBER);
         map.put("point_x",a);
-        a = (up_x - 19 ) / - 1 / Constant.SCALE_NUMBER + 2.4 ;
+        a = (up_x - 19 - 15.4 - 42) / - 1 / Constant.SCALE_NUMBER + 2.4 ;
         map.put("point_y",a);
         map.put("angle",angle);
         Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
@@ -1287,7 +1297,7 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
     }
     private void dialogFace(){
         Constant.DIALOG_SHOW = true;
-//        FaceDialog.getDialog(context,handler).show();
+        FaceDialog.getDialog(context,handler).show();
     }
 
     public void startPlan(){
@@ -1296,7 +1306,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
             @Override
             public void run() {
                 HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
-                Current_plannumber = plannumber;
+                Current_key = strings.get((int) plannumber);
+//                Current_plannumber = plannumber;
                 if(cirles == 0){
                     CURRENT_CRILES = true;
                 }else if(cirles > 0){
@@ -1304,12 +1315,12 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 }
                 while (CURRENT_CRILES || cirles > 0) {
                     Constant.debugLog("CURRENT_CRILES" + CURRENT_CRILES);
-                    synchronized (array) {
+//                    synchronized (array) {
                         planStart(array);
                         if (!CURRENT_CRILES) {
                             cirles--;
                         }
-                    }
+//                    }
                 }
                 thread = new Thread();
             }
@@ -1326,11 +1337,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                 while(true){
                     Random random=new Random();
                     float x = 0 , y = 0;
-                    while(x  < 150 || x > Constant.MyView_Width - 150){
-                        x = random.nextInt(Constant.MyView_Width - 150);
+                    while(x  < 110 || x > Constant.MyView_Width - 120){
+                        x = random.nextInt(Constant.MyView_Width - 120);
                     }
-                    while(y  < 150 || y > Constant.MyView_Height - 150){
-                        y = random.nextInt(Constant.MyView_Height - 150);
+                    while(y  < 250 || y > Constant.MyView_Height - 182){
+                        y = random.nextInt(Constant.MyView_Height - 182);
                     }
                     synchronized (thread){
                         try {
@@ -1465,7 +1476,11 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
         updatekey();
         Istouch = false;
         Isplan = true;
-        planchooce.setSelection((int)Current_plannumber,true);
+        for(int i = 0,size = strings.size();i<size;i++){
+            if(Current_key == strings.get(i)){
+                planchooce.setSelection(i,true);
+            }
+        }
     }
     //点选模式
     private void go_Point() {

@@ -67,7 +67,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 0:
-//                    FaceDialog.getDialog(WelcomeActivity.this,handler).show();
+                    FaceDialog.getDialog(WelcomeActivity.this,handler).show();
                     break;
                 case 3:
                     resetTimer();
