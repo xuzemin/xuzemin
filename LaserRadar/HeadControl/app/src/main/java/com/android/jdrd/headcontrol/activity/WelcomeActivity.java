@@ -68,6 +68,23 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             switch (msg.what){
                 case 0:
                     FaceDialog.getDialog(WelcomeActivity.this,handler).show();
+//                    if(FaceDialog.Current_Type ==0){
+//                        FaceDialog.Current_Type = 1;
+//                        FaceDialog.setAnimationDrawable();
+//                    }else {
+//                        FaceDialog.Current_Type = 0;
+//                        FaceDialog.setAnimationDrawable();
+//                    }
+//                    resetTimer2();
+                    break;
+                case 1:
+//                    if(FaceDialog.Current_Type ==0){
+//                        FaceDialog.Current_Type = 1;
+//                        FaceDialog.setAnimationDrawable();
+//                    }else {
+//                        FaceDialog.Current_Type = 0;
+//                        FaceDialog.setAnimationDrawable();
+//                    }
                     break;
                 case 3:
                     resetTimer();
@@ -80,10 +97,12 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Constant.debugLog(Constant.CURRENTINDEX+"onCreateCURRENTINDEX");
-//        // 隐藏标题栏
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        // 隐藏状态栏
+        Constant.debugLog(Constant.CURRENTINDEX+"onCreateCURRENTINDEX");
+        // 隐藏标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 隐藏状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -242,15 +261,15 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     break;
                 //点击了电源栏
                 case R.id.iv_Battery:
-                    startAnimation();
+//                    startAnimation();
                     changeBattery();
                     break;
                 case R.id.iv_Clean:
-                    startAnimation();
+//                    startAnimation();
                     changeClean();
                     break;
                 case R.id.iv_Map:
-                    startAnimation();
+//                    startAnimation();
                     changeMap();
                     break;
                 case R.id.rl_TitleList:
@@ -271,6 +290,8 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void setBackgroundColor() {
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_FULLSCREEN);
         //电源栏
         mImageView_Battery.setImageResource(R.mipmap.dianyuan_no);
         //清扫栏
@@ -364,6 +385,18 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         };
         timer_outTime.schedule(task_outTime, 30 * 1000);
     }
+//    public  void resetTimer2(){
+//        if (task_outTime != null){
+//            task_outTime.cancel();  //将原任务从队列中移除
+//        }
+//        timer_outTime = new Timer();
+//        task_outTime = new TimerTask() {
+//            public void run () {
+//                handler.sendEmptyMessage(1);
+//            }
+//        };
+//        timer_outTime.schedule(task_outTime, 5 * 1000);
+//    }
 
     @Override
     protected void onPause() {

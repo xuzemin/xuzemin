@@ -31,11 +31,12 @@ import com.android.jdrd.headcontrol.util.Constant;
  */
 
 public class FaceDialog extends Dialog {
-    private AnimationDrawable animationDrawable;
-    private ImageView imageView;
+    private static AnimationDrawable animationDrawable;
+    private static ImageView imageView;
     private Context context;
     private View view;
     private Handler handler = null;
+    public static int Current_Type = 0;
     private static FaceDialog faceDialog;
     public FaceDialog(Context context, Handler handler) {
         super(context);
@@ -45,8 +46,27 @@ public class FaceDialog extends Dialog {
         animationDrawable.start();
     }
 
+    public static void setAnimationDrawable() {
+        animationDrawable.stop();
+        switch (Current_Type){
+            case 0 :
+                imageView.setImageResource(R.drawable.smile);
+                break;
+            case 1 :
+                imageView.setImageResource(R.drawable.speak);
+                break;
+            case 2 :
+                imageView.setImageResource(R.drawable.electric);
+            default:
+                break;
+        }
+        animationDrawable = (AnimationDrawable) imageView.getDrawable();
+        if(!faceDialog.isShowing()){
+            animationDrawable.start();
+        }
+    }
 
-    public static FaceDialog getDialog(Context context,Handler handler){
+    public static FaceDialog getDialog(Context context, Handler handler){
         if(faceDialog ==null){
             faceDialog = new FaceDialog(context,handler);
         }
@@ -56,8 +76,21 @@ public class FaceDialog extends Dialog {
     private void setCustomDialog() {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog_face, null);
         imageView = (ImageView) view.findViewById(R.id.image);
-        imageView.setImageResource(R.drawable.smile);
+        Current_Type = Constant.ELECTRIC;
+        switch (Current_Type){
+            case 0 :
+                imageView.setImageResource(R.drawable.smile);
+                break;
+            case 1 :
+                imageView.setImageResource(R.drawable.speak);
+                break;
+            case 2 :
+                imageView.setImageResource(R.drawable.electric);
+            default:
+                break;
+        }
         animationDrawable = (AnimationDrawable) imageView.getDrawable();
+
         setCanceledOnTouchOutside(false);
         getWindow().setWindowAnimations(R.style.dialog_window);
         getWindow().setBackgroundDrawableResource(R.color.vifrification);
@@ -68,11 +101,6 @@ public class FaceDialog extends Dialog {
 
 //        Animation mAnimation = AnimationUtils.loadAnimation(context,R.animator.dialog_enter_anim);
 //        view.startAnimation(mAnimation);
-
-
-        imageView.setImageResource(R.drawable.speak);
-        animationDrawable = (AnimationDrawable) imageView.getDrawable();
-
 
         View bv = this.findViewById(android.R.id.title);
         bv.setVisibility(View.GONE);

@@ -24,6 +24,9 @@ public class Constant {
     public static final int MyView_Height = 971;
     public static final int MyView_Width = 1507;
     public static final int rote = 14;
+    public static final int ELECTRIC = 2;
+    public static final int SPEAK = 1;
+    public static final int SMILE = 0;
     static String IP = "";
     static final String IPLast = "106";
     static String isConnectSocket = "";
