@@ -1,6 +1,9 @@
 package com.android.jdrd.dudu.utils;
 
+import android.app.Application;
 import android.content.Context;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import com.iflytek.cloud.RecognizerListener;
@@ -27,80 +30,110 @@ public class Constant {
     private static SpeechSynthesizer mTts;
     private static SpeechRecognizer mIat;
     private static Constant constant;
-    public static Constant getConstant(Context context){
-        if(constant==null){
-            constant = new Constant();
-            mIat= SpeechRecognizer.createRecognizer(context, null);
-            mTts= SpeechSynthesizer.createSynthesizer(context, null);
+    private static AudioManager mAudioManager = null;
+    private static AudioManager.OnAudioFocusChangeListener mAudioFocusChangeListener = null;
+    private Context context;
+    public Constant(Context context){
+        this.context = context;
+    }
+    public static Constant getConstant(Context context) {
+        if (constant == null) {
+            constant = new Constant(context);
+            mIat = SpeechRecognizer.createRecognizer(context, null);
+            mTts = SpeechSynthesizer.createSynthesizer(context, null);
             setmIat();
             setmTts();
-            mIat.startListening(mRecoListener);
+//            mIat.startListening(mRecoListener);
             return constant;
         }
         return constant;
     }
 
-    private static void parseGson(String resultJson){
+    private static void parseGson(String resultJson) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(resultJson);
             answerText(jsonObject);
         } catch (JSONException e) {
-            LogUtils.e("Result"+e.toString());
+            LogUtils.e("Result" + e.toString());
             LogUtils.e("moreResults");
         }
     }
 
-    private static SynthesizerListener mSynListener = new SynthesizerListener(){
+    private static SynthesizerListener mSynListener = new SynthesizerListener() {
         //会话结束回调接口，没有错误时，error为null
         public void onCompleted(SpeechError error) {
-            mIat.startListening(mRecoListener);
+//            mIat.startListening(mRecoListener);
+            pausePlay();
         }
+
         //缓冲进度回调
         //percent为缓冲进度0~100，beginPos为缓冲音频在文本中开始位置，endPos表示缓冲音频在文本中结束位置，info为附加信息。
-        public void onBufferProgress(int percent, int beginPos, int endPos, String info) {}
+        public void onBufferProgress(int percent, int beginPos, int endPos, String info) {
+        }
+
         //开始播放
-        public void onSpeakBegin() {}
+        public void onSpeakBegin() {
+        }
+
         //暂停播放
-        public void onSpeakPaused() {}
+        public void onSpeakPaused() {
+
+        }
+
         //播放进度回调
-        public void onSpeakProgress(int percent, int beginPos, int endPos) {}
+        public void onSpeakProgress(int percent, int beginPos, int endPos) {
+//            if(percent == 90){
+//                pausePlay();
+//            }
+        }
+
         //恢复播放回调接口
-        public void onSpeakResumed() {}
+        public void onSpeakResumed() {
+        }
+
         //会话事件回调接口
         public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
         }
     };
     //听写监听器
-    private static RecognizerListener mRecoListener = new RecognizerListener(){
+    private static RecognizerListener mRecoListener = new RecognizerListener() {
         public void onResult(RecognizerResult results, boolean isLast) {
-            LogUtils.e(results.getResultString ());
+            LogUtils.e(results.getResultString());
             parseGson(results.getResultString());
         }
+
         public void onError(SpeechError error) {
             error.getPlainDescription(true);
             mIat.startListening(mRecoListener);
             LogUtils.e(error.toString());
         }
+
         @Override
         public void onVolumeChanged(int i, byte[] bytes) {
 
         }
-        public void onBeginOfSpeech(){
+
+        public void onBeginOfSpeech() {
 
         }
+
         public void onEndOfSpeech() {
 
         }
-        public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {}
+
+        public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {
+        }
     };
-    private static void setmTts(){
+
+    private static void setmTts() {
         mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");//设置发音人
-        mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
-        mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
+        mTts.setParameter(SpeechConstant.SPEED, "60");//设置语速
+        mTts.setParameter(SpeechConstant.VOLUME, "100");//设置音量，范围0~100
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
     }
-    private static void setmIat(){
+
+    private static void setmIat() {
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, "mix");
         mIat.setParameter("asr_sch", "1");
         mIat.setParameter(SpeechConstant.NLP_VERSION, "2.0");
@@ -109,7 +142,7 @@ public class Constant {
         mIat.setParameter("mixed_timeout", "2500");
     }
 
-    private static void answerText(JSONObject jsonObject){
+    private static void answerText(JSONObject jsonObject) {
         try {
             int rc = jsonObject.getInt("rc");
             switch (rc) {
@@ -121,12 +154,12 @@ public class Constant {
                     JSONArray moreResults;
                     moreResults = jsonObject.getJSONArray("moreResults");
                     if (moreResults.length() > 0) {
-                        for (int i=0,length = moreResults.length();i<length;i++){
+                        for (int i = 0, length = moreResults.length(); i < length; i++) {
                             JSONObject object = (JSONObject) moreResults.get(i);
                             String str = object.getString("answer");
-                            if(str !=null && !str.equals("")){
+                            if (str != null && !str.equals("")) {
                                 mTts.startSpeaking(new JSONObject(str).getString("text"), mSynListener);
-                            }else{
+                            } else {
                                 parseInfo(jsonObject);
                             }
                         }
@@ -149,29 +182,33 @@ public class Constant {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            mIat.startListening(mRecoListener);
         }
 
 
     }
-    private static void parseAPP(String type,String name){
-        if(type.equals("LAUNCH")){
-            mTts.startSpeaking("打开"+name, mSynListener);
-        }else if(type.equals("UNINSTALL")){
-            mTts.startSpeaking("卸载"+name, mSynListener);
-        }else if(type.equals("DOWNLOAD")){
-            mTts.startSpeaking("下载"+name, mSynListener);
-        }else if(type.equals("INSTALL")){
-            mTts.startSpeaking("安装"+name, mSynListener);
-        }else if(type.equals("QUERY")){
-            mTts.startSpeaking("搜索"+name, mSynListener);
-        }else if(type.equals("QUERY")){
-            mTts.startSpeaking("退出"+name, mSynListener);
+
+    private static void parseAPP(String type, String name) {
+        if (type.equals("LAUNCH")) {
+            mTts.startSpeaking("打开" + name, mSynListener);
+        } else if (type.equals("UNINSTALL")) {
+            mTts.startSpeaking("卸载" + name, mSynListener);
+        } else if (type.equals("DOWNLOAD")) {
+            mTts.startSpeaking("下载" + name, mSynListener);
+        } else if (type.equals("INSTALL")) {
+            mTts.startSpeaking("安装" + name, mSynListener);
+        } else if (type.equals("QUERY")) {
+            mTts.startSpeaking("搜索" + name, mSynListener);
+        } else if (type.equals("QUERY")) {
+            mTts.startSpeaking("退出" + name, mSynListener);
         }
     }
-    public static void parseANSWER(String text){
+
+    public static void parseANSWER(String text) {
         mTts.startSpeaking(text, mSynListener);
     }
-    private static void parseInfo(JSONObject jsonObject){
+
+    private static void parseInfo(JSONObject jsonObject) {
         try {
             if (jsonObject.getString("service").equals("app")) {
                 parseAPP(jsonObject.getString("operation"), new JSONObject(new JSONObject(jsonObject.getString("semantic")).getString("slots")).getString("name"));
@@ -250,7 +287,7 @@ public class Constant {
                     //查询歌曲信息
                 } else if (jsonObject.getString("operation").equals("QUERY")) {
                     mTts.startSpeaking("歌曲信息暂不支持查询", mSynListener);
-    //                            mIat.startListening(mRecoListener);
+                    //                            mIat.startListening(mRecoListener);
                 }
                 /**
                  * 火车
@@ -281,6 +318,52 @@ public class Constant {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            mIat.startListening(mRecoListener);
         }
+    }
+    public void startPlay() {
+        if (requestTheAudioFocus() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            mTts.startSpeaking("翻译暂不支持查询", mSynListener);
+        } else {
+
+        }
+    }
+
+    public static void pausePlay() {
+        releaseTheAudioFocus(mAudioFocusChangeListener);
+    }
+
+    private int requestTheAudioFocus() {
+        if (Build.VERSION.SDK_INT < 8) {
+
+        }
+        if(mAudioManager == null){
+            mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        }
+        if(mAudioFocusChangeListener == null){
+            mAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+                @Override
+                public void onAudioFocusChange(int focusChange) {
+                    switch (focusChange){
+                        case AudioManager.AUDIOFOCUS_GAIN:
+                        case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT:
+                        case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:
+                            break;
+                        case AudioManager.AUDIOFOCUS_LOSS:
+                        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            };
+        }
+        int requesFocusResult = mAudioManager.requestAudioFocus(mAudioFocusChangeListener,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK,AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        return requesFocusResult;
+    }
+    private static void releaseTheAudioFocus(AudioManager.OnAudioFocusChangeListener mAudioFocusChangeListener){
+        mAudioManager.abandonAudioFocus(mAudioFocusChangeListener);
     }
 }
