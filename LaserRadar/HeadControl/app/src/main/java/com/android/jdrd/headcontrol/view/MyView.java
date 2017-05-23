@@ -10,6 +10,7 @@ import android.graphics.Movie;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;

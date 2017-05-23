@@ -28,6 +28,7 @@ import com.android.jdrd.headcontrol.dialog.FaceDialog;
 import com.android.jdrd.headcontrol.fragment.BatteryFragment;
 import com.android.jdrd.headcontrol.fragment.CleanFragment;
 import com.android.jdrd.headcontrol.fragment.MapFragment;
+import com.android.jdrd.headcontrol.service.EthernetStaticIPService;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.android.jdrd.headcontrol.service.SetStaticIPService;
 import com.android.jdrd.headcontrol.util.Constant;
@@ -113,6 +114,9 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         //启动静态IP设置服务
         Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
         startService(SetStaticIPService);
+        //启动静态IP设置服务(有线连接)
+        Intent EthernetStaticIPService = new Intent(this, EthernetStaticIPService.class);
+        startService(EthernetStaticIPService);
 
 //        启动socket测试Activity
         Intent testActivity = new Intent(this, TestActivity.class);

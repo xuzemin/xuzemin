@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.jdrd.headcontrol"
+    android:sharedUserId="android.uid.system"
     >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -44,6 +45,11 @@
             android:name=".service.SetStaticIPService"
             android:enabled="true"
             android:exported="true"/>
+        <service
+            android:name=".service.EthernetStaticIPService"
+            android:enabled="true"
+            android:exported="true"/>
+
         <receiver android:name=".receiver.BootBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -10,6 +10,7 @@ android {
         versionCode 503
         versionName "1.0.2"
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,4 +31,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     //    testCompile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile files('libs/classes.jar')
 }
