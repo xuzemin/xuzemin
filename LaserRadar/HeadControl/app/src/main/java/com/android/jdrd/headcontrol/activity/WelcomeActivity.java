@@ -307,6 +307,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void changeBattery() {
+        BatteryFragment.flag = false;
         Constant.CURRENTINDEX  = 0;
         setClickable();
         setBackgroundColor();
@@ -320,6 +321,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void changeClean() {
+        CleanFragment.flag_rr_bar = false;
         Constant.CURRENTINDEX  = 1;
         setClickable();
         setBackgroundColor();
@@ -333,6 +335,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
 
     private void changeMap() {
         Constant.CURRENTINDEX = 2;
+        MapFragment.IsRight = false;
         setClickable();
         setBackgroundColor();
         mImageView_Map.setImageResource(R.mipmap.ditu_pre);

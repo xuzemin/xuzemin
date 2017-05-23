@@ -72,7 +72,7 @@ public class BatteryFragment extends BaseFragment implements Animation.Animation
     private BatteryReceiver receiver = null;
 
     private RelativeLayout ll_right_bar1;
-    boolean flag;
+    public static boolean flag;
     private View ll_right_bar;
     private ImageView imgViewBtnRight;
 

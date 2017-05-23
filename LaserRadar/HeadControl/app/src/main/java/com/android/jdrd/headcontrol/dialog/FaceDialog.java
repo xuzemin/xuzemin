@@ -76,7 +76,7 @@ public class FaceDialog extends Dialog {
     private void setCustomDialog() {
         view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog_face, null);
         imageView = (ImageView) view.findViewById(R.id.image);
-        Current_Type = Constant.ELECTRIC;
+//        Current_Type = Constant.ELECTRIC;
         switch (Current_Type){
             case 0 :
                 imageView.setImageResource(R.drawable.smile);

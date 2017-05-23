@@ -100,7 +100,7 @@ public class CleanFragment extends BaseFragment implements Animation.AnimationLi
     int type_modified=0;
 
     private RelativeLayout rr_right_bar_clean;
-    boolean flag_rr_bar;
+    public static boolean flag_rr_bar;
     private LinearLayout rr_right_bar_clean1;
     //1、 2、清洁时的出水状态是否有水流
     private ImageView img_ViewBtnRightClean,img_clean_waterState;

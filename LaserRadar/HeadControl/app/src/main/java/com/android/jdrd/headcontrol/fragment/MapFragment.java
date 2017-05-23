@@ -134,7 +134,13 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     Constant.debugLog("btn_cancle");
                     break;
                 case 3:
-                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                    if(thread!=null){
+                        surfaceview.IsHuman = false;
+                        if(thread.isAlive()){
+                            thread = new Thread();
+                        }
+                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                    }
                     Constant.getConstant().sendCamera(3,context);
                     CURRENT_CRILES = false;
                     if(Constant.CURRENTINDEX_MAP == 2){
@@ -147,14 +153,8 @@ public class MapFragment extends BaseFragment implements View.OnClickListener,An
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                     tasknumber = 0;
-                    if(thread!=null){
-                        surfaceview.IsHuman = false;
-                        if(thread.isAlive()){
-                            thread = new Thread();
-                        }
-                        Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
-                    }
                     break;
                 case 4:
                     if(thread!=null){
