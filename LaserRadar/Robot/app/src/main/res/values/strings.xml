@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Robot</string>
+
+    <array name="DATABASE_INFO">
+        <item>test.db</item>
+        <item>1</item>
+    </array>
+
+    <array name="CREATE_TABLE_SQL">
+        <item>CREATE TABLE area (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)</item>
+        <item>CREATE TABLE desk (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,area INTEGER)</item>
+        <item>CREATE TABLE command (id INTEGER PRIMARY KEY AUTOINCREMENT,type INTEGER,number INTERGER,desk INTERGER)</item>
+    </array>
+
+    <array name="UPDATE_TABLE_SQL">
+        <item></item>
+    </array>
+</resources>
