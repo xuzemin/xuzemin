@@ -127,6 +127,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 map.put("text", tableList.get(i));
                 data_list.add(map);
             }
+        }else{
+            robotDBHelper.insert("area",new String[]{"name"},new Object[]{"qiangyu"});
+            robotDBHelper.insert("area",new String[]{"name"},new Object[]{"qiangyu"});
+            robotDBHelper.insert("area",new String[]{"name"},new Object[]{"qiangyu"});
+            robotDBHelper.insert("area",new String[]{"name"},new Object[]{"qiangyu"});
+            robotDBHelper.insert("area",new String[]{"name"},new Object[]{"qiangyu"});
+
         }
 
         return data_list;
