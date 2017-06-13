@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Robot</string>
 
+    <string name="config_add">添加</string>
+
     <array name="DATABASE_INFO">
-        <item>test.db</item>
+        <item>robot.db</item>
         <item>1</item>
     </array>
 
@@ -10,6 +12,7 @@
         <item>CREATE TABLE area (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)</item>
         <item>CREATE TABLE desk (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,area INTEGER)</item>
         <item>CREATE TABLE command (id INTEGER PRIMARY KEY AUTOINCREMENT,type INTEGER,number INTERGER,desk INTERGER)</item>
+        <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT,ip INTEGER,electric INTERGER,type INTERGER ,lastlocation INTEGER)</item>
     </array>
 
     <array name="UPDATE_TABLE_SQL">

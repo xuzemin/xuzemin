@@ -219,6 +219,11 @@ public class RobotDBHelper extends DataBaseHelper {
         return rowNumber > 0;
     }
 
+    public boolean delete(String tableName,String type,String value){
+        this.mDb.execSQL("DELETE FROM "+tableName+" WHERE "+type+" = '" + value+ "'");
+        return  true;
+    }
+
 
     /**
      * 根据map来进行delete
