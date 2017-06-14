@@ -11,6 +11,10 @@
 
     <string name="deskname">名称</string>
     <string name="main">首页</string>
+    <string name="settings">设置</string>
+    <string name="command_settings">指令设置</string>
+    <string name="add_desk">请输入桌子名称</string>
+    <string name="name_setting">确认修改</string>
 
     <array name="DATABASE_INFO">
         <item>robot.db</item>

@@ -11,6 +11,10 @@
         android:background="@color/darkkhaki"
         android:layout_width="match_parent"
         android:layout_height="60dp">
+        <Button
+            android:id="@+id/setting_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,30 +22,54 @@
             android:gravity="center"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="@string/main"
+            android:text="@string/settings"
             />
     </RelativeLayout>
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="60dp"
-            android:layout_gravity="center"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/deskname"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            />
-    </LinearLayout>
+            >
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/deskname"
+                    android:gravity="center"
+                    android:textSize="25sp"
+                    />
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/add_desk"
+                    android:layout_weight="1"
+                    />
+                <Button
+                    android:id="@+id/change_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/name_setting"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="@string/command_settings"
+                    android:textSize="25sp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
