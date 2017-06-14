@@ -4,15 +4,44 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.android.jdrd.robot.activity.MainActivity">
-
-    <TextView
-        android:id="@+id/content_tvad"
+    <RelativeLayout
+        android:id="@+id/main"
+        android:background="@color/darkkhaki"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:text="@string/main"
+            />
+    </RelativeLayout>
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="60dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/deskname"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            />
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

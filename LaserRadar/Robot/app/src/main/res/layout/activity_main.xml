@@ -5,7 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.jdrd.robot.activity.MainActivity">
+    <RelativeLayout
+        android:id="@+id/main"
+        android:background="@color/darkkhaki"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:text="@string/main"
+            />
+    </RelativeLayout>
     <LinearLayout
+        android:layout_below="@+id/main"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,62 +29,20 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
-    <GridView
-        android:id="@+id/gview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="auto_fit"
-        android:columnWidth="80dp"
-        android:stretchMode="columnWidth"
-        />
-    <Button
-        android:id="@+id/select_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="select"
-        />
-    <Button
-        android:id="@+id/insert_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="insert"
-        />
-    <Button
-        android:id="@+id/update_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="update"
-        android:visibility="gone"
-        />
-    <Button
-        android:id="@+id/delete_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="delete"
-        />
-    <Button
-        android:id="@+id/select_table_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="select_table"
-        android:visibility="gone"
-        />
-    <Button
-        android:id="@+id/insert_table_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="insert_table"
-        android:visibility="gone"
-        />
-    <TextView
-        android:id="@+id/content_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <GridView
+            android:id="@+id/gview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="auto_fit"
+            android:columnWidth="80dp"
+            android:stretchMode="columnWidth"
+            />
     </LinearLayout>
     <RelativeLayout
+        android:layout_below="@+id/main"
         android:id="@+id/map_right_Ralative"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@null"
         android:layout_alignParentLeft="true">
         <ImageView
@@ -82,11 +56,75 @@
             />
         <LinearLayout
             android:id="@+id/linearlayout_all"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:layout_alignParentLeft="true"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:background="@mipmap/bg"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+            <ListView
+                android:id="@+id/area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
         </LinearLayout>
     </RelativeLayout>
+
+
+
+
+
+
+
+    <Button android:id="@+id/button_composer_sleep"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="@mipmap/composer_sleep"
+        android:layout_marginBottom="10dip" android:layout_marginLeft="10dip"
+        android:layout_alignParentBottom="true">
+    </Button>
+
+    <Button android:id="@+id/button_composer_thought"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="@mipmap/composer_thought"
+        android:layout_marginBottom="10dip" android:layout_marginLeft="10dip"
+        android:layout_alignParentBottom="true" android:layout_above="@id/button_composer_sleep">
+    </Button>
+
+    <Button android:id="@+id/button_composer_music"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="@mipmap/composer_music"
+        android:layout_marginBottom="10dip" android:layout_marginLeft="10dip"
+        android:layout_alignParentBottom="true">
+    </Button>
+
+    <Button android:id="@+id/button_composer_place"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="@mipmap/composer_place"
+        android:layout_marginBottom="10dip" android:layout_marginLeft="10dip"
+        android:layout_alignParentBottom="true" android:layout_above="@id/button_composer_music">
+    </Button>
+
+
+    <Button android:id="@+id/button_composer_with"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="@mipmap/composer_with"
+        android:layout_marginBottom="10dip" android:layout_marginLeft="10dip"
+        android:layout_alignParentBottom="true" android:layout_above="@id/button_composer_place">
+    </Button>
+
+
+    <Button android:id="@+id/button_composer_camera"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="@mipmap/composer_camera"
+        android:layout_marginBottom="10dip" android:layout_marginLeft="10dip"
+        android:layout_alignParentBottom="true" android:layout_above="@id/button_composer_with">
+    </Button>
+
+
+    <Button android:id="@+id/button_friends_delete"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="@mipmap/friends_delete"
+        android:layout_marginBottom="10dip" android:layout_marginLeft="10dip"
+        android:layout_alignParentBottom="true" android:layout_above="@id/button_composer_camera">
+    </Button>
+
 </RelativeLayout>
