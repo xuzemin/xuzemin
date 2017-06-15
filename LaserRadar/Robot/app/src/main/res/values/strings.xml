@@ -25,8 +25,12 @@
         <item>CREATE TABLE area (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)</item>
         <item>CREATE TABLE desk (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,area INTEGER)</item>
         <item>CREATE TABLE command (id INTEGER PRIMARY KEY AUTOINCREMENT,type INTEGER,desk INTERGER,goal INTERGER,direction INTERGER,
-            speed INTERGER,music INTERGER,trouble INTERGER,Error INTERGER,outime INTERGER,shownumber INTERGER,showcolor INTERGER)</item>
-        <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT,ip INTEGER,electric INTERGER,type INTERGER ,lastlocation INTEGER)</item>
+            speed INTERGER,music INTERGER,obstacle INTERGER,obstacle1 INTERGER,obstacle2 INTERGER,obstacle3 INTERGER,obstacle4 INTERGER,
+            Error INTERGER,outime INTERGER,shownumber INTERGER,showcolor INTERGER)</item>
+        <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT ,ip TEXT ,name TEXT ,outline INTERGER ,electric INTERGER ,
+            state INTERGER , commandnum INTERGER ,excute INTERGER , excutetime INTERGER ,commandstate INTERGER ,lastcommandstate INTERGER
+            ,lastlocation INTEGER)</item>
+        <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)</item>
     </array>
 
     <array name="UPDATE_TABLE_SQL">

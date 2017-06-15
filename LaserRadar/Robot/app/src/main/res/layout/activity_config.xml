@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/gray"
     tools:context="com.android.jdrd.robot.activity.MainActivity">
     <RelativeLayout
         android:id="@+id/main"
@@ -38,9 +39,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:text="@string/deskname"
+                    android:textColor="@color/black"
                     android:gravity="center"
                     android:textSize="25sp"
                     />
@@ -49,11 +51,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/add_desk"
+                    android:textColor="@color/black"
                     android:layout_weight="1"
                     />
                 <Button
                     android:id="@+id/change_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:text="@string/name_setting"
                     />

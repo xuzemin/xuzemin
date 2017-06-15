@@ -12,24 +12,25 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
-
-
 import com.android.jdrd.robot.R;
+import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ServerSocketUtil extends Service {
 
     private Context mContext;
-
+    private RobotDBHelper robotDBHelper;
     private static ServerSocket serverSocket;
     private static Socket socket1;
     private static Socket socket2;
@@ -41,12 +42,13 @@ public class ServerSocketUtil extends Service {
     public static Intent intent;
     private MyReceiver receiver;
     IntentFilter filter;
+    private static List<Map> socketlist = new ArrayList<>();
     private String function;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
         intent = new Intent();
 
         new Thread(new Runnable() {
@@ -62,7 +64,7 @@ public class ServerSocketUtil extends Service {
 
         receiver = new MyReceiver();
         filter = new IntentFilter();
-        filter.addAction("com.jdrd.fragment.Map");
+        filter.addAction("com.jdrd.activity.Main");
         registerReceiver(receiver, filter);
     }
 
@@ -92,7 +94,6 @@ public class ServerSocketUtil extends Service {
         serverSocket = new ServerSocket(port);
         Socket socket;
         Constant.debugLog("serverSocket is create....");
-
         while (true) {
             Constant.debugLog("waiting for connect....");
             socket = serverSocket.accept();
@@ -151,33 +152,22 @@ public class ServerSocketUtil extends Service {
                 if (out1 != null) {
                     out1.write(str.getBytes());
                 }
-//                if (ip.equals(Constant.ip_ros)) {
-//                    str = "*" + str + "#";
-//                    if (out2 != null) {
-//                        out2.write(str.getBytes());
-//                    }
-//                } else {
-//                    Constant.debugLog("IP不对");
-//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     class Task implements Runnable {
         private Socket socket;
-
         public Task(Socket socket) {
             this.socket = socket;
         }
-
         @Override
         public void run() {
-            final String ip = socket.getInetAddress().toString();
+            String str = socket.getInetAddress().toString();
+            final String  ip = str.substring(1,str.length());
             Constant.debugLog(ip);
-
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 @Override
@@ -185,14 +175,45 @@ public class ServerSocketUtil extends Service {
                     Toast.makeText(getApplicationContext(), "连接客户端IP为： " + ip, Toast.LENGTH_LONG).show();
                 }
             });
+            boolean IsHave = false;
+            List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
+            if(robotList !=null && robotList.size() > 0) {
+                for (int i = 0, size = robotList.size(); i < size; i++) {
+                    if (robotList.get(i).get("ip").equals(ip)) {
+                        IsHave = true;
+                        robotDBHelper.execSQL("update robot set outline= '1' where ip= '"+ ip +"'");
+                        break;
+                    }
+                }
+                if(!IsHave){
+                    robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
+                            "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation) values " +
+                            "('"+ip+"','"+ip+"',0,1,100,0,0,0,0,0,0,0)");
+                }
+            }else{
+                robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
+                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation) values " +
+                        "('"+ip+"','"+ip+"',0,1,100,0,0,0,0,0,0,0)");
+            }
+            intent.putExtra("msg", "robot_connect");
+            intent.setAction("com.jdrd.activity.Main");
+            sendBroadcast(intent);
+
+            Map<String, Object> map;
+            map = new HashMap<>();
+            map.put("socket", socket);
+            map.put("ip", ip);
+            socketlist.add(map);
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final Socket soa = socket;
+                    final Socket socket_cache = socket;
+                    final String socket_ip = ip;
                     while(true){
-                        try {
-                            sendDateToClient("aaaaa"+ip+soa.getPort(),ip,soa);
-                            Thread.sleep(1000);
+                        try{
+                            sendDateToClient("heartbeat",socket_ip,socket_cache);
+                            Thread.sleep(3000);
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
@@ -202,72 +223,58 @@ public class ServerSocketUtil extends Service {
                 }
             }).start();
 
-            if (ip.equals(Constant.ip_bigScreen)) {
-                socket1 = socket;
-            } else if (ip.equals(Constant.ip_ros)) {
-                socket2 = socket;
-            } else {
-                Constant.debugLog("IP不对");
-            }
-
+            Constant.debugLog(socketlist.toString());
             try {
-
-                if (ip.equals(Constant.ip_bigScreen)) {
-                    in1 = socket1.getInputStream();
-                    out1 = socket1.getOutputStream();
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            inputStreamParse(in1);
-                        }
-                    }).start();
-                } else if (ip.equals(Constant.ip_ros)) {
-                    in2 = socket2.getInputStream();
-                    out2 = socket2.getOutputStream();
-
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            inputStreamParse(in2);
-                        }
-                    }).start();
-                } else {
-                    Constant.debugLog("流为空");
-                }
-
+                in1 = socket.getInputStream();
+                out1 = socket.getOutputStream();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        inputStreamParse(in1,ip);
+                    }
+                }).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
-    public void inputStreamParse(InputStream in) {
+    public void inputStreamParse(InputStream in,String ip) {
         byte[] buffer = new byte[1024];
         int i = 0;
         boolean flag = false;
         boolean flag2 = false;
         int len = 0;
-
         while (true) {
-
             byte buf = 0;
             try {
                 buf = (byte) in.read();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            Constant.debugLog("buf内容：" + buf);
-
+            Constant.debugLog("buf内容：" + buf);
+            if(buf == -1){
+                Constant.debugLog("socketlist"+socketlist.toString());
+                int j = 0;
+                while(j < socketlist.size()){
+                    if(socketlist.get(j).get("ip").equals(ip)){
+                        socketlist.remove(j);
+                        robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
+                        Constant.debugLog("socketlist"+socketlist.toString());
+                        intent.putExtra("msg", "robot_unconnect");
+                        intent.setAction("com.jdrd.activity.Main");
+                        sendBroadcast(intent);
+                        break;
+                    }
+                }
+            }
             if ('*' == buf) {
                 flag = true;
                 flag2 = true;
             }
-
             if ('#' == buf) {
                 flag = false;
             }
-
             if (flag) {
                 buffer[i] = buf;
                 i++;
@@ -278,10 +285,8 @@ public class ServerSocketUtil extends Service {
                     ++len;
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
                     function = getJSONString(msg, "function");
-//                    savePowerData();
-//                    saveWaterStatus();
                     intent.putExtra("msg", msg);
-                    intent.setAction("com.jdrd.fragment.Map");
+                    intent.setAction("com.jdrd.activity.Main");
                     sendBroadcast(intent);
 
                     i = 0;
@@ -295,7 +300,6 @@ public class ServerSocketUtil extends Service {
                 Constant.debugLog((char) buf + "");
                 Constant.debugLog("数据格式不对");
             }
-
             if (buf == -1) {
                 break;
             }
@@ -356,5 +360,4 @@ public class ServerSocketUtil extends Service {
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
-
 }

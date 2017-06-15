@@ -1,22 +1,19 @@
 package com.android.jdrd.robot.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -27,47 +24,60 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 import com.android.jdrd.robot.R;
+import com.android.jdrd.robot.adapter.GridViewAdapter;
 import com.android.jdrd.robot.dialog.MyDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.service.ServerSocketUtil;
 import com.android.jdrd.robot.service.SetStaticIPService;
 import com.android.jdrd.robot.util.Constant;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import android.widget.RelativeLayout.LayoutParams;
 
 public class MainActivity extends Activity implements View.OnClickListener, Animation.AnimationListener {
 
+    private MyReceiver receiver;
     private RobotDBHelper robotDBHelper;
-    private List<Map> areaList,deskList;
+    private static List<Map> areaList = new ArrayList<>(),deskList = new ArrayList<>(),robotList = new ArrayList<>();
     private LinearLayout linearlayout_all;
     private RelativeLayout map_right_Ralative;
     private ImageView imgViewmapnRight;
-    private GridView gview;
+    private GridView deskview,robotgirdview;
     private List<Map<String, Object>> Areadata_list =  new ArrayList<>();
     private List<Map<String, Object>> Deskdata_list =  new ArrayList<>();
+    private static List<Map> Robotdata_list =  new ArrayList<>();
     private SimpleAdapter desk_adapter,area_adapter;
     private static boolean DeskIsEdit = false,AreaIsEdit = false;
     private boolean IsRight = false;
     private ListView area;
     private static int CURRENT_AREA_id = 0;
+    private final String [] from ={"image","text"};
+    private final int [] to = {R.id.image,R.id.text};
+    private GridViewAdapter gridViewAdapter;
 
-    private Button buttonCamera, buttonDelete, buttonWith, buttonPlace, buttonMusic, buttonThought, buttonSleep;
-    private Animation animationTranslate, animationRotate, animationScale;
-    private static int width, height;
-    private LayoutParams params = new LayoutParams(0, 0);
-    private static Boolean isClick = false;
-    private TextView refresh;
+//    private Button buttonCamera, buttonDelete, buttonWith, buttonPlace, buttonMusic, buttonThought, buttonSleep;
+//    private Animation animationTranslate, animationRotate, animationScale;
+//    private static int width, height;
+//    private LayoutParams params = new LayoutParams(0, 0);
+//    private static Boolean isClick = false;
+//    private TextView refresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
+        // 隐藏标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 隐藏状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
@@ -84,13 +94,20 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         map_right_Ralative = (RelativeLayout) findViewById(R.id.map_right_Ralative);
         area = (ListView) findViewById(R.id.area);
         imgViewmapnRight.setOnClickListener(this);
-        gview = (GridView) findViewById(R.id.gview);
+        robotgirdview  = (GridView) findViewById(R.id.robotgirdview);
+
+        robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),Robotdata_list.get(position).toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        deskview = (GridView) findViewById(R.id.gview);
         //获取数据
-        String [] from ={"image","text"};
-        int [] to = {R.id.image,R.id.text};
         desk_adapter = new SimpleAdapter(this, Deskdata_list, R.layout.item, from, to);
-        gview.setAdapter(desk_adapter);
-        gview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        deskview.setAdapter(desk_adapter);
+        deskview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Constant.debugLog("position"+position);
@@ -98,9 +115,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 Constant.debugLog(areaList.toString());
                 if(areaList != null && areaList.size() > 0){
                     if(DeskIsEdit){
-                        if(position == gview.getCount() -1){
+                        if(position == 0){
                             DeskIsEdit = false;
-                        }else if(position == gview.getCount() -2){
+                        }else if(position == 1){
                             Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
                             intent.putExtra("area", CURRENT_AREA_id);
                             startActivity(intent);
@@ -112,7 +129,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         }
                         getDeskData();
                     }else {
-                        if(position == gview.getCount() -1){
+                        if(position == 0){
                             DeskIsEdit = true;
                         }else {
                             Toast.makeText(getApplicationContext(), Deskdata_list.get(position).get("text").toString(), Toast.LENGTH_SHORT).show();
@@ -132,17 +149,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 Constant.debugLog("position"+position);
                 Constant.debugLog("AreaIsEdit"+AreaIsEdit);
                 if(AreaIsEdit){
-                    if(position == area.getCount() -1){
+                    if(position == 0){
                         AreaIsEdit = false;
-                    }else if(position == area.getCount() -2){
+                    }else if(position == 1){
                         dialog();
                     }else{
-                        CURRENT_AREA_id = (int) Areadata_list.get(position).get("id");
                         dialog(Areadata_list.get(position).get("text").toString(),(int)Areadata_list.get(position).get("id"));
                     }
                     getAreaData();
                 }else{
-                    if(position == area.getCount() -1){
+                    if(position == 0){
                         AreaIsEdit = true;
                     }else{
                         startAnimationRight();
@@ -154,8 +170,47 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         });
-
 //        initialButton();
+    }
+
+    private void setGridView() {
+        int size = Robotdata_list.size();
+        int length = 100;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int gridviewWidth = (int) (size * (length + 4) * density);
+        int itemWidth = (int) (length * density);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+        robotgirdview.setLayoutParams(params); // 重点
+        robotgirdview.setColumnWidth(itemWidth); // 重点
+        robotgirdview.setHorizontalSpacing(5); // 间距
+        robotgirdview.setStretchMode(GridView.NO_STRETCH);
+        robotgirdview.setNumColumns(size); // 重点
+        gridViewAdapter = new GridViewAdapter(getApplicationContext(),
+                Robotdata_list);
+        robotgirdview.setAdapter(gridViewAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        receiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.jdrd.activity.Main");
+        if(receiver != null ){
+            this.registerReceiver(receiver,filter);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if( receiver !=null) {
+            unregisterReceiver(receiver);
+        }
     }
 
     @Override
@@ -164,10 +219,17 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         getAreaData();
         if(CURRENT_AREA_id == 0){
             if(areaList !=null && areaList.size() >0){
-                CURRENT_AREA_id = (int) Areadata_list.get(0).get("id");
+                CURRENT_AREA_id = (int) Areadata_list.get(1).get("id");
             }
         }
         getDeskData();
+//        robotDBHelper.execSQL("delete from robot where id = '5'");
+//        robotDBHelper.execSQL("insert into  robot (name,ip,state,outline) values ('新建机器人','192.168.1.120',1,1)");
+        getRobotData();
+        gridViewAdapter.notifyDataSetInvalidated();
+//        gridViewAdapter = new GridViewAdapter(getApplicationContext(),
+//                Robotdata_list);
+//        robotgirdview.setAdapter(gridViewAdapter);
     }
 
     @Override
@@ -185,12 +247,26 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         try {
             deskList = robotDBHelper.queryListMap("select * from desk where area = '"+CURRENT_AREA_id+"'" ,null);
             Log.e("Robot",deskList.toString());
+            Log.e("Robot","CURRENT_AREA_id"+CURRENT_AREA_id);
         }catch (Exception e){
             e.printStackTrace();
         }
+        Map<String, Object> map;
+        map = new HashMap<>();
+        map.put("image", R.mipmap.zuo_xs);
+        map.put("id", 0);
+        map.put("text",getString(R.string.config_redact));
+        Deskdata_list.add(map);
+        if(DeskIsEdit){
+            map = new HashMap<>();
+            map.put("image", R.mipmap.zuo_xs);
+            map.put("id", 0);
+            map.put("text",getString(R.string.config_add));
+            Deskdata_list.add(map);
+        }
         if(deskList !=null && deskList.size() >0){
             for(int i=0 ,size = deskList.size();i<size;i++){
-                Map<String, Object> map = new HashMap<>();
+                map = new HashMap<>();
                 if(DeskIsEdit){
                     map.put("image", R.mipmap.ic_launcher);
                 }else{
@@ -202,20 +278,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 Deskdata_list.add(map);
             }
         }
-        if(DeskIsEdit){
-            Map<String, Object> map = new HashMap<>();
-            map.put("image", R.mipmap.zuo_xs);
-            map.put("id", 0);
-            map.put("text",getString(R.string.config_add));
-            Deskdata_list.add(map);
-        }
-        Map<String, Object> map = new HashMap<>();
-        map.put("image", R.mipmap.zuo_xs);
-        map.put("id", 0);
-        map.put("text",getString(R.string.config_redact));
-        Deskdata_list.add(map);
         desk_adapter.notifyDataSetChanged();
         return Deskdata_list;
+    }
+
+    public List<Map> getRobotData(){
+        Robotdata_list.clear();
+        try {
+            robotList = robotDBHelper.queryListMap("select * from robot " ,null);
+            Log.e("Robot",robotList.toString());
+            for(int i =0 ,size = robotList.size();i<robotList.size();i++){
+                Robotdata_list.add(robotList.get(i));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        setGridView();
+        return Robotdata_list;
     }
 
     public List<Map<String, Object>> getAreaData(){
@@ -226,7 +305,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         }catch (Exception e){
             e.printStackTrace();
         }
+
         Map<String, Object> map ;
+        map = new HashMap<>();
+        map.put("image", R.mipmap.zuo_xs);
+        map.put("text",getString(R.string.config_redact));
+        Areadata_list.add(map);
+        if(AreaIsEdit){
+            map = new HashMap<>();
+            map.put("image", R.mipmap.zuo_xs);
+            map.put("text",getString(R.string.config_add));
+            Areadata_list.add(map);
+        }
         if(areaList !=null && areaList.size() >0){
             for(int i=0 ,size = areaList.size();i<size;i++){
                 map = new HashMap<>();
@@ -240,16 +330,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 Areadata_list.add(map);
             }
         }
-        if(AreaIsEdit){
-            map = new HashMap<>();
-            map.put("image", R.mipmap.zuo_xs);
-            map.put("text",getString(R.string.config_add));
-            Areadata_list.add(map);
-        }
-        map = new HashMap<>();
-        map.put("image", R.mipmap.zuo_xs);
-        map.put("text",getString(R.string.config_redact));
-        Areadata_list.add(map);
         area_adapter.notifyDataSetChanged();
         return Areadata_list;
     }
@@ -282,7 +362,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     @Override
     public void onAnimationStart(Animation animation) {
+
     }
+
     @Override
     public void onAnimationEnd(Animation animation) {
         map_right_Ralative.clearAnimation();
@@ -295,8 +377,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             imgViewmapnRight.setImageResource(R.mipmap.zuo_xs);
         }
     }
+
     @Override
     public void onAnimationRepeat(Animation animation) {
+
     }
 
     private MyDialog dialog ;
@@ -609,4 +693,41 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 //        animationTranslate.setDuration(durationMillis);
 //        return animationTranslate;
 //    }
+
+
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String StringE = intent.getStringExtra("msg");
+            Constant.debugLog("msg"+StringE);
+            if(StringE !=null && !StringE.equals("")){
+                pasreJson(StringE);
+            }
+        }
+    }
+    public void pasreJson(String string){
+        if(string.equals("robot_connect") || string.equals("robot_unconnect")){
+            getRobotData();
+        }else {
+            JSONObject object;
+            try {
+                object = new JSONObject(string);
+                String type = object.getString(Constant.Type);
+                String funtion = object.getString(Constant.Function);
+                String data = object.getString(Constant.Data);
+                Constant.debugLog("message" + object.toString());
+                if (object != null) {
+                    if (type.equals(Constant.State)) {
+                        if (funtion.equals(Constant.Navigation)) {
+                        } else if (funtion.equals(Constant.Camera)) {
+                        } else if (funtion.equals(Constant.Peoplesearch)) {
+                        } else if (funtion.equals(Constant.Obstacle)) {
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -3,9 +3,7 @@ package com.android.jdrd.robot.helper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
 import com.android.jdrd.robot.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
