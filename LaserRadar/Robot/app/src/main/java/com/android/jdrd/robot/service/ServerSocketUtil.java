@@ -253,21 +253,6 @@ public class ServerSocketUtil extends Service {
                 e.printStackTrace();
             }
             Constant.debugLog("buf内容：" + buf);
-            if(buf == -1){
-                Constant.debugLog("socketlist"+socketlist.toString());
-                int j = 0;
-                while(j < socketlist.size()){
-                    if(socketlist.get(j).get("ip").equals(ip)){
-                        socketlist.remove(j);
-                        robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
-                        Constant.debugLog("socketlist"+socketlist.toString());
-                        intent.putExtra("msg", "robot_unconnect");
-                        intent.setAction("com.jdrd.activity.Main");
-                        sendBroadcast(intent);
-                        break;
-                    }
-                }
-            }
             if ('*' == buf) {
                 flag = true;
                 flag2 = true;
@@ -301,24 +286,26 @@ public class ServerSocketUtil extends Service {
                 Constant.debugLog("数据格式不对");
             }
             if (buf == -1) {
+                Constant.debugLog("socketlist"+socketlist.toString());
+                int j = 0;
+                while(j < socketlist.size()){
+                    if(socketlist.get(j).get("ip").equals(ip)){
+                        socketlist.remove(j);
+                        robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
+                        Constant.debugLog("socketlist"+socketlist.toString());
+                        intent.putExtra("msg", "robot_unconnect");
+                        intent.setAction("com.jdrd.activity.Main");
+                        sendBroadcast(intent);
+                        break;
+                    }
+                }
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
-
-            /*} catch (IOException e) {
-                Constant.debugLog("异常了");
-                e.printStackTrace();
-            }*/
-
-            /*msg = new String(buffer, 0, len);
-            if (msg != null) {
-                Constant.debugLog("msg = " + msg.toString() + "  ip地址： " + ip);
-            } else {
-                Constant.debugLog("hehe, msg为空");
-            }
-            intent.putExtra("msg", msg);
-            intent.setAction("com.jdrd.fragment.Map");
-            sendBroadcast(intent);*/
-
         }
     }
 

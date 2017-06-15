@@ -94,6 +94,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         map_right_Ralative = (RelativeLayout) findViewById(R.id.map_right_Ralative);
         area = (ListView) findViewById(R.id.area);
         imgViewmapnRight.setOnClickListener(this);
+        findViewById(R.id.config_redact).setOnClickListener(this);
         robotgirdview  = (GridView) findViewById(R.id.robotgirdview);
 
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,12 +117,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 if(areaList != null && areaList.size() > 0){
                     if(DeskIsEdit){
                         if(position == 0){
-                            DeskIsEdit = false;
-                        }else if(position == 1){
                             Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
                             intent.putExtra("area", CURRENT_AREA_id);
                             startActivity(intent);
-                        } else {
+                        }else {
                             Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
                             intent.putExtra("area", CURRENT_AREA_id);
                             intent.putExtra("id", (Integer) Deskdata_list.get(position).get("id"));
@@ -129,11 +128,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         }
                         getDeskData();
                     }else {
-                        if(position == 0){
-                            DeskIsEdit = true;
-                        }else {
-                            Toast.makeText(getApplicationContext(), Deskdata_list.get(position).get("text").toString(), Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(getApplicationContext(), Deskdata_list.get(position).get("text").toString(), Toast.LENGTH_SHORT).show();
                         getDeskData();
                     }
                 }else{Toast.makeText(getApplicationContext(),"请添加并选择区域",Toast.LENGTH_SHORT).show();
@@ -239,6 +234,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             case R.id.imgViewmapnRight:
                 startAnimationRight();
                 break;
+            case R.id.config_redact:
+                if(DeskIsEdit){
+                    DeskIsEdit = false;
+                }else{
+                    DeskIsEdit = true;
+                }
+                getDeskData();
+                break;
         }
     }
 
@@ -252,11 +255,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             e.printStackTrace();
         }
         Map<String, Object> map;
-        map = new HashMap<>();
-        map.put("image", R.mipmap.zuo_xs);
-        map.put("id", 0);
-        map.put("text",getString(R.string.config_redact));
-        Deskdata_list.add(map);
+//        map = new HashMap<>();
+//        map.put("image", R.mipmap.zuo_xs);
+//        map.put("id", 0);
+//        map.put("text",getString(R.string.config_redact));
+//        Deskdata_list.add(map);
         if(DeskIsEdit){
             map = new HashMap<>();
             map.put("image", R.mipmap.zuo_xs);
