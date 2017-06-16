@@ -14,7 +14,7 @@ public class Constant {
     static int prefix = 24;
     static String IP = "";
     //
-    static final String IPLast = "230";
+    static final String IPLast = "178";
     static String isConnectSocket = "";
 //    public static final String wifiname = "TimeBox_8b319a";
 //    public static final String password = "12345678";
@@ -29,7 +29,7 @@ public class Constant {
     //当前缓存状态
     //地图状态缓存
     //Socket服务器端口
-    public static int ServerPort = 12345;
+    public static int ServerPort = 1477;
 //    public static String ip_bigScreen = "/192.168.88.110";
 //    public static String ip_ros = "/192.168.88.101";
 //    测试用IP

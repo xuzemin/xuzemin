@@ -26,8 +26,8 @@
         <item>CREATE TABLE command (id INTEGER PRIMARY KEY AUTOINCREMENT,type INTEGER,desk INTERGER,goal INTERGER,direction INTERGER,
             speed INTERGER,music INTERGER,obstacle INTERGER,obstacle1 INTERGER,obstacle2 INTERGER,obstacle3 INTERGER,obstacle4 INTERGER,
             Error INTERGER,outime INTERGER,shownumber INTERGER,showcolor INTERGER)</item>
-        <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT ,ip TEXT ,name TEXT ,outline INTERGER ,electric INTERGER ,
-            state INTERGER , commandnum INTERGER ,excute INTERGER , excutetime INTERGER ,commandstate INTERGER ,lastcommandstate INTERGER
+        <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT ,ip TEXT ,name TEXT ,outline INTERGER ,electric INTERGER ,area INTERGER,
+            state INTERGER,robotstate INTERGER , commandnum INTERGER ,excute INTERGER , excutetime INTERGER ,commandstate INTERGER ,lastcommandstate INTERGER
             ,lastlocation INTEGER)</item>
         <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)</item>
     </array>

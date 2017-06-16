@@ -32,8 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.DeskConfigPathAcitivty">
-        </activity>
+        <activity android:name=".activity.DeskConfigPathAcitivty"/>
+        <activity android:name=".activity.RobotConfigActivity"/>
         <service
             android:name=".service.SetStaticIPService"
             android:enabled="true"

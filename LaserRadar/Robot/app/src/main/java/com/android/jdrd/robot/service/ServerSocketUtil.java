@@ -34,10 +34,8 @@ public class ServerSocketUtil extends Service {
     private static ServerSocket serverSocket;
     private static Socket socket1;
     private static Socket socket2;
-    private static InputStream in1 = null;
-    private static InputStream in2 = null;
-    private static OutputStream out1 = null;
-    private static OutputStream out2 = null;
+    private static InputStream in = null;
+    private static OutputStream out = null;
     private static String msg = null;
     public static Intent intent;
     private MyReceiver receiver;
@@ -147,10 +145,14 @@ public class ServerSocketUtil extends Service {
     public static synchronized void sendDateToClient(String str, String ip,Socket socket) throws IOException {
 
         try {
-            out1 = socket.getOutputStream();
-            if (ip != null) {
-                if (out1 != null) {
-                    out1.write(str.getBytes());
+            if(socket.isClosed()){
+
+            }else {
+                out = socket.getOutputStream();
+                if (ip != null) {
+                    if (out != null) {
+                        out.write(str.getBytes());
+                    }
                 }
             }
         } catch (Exception e) {
@@ -181,14 +183,15 @@ public class ServerSocketUtil extends Service {
                 for (int i = 0, size = robotList.size(); i < size; i++) {
                     if (robotList.get(i).get("ip").equals(ip)) {
                         IsHave = true;
-                        robotDBHelper.execSQL("update robot set outline= '1' where ip= '"+ ip +"'");
+                        robotDBHelper.execSQL("update robot set outline = '1' where ip= '"+ ip +"'");
+                        Constant.debugLog("socketlist"+socketlist.toString());
                         break;
                     }
                 }
                 if(!IsHave){
                     robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
                             "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation) values " +
-                            "('"+ip+"','"+ip+"',0,1,100,0,0,0,0,0,0,0)");
+                            "('新连接机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0)");
                 }
             }else{
                 robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
@@ -199,43 +202,73 @@ public class ServerSocketUtil extends Service {
             intent.setAction("com.jdrd.activity.Main");
             sendBroadcast(intent);
 
-            Map<String, Object> map;
-            map = new HashMap<>();
-            map.put("socket", socket);
-            map.put("ip", ip);
-            socketlist.add(map);
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     final Socket socket_cache = socket;
                     final String socket_ip = ip;
-                    while(true){
-                        try{
-                            sendDateToClient("heartbeat",socket_ip,socket_cache);
-                            Thread.sleep(3000);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
+                    while(true) {
+                        try {
+                            if(socket_cache.isClosed()){
+                                break;
+                            }else{
+                                sendDateToClient("heartbead" + socket_ip + "getPort" + socket_cache.getPort(), socket_ip, socket_cache);
+                                Thread.sleep(3000);
+                            }
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
             }).start();
 
-            Constant.debugLog(socketlist.toString());
             try {
-                in1 = socket.getInputStream();
-                out1 = socket.getOutputStream();
+                in = socket.getInputStream();
+                out = socket.getOutputStream();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        inputStreamParse(in1,ip);
+                        inputStreamParse(in,ip);
                     }
                 }).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Constant.debugLog(IsHave+"IsHAVE");
+            if(IsHave){
+                int j = 0;
+                Constant.debugLog(socketlist.size()+"IsHAVE");
+                while(j < socketlist.size()){
+                    Constant.debugLog(socketlist.get(j).get("ip")+"socketlist.get(j).get(\"ip\")"+ip+"ip");
+                    if(socketlist.get(j).get("ip").equals(ip)){
+                        try {
+                            Constant.debugLog("inclose");
+                            ((InputStream)socketlist.get(j).get("in")).close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            Constant.debugLog("socketclose");
+                            ((Socket)socketlist.get(j).get("socket")).close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        socketlist.remove(j);
+                        Constant.debugLog("socketlist"+socketlist.toString());
+                        break;
+                    }
+                    j++;
+                    Constant.debugLog("j socketlist" +j);
+                }
+            }
+            Map<String, Object> map;
+            map = new HashMap<>();
+            map.put("socket", socket);
+            map.put("ip", ip);
+            map.put("in", in);
+            map.put("out", out);
+            socketlist.add(map);
         }
     }
 
@@ -245,6 +278,7 @@ public class ServerSocketUtil extends Service {
         boolean flag = false;
         boolean flag2 = false;
         int len = 0;
+        int len1 = 0;
         while (true) {
             byte buf = 0;
             try {
@@ -252,7 +286,8 @@ public class ServerSocketUtil extends Service {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Constant.debugLog("buf内容：" + buf);
+            len1++;
+            Constant.debugLog("buf内容：" + buf +"len1"+len1);
             if ('*' == buf) {
                 flag = true;
                 flag2 = true;
@@ -306,6 +341,9 @@ public class ServerSocketUtil extends Service {
                 }
                 break;
             }
+            if (buf == 0) {
+                break;
+            }
         }
     }
 
@@ -340,6 +378,9 @@ public class ServerSocketUtil extends Service {
         //若通讯服务挂掉，再次开启服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
+        intent.putExtra("msg", "robot_destory");
+        intent.setAction("com.jdrd.activity.Main");
+        sendBroadcast(intent);
         super.onDestroy();
     }
 

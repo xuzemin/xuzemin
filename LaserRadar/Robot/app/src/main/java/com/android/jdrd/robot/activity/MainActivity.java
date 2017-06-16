@@ -100,7 +100,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),Robotdata_list.get(position).toString(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
+                intent.putExtra("id", (Integer) Robotdata_list.get(position).get("id"));
+                startActivity(intent);
             }
         });
 
@@ -206,6 +208,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         if( receiver !=null) {
             unregisterReceiver(receiver);
         }
+        robotDBHelper.execSQL("update robot set outline= '0' ");
     }
 
     @Override
@@ -288,9 +291,20 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     public List<Map> getRobotData(){
         Robotdata_list.clear();
         try {
-            robotList = robotDBHelper.queryListMap("select * from robot " ,null);
+            robotList = robotDBHelper.queryListMap("select * from robot where outline = 1" ,null);
             Log.e("Robot",robotList.toString());
-            for(int i =0 ,size = robotList.size();i<robotList.size();i++){
+            for(int i =0 ,size = robotList.size();i< size ; i++){
+                Robotdata_list.add(robotList.get(i));
+                Constant.debugLog(Robotdata_list.toString());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try {
+            robotList.clear();
+            robotList = robotDBHelper.queryListMap("select * from robot where outline = 0 " ,null);
+            Log.e("Robot",robotList.toString());
+            for(int i =0 ,size = robotList.size();i< size ; i++){
                 Robotdata_list.add(robotList.get(i));
             }
         }catch (Exception e){
@@ -711,6 +725,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     public void pasreJson(String string){
         if(string.equals("robot_connect") || string.equals("robot_unconnect")){
             getRobotData();
+        }else if(string.equals("robot_destory")){
+            robotDBHelper.execSQL("update robot set outline= '0' ");
         }else {
             JSONObject object;
             try {
