@@ -40,7 +40,7 @@ public class ServerSocketUtil extends Service {
     public static Intent intent;
     private MyReceiver receiver;
     IntentFilter filter;
-    private static List<Map> socketlist = new ArrayList<>();
+    public static List<Map> socketlist = new ArrayList<>();
     private String function;
 
     @Override

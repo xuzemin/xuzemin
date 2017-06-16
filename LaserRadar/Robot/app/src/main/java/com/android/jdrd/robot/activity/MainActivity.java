@@ -168,6 +168,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             }
         });
 //        initialButton();
+        robotDBHelper.execSQL("update robot set outline= '0' ");
     }
 
     private void setGridView() {
@@ -291,21 +292,20 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     public List<Map> getRobotData(){
         Robotdata_list.clear();
         try {
-            robotList = robotDBHelper.queryListMap("select * from robot where outline = 1" ,null);
-            Log.e("Robot",robotList.toString());
+            robotList = robotDBHelper.queryListMap("select * from robot" ,null);
             for(int i =0 ,size = robotList.size();i< size ; i++){
+                int j = 0;
+                int h = ServerSocketUtil.socketlist.size();
+                while(j<h){
+                    if(robotList.get(i).get("ip").equals(ServerSocketUtil.socketlist.get(j).get("ip"))){
+                        robotDBHelper.execSQL("update robot set outline= '1' where ip = '"+robotList.get(i).get("ip")+"'");
+                        robotList.get(i).put("outline",1);
+                        break;
+                    }
+                    j++;
+                }
                 Robotdata_list.add(robotList.get(i));
                 Constant.debugLog(Robotdata_list.toString());
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        try {
-            robotList.clear();
-            robotList = robotDBHelper.queryListMap("select * from robot where outline = 0 " ,null);
-            Log.e("Robot",robotList.toString());
-            for(int i =0 ,size = robotList.size();i< size ; i++){
-                Robotdata_list.add(robotList.get(i));
             }
         }catch (Exception e){
             e.printStackTrace();
