@@ -34,6 +34,7 @@
         </activity>
         <activity android:name=".activity.DeskConfigPathAcitivty"/>
         <activity android:name=".activity.RobotConfigActivity"/>
+        <activity android:name=".activity.RobotActivity"/>
         <service
             android:name=".service.SetStaticIPService"
             android:enabled="true"

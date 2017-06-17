@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gray"
+    android:background="@color/white"
     tools:context="com.android.jdrd.robot.activity.MainActivity">
     <RelativeLayout
         android:id="@+id/main"
@@ -17,13 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
         <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="25sp"
             android:gravity="center"
             android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="@string/settings"
+            android:text="@string/desk_settings"
             />
     </RelativeLayout>
     <ScrollView
@@ -34,44 +35,266 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-            <LinearLayout
-                android:orientation="horizontal"
+            <View
                 android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_height="0.5dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="60dp">
                 <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/deskname"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="25sp"
-                    />
-                <EditText
-                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/add_desk"
-                    android:textColor="@color/black"
-                    android:layout_weight="1"
-                    />
-                <Button
-                    android:id="@+id/change_name"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/name_setting"
-                    />
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:text="@string/deskname_setting"/>
             </LinearLayout>
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/deskname"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        />
+                    <EditText
+                        android:id="@+id/deskname"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/add_desk"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="120dp"
+                        android:layout_toLeftOf="@+id/change_name"
+                        />
+                    <Button
+                        android:id="@+id/change_name"
+                        android:layout_width="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent"
+                        android:text="@string/btn_sure"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_height="0.5dp"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="@string/command_settings"
                     android:textSize="25sp"
                     />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="@dimen/btn_width"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/straight"
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
+
+                    <Button
+                        android:id="@+id/straight"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:text="@string/config_add" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="@dimen/btn_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/derail"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        />
+                    <Button
+                        android:id="@+id/derail"
+                        android:layout_width="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent"
+                        android:text="@string/config_add"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="@dimen/btn_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/rotato"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        />
+                    <Button
+                        android:id="@+id/rotato"
+                        android:layout_width="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent"
+                        android:text="@string/config_add"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="@dimen/btn_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/wait"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        />
+                    <Button
+                        android:id="@+id/wait"
+                        android:layout_width="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent"
+                        android:text="@string/config_add"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="@dimen/btn_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/puthook"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        />
+                    <Button
+                        android:id="@+id/puthook"
+                        android:layout_width="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent"
+                        android:text="@string/config_add"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="@dimen/btn_width"
+                        android:layout_height="match_parent"
+                        android:text="@string/lockhook"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        />
+                    <Button
+                        android:id="@+id/lockhook"
+                        android:layout_width="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent"
+                        android:text="@string/config_add"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:text="@string/added_settings"
+                    android:textSize="25sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <ListView
+                    android:id="@+id/added_command"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

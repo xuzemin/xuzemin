@@ -100,7 +100,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
+                Intent intent = new Intent(MainActivity.this, RobotActivity.class);
                 intent.putExtra("id", (Integer) Robotdata_list.get(position).get("id"));
                 startActivity(intent);
             }
@@ -113,11 +113,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         deskview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Constant.debugLog("position"+position);
+                getAreaData();
+                Constant.debugLog("position"+CURRENT_AREA_id);
                 Constant.debugLog("DeskIsEdit"+DeskIsEdit);
                 Constant.debugLog(areaList.toString());
-                if(areaList != null && areaList.size() > 0){
-                    if(DeskIsEdit){
+                if(areaList != null && areaList.size() > 0 && CURRENT_AREA_id !=0){
+                    if(DeskIsEdit ){
                         if(position == 0){
                             Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
                             intent.putExtra("area", CURRENT_AREA_id);
@@ -143,7 +144,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Constant.debugLog("position"+position);
+                getAreaData();
+                Constant.debugLog("position"+CURRENT_AREA_id);
                 Constant.debugLog("AreaIsEdit"+AreaIsEdit);
                 if(AreaIsEdit){
                     if(position == 0){
@@ -204,12 +206,17 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         if( receiver !=null) {
-            unregisterReceiver(receiver);
+            this.unregisterReceiver(receiver);
         }
         robotDBHelper.execSQL("update robot set outline= '0' ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -218,7 +225,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         getAreaData();
         if(CURRENT_AREA_id == 0){
             if(areaList !=null && areaList.size() >0){
-                CURRENT_AREA_id = (int) Areadata_list.get(1).get("id");
+                CURRENT_AREA_id = (int) areaList.get(0).get("id");
             }
         }
         getDeskData();
@@ -418,6 +425,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         });
+        dialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
     }
     private void dialog(String name, final int id) {
@@ -449,6 +462,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
                 robotDBHelper.execSQL("delete from desk where area= '"+ id +"'");
                 getAreaData();
+                if(areaList !=null && areaList.size() >0){
+                    CURRENT_AREA_id = (int) areaList.get(0).get("id");
+                }
                 getDeskData();
                 dialog.dismiss();
             }

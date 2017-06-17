@@ -4,17 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.jdrd.robot.R;
+import com.android.jdrd.robot.adapter.MyAdapter;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +32,11 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
     private RobotDBHelper robotDBHelper;
     private int deskid,areaid;
     private EditText name;
+    private Map deskconfiglist;
+    private ListView commandlistview;
+    private List<Map> command_list = new ArrayList<>();
     private boolean IsADD = false;
+    private MyAdapter myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,25 +49,56 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
 
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
 
+        name = (EditText) findViewById(R.id.deskname);
+        findViewById(R.id.change_name).setOnClickListener(this);
+        findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.straight).setOnClickListener(this);
+        findViewById(R.id.derail).setOnClickListener(this);
+        findViewById(R.id.rotato).setOnClickListener(this);
+        findViewById(R.id.wait).setOnClickListener(this);
+        findViewById(R.id.puthook).setOnClickListener(this);
+        findViewById(R.id.lockhook).setOnClickListener(this);
+        commandlistview = (ListView) findViewById(R.id.added_command);
+
         Intent intent =getIntent();// 收取 email
         deskid = intent.getIntExtra("id",0);
         areaid = intent.getIntExtra("area",0);
 
-        name = (EditText) findViewById(R.id.name);
-
         if(deskid == 0){
+            ((TextView)findViewById(R.id.title)).setText(R.string.desk_add);
             IsADD = true;
         }else{
+            ((TextView)findViewById(R.id.title)).setText(R.string.desk_settings);
             IsADD = false;
             List<Map> desklist = robotDBHelper.queryListMap("select * from desk where id = '"+ deskid +"'" ,null);
-            name.setHint(desklist.get(0).get("name").toString());
+            deskconfiglist = desklist.get(0);
+            name.setHint(deskconfiglist.get("name").toString());
+            ((TextView)findViewById(R.id.title)).setText(R.string.desk_deract);
         }
 
-        findViewById(R.id.setting_back).setOnClickListener(this);
-        findViewById(R.id.change_name).setOnClickListener(this);
+        myAdapter = new MyAdapter(this,command_list);
+        commandlistview.setAdapter(myAdapter);
+        commandlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
     }
 
+    public void refreshCommand(){
+        command_list.clear();
+        List<Map> list = robotDBHelper.queryListMap("select * from command where desk = '"+ deskid +"'" ,null);
+        command_list.addAll(list);
+        setListViewHeightBasedOnChildren(commandlistview);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshCommand();
+    }
 
     @Override
     protected void onDestroy() {
@@ -76,12 +116,12 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
                     Toast.makeText(getApplicationContext(),"名称不能为空",Toast.LENGTH_SHORT).show();
                 }else {
                     if(IsADD){
-//                        robotDBHelper.insert("desk",new String[]{"name","area"},new Object[]{name.getText().toString(),"'"+areaid+"'"});
                         robotDBHelper.execSQL("insert into desk (name,area) values ('"+name.getText().toString()+"','"+areaid+"')");
-                        Constant.debugLog("name"+name.getText().toString()+" areaid"+areaid);
                         List<Map> desklist = robotDBHelper.queryListMap("select * from desk where area = '"+areaid+"'" ,null);
-                        Constant.debugLog("desklist"+desklist.toString());
                         deskid = (int) desklist.get(desklist.size()-1).get("id");
+                        desklist = robotDBHelper.queryListMap("select * from desk where id = '"+ deskid +"'" ,null);
+                        deskconfiglist = desklist.get(0);
+                        ((TextView)findViewById(R.id.title)).setText(R.string.desk_deract);
                         IsADD = false;
                         Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                     }else{
@@ -90,6 +130,59 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
                     }
                 }
                 break;
+            case R.id.straight:
+                if(!IsADD){
+                    robotDBHelper.execSQL("insert into command (type,desk) values ('0','"+deskid+"')");
+                }
+                refreshCommand();
+                break;
+            case R.id.derail:
+                if(!IsADD){
+                    robotDBHelper.execSQL("insert into command (type,desk) values ('1','"+deskid+"')");
+                }
+                refreshCommand();
+                break;
+            case R.id.rotato:
+                if(!IsADD){
+                    robotDBHelper.execSQL("insert into command (type,desk) values ('2','"+deskid+"')");
+                }
+                refreshCommand();
+                break;
+            case R.id.wait:
+                if(!IsADD){
+                    robotDBHelper.execSQL("insert into command (type,desk) values ('3','"+deskid+"')");
+                }
+                refreshCommand();
+                break;
+            case R.id.puthook:
+                if(!IsADD){
+                    robotDBHelper.execSQL("insert into command (type,desk) values ('4','"+deskid+"')");
+                }
+                refreshCommand();
+                break;
+            case R.id.lockhook:
+                if(!IsADD){
+                    robotDBHelper.execSQL("insert into command (type,desk) values ('5','"+deskid+"')");
+                }
+                refreshCommand();
+                break;
         }
     }
+
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        MyAdapter listAdapter = (MyAdapter) commandlistview.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
+
 }

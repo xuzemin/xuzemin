@@ -190,13 +190,13 @@ public class ServerSocketUtil extends Service {
                 }
                 if(!IsHave){
                     robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
-                            "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation) values " +
-                            "('新连接机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0)");
+                            "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
+                            "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0)");
                 }
             }else{
                 robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
-                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation) values " +
-                        "('"+ip+"','"+ip+"',0,1,100,0,0,0,0,0,0,0)");
+                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
+                        "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0)");
             }
             intent.putExtra("msg", "robot_connect");
             intent.setAction("com.jdrd.activity.Main");

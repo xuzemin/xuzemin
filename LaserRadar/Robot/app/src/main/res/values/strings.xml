@@ -8,10 +8,37 @@
     <string name="change_area">请修改区域名称</string>
     <string name="add_area">请输入增加区域名称</string>
 
-    <string name="deskname">名称</string>
+    <string name="deskname_setting">设置桌名</string>
+    <string name="deskname">桌名</string>
+
+    <string name="straight">直行</string>
+    <string name="derail">脱轨运行</string>
+    <string name="rotato">脱轨旋转</string>
+    <string name="wait">等待退出</string>
+    <string name="puthook">放牵引钩</string>
+    <string name="lockhook">锁牵引钩</string>
+
+    <string name="name">名称:</string>
+    <string name="ip">IP地址:</string>
+    <string name="outline">在线状态:</string>
+    <string name="electric">电量电压:</string>
+    <string name="area">所属区域:</string>
+    <string name="state">运动状态:</string>
+    <string name="robot_state">机器人状态:</string>
+    <string name="command_num">指令总数:</string>
+    <string name="excute_command">执行指令:</string>
+    <string name="excute_time">执行时间:</string>
+    <string name="command_state">指令状态:</string>
+    <string name="last_command_state">前指令状态:</string>
+    <string name="last_location">最后坐标:</string>
+
     <string name="main">首页</string>
-    <string name="settings">设置</string>
-    <string name="command_settings">指令设置</string>
+    <string name="desk_add">添加桌子</string>
+    <string name="desk_settings">添加桌子</string>
+    <string name="desk_deract">编辑桌子</string>
+    <string name="robot_settings">设置</string>
+    <string name="command_settings">添加指令</string>
+    <string name="added_settings">已有指令</string>
     <string name="add_desk">请输入桌子名称</string>
     <string name="name_setting">确认修改</string>
 
