@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.GridViewAdapter;
 import com.android.jdrd.robot.dialog.MyDialog;
+import com.android.jdrd.robot.dialog.RobotDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.service.ServerSocketUtil;
 import com.android.jdrd.robot.service.SetStaticIPService;
@@ -36,6 +37,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.SocketImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -58,7 +62,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private static boolean DeskIsEdit = false,AreaIsEdit = false;
     private boolean IsRight = false;
     private ListView area;
-    private static int CURRENT_AREA_id = 0;
+    public static int CURRENT_AREA_id = 0;
     private final String [] from ={"image","text"};
     private final int [] to = {R.id.image,R.id.text};
     private GridViewAdapter gridViewAdapter;
@@ -131,10 +135,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         }
                         getDeskData();
                     }else {
-                        Toast.makeText(getApplicationContext(), Deskdata_list.get(position).get("text").toString(), Toast.LENGTH_SHORT).show();
-                        getDeskData();
+                        Constant.debugLog("position"+CURRENT_AREA_id);
+                        robotDialog();
                     }
-                }else{Toast.makeText(getApplicationContext(),"请添加并选择区域",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),"请添加并选择区域",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -473,6 +478,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         dialog.show();
     }
 
+    private RobotDialog robotDialog ;
+    private void robotDialog() {
+        robotDialog = new RobotDialog(this);
+        robotDialog.show();
+    }
 
 
 //    private void initialButton()

@@ -33,9 +33,6 @@ public class Constant {
 //    public static String ip_bigScreen = "/192.168.88.110";
 //    public static String ip_ros = "/192.168.88.101";
 //    测试用IP
-    public static String ip_bigScreen = "/192.168.88.110";
-    //Ros固定IP
-    public static String ip_ros = "/192.168.88.101";
     //是否打印日志
     private static final boolean isDebug = true;
     //日志标题

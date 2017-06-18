@@ -7,7 +7,7 @@
     <string name="config_redact">编辑</string>
     <string name="change_area">请修改区域名称</string>
     <string name="add_area">请输入增加区域名称</string>
-
+    <string name="choose_robot">请选择执行的机器人</string>
     <string name="deskname_setting">设置桌名</string>
     <string name="deskname">桌名</string>
 

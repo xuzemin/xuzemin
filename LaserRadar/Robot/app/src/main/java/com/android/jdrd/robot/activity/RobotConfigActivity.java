@@ -63,7 +63,6 @@ public class RobotConfigActivity extends Activity implements View.OnClickListene
         if(arealist!=null && arealist.size()>0){
             for(int i=0,size = arealist.size();i<size;i++){
                 map_Plan.add(arealist.get(i).get("name").toString());
-                break;
             }
         }
         adapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
