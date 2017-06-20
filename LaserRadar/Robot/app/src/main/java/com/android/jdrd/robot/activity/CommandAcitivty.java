@@ -61,6 +61,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         shownum = (EditText) findViewById(R.id.shownum);
         showcolor = (EditText) findViewById(R.id.showcolor);
 
+        findViewById(R.id.btn_delete).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
 
         List<Map> commandlist = robotDBHelper.queryListMap("select * from command where id = '"+ command_id +"'" ,null);
@@ -119,6 +120,10 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.btn_delete:
+                robotDBHelper.execSQL("delete from command where id = '"+command_id+"'");
                 finish();
                 break;
         }
