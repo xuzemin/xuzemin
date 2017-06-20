@@ -69,8 +69,32 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         if(commandlist !=null && commandlist.size() >0){
             commandconfig = commandlist.get(0);
             Constant.debugLog("commandconfig type"+(int)commandconfig.get("type"));
+
+//            goal.setSelection((int)commandconfig.get("goal"),true);
+            if(commandconfig.get("direction") !=null){
+                direction.setSelection((int)commandconfig.get("direction"),true);
+            }else{
+                direction.setSelection(0,true);
+            }
+
+            if(commandconfig.get("speed") !=null){
+                speed.setText(commandconfig.get("speed").toString());
+            }
+            if(commandconfig.get("mp3") !=null){
+                mp3.setText(commandconfig.get("mp3").toString());
+            }
+            if(commandconfig.get("outime") !=null){
+                outime.setText(commandconfig.get("outime").toString());
+            }
+            if(commandconfig.get("shownum") !=null){
+                shownum.setText(commandconfig.get("shownum").toString());
+            }
+            if(commandconfig.get("showcolor") !=null){
+                showcolor.setText(commandconfig.get("showcolor").toString());
+            }
             switch ((int)commandconfig.get("type")){
                 case 0:
+
                     break;
                 case 1:
                     findViewById(R.id.linear_goal).setVisibility(View.GONE);
@@ -99,8 +123,6 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         diretionAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
         diretionAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
         direction.setAdapter(diretionAdapter);
-
-
 
 
     }

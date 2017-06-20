@@ -71,18 +71,48 @@
     <LinearLayout
         android:layout_toRightOf="@+id/map_right_Ralative"
         android:layout_below="@+id/view"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
         <GridView
             android:id="@+id/gview"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:numColumns="auto_fit"
             android:columnWidth="80dp"
             android:stretchMode="columnWidth"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/up"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="前进"/>
+            <Button
+                android:id="@+id/down"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="后退"/>
+            <Button
+                android:id="@+id/left"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="左转"/>
+            <Button
+                android:id="@+id/right"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="右转"/>
+            <Button
+                android:id="@+id/stop"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="停止"/>
+        </LinearLayout>
     </LinearLayout>
     <RelativeLayout
         android:layout_below="@+id/main"

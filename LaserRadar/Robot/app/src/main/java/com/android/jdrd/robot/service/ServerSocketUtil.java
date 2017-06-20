@@ -202,26 +202,26 @@ public class ServerSocketUtil extends Service {
             intent.setAction("com.jdrd.activity.Main");
             sendBroadcast(intent);
 
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final Socket socket_cache = socket;
-                    final String socket_ip = ip;
-                    while(true) {
-                        try {
-                            if(socket_cache.isClosed()){
-                                break;
-                            }else{
-                                sendDateToClient("heartbead" + socket_ip + "getPort" + socket_cache.getPort(), socket_ip, socket_cache);
-                                Thread.sleep(3000);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
+//
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    final Socket socket_cache = socket;
+//                    final String socket_ip = ip;
+//                    while(true) {
+//                        try {
+//                            if(socket_cache.isClosed()){
+//                                break;
+//                            }else{
+//                                sendDateToClient("*s+5+#", socket_ip, socket_cache);
+//                                Thread.sleep(3000);
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }).start();
 
             try {
                 in = socket.getInputStream();

@@ -110,6 +110,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             }
         });
 
+        findViewById(R.id.up).setOnClickListener(this);
+        findViewById(R.id.down).setOnClickListener(this);
+        findViewById(R.id.left).setOnClickListener(this);
+        findViewById(R.id.right).setOnClickListener(this);
+        findViewById(R.id.stop).setOnClickListener(this);
+
         deskview = (GridView) findViewById(R.id.gview);
         //获取数据
         desk_adapter = new SimpleAdapter(this, Deskdata_list, R.layout.item, from, to);
@@ -136,7 +142,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         getDeskData();
                     }else {
                         Constant.debugLog("position"+CURRENT_AREA_id);
-                        robotDialog();
+                        robotDialog("*s#");
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),"请添加并选择区域",Toast.LENGTH_SHORT).show();
@@ -245,7 +251,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     @Override
     public void onClick(View v) {
-        List<Map> list;
         switch (v.getId()){
             case R.id.imgViewmapnRight:
                 startAnimationRight();
@@ -258,6 +263,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
                 getDeskData();
                 break;
+            case R.id.up:
+                robotDialog("*u#");
+                break;
+            case R.id.down:
+                robotDialog("*d#");
+                break;
+            case R.id.left:
+                robotDialog("*l#");
+                break;
+            case R.id.right:
+                robotDialog("*r#");
+                break;
+            case R.id.stop:
+                robotDialog("*s#");
+                break;
+
         }
     }
 
@@ -304,34 +325,31 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     public List<Map> getRobotData(){
         Robotdata_list.clear();
         try {
-            robotList = robotDBHelper.queryListMap("select * from robot where outline = 1" ,null);
-            for(int i =0 ,size = robotList.size();i< size ; i++){
-                int j = 0;
+            robotList = robotDBHelper.queryListMap("select * from robot" ,null);
+            Constant.debugLog("robotList"+robotList.toString());
+            List<Map> Robotdata_listcache =  new ArrayList<>();
+            int j;
+            Constant.debugLog("robotList.size()" + robotList.toString());
+            for(int i =0 ,size = robotList.size();i < size ; i++){
+                Constant.debugLog("size" + size +" ip"+robotList.get(i).get("ip").toString());
+                String ip = robotList.get(i).get("ip").toString();
+                j = 0;
                 int h = ServerSocketUtil.socketlist.size();
-                while(j<h){
-                    if(robotList.get(i).get("ip").equals(ServerSocketUtil.socketlist.get(j).get("ip"))){
+                while( j < h){
+                    if(ip.equals(ServerSocketUtil.socketlist.get(j).get("ip"))){
                         robotDBHelper.execSQL("update robot set outline= '1' where ip = '"+robotList.get(i).get("ip")+"'");
                         robotList.get(i).put("outline",1);
-                        break;
+                        Robotdata_listcache.add(robotList.get(i));
+                        robotList.remove(i);
                     }
                     j++;
+                    h = ServerSocketUtil.socketlist.size();
                 }
-                Robotdata_list.add(robotList.get(i));
             }
-            robotList = robotDBHelper.queryListMap("select * from robot where outline = 0" ,null);
-            for(int i =0 ,size = robotList.size();i< size ; i++){
-                int j = 0;
-                int h = ServerSocketUtil.socketlist.size();
-                while(j<h){
-                    if(robotList.get(i).get("ip").equals(ServerSocketUtil.socketlist.get(j).get("ip"))){
-                        robotDBHelper.execSQL("update robot set outline= '1' where ip = '"+robotList.get(i).get("ip")+"'");
-                        robotList.get(i).put("outline",1);
-                        break;
-                    }
-                    j++;
-                }
-                Robotdata_list.add(robotList.get(i));
-            }
+            Constant.debugLog("robotList"+Robotdata_listcache.toString());
+            Constant.debugLog("robotList"+robotList.toString());
+            Robotdata_list.addAll(Robotdata_listcache);
+            Robotdata_list.addAll(robotList);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -492,8 +510,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     }
 
     private RobotDialog robotDialog ;
-    private void robotDialog() {
-        robotDialog = new RobotDialog(this);
+    private void robotDialog(String str) {
+        robotDialog = new RobotDialog(this,str);
         robotDialog.show();
     }
 
@@ -755,9 +773,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         @Override
         public void onReceive(Context context, Intent intent) {
             String StringE = intent.getStringExtra("msg");
-            getAreaData();
-            getDeskData();
-            getRobotData();
             Constant.debugLog("msg"+StringE);
             if(StringE !=null && !StringE.equals("")){
                 pasreJson(StringE);

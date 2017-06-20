@@ -47,10 +47,12 @@ public class RobotDialog extends Dialog {
     private final String [] from ={"image","text"};
     private final int [] to = {R.id.image,R.id.text};
     private Context context;
-    public RobotDialog(Context context) {
+    private String str;
+    public RobotDialog(Context context,String str) {
         super(context, R.style.MyDialog);
         setCustomDialog();
         this.context = context;
+        this.str = str;
     }
 
     private void setCustomDialog() {
@@ -98,7 +100,7 @@ public class RobotDialog extends Dialog {
                     public void run() {
                         if (out != null) {
                             try {
-                                out.write(("aaa").getBytes());
+                                out.write(str.getBytes());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
