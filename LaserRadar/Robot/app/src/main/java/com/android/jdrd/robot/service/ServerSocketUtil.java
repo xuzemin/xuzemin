@@ -304,10 +304,42 @@ public class ServerSocketUtil extends Service {
                 if (msg != null) {
                     ++len;
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
-                    function = getJSONString(msg, "function");
-                    intent.putExtra("msg", msg);
-                    intent.setAction("com.jdrd.activity.Main");
-                    sendBroadcast(intent);
+//                    function = getJSONString(msg, "function");
+                    byte[] bytes = msg.getBytes();
+                    Constant.debugLog(bytes[0]+"bytes");
+                    String[] cstr = msg.split("/+");
+                    switch (bytes[0]) {
+                        case 97:
+                            Constant.debugLog(bytes[1]+"bytes");
+                            Constant.debugLog(bytes[2]+"bytes");
+                            if (bytes[1] == 43) {
+                                bytes = msg.substring(1, msg.length()).getBytes();
+                                for (int index = 0; i < bytes.length; i++) {
+                                    if (bytes[index] == 43) {
+//                                        robotDBHelper.execSQL("update robot set outline = '"+msg.substring(1,index+2)+"' where ip= '"+ ip +"'");
+                                        Constant.debugLog(msg.substring(1, index + 2) + "msg.substring(1,index+2)");
+                                    }
+                                }
+                            }
+                            break;
+                        case 98:
+                            break;
+                        case 99:
+                            break;
+                        case 100:
+                            break;
+                        case 101:
+                            break;
+                        //r
+                        case 114:
+                            break;
+                        //s
+                        case 115:
+                            break;
+                    }
+//                    intent.putExtra("msg", msg);
+//                    intent.setAction("com.jdrd.activity.Main");
+//                    sendBroadcast(intent);
 
                     i = 0;
                     for (int j = 0; j < buffer.length; j++) {
@@ -333,6 +365,7 @@ public class ServerSocketUtil extends Service {
                         sendBroadcast(intent);
                         break;
                     }
+                    j++;
                 }
                 try {
                     in.close();
