@@ -11,6 +11,14 @@
     <string name="deskname_setting">设置桌名</string>
     <string name="deskname">桌名</string>
 
+    <string name="goalname">站点</string>
+    <string name="direction">方向</string>
+    <string name="speed">速度</string>
+    <string name="mp3">MP3通道</string>
+    <string name="outime">超时时间</string>
+    <string name="shownum">显示编号</string>
+    <string name="showcolor">显示颜色</string>
+
     <string name="straight">直行</string>
     <string name="derail">脱轨运行</string>
     <string name="rotato">脱轨旋转</string>
@@ -36,7 +44,8 @@
     <string name="desk_add">添加桌子</string>
     <string name="desk_settings">添加桌子</string>
     <string name="desk_deract">编辑桌子</string>
-    <string name="robot_settings">设置</string>
+    <string name="command_deract">编辑命令</string>
+    <string name="robot_settings">机器人设置</string>
     <string name="command_settings">添加指令</string>
     <string name="added_settings">已有指令</string>
     <string name="add_desk">请输入桌子名称</string>
@@ -51,8 +60,7 @@
         <item>CREATE TABLE area (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)</item>
         <item>CREATE TABLE desk (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,area INTEGER)</item>
         <item>CREATE TABLE command (id INTEGER PRIMARY KEY AUTOINCREMENT,type INTEGER,desk INTERGER,goal INTERGER,direction INTERGER,
-            speed INTERGER,music INTERGER,obstacle INTERGER,obstacle1 INTERGER,obstacle2 INTERGER,obstacle3 INTERGER,obstacle4 INTERGER,
-            Error INTERGER,outime INTERGER,shownumber INTERGER,showcolor INTERGER)</item>
+            speed INTERGER,music INTERGER,Error INTERGER,outime INTERGER,shownumber INTERGER,showcolor INTERGER)</item>
         <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT ,ip TEXT ,name TEXT ,outline INTERGER ,electric INTERGER ,area INTERGER,
             state INTERGER,robotstate INTERGER , commandnum INTERGER ,excute INTERGER , excutetime INTERGER ,commandstate INTERGER ,lastcommandstate INTERGER
             ,lastlocation INTEGER)</item>

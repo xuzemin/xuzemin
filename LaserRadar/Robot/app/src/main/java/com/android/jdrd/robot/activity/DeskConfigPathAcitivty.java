@@ -81,7 +81,9 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         commandlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(DeskConfigPathAcitivty.this, CommandAcitivty.class);
+                intent.putExtra("command_id", command_list.get(position).get("id").toString());
+                startActivity(intent);
             }
         });
 
