@@ -3,6 +3,7 @@ package com.android.jdrd.robot.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,7 +38,6 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         Intent intent =getIntent();
         robotid = intent.getIntExtra("id",0);
 
-
         findViewById(R.id.setting_redact).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
     }
@@ -47,18 +47,39 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         super.onStart();
         List<Map> robotlist = robotDBHelper.queryListMap("select * from robot where id = '"+ robotid +"'" ,null);
         robotconfig = robotlist.get(0);
-        Constant.debugLog("robot"+robotlist.toString());
+        Constant.debugLog("robot     "+robotlist.toString());
+        Constant.debugLog("robotconfig     "+robotconfig.toString());
 
         List<Map> arealist = robotDBHelper.queryListMap("select * from area where id = '"+ robotconfig.get("area") +"'" ,null);
+        Constant.debugLog(arealist.toString());
         if(arealist != null && arealist.size()>0){
             ((TextView)findViewById(R.id.area)).setText(arealist.get(0).get("name").toString());
         }
+        if((int)robotconfig.get("outline") == 1){
+            ((TextView)findViewById(R.id.outline)).setText("在线");
+        }else{
+            ((TextView)findViewById(R.id.outline)).setText("离线");
+        }
+        if((int)robotconfig.get("state") == 0){
+            ((TextView)findViewById(R.id.robot_state)).setText("空闲");
+        }else if((int)robotconfig.get("state") == 1){
+            ((TextView)findViewById(R.id.robot_state)).setText("送餐");
+        }else if((int)robotconfig.get("state") == 2){
+            ((TextView)findViewById(R.id.robot_state)).setText("故障");
+        }
+        if((int)robotconfig.get("state") == 0){
+            ((TextView)findViewById(R.id.state)).setText("直行前进");
+        }else if((int)robotconfig.get("state") == 1){
+            ((TextView)findViewById(R.id.state)).setText("左转");
+        }else if((int)robotconfig.get("state") == 2){
+            ((TextView)findViewById(R.id.state)).setText("右转");
+        }else if((int)robotconfig.get("state") == 3){
+            ((TextView)findViewById(R.id.state)).setText("旋转");
+        }
         ((TextView)findViewById(R.id.name)).setText(robotconfig.get("name").toString());
         ((TextView)findViewById(R.id.ip)).setText(robotconfig.get("ip").toString());
-        ((TextView)findViewById(R.id.outline)).setText(robotconfig.get("outline").toString());
         ((TextView)findViewById(R.id.electric)).setText(robotconfig.get("electric").toString());
-        ((TextView)findViewById(R.id.state)).setText(robotconfig.get("state").toString());
-        ((TextView)findViewById(R.id.robot_state)).setText(robotconfig.get("state").toString());
+
         ((TextView)findViewById(R.id.command_num)).setText(robotconfig.get("commandnum").toString());
         ((TextView)findViewById(R.id.excute_command)).setText(robotconfig.get("excute").toString());
         ((TextView)findViewById(R.id.excute_time)).setText(robotconfig.get("excutetime").toString());

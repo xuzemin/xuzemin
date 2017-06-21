@@ -15,6 +15,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
@@ -51,7 +52,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener, Animation.AnimationListener {
-
     private MyReceiver receiver;
     private RobotDBHelper robotDBHelper;
     private static List<Map> areaList = new ArrayList<>(),deskList = new ArrayList<>(),robotList = new ArrayList<>();
@@ -66,12 +66,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private static boolean DeskIsEdit = false,AreaIsEdit = false;
     private boolean IsRight = false;
     private ListView area;
+    private Button up,down,left,right,stop,shrink;
     public static int CURRENT_AREA_id = 0;
     private final String [] from ={"image","text"};
     private final int [] to = {R.id.image,R.id.text};
     private GridViewAdapter gridViewAdapter;
     private boolean isShrink = false;
-    private Button button1,button2,button3,button0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,25 +82,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
         Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
         startService(SetStaticIPService);
-
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
-
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
-        button1 = (Button) findViewById(R.id.btn1);
-        button2 = (Button) findViewById(R.id.btn2);
-        button3 = (Button) findViewById(R.id.btn3);
-        button0 = (Button) findViewById(R.id.btn0);
-
-        button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
-        button3.setOnClickListener(this);
-        button0.setOnClickListener(this);
-
         linearlayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
         imgViewmapnRight = (ImageView) findViewById(R.id.imgViewmapnRight);
         map_right_Ralative = (RelativeLayout) findViewById(R.id.map_right_Ralative);
@@ -108,7 +95,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         imgViewmapnRight.setOnClickListener(this);
         findViewById(R.id.config_redact).setOnClickListener(this);
         robotgirdview  = (GridView) findViewById(R.id.robotgirdview);
-
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -117,14 +103,19 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 startActivity(intent);
             }
         });
-
-        findViewById(R.id.up).setOnClickListener(this);
-        findViewById(R.id.down).setOnClickListener(this);
-        findViewById(R.id.left).setOnClickListener(this);
-        findViewById(R.id.right).setOnClickListener(this);
-        findViewById(R.id.stop).setOnClickListener(this);
+        up = (Button) findViewById(R.id.up);
+        down = (Button) findViewById(R.id.down);
+        left = (Button) findViewById(R.id.left);
+        right = (Button) findViewById(R.id.right);
+        stop = (Button) findViewById(R.id.stop);
+        shrink = (Button) findViewById(R.id.shrink);
+        up.setOnClickListener(this);
+        down.setOnClickListener(this);
+        left.setOnClickListener(this);
+        right.setOnClickListener(this);
+        stop.setOnClickListener(this);
+        shrink.setOnClickListener(this);
         findViewById(R.id.shrink).setOnClickListener(this);
-
         deskview = (GridView) findViewById(R.id.gview);
         //获取数据
         desk_adapter = new SimpleAdapter(this, Deskdata_list, R.layout.item, from, to);
@@ -158,7 +149,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         });
-
         area_adapter = new SimpleAdapter(this, Areadata_list, R.layout.item, from, to);
         area.setAdapter(area_adapter);
         area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -230,7 +220,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         if( receiver !=null) {
             this.unregisterReceiver(receiver);
         }
-        robotDBHelper.execSQL("update robot set outline= '0' ");
     }
 
     @Override
@@ -343,6 +332,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             List<Map> Robotdata_listcache =  new ArrayList<>();
             int j;
             Constant.debugLog("robotList.size()" + robotList.toString());
+            boolean flag = false;
             for(int i =0 ,size = robotList.size();i < size ; i++){
                 Constant.debugLog("size" + size +" ip"+robotList.get(i).get("ip").toString());
                 String ip = robotList.get(i).get("ip").toString();
@@ -354,11 +344,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         robotList.get(i).put("outline",1);
                         Robotdata_listcache.add(robotList.get(i));
                         robotList.remove(i);
+                        flag = true;
+                        break;
                     }
+                        j++;
                     h = ServerSocketUtil.socketlist.size();
-                    j++;
                 }
                 size = robotList.size();
+                if(flag){
+                    i--;
+                }
             }
             Constant.debugLog("robotList"+Robotdata_listcache.toString());
             Constant.debugLog("robotList"+robotList.toString());
@@ -458,48 +453,81 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
 
     private void startAnimationShrink(){
+        Animation translate;
         if (isShrink){
-            Animation translate= AnimationUtils.loadAnimation(this,R.animator.translate_in);
-            translate.setFillAfter(true);
-            translate.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                }
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    isShrink = false;
-                    button0.setVisibility(View.GONE);
-                }
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            button0.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_left);
+            translate.setAnimationListener(animationListener);
+            left.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_right);
+            translate.setAnimationListener(animationListener);
+            right.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_up);
+            translate.setAnimationListener(animationListener);
+            up.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_down);
+            translate.setAnimationListener(animationListener);
+            down.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_stop);
+            translate.setAnimationListener(animationListener);
+            stop.startAnimation(translate);
+//            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_shrink);
+//            translate.setAnimationListener(animationListener);
+//            shrink.startAnimation(translate);
         }else {
-            button0.setVisibility(View.VISIBLE);
-            Animation translate= AnimationUtils.loadAnimation(this,R.animator.translate_out);
-            translate.setFillAfter(true);
-            translate.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    isShrink = true;
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            button0.startAnimation(translate);
+            left.setVisibility(View.VISIBLE);
+            down.setVisibility(View.VISIBLE);
+            up.setVisibility(View.VISIBLE);
+            right.setVisibility(View.VISIBLE);
+            stop.setVisibility(View.VISIBLE);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_left);
+            translate.setAnimationListener(animationListener);
+            left.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_right);
+            translate.setAnimationListener(animationListener);
+            right.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_up);
+            translate.setAnimationListener(animationListener);
+            up.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_down);
+            translate.setAnimationListener(animationListener);
+            down.startAnimation(translate);
+            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_stop);
+            translate.setAnimationListener(animationListener);
+            stop.startAnimation(translate);
+//            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_shrink);
+//            translate.setFillAfter(true);
+//            translate.setAnimationListener(animationListener);
+//            shrink.startAnimation(translate);
         }
     }
 
+    private Animation.AnimationListener animationListener = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if(isShrink){
+                isShrink =false;
+                up.setVisibility(View.GONE);
+                down.setVisibility(View.GONE);
+                left.setVisibility(View.GONE);
+                right.setVisibility(View.GONE);
+                stop.setVisibility(View.GONE);
+            }else{
+                isShrink =true;
+                left.setVisibility(View.VISIBLE);
+                down.setVisibility(View.VISIBLE);
+                up.setVisibility(View.VISIBLE);
+                right.setVisibility(View.VISIBLE);
+                stop.setVisibility(View.VISIBLE);
+            }
+        }
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    };
 
     private MyDialog dialog ;
     private EditText editText;
@@ -544,7 +572,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         });
+
         //delete from person where name = 'wuyudong'
+
         dialog.setOnNegativeListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -588,6 +618,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     public void pasreJson(String string){
         if(string.equals("robot_connect") || string.equals("robot_unconnect")){
             getRobotData();
+        }else if(string.equals("robot_receive_succus")){
+            Toast.makeText(getApplicationContext(),"收到成功指令",Toast.LENGTH_SHORT).show();
+        }else if(string.equals("robot_receive_fail")){
+            Toast.makeText(getApplicationContext(),"收到失败指令",Toast.LENGTH_SHORT).show();
         }else if(string.equals("robot_destory")){
             robotDBHelper.execSQL("update robot set outline= '0' ");
         }else {

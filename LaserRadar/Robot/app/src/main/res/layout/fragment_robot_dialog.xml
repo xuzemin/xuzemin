@@ -12,6 +12,7 @@
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="400dp"
+            android:background="@mipmap/bg"
             android:layout_gravity="center"
             android:orientation="vertical">
             <TextView
@@ -21,7 +22,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:text="@string/choose_robot"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 />
             <GridView
                 android:id="@+id/robot_girdview"

@@ -78,23 +78,22 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
             }
 
             if(commandconfig.get("speed") !=null){
-                speed.setText(commandconfig.get("speed").toString());
+                speed.setText(commandconfig.get("speed").toString().trim());
             }
-            if(commandconfig.get("mp3") !=null){
-                mp3.setText(commandconfig.get("mp3").toString());
+            if(commandconfig.get("music") !=null){
+                mp3.setText(commandconfig.get("music").toString());
             }
             if(commandconfig.get("outime") !=null){
                 outime.setText(commandconfig.get("outime").toString());
             }
-            if(commandconfig.get("shownum") !=null){
-                shownum.setText(commandconfig.get("shownum").toString());
+            if(commandconfig.get("shownumber") !=null){
+                shownum.setText(commandconfig.get("shownumber").toString());
             }
             if(commandconfig.get("showcolor") !=null){
                 showcolor.setText(commandconfig.get("showcolor").toString());
             }
             switch ((int)commandconfig.get("type")){
                 case 0:
-
                     break;
                 case 1:
                     findViewById(R.id.linear_goal).setVisibility(View.GONE);
@@ -124,6 +123,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         diretionAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
         direction.setAdapter(diretionAdapter);
 
+        findViewById(R.id.btn_sure).setOnClickListener(this);
 
     }
 
@@ -146,6 +146,49 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_delete:
                 robotDBHelper.execSQL("delete from command where id = '"+command_id+"'");
+                finish();
+                break;
+            case R.id.btn_sure:
+                switch ((int)commandconfig.get("type")){
+                    case 0:
+                        if(!speed.getText().toString().equals("") && !mp3.getText().toString().equals("") && !outime.getText().toString().equals("")
+                                &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")){
+                            robotDBHelper.execSQL("update command set goal= '"+0+"' ," +
+                                    "direction = '"+directionnum+"' ,speed = '"+speed.getText().toString().trim()+"'," +
+                                    "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
+                                    "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                        }
+                        break;
+                    case 1:
+                        if(!speed.getText().toString().equals("") && !mp3.getText().toString().equals("") && !outime.getText().toString().equals("")
+                                &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")){
+                            robotDBHelper.execSQL("update command set goal= '"+0+"' ," +
+                                    "direction = '"+0+"' ,speed = '"+speed.getText().toString().trim()+"'," +
+                                    "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
+                                    "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                        }
+                        break;
+                    case 2:
+                        if(!speed.getText().toString().equals("") && !mp3.getText().toString().equals("") && !outime.getText().toString().equals("")
+                                &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")){
+                            robotDBHelper.execSQL("update command set goal= '"+0+"' ," +
+                                    "direction = '"+0+"' ,speed = '"+speed.getText().toString().trim()+"'," +
+                                    "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
+                                    "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                        }
+                        break;
+                    case 3:
+                        if(!mp3.getText().toString().equals("") && !outime.getText().toString().equals("")
+                                &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")){
+                            robotDBHelper.execSQL("update command set goal= '"+0+"' ," +
+                                    "direction = '"+0+"' ,speed = '"+0+"'," +
+                                    "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
+                                    "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                        }
+                        break;
+                    default:
+                        break;
+                }
                 finish();
                 break;
         }

@@ -279,6 +279,7 @@ public class ServerSocketUtil extends Service {
         boolean flag2 = false;
         int len = 0;
         int len1 = 0;
+        Socket socket = null;
         while (true) {
             byte buf = 0;
             try {
@@ -287,7 +288,7 @@ public class ServerSocketUtil extends Service {
                 e.printStackTrace();
             }
             len1++;
-            Constant.debugLog("buf内容：" + buf +"len1"+len1);
+//            Constant.debugLog("buf内容：" + buf +"len1"+len1);
             if ('*' == buf) {
                 flag = true;
                 flag2 = true;
@@ -302,40 +303,55 @@ public class ServerSocketUtil extends Service {
                 msg = new String(buffer, 1, i);
                 msg = msg.trim();
                 if (msg != null) {
-                    ++len;
-                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
-//                    function = getJSONString(msg, "function");
+//                    ++len;
+//                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
                     byte[] bytes = msg.getBytes();
                     Constant.debugLog(bytes[0]+"bytes");
-                    String[] cstr = msg.split("/+");
+                    flag = false;
+                    List<String> str = new ArrayList<>();
+                    int k = 0;
+                    for(int h = 1,size = bytes.length;h<size;h++){
+                        if(bytes[h]==43){
+                            if(flag){
+                                str.add(msg.substring(k+1,h));
+                                k = h;
+                            }else{
+                                flag = true;
+                                k = h;
+                            }
+                        }
+                    }
+                    Constant.debugLog("str"+str.toString());
                     switch (bytes[0]) {
                         case 97:
-                            Constant.debugLog(bytes[1]+"bytes");
-                            Constant.debugLog(bytes[2]+"bytes");
-                            if (bytes[1] == 43) {
-                                bytes = msg.substring(1, msg.length()).getBytes();
-                                for (int index = 0; i < bytes.length; i++) {
-                                    if (bytes[index] == 43) {
-//                                        robotDBHelper.execSQL("update robot set outline = '"+msg.substring(1,index+2)+"' where ip= '"+ ip +"'");
-                                        Constant.debugLog(msg.substring(1, index + 2) + "msg.substring(1,index+2)");
-                                    }
-                                }
-                            }
+                            robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
                             break;
                         case 98:
+                            robotDBHelper.execSQL("update robot set runstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
                             break;
                         case 99:
+                            robotDBHelper.execSQL("update robot set robotstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
                             break;
                         case 100:
+                            robotDBHelper.execSQL("update robot set obstacle = '"+str.get(0)+"' where ip= '"+ ip +"'");
                             break;
                         case 101:
+                            robotDBHelper.execSQL("update robot set lastlocation = '"+str.get(0)+"' where ip= '"+ ip +"'");
                             break;
                         //r
                         case 114:
+                            if(str.get(0).equals("0")){
+                                intent.putExtra("msg", "robot_receive_succus");
+                            }else{
+                                intent.putExtra("msg", "robot_receive_fail");
+                            }
+                            intent.setAction("com.jdrd.activity.Main");
+                            sendBroadcast(intent);
                             break;
-                        //s
-                        case 115:
-                            break;
+//                        //s
+//                        case 115:
+//                            robotDBHelper.execSQL("update robot set runstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
+//                            break;
                     }
 //                    intent.putExtra("msg", msg);
 //                    intent.setAction("com.jdrd.activity.Main");
@@ -357,6 +373,7 @@ public class ServerSocketUtil extends Service {
                 int j = 0;
                 while(j < socketlist.size()){
                     if(socketlist.get(j).get("ip").equals(ip)){
+                        socket = (Socket) socketlist.get(j).get("socket");
                         socketlist.remove(j);
                         robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
                         Constant.debugLog("socketlist"+socketlist.toString());
@@ -369,6 +386,7 @@ public class ServerSocketUtil extends Service {
                 }
                 try {
                     in.close();
+                    socket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
