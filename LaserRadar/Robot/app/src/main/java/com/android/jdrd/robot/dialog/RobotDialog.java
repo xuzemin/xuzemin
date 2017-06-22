@@ -139,6 +139,10 @@ public class RobotDialog extends Dialog {
                     public void run() {
                         if (out != null) {
                             try {
+                                out.write("*s+6+#".getBytes());
+                                synchronized (thread){
+                                    thread.wait();
+                                }
                                 for(int i =0,size = robotlist.size();i<size;i++){
                                     switch ((int)robotlist.get(i).get("type")){
                                         case 0:

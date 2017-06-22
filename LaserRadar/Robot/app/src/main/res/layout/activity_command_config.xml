@@ -129,6 +129,7 @@
                         android:textSize="25sp"
                         />
                     <EditText
+                        android:inputType="number"
                         android:id="@+id/speed"
                         android:layout_width="match_parent"
                         android:gravity="right"
@@ -162,6 +163,7 @@
                         />
                     <EditText
                         android:id="@+id/mp3"
+                        android:inputType="number"
                         android:layout_width="match_parent"
                         android:gravity="right"
                         android:layout_height="match_parent"/>
@@ -194,6 +196,7 @@
                         />
                     <EditText
                         android:id="@+id/outime"
+                        android:inputType="number"
                         android:layout_width="match_parent"
                         android:gravity="right"
                         android:layout_height="match_parent"/>
@@ -225,6 +228,7 @@
                         android:textSize="25sp"
                         />
                     <EditText
+                        android:inputType="number"
                         android:id="@+id/shownum"
                         android:layout_width="match_parent"
                         android:gravity="right"
@@ -257,6 +261,7 @@
                         android:textSize="25sp"
                         />
                     <EditText
+                        android:inputType="number"
                         android:id="@+id/showcolor"
                         android:layout_width="match_parent"
                         android:gravity="right"

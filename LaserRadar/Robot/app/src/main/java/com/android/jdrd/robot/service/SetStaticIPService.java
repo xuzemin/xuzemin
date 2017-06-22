@@ -68,7 +68,7 @@ public class SetStaticIPService extends Service {
                         isscaning = true;
                         break;
                     case WifiManager.WIFI_STATE_ENABLED:
-                        start_Scan();
+//                        start_Scan();
                         break;
                     default:
                         break;
