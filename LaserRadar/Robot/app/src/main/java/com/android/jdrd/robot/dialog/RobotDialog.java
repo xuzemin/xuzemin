@@ -41,18 +41,30 @@ import java.util.Map;
 public class RobotDialog extends Dialog {
     private GridView gridView;
     private SimpleAdapter robotadapter;
-    private List<Map> list;
+    private static List<Map> list,robotlist;
     private static RobotDBHelper robotDBHelper;
     private List<Map<String, Object>> Robotdata_list =  new ArrayList<>();
     private final String [] from ={"image","text"};
     private final int [] to = {R.id.image,R.id.text};
     private Context context;
-    private String str;
+    private static String sendstr;
+    private static String IP;
+    public static Thread thread = new Thread();
+    public static boolean flag;
     public RobotDialog(Context context,String str) {
         super(context, R.style.MyDialog);
         setCustomDialog();
         this.context = context;
-        this.str = str;
+        this.sendstr = str;
+        flag = false;
+    }
+
+    public RobotDialog(Context context,List<Map> robotlist) {
+        super(context, R.style.MyDialog);
+        setCustomDialog();
+        this.context = context;
+        this.robotlist = robotlist;
+        flag = true;
     }
 
     private void setCustomDialog() {
@@ -84,29 +96,84 @@ public class RobotDialog extends Dialog {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    sendCommand(Robotdata_list.get(position).get("ip").toString());
+                    IP = Robotdata_list.get(position).get("ip").toString();
+                    if(flag){
+                        sendCommandList();
+                    }else {
+                        sendCommand();
+                    }
                 }
             });
         }
 
         super.setContentView(mView);
     }
-    public void sendCommand(String ip){
+    public static void sendCommand(){
         for(Map map: ServerSocketUtil.socketlist){
-            if(map.get("ip").equals(ip)){
+            if(map.get("ip").equals(IP)){
                 final OutputStream out = (OutputStream) map.get("out");
-                new Thread(new Runnable() {
+                thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         if (out != null) {
                             try {
-                                out.write(str.getBytes());
+                                out.write(sendstr.getBytes());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
-                }).start();
+                });
+                thread.start();
+            }
+        }
+    }
+
+    public static void sendCommandList(){
+        Constant.debugLog(robotlist.toString());
+        for(Map map: ServerSocketUtil.socketlist){
+            if(map.get("ip").equals(IP)){
+                final OutputStream out = (OutputStream) map.get("out");
+                thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (out != null) {
+                            try {
+                                for(int i =0,size = robotlist.size();i<size;i++){
+                                    switch ((int)robotlist.get(i).get("type")){
+                                        case 0:
+                                            sendstr="*g+"+robotlist.get(i).get("goal")+"+"+robotlist.get(i).get("direction")+"+"+robotlist.get(i).get("speed")
+                                                    +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
+                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            break;
+                                        case 1:
+                                            sendstr="*d";
+                                            break;
+                                        case 2:
+                                            sendstr="*r";
+                                            break;
+                                        case 3:
+                                            sendstr="*w";
+                                            break;
+                                    }
+                                    if(sendstr.length() >= 6){
+                                        sendstr = sendstr + "+"+(sendstr.length()+5)+"+#";
+                                    }else{
+                                        sendstr = sendstr + "+"+(sendstr.length()+4)+"+#";
+                                    }
+                                    out.write(sendstr.getBytes());
+                                    Constant.debugLog("length"+sendstr.length());
+                                    synchronized (thread){
+                                        thread.wait();
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                thread.start();
             }
         }
     }

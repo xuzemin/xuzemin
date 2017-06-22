@@ -322,40 +322,39 @@ public class ServerSocketUtil extends Service {
                         }
                     }
                     Constant.debugLog("str"+str.toString());
-                    switch (bytes[0]) {
-                        case 97:
-                            robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                            break;
-                        case 98:
-                            robotDBHelper.execSQL("update robot set runstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                            break;
-                        case 99:
-                            robotDBHelper.execSQL("update robot set robotstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                            break;
-                        case 100:
-                            robotDBHelper.execSQL("update robot set obstacle = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                            break;
-                        case 101:
-                            robotDBHelper.execSQL("update robot set lastlocation = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                            break;
-                        //r
-                        case 114:
-                            if(str.get(0).equals("0")){
-                                intent.putExtra("msg", "robot_receive_succus");
-                            }else{
-                                intent.putExtra("msg", "robot_receive_fail");
-                            }
-                            intent.setAction("com.jdrd.activity.Main");
-                            sendBroadcast(intent);
-                            break;
-//                        //s
-//                        case 115:
-//                            robotDBHelper.execSQL("update robot set runstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
-//                            break;
+                    Constant.debugLog("长度错误"+Integer.valueOf(str.get(str.size()-1))+"buffer.length"+( msg.length() +2));
+                    if(Integer.valueOf(str.get(str.size()-1)) == msg.length() +2){
+                        Constant.debugLog("长度正确");
+                        switch (bytes[0]) {
+                            case 97:
+                                robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                break;
+                            case 98:
+                                robotDBHelper.execSQL("update robot set runstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                break;
+                            case 99:
+                                robotDBHelper.execSQL("update robot set robotstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                break;
+                            case 100:
+                                robotDBHelper.execSQL("update robot set obstacle = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                break;
+                            case 101:
+                                robotDBHelper.execSQL("update robot set lastlocation = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                break;
+                            //r
+                            case 114:
+                                if(str.get(0).equals("0")){
+                                    intent.putExtra("msg", "robot_receive_succus");
+                                }else{
+                                    intent.putExtra("msg", "robot_receive_fail");
+                                }
+                                intent.setAction("com.jdrd.activity.Main");
+                                sendBroadcast(intent);
+                                break;
+                        }
+                    }else{
+                        Constant.debugLog("长度不对");
                     }
-//                    intent.putExtra("msg", msg);
-//                    intent.setAction("com.jdrd.activity.Main");
-//                    sendBroadcast(intent);
 
                     i = 0;
                     for (int j = 0; j < buffer.length; j++) {

@@ -54,7 +54,7 @@ import java.util.Map;
 public class MainActivity extends Activity implements View.OnClickListener, Animation.AnimationListener {
     private MyReceiver receiver;
     private RobotDBHelper robotDBHelper;
-    private static List<Map> areaList = new ArrayList<>(),deskList = new ArrayList<>(),robotList = new ArrayList<>();
+    private static List<Map> areaList = new ArrayList<>(),deskList = new ArrayList<>(),robotList = new ArrayList<>(),commandlit = new ArrayList<>();
     private LinearLayout linearlayout_all;
     private RelativeLayout map_right_Ralative;
     private ImageView imgViewmapnRight;
@@ -142,7 +142,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         getDeskData();
                     }else {
                         Constant.debugLog("position"+CURRENT_AREA_id);
-                        robotDialog("*s#");
+                        commandlit = robotDBHelper.queryListMap("select * from command where desk = '"+Deskdata_list.get(position).get("id")+"'" ,null);
+                        if(commandlit !=null&&commandlit.size()>0){
+                                robotDialog(commandlit);
+                        }
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),"请添加并选择区域",Toast.LENGTH_SHORT).show();
@@ -237,13 +240,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             }
         }
         getDeskData();
-//        robotDBHelper.execSQL("delete from robot where id = '5'");
-//        robotDBHelper.execSQL("insert into  robot (name,ip,state,outline) values ('新建机器人','192.168.1.120',1,1)");
         getRobotData();
         gridViewAdapter.notifyDataSetInvalidated();
-//        gridViewAdapter = new GridViewAdapter(getApplicationContext(),
-//                Robotdata_list);
-//        robotgirdview.setAdapter(gridViewAdapter);
     }
 
     @Override
@@ -279,8 +277,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 Constant.debugLog("startAnimationShrink"+isShrink);
                 startAnimationShrink();
                 break;
-
-
         }
     }
 
@@ -294,11 +290,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             e.printStackTrace();
         }
         Map<String, Object> map;
-//        map = new HashMap<>();
-//        map.put("image", R.mipmap.zuo_xs);
-//        map.put("id", 0);
-//        map.put("text",getString(R.string.config_redact));
-//        Deskdata_list.add(map);
         if(DeskIsEdit){
             map = new HashMap<>();
             map.put("image", R.mipmap.zuo_xs);
@@ -470,9 +461,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_stop);
             translate.setAnimationListener(animationListener);
             stop.startAnimation(translate);
-//            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_shrink);
-//            translate.setAnimationListener(animationListener);
-//            shrink.startAnimation(translate);
         }else {
             left.setVisibility(View.VISIBLE);
             down.setVisibility(View.VISIBLE);
@@ -494,10 +482,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_stop);
             translate.setAnimationListener(animationListener);
             stop.startAnimation(translate);
-//            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_shrink);
-//            translate.setFillAfter(true);
-//            translate.setAnimationListener(animationListener);
-//            shrink.startAnimation(translate);
         }
     }
 
@@ -602,6 +586,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         robotDialog = new RobotDialog(this,str);
         robotDialog.show();
     }
+    private void robotDialog(List<Map> list) {
+        robotDialog = new RobotDialog(this,list);
+        robotDialog.show();
+    }
 
 
 
@@ -620,8 +608,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             getRobotData();
         }else if(string.equals("robot_receive_succus")){
             Toast.makeText(getApplicationContext(),"收到成功指令",Toast.LENGTH_SHORT).show();
+            synchronized (RobotDialog.thread){
+                RobotDialog.thread.notify();
+            }
         }else if(string.equals("robot_receive_fail")){
             Toast.makeText(getApplicationContext(),"收到失败指令",Toast.LENGTH_SHORT).show();
+            if(RobotDialog.flag){
+                RobotDialog.sendCommandList();
+            }else{
+                RobotDialog.sendCommand();
+            }
         }else if(string.equals("robot_destory")){
             robotDBHelper.execSQL("update robot set outline= '0' ");
         }else {
