@@ -26,6 +26,12 @@
             android:textColor="@color/black"
             android:text="@string/desk_settings"
             />
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_alignParentRight="true"
+            android:text="@string/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -47,6 +53,7 @@
                     android:layout_height="match_parent"
                     android:textSize="25sp"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:text="@string/deskname_setting"/>
             </LinearLayout>
             <LinearLayout
@@ -73,6 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/add_desk"
+                        android:textColorHint="@color/aliceblue"
                         android:textColor="@color/black"
                         android:layout_marginLeft="120dp"
                         android:layout_toLeftOf="@+id/change_name"
@@ -86,6 +94,10 @@
                         />
                 </RelativeLayout>
             </LinearLayout>
+            <Button
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
             <View
                 android:layout_width="match_parent"
                 android:background="@color/black"
@@ -97,6 +109,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:layout_height="match_parent"
                     android:text="@string/command_settings"
                     android:textSize="25sp"

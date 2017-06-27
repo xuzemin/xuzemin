@@ -58,6 +58,9 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         findViewById(R.id.wait).setOnClickListener(this);
         findViewById(R.id.puthook).setOnClickListener(this);
         findViewById(R.id.lockhook).setOnClickListener(this);
+        findViewById(R.id.btn_delete).setOnClickListener(this);
+        findViewById(R.id.card).setOnClickListener(this);
+
         commandlistview = (ListView) findViewById(R.id.added_command);
 
         Intent intent =getIntent();// 收取 email
@@ -65,6 +68,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         areaid = intent.getIntExtra("area",0);
 
         if(deskid == 0){
+            findViewById(R.id.btn_delete).setVisibility(View.GONE);
             ((TextView)findViewById(R.id.title)).setText(R.string.desk_add);
             IsADD = true;
         }else{
@@ -110,6 +114,13 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.btn_delete:
+                robotDBHelper.execSQL("delete from desk where id= '"+ deskid +"'");
+                finish();
+                break;
+            case R.id.card:
+                startActivity(new Intent(DeskConfigPathAcitivty.this,CardConfig.class));
+            break;
             case R.id.setting_back:
                 finish();
                 break;

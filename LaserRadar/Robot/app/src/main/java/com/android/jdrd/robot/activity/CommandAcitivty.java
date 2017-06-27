@@ -34,6 +34,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
     private RobotDBHelper robotDBHelper;
     private int command_id;
     private Map commandconfig;
+    private List<Map> goallist;
     private EditText speed,mp3,outime,shownum,showcolor;
     private Spinner goal,direction;
     private int goalnum,directionnum;
@@ -64,13 +65,47 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         findViewById(R.id.btn_delete).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
 
+        ArrayList<String> map_Plan = new ArrayList<>();
+        map_Plan.add("直行");
+        map_Plan.add("左岔道");
+        map_Plan.add("右岔道");
+        diretionAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
+        diretionAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+        direction.setAdapter(diretionAdapter);
+
+        map_Plan = new ArrayList<>();
+        goallist = robotDBHelper.queryListMap("select * from card " ,null);
+        if(goallist!=null&&goallist.size()>0){
+            for(int i = 0,size = goallist.size();i< size;i++){
+                map_Plan.add(goallist.get(i).get("name").toString());
+            }
+        }
+        goalAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
+        goalAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+        goal.setAdapter(goalAdapter);
+
         List<Map> commandlist = robotDBHelper.queryListMap("select * from command where id = '"+ command_id +"'" ,null);
         Log.e("commandlist" ,commandlist.toString());
         if(commandlist !=null && commandlist.size() >0){
             commandconfig = commandlist.get(0);
             Constant.debugLog("commandconfig type"+(int)commandconfig.get("type"));
-
-//            goal.setSelection((int)commandconfig.get("goal"),true);
+            if(commandconfig.get("goal") !=null){
+                if(goallist!=null&&goallist.size()>0){
+                    boolean flag = false;
+                    for(int i = 0,size = goallist.size();i< size;i++){
+                        if(goallist.get(i).get("id").equals(commandconfig.get("goal"))){
+                            goal.setSelection(i,true);
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(!flag){
+                        goal.setSelection(0,true);
+                    }
+                }
+            }else{
+                goal.setSelection(0,true);
+            }
             if(commandconfig.get("direction") !=null){
                 direction.setSelection((int)commandconfig.get("direction"),true);
             }else{
@@ -114,15 +149,27 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
             }
         }
 
+        direction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                directionnum = position;
+            }
 
-        ArrayList<String> map_Plan = new ArrayList<>();
-        map_Plan.add("直行");
-        map_Plan.add("左岔道");
-        map_Plan.add("右岔道");
-        diretionAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
-        diretionAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
-        direction.setAdapter(diretionAdapter);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        goal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                goalnum = position;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         findViewById(R.id.btn_sure).setOnClickListener(this);
 
     }
@@ -153,7 +200,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                     case 0:
                         if(!speed.getText().toString().equals("") && !mp3.getText().toString().equals("") && !outime.getText().toString().equals("")
                                 &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")){
-                            robotDBHelper.execSQL("update command set goal= '"+0+"' ," +
+                            robotDBHelper.execSQL("update command set goal= '"+goallist.get(goalnum).get("id")+"' ," +
                                     "direction = '"+directionnum+"' ,speed = '"+speed.getText().toString().trim()+"'," +
                                     "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
                                     "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");

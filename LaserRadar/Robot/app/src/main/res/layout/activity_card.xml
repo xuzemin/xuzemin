@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.android.jdrd.robot.activity.MainActivity">
+    >
 
     <RelativeLayout
         android:id="@+id/main"
@@ -17,20 +15,22 @@
             android:id="@+id/setting_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="25sp"
             android:gravity="center"
-            android:layout_centerInParent="true"
             android:textColor="@color/black"
-            android:text="@string/desk_settings"
-            />
+            android:text="@string/card_settings"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
-
     <ListView
         android:id="@+id/cardlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

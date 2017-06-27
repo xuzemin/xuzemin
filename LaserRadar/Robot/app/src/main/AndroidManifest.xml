@@ -40,6 +40,7 @@
         <activity android:name=".activity.RobotActivity"/>
         <activity android:name=".activity.CommandAcitivty"/>
         <activity android:name=".activity.CardConfig"/>
+        <activity android:name=".activity.CardConfigActivity"/>
         <service
             android:name=".service.SetStaticIPService"
             android:enabled="true"

@@ -12,10 +12,11 @@ import android.widget.ListView;
 
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.CardAdapter;
-import com.android.jdrd.robot.adapter.MyAdapter;
 import com.android.jdrd.robot.helper.RobotDBHelper;
+import com.android.jdrd.robot.util.Constant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,28 +30,47 @@ public class CardConfig extends Activity implements View.OnClickListener {
     private RobotDBHelper robotDBHelper;
     private List<Map> card_list = new ArrayList<>();
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_card);
+
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
+
         findViewById(R.id.setting_back).setOnClickListener(this);
+
         cardlist = (ListView) findViewById(R.id.cardlist);
 
-        card_list = robotDBHelper.queryListMap("select * from card " ,null);
-        myAdapter = new CardAdapter(this,card_list);
-        cardlist.setAdapter(myAdapter);
         cardlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CardConfig.this, CommandAcitivty.class);
-                intent.putExtra("command_id", card_list.get(position).get("id").toString());
-                startActivity(intent);
+                if(position == card_list.size() -1){
+                    Intent intent = new Intent(CardConfig.this, CardConfigActivity.class);
+                    intent.putExtra("id", 0);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(CardConfig.this, CardConfigActivity.class);
+                    intent.putExtra("id",  (Integer) card_list.get(position).get("id"));
+                    Constant.debugLog("id"+card_list.get(position).get("id").toString());
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        card_list = robotDBHelper.queryListMap("select * from card " ,null);
+        Map<String, Object> map ;
+        map = new HashMap<>();
+        card_list.add(map);
+        myAdapter = new CardAdapter(this,card_list);
+        cardlist.setAdapter(myAdapter);
     }
 
     @Override

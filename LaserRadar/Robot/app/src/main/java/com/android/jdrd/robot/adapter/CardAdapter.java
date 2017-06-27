@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.jdrd.robot.R;
@@ -51,53 +52,29 @@ public class CardAdapter extends BaseAdapter {
         if(convertView == null){
             final LayoutInflater inflater = (LayoutInflater) context
                            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview_item, null);
+            convertView = inflater.inflate(R.layout.listview_card, null);
             viewHolder = new ViewHolder();
             viewHolder.text = (TextView) convertView.findViewById(R.id.text);
-            viewHolder.btn = (Button) convertView.findViewById(R.id.btn);
+            viewHolder.imageview = (ImageView) convertView.findViewById(R.id.imageview);
             convertView.setTag(viewHolder);//讲ViewHolder存储在View中
 
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ViewHolder.btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, CommandAcitivty.class);
-                Constant.debugLog("commandid"+list.get(position).get("id").toString());
-                intent.putExtra("id", (Integer) list.get(position).get("id"));
-                context.startActivity(intent);
-
-            }
-        });
-
-        switch ((int)list.get(position).get("type")){
-            case 0:
-                viewHolder.text.setText(R.string.straight);
-                break;
-            case 1:
-                viewHolder.text.setText(R.string.derail);
-                break;
-            case 2:
-                viewHolder.text.setText(R.string.rotato);
-                break;
-            case 3:
-                viewHolder.text.setText(R.string.wait);
-                break;
-            case 4:
-                viewHolder.text.setText(R.string.puthook);
-                break;
-            case 5:
-                viewHolder.text.setText(R.string.lockhook);
-                break;
+        if(position == getCount() -1){
+            viewHolder.imageview.setVisibility(View.VISIBLE);
+            viewHolder.imageview.setImageResource(R.mipmap.ic_launcher);
+        }else {
+            viewHolder.imageview.setVisibility(View.GONE);
+            viewHolder.text.setText(list.get(position).get("name").toString());
         }
         return convertView;
     }
 
     //内部类
-    static class ViewHolder{
+     class ViewHolder{
         TextView text;
-        static Button btn;
+        ImageView imageview;
     }
 
 }
