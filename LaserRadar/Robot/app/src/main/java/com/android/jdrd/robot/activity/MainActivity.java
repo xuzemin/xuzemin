@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private MyReceiver receiver;
     private RobotDBHelper robotDBHelper;
     private static List<Map> areaList = new ArrayList<>(),deskList = new ArrayList<>(),robotList = new ArrayList<>(),commandlit = new ArrayList<>();
-    private LinearLayout linearlayout_all;
+    private LinearLayout linearlayout_all,linear_robot,linear_desk;
     private RelativeLayout map_right_Ralative;
     private ImageView imgViewmapnRight;
     private GridView deskview,robotgirdview;
@@ -64,7 +64,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private static List<Map> Robotdata_list =  new ArrayList<>();
     private SimpleAdapter desk_adapter,area_adapter;
     private static boolean DeskIsEdit = false,AreaIsEdit = false;
-    private boolean IsRight = false;
+    private boolean IsRight = true;
     private ListView area;
     private Button up,down,left,right,stop,shrink;
     public static int CURRENT_AREA_id = 0;
@@ -94,6 +94,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         area = (ListView) findViewById(R.id.area);
         imgViewmapnRight.setOnClickListener(this);
         findViewById(R.id.config_redact).setOnClickListener(this);
+
+        linear_robot = (LinearLayout) findViewById(R.id.linear_robot);
+        linear_desk = (LinearLayout) findViewById(R.id.linear_desk);
+
         robotgirdview  = (GridView) findViewById(R.id.robotgirdview);
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -406,6 +410,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             translateAnimation.setFillAfter(true);
             translateAnimation.setAnimationListener(MainActivity.this);
             map_right_Ralative.startAnimation(translateAnimation);
+
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,linearlayout_all.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0F
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            deskview.startAnimation(translateAnimation);
+            robotgirdview.startAnimation(translateAnimation);
         }else {
             TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,-linearlayout_all.getWidth(),
@@ -416,6 +430,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             translateAnimation.setFillAfter(false);
             translateAnimation.setAnimationListener(MainActivity.this);
             map_right_Ralative.startAnimation(translateAnimation);
+
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,linearlayout_all.getWidth(),
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            deskview.startAnimation(translateAnimation);
+            robotgirdview.startAnimation(translateAnimation);
         }
     }
 

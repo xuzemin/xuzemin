@@ -39,8 +39,7 @@
     </RelativeLayout>
     <LinearLayout
         android:layout_below="@+id/main"
-        android:id="@+id/robotList"
-        android:layout_toRightOf="@+id/map_right_Ralative"
+        android:id="@+id/linear_robot"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="100dp">
@@ -64,13 +63,13 @@
         </HorizontalScrollView>
     </LinearLayout>
     <View
-        android:layout_below="@+id/robotList"
+        android:layout_below="@+id/linear_robot"
         android:id="@+id/view"
         android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>
     <LinearLayout
-        android:layout_toRightOf="@+id/map_right_Ralative"
+        android:id="@+id/linear_desk"
         android:layout_below="@+id/view"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -97,6 +96,7 @@
             android:layout_width="100dp"
             android:layout_alignParentLeft="true"
             android:orientation="vertical"
+            android:visibility="gone"
             android:background="@mipmap/bg"
             android:layout_height="match_parent">
             <ListView
