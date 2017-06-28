@@ -66,6 +66,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private static boolean DeskIsEdit = false,AreaIsEdit = false;
     private boolean IsRight = true;
     private ListView area;
+    private TextView area_text;
     private Button up,down,left,right,stop,shrink;
     public static int CURRENT_AREA_id = 0;
     private final String [] from ={"image","text"};
@@ -94,7 +95,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         area = (ListView) findViewById(R.id.area);
         imgViewmapnRight.setOnClickListener(this);
         findViewById(R.id.config_redact).setOnClickListener(this);
-
+        area_text = (TextView) findViewById(R.id.area_text);
         linear_robot = (LinearLayout) findViewById(R.id.linear_robot);
         linear_desk = (LinearLayout) findViewById(R.id.linear_desk);
 
@@ -180,6 +181,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         startAnimationLeft();
                         DeskIsEdit = false;
                         CURRENT_AREA_id = (int) Areadata_list.get(position).get("id");
+                        area_text.setText( Areadata_list.get(position).get("text").toString());
                         getDeskData();
                     }
                     getAreaData();
@@ -263,19 +265,19 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 getDeskData();
                 break;
             case R.id.up:
-                robotDialog("*u#");
+                robotDialog("*u+6+#");
                 break;
             case R.id.down:
-                robotDialog("*d#");
+                robotDialog("*d+6+#");
                 break;
             case R.id.left:
-                robotDialog("*l#");
+                robotDialog("*l+6+#");
                 break;
             case R.id.right:
-                robotDialog("*r#");
+                robotDialog("*r+6+#");
                 break;
             case R.id.stop:
-                robotDialog("*s#");
+                robotDialog("*s+6+#");
                 break;
             case R.id.shrink:
                 Constant.debugLog("startAnimationShrink"+isShrink);

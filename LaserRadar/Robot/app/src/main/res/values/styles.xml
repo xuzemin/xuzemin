@@ -19,4 +19,7 @@
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+    <style name="AppWelcome" parent="AppTheme">
+        <item name="android:windowBackground">@mipmap/china</item>
+    </style>
 </resources>

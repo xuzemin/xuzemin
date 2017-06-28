@@ -12,7 +12,5 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // 隐藏标题栏
-        RobotDBHelper.getInstance(getApplicationContext());
     }
 }

@@ -99,8 +99,10 @@ public class RobotDialog extends Dialog {
                     IP = Robotdata_list.get(position).get("ip").toString();
                     if(flag){
                         sendCommandList();
+                        dismiss();
                     }else {
                         sendCommand();
+                        dismiss();
                     }
                 }
             });
@@ -146,9 +148,12 @@ public class RobotDialog extends Dialog {
                                 for(int i =0,size = robotlist.size();i<size;i++){
                                     switch ((int)robotlist.get(i).get("type")){
                                         case 0:
-                                            sendstr="*g+"+robotlist.get(i).get("goal")+"+"+robotlist.get(i).get("direction")+"+"+robotlist.get(i).get("speed")
-                                                    +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
-                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '"+robotlist.get(i).get("goal")+"'" ,null);
+                                            if(card_list !=null && card_list.size()>0){
+                                                sendstr="*g+"+card_list.get(0).get("address")+"+"+robotlist.get(i).get("direction")+"+"+robotlist.get(i).get("speed")
+                                                        +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
+                                                        +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            }
                                             break;
                                         case 1:
                                             sendstr="*d";

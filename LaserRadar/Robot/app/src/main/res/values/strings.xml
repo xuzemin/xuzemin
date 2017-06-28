@@ -7,6 +7,7 @@
     <string name="config_redact">编辑</string>
     <string name="change_area">请修改区域名称</string>
     <string name="add_area">请输入增加区域名称</string>
+    <string name="choose_area">请选择区域</string>
     <string name="choose_robot">请选择执行的机器</string>
     <string name="deskname_setting">设置桌名</string>
     <string name="deskname">桌名</string>
@@ -53,7 +54,7 @@
 
     <string name="card_settings">系统卡管理</string>
     <string name="card_address">磁条编码</string>
-
+    <string name="add_card">请输入系统卡名称</string>
     <array name="DATABASE_INFO">
         <item>robot.db</item>
         <item>1</item>

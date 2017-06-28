@@ -28,14 +28,6 @@
             android:textColor="@color/black"
             android:text="@string/main"
             />
-        <Button
-            android:id="@+id/config_redact"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/config_redact"
-            android:layout_alignParentRight="true"
-            />
     </RelativeLayout>
     <LinearLayout
         android:layout_below="@+id/main"
@@ -71,10 +63,34 @@
     <LinearLayout
         android:id="@+id/linear_desk"
         android:layout_below="@+id/view"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <TextView
+                android:id="@+id/area_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/choose_area"
+                android:textSize="25sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                />
+            <Button
+                android:id="@+id/config_redact"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:text="@string/config_redact"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
         <GridView
             android:id="@+id/gview"
             android:layout_width="match_parent"
