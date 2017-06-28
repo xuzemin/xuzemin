@@ -189,19 +189,16 @@ public class ServerSocketUtil extends Service {
                     }
                 }
                 if(!IsHave){
-                    robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
+                    robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
                             "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
-                            "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0)");
+                            "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
                 }
             }else{
-                robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,state," +
+                robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
                         "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
-                        "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0)");
+                        "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
             }
-            intent.putExtra("msg", "robot_connect");
-            intent.setAction("com.jdrd.activity.Main");
-            sendBroadcast(intent);
-
+            sendBroadcastMain("robot_connect");
 //
 //            new Thread(new Runnable() {
 //                @Override
@@ -328,28 +325,36 @@ public class ServerSocketUtil extends Service {
                         switch (bytes[0]) {
                             case 97:
                                 robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                sendBroadcastRobot("robot");
+                                sendBroadcastMain("robot_connect");
                                 break;
                             case 98:
-                                robotDBHelper.execSQL("update robot set runstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                robotDBHelper.execSQL("update robot set state = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                sendBroadcastRobot("robot");
+                                sendBroadcastMain("robot_connect");
                                 break;
                             case 99:
                                 robotDBHelper.execSQL("update robot set robotstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                sendBroadcastRobot("robot");
+                                sendBroadcastMain("robot_connect");
                                 break;
                             case 100:
                                 robotDBHelper.execSQL("update robot set obstacle = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                sendBroadcastRobot("robot");
+                                sendBroadcastMain("robot_connect");
                                 break;
                             case 101:
                                 robotDBHelper.execSQL("update robot set lastlocation = '"+str.get(0)+"' where ip= '"+ ip +"'");
+                                sendBroadcastRobot("robot");
+                                sendBroadcastMain("robot_connect");
                                 break;
                             //r
                             case 114:
                                 if(str.get(0).equals("0")){
-                                    intent.putExtra("msg", "robot_receive_succus");
+                                    sendBroadcastMain("robot_receive_succus");
                                 }else{
-                                    intent.putExtra("msg", "robot_receive_fail");
+                                    sendBroadcastMain("robot_receive_fail");
                                 }
-                                intent.setAction("com.jdrd.activity.Main");
-                                sendBroadcast(intent);
                                 break;
                         }
                     }else{
@@ -398,6 +403,16 @@ public class ServerSocketUtil extends Service {
     }
 
 
+    private void sendBroadcastMain(String str){
+        intent.putExtra("msg", str);
+        intent.setAction("com.jdrd.activity.Main");
+        sendBroadcast(intent);
+    }
+    private void sendBroadcastRobot(String str){
+        intent.putExtra("msg", str);
+        intent.setAction("com.jdrd.activity.Robot");
+        sendBroadcast(intent);
+    }
 
     public static String getJSONString(String str, String key) {
         JSONObject object = null;

@@ -178,7 +178,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                     if(position == 0){
                         AreaIsEdit = true;
                     }else{
-                        startAnimationLeft();
                         DeskIsEdit = false;
                         CURRENT_AREA_id = (int) Areadata_list.get(position).get("id");
                         area_text.setText( Areadata_list.get(position).get("text").toString());
@@ -403,7 +402,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private void startAnimationLeft(){
         if (IsRight){
             linearlayout_all.setVisibility(View.VISIBLE);
-            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,-linearlayout_all.getWidth(),
+            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,-Constant.linearWidth,
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0F
@@ -414,17 +413,24 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             map_right_Ralative.startAnimation(translateAnimation);
 
             translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,linearlayout_all.getWidth(),
+                    Animation.ABSOLUTE,Constant.linearWidth,
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0F
             );
             translateAnimation.setDuration(500);
             translateAnimation.setFillAfter(true);
-            deskview.startAnimation(translateAnimation);
-            robotgirdview.startAnimation(translateAnimation);
+            linear_robot.startAnimation(translateAnimation);
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,Constant.linearWidth,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0F
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            linear_desk.startAnimation(translateAnimation);
         }else {
             TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,-linearlayout_all.getWidth(),
+                    Animation.ABSOLUTE,-Constant.linearWidth,
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0f
             );
@@ -433,15 +439,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             translateAnimation.setAnimationListener(MainActivity.this);
             map_right_Ralative.startAnimation(translateAnimation);
 
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,linearlayout_all.getWidth(),
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0f,
                     Animation.ABSOLUTE,0.0f
             );
             translateAnimation.setDuration(500);
             translateAnimation.setFillAfter(true);
-            deskview.startAnimation(translateAnimation);
-            robotgirdview.startAnimation(translateAnimation);
+            linear_robot.startAnimation(translateAnimation);
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            linear_desk.startAnimation(translateAnimation);
         }
     }
 
@@ -600,6 +613,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                     CURRENT_AREA_id = (int) areaList.get(0).get("id");
                 }
                 getDeskData();
+                area_text.setText("请选择左侧区域");
                 dialog.dismiss();
             }
         });

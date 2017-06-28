@@ -39,6 +39,7 @@ public class Constant {
     private static final String TAG = "HeadControl";
     //地图默认配置地图
     public static String filePath = "data/data/com.android.jdrd.headcontrol/cache/map.xml";
+    public static int linearWidth=100;
     //消息解析字段
     public static String Type = "type";
     public static String Function = "function";

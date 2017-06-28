@@ -40,7 +40,7 @@
     <string name="command_state">指令状态:</string>
     <string name="last_command_state">前指令状态:</string>
     <string name="last_location">最后坐标:</string>
-
+    <string name="obstacle">障碍物</string>
     <string name="main">首页</string>
     <string name="desk_add">添加桌子</string>
     <string name="desk_settings">添加桌子</string>
@@ -66,7 +66,7 @@
         <item>CREATE TABLE command (id INTEGER PRIMARY KEY AUTOINCREMENT,type INTEGER,desk INTERGER,goal INTERGER,direction INTERGER,
             speed INTERGER,music INTERGER,Error INTERGER,outime INTERGER,shownumber INTERGER,showcolor INTERGER)</item>
         <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT ,ip TEXT ,name TEXT ,outline INTERGER ,electric INTERGER ,area INTERGER,
-            state INTERGER,robotstate INTERGER , commandnum INTERGER ,excute INTERGER , excutetime INTERGER ,commandstate INTERGER ,lastcommandstate INTERGER
+            state INTERGER,robotstate INTERGER,obstacle INTERGER, commandnum INTERGER ,excute INTERGER , excutetime INTERGER ,commandstate INTERGER ,lastcommandstate INTERGER
             ,lastlocation INTEGER)</item>
         <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)</item>
     </array>

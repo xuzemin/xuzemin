@@ -1,7 +1,10 @@
 package com.android.jdrd.robot.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,8 +12,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.jdrd.robot.R;
+import com.android.jdrd.robot.dialog.RobotDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
 
@@ -25,6 +30,7 @@ import java.util.Map;
 public class RobotActivity extends Activity implements View.OnClickListener {
     private RobotDBHelper robotDBHelper;
     private int robotid;
+    private MyReceiver receiver;
     private Map robotconfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,6 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
         Intent intent =getIntent();
         robotid = intent.getIntExtra("id",0);
-
         findViewById(R.id.setting_redact).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
     }
@@ -45,6 +50,29 @@ public class RobotActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onStart() {
         super.onStart();
+        init();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if( receiver !=null) {
+            this.unregisterReceiver(receiver);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.jdrd.activity.Robot");
+        if(receiver != null ){
+            this.registerReceiver(receiver,filter);
+        }
+    }
+
+    private void init(){
         List<Map> robotlist = robotDBHelper.queryListMap("select * from robot where id = '"+ robotid +"'" ,null);
         robotconfig = robotlist.get(0);
         Constant.debugLog("robot     "+robotlist.toString());
@@ -60,11 +88,11 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         }else{
             ((TextView)findViewById(R.id.outline)).setText("离线");
         }
-        if((int)robotconfig.get("state") == 0){
+        if((int)robotconfig.get("robotstate") == 0){
             ((TextView)findViewById(R.id.robot_state)).setText("空闲");
-        }else if((int)robotconfig.get("state") == 1){
+        }else if((int)robotconfig.get("robotstate") == 1){
             ((TextView)findViewById(R.id.robot_state)).setText("送餐");
-        }else if((int)robotconfig.get("state") == 2){
+        }else if((int)robotconfig.get("robotstate") == 2){
             ((TextView)findViewById(R.id.robot_state)).setText("故障");
         }
         if((int)robotconfig.get("state") == 0){
@@ -79,19 +107,17 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         ((TextView)findViewById(R.id.name)).setText(robotconfig.get("name").toString());
         ((TextView)findViewById(R.id.ip)).setText(robotconfig.get("ip").toString());
         ((TextView)findViewById(R.id.electric)).setText(robotconfig.get("electric").toString());
-
         ((TextView)findViewById(R.id.command_num)).setText(robotconfig.get("commandnum").toString());
         ((TextView)findViewById(R.id.excute_command)).setText(robotconfig.get("excute").toString());
         ((TextView)findViewById(R.id.excute_time)).setText(robotconfig.get("excutetime").toString());
         ((TextView)findViewById(R.id.command_state)).setText(robotconfig.get("commandstate").toString());
         ((TextView)findViewById(R.id.last_command_state)).setText(robotconfig.get("lastcommandstate").toString());
         ((TextView)findViewById(R.id.last_location)).setText(robotconfig.get("lastlocation").toString());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+        if((int)robotconfig.get("obstacle") == 0){
+            ((TextView)findViewById(R.id.obstacle)).setText("无");
+        }else{
+            ((TextView)findViewById(R.id.obstacle)).setText("有");
+        }
     }
 
     @Override
@@ -105,6 +131,23 @@ public class RobotActivity extends Activity implements View.OnClickListener {
             case R.id.setting_back:
                 finish();
                 break;
+        }
+    }
+
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String StringE = intent.getStringExtra("msg");
+            Constant.debugLog("msg"+StringE);
+            if(StringE !=null && !StringE.equals("")){
+                pasreJson(StringE);
+            }
+        }
+    }
+    public void pasreJson(String string){
+        if(string.equals("robot")){
+            init();
+        }else {
         }
     }
 }
