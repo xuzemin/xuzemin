@@ -37,6 +37,7 @@ import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.service.ServerSocketUtil;
 import com.android.jdrd.robot.service.SetStaticIPService;
 import com.android.jdrd.robot.util.Constant;
+import com.android.jdrd.robot.view.HorizontalListView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,11 +98,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         imgViewmapnRight.setOnClickListener(this);
         findViewById(R.id.config_redact).setOnClickListener(this);
         area_text = (TextView) findViewById(R.id.area_text);
-        linear_robot = (LinearLayout) findViewById(R.id.linear_robot1);
+        linear_robot = (LinearLayout) findViewById(R.id.linear_robot);
         linear_desk = (LinearLayout) findViewById(R.id.linear_desk);
 
         linear_robot.setOnClickListener(this);
-        linear_robot.setOnClickListener(this);
+        linear_desk.setOnClickListener(this);
 
         robotgirdview  = (GridView) findViewById(R.id.robotgirdview);
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -112,6 +113,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 startActivity(intent);
             }
         });
+
+
         up = (Button) findViewById(R.id.up);
         down = (Button) findViewById(R.id.down);
         left = (Button) findViewById(R.id.left);
@@ -248,7 +251,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         if(CURRENT_AREA_id == 0){
             if(areaList !=null && areaList.size() >0){
                 CURRENT_AREA_id = (int) areaList.get(0).get("id");
+                area_text.setText( areaList.get(0).get("name").toString());
             }
+        }else{
+            area_text.setText("请选择左侧区域");
         }
         getDeskData();
         getRobotData();
@@ -420,7 +426,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             IsFinish = false;
             if (IsRight){
                 linearlayout_all.setVisibility(View.VISIBLE);
-                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,-linearlayout_all.getWidth(),
+                Constant.linearWidth = linearlayout_all.getWidth();
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,-Constant.linearWidth,
                         Animation.ABSOLUTE,0.0f,
                         Animation.ABSOLUTE,0.0f,
                         Animation.ABSOLUTE,0.0F
@@ -430,25 +437,25 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 translateAnimation.setAnimationListener(MainActivity.this);
                 map_right_Ralative.startAnimation(translateAnimation);
 
-//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,linearlayout_all.getWidth(),
-//                    Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,0.0F
-//            );
-//            translateAnimation.setDuration(500);
-//            translateAnimation.setFillAfter(true);
-//            linear_robot.startAnimation(translateAnimation);
-//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,linearlayout_all.getWidth(),
-//                    Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,0.0F
-//            );
-//            translateAnimation.setDuration(500);
-//            translateAnimation.setFillAfter(true);
-//            linear_desk.startAnimation(translateAnimation);
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,Constant.linearWidth,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0F
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            linear_robot.startAnimation(translateAnimation);
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,Constant.linearWidth,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0F
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            linear_desk.startAnimation(translateAnimation);
             }else {
                 translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,-linearlayout_all.getWidth(),
+                        Animation.ABSOLUTE,-Constant.linearWidth,
                         Animation.ABSOLUTE,0.0f,
                         Animation.ABSOLUTE,0.0f
                 );
@@ -457,22 +464,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 translateAnimation.setAnimationListener(MainActivity.this);
                 map_right_Ralative.startAnimation(translateAnimation);
 
-//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,linearlayout_all.getWidth(),
-//                    Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,0.0f
-//            );
-//            translateAnimation.setDuration(500);
-//            translateAnimation.setFillAfter(true);
-//            linear_robot.startAnimation(translateAnimation);
-//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,linearlayout_all.getWidth(),
-//                    Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,0.0f,
-//                    Animation.ABSOLUTE,0.0f
-//            );
-//            translateAnimation.setDuration(500);
-//            translateAnimation.setFillAfter(true);
-//            linear_desk.startAnimation(translateAnimation);
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            linear_robot.startAnimation(translateAnimation);
+            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f,
+                    Animation.ABSOLUTE,0.0f
+            );
+            translateAnimation.setDuration(500);
+            translateAnimation.setFillAfter(true);
+            linear_desk.startAnimation(translateAnimation);
             }
         }
     }
@@ -613,7 +620,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         });
-        //delete from person where name = 'wuyudong'
 
         dialog.setOnNegativeListener(new View.OnClickListener() {
             @Override
@@ -628,9 +634,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 getAreaData();
                 if(areaList !=null && areaList.size() >0){
                     CURRENT_AREA_id = (int) areaList.get(0).get("id");
+                    area_text.setText( areaList.get(0).get("name").toString());
+                }else{
+                    area_text.setText("请选择左侧区域");
                 }
                 getDeskData();
-                area_text.setText("请选择左侧区域");
                 dialog.dismiss();
             }
         });
