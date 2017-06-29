@@ -59,12 +59,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private RelativeLayout map_right_Ralative;
     private ImageView imgViewmapnRight;
     private GridView deskview,robotgirdview;
+    private TranslateAnimation translateAnimation;
     private List<Map<String, Object>> Areadata_list =  new ArrayList<>();
     private List<Map<String, Object>> Deskdata_list =  new ArrayList<>();
     private static List<Map> Robotdata_list =  new ArrayList<>();
     private SimpleAdapter desk_adapter,area_adapter;
     private static boolean DeskIsEdit = false,AreaIsEdit = false;
-    private boolean IsRight = true;
+    private boolean IsRight = false,IsFinish = true;
     private ListView area;
     private TextView area_text;
     private Button up,down,left,right,stop,shrink;
@@ -96,8 +97,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         imgViewmapnRight.setOnClickListener(this);
         findViewById(R.id.config_redact).setOnClickListener(this);
         area_text = (TextView) findViewById(R.id.area_text);
-        linear_robot = (LinearLayout) findViewById(R.id.linear_robot);
+        linear_robot = (LinearLayout) findViewById(R.id.linear_robot1);
         linear_desk = (LinearLayout) findViewById(R.id.linear_desk);
+
+        linear_robot.setOnClickListener(this);
+        linear_robot.setOnClickListener(this);
 
         robotgirdview  = (GridView) findViewById(R.id.robotgirdview);
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,6 +124,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         right.setOnClickListener(this);
         stop.setOnClickListener(this);
         shrink.setOnClickListener(this);
+
         findViewById(R.id.shrink).setOnClickListener(this);
         deskview = (GridView) findViewById(R.id.gview);
         //获取数据
@@ -149,7 +154,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         Constant.debugLog("position"+CURRENT_AREA_id);
                         commandlit = robotDBHelper.queryListMap("select * from command where desk = '"+Deskdata_list.get(position).get("id")+"'" ,null);
                         if(commandlit !=null&&commandlit.size()>0){
-                                robotDialog(commandlit);
+                            robotDialog(commandlit);
                         }
                     }
                 }else{
@@ -188,6 +193,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             }
         });
         robotDBHelper.execSQL("update robot set outline= '0' ");
+
+        receiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.jdrd.activity.Main");
+        if(receiver != null ){
+            this.registerReceiver(receiver,filter);
+        }
     }
 
     private void setGridView() {
@@ -214,25 +226,19 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     @Override
     protected void onStart() {
         super.onStart();
-        receiver = new MyReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.jdrd.activity.Main");
-        if(receiver != null ){
-            this.registerReceiver(receiver,filter);
-        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if( receiver !=null) {
-            this.unregisterReceiver(receiver);
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if( receiver !=null) {
+            this.unregisterReceiver(receiver);
+        }
     }
 
     @Override
@@ -262,6 +268,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                     DeskIsEdit = true;
                 }
                 getDeskData();
+                break;
+            case R.id.robotgirdview:
+                if(!IsRight){
+                    startAnimationLeft();
+                }
+                break;
+            case R.id.linear_desk:
+                if(!IsRight){
+                    startAnimationLeft();
+                }
                 break;
             case R.id.up:
                 robotDialog("*u+6+#");
@@ -343,7 +359,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         flag = true;
                         break;
                     }
-                        j++;
+                    j++;
                     h = ServerSocketUtil.socketlist.size();
                 }
                 size = robotList.size();
@@ -400,61 +416,64 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     }
 
     private void startAnimationLeft(){
-        if (IsRight){
-            linearlayout_all.setVisibility(View.VISIBLE);
-            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,-Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0F
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            translateAnimation.setAnimationListener(MainActivity.this);
-            map_right_Ralative.startAnimation(translateAnimation);
+        if(IsFinish){
+            IsFinish = false;
+            if (IsRight){
+                linearlayout_all.setVisibility(View.VISIBLE);
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,-linearlayout_all.getWidth(),
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0F
+                );
+                translateAnimation.setDuration(500);
+                translateAnimation.setFillAfter(true);
+                translateAnimation.setAnimationListener(MainActivity.this);
+                map_right_Ralative.startAnimation(translateAnimation);
 
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0F
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_robot.startAnimation(translateAnimation);
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0F
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_desk.startAnimation(translateAnimation);
-        }else {
-            TranslateAnimation translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,-Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(false);
-            translateAnimation.setAnimationListener(MainActivity.this);
-            map_right_Ralative.startAnimation(translateAnimation);
+//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,linearlayout_all.getWidth(),
+//                    Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,0.0F
+//            );
+//            translateAnimation.setDuration(500);
+//            translateAnimation.setFillAfter(true);
+//            linear_robot.startAnimation(translateAnimation);
+//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,linearlayout_all.getWidth(),
+//                    Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,0.0F
+//            );
+//            translateAnimation.setDuration(500);
+//            translateAnimation.setFillAfter(true);
+//            linear_desk.startAnimation(translateAnimation);
+            }else {
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,-linearlayout_all.getWidth(),
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0f
+                );
+                translateAnimation.setDuration(500);
+                translateAnimation.setFillAfter(true);
+                translateAnimation.setAnimationListener(MainActivity.this);
+                map_right_Ralative.startAnimation(translateAnimation);
 
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_robot.startAnimation(translateAnimation);
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_desk.startAnimation(translateAnimation);
+//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,linearlayout_all.getWidth(),
+//                    Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,0.0f
+//            );
+//            translateAnimation.setDuration(500);
+//            translateAnimation.setFillAfter(true);
+//            linear_robot.startAnimation(translateAnimation);
+//            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,linearlayout_all.getWidth(),
+//                    Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,0.0f,
+//                    Animation.ABSOLUTE,0.0f
+//            );
+//            translateAnimation.setDuration(500);
+//            translateAnimation.setFillAfter(true);
+//            linear_desk.startAnimation(translateAnimation);
+            }
         }
     }
 
@@ -474,13 +493,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             linearlayout_all.setVisibility(View.GONE);
             imgViewmapnRight.setImageResource(R.mipmap.zuo_xs);
         }
+        IsFinish = true;
     }
 
     @Override
     public void onAnimationRepeat(Animation animation) {
 
     }
-
 
     private void startAnimationShrink(){
         Animation translate;
@@ -548,7 +567,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         }
         @Override
         public void onAnimationRepeat(Animation animation) {
-
         }
     };
 
@@ -595,7 +613,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         });
-
         //delete from person where name = 'wuyudong'
 
         dialog.setOnNegativeListener(new View.OnClickListener() {
@@ -630,8 +647,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         robotDialog = new RobotDialog(this,list);
         robotDialog.show();
     }
-
-
 
     public class MyReceiver extends BroadcastReceiver {
         @Override

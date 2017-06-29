@@ -154,26 +154,39 @@ public class RobotDialog extends Dialog {
                                                         +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
                                                         +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
                                             }
+                                            setSendstr(out,sendstr);
+                                            synchronized (thread){
+                                                thread.wait();
+                                            }
                                             break;
                                         case 1:
-                                            sendstr="*d";
+                                            sendstr="*d+"+robotlist.get(i).get("speed")
+                                                    +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
+                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            setSendstr(out,sendstr);
+                                            synchronized (thread){
+                                                thread.wait();
+                                            }
                                             break;
                                         case 2:
-                                            sendstr="*r";
+                                            sendstr="*r+"+robotlist.get(i).get("speed")
+                                                    +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
+                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            setSendstr(out,sendstr);
+                                            synchronized (thread){
+                                                thread.wait();
+                                            }
                                             break;
                                         case 3:
-                                            sendstr="*w";
+                                            sendstr="*w+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
+                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            setSendstr(out,sendstr);
+                                            synchronized (thread){
+                                                thread.wait();
+                                            }
                                             break;
-                                    }
-                                    if(sendstr.length() >= 6){
-                                        sendstr = sendstr + "+"+(sendstr.length()+5)+"+#";
-                                    }else{
-                                        sendstr = sendstr + "+"+(sendstr.length()+4)+"+#";
-                                    }
-                                    out.write(sendstr.getBytes());
-                                    Constant.debugLog("length"+sendstr.length());
-                                    synchronized (thread){
-                                        thread.wait();
+                                        default:
+                                            break;
                                     }
                                 }
                             } catch (Exception e) {
@@ -184,6 +197,19 @@ public class RobotDialog extends Dialog {
                 });
                 thread.start();
             }
+        }
+    }
+
+    private static void setSendstr(OutputStream out,String str){
+        if(str.length() >= 6){
+            str = str + "+"+(str.length()+5)+"+#";
+        }else{
+            str = str + "+"+(str.length()+4)+"+#";
+        }
+        try {
+            out.write(str.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

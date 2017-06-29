@@ -45,6 +45,12 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         robotid = intent.getIntExtra("id",0);
         findViewById(R.id.setting_redact).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
+        receiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.jdrd.activity.Robot");
+        if(receiver != null ){
+            this.registerReceiver(receiver,filter);
+        }
     }
 
     @Override
@@ -56,7 +62,12 @@ public class RobotActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
-        if( receiver !=null) {
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if( receiver !=null ) {
             this.unregisterReceiver(receiver);
         }
     }
@@ -64,12 +75,6 @@ public class RobotActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        receiver = new MyReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.jdrd.activity.Robot");
-        if(receiver != null ){
-            this.registerReceiver(receiver,filter);
-        }
     }
 
     private void init(){
