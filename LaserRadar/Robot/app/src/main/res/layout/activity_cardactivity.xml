@@ -3,25 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="#EEEEEE"
     >
     <RelativeLayout
         android:id="@+id/main"
-        android:background="@color/darkkhaki"
+        android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="48dp">
         <Button
             android:id="@+id/setting_back"
+            android:background="@drawable/btn_back_selector"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
+            android:layout_height="30dp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="25sp"
+            android:textSize="17sp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="@string/card_settings"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -31,23 +33,24 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp">
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:text="@string/name"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="25sp"
-            />
         <EditText
             android:id="@+id/cardname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/add_card"
+            android:gravity="right|center_vertical"
             android:textColor="@color/black"
             android:layout_marginLeft="120dp"
-            android:layout_toLeftOf="@+id/change_name"
             />
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:text="@string/name"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:id="@+id/textView2" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,8 +60,9 @@
             android:layout_height="match_parent"
             android:text="@string/card_address"
             android:textColor="@color/black"
-            android:gravity="center"
-            android:textSize="25sp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:textSize="17sp"
             />
         <EditText
             android:id="@+id/cardaddress"
@@ -66,6 +70,7 @@
             android:layout_height="match_parent"
             android:textColor="@color/black"
             android:inputType="number"
+            android:gravity="right|center_vertical"
             android:layout_marginLeft="120dp"
             />
     </RelativeLayout>
@@ -73,16 +78,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/btn_sure"
             android:layout_width="match_parent"
             android:text="@string/btn_sure"
             android:layout_weight="1"
+            android:textSize="17sp"
+            android:background="@color/white"
             android:layout_height="60dp" />
+
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="match_parent"
             android:text="@string/btn_delete"
+            android:textSize="17sp"
+            android:background="@color/white"
             android:layout_weight="1"
             android:layout_height="60dp" />
     </LinearLayout>

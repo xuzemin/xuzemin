@@ -9,25 +9,32 @@
     tools:context="com.android.jdrd.robot.activity.MainActivity">
     <RelativeLayout
         android:id="@+id/main"
-        android:background="@color/darkkhaki"
+        android:background="@color/green"
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <Button
             android:id="@+id/setting_back"
+            android:background="@drawable/btn_back_selector"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="30dp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="25sp"
+            android:textSize="17sp"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="@string/command_deract"
             />
         <Button
+            android:background="@color/green"
+            android:textColor="@color/white"
             android:id="@+id/btn_delete"
+            android:layout_marginRight="5dp"
+            android:textSize="17sp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -50,7 +57,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -59,16 +66,18 @@
                         android:layout_height="match_parent"
                         android:text="@string/goalname"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
+                        android:gravity="left|center_vertical"
+                        android:textSize="17sp"
                         />
 
                     <Spinner
                         android:id="@+id/goal"
-                        android:layout_width="match_parent"
+                        android:background="@color/white"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center" />
-                </LinearLayout>
+                        />
+                </RelativeLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -83,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:background="@color/black"
                     android:layout_height="0.5dp"/>
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -91,16 +100,20 @@
                         android:layout_width="120dp"
                         android:layout_height="match_parent"
                         android:text="@string/direction"
+                        android:gravity="left|center_vertical"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
+                        android:textSize="17sp"
                         />
+
                     <Spinner
                         android:id="@+id/direction"
-                        android:layout_width="match_parent"
-                        android:gravity="center"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:background="@color/white"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -115,27 +128,28 @@
                     android:layout_width="match_parent"
                     android:background="@color/black"
                     android:layout_height="0.5dp"/>
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
                         android:id="@+id/speed_text"
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/speed"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
+                        android:gravity="left|center_vertical"
+                        android:textSize="17sp"
                         />
                     <EditText
                         android:inputType="number"
+                        android:background="@drawable/bg_edittext"
                         android:id="@+id/speed"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"/>
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -150,26 +164,27 @@
                     android:layout_width="match_parent"
                     android:background="@color/black"
                     android:layout_height="0.5dp"/>
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/mp3"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
+                        android:gravity="left|center_vertical"
+                        android:textSize="17sp"
                         />
                     <EditText
                         android:id="@+id/mp3"
+                        android:background="@drawable/bg_edittext"
                         android:inputType="number"
-                        android:layout_width="match_parent"
+                        android:layout_width="100dp"
                         android:textColor="@color/black"
-                        android:gravity="center"
+                        android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -184,26 +199,27 @@
                     android:layout_width="match_parent"
                     android:background="@color/black"
                     android:layout_height="0.5dp"/>
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/outime"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
+                        android:gravity="left|center_vertical"
+                        android:textSize="17sp"
                         />
                     <EditText
                         android:id="@+id/outime"
                         android:inputType="number"
                         android:textColor="@color/black"
-                        android:layout_width="match_parent"
-                        android:gravity="center"
+                        android:layout_width="100dp"
+                        android:background="@drawable/bg_edittext"
+                        android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -218,26 +234,27 @@
                     android:layout_width="match_parent"
                     android:background="@color/black"
                     android:layout_height="0.5dp"/>
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/shownum"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
+                        android:gravity="left|center_vertical"
+                        android:textSize="17sp"
                         />
                     <EditText
                         android:inputType="number"
+                        android:background="@drawable/bg_edittext"
                         android:id="@+id/shownum"
                         android:textColor="@color/black"
-                        android:layout_width="match_parent"
-                        android:gravity="center"
+                        android:layout_width="100dp"
+                        android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -252,26 +269,27 @@
                     android:layout_width="match_parent"
                     android:background="@color/black"
                     android:layout_height="0.5dp"/>
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/showcolor"
                         android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
+                        android:gravity="left|center_vertical"
+                        android:textSize="17sp"
                         />
                     <EditText
                         android:inputType="number"
                         android:id="@+id/showcolor"
-                        android:layout_width="match_parent"
+                        android:background="@drawable/bg_edittext"
+                        android:layout_width="100dp"
                         android:textColor="@color/black"
-                        android:gravity="center"
+                        android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -279,7 +297,9 @@
                 android:layout_height="0.5dp"/>
             <Button
                 android:id="@+id/btn_sure"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/white"
                 android:text="@string/btn_sure"
                 android:textSize="25sp"
                 android:layout_height="wrap_content" />

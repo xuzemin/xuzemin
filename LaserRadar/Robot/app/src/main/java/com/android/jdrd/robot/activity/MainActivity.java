@@ -164,9 +164,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!IsRight){
-                    startAnimationLeft();
-                }
                 getAreaData();
                 if(AreaIsEdit){
                     if(position == 0){
@@ -201,18 +198,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     private void setGridView() {
         int size = Robotdata_list.size();
-        int length = 250;
+        int length = 76;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         density = dm.density;
-        int gridviewWidth = (int) (size * (length + 9) * density);
+        int gridviewWidth = (int) (size * (length + 10) * density);
         int itemWidth = (int) (length * density);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                gridviewWidth, gridviewWidth / 2);
-        Constant.linearWidth = (int) (100 * density);
+                gridviewWidth, gridviewWidth * 2);
+        Constant.linearWidth = (int) (83 * density);
         robotgirdview.setLayoutParams(params); // 重点
         robotgirdview.setColumnWidth(itemWidth); // 重点
-        robotgirdview.setHorizontalSpacing((int) (9*density)); // 间距
+        robotgirdview.setHorizontalSpacing((int) (10*density)); // 间距
         robotgirdview.setStretchMode(GridView.NO_STRETCH);
         robotgirdview.setNumColumns(size); // 重点
         gridViewAdapter = new GridViewAdapter(getApplicationContext(),

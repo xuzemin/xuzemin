@@ -8,28 +8,33 @@
 
     <RelativeLayout
         android:id="@+id/main"
-        android:background="@color/darkkhaki"
+        android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="48dp">
         <Button
             android:id="@+id/setting_back"
+            android:background="@drawable/btn_back_selector"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
+            android:layout_height="30dp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="25sp"
+            android:textSize="17sp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="@string/card_settings"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
     </RelativeLayout>
+
     <ListView
         android:id="@+id/cardlist"
+        android:divider="#EEEEEE"
+        android:dividerHeight = "5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

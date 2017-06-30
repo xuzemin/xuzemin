@@ -3,6 +3,6 @@
     android:layout_height="60dp"
     android:layout_width="fill_parent"
     android:textColor="@color/black"
-    android:textSize="27sp"
+    android:textSize="17sp"
     android:background="@color/white"
     android:gravity="center"/>

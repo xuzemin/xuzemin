@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="200dp"
     android:orientation="horizontal"
+    android:background="#EEEEEE"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/title"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:text="@string/add_area"
@@ -24,30 +25,39 @@
                 />
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:textSize="27sp"
                 android:textColorHint="#7D7D7D"
+                android:background="@drawable/bg_edittext"
                 />
             <LinearLayout
-                android:layout_width="200dp"
-                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:orientation="horizontal"
                 >
                 <Button
-                    android:id="@+id/positiveButton"
-                    android:layout_width="100dp"
+                    android:id="@+id/negativeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
                     android:layout_height="match_parent"
-                    android:background="@animator/btn_selector"
-                    android:text="@string/btn_sure"
+                    android:text="@string/btn_cancle"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
                     />
                 <Button
-                    android:id="@+id/negativeButton"
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:id="@+id/positiveButton"
+                    android:layout_width="wrap_content"
+                    android:background="@color/white"
                     android:layout_height="match_parent"
-                    android:background="@animator/btn_selector"
-                    android:text="@string/btn_cancle"
+                    android:text="@string/btn_sure"
+                    android:textSize="25sp"
+                    android:textColor="@color/origen"
                     />
             </LinearLayout>
         </LinearLayout>

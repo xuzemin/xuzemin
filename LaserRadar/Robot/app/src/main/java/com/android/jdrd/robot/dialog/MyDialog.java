@@ -7,6 +7,7 @@ package com.android.jdrd.robot.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.media.RatingCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -29,16 +30,16 @@ public class MyDialog extends Dialog {
     private TextView title;
 
     public MyDialog(Context context) {
-        super(context, R.style.MyDialog);
+        super(context, R.style.SoundRecorder);
         setCustomDialog();
     }
     public MyDialog(Context context, int id){
-        super(context, R.style.MyDialog);
+        super(context, R.style.SoundRecorder);
         setpassWordDialog();
     }
 
     private void setCustomDialog() {
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog, null);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog,null);
         title = (TextView) mView.findViewById(R.id.title);
         editText = (EditText) mView.findViewById(R.id.editText);
         positiveButton = (Button) mView.findViewById(R.id.positiveButton);
