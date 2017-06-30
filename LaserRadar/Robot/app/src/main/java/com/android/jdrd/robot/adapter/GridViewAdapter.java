@@ -57,13 +57,25 @@ public class GridViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if(("1").equals(list.get(position).get("outline").toString())){
-            viewHolder.imageView.setImageResource(R.mipmap.bg);
+        Map map = list.get(position);
+
+        if(("1").equals(map.get("outline").toString())){
+            viewHolder.imageView.setImageResource(R.mipmap.zaixian);
         }else{
-            viewHolder.imageView.setImageResource(R.mipmap.ic_launcher);
+            viewHolder.imageView.setImageResource(R.mipmap.lixiang02);
         }
-        viewHolder.text.setText(list.get(position).get("lastlocation").toString());
-        viewHolder.name.setText(list.get(position).get("name").toString());
+        viewHolder.name.setText(map.get("name").toString());
+        switch ((int)map.get("robotstate")){
+            case 0:
+                viewHolder.text.setText("空闲");
+                break;
+            case 1:
+                viewHolder.text.setText("送餐");
+                break;
+            case 2:
+                viewHolder.text.setText("故障");
+                break;
+        }
         return convertView;
     }
 

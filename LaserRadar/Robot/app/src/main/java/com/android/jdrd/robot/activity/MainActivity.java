@@ -11,12 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.GridViewAdapter;
 import com.android.jdrd.robot.dialog.MyDialog;
@@ -37,18 +34,9 @@ import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.service.ServerSocketUtil;
 import com.android.jdrd.robot.service.SetStaticIPService;
 import com.android.jdrd.robot.util.Constant;
-import com.android.jdrd.robot.view.HorizontalListView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.net.SocketImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,8 +54,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private static List<Map> Robotdata_list =  new ArrayList<>();
     private SimpleAdapter desk_adapter,area_adapter;
     private static boolean DeskIsEdit = false,AreaIsEdit = false;
-    private boolean IsRight = false,IsFinish = true;
+    private boolean IsRight = true,IsFinish = true;
     private ListView area;
+    private float density;
     private TextView area_text;
     private Button up,down,left,right,stop,shrink;
     public static int CURRENT_AREA_id = 0;
@@ -100,11 +89,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         area_text = (TextView) findViewById(R.id.area_text);
         linear_robot = (LinearLayout) findViewById(R.id.linear_robot);
         linear_desk = (LinearLayout) findViewById(R.id.linear_desk);
-
+        findViewById(R.id.main).setOnClickListener(this);
         linear_robot.setOnClickListener(this);
         linear_desk.setOnClickListener(this);
+        findViewById(R.id.main).setOnClickListener(this);
 
         robotgirdview  = (GridView) findViewById(R.id.robotgirdview);
+
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -113,7 +104,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 startActivity(intent);
             }
         });
-
 
         up = (Button) findViewById(R.id.up);
         down = (Button) findViewById(R.id.down);
@@ -131,11 +121,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         findViewById(R.id.shrink).setOnClickListener(this);
         deskview = (GridView) findViewById(R.id.gview);
         //获取数据
-        desk_adapter = new SimpleAdapter(this, Deskdata_list, R.layout.item, from, to);
+        desk_adapter = new SimpleAdapter(this, Deskdata_list, R.layout.desk_item, from, to);
         deskview.setAdapter(desk_adapter);
         deskview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(!IsRight){
+                    startAnimationLeft();
+                }
                 getAreaData();
                 Constant.debugLog("position"+CURRENT_AREA_id);
                 Constant.debugLog("DeskIsEdit"+DeskIsEdit);
@@ -165,14 +158,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         });
+
         area_adapter = new SimpleAdapter(this, Areadata_list, R.layout.item, from, to);
         area.setAdapter(area_adapter);
         area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(!IsRight){
+                    startAnimationLeft();
+                }
                 getAreaData();
-                Constant.debugLog("position"+CURRENT_AREA_id);
-                Constant.debugLog("AreaIsEdit"+AreaIsEdit);
                 if(AreaIsEdit){
                     if(position == 0){
                         AreaIsEdit = false;
@@ -196,7 +191,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             }
         });
         robotDBHelper.execSQL("update robot set outline= '0' ");
-
         receiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.jdrd.activity.Main");
@@ -207,18 +201,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     private void setGridView() {
         int size = Robotdata_list.size();
-        int length = 100;
+        int length = 250;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float density = dm.density;
-        int gridviewWidth = (int) (size * (length + 4) * density);
+        density = dm.density;
+        int gridviewWidth = (int) (size * (length + 9) * density);
         int itemWidth = (int) (length * density);
-
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+                gridviewWidth, gridviewWidth / 2);
+        Constant.linearWidth = (int) (100 * density);
         robotgirdview.setLayoutParams(params); // 重点
         robotgirdview.setColumnWidth(itemWidth); // 重点
-        robotgirdview.setHorizontalSpacing(5); // 间距
+        robotgirdview.setHorizontalSpacing((int) (9*density)); // 间距
         robotgirdview.setStretchMode(GridView.NO_STRETCH);
         robotgirdview.setNumColumns(size); // 重点
         gridViewAdapter = new GridViewAdapter(getApplicationContext(),
@@ -264,6 +258,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.main:
+                if(!IsRight){
+                    startAnimationLeft();
+                }
+                break;
             case R.id.imgViewmapnRight:
                 startAnimationLeft();
                 break;
@@ -319,7 +318,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         Map<String, Object> map;
         if(DeskIsEdit){
             map = new HashMap<>();
-            map.put("image", R.mipmap.zuo_xs);
+//            map.put("image", R.mipmap.zuo_xs);
             map.put("id", 0);
             map.put("text",getString(R.string.config_add));
             Deskdata_list.add(map);
@@ -328,9 +327,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             for(int i=0 ,size = deskList.size();i<size;i++){
                 map = new HashMap<>();
                 if(DeskIsEdit){
-                    map.put("image", R.mipmap.ic_launcher);
+//                    map.put("image", R.mipmap.ic_launcher);
                 }else{
-                    map.put("image", R.mipmap.bg);
+//                    map.put("image", R.mipmap.bg);
                 }
                 map.put("id", deskList.get(i).get("id"));
                 map.put("text", deskList.get(i).get("name"));
@@ -395,12 +394,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
         Map<String, Object> map ;
         map = new HashMap<>();
-        map.put("image", R.mipmap.zuo_xs);
+//        map.put("image", R.mipmap.zuo_xs);
         map.put("text",getString(R.string.config_redact));
         Areadata_list.add(map);
         if(AreaIsEdit){
             map = new HashMap<>();
-            map.put("image", R.mipmap.zuo_xs);
+//            map.put("image", R.mipmap.zuo_xs);
             map.put("text",getString(R.string.config_add));
             Areadata_list.add(map);
         }
@@ -408,9 +407,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             for(int i=0 ,size = areaList.size();i<size;i++){
                 map = new HashMap<>();
                 if(AreaIsEdit){
-                    map.put("image", R.mipmap.ic_launcher);
+//                    map.put("image", R.mipmap.ic_launcher);
                 }else{
-                    map.put("image", R.mipmap.bg);
+//                    map.put("image", R.mipmap.bg);
                 }
                 map.put("id", areaList.get(i).get("id"));
                 map.put("text", areaList.get(i).get("name"));
@@ -426,7 +425,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             IsFinish = false;
             if (IsRight){
                 linearlayout_all.setVisibility(View.VISIBLE);
-                Constant.linearWidth = linearlayout_all.getWidth();
                 translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,-Constant.linearWidth,
                         Animation.ABSOLUTE,0.0f,
                         Animation.ABSOLUTE,0.0f,
@@ -437,22 +435,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 translateAnimation.setAnimationListener(MainActivity.this);
                 map_right_Ralative.startAnimation(translateAnimation);
 
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0F
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_robot.startAnimation(translateAnimation);
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0F
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_desk.startAnimation(translateAnimation);
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,Constant.linearWidth,
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0F
+                );
+                translateAnimation.setDuration(500);
+                translateAnimation.setFillAfter(true);
+                linear_robot.startAnimation(translateAnimation);
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,Constant.linearWidth,
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0F
+                );
+                translateAnimation.setDuration(500);
+                translateAnimation.setFillAfter(true);
+                linear_desk.startAnimation(translateAnimation);
             }else {
                 translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
                         Animation.ABSOLUTE,-Constant.linearWidth,
@@ -464,22 +462,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 translateAnimation.setAnimationListener(MainActivity.this);
                 map_right_Ralative.startAnimation(translateAnimation);
 
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_robot.startAnimation(translateAnimation);
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f,
-                    Animation.ABSOLUTE,0.0f
-            );
-            translateAnimation.setDuration(500);
-            translateAnimation.setFillAfter(true);
-            linear_desk.startAnimation(translateAnimation);
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0f
+                );
+                translateAnimation.setDuration(500);
+                translateAnimation.setFillAfter(true);
+                linear_robot.startAnimation(translateAnimation);
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0f,
+                        Animation.ABSOLUTE,0.0f
+                );
+                translateAnimation.setDuration(500);
+                translateAnimation.setFillAfter(true);
+                linear_desk.startAnimation(translateAnimation);
             }
         }
     }
@@ -494,11 +492,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         map_right_Ralative.clearAnimation();
         if (IsRight){
             IsRight = false;
-            imgViewmapnRight.setImageResource(R.mipmap.zuo_yc);
         }else {
             IsRight = true;
             linearlayout_all.setVisibility(View.GONE);
-            imgViewmapnRight.setImageResource(R.mipmap.zuo_xs);
         }
         IsFinish = true;
     }

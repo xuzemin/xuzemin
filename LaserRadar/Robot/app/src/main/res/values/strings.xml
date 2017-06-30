@@ -42,6 +42,7 @@
     <string name="last_location">最后坐标:</string>
     <string name="obstacle">障碍物</string>
     <string name="main">首页</string>
+    <string name="dining">嘟嘟送餐</string>
     <string name="desk_add">添加桌子</string>
     <string name="desk_settings">添加桌子</string>
     <string name="desk_deract">编辑桌子</string>

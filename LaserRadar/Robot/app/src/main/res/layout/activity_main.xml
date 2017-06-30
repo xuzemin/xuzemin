@@ -4,20 +4,21 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/darkgrey"
     tools:context="com.android.jdrd.robot.activity.MainActivity">
 
     <RelativeLayout
         android:id="@+id/main"
-        android:background="@color/darkkhaki"
+        android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="72dp">
         <ImageView
             android:id="@+id/imgViewmapnRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="@mipmap/zuo_yc"
+            android:layout_width="30dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@animator/btn_more_selector"
             />
         <TextView
             android:layout_width="match_parent"
@@ -25,16 +26,19 @@
             android:textSize="25sp"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:textColor="@color/black"
-            android:text="@string/main"
+            android:textColor="#FFFFFF"
+            android:text="@string/dining"
             />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/linear_robot"
         android:layout_below="@+id/main"
         android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:orientation="vertical"
-        android:layout_height="100dp">
+        android:layout_height="125dp">
         <HorizontalScrollView
             android:id="@+id/aas"
             android:layout_width="match_parent"
@@ -49,46 +53,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:numColumns="auto_fit"
-                    android:stretchMode="spacingWidthUniform" >
+                    android:horizontalSpacing="15dp"
+                    android:verticalSpacing="15dp"
+                    android:padding="5dp"
+                    android:stretchMode="spacingWidthUniform"
+                    >
                 </GridView>
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
-    <View
-        android:layout_below="@+id/linear_robot"
-        android:id="@+id/view"
-        android:background="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
     <LinearLayout
         android:id="@+id/linear_desk"
-        android:layout_below="@+id/view"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/linear_robot"
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_height="match_parent"
         >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:background="@color/white"
+            android:layout_height="70dp">
             <TextView
                 android:id="@+id/area_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/choose_area"
-                android:textSize="25sp"
+                android:layout_marginLeft="17dp"
+                android:textSize="24sp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="#333333"
                 />
             <Button
                 android:id="@+id/config_redact"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:textColor="@color/black"
+                android:layout_marginRight="17dp"
                 android:textSize="25sp"
-                android:text="@string/config_redact"
+                android:background="@animator/btn_direct_selector"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 />
         </RelativeLayout>
@@ -100,10 +107,8 @@
             android:id="@+id/gview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:numColumns="auto_fit"
             android:columnWidth="80dp"
-            android:stretchMode="columnWidth"
             />
     </LinearLayout>
     <RelativeLayout
@@ -111,14 +116,13 @@
         android:id="@+id/map_right_Ralative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
         android:layout_alignParentLeft="true">
         <LinearLayout
             android:id="@+id/linearlayout_all"
             android:layout_width="100dp"
+            android:visibility="gone"
             android:layout_alignParentLeft="true"
             android:orientation="vertical"
-            android:background="@mipmap/bg"
             android:layout_height="match_parent">
             <ListView
                 android:id="@+id/area"
@@ -191,11 +195,10 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="310dp"
         android:layout_marginRight="10dp"
-        android:text="前进"
         android:visibility="gone"
-        android:background="@mipmap/ic_launcher"/>
+        android:background="@animator/btn_up_selector"/>
     <Button
         android:id="@+id/down"
         android:layout_width="60dp"
@@ -203,10 +206,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="130dp"
-        android:text="后退"
+        android:layout_marginBottom="250dp"
         android:visibility="gone"
-        android:background="@mipmap/ic_launcher"/>
+        android:background="@animator/btn_down_selector"/>
     <Button
         android:id="@+id/left"
         android:layout_width="60dp"
@@ -215,31 +217,28 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="190dp"
         android:layout_marginRight="10dp"
-        android:text="左转"
         android:visibility="gone"
-        android:background="@mipmap/ic_launcher"/>
+        android:background="@animator/btn_left_selector"/>
     <Button
         android:id="@+id/right"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:text="右转"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="130dp"
         android:layout_marginRight="10dp"
         android:visibility="gone"
-        android:background="@mipmap/ic_launcher"/>
+        android:background="@animator/btn_right_selector"/>
     <Button
         android:id="@+id/stop"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="310dp"
+        android:layout_marginBottom="70dp"
         android:layout_marginRight="10dp"
         android:visibility="gone"
-        android:text="停止"
-        android:background="@mipmap/ic_launcher"/>
+        android:background="@animator/btn_stop_selector"/>
     <Button
         android:id="@+id/shrink"
         android:layout_width="60dp"
@@ -248,5 +247,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:background="@mipmap/ic_launcher"/>
+        android:background="@animator/btn_shrink_selector"/>
 </RelativeLayout>
