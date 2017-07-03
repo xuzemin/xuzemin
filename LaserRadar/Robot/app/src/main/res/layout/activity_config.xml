@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="48dp">
         <Button
             android:id="@+id/setting_back"
             android:background="@drawable/btn_back_selector"
@@ -100,13 +100,16 @@
                 android:layout_width="match_parent"
                 android:background="#EEEEEE"
                 android:layout_height="0.5dp"/>
+
             <Button
                 android:id="@+id/card"
                 android:text="@string/card_settings"
                 android:background="@color/white"
                 android:layout_gravity="center"
                 android:layout_width="200dp"
+                android:textSize="22sp"
                 android:layout_height="60dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:background="#EEEEEE"
@@ -170,14 +173,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/derail"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textSize="25sp"
-                        />
+
                     <Button
                         android:id="@+id/derail"
                         android:layout_width="@dimen/add_width"
@@ -186,6 +182,18 @@
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/derail"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="25sp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView5" />
                 </RelativeLayout>
             </LinearLayout>
             <View
@@ -197,6 +205,7 @@
                 android:layout_width="match_parent"
                 android:background="@color/white"
                 android:layout_height="@dimen/desk_height">
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="48dp">
         <Button
             android:id="@+id/setting_back"
             android:layout_marginLeft="10dp"

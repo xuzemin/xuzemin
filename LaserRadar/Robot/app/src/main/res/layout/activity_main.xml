@@ -208,8 +208,8 @@
     <!--</Button>-->
     <Button
         android:id="@+id/up"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="310dp"
@@ -218,8 +218,8 @@
         android:background="@animator/btn_up_selector"/>
     <Button
         android:id="@+id/down"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
@@ -228,8 +228,8 @@
         android:background="@animator/btn_down_selector"/>
     <Button
         android:id="@+id/left"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="190dp"
@@ -238,8 +238,8 @@
         android:background="@animator/btn_left_selector"/>
     <Button
         android:id="@+id/right"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="130dp"
@@ -248,8 +248,8 @@
         android:background="@animator/btn_right_selector"/>
     <Button
         android:id="@+id/stop"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="70dp"
@@ -258,8 +258,8 @@
         android:background="@animator/btn_stop_selector"/>
     <Button
         android:id="@+id/shrink"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
