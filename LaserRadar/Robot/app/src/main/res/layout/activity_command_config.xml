@@ -11,14 +11,14 @@
         android:id="@+id/main"
         android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="@dimen/top_height">
         <Button
             android:id="@+id/setting_back"
             android:background="@drawable/btn_back_selector"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
+            android:layout_width="17dp"
+            android:layout_height="32dp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             />
         <Button
             android:background="@color/green"
-            android:textColor="@color/white"
+            android:textColor="@color/orange"
             android:id="@+id/btn_delete"
             android:layout_marginRight="5dp"
             android:textSize="17sp"
@@ -62,9 +62,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/goalname"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/black"
                         android:gravity="left|center_vertical"
                         android:textSize="17sp"
@@ -73,10 +74,11 @@
                     <Spinner
                         android:id="@+id/goal"
                         android:background="@color/white"
-                        android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        />
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
                 </RelativeLayout>
             </LinearLayout>
             <View
@@ -97,9 +99,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
-                        android:layout_width="120dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/direction"
+                        android:layout_marginLeft="10dp"
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="17sp"
@@ -107,7 +110,7 @@
 
                     <Spinner
                         android:id="@+id/direction"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:background="@color/white"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
@@ -136,6 +139,7 @@
                         android:id="@+id/speed_text"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
                         android:text="@string/speed"
                         android:textColor="@color/black"
                         android:gravity="left|center_vertical"
@@ -172,6 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/mp3"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/black"
                         android:gravity="left|center_vertical"
                         android:textSize="17sp"
@@ -207,6 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/outime"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/black"
                         android:gravity="left|center_vertical"
                         android:textSize="17sp"
@@ -242,6 +248,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/shownum"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/black"
                         android:gravity="left|center_vertical"
                         android:textSize="17sp"
@@ -277,6 +284,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/showcolor"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/black"
                         android:gravity="left|center_vertical"
                         android:textSize="17sp"
@@ -296,13 +304,15 @@
                 android:background="@color/black"
                 android:layout_height="0.5dp"/>
             <Button
+                android:layout_marginTop="15dp"
                 android:id="@+id/btn_sure"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_gravity="center"
                 android:background="@color/white"
                 android:text="@string/btn_sure"
-                android:textSize="25sp"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/origen"
+                android:textSize="22sp"
+                android:layout_height="60dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

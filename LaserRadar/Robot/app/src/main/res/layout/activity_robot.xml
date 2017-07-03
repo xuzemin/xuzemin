@@ -5,32 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="#EEEEEE"
     tools:context="com.android.jdrd.robot.activity.MainActivity">
     <RelativeLayout
         android:id="@+id/main"
-        android:background="@color/darkkhaki"
+        android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="@dimen/top_height">
         <Button
             android:id="@+id/setting_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_back_selector"
+            android:layout_centerVertical="true"
+            android:layout_width="17dp"
+            android:layout_height="32dp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="25sp"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:textColor="@color/black"
-            android:text="@string/robot_settings"
+            android:textColor="@color/white"
+            android:text="@string/robot_state_"
             />
         <Button
             android:id="@+id/setting_redact"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:text="@string/config_redact"
+            android:background="@drawable/btn_settings_selector"
             />
     </RelativeLayout>
     <ScrollView
@@ -47,18 +51,19 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
                     android:text="@string/name"/>
+
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -70,7 +75,7 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
 
                 <TextView
                     android:id="@+id/textView"
@@ -79,12 +84,12 @@
                     android:gravity="center"
                     android:text="@string/ip"
                     android:textColor="@color/black"
-                    android:textSize="25sp" />
+                    android:textSize="@dimen/robot_size" />
 
                 <TextView
                     android:id="@+id/ip"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -96,18 +101,21 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
+
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
-                    android:text="@string/outline"/>
+                    android:text="@string/outline"
+                    android:id="@+id/textView3" />
+
                 <TextView
                     android:id="@+id/outline"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -119,10 +127,10 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -130,7 +138,7 @@
                 <TextView
                     android:id="@+id/electric"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -142,10 +150,10 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -153,7 +161,7 @@
                 <TextView
                     android:id="@+id/area"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -165,10 +173,10 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -176,7 +184,7 @@
                 <TextView
                     android:id="@+id/state"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -188,10 +196,10 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -199,7 +207,7 @@
                 <TextView
                     android:id="@+id/robot_state"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -213,10 +221,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:visibility="gone"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -224,7 +232,7 @@
                 <TextView
                     android:id="@+id/command_num"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -238,10 +246,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:visibility="gone"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -249,7 +257,7 @@
                 <TextView
                     android:id="@+id/excute_command"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -263,10 +271,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:visibility="gone"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -274,7 +282,7 @@
                 <TextView
                     android:id="@+id/excute_time"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -288,10 +296,10 @@
             <LinearLayout
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -299,7 +307,7 @@
                 <TextView
                     android:id="@+id/command_state"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -313,10 +321,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:visibility="gone"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -324,7 +332,7 @@
                 <TextView
                     android:id="@+id/last_command_state"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -336,10 +344,10 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -347,7 +355,7 @@
                 <TextView
                     android:id="@+id/last_location"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -359,10 +367,10 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/area_height">
                 <TextView
                     android:layout_width="120dp"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
@@ -370,7 +378,7 @@
                 <TextView
                     android:id="@+id/obstacle"
                     android:layout_width="match_parent"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/robot_size"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"

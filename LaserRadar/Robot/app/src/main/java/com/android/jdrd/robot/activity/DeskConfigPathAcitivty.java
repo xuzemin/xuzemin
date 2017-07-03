@@ -46,9 +46,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_config);
-
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
-
         name = (EditText) findViewById(R.id.deskname);
         findViewById(R.id.change_name).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
@@ -187,7 +185,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         if (listAdapter == null) {
             return;
         }
-        int totalHeight = 0;
+        int totalHeight = 5;
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);

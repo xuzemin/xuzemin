@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * Created by jdrd on 2017/6/27.
+ *
  */
 
 public class CardConfig extends Activity implements View.OnClickListener {

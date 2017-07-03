@@ -14,10 +14,10 @@
         <Button
             android:id="@+id/setting_back"
             android:background="@drawable/btn_back_selector"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
+            android:layout_width="17dp"
+            android:layout_height="32dp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:textSize="17sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="@string/card_settings"
+            android:text="@string/card_list"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

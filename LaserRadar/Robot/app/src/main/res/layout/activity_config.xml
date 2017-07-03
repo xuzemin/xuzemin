@@ -15,10 +15,10 @@
         <Button
             android:id="@+id/setting_back"
             android:background="@drawable/btn_back_selector"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
+            android:layout_width="17dp"
+            android:layout_height="32dp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -34,18 +34,18 @@
             android:textColor="@color/white"
             android:id="@+id/btn_delete"
             android:layout_marginRight="5dp"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:text="@string/btn_delete"/>
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -55,11 +55,11 @@
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/desk_text_height">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="17sp"
+                    android:textSize="18sp"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:text="@string/deskname_setting"/>
@@ -74,64 +74,65 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/deskname"
-                        android:textColor="@color/black"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:textSize="17sp"
-                        />
                     <EditText
                         android:id="@+id/deskname"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/add_desk"
+                        android:textSize="@dimen/robot_size"
                         android:textColorHint="@color/aliceblue"
                         android:textColor="@color/black"
-                        android:layout_marginLeft="120dp"
                         android:layout_toLeftOf="@+id/change_name"
                         />
                     <Button
                         android:id="@+id/change_name"
-                        android:layout_width="80dp"
+                        android:layout_width="110dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@color/white"
                         android:layout_alignParentRight="true"
                         android:layout_height="match_parent"
+                        android:textSize="22sp"
                         android:text="@string/btn_sure"
                         />
                 </RelativeLayout>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="0.5dp"/>
             <Button
                 android:id="@+id/card"
                 android:text="@string/card_settings"
-                android:background="#EEEEEE"
-                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_gravity="center"
+                android:layout_width="200dp"
                 android:layout_height="60dp" />
             <View
                 android:layout_width="match_parent"
+                android:background="#EEEEEE"
                 android:layout_height="0.5dp"/>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/desk_text_height">
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:layout_height="match_parent"
                     android:text="@string/command_settings"
-                    android:textSize="25sp"
+                    android:textSize="18sp"
                     />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:orientation="vertical"
+                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"/>
+                android:layout_height="@dimen/desk_height">
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -145,8 +146,8 @@
 
                     <Button
                         android:id="@+id/straight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/add_width"
+                        android:layout_height="@dimen/add_height"
                         android:layout_centerVertical="true"
                         android:background="@drawable/btn_add_selector"
                         android:layout_alignParentRight="true"
@@ -157,13 +158,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"/>
+                android:background="@color/white"
+                android:layout_height="@dimen/desk_height">
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -177,21 +180,23 @@
                         />
                     <Button
                         android:id="@+id/derail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/add_width"
+                        android:layout_height="@dimen/add_height"
                         android:background="@drawable/btn_add_selector"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         />
                 </RelativeLayout>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"/>
+                android:background="@color/white"
+                android:layout_height="@dimen/desk_height">
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -205,21 +210,23 @@
                         />
                     <Button
                         android:id="@+id/rotato"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/add_width"
+                        android:layout_height="@dimen/add_height"
                         android:background="@drawable/btn_add_selector"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         />
                 </RelativeLayout>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"/>
+                android:background="@color/white"
+                android:layout_height="@dimen/desk_height">
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -233,8 +240,8 @@
                         />
                     <Button
                         android:id="@+id/wait"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/add_width"
+                        android:layout_height="@dimen/add_height"
                         android:background="@drawable/btn_add_selector"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
@@ -245,7 +252,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:visibility="gone"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/desk_height">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
@@ -274,7 +281,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:visibility="gone"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/desk_height">
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"/>
@@ -302,13 +309,14 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp">
+                android:layout_height="@dimen/desk_text_height">
                 <TextView
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:text="@string/added_settings"
                     android:textSize="25sp"
+                    android:textColor="@color/black"
                     />
             </LinearLayout>
             <LinearLayout

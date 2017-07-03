@@ -1,6 +1,8 @@
 package com.android.jdrd.robot.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.DrawableContainer;
+import android.graphics.drawable.PictureDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,7 @@ public class GridViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.grid_item, null);
             viewHolder = new ViewHolder();
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
+            viewHolder.imageback = (ImageView) convertView.findViewById(R.id.imageback);
             viewHolder.text = (TextView) convertView.findViewById(R.id.text);
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
             convertView.setTag(viewHolder);//讲ViewHolder存储在View中
@@ -68,12 +71,15 @@ public class GridViewAdapter extends BaseAdapter {
         switch ((int)map.get("robotstate")){
             case 0:
                 viewHolder.text.setText("空闲");
+                viewHolder.imageback.setImageResource(R.mipmap.kongxian);
                 break;
             case 1:
                 viewHolder.text.setText("送餐");
+                viewHolder.imageback.setImageResource(R.mipmap.fuwuzhong);
                 break;
             case 2:
                 viewHolder.text.setText("故障");
+                viewHolder.imageback.setImageResource(R.mipmap.guzhang);
                 break;
         }
         return convertView;
@@ -84,6 +90,7 @@ public class GridViewAdapter extends BaseAdapter {
         ImageView imageView;
         TextView text;
         TextView name;
+        ImageView imageback;
     }
 
 }

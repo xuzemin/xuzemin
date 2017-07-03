@@ -10,27 +10,21 @@ import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.activity.MainActivity;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.service.ServerSocketUtil;
 import com.android.jdrd.robot.util.Constant;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * 自定义对话框
@@ -44,8 +38,8 @@ public class RobotDialog extends Dialog {
     private static List<Map> list,robotlist;
     private static RobotDBHelper robotDBHelper;
     private List<Map<String, Object>> Robotdata_list =  new ArrayList<>();
-    private final String [] from ={"image","text"};
-    private final int [] to = {R.id.image,R.id.text};
+    private final String [] from ={"image","text","name","imageback"};
+    private final int [] to = {R.id.imageview,R.id.text,R.id.name,R.id.imageback};
     private Context context;
     private static String sendstr;
     private static String IP;
@@ -84,14 +78,28 @@ public class RobotDialog extends Dialog {
             Map<String, Object> map ;
             while(i<j){
                 map = new HashMap<>();
-                map.put("image", R.mipmap.zuo_xs);
-                map.put("text",list.get(i).get("name"));
+                map.put("image", R.mipmap.zaixian);
+                map.put("name",list.get(i).get("name"));
                 map.put("ip",list.get(i).get("ip"));
+                switch ((int)list.get(i).get("robotstate")){
+                    case 0:
+                        map.put("text","空闲");
+                        map.put("imageback",R.mipmap.kongxian);
+                        break;
+                    case 1:
+                        map.put("text","送餐");
+                        map.put("imageback",R.mipmap.fuwuzhong);
+                        break;
+                    case 2:
+                        map.put("text","故障");
+                        map.put("imageback",R.mipmap.guzhang);
+                        break;
+                }
                 Robotdata_list.add(map);
                 i++;
             }
             Constant.debugLog(Robotdata_list.toString());
-            robotadapter = new SimpleAdapter(getContext(), Robotdata_list, R.layout.item, from, to);
+            robotadapter = new SimpleAdapter(getContext(), Robotdata_list, R.layout.robot_grid_item, from, to);
             gridView.setAdapter(robotadapter);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

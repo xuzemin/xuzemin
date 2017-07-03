@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="90dp"
+    android:layout_height="90dp"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/white"
     android:padding="10dp"
+    android:background="@color/white"
     >
     <RelativeLayout
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"/>
+        <View
+            android:layout_alignParentLeft="true"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#EEEEEE"/>
+        <View
+            android:layout_alignParentRight="true"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#EEEEEE"/>
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
@@ -26,16 +38,22 @@
             android:gravity="center"
             android:textSize="25sp"
             android:layout_height="match_parent" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"/>
     </RelativeLayout>
-    <TextView
-        android:id="@+id/text"
-        android:layout_marginTop="9dp"
-        android:layout_weight="3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/btn_cancle"
-        android:gravity="center"
-        android:textSize="13sp"
-        android:textColor="#666666"
-        />
+    <!--<TextView-->
+        <!--android:id="@+id/text"-->
+        <!--android:layout_marginTop="9dp"-->
+        <!--android:layout_weight="3"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="@string/btn_cancle"-->
+        <!--android:gravity="center"-->
+        <!--android:visibility="gone"-->
+        <!--android:textSize="13sp"-->
+        <!--android:textColor="#666666"-->
+        <!--/>-->
 </LinearLayout>

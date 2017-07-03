@@ -34,6 +34,7 @@
     <string name="area">所属区域</string>
     <string name="state">运动状态</string>
     <string name="robot_state">机器人状态</string>
+    <string name="robot_state_">机器人状态</string>
     <string name="command_num">指令总数</string>
     <string name="excute_command">执行指令</string>
     <string name="excute_time">执行时间</string>
@@ -47,13 +48,14 @@
     <string name="desk_settings">添加桌子</string>
     <string name="desk_deract">编辑桌子</string>
     <string name="command_deract">编辑命令</string>
-    <string name="robot_settings">机器人设置</string>
+    <string name="robot_settings">机器人编辑</string>
     <string name="command_settings">添加指令</string>
     <string name="added_settings">已有指令</string>
     <string name="add_desk">请输入桌子名称</string>
     <string name="name_setting">确认修改</string>
 
-    <string name="card_settings">系统卡管理</string>
+    <string name="card_settings">系统卡编辑</string>
+    <string name="card_list">系统卡列表</string>
     <string name="card_address">磁条编码</string>
     <string name="add_card">请输入系统卡名称</string>
     <array name="DATABASE_INFO">
