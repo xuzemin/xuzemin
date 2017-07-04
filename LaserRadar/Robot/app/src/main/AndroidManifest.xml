@@ -43,11 +43,11 @@
         </activity>
         <activity android:name=".activity.DeskConfigPathAcitivty"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
-        <activity android:name=".activity.RobotConfigActivity"/>
-        <activity android:name=".activity.RobotActivity"/>
-        <activity android:name=".activity.CommandAcitivty"/>
-        <activity android:name=".activity.CardConfig"/>
-        <activity android:name=".activity.CardConfigActivity"/>
+        <activity android:name=".activity.RobotConfigActivity" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+        <activity android:name=".activity.RobotActivity" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+        <activity android:name=".activity.CommandAcitivty" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+        <activity android:name=".activity.CardConfig" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+        <activity android:name=".activity.CardConfigActivity" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <service
             android:name=".service.SetStaticIPService"
             android:enabled="true"
