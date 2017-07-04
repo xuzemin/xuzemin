@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/orange"
     android:gravity="center"
     >
     <View
         android:layout_width="match_parent"
         android:background="@color/black"
         android:layout_height="0.5dp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp">
@@ -21,16 +22,17 @@
             android:gravity="center"
             android:text="@string/straight"
             android:layout_centerVertical="true"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="22sp"
             />
         <Button
             android:id="@+id/btn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="17dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="@string/config_redact"
+            android:background="@drawable/btn_qianjin_selector"
             />
     </RelativeLayout>
 

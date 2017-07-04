@@ -130,9 +130,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                     startAnimationLeft();
                 }
                 getAreaData();
-                Constant.debugLog("position"+CURRENT_AREA_id);
-                Constant.debugLog("DeskIsEdit"+DeskIsEdit);
-                Constant.debugLog(areaList.toString());
                 if(areaList != null && areaList.size() > 0 && CURRENT_AREA_id !=0){
                     if(DeskIsEdit ){
                         if(position == 0){
@@ -327,9 +324,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         Map<String, Object> map;
         if(DeskIsEdit){
             map = new HashMap<>();
-//            map.put("image", R.mipmap.zuo_xs);
+            map.put("image", R.mipmap.add_no);
             map.put("id", 0);
-            map.put("name",getString(R.string.config_add));
+//            map.put("name",getString(R.string.config_add));
             Deskdata_list.add(map);
         }
         if(deskList !=null && deskList.size() >0){
@@ -381,8 +378,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                     i--;
                 }
             }
-            Constant.debugLog("robotList"+Robotdata_listcache.toString());
-            Constant.debugLog("robotList"+robotList.toString());
             Robotdata_list.addAll(Robotdata_listcache);
             Robotdata_list.addAll(robotList);
         }catch (Exception e){
@@ -396,7 +391,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         Areadata_list.clear();
         try {
             areaList = robotDBHelper.queryListMap("select * from area",null);
-            Constant.debugLog(areaList.toString());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -408,8 +402,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         Areadata_list.add(map);
         if(AreaIsEdit){
             map = new HashMap<>();
-//            map.put("image", R.mipmap.zuo_xs);
-            map.put("name",getString(R.string.config_add));
+            map.put("image", R.mipmap.add_area);
+//            map.put("name",getString(R.string.config_add));
             Areadata_list.add(map);
         }
         if(areaList !=null && areaList.size() >0){
