@@ -145,36 +145,42 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
                 if(!IsADD){
                     robotDBHelper.execSQL("insert into command (type,desk) values ('0','"+deskid+"')");
                 }
+                Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                 refreshCommand();
                 break;
             case R.id.derail:
                 if(!IsADD){
                     robotDBHelper.execSQL("insert into command (type,desk) values ('1','"+deskid+"')");
                 }
+                Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                 refreshCommand();
                 break;
             case R.id.rotato:
                 if(!IsADD){
                     robotDBHelper.execSQL("insert into command (type,desk) values ('2','"+deskid+"')");
                 }
+                Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                 refreshCommand();
                 break;
             case R.id.wait:
                 if(!IsADD){
                     robotDBHelper.execSQL("insert into command (type,desk) values ('3','"+deskid+"')");
                 }
+                Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                 refreshCommand();
                 break;
             case R.id.puthook:
                 if(!IsADD){
                     robotDBHelper.execSQL("insert into command (type,desk) values ('4','"+deskid+"')");
                 }
+                Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                 refreshCommand();
                 break;
             case R.id.lockhook:
                 if(!IsADD){
                     robotDBHelper.execSQL("insert into command (type,desk) values ('5','"+deskid+"')");
                 }
+                Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                 refreshCommand();
                 break;
         }

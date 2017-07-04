@@ -41,7 +41,8 @@
             <!--android:screenOrientation="portrait"-->
             <!--&gt;-->
         </activity>
-        <activity android:name=".activity.DeskConfigPathAcitivty"/>
+        <activity android:name=".activity.DeskConfigPathAcitivty"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <activity android:name=".activity.RobotConfigActivity"/>
         <activity android:name=".activity.RobotActivity"/>
         <activity android:name=".activity.CommandAcitivty"/>

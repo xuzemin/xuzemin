@@ -200,25 +200,32 @@ public class ServerSocketUtil extends Service {
             }
             sendBroadcastMain("robot_connect");
 //
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    final Socket socket_cache = socket;
-//                    final String socket_ip = ip;
-//                    while(true) {
-//                        try {
-//                            if(socket_cache.isClosed()){
-//                                break;
-//                            }else{
-//                                sendDateToClient("*s+5+#", socket_ip, socket_cache);
-//                                Thread.sleep(3000);
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            }).start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Socket socket_cache = socket;
+                    final String socket_ip = ip;
+                    while(true) {
+                        try {
+                            if(socket_cache.isClosed()){
+                                break;
+                            }else{
+                                sendDateToClient("heartbeat", socket_ip, socket_cache);
+                                Thread.sleep(5000);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            try {
+                                socket.close();
+                                robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
+                                sendBroadcastMain("robot_connect");
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }).start();
 
             try {
                 in = socket.getInputStream();
@@ -276,7 +283,9 @@ public class ServerSocketUtil extends Service {
         boolean flag2 = false;
         int len = 0;
         int len1 = 0;
+        String string = null;
         Socket socket = null;
+        OutputStream out =null;
         while (true) {
             byte buf = 0;
             try {
@@ -286,6 +295,17 @@ public class ServerSocketUtil extends Service {
             }
             len1++;
 //            Constant.debugLog("buf内容：" + buf +"len1"+len1);
+
+            int j = 0;
+            while(j < socketlist.size()){
+                if(socketlist.get(j).get("ip").equals(ip)){
+                    socket = (Socket) socketlist.get(j).get("socket");
+                    out = (OutputStream) socketlist.get(j).get("out");
+                    break;
+                }
+                j++;
+            }
+
             if ('*' == buf) {
                 flag = true;
                 flag2 = true;
@@ -324,29 +344,70 @@ public class ServerSocketUtil extends Service {
                         Constant.debugLog("长度正确");
                         switch (bytes[0]) {
                             case 97:
+
                                 robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
                                 sendBroadcastRobot("robot");
                                 sendBroadcastMain("robot_connect");
+                                if (out != null) {
+                                    string = "*r+0+8+#";
+                                    try {
+                                        out.write(string.getBytes());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 break;
                             case 98:
                                 robotDBHelper.execSQL("update robot set state = '"+str.get(0)+"' where ip= '"+ ip +"'");
                                 sendBroadcastRobot("robot");
                                 sendBroadcastMain("robot_connect");
+                                if (out != null) {
+                                    string = "*r+0+8+#";
+                                    try {
+                                        out.write(string.getBytes());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 break;
                             case 99:
                                 robotDBHelper.execSQL("update robot set robotstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
                                 sendBroadcastRobot("robot");
                                 sendBroadcastMain("robot_connect");
+                                if (out != null) {
+                                    string = "*r+0+8+#";
+                                    try {
+                                        out.write(string.getBytes());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 break;
                             case 100:
                                 robotDBHelper.execSQL("update robot set obstacle = '"+str.get(0)+"' where ip= '"+ ip +"'");
                                 sendBroadcastRobot("robot");
                                 sendBroadcastMain("robot_connect");
+                                if (out != null) {
+                                    string = "*r+0+8+#";
+                                    try {
+                                        out.write(string.getBytes());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 break;
                             case 101:
                                 robotDBHelper.execSQL("update robot set lastlocation = '"+str.get(0)+"' where ip= '"+ ip +"'");
                                 sendBroadcastRobot("robot");
                                 sendBroadcastMain("robot_connect");
+                                if (out != null) {
+                                    string = "*r+0+8+#";
+                                    try {
+                                        out.write(string.getBytes());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                                 break;
                             //r
                             case 114:
@@ -359,11 +420,19 @@ public class ServerSocketUtil extends Service {
                         }
                     }else{
                         Constant.debugLog("长度不对");
+                        if (out != null) {
+                            string = "*r+1+8+#";
+                            try {
+                                out.write(string.getBytes());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     i = 0;
-                    for (int j = 0; j < buffer.length; j++) {
-                        buffer[j] = 0;
+                    for (int m = 0; m < buffer.length; m++) {
+                        buffer[m] = 0;
                     }
                     flag = false;
                     flag2 = false;
@@ -371,23 +440,21 @@ public class ServerSocketUtil extends Service {
             } else {
                 Constant.debugLog((char) buf + "");
                 Constant.debugLog("数据格式不对");
+                string = "*r+1+8+#";
+                try {
+                    out.write(string.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             if (buf == -1) {
                 Constant.debugLog("socketlist"+socketlist.toString());
-                int j = 0;
-                while(j < socketlist.size()){
-                    if(socketlist.get(j).get("ip").equals(ip)){
-                        socket = (Socket) socketlist.get(j).get("socket");
-                        socketlist.remove(j);
-                        robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
-                        Constant.debugLog("socketlist"+socketlist.toString());
-                        intent.putExtra("msg", "robot_unconnect");
-                        intent.setAction("com.jdrd.activity.Main");
-                        sendBroadcast(intent);
-                        break;
-                    }
-                    j++;
-                }
+                socketlist.remove(j);
+                robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
+                Constant.debugLog("socketlist"+socketlist.toString());
+                intent.putExtra("msg", "robot_unconnect");
+                intent.setAction("com.jdrd.activity.Main");
+                sendBroadcast(intent);
                 try {
                     in.close();
                     socket.close();

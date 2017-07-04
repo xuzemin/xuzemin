@@ -104,7 +104,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 startActivity(intent);
             }
         });
-
+        findViewById(R.id.activity_main).setOnClickListener(this);
         up = (Button) findViewById(R.id.up);
         down = (Button) findViewById(R.id.down);
         left = (Button) findViewById(R.id.left);
@@ -260,6 +260,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.linear_robot:
+                if(!IsRight){
+                    startAnimationLeft();
+                }
+                break;
             case R.id.main:
                 if(!IsRight){
                     startAnimationLeft();
@@ -302,6 +307,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 robotDialog("*s+6+#");
                 break;
             case R.id.shrink:
+                if(!IsRight){
+                    startAnimationLeft();
+                }
                 startAnimationShrink();
                 break;
         }
