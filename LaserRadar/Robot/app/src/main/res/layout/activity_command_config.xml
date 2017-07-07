@@ -40,6 +40,7 @@
             android:layout_alignParentRight="true"
             android:text="@string/btn_delete"/>
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -150,8 +151,8 @@
                         />
                     <EditText
                         android:inputType="number"
-                        android:background="@drawable/bg_edittext"
                         android:id="@+id/speed"
+                        android:textColorHint="@color/aliceblue"
                         android:textColor="@color/black"
                         android:layout_alignParentRight="true"
                         android:layout_width="100dp"
@@ -187,8 +188,8 @@
                         />
                     <EditText
                         android:id="@+id/mp3"
-                        android:background="@drawable/bg_edittext"
                         android:inputType="number"
+                        android:textColorHint="@color/aliceblue"
                         android:layout_width="100dp"
                         android:textColor="@color/black"
                         android:layout_alignParentRight="true"
@@ -221,15 +222,19 @@
                         android:textColor="@color/black"
                         android:gravity="left|center_vertical"
                         android:textSize="17sp"
-                        />
+                        android:id="@+id/textView6" />
+
                     <EditText
                         android:id="@+id/outime"
                         android:inputType="number"
                         android:textColor="@color/black"
                         android:layout_width="100dp"
-                        android:background="@drawable/bg_edittext"
+                        android:textColorHint="@color/aliceblue"
+                        android:layout_height="match_parent"
+                        android:layout_alignBaseline="@+id/textView6"
+                        android:layout_alignBottom="@+id/textView6"
                         android:layout_alignParentRight="true"
-                        android:layout_height="match_parent"/>
+                        android:layout_alignParentEnd="true" />
                 </RelativeLayout>
             </LinearLayout>
             <View
@@ -261,9 +266,9 @@
                         />
                     <EditText
                         android:inputType="number"
-                        android:background="@drawable/bg_edittext"
                         android:id="@+id/shownum"
                         android:textColor="@color/black"
+                        android:textColorHint="@color/aliceblue"
                         android:layout_width="100dp"
                         android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
@@ -299,8 +304,8 @@
                     <EditText
                         android:inputType="number"
                         android:id="@+id/showcolor"
-                        android:background="@drawable/bg_edittext"
                         android:layout_width="100dp"
+                        android:textColorHint="@color/aliceblue"
                         android:textColor="@color/black"
                         android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
