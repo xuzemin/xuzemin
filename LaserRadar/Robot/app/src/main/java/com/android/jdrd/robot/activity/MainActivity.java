@@ -245,9 +245,16 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             if(areaList !=null && areaList.size() >0){
                 CURRENT_AREA_id = (int) areaList.get(0).get("id");
                 area_text.setText( areaList.get(0).get("name").toString());
+            }else{
+                area_text.setText("请选择左侧区域");
             }
         }else{
-            area_text.setText("请选择左侧区域");
+            CURRENT_AREA_id = (int) areaList.get(0).get("id");
+            for(int i = 0,size = areaList.size();i<size;i++){
+                if(((int)areaList.get(i).get("id")) == CURRENT_AREA_id){
+                    area_text.setText( areaList.get(i).get("name").toString());
+                }
+            }
         }
         getDeskData();
         getRobotData();

@@ -199,11 +199,14 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                 switch ((int)commandconfig.get("type")){
                     case 0:
                         if(!speed.getText().toString().equals("") && !mp3.getText().toString().equals("") && !outime.getText().toString().equals("")
-                                &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")){
+                                &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")&&goallist!=null && goallist.size() > 0){
                             robotDBHelper.execSQL("update command set goal= '"+goallist.get(goalnum).get("id")+"' ," +
                                     "direction = '"+directionnum+"' ,speed = '"+speed.getText().toString().trim()+"'," +
                                     "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
                                     "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            finish();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请选择确认好参数",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 1:
@@ -213,6 +216,9 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                                     "direction = '"+0+"' ,speed = '"+speed.getText().toString().trim()+"'," +
                                     "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
                                     "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            finish();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请选择确认好参数",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 2:
@@ -222,6 +228,9 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                                     "direction = '"+0+"' ,speed = '"+speed.getText().toString().trim()+"'," +
                                     "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
                                     "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            finish();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请选择确认好参数",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 3:
@@ -231,12 +240,14 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                                     "direction = '"+0+"' ,speed = '"+0+"'," +
                                     "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
                                     "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            finish();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请选择确认好参数",Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:
                         break;
                 }
-                finish();
                 break;
         }
     }
