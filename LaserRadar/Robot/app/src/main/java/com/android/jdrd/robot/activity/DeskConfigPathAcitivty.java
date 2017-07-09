@@ -133,22 +133,12 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         cursorIv.setImageMatrix(matrix);
 
         listViews = new ArrayList<>();
-        LayoutInflater mInflater = getLayoutInflater();
-        listViews.add(mInflater.inflate(R.layout.tab_01, null));
-        refreshCommand();
-        Constant.debugLog("command_list1111"+command_list);
-        View view = mInflater.inflate(R.layout.tab_02, null);
+        listViews.add(this.getLayoutInflater().inflate(R.layout.tab_01, null));
+        View view = this.getLayoutInflater().inflate(R.layout.tab_02, null);
         commandlistview =(ListView)view.findViewById(R.id.added_command);
-        List<String> data =  new ArrayList<>();
-        data.add("aaaaa");
-        data.add("sssss");
-        ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
-        commandlistview.setAdapter(listAdapter);
-//        myAdapter = new MyAdapter(this,command_list);
-//        commandlistview.setAdapter(myAdapter);
-//        setListViewHeightBasedOnChildren(commandlistview);
-        listViews.add(mInflater.inflate(R.layout.tab_02, null));
-
+        myAdapter = new MyAdapter(this,command_list);
+        commandlistview.setAdapter(myAdapter);
+        listViews.add(view);
 
         viewPager.setAdapter(new MyPagerAdapter(listViews));
         viewPager.setCurrentItem(0);
@@ -159,6 +149,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                refreshCommand();
             }
 
             @Override
@@ -180,19 +171,10 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                refreshCommand();
             }
         });
 
-
-
-//        commandlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(DeskConfigPathAcitivty.this, CommandAcitivty.class);
-//                intent.putExtra("command_id", command_list.get(position).get("id").toString());
-//                startActivity(intent);
-//            }
-//        });
     }
 
     public void testClick(View v) {
@@ -258,14 +240,14 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         command_list.clear();
         List<Map> list = robotDBHelper.queryListMap("select * from command where desk = '"+ deskid +"'" ,null);
         command_list.addAll(list);
-//        setListViewHeightBasedOnChildren(commandlistview);
         Constant.debugLog("command_list"+command_list.toString());
+        myAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        refreshCommand();
+        refreshCommand();
     }
 
     @Override
@@ -315,13 +297,6 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
                 if (viewPager.getCurrentItem() != TAB_1) {
                     viewPager.setCurrentItem(TAB_1);
                     refreshCommand();
-                    View view = getLayoutInflater().inflate(R.layout.tab_02, null);
-                    commandlistview =(ListView)view.findViewById(R.id.added_command);
-                    List<String> data =  new ArrayList<>(); 
-                    data.add("aaaaa");
-                    data.add("sssss");
-                    ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
-                    commandlistview.setAdapter(listAdapter);
                 }
                 break;
         }

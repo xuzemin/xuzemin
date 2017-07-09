@@ -41,110 +41,111 @@
             android:text="@string/btn_delete"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/black"
+            android:layout_height="0.5dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/desk_text_height">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="@string/deskname_setting"/>
+        </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="60dp">
             <View
                 android:layout_width="match_parent"
-                android:background="@color/black"
                 android:layout_height="0.5dp"/>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/desk_text_height">
-                <TextView
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/deskname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="18sp"
-                    android:gravity="center"
+                    android:hint="@string/add_desk"
+                    android:textSize="@dimen/robot_size"
+                    android:textColorHint="@color/aliceblue"
                     android:textColor="@color/black"
-                    android:text="@string/deskname_setting"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"/>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/deskname"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="@string/add_desk"
-                        android:textSize="@dimen/robot_size"
-                        android:textColorHint="@color/aliceblue"
-                        android:textColor="@color/black"
-                        android:layout_toLeftOf="@+id/change_name"
-                        />
-                    <Button
-                        android:id="@+id/change_name"
-                        android:layout_width="110dp"
-                        android:layout_marginLeft="10dp"
-                        android:background="@color/white"
-                        android:layout_alignParentRight="true"
-                        android:layout_height="match_parent"
-                        android:textSize="22sp"
-                        android:text="@string/btn_sure"
-                        />
-                </RelativeLayout>
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="#EEEEEE"
-                android:layout_height="0.5dp"/>
-
-            <Button
-                android:id="@+id/card"
-                android:text="@string/card_settings"
-                android:background="@color/white"
-                android:layout_gravity="center"
-                android:layout_width="200dp"
-                android:textSize="22sp"
-                android:layout_height="60dp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:background="#EEEEEE"
-                android:layout_height="0.5dp"/>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/desk_text_height">
-                <TextView
-                    android:id="@+id/tv01"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_height="match_parent"
-                    android:text="@string/command_settings"
-                    android:textSize="18sp"
+                    android:layout_toLeftOf="@+id/change_name"
                     />
-                <TextView
-                    android:id="@+id/tv02"
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/change_name"
+                    android:layout_width="110dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/white"
+                    android:layout_alignParentRight="true"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/added_settings"
-                    android:textSize="18sp" />
-            </LinearLayout>
-            <ImageView
-                android:id="@+id/iv_tab_bottom_img"
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:scaleType="matrix"
-                android:src="@mipmap/huakuai01" />
+                    android:textSize="22sp"
+                    android:text="@string/btn_sure"
+                    />
+            </RelativeLayout>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="#EEEEEE"
+            android:layout_height="0.5dp"/>
+
+        <Button
+            android:id="@+id/card"
+            android:text="@string/card_settings"
+            android:background="@color/white"
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:textSize="22sp"
+            android:layout_height="60dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="#EEEEEE"
+            android:layout_height="0.5dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/desk_text_height">
+            <TextView
+                android:id="@+id/tv01"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:layout_height="match_parent"
+                android:text="@string/command_settings"
+                android:textSize="18sp"
+                />
+            <TextView
+                android:id="@+id/tv02"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="@string/added_settings"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_tab_bottom_img"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:scaleType="matrix"
+            android:src="@mipmap/huakuai01" />
+    </LinearLayout>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/vPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
         android:background="#ffffff" />
 </LinearLayout>
