@@ -453,6 +453,7 @@ public class ServerSocketUtil extends Service {
                 socketlist.remove(j);
                 robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
                 sendBroadcastMain("robot_unconnect");
+                sendBroadcastRobot("robot");
                 try {
                     in.close();
                     socket.close();

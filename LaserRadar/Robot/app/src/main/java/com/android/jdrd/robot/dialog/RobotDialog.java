@@ -46,7 +46,7 @@ public class RobotDialog extends Dialog {
     public static Thread thread = new Thread();
     public static boolean flag;
     public RobotDialog(Context context,String str) {
-        super(context, R.style.MyDialog);
+        super(context, R.style.SoundRecorder);
         setCustomDialog();
         this.context = context;
         this.sendstr = str;
@@ -54,7 +54,7 @@ public class RobotDialog extends Dialog {
     }
 
     public RobotDialog(Context context,List<Map> robotlist) {
-        super(context, R.style.MyDialog);
+        super(context, R.style.SoundRecorder);
         setCustomDialog();
         this.context = context;
         this.robotlist = robotlist;

@@ -33,10 +33,10 @@ public class MyDialog extends Dialog {
         super(context, R.style.SoundRecorder);
         setCustomDialog();
     }
-    public MyDialog(Context context, int id){
-        super(context, R.style.SoundRecorder);
-        setpassWordDialog();
-    }
+//    public MyDialog(Context context, int id){
+//        super(context, R.style.SoundRecorder);
+//        setpassWordDialog();
+//    }
 
     private void setCustomDialog() {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog,null);
@@ -46,13 +46,13 @@ public class MyDialog extends Dialog {
         negativeButton = (Button) mView.findViewById(R.id.negativeButton);
         super.setContentView(mView);
     }
-    private void setpassWordDialog() {
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog_passwork, null);
-        title = (TextView) mView.findViewById(R.id.title);
-        editText = (EditText) mView.findViewById(R.id.editText);
-        positiveButton = (Button) mView.findViewById(R.id.positiveButton);
-        super.setContentView(mView);
-    }
+//    private void setpassWordDialog() {
+//        View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dialog_passwork, null);
+//        title = (TextView) mView.findViewById(R.id.title);
+//        editText = (EditText) mView.findViewById(R.id.editText);
+//        positiveButton = (Button) mView.findViewById(R.id.positiveButton);
+//        super.setContentView(mView);
+//    }
 
     public View getEditText(){
         return editText;

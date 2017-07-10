@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="240dp"
-    android:layout_height="240dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@color/white"
+    android:background="#EEEEEE"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
+            android:gravity="center"
             >
             <TextView
                 android:id="@+id/title"
@@ -26,14 +22,18 @@
                 android:text="@string/choose_robot"
                 android:textSize="25sp"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black"
+                />
             <GridView
                 android:id="@+id/robot_girdview"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:numColumns="auto_fit"
                 android:columnWidth="80dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_width="300dp"
+                android:layout_height="200dp"/>
         </LinearLayout>
-    </LinearLayout>
 </LinearLayout>
