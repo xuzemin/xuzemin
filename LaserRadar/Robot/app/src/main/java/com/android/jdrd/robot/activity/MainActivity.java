@@ -361,7 +361,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             Constant.debugLog("robotList"+robotList.toString());
             List<Map> Robotdata_listcache =  new ArrayList<>();
             int j;
-            Constant.debugLog("robotList.size()" + robotList.toString());
             boolean flag = false;
             for(int i =0 ,size = robotList.size();i < size ; i++){
                 Constant.debugLog("size" + size +" ip"+robotList.get(i).get("ip").toString());
@@ -675,6 +674,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     public void pasreJson(String string){
         if(string.equals("robot_connect") || string.equals("robot_unconnect")){
             getRobotData();
+            gridViewAdapter.notifyDataSetInvalidated();
+            Toast.makeText(getApplicationContext(),"连接 断开",Toast.LENGTH_SHORT).show();
         }else if(string.equals("robot_receive_succus")){
             Toast.makeText(getApplicationContext(),"收到成功指令",Toast.LENGTH_SHORT).show();
             synchronized (RobotDialog.thread){

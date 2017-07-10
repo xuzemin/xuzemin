@@ -41,7 +41,6 @@ public class ServerSocketUtil extends Service {
     private MyReceiver receiver;
     IntentFilter filter;
     public static List<Map> socketlist = new ArrayList<>();
-    private String function;
 
     @Override
     public void onCreate() {
@@ -95,6 +94,8 @@ public class ServerSocketUtil extends Service {
         while (true) {
             Constant.debugLog("waiting for connect....");
             socket = serverSocket.accept();
+            socket.setKeepAlive(true);
+            socket.setSoTimeout(9000);
             new Thread(new Task(socket)).start();
         }
     }
@@ -199,7 +200,6 @@ public class ServerSocketUtil extends Service {
                         "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
             }
             sendBroadcastMain("robot_connect");
-//
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -210,11 +210,12 @@ public class ServerSocketUtil extends Service {
                             if(socket_cache.isClosed()){
                                 break;
                             }else{
-                                sendDateToClient("heartbeat", socket_ip, socket_cache);
-                                Thread.sleep(5000);
+                                sendDateToClient("*heartbeat#", socket_ip, socket_cache);
+                                Thread.sleep(3000);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                            Constant.debugLog(e.toString());
                             try {
                                 socket.close();
                                 robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
@@ -233,7 +234,7 @@ public class ServerSocketUtil extends Service {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        inputStreamParse(in,ip);
+                        inputStreamParse(in,ip,out);
                     }
                 }).start();
             } catch (IOException e) {
@@ -276,7 +277,7 @@ public class ServerSocketUtil extends Service {
         }
     }
 
-    public void inputStreamParse(InputStream in,String ip) {
+    public void inputStreamParse(InputStream in,String ip,OutputStream out) {
         byte[] buffer = new byte[1024];
         int i = 0;
         boolean flag = false;
@@ -284,44 +285,39 @@ public class ServerSocketUtil extends Service {
         int len = 0;
         int len1 = 0;
         String string = null;
-        Socket socket = null;
-        OutputStream out =null;
         while (true) {
             byte buf = 0;
             try {
                 buf = (byte) in.read();
             } catch (IOException e) {
                 e.printStackTrace();
+                Constant.debugLog(e.toString());
+                removeSocket(ip);
             }
             len1++;
-//            Constant.debugLog("buf内容：" + buf +"len1"+len1);
-
-            int j = 0;
-            while(j < socketlist.size()){
-                if(socketlist.get(j).get("ip").equals(ip)){
-                    socket = (Socket) socketlist.get(j).get("socket");
-                    out = (OutputStream) socketlist.get(j).get("out");
-                    break;
-                }
-                j++;
-            }
-
-            if ('*' == buf) {
+            Constant.debugLog("buf内容：" + buf +"len1"+len1);
+            if (buf == -1) {
+                removeSocket(ip);
+                break;
+            }else if (buf == 0) {
+                removeSocket(ip);
+                break;
+            }else if ('*' == buf) {
                 flag = true;
                 flag2 = true;
-            }
-            if ('#' == buf) {
+            }else if ('#' == buf) {
                 flag = false;
-            }
-            if (flag) {
+            }else if (flag) {
                 buffer[i] = buf;
                 i++;
             } else if (flag == false && flag2) {
                 msg = new String(buffer, 1, i);
                 msg = msg.trim();
-                if (msg != null) {
-//                    ++len;
-//                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
+                if(msg.equals("heartbeat")){
+
+                }else if (msg != null) {
+                    ++len;
+                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
                     byte[] bytes = msg.getBytes();
                     Constant.debugLog(bytes[0]+"bytes");
                     flag = false;
@@ -338,13 +334,10 @@ public class ServerSocketUtil extends Service {
                             }
                         }
                     }
-                    Constant.debugLog("str"+str.toString());
-                    Constant.debugLog("长度错误"+Integer.valueOf(str.get(str.size()-1))+"buffer.length"+( msg.length() +2));
                     if(Integer.valueOf(str.get(str.size()-1)) == msg.length() +2){
                         Constant.debugLog("长度正确");
                         switch (bytes[0]) {
                             case 97:
-
                                 robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
                                 sendBroadcastRobot("robot");
                                 sendBroadcastMain("robot_connect");
@@ -445,16 +438,21 @@ public class ServerSocketUtil extends Service {
                     out.write(string.getBytes());
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Constant.debugLog(e.toString());
                 }
             }
-            if (buf == -1) {
-                Constant.debugLog("socketlist"+socketlist.toString());
+        }
+    }
+
+    public void removeSocket(String ip){
+        Socket socket ;
+        int j = 0;
+        while(j < socketlist.size()){
+            if(socketlist.get(j).get("ip").equals(ip)){
+                socket = (Socket) socketlist.get(j).get("socket");
                 socketlist.remove(j);
                 robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
-                Constant.debugLog("socketlist"+socketlist.toString());
-                intent.putExtra("msg", "robot_unconnect");
-                intent.setAction("com.jdrd.activity.Main");
-                sendBroadcast(intent);
+                sendBroadcastMain("robot_unconnect");
                 try {
                     in.close();
                     socket.close();
@@ -463,9 +461,7 @@ public class ServerSocketUtil extends Service {
                 }
                 break;
             }
-            if (buf == 0) {
-                break;
-            }
+            j++;
         }
     }
 
