@@ -40,7 +40,6 @@
             android:layout_alignParentRight="true"
             android:text="@string/btn_delete"/>
     </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -49,10 +48,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:id="@+id/linear_goal"
                 android:orientation="vertical"
@@ -82,11 +77,11 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:id="@+id/linear_direction"
                 android:orientation="vertical"
@@ -120,11 +115,11 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:id="@+id/linear_speed"
                 android:orientation="vertical"
@@ -158,11 +153,11 @@
                         android:layout_width="100dp"
                         android:layout_height="match_parent"/>
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:id="@+id/linear_mp3"
                 android:orientation="vertical"
@@ -195,11 +190,11 @@
                         android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:id="@+id/linear_outime"
                 android:orientation="vertical"
@@ -236,11 +231,11 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:id="@+id/linear_shownum"
                 android:orientation="vertical"
@@ -273,11 +268,11 @@
                         android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:id="@+id/linear_showcolor"
                 android:orientation="vertical"
@@ -310,11 +305,11 @@
                         android:layout_alignParentRight="true"
                         android:layout_height="match_parent"/>
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="0.5dp"/>
             <Button
                 android:layout_marginTop="15dp"
                 android:id="@+id/btn_sure"
