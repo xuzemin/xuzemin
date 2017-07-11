@@ -210,7 +210,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         List<Map> list = robotDBHelper.queryListMap("select * from command where desk = '"+ deskid +"'" ,null);
         command_list.addAll(list);
         myAdapter.notifyDataSetChanged();
-        setListViewHeightBasedOnChildren(commandlistview);
+//        setListViewHeightBasedOnChildren(commandlistview);
     }
 
     @Override
