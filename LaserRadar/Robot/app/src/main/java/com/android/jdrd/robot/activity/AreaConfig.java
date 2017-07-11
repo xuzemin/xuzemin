@@ -27,7 +27,7 @@ import java.util.Map;
 public class AreaConfig extends Activity implements View.OnClickListener {
     private AreaConfigAdapter myAdapter;
     private ListView arealist;
-    public static int Current_position = 0;
+    public static int Current_position = -1;
     private RobotDBHelper robotDBHelper;
     private Map robotconfig;
     private static int robotid;

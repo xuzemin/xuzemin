@@ -62,16 +62,15 @@ public class RobotConfigActivity extends Activity implements View.OnClickListene
         name.setHint(robotconfig.get("name").toString());
         arealist = robotDBHelper.queryListMap("select * from area " ,null);
         areaid = (int) robotconfig.get("area");
+        area_text.setText("未选择区域");
         if(arealist !=null && arealist.size()>0){
-            if(areaid !=0){
-                for(int i = 0,size = arealist.size();i<size;i++){
-                    if(arealist.get(i).get("id").equals(areaid)){
+            if(areaid !=0) {
+                for (int i = 0, size = arealist.size(); i < size; i++) {
+                    if (arealist.get(i).get("id").equals(areaid)) {
                         area_text.setText(arealist.get(i).get("name").toString());
                         break;
                     }
                 }
-            }else{
-                area_text.setText("未选择区域");
             }
         }
     }
