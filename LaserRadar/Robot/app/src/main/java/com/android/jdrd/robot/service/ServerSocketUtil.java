@@ -296,10 +296,10 @@ public class ServerSocketUtil extends Service {
             }
             len1++;
             Constant.debugLog("buf内容：" + buf +"len1"+len1);
-            if (buf == -1) {
+            if ( -1 == buf ) {
                 removeSocket(ip);
                 break;
-            }else if (buf == 0) {
+            }else if (0 == buf) {
                 removeSocket(ip);
                 break;
             }else if ('*' == buf) {
@@ -307,15 +307,14 @@ public class ServerSocketUtil extends Service {
                 flag2 = true;
             }else if ('#' == buf) {
                 flag = false;
-            }else if (flag) {
+            }
+            if (flag) {
                 buffer[i] = buf;
                 i++;
             } else if (flag == false && flag2) {
                 msg = new String(buffer, 1, i);
                 msg = msg.trim();
-                if(msg.equals("heartbeat")){
-
-                }else if (msg != null) {
+                if (msg != null) {
                     ++len;
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
                     byte[] bytes = msg.getBytes();

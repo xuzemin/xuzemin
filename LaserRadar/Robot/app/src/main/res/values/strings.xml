@@ -9,7 +9,7 @@
     <string name="add_area">请输入区域名称</string>
     <string name="choose_area">请选择区域</string>
     <string name="choose_robot">请选择执行的机器</string>
-    <string name="deskname_setting">设置桌名</string>
+    <string name="deskname_setting">设置</string>
     <string name="deskname">桌名</string>
 
     <string name="goalname">站点</string>
@@ -31,7 +31,7 @@
     <string name="ip">IP地址</string>
     <string name="outline">在线状态</string>
     <string name="electric">电量电压</string>
-    <string name="area">所属区域</string>
+    <string name="area">服务区域</string>
     <string name="state">运动状态</string>
     <string name="robot_state">机器人状态</string>
     <string name="robot_state_">机器人状态</string>

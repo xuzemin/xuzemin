@@ -43,22 +43,16 @@ public class CardConfig extends Activity implements View.OnClickListener {
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
 
         findViewById(R.id.setting_back).setOnClickListener(this);
-
+        findViewById(R.id.add_card).setOnClickListener(this);
         cardlist = (ListView) findViewById(R.id.cardlist);
 
         cardlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == card_list.size() -1){
-                    Intent intent = new Intent(CardConfig.this, CardConfigActivity.class);
-                    intent.putExtra("id", 0);
-                    startActivity(intent);
-                }else {
                     Intent intent = new Intent(CardConfig.this, CardConfigActivity.class);
                     intent.putExtra("id",  (Integer) card_list.get(position).get("id"));
                     Constant.debugLog("id"+card_list.get(position).get("id").toString());
                     startActivity(intent);
-                }
             }
         });
     }
@@ -67,9 +61,6 @@ public class CardConfig extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         card_list = robotDBHelper.queryListMap("select * from card " ,null);
-        Map<String, Object> map ;
-        map = new HashMap<>();
-        card_list.add(map);
         myAdapter = new CardAdapter(this,card_list);
         cardlist.setAdapter(myAdapter);
     }
@@ -79,6 +70,11 @@ public class CardConfig extends Activity implements View.OnClickListener {
         switch (v.getId()){
             case R.id.setting_back:
                 finish();
+                break;
+            case R.id.add_card:
+                Intent intent = new Intent(CardConfig.this, CardConfigActivity.class);
+                intent.putExtra("id", 0);
+                startActivity(intent);
                 break;
         }
     }

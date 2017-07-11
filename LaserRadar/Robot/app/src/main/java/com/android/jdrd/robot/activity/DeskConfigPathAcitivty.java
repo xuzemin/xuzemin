@@ -49,14 +49,11 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
     private List<Map> command_list = new ArrayList<>();
     private boolean IsADD = false;
     private MyAdapter myAdapter;
-
-
     private List<View> listViews;
     private ImageView cursorIv;
     private TextView tab01, tab02;
     private TextView[] titles;
     private ViewPager viewPager;
-
     private int offset = 0;
 
     /**
@@ -73,9 +70,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
      * 选项卡总数
      */
     private static final int TAB_COUNT = 2;
-
     private static final int TAB_0 = 0;
-
     private static final int TAB_1 = 1;
 
     @Override
@@ -121,7 +116,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         tab02.setOnClickListener(this);
 
         // 获取图片宽度
-        lineWidth = BitmapFactory.decodeResource(getResources(), R.mipmap.huakuai01).getWidth();
+        lineWidth = BitmapFactory.decodeResource(getResources(), R.mipmap.fuwuzhong).getWidth();
         // Android提供的DisplayMetrics可以很方便的获取屏幕分辨率
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -164,7 +159,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
                 // 给图片添加动画
                 cursorIv.startAnimation(animation);
                 // 当前Tab的字体变成红色
-                titles[position].setTextColor(Color.RED);
+                titles[position].setTextColor(Color.parseColor("#FFB837"));
                 titles[current_index].setTextColor(Color.BLACK);
                 current_index = position;
             }
@@ -178,70 +173,44 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
     }
 
     public void testClick(View v) {
+        if (IsADD) {
+            Toast.makeText(getApplicationContext(), "请先添加餐桌名称", Toast.LENGTH_SHORT).show();
+        }
         switch (v.getId()) {
             case R.id.straight:
-                if (!IsADD) {
                     robotDBHelper.execSQL("insert into command (type,desk) values ('0','" + deskid + "')");
                     Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "请先输入名称添加", Toast.LENGTH_SHORT).show();
-                }
-                refreshCommand();
                 break;
             case R.id.derail:
-                if (!IsADD) {
                     robotDBHelper.execSQL("insert into command (type,desk) values ('1','" + deskid + "')");
                     Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "请先输入名称添加", Toast.LENGTH_SHORT).show();
-                }
-                refreshCommand();
                 break;
             case R.id.rotato:
-                if (!IsADD) {
                     robotDBHelper.execSQL("insert into command (type,desk) values ('2','" + deskid + "')");
                     Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "请先输入名称添加", Toast.LENGTH_SHORT).show();
-                }
-                refreshCommand();
                 break;
             case R.id.wait:
-                if (!IsADD) {
                     robotDBHelper.execSQL("insert into command (type,desk) values ('3','" + deskid + "')");
                     Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "请先输入名称添加", Toast.LENGTH_SHORT).show();
-                }
-                refreshCommand();
                 break;
             case R.id.puthook:
-                if (!IsADD) {
                     robotDBHelper.execSQL("insert into command (type,desk) values ('4','" + deskid + "')");
                     Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "请先输入名称添加", Toast.LENGTH_SHORT).show();
-                }
-                refreshCommand();
                 break;
             case R.id.lockhook:
-                if (!IsADD) {
                     robotDBHelper.execSQL("insert into command (type,desk) values ('5','" + deskid + "')");
                     Toast.makeText(getApplicationContext(), "添加成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "请先输入名称添加", Toast.LENGTH_SHORT).show();
-                }
-                refreshCommand();
                 break;
         }
-    };
+        refreshCommand();
+    }
 
     public void refreshCommand(){
         command_list.clear();
         List<Map> list = robotDBHelper.queryListMap("select * from command where desk = '"+ deskid +"'" ,null);
         command_list.addAll(list);
-        Constant.debugLog("command_list"+command_list.toString());
         myAdapter.notifyDataSetChanged();
+        setListViewHeightBasedOnChildren(commandlistview);
     }
 
     @Override

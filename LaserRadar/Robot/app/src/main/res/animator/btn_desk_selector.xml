@@ -2,6 +2,6 @@
 <selector
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true"
-        android:drawable="@mipmap/fuwuzhong" />
-    <item android:drawable="@mipmap/fuwuzhong02" />
+        android:drawable="@mipmap/fuwuzhong02_pre" />
+    <item android:drawable="@mipmap/fuwuzhong02_no" />
 </selector>

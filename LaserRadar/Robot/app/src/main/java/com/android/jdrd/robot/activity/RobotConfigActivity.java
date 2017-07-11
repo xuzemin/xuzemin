@@ -17,6 +17,8 @@ import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +30,10 @@ import java.util.Map;
 
 public class RobotConfigActivity extends Activity implements View.OnClickListener {
     private RobotDBHelper robotDBHelper;
-    private int robotid;
+    private static int robotid;
     private Map robotconfig;
     private EditText name;
-    private ArrayAdapter adapter;
-    private Spinner spinner;
+    private TextView area_text;
     public int areaid;
     private List<Map> arealist;
     @Override
@@ -44,52 +45,33 @@ public class RobotConfigActivity extends Activity implements View.OnClickListene
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_robot_config);
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
-        Intent intent =getIntent();
-        robotid = intent.getIntExtra("id",0);
-
-
-        List<Map> robotlist = robotDBHelper.queryListMap("select * from robot where id = '"+ robotid +"'" ,null);
-        robotconfig = robotlist.get(0);
-        Constant.debugLog("robot"+robotlist.toString());
         name = ((EditText)findViewById(R.id.name));
-        name.setHint(robotconfig.get("name").toString());
-
-        arealist = robotDBHelper.queryListMap("select * from area " ,null);
-
         findViewById(R.id.sure).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
-        spinner = (Spinner) findViewById(R.id.area);
-        ArrayList<String> map_Plan = new ArrayList<>();
-        if(arealist!=null && arealist.size()>0){
-            for(int i=0,size = arealist.size();i<size;i++){
-                map_Plan.add(arealist.get(i).get("name").toString());
-            }
-        }
-        adapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
-        adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                areaid = (int) arealist.get(position).get("id");
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        area_text = (TextView) findViewById(R.id.area_text);
+        findViewById(R.id.area).setOnClickListener(this);
+        Intent intent =getIntent();
+        robotid = intent.getIntExtra("id",0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Map> robotlist = robotDBHelper.queryListMap("select * from robot where id = '"+ robotid +"'" ,null);
+        robotconfig = robotlist.get(0);
+        name.setHint(robotconfig.get("name").toString());
+        arealist = robotDBHelper.queryListMap("select * from area " ,null);
         areaid = (int) robotconfig.get("area");
         if(arealist !=null && arealist.size()>0){
             if(areaid !=0){
                 for(int i = 0,size = arealist.size();i<size;i++){
                     if(arealist.get(i).get("id").equals(areaid)){
-                        spinner.setSelection(i,true);
+                        area_text.setText(arealist.get(i).get("name").toString());
                         break;
                     }
                 }
             }else{
-                Constant.debugLog("id"+arealist.get(0).get("id"));
-                areaid = (int) arealist.get(0).get("id");
-                spinner.setSelection(0,true);
+                area_text.setText("未选择区域");
             }
         }
     }
@@ -99,23 +81,20 @@ public class RobotConfigActivity extends Activity implements View.OnClickListene
         switch (v.getId()){
             case R.id.sure:
                 Constant.debugLog("areaid"+areaid);
-                    if(areaid != 0){
                         if(!name.getText().toString().trim().equals("")){
-                            robotDBHelper.execSQL("update robot set name= '"+name.getText().toString().trim()+"' ,area= '"+areaid+"' where id= '"+ robotid +"'");
+                            robotDBHelper.execSQL("update robot set name= '"+name.getText().toString().trim()+"'  where id= '"+ robotid +"'");
                         }else{
-                            robotDBHelper.execSQL("update robot set name= '"+robotconfig.get("name").toString()+"' ,area= '"+areaid+"' where id= '"+ robotid +"'");
+                            robotDBHelper.execSQL("update robot set name= '"+robotconfig.get("name").toString()+"'  where id= '"+ robotid +"'");
                         }
-                    }else {
-                        if(!name.getText().toString().trim().equals("")){
-                            robotDBHelper.execSQL("update robot set name= '"+name.getText().toString().trim()+"' ,area= '"+areaid+"' where id= '"+ robotid +"'");
-                        }else{
-                            robotDBHelper.execSQL("update robot set name= '"+robotconfig.get("name").toString()+"' ,area= '"+areaid+"' where id= '"+ robotid +"'");
-                        }
-                    }
                 finish();
                 break;
             case R.id.setting_back:
                 finish();
+                break;
+            case R.id.area:
+                Intent intent = new Intent(RobotConfigActivity.this,AreaConfig.class);
+                intent.putExtra("id", robotid);
+                startActivity(intent);
                 break;
         }
     }

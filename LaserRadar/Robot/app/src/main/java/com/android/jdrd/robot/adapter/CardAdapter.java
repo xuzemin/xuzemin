@@ -61,13 +61,7 @@ public class CardAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if(position == getCount() -1){
-            viewHolder.imageview.setVisibility(View.VISIBLE);
-            viewHolder.imageview.setImageResource(R.mipmap.ic_launcher);
-        }else {
-            viewHolder.imageview.setVisibility(View.GONE);
             viewHolder.text.setText(list.get(position).get("name").toString());
-        }
         return convertView;
     }
 

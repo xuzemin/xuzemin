@@ -5,11 +5,10 @@
     android:orientation="vertical"
     android:background="@color/white"
     >
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/desk_height">
+        android:layout_height="53dp">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -18,55 +17,54 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="@string/straight"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
-
+                android:layout_marginLeft="10dp"
+                android:textColor="#333333"
+                android:textSize="15sp" />
             <Button
                 android:id="@+id/straight"
-                android:layout_width="@dimen/add_width"
-                android:layout_height="@dimen/add_height"
+                android:layout_width="59dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/btn_add_selector"
+                android:background="@animator/btn_add_command_selector"
                 android:layout_alignParentRight="true"
                 android:onClick="testClick"
                 />
         </RelativeLayout>
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
-    </LinearLayout>
+            android:background="#EEEEEE"
+            android:layout_height="1dp"/>
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:background="#EEEEEE"
-        android:layout_height="0.5dp"/>
+        android:layout_height="1dp"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="@dimen/desk_height">
-
+        android:layout_height="53dp">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
             <Button
                 android:id="@+id/derail"
-                android:layout_width="@dimen/add_width"
-                android:layout_height="@dimen/add_height"
-                android:background="@drawable/btn_add_selector"
+                android:layout_width="59dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="30dp"
+                android:background="@animator/btn_add_command_selector"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:onClick="testClick"
                 />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/derail"
-                android:textColor="@color/black"
+                android:textColor="#333333"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -76,12 +74,12 @@
     <View
         android:layout_width="match_parent"
         android:background="#EEEEEE"
-        android:layout_height="0.5dp"/>
+        android:layout_height="1dp"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_height="@dimen/desk_height">
+        android:layout_height="53dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -90,31 +88,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/rotato"
-                android:textColor="@color/black"
+                android:textColor="#333333"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
                 />
             <Button
                 android:id="@+id/rotato"
-                android:layout_width="@dimen/add_width"
-                android:layout_height="@dimen/add_height"
+                android:layout_width="59dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="30dp"
                 android:onClick="testClick"
-                android:background="@drawable/btn_add_selector"
+                android:background="@animator/btn_add_command_selector"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 />
         </RelativeLayout>
     </LinearLayout>
     <View
-        android:layout_width="match_parent"
-        android:background="#EEEEEE"
-        android:layout_height="0.5dp"/>
+    android:layout_width="match_parent"
+    android:background="#EEEEEE"
+    android:layout_height="1dp"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_height="@dimen/desk_height">
-
+        android:layout_height="53dp">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -122,29 +121,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/wait"
-                android:textColor="@color/black"
+                android:textColor="#333333"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
                 />
             <Button
                 android:id="@+id/wait"
-                android:layout_width="@dimen/add_width"
-                android:layout_height="@dimen/add_height"
-                android:background="@drawable/btn_add_selector"
+                android:layout_width="59dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="30dp"
+                android:background="@animator/btn_add_command_selector"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:onClick="testClick"
                 />
         </RelativeLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="#EEEEEE"
+        android:layout_height="1dp"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:layout_height="@dimen/desk_height">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -154,7 +156,7 @@
                 android:text="@string/puthook"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="17sp"
                 />
             <Button
                 android:id="@+id/puthook"
@@ -174,7 +176,8 @@
         android:layout_height="@dimen/desk_height">
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
+            android:background="#EEEEEE"
+            android:layout_height="1dp"/>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -184,7 +187,7 @@
                 android:text="@string/lockhook"
                 android:textColor="@color/black"
                 android:gravity="center"
-                android:textSize="25sp"
+                android:textSize="17sp"
                 />
             <Button
                 android:id="@+id/lockhook"
@@ -197,5 +200,4 @@
                 />
         </RelativeLayout>
     </LinearLayout>
-
 </LinearLayout>

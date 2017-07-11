@@ -48,6 +48,7 @@
         <activity android:name=".activity.CommandAcitivty" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <activity android:name=".activity.CardConfig" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <activity android:name=".activity.CardConfigActivity" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+        <activity android:name=".activity.AreaConfig" android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
         <service
             android:name=".service.SetStaticIPService"
             android:enabled="true"

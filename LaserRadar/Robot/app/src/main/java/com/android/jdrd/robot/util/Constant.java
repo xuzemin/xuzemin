@@ -30,6 +30,7 @@ public class Constant {
     //地图状态缓存
     //Socket服务器端口
     public static int ServerPort = 1477;
+    public static int ClientPort = 8839;
 //    public static String ip_bigScreen = "/192.168.88.110";
 //    public static String ip_ros = "/192.168.88.101";
 //    测试用IP

@@ -18,7 +18,7 @@
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
             android:layout_width="17dp"
-            android:layout_height="32dp" />
+            android:layout_height="21dp" />
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             />
         <Button
             android:background="@color/green"
-            android:textColor="@color/orange"
+            android:textColor="@animator/btn_delete_selector"
             android:id="@+id/btn_delete"
             android:layout_marginRight="5dp"
             android:textSize="17sp"
@@ -42,6 +42,8 @@
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
@@ -53,7 +55,8 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:background="@color/white"
-                android:layout_height="60dp">
+                android:layout_height="53dp">
+
                 <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -63,35 +66,41 @@
                         android:layout_height="match_parent"
                         android:text="@string/goalname"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/black"
+                        android:textColor="#333333"
                         android:gravity="left|center_vertical"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         />
 
                     <Spinner
                         android:id="@+id/goal"
                         android:background="@color/white"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
+                        android:gravity="right|center"
+                        android:layout_marginRight="20dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        />
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@mipmap/xyb"/>
                 </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_direction"
                 android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                android:layout_height="53dp">
                 <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -102,37 +111,42 @@
                         android:text="@string/direction"
                         android:layout_marginLeft="10dp"
                         android:gravity="left|center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
+                        android:textColor="#333333"
+                        android:textSize="15sp"
                         />
 
                     <Spinner
                         android:id="@+id/direction"
-                        android:layout_width="100dp"
-                        android:background="@color/white"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_width="wrap_content"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:layout_marginRight="20dp"
+                        android:layout_height="match_parent"
+                        />
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@mipmap/xyb"/>
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_speed"
                 android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
-                <RelativeLayout
+                android:layout_height="53dp">
+                <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     android:layout_height="match_parent">
                     <TextView
                         android:id="@+id/speed_text"
@@ -140,35 +154,34 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:text="@string/speed"
-                        android:textColor="@color/black"
+                        android:textColor="#333333"
                         android:gravity="left|center_vertical"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         />
                     <EditText
                         android:inputType="number"
                         android:id="@+id/speed"
                         android:textColorHint="@color/aliceblue"
-                        android:textColor="@color/black"
-                        android:layout_alignParentRight="true"
-                        android:layout_width="100dp"
+                        android:textColor="#999999"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
-                </RelativeLayout>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_mp3"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:background="@color/white"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
-                <RelativeLayout
+                android:layout_height="53dp">
+                <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -177,35 +190,34 @@
                         android:layout_height="match_parent"
                         android:text="@string/mp3"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/black"
+                        android:textColor="#333333"
                         android:gravity="left|center_vertical"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         />
                     <EditText
                         android:id="@+id/mp3"
                         android:inputType="number"
                         android:textColorHint="@color/aliceblue"
-                        android:layout_width="100dp"
-                        android:textColor="@color/black"
-                        android:layout_alignParentRight="true"
+                        android:layout_width="match_parent"
+                        android:textColor="#999999"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:textSize="15sp"
                         android:layout_height="match_parent"/>
-                </RelativeLayout>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_outime"
                 android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
-                <RelativeLayout
+                android:layout_height="53dp">
+                <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -214,39 +226,36 @@
                         android:layout_height="match_parent"
                         android:text="@string/outime"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/black"
+                        android:textColor="#333333"
                         android:gravity="left|center_vertical"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         android:id="@+id/textView6" />
 
                     <EditText
                         android:id="@+id/outime"
                         android:inputType="number"
-                        android:textColor="@color/black"
-                        android:layout_width="100dp"
+                        android:textColor="#999999"
+                        android:textSize="15sp"
+                        android:layout_width="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
                         android:textColorHint="@color/aliceblue"
                         android:layout_height="match_parent"
-                        android:layout_alignBaseline="@+id/textView6"
-                        android:layout_alignBottom="@+id/textView6"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true" />
-                </RelativeLayout>
+                        />
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_shownum"
                 android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
-                <RelativeLayout
+                android:layout_height="53dp">
+                <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -255,35 +264,34 @@
                         android:layout_height="match_parent"
                         android:text="@string/shownum"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/black"
+                        android:textColor="#333333"
                         android:gravity="left|center_vertical"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         />
                     <EditText
                         android:inputType="number"
                         android:id="@+id/shownum"
-                        android:textColor="@color/black"
+                        android:textColor="#999999"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
                         android:textColorHint="@color/aliceblue"
-                        android:layout_width="100dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_width="match_parent"
+                        android:gravity="right|center"
                         android:layout_height="match_parent"/>
-                </RelativeLayout>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_showcolor"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:background="@color/white"
-                android:layout_height="60dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
-                <RelativeLayout
+                android:layout_height="53dp">
+                <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -292,34 +300,33 @@
                         android:layout_height="match_parent"
                         android:text="@string/showcolor"
                         android:layout_marginLeft="10dp"
-                        android:textColor="@color/black"
+                        android:textColor="#333333"
                         android:gravity="left|center_vertical"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         />
                     <EditText
                         android:inputType="number"
                         android:id="@+id/showcolor"
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
                         android:textColorHint="@color/aliceblue"
-                        android:textColor="@color/black"
-                        android:layout_alignParentRight="true"
+                        android:textColor="#999999"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
                         android:layout_height="match_parent"/>
-                </RelativeLayout>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/black"
-                    android:layout_height="0.5dp"/>
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
             <Button
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="52dp"
                 android:id="@+id/btn_sure"
-                android:layout_width="100dp"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:text="@string/btn_sure"
-                android:textColor="@color/origen"
-                android:textSize="22sp"
-                android:layout_height="60dp" />
+                android:layout_width="match_parent"
+                android:background="@animator/btn_sure_selector"
+                android:layout_height="46dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

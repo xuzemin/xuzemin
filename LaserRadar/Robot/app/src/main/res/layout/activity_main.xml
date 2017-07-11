@@ -36,10 +36,10 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="vertical"
-        android:layout_height="100dp">
+        android:layout_height="106dp">
 
         <HorizontalScrollView
             android:id="@+id/aas"
@@ -49,6 +49,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 >
                 <GridView
                     android:id="@+id/robotgirdview"
@@ -70,30 +71,30 @@
         android:layout_below="@+id/linear_robot"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_height="match_parent"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:background="@color/white"
-            android:layout_marginTop="15dp"
-            android:layout_height="70dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="46dp">
             <TextView
                 android:id="@+id/area_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/choose_area"
                 android:layout_marginLeft="17dp"
-                android:textSize="24sp"
+                android:textSize="16sp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="#333333"
                 />
             <Button
                 android:id="@+id/config_redact"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:textColor="@color/black"
                 android:layout_marginRight="17dp"
                 android:textSize="25sp"
@@ -110,14 +111,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:dividerHeight = "1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:divider="#EEEEEE"
             android:background="@color/white"
-            android:soundEffectsEnabled="true"
-            android:smoothScrollbar="true"
-            android:verticalSpacing="1.0dp"
-            android:horizontalSpacing="1.0dp"
             android:numColumns="auto_fit"
-            android:columnWidth="90dp"
+            android:columnWidth="109dp"
             android:layout_marginBottom="20dp"
             />
     </LinearLayout>
@@ -125,27 +124,27 @@
         android:layout_below="@+id/main"
         android:id="@+id/map_right_Ralative"
         android:layout_width="wrap_content"
-        android:background="@color/green"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true">
         <LinearLayout
             android:id="@+id/linearlayout_all"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_alignParentLeft="true"
             android:orientation="vertical"
             android:visibility="gone"
+            android:background="#087235"
             android:layout_height="match_parent">
-            <ListView
-                android:id="@+id/area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@color/black"
-                android:dividerHeight="0.5dp"
-                />
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/black"/>
+                android:layout_height="1dp"
+                android:background="#539D72"
+                />
+            <ListView
+                android:id="@+id/area"
+                android:divider="@null"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
         </LinearLayout>
     </RelativeLayout>
 
@@ -208,61 +207,61 @@
     <!--</Button>-->
     <Button
         android:id="@+id/up"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="310dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="339dp"
+        android:layout_marginRight="7dp"
         android:visibility="gone"
         android:background="@animator/btn_up_selector"/>
     <Button
         android:id="@+id/down"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="272dp"
         android:visibility="gone"
         android:background="@animator/btn_down_selector"/>
     <Button
         android:id="@+id/left"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="190dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="205dp"
+        android:layout_marginRight="7dp"
         android:visibility="gone"
         android:background="@animator/btn_left_selector"/>
     <Button
         android:id="@+id/right"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="130dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="138dp"
+        android:layout_marginRight="7dp"
         android:visibility="gone"
         android:background="@animator/btn_right_selector"/>
     <Button
         android:id="@+id/stop"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="70dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="71dp"
+        android:layout_marginRight="7dp"
         android:visibility="gone"
         android:background="@animator/btn_stop_selector"/>
     <Button
         android:id="@+id/shrink"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="7dp"
         android:background="@animator/btn_shrink_selector"/>
 </RelativeLayout>

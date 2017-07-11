@@ -113,10 +113,6 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         ((TextView)findViewById(R.id.ip)).setText(robotconfig.get("ip").toString());
         ((TextView)findViewById(R.id.electric)).setText(robotconfig.get("electric").toString());
         ((TextView)findViewById(R.id.command_num)).setText(robotconfig.get("commandnum").toString());
-        ((TextView)findViewById(R.id.excute_command)).setText(robotconfig.get("excute").toString());
-        ((TextView)findViewById(R.id.excute_time)).setText(robotconfig.get("excutetime").toString());
-        ((TextView)findViewById(R.id.command_state)).setText(robotconfig.get("commandstate").toString());
-        ((TextView)findViewById(R.id.last_command_state)).setText(robotconfig.get("lastcommandstate").toString());
         ((TextView)findViewById(R.id.last_location)).setText(robotconfig.get("lastlocation").toString());
         if((int)robotconfig.get("obstacle") == 0){
             ((TextView)findViewById(R.id.obstacle)).setText("无");

@@ -6,7 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.jdrd.robot.R;
+import com.android.jdrd.robot.adapter.AreaAdapter;
+import com.android.jdrd.robot.adapter.DeskAdapter;
 import com.android.jdrd.robot.adapter.GridViewAdapter;
 import com.android.jdrd.robot.dialog.MyDialog;
 import com.android.jdrd.robot.dialog.RobotDialog;
@@ -47,12 +51,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private RelativeLayout map_right_Ralative;
     private ImageView imgViewmapnRight;
     private GridView deskview,robotgirdview;
+    public static int Current_INDEX = 1;
     private TranslateAnimation translateAnimation;
     private List<Map<String, Object>> Areadata_list =  new ArrayList<>();
     private List<Map<String, Object>> Deskdata_list =  new ArrayList<>();
     private static List<Map> Robotdata_list =  new ArrayList<>();
-    private SimpleAdapter desk_adapter,area_adapter;
-    private static boolean DeskIsEdit = false,AreaIsEdit = false;
+    private DeskAdapter desk_adapter;
+    private AreaAdapter area_adapter;
+    public static boolean DeskIsEdit = false,AreaIsEdit = false;
     private boolean IsRight = true,IsFinish = true;
     private ListView area;
     private float density;
@@ -98,10 +104,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!IsRight){
                     startAnimationLeft();
+                }else {
+                    Intent intent = new Intent(MainActivity.this, RobotActivity.class);
+                    intent.putExtra("id", (Integer) Robotdata_list.get(position).get("id"));
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(MainActivity.this, RobotActivity.class);
-                intent.putExtra("id", (Integer) Robotdata_list.get(position).get("id"));
-                startActivity(intent);
             }
         });
         findViewById(R.id.activity_main).setOnClickListener(this);
@@ -121,42 +128,43 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         findViewById(R.id.shrink).setOnClickListener(this);
         deskview = (GridView) findViewById(R.id.gview);
         //获取数据
-        desk_adapter = new SimpleAdapter(this, Deskdata_list, R.layout.desk_item, from, to);
+        desk_adapter = new DeskAdapter(this, Deskdata_list);
         deskview.setAdapter(desk_adapter);
         deskview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!IsRight){
                     startAnimationLeft();
-                }
-                getAreaData();
-                if(areaList != null && areaList.size() > 0 && CURRENT_AREA_id !=0){
-                    if(DeskIsEdit ){
-                        if(position == 0){
-                            Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
-                            intent.putExtra("area", CURRENT_AREA_id);
-                            startActivity(intent);
-                        }else {
-                            Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
-                            intent.putExtra("area", CURRENT_AREA_id);
-                            intent.putExtra("id", (Integer) Deskdata_list.get(position).get("id"));
-                            startActivity(intent);
+                }else {
+                    getAreaData();
+                    if (areaList != null && areaList.size() > 0 && CURRENT_AREA_id != 0) {
+                        if (DeskIsEdit) {
+                            if (position == 0) {
+                                Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
+                                intent.putExtra("area", CURRENT_AREA_id);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(MainActivity.this, DeskConfigPathAcitivty.class);
+                                intent.putExtra("area", CURRENT_AREA_id);
+                                intent.putExtra("id", (Integer) Deskdata_list.get(position).get("id"));
+                                startActivity(intent);
+                            }
+                            getDeskData();
+                        } else {
+                            Constant.debugLog("position" + CURRENT_AREA_id);
+                            commandlit = robotDBHelper.queryListMap("select * from command where desk = '" + Deskdata_list.get(position).get("id") + "'", null);
+                            if (commandlit != null && commandlit.size() > 0) {
+                                robotDialog(commandlit);
+                            }
                         }
-                        getDeskData();
-                    }else {
-                        Constant.debugLog("position"+CURRENT_AREA_id);
-                        commandlit = robotDBHelper.queryListMap("select * from command where desk = '"+Deskdata_list.get(position).get("id")+"'" ,null);
-                        if(commandlit !=null&&commandlit.size()>0){
-                            robotDialog(commandlit);
-                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "请添加并选择区域", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(getApplicationContext(),"请添加并选择区域",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        area_adapter = new SimpleAdapter(this, Areadata_list, R.layout.item, from, to);
+        area_adapter = new AreaAdapter(this,Areadata_list);
         area.setAdapter(area_adapter);
         area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -180,6 +188,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                         }
                         DeskIsEdit = false;
                         CURRENT_AREA_id = (int) Areadata_list.get(position).get("id");
+                        Current_INDEX = position;
                         area_text.setText( Areadata_list.get(position).get("name").toString());
                         getDeskData();
                     }
@@ -198,17 +207,20 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     private void setGridView() {
         int size = Robotdata_list.size();
-        int length = 76;
-        int height = 120;
+        int length = 86;
+        int height = 106;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         density = dm.density;
         int gridviewWidth = (int) (size * (length + 30) * density);
+        if(gridviewWidth<=340* density){
+            gridviewWidth = (int) (340 * density);
+        }
         int itemWidth = (int) (length * density);
         int itemHeight = (int) (height * density);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 gridviewWidth, itemHeight);
-        Constant.linearWidth = (int) (83 * density);
+        Constant.linearWidth = (int) (80 * density);
         robotgirdview.setLayoutParams(params); // 重点
         robotgirdview.setColumnWidth(itemWidth); // 重点
         robotgirdview.setHorizontalSpacing((int) (10 * density)); // 间距
@@ -244,15 +256,17 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         if(CURRENT_AREA_id == 0){
             if(areaList !=null && areaList.size() >0){
                 CURRENT_AREA_id = (int) areaList.get(0).get("id");
+                Current_INDEX = 1;
                 area_text.setText( areaList.get(0).get("name").toString());
             }else{
                 area_text.setText("请选择左侧区域");
             }
         }else{
-            CURRENT_AREA_id = (int) areaList.get(0).get("id");
             for(int i = 0,size = areaList.size();i<size;i++){
                 if(((int)areaList.get(i).get("id")) == CURRENT_AREA_id){
                     area_text.setText( areaList.get(i).get("name").toString());
+                    CURRENT_AREA_id = (int) areaList.get(i).get("id");
+                    Current_INDEX = i+1;
                 }
             }
         }
@@ -261,6 +275,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         gridViewAdapter.notifyDataSetInvalidated();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -280,8 +295,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             case R.id.config_redact:
                 if(DeskIsEdit){
                     DeskIsEdit = false;
+                    findViewById(R.id.config_redact).setBackground(getResources().getDrawable(R.animator.btn_direct_selector,null));
                 }else{
                     DeskIsEdit = true;
+                    findViewById(R.id.config_redact).setBackground(getResources().getDrawable(R.animator.btn_exit_selector,null));
                 }
                 getDeskData();
                 break;
@@ -331,7 +348,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         Map<String, Object> map;
         if(DeskIsEdit){
             map = new HashMap<>();
-            map.put("image", R.mipmap.add_no);
+            map.put("image", R.animator.btn_add_desk_selector);
             map.put("id", 0);
 //            map.put("name",getString(R.string.config_add));
             Deskdata_list.add(map);
@@ -513,9 +530,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void startAnimationShrink(){
         Animation translate;
         if (isShrink){
+            findViewById(R.id.shrink).setBackground(getResources().getDrawable(R.animator.btn_shrink_selector));
             translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_left);
             translate.setAnimationListener(animationListener);
             left.startAnimation(translate);
@@ -532,6 +551,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             translate.setAnimationListener(animationListener);
             stop.startAnimation(translate);
         }else {
+            findViewById(R.id.shrink).setBackground(getResources().getDrawable(R.animator.btn_shrink_out_selector));
             left.setVisibility(View.VISIBLE);
             down.setVisibility(View.VISIBLE);
             up.setVisibility(View.VISIBLE);
@@ -639,6 +659,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 getAreaData();
                 if(areaList !=null && areaList.size() >0){
                     CURRENT_AREA_id = (int) areaList.get(0).get("id");
+                    Current_INDEX = 1;
                     area_text.setText( areaList.get(0).get("name").toString());
                 }else{
                     area_text.setText("请选择左侧区域");

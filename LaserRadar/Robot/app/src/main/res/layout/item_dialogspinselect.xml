@@ -2,7 +2,6 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="60dp"
     android:layout_width="fill_parent"
-    android:textColor="@color/black"
-    android:textSize="17sp"
+    android:textSize="15sp"
     android:background="@color/white"
     android:gravity="center"/>

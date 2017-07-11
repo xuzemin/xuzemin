@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="#EEEEEE"
+    android:background="@color/white"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,20 +22,29 @@
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:text="@string/add_area"
-                android:textSize="29sp"
+                android:textSize="22sp"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="1dp"/>
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="260dp"
                 android:layout_height="60dp"
+                android:maxLength="3"
                 android:gravity="center"
+                android:background="@color/white"
                 android:textColor="@color/black"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textSize="27sp"
+                android:textSize="17sp"
                 android:textColorHint="#7D7D7D"
-                android:background="@drawable/bg_edittext"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="300dp"
                 android:layout_height="70dp"
@@ -49,8 +58,12 @@
                     android:layout_height="match_parent"
                     android:text="@string/btn_cancle"
                     android:textColor="@color/black"
-                    android:textSize="25sp"
+                    android:textSize="17sp"
                     />
+                <View
+                    android:layout_width="1dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="match_parent"/>
                 <Button
                     android:layout_weight="1"
                     android:id="@+id/positiveButton"
@@ -58,7 +71,7 @@
                     android:background="@color/white"
                     android:layout_height="match_parent"
                     android:text="@string/btn_sure"
-                    android:textSize="25sp"
+                    android:textSize="17sp"
                     android:textColor="@color/origen"
                     />
             </LinearLayout>
