@@ -116,7 +116,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         tab02.setOnClickListener(this);
 
         // 获取图片宽度
-        lineWidth = BitmapFactory.decodeResource(getResources(), R.mipmap.fuwuzhong).getWidth();
+        lineWidth = BitmapFactory.decodeResource(getResources(), R.mipmap.up_pre).getWidth();
         // Android提供的DisplayMetrics可以很方便的获取屏幕分辨率
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#EEEEEE"
+    android:background="@color/white"
     >
     <RelativeLayout
         android:id="@+id/main"
@@ -37,8 +37,8 @@
             />
     </RelativeLayout>
     <ScrollView
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
+        android:background="#EEEEEE"
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
@@ -57,6 +57,7 @@
                     android:layout_width="120dp"
                     android:textSize="@dimen/robot_size"
                     android:gravity="center|left"
+                    android:layout_marginLeft="10dp"
                     android:textColor="#333333"
                     android:layout_height="match_parent"
                     android:text="@string/name"
@@ -85,6 +86,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center|left"
                     android:textColor="#333333"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/ip"
                     android:textSize="@dimen/robot_size" />
                 <TextView
@@ -111,6 +113,7 @@
                     android:gravity="center|left"
                     android:textColor="#333333"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/outline"
                     android:id="@+id/textView3" />
                 <TextView
@@ -135,6 +138,7 @@
                     android:layout_width="120dp"
                     android:textSize="@dimen/robot_size"
                     android:gravity="center|left"
+                    android:layout_marginLeft="10dp"
                     android:textColor="#333333"
                     android:layout_height="match_parent"
                     android:text="@string/electric"/>
@@ -160,6 +164,7 @@
                     android:layout_width="120dp"
                     android:textSize="@dimen/robot_size"
                     android:gravity="center|left"
+                    android:layout_marginLeft="10dp"
                     android:textColor="#333333"
                     android:layout_height="match_parent"
                     android:text="@string/area"/>
@@ -185,6 +190,7 @@
                     android:layout_width="120dp"
                     android:textSize="@dimen/robot_size"
                     android:gravity="center|left"
+                    android:layout_marginLeft="10dp"
                     android:textColor="#333333"
                     android:layout_height="match_parent"
                     android:text="@string/state"/>
@@ -211,6 +217,7 @@
                     android:textSize="@dimen/robot_size"
                     android:gravity="center|left"
                     android:textColor="#333333"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="match_parent"
                     android:text="@string/robot_state"/>
                 <TextView
@@ -229,6 +236,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
                 android:background="@color/white"
                 android:visibility="gone"
                 android:layout_height="@dimen/area_height">
@@ -261,6 +269,7 @@
                     android:textSize="@dimen/robot_size"
                     android:gravity="center|left"
                     android:textColor="#333333"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="match_parent"
                     android:text="@string/last_location"/>
                 <TextView
@@ -286,6 +295,7 @@
                     android:textSize="@dimen/robot_size"
                     android:gravity="center|left"
                     android:textColor="#333333"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="match_parent"
                     android:text="@string/obstacle"/>
                 <TextView

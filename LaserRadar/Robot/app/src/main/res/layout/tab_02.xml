@@ -9,7 +9,6 @@
             android:id="@+id/added_command"
             android:layout_width="match_parent"
             android:divider="#EEEEEE"
-            android:layout_marginBottom="10dp"
             android:dividerHeight="1dp"
             android:layout_height="match_parent"/>
 </LinearLayout>
