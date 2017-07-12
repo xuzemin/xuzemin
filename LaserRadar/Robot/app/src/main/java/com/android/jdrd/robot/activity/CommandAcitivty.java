@@ -18,10 +18,15 @@ import android.widget.Toast;
 
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.MyAdapter;
+import com.android.jdrd.robot.adapter.SpinnerAdapter;
+import com.android.jdrd.robot.dialog.DeleteDialog;
+import com.android.jdrd.robot.dialog.MyDialog;
+import com.android.jdrd.robot.dialog.SpinnerDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +41,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
     private Map commandconfig;
     private List<Map> goallist;
     private EditText speed,mp3,outime,shownum,showcolor;
-    private Spinner goal,direction;
+    private TextView goal,direction;
     private int goalnum,directionnum;
     private ArrayAdapter diretionAdapter,goalAdapter;
     @Override
@@ -54,14 +59,13 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         Intent intent =getIntent();
         command_id = intent.getIntExtra("id",0);
         Log.e("commandlist" ,command_id+"");
-        goal = (Spinner) findViewById(R.id.goal);
-        direction = (Spinner) findViewById(R.id.direction);
+        goal = (TextView) findViewById(R.id.goal);
+        direction = (TextView) findViewById(R.id.direction);
         speed = (EditText) findViewById(R.id.speed);
         mp3 = (EditText) findViewById(R.id.mp3);
         outime = (EditText) findViewById(R.id.outime);
         shownum = (EditText) findViewById(R.id.shownum);
         showcolor = (EditText) findViewById(R.id.showcolor);
-
         findViewById(R.id.btn_delete).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
 
@@ -69,9 +73,9 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         map_Plan.add("直行");
         map_Plan.add("左岔道");
         map_Plan.add("右岔道");
-        diretionAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
-        diretionAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
-        direction.setAdapter(diretionAdapter);
+//        diretionAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
+//        diretionAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+//        direction.setAdapter(diretionAdapter);
 
         map_Plan = new ArrayList<>();
         goallist = robotDBHelper.queryListMap("select * from card " ,null);
@@ -80,9 +84,12 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                 map_Plan.add(goallist.get(i).get("name").toString());
             }
         }
-        goalAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
-        goalAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
-        goal.setAdapter(goalAdapter);
+//        goalAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
+//        goalAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
+//        goal.setAdapter(goalAdapter);
+
+        goal.setOnClickListener(this);
+        direction.setOnClickListener(this);
 
         List<Map> commandlist = robotDBHelper.queryListMap("select * from command where id = '"+ command_id +"'" ,null);
         Log.e("commandlist" ,commandlist.toString());
@@ -94,22 +101,32 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                     boolean flag = false;
                     for(int i = 0,size = goallist.size();i< size;i++){
                         if(goallist.get(i).get("id").equals(commandconfig.get("goal"))){
-                            goal.setSelection(i,true);
+                            goal.setText(goallist.get(i).get("name").toString());
                             flag = true;
                             break;
                         }
                     }
                     if(!flag){
-                        goal.setSelection(0,true);
+                        goal.setText("请选择站点");
                     }
                 }
             }else{
-                goal.setSelection(0,true);
+                goal.setText("请选择站点");
             }
             if(commandconfig.get("direction") !=null){
-                direction.setSelection((int)commandconfig.get("direction"),true);
+                switch ((int)commandconfig.get("direction")){
+                    case 0:
+                        direction.setText("直行");
+                        break;
+                    case 1:
+                        direction.setText("左岔道");
+                        break;
+                    case 2:
+                        direction.setText("右岔道");
+                        break;
+                }
             }else{
-                direction.setSelection(0,true);
+                direction.setText("请选择方向");
             }
 
             if(commandconfig.get("speed") !=null){
@@ -148,30 +165,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                     break;
             }
         }
-
-        direction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                directionnum = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        goal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                goalnum = position;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         findViewById(R.id.btn_sure).setOnClickListener(this);
-
     }
 
 
@@ -192,8 +186,13 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.btn_delete:
-                robotDBHelper.execSQL("delete from command where id = '"+command_id+"'");
-                finish();
+                dialog();
+                break;
+            case R.id.goal:
+                dialog_spinner(true);
+                break;
+            case R.id.direction:
+                dialog_spinner(false);
                 break;
             case R.id.btn_sure:
                 switch ((int)commandconfig.get("type")){
@@ -252,5 +251,57 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         }
     }
 
+    private DeleteDialog dialog ;
+    private void dialog() {
+        dialog = new DeleteDialog(this);
+        dialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                robotDBHelper.execSQL("delete from command where id = '"+command_id+"'");
+                finish();
+            }
+        });
+        dialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
+    private SpinnerDialog spinnerdialog ;
+    private SpinnerAdapter spinnerAdapter;
+    private void dialog_spinner(boolean gl) {
+        spinnerdialog = new SpinnerDialog(this);
+        if(gl){
+
+        }else{
+            List<Map> list = new ArrayList<>();
+            Map<String, Object> map ;
+            map = new HashMap<>();
+            map.put("name","直行");
+            list.add(map);
+            map = new HashMap<>();
+            map.put("name","左岔道");
+            list.add(map);
+            map = new HashMap<>();
+            map.put("name","右岔道");
+            list.add(map);
+            spinnerAdapter = new SpinnerAdapter(this,list);
+        }
+        spinnerdialog.getListView().setAdapter(spinnerAdapter);
+        spinnerdialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        spinnerdialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerdialog.dismiss();
+            }
+        });
+        spinnerdialog.show();
+    }
 }

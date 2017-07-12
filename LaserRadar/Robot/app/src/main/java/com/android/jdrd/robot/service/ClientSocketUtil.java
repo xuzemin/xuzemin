@@ -98,7 +98,7 @@ public class ClientSocketUtil extends Service {
             Constant.debugLog("waiting for connect....");
             socket = serverSocket.accept();
             socket.setKeepAlive(true);
-            socket.setSoTimeout(9000);
+//            socket.setSoTimeout(9000);
             new Thread(new Task(socket)).start();
         }
     }
@@ -190,7 +190,11 @@ public class ClientSocketUtil extends Service {
                             if(socket_cache.isClosed()){
                                 break;
                             }else{
-                                sendDateToClient("*heartbeat#", socket_ip, socket_cache);
+                                robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
+                                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
+                                        "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
+                                List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
+                                sendDateToClient("*"+robotList.toString()+"#", socket_ip, socket_cache);
                                 Thread.sleep(3000);
                             }
                         } catch (Exception e) {

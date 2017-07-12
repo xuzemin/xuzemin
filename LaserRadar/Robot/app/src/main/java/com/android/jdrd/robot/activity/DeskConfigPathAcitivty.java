@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.MyAdapter;
+import com.android.jdrd.robot.dialog.DeleteDialog;
+import com.android.jdrd.robot.dialog.MyDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
 
@@ -210,7 +212,6 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         List<Map> list = robotDBHelper.queryListMap("select * from command where desk = '"+ deskid +"'" ,null);
         command_list.addAll(list);
         myAdapter.notifyDataSetChanged();
-//        setListViewHeightBasedOnChildren(commandlistview);
     }
 
     @Override
@@ -228,8 +229,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_delete:
-                robotDBHelper.execSQL("delete from desk where id= '"+ deskid +"'");
-                finish();
+                dialog();
                 break;
             case R.id.card:
                 startActivity(new Intent(DeskConfigPathAcitivty.this,CardConfig.class));
@@ -249,6 +249,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
                         deskconfiglist = desklist.get(0);
                         ((TextView)findViewById(R.id.title)).setText(R.string.desk_deract);
                         IsADD = false;
+                        findViewById(R.id.btn_delete).setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
                     }else{
                         robotDBHelper.execSQL("update desk set name= '"+name.getText().toString().trim()+"' where id= '"+ deskid +"'");
@@ -271,21 +272,26 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         }
     }
 
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        MyAdapter listAdapter = (MyAdapter) listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-        int totalHeight = 5;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
+    private DeleteDialog dialog ;
+    private void dialog() {
+        dialog = new DeleteDialog(this);
+        dialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                robotDBHelper.execSQL("delete from desk where id= '"+ deskid +"'");
+                finish();
+            }
+        });
+        dialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
+
+
 
     /**
      * ViewPager适配器

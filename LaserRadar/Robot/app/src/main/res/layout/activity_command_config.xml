@@ -71,7 +71,7 @@
                         android:textSize="15sp"
                         />
 
-                    <Spinner
+                    <TextView
                         android:id="@+id/goal"
                         android:background="@color/white"
                         android:layout_width="wrap_content"
@@ -79,6 +79,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
+                        android:text="请选择站点"
                         android:layout_alignParentRight="true"
                         />
                     <ImageView
@@ -115,13 +116,14 @@
                         android:textSize="15sp"
                         />
 
-                    <Spinner
+                    <TextView
                         android:id="@+id/direction"
                         android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:background="@color/white"
                         android:gravity="right|center"
                         android:layout_marginRight="20dp"
+                        android:text="请选择方向"
                         android:layout_height="match_parent"
                         />
                     <ImageView

@@ -1,6 +1,5 @@
 package com.android.jdrd.robot.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.jdrd.robot.R;
@@ -35,6 +33,7 @@ import com.android.jdrd.robot.adapter.GridViewAdapter;
 import com.android.jdrd.robot.dialog.MyDialog;
 import com.android.jdrd.robot.dialog.RobotDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
+import com.android.jdrd.robot.service.ClientSocketUtil;
 import com.android.jdrd.robot.service.ServerSocketUtil;
 import com.android.jdrd.robot.service.SetStaticIPService;
 import com.android.jdrd.robot.util.Constant;
@@ -84,6 +83,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
+        startService(new Intent(this, ClientSocketUtil.class));
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
         linearlayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
         imgViewmapnRight = (ImageView) findViewById(R.id.imgViewmapnRight);
@@ -207,7 +207,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     private void setGridView() {
         int size = Robotdata_list.size();
-        int length = 86;
+        int length = 76;
         int height = 106;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -220,10 +220,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         int itemHeight = (int) (height * density);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 gridviewWidth, itemHeight);
-        Constant.linearWidth = (int) (80 * density);
+        Constant.linearWidth = (int) (76 * density);
         robotgirdview.setLayoutParams(params); // 重点
         robotgirdview.setColumnWidth(itemWidth); // 重点
-        robotgirdview.setHorizontalSpacing((int) (10 * density)); // 间距
+        robotgirdview.setHorizontalSpacing((int) (8 * density)); // 间距
         robotgirdview.setStretchMode(GridView.NO_STRETCH);
         robotgirdview.setNumColumns(size); // 重点
         gridViewAdapter = new GridViewAdapter(getApplicationContext(),

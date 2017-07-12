@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.CardAdapter;
+import com.android.jdrd.robot.dialog.DeleteDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
 
@@ -70,8 +71,7 @@ public class CardConfigActivity extends Activity implements View.OnClickListener
                 finish();
                 break;
             case R.id.btn_delete:
-                robotDBHelper.execSQL("delete from card where id= '"+ card_id +"'");
-                finish();
+                dialog();
                 break;
             case R.id.btn_sure:
                 if(card_id == 0){
@@ -82,5 +82,24 @@ public class CardConfigActivity extends Activity implements View.OnClickListener
                 finish();
                 break;
         }
+    }
+
+    private DeleteDialog dialog ;
+    private void dialog() {
+        dialog = new DeleteDialog(this);
+        dialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                robotDBHelper.execSQL("delete from card where id= '"+ card_id +"'");
+                finish();
+            }
+        });
+        dialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }
