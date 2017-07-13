@@ -177,6 +177,9 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
             case R.id.goal:
                 dialog_spinner(true);
                 break;
+            case R.id.direction:
+                dialog_spinner(false);
+                break;
             case R.id.speed:
                 dialog_Text(0);
                 break;
