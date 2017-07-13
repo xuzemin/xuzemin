@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_Battery_Main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_Battery_Top"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/right_title_background_color"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="电源配置信息"
+                        android:textColor="@color/white"
+                        android:textSize="36sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_Battery_Save"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_save_background"
+                    android:gravity="center"
+                    android:text="保存"
+                    android:textColor="@color/white"
+                    android:textSize="36sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_Battery_Bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@mipmap/bg"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <!--android:layout_width="300dp"
+                            android:layout_height="100dp" -->
+                        <ImageView
+                            android:id="@+id/iv_Battery_Power01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:src="@mipmap/power2" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="100%"
+                            android:textSize="111px"
+                            android:textColor="#FFFFFF"
+                            />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@mipmap/bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:paddingLeft="24px"
+                        android:paddingRight="24px"
+                        android:paddingTop="24px">
+
+                        <TextView
+                            android:id="@+id/tv_Battery_Setting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:text="电源警告设置"
+                            android:textColor="@color/white"
+                            android:textSize="33sp" />
+
+                        <TextView
+                            android:id="@+id/tv_Battery_Warn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/tv_Battery_Setting"
+                            android:paddingLeft="24px"
+                            android:textColor="@color/white"
+                            android:textSize="33sp" />
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true">
+                            <!--android:layout_width="100dp"
+                            android:layout_height="60dp" -->
+                            <ImageView
+                                android:id="@+id/iv_Battery_Switch_Open"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/kai" />
+
+                            <ImageView
+                                android:id="@+id/iv_Battery_Switch_Close"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/guang"
+                                android:visibility="gone" />
+                        </FrameLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp">
+
+                        <SeekBar
+                            android:id="@+id/sb_SeekBar"
+                            style="@style/Widget.SeekBar.Normal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="24px"
+                        android:paddingRight="24px">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/kedu" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@mipmap/dingbu"
+            android:gravity="center"
+            android:text="电源"
+            android:textColor="#E8E8E8"
+            android:textSize="15px" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="center_horizontal|center|center_vertical"
+
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="1404px"
+                        android:layout_height="529px"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/kuang_bg"
+                        android:layout_gravity="center|center_horizontal"
+
+                        >
+
+
+                        <ImageView
+                            android:id="@+id/iv_Battery_Power"
+                            android:layout_width="922px"
+                            android:layout_height="327px"
+                            android:layout_centerInParent="true"
+                             />
+
+                        <TextView
+                            android:id="@+id/tv_Battery_Level"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="111sp"
+                            android:textColor="#FFFFFF"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"/>
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+    <FrameLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+                <include layout="@layout/battery_rightbar"
+                    >
+
+                </include>
+        </FrameLayout>
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\tf2_msgs-0.5.9.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b2fea11356b0f4ce744f30ac76e987b531b6028e">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\tf2_msgs-0.5.9_3085b5b1eeff5d42ce713d3882dd3b0871dfb585\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\commons-pool-1.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="8fae5f0807937792c81487aa91cb80db539cbb25">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\commons-pool-1.6_e78738361ce6b1dedf7eb585d0ff218dbbcc121b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.1.0_35a6622990517465fe83686fd31bc5b087d23eff\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_a477e56922d5195f30fd5f6bf3f49330d8113f18\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.1.0_04dbbc55f28fdb3058eb5602ef6d06ba21aec707\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\jdrd\.gradle\caches\modules-2\files-2.1\org.jetbrains\annotations\13.0\919f0dfe192fb4e063e7dacadee7f8bb9a2672a9\annotations-13.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="919f0dfe192fb4e063e7dacadee7f8bb9a2672a9">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\annotations-13.0_db278eec53063876ce3186e2fe76a77b6e488bc8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\jdrd\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib-jre7\1.1.2-4\e6a7403299b8f3126e3a1576c02e3f07ae5af6fa\kotlin-stdlib-jre7-1.1.2-4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e6a7403299b8f3126e3a1576c02e3f07ae5af6fa">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\kotlin-stdlib-jre7-1.1.2-4_fe2275c0c1dec26aac11ca854ac8090e89bd4ae2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.1.0_ce00c5a866ceacf0683cdf82a5aa011efc8227aa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\apache_xmlrpc_client-0.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="fb125aa8e6fcc2cf84d4399e4377c8dc85bf4c3a">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\apache_xmlrpc_client-0.2.1_42f54cd406a31821ad6980fac8f26ccad727ee52\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.1.0_b2d54aad1956c4ffd3b2fbada90471cb9e4378ff\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\ws-commons-util-1.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4d9aedf3f09ae3b067cad6dd438c5ef9ba1feeab">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\ws-commons-util-1.0.1_b7d3360a024cbb7d8d36344109fab890b06e0a95\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.1.0_a85df2bbd806a75fd16112221f283c4e9aaac1c9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6dda6509415072afab7a0759e94488b2ca2ff3e1">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_4832efc904e3ea117556a726bdad3e06e8e0e32b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\message_generation-0.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="dc3afb66cd5aa168a71bcb63ba89560b197b9300">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\message_generation-0.2.1_bf2bb35b739ef1fb380d3a56bf415e495edee75c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\snakeyaml-1.10.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="aeab92645d27fb32a150477a021f98e54438afd4">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\snakeyaml-1.10_bdf1f70c95a01a501c82b7f1d25f29717326d293\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\eai_slam-0.3.5.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="319389631d71f84db50d8c6d6f77646aff0509cb">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\eai_slam-0.3.5_fa95550da650baf6ed7e8c83882d4c6a6c7bbe56\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\rosjava_geometry-0.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a31311017f578093eb09216269d0e25b0bd3d81d">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\rosjava_geometry-0.2.1_afb7977c22966204d1b9b04cdce6721670c1143b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a6912e35d3d275bcf2630a45f4de7c8b5011eb98">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_ff6e7ba7cb0f7213a360cb2a534a81f8e8119d27\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\sensor_msgs-1.11.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5f0b7ac0b5d341b9b37f408ab45c4a2e4c80068e">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\sensor_msgs-1.11.7_e4dde410ad25e968bfc32cf9e6c8ddcca8a727a2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="aee64634871d88a419d59eb743c1258a60f19700">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.1.0_e195017700a3e24fe87c34adcf34df9f4ba2e424\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\apache_xmlrpc_common-0.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a956178368232d0a9fccf501a8c91aacf2ac0256">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\apache_xmlrpc_common-0.2.1_9398a1a219e185cd111b2452bbf5c2a1c2f0bc69\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\gson-2.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ee05a659aea6a11628042872fdfec4e2379fa9b2">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\gson-2.8.0_e4e1fd6fa2a92fd4ed11aee3b126e76fd6947573\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\jdrd\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib\1.1.2-4\3f5f1498bdbb9611cb1413f794b3a3a5a6edef34\kotlin-stdlib-1.1.2-4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3f5f1498bdbb9611cb1413f794b3a3a5a6edef34">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\10\kotlin-stdlib-1.1.2-4_220568aaa4925295bc6d4ac5cad9319499688c20\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\rosjava-0.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="68face01dcd34ac0dd82fc3745afd764d330b427">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\rosjava-0.2.1_02d5783918315f421329fd0f9c967fa0f16a6ce6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\geometry_msgs-1.11.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bb9ca9051697047f8ebacae69956aa562d43b0e1">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\geometry_msgs-1.11.7_9cffc343cb3c55c9fee235b1531c7b935ccc78ed\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\LaserRadarEAI\HeadControl\app\libs\move_base_msgs-1.12.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c59a7b1bdfe3668eee6713131d9caeccabfb509d">
+        <dex dex="D:\LaserRadarEAI\HeadControl\app\build\intermediates\transforms\dex\debug\folders\1000\2\move_base_msgs-1.12.2_0b027da292e94cbd47298f14b9ef409d08c83dfa\classes.dex" />
+    </item>
+
+</items>

@@ -1,0 +1,170 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="MyTheme" parent="android:Theme.NoTitleBar.Fullscreen"/>
+    <style name="BaseTheme" parent="MyTheme">
+    </style>
+    <!--电源模块SeekBar16.0dip-->
+    <style name="Widget.SeekBar.Normal" parent="@android:style/Widget.SeekBar">
+        <item name="android:maxHeight">32.0dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:progressDrawable">@drawable/seekbar_horizontal_battery</item>
+        <item name="android:minHeight">32.0dip</item>
+        <item name="android:thumb">@mipmap/huakuai3</item>
+        <item name="android:thumbOffset">10.0dip</item>
+    </style>
+
+    <!--自定义dialog背景全透明无边框theme -->
+    <style name="MyDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <!--弹出对话框-->
+    <style name="CustomDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0</item>
+        <item name="android:maxHeight">100dip</item>
+
+    </style>
+    <style name="MyTextView">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#A5F848</item>
+        <item name="android:textSize">25px</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">64px</item>
+    </style>
+    <style name="MyButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">200dp</item>
+    </style>
+    <style name="MySpiner">
+        <item name="android:background">@drawable/btn_spiner_selector</item>
+        <item name="android:layout_width">232dp</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+    <style name="text_18_ffffff">
+        <item name="android:textSize">18.0dip</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="text_16_666666">
+        <item name="android:textSize">16.0dip</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="sdw_white">
+        <item name="android:shadowColor">#7fffffff</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">0.65</item>
+        <item name="android:shadowRadius">1.0</item>
+    </style>
+
+    <style name="sdw_79351b">
+        <item name="android:shadowColor">#ff79351b</item>
+        <item name="android:shadowDx">0.0</item>
+        <item name="android:shadowDy">1.0</item>
+        <item name="android:shadowRadius">1.0</item>
+    </style>
+
+    <style name="text_15_ffffff_sdw" parent="@style/sdw_79351b">
+        <item name="android:textSize">15.0dip</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="text_15_666666_sdw" parent="@style/sdw_white">
+        <item name="android:textSize">15.0dip</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="weekName">
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="main_bar_text_style">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="MapButton">
+        <item name="android:background">@drawable/btn_map_selector</item>
+        <item name="android:textColor">#E8E8E8</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:layout_width">232dp</item>
+    </style>
+    <style name="dialog_window" parent="android:Animation.Activity">
+        <item name="android:windowEnterAnimation">@animator/dialog_enter_anim</item>
+        <item name="android:windowExitAnimation">@animator/dialog_exit_anim</item>
+    </style>
+
+
+    <style name="CleanTimeSpinner">
+        <item name="android:background">@drawable/btn_cleantime_selector</item>
+        <item name="android:layout_width">236dp</item>
+        <item name="android:layout_height">87dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/title_dudutext_color</item>
+        <item name="android:textSize">27sp</item>
+    </style>
+    <style name="CleanTimeStartAndsStopBtn">
+        <item name="android:background">@drawable/btn_cleantime_startandstop</item>
+        <item name="android:layout_width">193dp</item>
+        <item name="android:layout_height">62dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/title_dudutext_color</item>
+        <item name="android:textSize">27sp</item>
+
+    </style>
+
+    <string-array name="cleanTimeItem">
+        <item>1分钟</item>
+        <item>5分钟 </item>
+        <item>10分钟</item>
+        <item>20分钟</item>
+        <item>30分钟</item>
+        <item>60分钟</item>
+    </string-array>
+
+</resources>

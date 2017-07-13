@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.android.jdrd.headcontrol.activity.TestActivity">
+
+    <Button
+        android:id="@+id/openSearchPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开找人"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/closeSearchPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关闭找人"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/openAR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开AR"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/closeAR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关闭AR"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/openBigScreenPower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开大屏电源"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/closeBigScreenPower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关闭大屏电源"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/openWaterHigh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开水箱电源(高)"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/openWaterMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开水箱电源(中)"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/openWaterLow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="打开水箱电源(低)"
+        android:textSize="25sp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/closeWater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关闭水箱电源"
+        android:textSize="25sp" />
+
+</LinearLayout>
