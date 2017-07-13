@@ -3,6 +3,7 @@ package com.android.jdrd.robot.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +41,9 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
     private int command_id;
     private Map commandconfig;
     private List<Map> goallist;
-    private EditText speed,mp3,outime,shownum,showcolor;
+    private TextView speed,mp3,outime,shownum,showcolor;
     private TextView goal,direction;
-    private int goalnum,directionnum;
-    private ArrayAdapter diretionAdapter,goalAdapter;
+    public static int goalnum = -1,directionnum = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,55 +53,40 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_command_config);
-
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
-
         Intent intent =getIntent();
         command_id = intent.getIntExtra("id",0);
         Log.e("commandlist" ,command_id+"");
         goal = (TextView) findViewById(R.id.goal);
         direction = (TextView) findViewById(R.id.direction);
-        speed = (EditText) findViewById(R.id.speed);
-        mp3 = (EditText) findViewById(R.id.mp3);
-        outime = (EditText) findViewById(R.id.outime);
-        shownum = (EditText) findViewById(R.id.shownum);
-        showcolor = (EditText) findViewById(R.id.showcolor);
+        goal.setOnClickListener(this);
+        direction.setOnClickListener(this);
+        speed = (TextView) findViewById(R.id.speed);
+        speed.setOnClickListener(this);
+        mp3 = (TextView) findViewById(R.id.mp3);
+        mp3.setOnClickListener(this);
+        outime = (TextView) findViewById(R.id.outime);
+        outime.setOnClickListener(this);
+        shownum = (TextView) findViewById(R.id.shownum);
+        shownum.setOnClickListener(this);
+        showcolor = (TextView) findViewById(R.id.showcolor);
+        showcolor.setOnClickListener(this);
         findViewById(R.id.btn_delete).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
 
-        ArrayList<String> map_Plan = new ArrayList<>();
-        map_Plan.add("直行");
-        map_Plan.add("左岔道");
-        map_Plan.add("右岔道");
-//        diretionAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
-//        diretionAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
-//        direction.setAdapter(diretionAdapter);
-
-        map_Plan = new ArrayList<>();
         goallist = robotDBHelper.queryListMap("select * from card " ,null);
-        if(goallist!=null&&goallist.size()>0){
-            for(int i = 0,size = goallist.size();i< size;i++){
-                map_Plan.add(goallist.get(i).get("name").toString());
-            }
-        }
-//        goalAdapter = new ArrayAdapter<>(this,R.layout.item_spinselect,map_Plan);
-//        goalAdapter.setDropDownViewResource(R.layout.item_dialogspinselect);
-//        goal.setAdapter(goalAdapter);
 
-        goal.setOnClickListener(this);
-        direction.setOnClickListener(this);
 
         List<Map> commandlist = robotDBHelper.queryListMap("select * from command where id = '"+ command_id +"'" ,null);
-        Log.e("commandlist" ,commandlist.toString());
         if(commandlist !=null && commandlist.size() >0){
             commandconfig = commandlist.get(0);
-            Constant.debugLog("commandconfig type"+(int)commandconfig.get("type"));
             if(commandconfig.get("goal") !=null){
                 if(goallist!=null&&goallist.size()>0){
                     boolean flag = false;
                     for(int i = 0,size = goallist.size();i< size;i++){
                         if(goallist.get(i).get("id").equals(commandconfig.get("goal"))){
                             goal.setText(goallist.get(i).get("name").toString());
+                            goalnum = i;
                             flag = true;
                             break;
                         }
@@ -114,7 +99,8 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                 goal.setText("请选择站点");
             }
             if(commandconfig.get("direction") !=null){
-                switch ((int)commandconfig.get("direction")){
+                directionnum = (int) commandconfig.get("direction");
+                switch (directionnum){
                     case 0:
                         direction.setText("直行");
                         break;
@@ -191,16 +177,27 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
             case R.id.goal:
                 dialog_spinner(true);
                 break;
-            case R.id.direction:
-                dialog_spinner(false);
+            case R.id.speed:
+                dialog_Text(0);
+                break;
+            case R.id.mp3:
+                dialog_Text(1);
+                break;
+            case R.id.outime:
+                dialog_Text(2);
+                break;
+            case R.id.shownum:
+                dialog_Text(3);
+                break;
+            case R.id.showcolor:
+                dialog_Text(4);
                 break;
             case R.id.btn_sure:
                 switch ((int)commandconfig.get("type")){
                     case 0:
                         if(!speed.getText().toString().equals("") && !mp3.getText().toString().equals("") && !outime.getText().toString().equals("")
                                 &&!shownum.getText().toString().equals("") && !showcolor.getText().toString().equals("")&&goallist!=null && goallist.size() > 0){
-                            robotDBHelper.execSQL("update command set goal= '"+goallist.get(goalnum).get("id")+"' ," +
-                                    "direction = '"+directionnum+"' ,speed = '"+speed.getText().toString().trim()+"'," +
+                            robotDBHelper.execSQL("update command set speed = '"+speed.getText().toString().trim()+"'," +
                                     "music = '"+mp3.getText().toString().trim()+"' ,outime = '"+outime.getText().toString().trim()+"' ," +
                                     "shownumber = '"+shownum.getText().toString().trim()+"' ,showcolor = '"+showcolor.getText().toString().trim()+"' where id= '"+ command_id +"'");
                             finish();
@@ -272,10 +269,10 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
 
     private SpinnerDialog spinnerdialog ;
     private SpinnerAdapter spinnerAdapter;
-    private void dialog_spinner(boolean gl) {
+    private void dialog_spinner(final boolean gl) {
         spinnerdialog = new SpinnerDialog(this);
         if(gl){
-
+            spinnerAdapter = new SpinnerAdapter(this,goallist,gl);
         }else{
             List<Map> list = new ArrayList<>();
             Map<String, Object> map ;
@@ -288,12 +285,46 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
             map = new HashMap<>();
             map.put("name","右岔道");
             list.add(map);
-            spinnerAdapter = new SpinnerAdapter(this,list);
+            spinnerAdapter = new SpinnerAdapter(this,list,gl);
         }
         spinnerdialog.getListView().setAdapter(spinnerAdapter);
+        spinnerdialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(gl){
+                    goalnum = position;
+                }else{
+                    directionnum = position;
+                }
+                spinnerAdapter.notifyDataSetChanged();
+            }
+        });
         spinnerdialog.setOnPositiveListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(gl){
+                    if(goallist!=null && goallist.size()>0 &&goalnum !=-1){
+                        robotDBHelper.execSQL("update command set goal= '"+goallist.get(goalnum).get("id")+"' where id= '"+ command_id +"'");
+                        goal.setText(goallist.get(goalnum).get("name").toString());
+                        spinnerdialog.dismiss();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"请选择站点系统卡",Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    robotDBHelper.execSQL("update command set direction = '"+directionnum+"' where id= '"+ command_id +"'");
+                    switch (directionnum){
+                        case 0:
+                            direction.setText("直行");
+                            break;
+                        case 1:
+                            direction.setText("左岔道");
+                            break;
+                        case 2:
+                            direction.setText("右岔道");
+                            break;
+                    }
+                    spinnerdialog.dismiss();
+                }
             }
         });
         spinnerdialog.setOnNegativeListener(new View.OnClickListener() {
@@ -303,5 +334,96 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
             }
         });
         spinnerdialog.show();
+    }
+
+
+    private MyDialog textdialog ;
+    private EditText editText;
+    private TextView title;
+    private void dialog_Text(final int type) {
+        textdialog = new MyDialog(this);
+        switch (type){
+            case 0:
+                textdialog.getTitle().setText("速度修改");
+                textdialog.getTitleTemp().setText("请输入最新速度值");
+                break;
+            case 1:
+                textdialog.getTitle().setText("MP3通道修改");
+                textdialog.getTitleTemp().setText("请输入MP3通道");
+                break;
+            case 2:
+                textdialog.getTitle().setText("超时时间修改");
+                textdialog.getTitleTemp().setText("请输入超时时间");
+                break;
+            case 3:
+                textdialog.getTitle().setText("显示编号修改");
+                textdialog.getTitleTemp().setText("请输入显示编号");
+                break;
+            case 4:
+                textdialog.getTitle().setText("显示颜色修改");
+                textdialog.getTitleTemp().setText("请输入显示颜色");
+                break;
+        }
+        editText = (EditText) textdialog.getEditText();
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        textdialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (type){
+                    case 0:
+                        if(!editText.getText().toString().trim().equals("")){
+                            robotDBHelper.execSQL("update command set speed = '"+editText.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            textdialog.dismiss();
+                            speed.setText(editText.getText().toString().trim());
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请输入参数",Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 1:
+                        if(!editText.getText().toString().trim().equals("")){
+                            robotDBHelper.execSQL("update command set music = '"+editText.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            textdialog.dismiss();
+                            mp3.setText(editText.getText().toString().trim());
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请输入参数",Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 2:
+                        if(!editText.getText().toString().trim().equals("")){
+                            robotDBHelper.execSQL("update command set outime = '"+editText.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            textdialog.dismiss();
+                            outime.setText(editText.getText().toString().trim());
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请输入参数",Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 3:
+                        if(!editText.getText().toString().trim().equals("")){
+                            robotDBHelper.execSQL("update command set shownumber = '"+editText.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            textdialog.dismiss();
+                            shownum.setText(editText.getText().toString().trim());
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请输入参数",Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 4:
+                        if(!editText.getText().toString().trim().equals("")){
+                            robotDBHelper.execSQL("update command set showcolor = '"+editText.getText().toString().trim()+"' where id= '"+ command_id +"'");
+                            textdialog.dismiss();
+                            showcolor.setText(editText.getText().toString().trim());
+                        }else{
+                            Toast.makeText(getApplicationContext(),"请输入参数",Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                }
+            }
+        });
+        textdialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textdialog.dismiss();
+            }
+        });
+        textdialog.show();
     }
 }

@@ -27,7 +27,7 @@ import com.android.jdrd.robot.R;
 public class MyDialog extends Dialog {
     private EditText editText;
     private Button positiveButton, negativeButton;
-    private TextView title;
+    private TextView title,title_template;
 
     public MyDialog(Context context) {
         super(context, R.style.SoundRecorder);
@@ -44,6 +44,7 @@ public class MyDialog extends Dialog {
         editText = (EditText) mView.findViewById(R.id.editText);
         positiveButton = (Button) mView.findViewById(R.id.positiveButton);
         negativeButton = (Button) mView.findViewById(R.id.negativeButton);
+        title_template = (TextView) mView.findViewById(R.id.title_template);
         super.setContentView(mView);
     }
 //    private void setpassWordDialog() {
@@ -57,8 +58,11 @@ public class MyDialog extends Dialog {
     public View getEditText(){
         return editText;
     }
-    public View getTextView(){
+    public TextView getTitle(){
         return title;
+    }
+    public TextView getTitleTemp(){
+        return title_template;
     }
     public View getNegative(){
         return negativeButton;

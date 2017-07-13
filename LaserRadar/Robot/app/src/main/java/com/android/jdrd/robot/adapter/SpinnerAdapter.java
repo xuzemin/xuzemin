@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.jdrd.robot.R;
+import com.android.jdrd.robot.activity.CommandAcitivty;
 
 import java.util.List;
 import java.util.Map;
@@ -21,11 +22,11 @@ import java.util.Map;
 public class SpinnerAdapter extends BaseAdapter {
     Context context;
     List<Map> list;
-
-    public SpinnerAdapter(Context _context, List<Map>  _list) {
+    boolean flag;
+    public SpinnerAdapter(Context _context, List<Map>  _list,boolean flag) {
         this.list = _list;
         this.context = _context;
-    }
+        this.flag = flag;    }
 
     @Override
     public int getCount() {
@@ -47,22 +48,31 @@ public class SpinnerAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if(convertView == null){
             final LayoutInflater inflater = (LayoutInflater) context
-                           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.listview_card, null);
             viewHolder = new ViewHolder();
             viewHolder.text = (TextView) convertView.findViewById(R.id.text);
             viewHolder.imageview = (ImageView) convertView.findViewById(R.id.imageview);
             convertView.setTag(viewHolder);//讲ViewHolder存储在View中
-
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-            viewHolder.text.setText(list.get(position).get("name").toString());
+        viewHolder.imageview.setVisibility(View.GONE);
+        if(flag){
+            if(position == CommandAcitivty.goalnum){
+                viewHolder.imageview.setVisibility(View.VISIBLE);
+            }
+        }else{
+            if(position == CommandAcitivty.directionnum){
+                viewHolder.imageview.setVisibility(View.VISIBLE);
+            }
+        }
+        viewHolder.text.setText(list.get(position).get("name").toString());
         return convertView;
     }
 
     //内部类
-     class ViewHolder{
+    class ViewHolder{
         TextView text;
         ImageView imageview;
     }

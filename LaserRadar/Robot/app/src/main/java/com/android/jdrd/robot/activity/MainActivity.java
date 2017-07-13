@@ -632,7 +632,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         dialog = new MyDialog(this);
         editText = (EditText) dialog.getEditText();
         editText.setText(name);
-        title = (TextView) dialog.getTextView();
+        title = (TextView) dialog.getTitle();
         title.setText(R.string.change_area);
         dialog.setOnPositiveListener(new View.OnClickListener() {
             @Override

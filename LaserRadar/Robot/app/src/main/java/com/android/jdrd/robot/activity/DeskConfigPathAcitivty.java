@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ import java.util.Map;
 public class DeskConfigPathAcitivty extends Activity implements View.OnClickListener {
     private RobotDBHelper robotDBHelper;
     private int deskid,areaid;
-    private EditText name;
+    private TextView name;
     private Map deskconfiglist;
     private ListView commandlistview;
     private List<Map> command_list = new ArrayList<>();
@@ -90,7 +91,8 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         deskid = intent.getIntExtra("id",0);
         areaid = intent.getIntExtra("area",0);
 
-        name = (EditText) findViewById(R.id.deskname);
+        name = (TextView) findViewById(R.id.deskname);
+        name.setOnClickListener(this);
         findViewById(R.id.change_name).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
         findViewById(R.id.btn_delete).setOnClickListener(this);
@@ -105,7 +107,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
             IsADD = false;
             List<Map> desklist = robotDBHelper.queryListMap("select * from desk where id = '"+ deskid +"'" ,null);
             deskconfiglist = desklist.get(0);
-            name.setHint(deskconfiglist.get("name").toString());
+            name.setText(deskconfiglist.get("name").toString());
             ((TextView)findViewById(R.id.title)).setText(R.string.desk_deract);
         }
 
@@ -228,6 +230,9 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.deskname:
+                dialog_Text();
+                break;
             case R.id.btn_delete:
                 dialog();
                 break;
@@ -291,7 +296,47 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         dialog.show();
     }
 
-
+    private MyDialog textdialog ;
+    private EditText editText;
+    private TextView title;
+    private void dialog_Text() {
+        textdialog = new MyDialog(this);
+        editText = (EditText) textdialog.getEditText();
+        textdialog.getTitle().setText("桌名修改");
+        textdialog.getTitleTemp().setText("请输入新桌名");
+        textdialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!editText.getText().toString().trim().equals("")){
+                    if(IsADD){
+                        robotDBHelper.execSQL("insert into desk (name,area) values ('"+editText.getText().toString().trim()+"','"+areaid+"')");
+                        List<Map> desklist = robotDBHelper.queryListMap("select * from desk where area = '"+areaid+"'" ,null);
+                        deskid = (int) desklist.get(desklist.size()-1).get("id");
+                        desklist = robotDBHelper.queryListMap("select * from desk where id = '"+ deskid +"'" ,null);
+                        deskconfiglist = desklist.get(0);
+                        ((TextView)findViewById(R.id.title)).setText(R.string.desk_deract);
+                        IsADD = false;
+                        findViewById(R.id.btn_delete).setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplicationContext(),"添加成功",Toast.LENGTH_SHORT).show();
+                    }else{
+                        robotDBHelper.execSQL("update desk set name= '"+editText.getText().toString().trim()+"' where id= '"+ deskid +"'");
+                        Toast.makeText(getApplicationContext(),"更新成功",Toast.LENGTH_SHORT).show();
+                    }
+                    name.setText(editText.getText().toString().trim());
+                }else{
+                    Toast.makeText(getApplicationContext(),"请输入参数",Toast.LENGTH_SHORT).show();
+                }
+                textdialog.dismiss();
+            }
+        });
+        textdialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textdialog.dismiss();
+            }
+        });
+        textdialog.show();
+    }
 
     /**
      * ViewPager适配器
