@@ -86,7 +86,7 @@ public class SetStaticIPService extends Service {
                         if (("\"" + Constant.wifiname + "\"").equals(extrainfo)) {
                             Toast.makeText(SetStaticIPService.this, "指定网络连接成功",
                                     Toast.LENGTH_LONG).show();
-                            new WifiStaticIpUtil(SetStaticIPService.this).getNetworkInformation();
+//                            new WifiStaticIpUtil(SetStaticIPService.this).getNetworkInformation();
                             isscaning = false;
                             /*if (wifi_disconect_dialog != null) {
                                 wifi_disconect_dialog.cancleDialog();

@@ -483,15 +483,22 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 break;
 
             case R.id.button_next_eai:
-                if(robotList!=null && robotList.size()>0){
+                Constant.debugLog("robotList"+robotList.toString());
+                if(robotList!=null&& robotList.size()>0){
+                    goalPathLayer.navToGoalPose(robotList.get(0));
                     RobotPose robotPose = robotList.get(0);
-                    goalPathLayer.navToGoalPose(robotPose);
                     sendNativePoint(robotPose.getPointX(),robotPose.getPointY(),robotPose.getQuaternionW());
                 }
+                Constant.debugLog("getCurrentPoseGoal"+goalPathLayer.getCurrentPoseGoal());
+//                getPathList();
+//                multiGoalPoseP44ublisher.sendPoseList(goalPoseList);
                 break;
+
+
             case R.id.button_point_stop_eai:
-                goalPathLayer.cancelNavToGoalPose();
+                goalPathLayer.cancelAutoNavigation();
                 break;
+
             case R.id.button_pathplan_eai:
                 Constant.CURRENTINDEX_MAP = 2;
                 serchtime.setSelection(0,true);
@@ -565,17 +572,23 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 goalPathLayer.setGoalPoseMode();
                 Isplan = false;
                 robotList.clear();
+
                 serchtime_roam.setSelection(0,true);
                 scope_roam.setSelection(0,true);
                 gametime_roam.setSelection(0,true);
+
                 robotList = new ArrayList<>();
                 break;
+
             //删除
             case R.id.button_remove_eai:
+
                 arrayserchtime.removeAllElements();
                 arrayscope.removeAllElements();
                 arraygametime.removeAllElements();
+
                 goalPathLayer.clearAllMarkerGoals();
+
                 break;
             //调整
             case R.id.plan_change_eai:
@@ -593,6 +606,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             //停止漫游
             case R.id.button_roam_stop_eai:
                 break;
+
             //清除当前
             case R.id.button_clearlast_eai:
                 break;
