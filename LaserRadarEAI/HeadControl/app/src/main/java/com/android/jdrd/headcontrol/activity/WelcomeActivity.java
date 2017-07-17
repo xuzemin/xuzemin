@@ -131,12 +131,12 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         //启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
-        //启动静态IP设置服务
-        Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
-        startService(SetStaticIPService);
-        //启动静态IP设置服务(有线连接)
-        Intent EthernetStaticIPService = new Intent(this, EthernetStaticIPService.class);
-        startService(EthernetStaticIPService);
+//        //启动静态IP设置服务
+//        Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
+//        startService(SetStaticIPService);
+//        //启动静态IP设置服务(有线连接)
+//        Intent EthernetStaticIPService = new Intent(this, EthernetStaticIPService.class);
+//        startService(EthernetStaticIPService);
 
 //        启动socket测试Activity
         Intent testActivity = new Intent(this, TestActivity.class);

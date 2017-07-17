@@ -56,6 +56,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -107,7 +108,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private MapView mapview;
     private MapGridLayer mapGridLayer;
     private PathLayer pathLayer;
-    private MultiGoalPoseLayer goalPathLayer;
+    private GoalPathLayer goalPathLayer;
+//    private MultiGoalPoseLayer goalPathLayer;
     @SuppressLint("ValidFragment")
     public EaiFragment(Context context){
         super(context);
@@ -481,14 +483,15 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 break;
 
             case R.id.button_next_eai:
-//                goalPathLayer.navToGoalPose(robotList.get(0));
-//                getPathList();
-//                multiGoalPosePublisher.sendPoseList(goalPoseList);
+                if(robotList!=null && robotList.size()>0){
+                    RobotPose robotPose = robotList.get(0);
+                    goalPathLayer.navToGoalPose(robotPose);
+                    sendNativePoint(robotPose.getPointX(),robotPose.getPointY(),robotPose.getQuaternionW());
+                }
                 break;
             case R.id.button_point_stop_eai:
-                goalPathLayer.cancelNavigation();
+                goalPathLayer.cancelNavToGoalPose();
                 break;
-
             case R.id.button_pathplan_eai:
                 Constant.CURRENTINDEX_MAP = 2;
                 serchtime.setSelection(0,true);
@@ -562,23 +565,17 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 goalPathLayer.setGoalPoseMode();
                 Isplan = false;
                 robotList.clear();
-
                 serchtime_roam.setSelection(0,true);
                 scope_roam.setSelection(0,true);
                 gametime_roam.setSelection(0,true);
-
                 robotList = new ArrayList<>();
                 break;
-
             //删除
             case R.id.button_remove_eai:
-
                 arrayserchtime.removeAllElements();
                 arrayscope.removeAllElements();
                 arraygametime.removeAllElements();
-
-//                goalPathLayer.clearAllMarkerGoals();
-
+                goalPathLayer.clearAllMarkerGoals();
                 break;
             //调整
             case R.id.plan_change_eai:
@@ -595,9 +592,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 break;
             //停止漫游
             case R.id.button_roam_stop_eai:
-
                 break;
-
             //清除当前
             case R.id.button_clearlast_eai:
                 break;
@@ -625,6 +620,17 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         setVisible();
         linear_roam.setVisibility(View.VISIBLE);
     }
+
+    //发往底层
+    private void sendNativePoint(double up_x,double up_y ,double angle){
+        Map map  = new LinkedHashMap();
+        map.put("point_x",up_x);
+        map.put("point_y",up_y);
+        map.put("angle",angle);
+        Constant.getConstant().sendBundle(Constant.Command,Constant.Navigation,map);
+        Constant.debugLog("map"+map.toString());
+    }
+
     //路线规划
     private void go_Plan(){
         setVisible();
@@ -647,14 +653,13 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         rosService = RosService.getRosServiceInstance(mContext);
         mapGridLayer = new MapGridLayer();
         pathLayer = new PathLayer();
-        goalPathLayer = new MultiGoalPoseLayer();
+        goalPathLayer = new GoalPathLayer();
         robotPoseLayer = new RobotPoseLayer();
         mapview.addLayer(mapGridLayer);
         mapview.addLayer(pathLayer);
         mapview.addLayer(goalPathLayer);
         mapview.addLayer(robotPoseLayer);
         mapview.init(rosService.getNodeMainExecutor());
-
 
         rosService.addRosNode(mapview);
         mapUtil = new MapUtil();
