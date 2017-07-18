@@ -272,6 +272,7 @@ public class ClientSocketUtil extends Service {
                     ++len;
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
                     function = getJSONString(msg, "function");
+                    Constant.debugLog("function： " + function);
                     if(function.equals("robot")){
                         List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
                         Map robot ;
@@ -336,8 +337,11 @@ public class ClientSocketUtil extends Service {
                         string = gson.toJson(map);
                     }else if(function.equals("command")){
                         String data = getJSONString(msg, "data");
-                        List<Map> commandlit = robotDBHelper.queryListMap("select * from command where desk = '" + getJSONString(data,"desk") + "'", null);
-                        RobotDialog.IP = getJSONString(data,"robot");
+                        Constant.debugLog("data"+data);
+                        List<Map> commandlit = robotDBHelper.queryListMap("select * from command where desk = '" + getJSONString(data,"deskid") + "'", null);
+                        Constant.debugLog("commandlit"+commandlit.toString());
+                        RobotDialog.IP = getJSONString(data,"robotip");
+                        Constant.debugLog("RobotDialog.IP"+RobotDialog.IP);
                         RobotDialog.robotlist = commandlit;
                         RobotDialog.CurrentIndex = -1;
                         RobotDialog.sendCommandList();

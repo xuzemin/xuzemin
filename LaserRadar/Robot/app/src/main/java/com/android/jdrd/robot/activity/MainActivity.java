@@ -379,7 +379,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             Constant.debugLog("robotList"+robotList.toString());
             List<Map> Robotdata_listcache =  new ArrayList<>();
             int j;
-            boolean flag = false;
+            boolean flag;
             for(int i =0 ,size = robotList.size();i < size ; i++){
                 Constant.debugLog("size" + size +" ip"+robotList.get(i).get("ip").toString());
                 String ip = robotList.get(i).get("ip").toString();

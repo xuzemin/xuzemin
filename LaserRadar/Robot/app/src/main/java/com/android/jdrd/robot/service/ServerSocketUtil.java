@@ -95,7 +95,7 @@ public class ServerSocketUtil extends Service {
             Constant.debugLog("waiting for connect....");
             socket = serverSocket.accept();
             socket.setKeepAlive(true);
-//            socket.setSoTimeout(9000);
+            socket.setSoTimeout(9000);
             new Thread(new Task(socket)).start();
         }
     }
