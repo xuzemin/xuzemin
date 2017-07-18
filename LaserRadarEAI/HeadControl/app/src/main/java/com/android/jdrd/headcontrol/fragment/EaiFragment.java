@@ -33,6 +33,7 @@ import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.android.jdrd.headcontrol.util.Constant;
 import com.android.jdrd.headcontrol.view.MyView;
 import com.eaibot.bean.GoalPoseStamped;
+import com.eaibot.bean.MarkPose;
 import com.eaibot.bean.RobotPose;
 import com.eaibot.layer.ControlLayer;
 import com.eaibot.layer.GoalPathLayer;
@@ -108,6 +109,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private MyReceiver receiver;
 
     private ArrayList<RobotPose> robotList = new ArrayList<>();
+    private ArrayList<MarkPose> markList = new ArrayList<>();
     private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
     private Vector<String> strings = new Vector<>();
     private HashMap<String,Vector<Float>> configArray = new HashMap<>();
@@ -122,8 +124,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private MapView mapview;
     private MapGridLayer mapGridLayer;
     private PathLayer pathLayer;
-    private GoalPathLayer goalPathLayer;
-    //    private MultiGoalPoseLayer goalPathLayer;
+//    private GoalPathLayer goalPathLayer;
+        private MultiGoalPoseLayer goalPathLayer;
     @SuppressLint("ValidFragment")
     public EaiFragment(Context context){
         super(context);
@@ -164,7 +166,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     }
                     break;
                 case 5:
-
                     break;
                 case 6:
                     if(thread!=null){
@@ -361,9 +362,33 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tasknumber = 0;
                 CurrentPoint = 0;
-                MyView.current_plan_number = 0;
-                    plannumber = position;
-                    HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+                plannumber = position;
+                HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
+                if(array!=null&&array.size()>0){
+                    RobotPose robotPose;
+                    MarkPose markPose;
+                    markList = new ArrayList<>();
+                    robotList = new ArrayList<>();
+                    Vector<Float> point_xs = array.get("point_xs");
+                    Vector<Float> point_ys = array.get("point_ys");
+                    Vector<Float> point_ws = array.get("point_ws");
+                    Constant.debugLog("point_xs"+point_xs.toString() +"\n"
+                    +"point_ys"+point_ys.toString() +"\n"
+                            +"point_ys"+point_ys.toString());
+                    for(int i = 0,size = point_xs.size();i<size;i++){
+                        robotPose = new RobotPose();
+                        markPose = new MarkPose();
+                        robotPose.setPointX(point_xs.get(i));
+                        robotPose.setPointX(point_ys.get(i));
+                        robotPose.setPointX(point_ws.get(i));
+                        robotList.add(robotPose);
+                        markPose.setName(""+i);
+                        markPose.setId(i);
+                        markPose.setRobotPose(robotPose);
+                        markList.add(markPose);
+                    }
+//                    goalPathLayer.setMarkPoses(markList);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -378,6 +403,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             adapter = new ArrayAdapter<>(mContext,R.layout.item_spinselect,strings);
             adapter.setDropDownViewResource(R.layout.item_dialogspinselect);
             planchooce.setAdapter(adapter);
+            planchooce.setSelection(0,true);
         }
     }
 
@@ -500,15 +526,16 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             case R.id.button_next_eai:
                 Constant.debugLog("robotList"+robotList.toString());
                 if(robotList!=null&& robotList.size()>0){
-                    goalPathLayer.navToGoalPose(robotList.get(0));
-                    RobotPose robotPose = robotList.get(0);
-                    sendNativePoint(robotPose.getPointX(),robotPose.getPointY(),robotPose.getQuaternionW());
+//                    goalPathLayer.navToGoalPose(robotList.get(0));
+//                    RobotPose robotPose = robotList.get(0);
+//                    sendNativePoint(robotPose.getPointX(),robotPose.getPointY(),robotPose.getQuaternionW());
                 }
                 Constant.debugLog("getCurrentPoseGoal"+goalPathLayer.getCurrentPoseGoal());
                 break;
 
             case R.id.button_point_stop_eai:
-                goalPathLayer.cancelNavToGoalPose();
+//                goalPathLayer.cancelNavToGoalPose();
+                goalPathLayer.cancelNavigation();
                 break;
 
             case R.id.button_pathplan_eai:
@@ -519,6 +546,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 plan_cirles.setSelection(0,true);
                 updateplan();
                 go_Plan();
+                Isplan = true;
                 break;
 
             case R.id.button_cruise_eai:
@@ -592,9 +620,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             //新路线
             case R.id.button_plan_eai:
                 goalPathLayer.setGoalPoseMode();
-                Isplan = false;
+                Isplan = true;
                 robotList.clear();
-
                 serchtime_roam.setSelection(0,true);
                 scope_roam.setSelection(0,true);
                 gametime_roam.setSelection(0,true);
@@ -614,7 +641,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 arrayserchtime.removeAllElements();
                 arrayscope.removeAllElements();
                 arraygametime.removeAllElements();
-                goalPathLayer.clearAllMarkerGoals();
+//                goalPathLayer.clearAllMarkerGoals();
                 break;
             //调整
             case R.id.plan_change_eai:
@@ -647,12 +674,14 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     Vector<Float> point_w = new Vector<>();
                     RobotPose robotPose;
                     readXML();
+                    Constant.debugLog("robotList"+robotList.toString());
                     for(int i =0,size = robotList.size();i<size;i++){
                         robotPose =  robotList.get(i);
                         point_x.add((float) robotPose.getPointX());
                         point_y.add((float) robotPose.getPointY());
                         point_w.add((float) robotPose.getQuaternionW());
                     }
+                    Constant.debugLog("point_x"+point_x.toString());
                     configArray = new HashMap<>();
                     configArray.put("point_xs",point_x);
                     configArray.put("point_ys",point_y);
@@ -715,7 +744,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         rosService = RosService.getRosServiceInstance(mContext);
         mapGridLayer = new MapGridLayer();
         pathLayer = new PathLayer();
-        goalPathLayer = new GoalPathLayer();
+        goalPathLayer = new MultiGoalPoseLayer();
+//        goalPathLayer = new GoalPathLayer();
         robotPoseLayer = new RobotPoseLayer();
         mapview.addLayer(mapGridLayer);
         mapview.addLayer(pathLayer);
@@ -735,10 +765,11 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 Constant.debugLog("MapClick" + b +"RobotPose "+ robotPose);
                 if(b){
                     if(!Isplan){
-//                    goalPathLayer.clearAllMarkerGoals();
+//                        goalPathLayer.clearAllMarkerGoals();
                         robotList = new ArrayList<>();
                         robotList.add(robotPose);
                     }else{
+                        Constant.debugLog("robotlist"+robotList);
                         robotList.add(robotPose);
                         arrayserchtime.add(serchtimenumber);
                         arrayscope.add(scopenumber);
@@ -1053,10 +1084,10 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 while (CURRENT_CRILES || cirles > 0) {
                     Constant.debugLog("CURRENT_CRILES" + CURRENT_CRILES);
 //                    synchronized (array) {
-                        planStart(array);
-                        if (!CURRENT_CRILES) {
-                            cirles--;
-                        }
+                    planStart(array);
+                    if (!CURRENT_CRILES) {
+                        cirles--;
+                    }
 //                    }
                 }
                 thread = new Thread();
@@ -1157,9 +1188,11 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             @Override
             public void onClick(View v) {
                 if(!"".equals(editText.getText().toString().trim())){
+                    Constant.debugLog("configArray"+configArray.toString());
                     arrayPlanLists.put(editText.getText().toString().trim(),configArray);
+                    Constant.debugLog("arrayPlanLists"+arrayPlanLists.toString());
                     writeXML();
-                    goalPathLayer.clearAllMarkerGoals();
+//                    goalPathLayer.clearAllMarkerGoals();
                     arrayserchtime.removeAllElements();
                     arrayscope.removeAllElements();
                     arraygametime.removeAllElements();
@@ -1191,7 +1224,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             File file = new File(Constant.filePath);
             Document parse;
             if (!file.exists()) {
-                parse = builder.parse(getContext().getAssets().open("map.xml"));
+                parse = builder.parse(mContext.getAssets().open("map.xml"));
             }else{
                 parse = builder.parse(file);
             }
@@ -1238,7 +1271,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.newDocument();
             Element planLists = document.createElement("planLists");
-
+            Constant.debugLog("arrayPlanLists"+arrayPlanLists.toString());
             Iterator<Map.Entry<String, HashMap<String,Vector<Float>>>> iter = arrayPlanLists.entrySet().iterator();
             while(iter.hasNext()){
                 HashMap<String,Vector<Float>> planList;
@@ -1269,7 +1302,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     Element item_ys = document.createElement("item_ys");
                     item_ys.setTextContent(point_ys.elementAt(x)+"");
                     Element item_ws = document.createElement("item_ws");
-                    item_ys.setTextContent(point_ys.elementAt(x)+"");
+                    item_ws.setTextContent(point_ws.elementAt(x)+"");
                     Element item_serchtime = document.createElement("item_serchtime");
                     item_serchtime.setTextContent(arrayserchtime.elementAt(x)+"");
                     Element item_scope = document.createElement("item_scope");

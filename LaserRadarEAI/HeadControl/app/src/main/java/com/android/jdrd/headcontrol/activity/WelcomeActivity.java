@@ -76,6 +76,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     private ImageView imgViewBtnLift;
     MyClickListener mMyClickListener;
     List<Fragment> list;
+    private boolean isConnnect = false;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -199,11 +200,13 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     Toast.makeText(context,"广播"+intent.getAction(),Toast.LENGTH_SHORT).show();
                     connectRos();
 //                    mImageView_Map.setClickable(false);
+                    isConnnect = false;
                 }
             }else if(intent.getAction().equals(BroadcastFilter.ROS_INIT_FINISHED)){
                 Toast.makeText(context,"初始化"+intent.getBooleanExtra("rosInitFinished" , false),Toast.LENGTH_SHORT).show();
                 if(intent.getBooleanExtra("rosInitFinished" , false)){
                     mImageView_Map.setClickable(true);
+                    isConnnect = true;
 //                    rosService.addRosNode(dashgoPublisher,"eaibot/dashgo_activity");
                 }
             }
@@ -231,7 +234,13 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             }
         }
         initEvent();
-        PathgoUtil.navigationByAppStart(Constant.ROS_IP,"GET",handler,1010);
+        if(!isConnnect){
+            PathgoUtil.navigationByAppStart(Constant.ROS_IP,"GET",handler,1010);
+            mImageView_Map.setClickable(false);
+        }else{
+            mImageView_Map.setClickable(true);
+        }
+
     }
 
     private void initView() {
@@ -242,7 +251,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         mImageView_Battery = (ImageView) findViewById(R.id.iv_Battery);
         mImageView_Clean = (ImageView) findViewById(R.id.iv_Clean);
         mImageView_Map = (ImageView) findViewById(R.id.iv_Map);
-        mImageView_Map.setClickable(false);
         mImageView_setting = (ImageView) findViewById(R.id.iv_settings);
 
         fragment=findViewById(R.id.fragment);
