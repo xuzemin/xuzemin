@@ -81,6 +81,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         public void handleMessage(Message msg) {
             if(msg.what =='\ud903'){
                 PathgoUtil.navigationByAppStart(Constant.ROS_IP,"GET",handler,1010);
+
             }else {
                 switch (msg.what) {
                     case 0:
@@ -157,6 +158,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         intentfilter.addAction(BroadcastFilter.ROS_INIT_FINISHED);
         registerReceiver(rosServiceBroadcastRceiver,intentfilter);
 
+//        mImageView_Map.setClickable(false);
     }
 
     @Override
@@ -167,7 +169,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     protected void onDestroy() {
 //        rosService.shutdownRosService();
 //        unregisterReceiver(rosServiceBroadcastRceiver);
-        mImageView_Map.setClickable(false);
+//        mImageView_Map.setClickable(false);
         super.onDestroy();
     }
 
@@ -184,7 +186,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             @Override
             public void onFailure(Exception e) {
                 connectRos();
-                mImageView_Map.setClickable(false);
+//                mImageView_Map.setClickable(false);
             }
         });
     }
@@ -196,7 +198,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
                     //ROS关闭处理
                     Toast.makeText(context,"广播"+intent.getAction(),Toast.LENGTH_SHORT).show();
                     connectRos();
-                    mImageView_Map.setClickable(false);
+//                    mImageView_Map.setClickable(false);
                 }
             }else if(intent.getAction().equals(BroadcastFilter.ROS_INIT_FINISHED)){
                 Toast.makeText(context,"初始化"+intent.getBooleanExtra("rosInitFinished" , false),Toast.LENGTH_SHORT).show();
@@ -229,7 +231,6 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
             }
         }
         initEvent();
-
         PathgoUtil.navigationByAppStart(Constant.ROS_IP,"GET",handler,1010);
     }
 
@@ -375,7 +376,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
     }
 
     private void setClickable() {
-        mImageView_Map.setEnabled(true);
+//        mImageView_Map.setEnabled(true);
         mImageView_Clean.setEnabled(true);
         mImageView_Battery.setEnabled(true);
         mImageView_setting.setEnabled(true);
@@ -446,7 +447,7 @@ public class WelcomeActivity extends Activity implements Animation.AnimationList
         FragmentTransaction transaction_map = fragmentManager_Map.beginTransaction();
         transaction_map.replace(R.id.ll_right, list.get(2), "eaiFragment");
         transaction_map.commit();
-        mImageView_Map.setEnabled(false);
+//        mImageView_Map.setEnabled(false);
     }
 
     @Override

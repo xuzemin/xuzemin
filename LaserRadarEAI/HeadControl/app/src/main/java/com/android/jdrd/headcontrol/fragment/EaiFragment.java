@@ -49,8 +49,14 @@ import com.eaibot.utils.MapUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ros.node.NodeMain;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -62,6 +68,16 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import static com.android.jdrd.headcontrol.fragment.MapFragment.Isplan;
 
@@ -83,10 +99,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private ArrayAdapter<String> adapter;
     private static boolean IsRight = false;
     private Timer timer;
-    private Vector<String> strings = new Vector<>();
     public static boolean IsFind = false,IsAway = false ,Isplan = false;
     private static Thread thread;
-    private MultiGoalPoseLayer goalPoseControlLayer ;
     private Vector<Float> arrayserchtime,arrayscope,arraygametime;
     private LinearLayout linearlayout_map,linear_plan,linear_plan_info,linear_point,linear_roam,linearlayout_all,linearlayout_plan_change;
     private float plannumber =0,serchtimenumber =0,scopenumber =0,gametimenumber =0,serchtimenumber_roam =0,scopenumber_roam =0,gametimenumber_roam =0;
@@ -94,8 +108,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private MyReceiver receiver;
 
     private ArrayList<RobotPose> robotList = new ArrayList<>();
-    private HashMap<String, ArrayList<RobotPose>> pathListArray = new HashMap<>();
-    private HashMap<String,HashMap<String,Vector<Float>>> pathConfigArray = new HashMap<>();
+    private HashMap<String,HashMap<String,Vector<Float>>> arrayPlanLists = new HashMap<>();
+    private Vector<String> strings = new Vector<>();
     private HashMap<String,Vector<Float>> configArray = new HashMap<>();
     public  EaiFragment(){
         super();
@@ -109,7 +123,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private MapGridLayer mapGridLayer;
     private PathLayer pathLayer;
     private GoalPathLayer goalPathLayer;
-//    private MultiGoalPoseLayer goalPathLayer;
+    //    private MultiGoalPoseLayer goalPathLayer;
     @SuppressLint("ValidFragment")
     public EaiFragment(Context context){
         super(context);
@@ -345,11 +359,11 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         planchooce.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                plannumber = position;
-//                HashMap<String, Vector<Float>> array = robotList.get(strings.get((int) plannumber));
-//                ((Button)findViewById(R.id.button_plan_stop)).setText("停止路线");
-//                CurrentPoint = 0;
-//                MyView.current_plan_number = 0;
+                tasknumber = 0;
+                CurrentPoint = 0;
+                MyView.current_plan_number = 0;
+                    plannumber = position;
+                    HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -358,6 +372,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         });
     }
     public void updateplan(){
+        readXML();
         strings = getKey();
         if(strings !=null && mContext!=null){
             adapter = new ArrayAdapter<>(mContext,R.layout.item_spinselect,strings);
@@ -368,7 +383,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
 
     //获取路线key名称HashMap<String, ArrayList<RobotPose>>
     public Vector<String> getKey(){
-        Iterator<Map.Entry<String, ArrayList<RobotPose>>> iter = pathListArray.entrySet().iterator();
+        Iterator<Map.Entry<String, HashMap<String,Vector<Float>>>> iter = arrayPlanLists.entrySet().iterator();
         Vector<String> strings = new Vector<>();
         while(iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
@@ -490,13 +505,10 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     sendNativePoint(robotPose.getPointX(),robotPose.getPointY(),robotPose.getQuaternionW());
                 }
                 Constant.debugLog("getCurrentPoseGoal"+goalPathLayer.getCurrentPoseGoal());
-//                getPathList();
-//                multiGoalPoseP44ublisher.sendPoseList(goalPoseList);
                 break;
 
-
             case R.id.button_point_stop_eai:
-                goalPathLayer.cancelAutoNavigation();
+                goalPathLayer.cancelNavToGoalPose();
                 break;
 
             case R.id.button_pathplan_eai:
@@ -508,6 +520,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 updateplan();
                 go_Plan();
                 break;
+
             case R.id.button_cruise_eai:
                 Constant.CURRENTINDEX_MAP = 3;
                 go_Roam();
@@ -515,12 +528,15 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 scope_roam.setSelection(0,true);
                 gametime_roam.setSelection(0,true);
                 break;
+
             case R.id.button_returnback_eai:
                 Toast.makeText(mContext,"返回原点",Toast.LENGTH_SHORT).show();
                 break;
+
             case R.id.button_setreturn_eai:
-                goalPathLayer.setInitPoseMode();
+//                goalPathLayer.setInitPoseMode();
                 break;
+
             case R.id.button_versioncode_eai:
                 PackageInfo pi = null;//getPackageName()是你当前类的包名，0代表是获取版本信息
                 try {
@@ -533,32 +549,38 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     e.printStackTrace();
                 }
                 break;
+
             case R.id.imgViewmapnRight_eai:
                 startAnimationRight();
                 break;
+
             case R.id.button_plan_back_eai:
                 Constant.CURRENTINDEX_MAP = 0;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_plan.setVisibility(View.GONE);
                 goalPathLayer.setInitPoseMode();
                 break;
+
             case R.id.button_plan_info_back_eai:
                 Constant.CURRENTINDEX_MAP = 2;
                 linear_plan_info.setVisibility(View.GONE);
                 linear_plan.setVisibility(View.VISIBLE);
                 break;
+
             case R.id.button_point_back_eai:
                 Constant.CURRENTINDEX_MAP = 0;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_point.setVisibility(View.GONE);
                 goalPathLayer.setInitPoseMode();
                 break;
+
             case R.id.button_roam_back_eai:
                 Constant.CURRENTINDEX_MAP = 0;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_roam.setVisibility(View.GONE);
                 goalPathLayer.setInitPoseMode();
                 break;
+
             //执行路线
             case R.id.button_execut_eai:
                 startPlan();
@@ -576,19 +598,23 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 serchtime_roam.setSelection(0,true);
                 scope_roam.setSelection(0,true);
                 gametime_roam.setSelection(0,true);
-
+                go_NewPlan();
                 robotList = new ArrayList<>();
                 break;
 
             //删除
             case R.id.button_remove_eai:
-
+                if(arrayPlanLists.size() > 0){
+                    Toast.makeText(getContext(),"删除路线",Toast.LENGTH_SHORT).show();
+                    readXML();
+                    arrayPlanLists.remove(strings.get((int) plannumber));
+                    writeXML();
+                    updateplan();
+                }
                 arrayserchtime.removeAllElements();
                 arrayscope.removeAllElements();
                 arraygametime.removeAllElements();
-
                 goalPathLayer.clearAllMarkerGoals();
-
                 break;
             //调整
             case R.id.plan_change_eai:
@@ -606,7 +632,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             //停止漫游
             case R.id.button_roam_stop_eai:
                 break;
-
             //清除当前
             case R.id.button_clearlast_eai:
                 break;
@@ -617,7 +642,21 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             case R.id.button_saveall_eai:
                 Constant.CURRENTINDEX_MAP = 2;
                 if(robotList.size()> 0 ){
+                    Vector<Float> point_x = new Vector<>();
+                    Vector<Float> point_y = new Vector<>();
+                    Vector<Float> point_w = new Vector<>();
+                    RobotPose robotPose;
+                    readXML();
+                    for(int i =0,size = robotList.size();i<size;i++){
+                        robotPose =  robotList.get(i);
+                        point_x.add((float) robotPose.getPointX());
+                        point_y.add((float) robotPose.getPointY());
+                        point_w.add((float) robotPose.getQuaternionW());
+                    }
                     configArray = new HashMap<>();
+                    configArray.put("point_xs",point_x);
+                    configArray.put("point_ys",point_y);
+                    configArray.put("point_ws",point_w);
                     configArray.put("arrayserchtime",arrayserchtime);
                     configArray.put("arrayscope",arrayscope);
                     configArray.put("arraygametime",arraygametime);
@@ -633,6 +672,15 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private void go_Roam(){
         setVisible();
         linear_roam.setVisibility(View.VISIBLE);
+    }
+
+    //规划新路线
+    private void go_NewPlan() {
+        arrayserchtime = new Vector<>();
+        arrayscope = new Vector<>();
+        arraygametime = new Vector<>();
+        setVisible();
+        linear_plan_info.setVisibility(View.VISIBLE);
     }
 
     //发往底层
@@ -773,7 +821,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             }
         }
     }
-
+    private static int tasknumber = -1;
     public void pasreJson(String string){
         JSONObject object ;
         try {
@@ -782,34 +830,182 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             String funtion = object.getString(Constant.Function);
             String data = object.getString(Constant.Data);
             Constant.debugLog("message"+object.toString());
-            Toast.makeText(mContext,""+object.toString(),Toast.LENGTH_SHORT).show();
+            if(object !=null){
+                if(type.equals(Constant.State)){
+                    if(funtion.equals(Constant.Navigation)){
+                        JSONObject jsonObject = new JSONObject(data);
+                        String flag = jsonObject.getString(Constant.Result);
+                        if(flag.equals("success")){
+                            IsSuccus = true;
+                            if(tasknumber == 0 ){
+                                //到达新地点
+                                tasknumber = 1;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber ==4){
+                                //返回新地点
+                                tasknumber = 5;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 20){
+                                tasknumber = -1;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 10){
+                                tasknumber = 11;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 14){
+                                tasknumber = 15;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 30){
+                                handler.sendEmptyMessage(7);
+                            }
+                        }else if(flag.equals("fail")){
+                            IsSuccus = false;
+                            if(tasknumber == 0  ) {
+                                //到达新地点
+                                tasknumber = 1;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 4){
+                                //返回新地点
+                                tasknumber = 5;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 10){
+                                tasknumber = 11;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 14){
+                                tasknumber = 15;
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 30){
+                                handler.sendEmptyMessage(7);
+                            }
+                        }else if(flag.equals("navigating")){
+
+                        }
+                    }else if(funtion.equals(Constant.Camera)){
+                        JSONObject jsonObject = new JSONObject(data);
+                        String str =  jsonObject.getString("result");
+                        Constant.debugLog("Camera"+jsonObject.toString());
+                        if(str.equals("body")){
+                            float degree = Float.valueOf(jsonObject.getString("degree"));
+                            float distance = Float.valueOf(jsonObject.getString("distance"));
+                            Constant.debugLog("distance"+distance);
+                            Constant.debugLog("degree"+degree);
+                            if(degree > 180){
+                                degree = degree - 360;
+                            }
+                            if(task!=null){
+                                task.cancel();
+                            }
+                            try {
+                                if(tasknumber == 1){
+                                    //摄像头搜索到人
+                                    IsFind = true;
+                                    tasknumber = 2;
+                                    ServerSocketUtil.sendDateToClient(string, Constant.ip_ros);
+                                }else if(tasknumber == 10){
+                                    IsFind = true;
+                                    tasknumber = 11;
+                                    Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
+                                    Map map  = new LinkedHashMap();
+                                    map.put("degree",degree);
+                                    map.put("distance",distance);
+                                    Constant.getConstant().sendCamera(0,getContext());
+                                    Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
+                                    Constant.debugLog("map"+map);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }else if(str.equals("nobody")){
+                        }else if(str.equals("away")){
+                            if(tasknumber == 3 && IsAway){
+                                tasknumber = 4 ;
+                                if(task!=null ){
+                                    task.cancel();
+                                }
+                                Constant.getConstant().sendCamera(3,getContext());
+                                ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
+                                handler.sendEmptyMessage(4);
+                            }else if(tasknumber == 12 && IsAway){
+                                tasknumber = 13 ;
+                                if(task!=null ){
+                                    task.cancel();
+                                }
+                                ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
+                                Constant.getConstant().sendCamera(3,getContext());
+                                handler.sendEmptyMessage(4);
+                            }
+                        }
+                    }else if(funtion.equals(Constant.Peoplesearch)){
+                        if(data.equals("foundpeople")){
+                            Constant.debugLog("foundpeople"  +"    tasknumber"+tasknumber);
+                            if(tasknumber == 2){
+                                //机器人找到人
+                                tasknumber = 3;
+                                handler.sendEmptyMessage(4);
+                                ServerSocketUtil.sendDateToClient("open", Constant.ip_bigScreen);
+                            }else if(tasknumber == 11){
+                                tasknumber = 12;
+                                handler.sendEmptyMessage(4);
+                                ServerSocketUtil.sendDateToClient("open", Constant.ip_bigScreen);
+                            }
+                        }
+                    }else if(funtion.equals(Constant.Obstacle)){
+                        JSONObject jsonObject = new JSONObject(data);
+                        String str =  jsonObject.getString("result");
+                        Constant.debugLog("obstacle"+ jsonObject.toString());
+                        if("obstacle".equals(str)){
+                            String direction = jsonObject.getString("direction");
+                            if("front".equals(direction)){
+                            }else if("back".equals(direction)){
+                            }else{
+                            }
+                        }else{
+                        }
+                    }
+                }
+            }
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void planStart(final List<GoalPoseStamped> goalPoseListCache){
+    public void planStart(final HashMap<String, Vector<Float>> array){
         CurrentPoint = 0;
-        Constant.debugLog("size"+goalPoseListCache.size());
-        while(CurrentPoint < goalPoseListCache.size()){
+        Constant.debugLog("size"+robotList.size());
+        Vector<Float> arrayserchtime_tmp;
+        Vector<Float> arrayscope_tmp;
+        Vector<Float> arraygametime_tmp;
+        Vector<Float> xs_tmp;
+        Vector<Float> ys_tmp;
+        Vector<Float> ws_tmp;
+        xs_tmp = array.get("point_xs");
+        ys_tmp = array.get("point_ys");
+        ws_tmp = array.get("point_ws");
+        arrayserchtime_tmp = array.get("arrayserchtime");
+        arrayscope_tmp = array.get("arrayscope");
+        arraygametime_tmp = array.get("arraygametime");
+        Float ser,game;
+        while(CurrentPoint < robotList.size()){
             try {
-
                 //
+                tasknumber = 0;
+                sendNativePoint(xs_tmp.get(CurrentPoint),ys_tmp.get(CurrentPoint),ws_tmp.get(CurrentPoint));
                 thread.wait();
-//                        arrayserchtime,arrayscope,arraygametime
-                if(arrayserchtime.get(CurrentPoint) !=0 && IsSuccus == true ){
+                ser = arrayserchtime_tmp.get(CurrentPoint);
+                if(ser !=0 && IsSuccus == true ){
                     resetFindTimer();
-                    if (arrayserchtime.get(CurrentPoint) == 1) {
+                    if (ser == 1) {
                         Constant.debugLog("arrayserchtime = " + 0);
                         timer.schedule(task, 40 * 1000);
-                    } else if (arrayserchtime.get(CurrentPoint) == 2) {
+                    } else if (ser == 2) {
                         Constant.debugLog("arrayserchtime = " + 1);
                         timer.schedule(task, 2 * 40 * 1000);
-                    } else if (arrayserchtime.get(CurrentPoint) == 3) {
+                    } else if (ser == 3) {
                         Constant.debugLog("arrayserchtime = " + 2);
                         timer.schedule(task, 3 * 40 * 1000);
                     }
                     IsFind = false;
-                    Constant.getConstant().sendCamera(arrayscope.get(CurrentPoint), mContext);
+                    Constant.getConstant().sendCamera(arrayscope_tmp.get(CurrentPoint), mContext);
                     Constant.getConstant().sendBundle(Constant.Command, Constant.Peoplesearch, "");
                     thread.wait();
                     //如果有找到人则到达指定位置
@@ -818,18 +1014,20 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                         Constant.debugLog("互动时间 = " + CurrentPoint);
                         resetGameTimer();
                         IsAway = false;
-                        if (arraygametime.get(CurrentPoint) == 0) {
+                        game = arraygametime_tmp.get(CurrentPoint);
+                        if (game == 0) {
                             Constant.debugLog("arraygametime_tmp = " + 0);
                             timer.schedule(task, 15 * 1000);
-                        } else if (arraygametime.get(CurrentPoint) == 1) {
+                        } else if (game == 1) {
                             IsAway = true;
                         } else {
-                            float a = arraygametime.get(CurrentPoint) - 1;
+                            float a = game - 1;
                             timer.schedule(task, (long) (a * 60 * 1000));
                             Constant.debugLog("tasknumber = " + a);
                         }
                         thread.wait();
                     }
+                    sendNativePoint(xs_tmp.get(CurrentPoint),ys_tmp.get(CurrentPoint),ws_tmp.get(CurrentPoint));
                     thread.wait();
                     CurrentPoint++;
                 }
@@ -844,22 +1042,21 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                HashMap<String,Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
                 if(cirles == 0){
                     CURRENT_CRILES = true;
                 }else if(cirles > 0){
                     CURRENT_CRILES = false;
                 }
-//                getPathList();
-//                List<GoalPoseStamped> goalPoseListCache = goalPoseList;
                 CURRENT_CRILES = false;
                 cirles = 1;
                 while (CURRENT_CRILES || cirles > 0) {
                     Constant.debugLog("CURRENT_CRILES" + CURRENT_CRILES);
 //                    synchronized (array) {
-//                    planStart(goalPoseListCache);
-                    if (!CURRENT_CRILES) {
-                        cirles--;
-                    }
+                        planStart(array);
+                        if (!CURRENT_CRILES) {
+                            cirles--;
+                        }
 //                    }
                 }
                 thread = new Thread();
@@ -960,19 +1157,15 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             @Override
             public void onClick(View v) {
                 if(!"".equals(editText.getText().toString().trim())){
-                    pathListArray.put(editText.getText().toString().trim(),robotList);
-                    pathConfigArray.put(editText.getText().toString().trim(),configArray);
-                    //保存
-//                    arrayPlanLists.put(editText.getText().toString().trim(),arrayhash);
-//                    ObjectSaveUtil.saveObject(mContext,pathListArray,Constant.PATHLIST);
-//                    ObjectSaveUtil.saveObject(mContext,pathConfigArray,Constant.PATHCONFIG);
-
-                    robotList.clear();
+                    arrayPlanLists.put(editText.getText().toString().trim(),configArray);
+                    writeXML();
+                    goalPathLayer.clearAllMarkerGoals();
                     arrayserchtime.removeAllElements();
                     arrayscope.removeAllElements();
                     arraygametime.removeAllElements();
                     linear_plan_info.setVisibility(View.GONE);
                     linear_plan.setVisibility(View.VISIBLE);
+                    robotList.clear();
                     dialog.dismiss();
                 }else {
                     Toast.makeText(mContext,"请输入合法的路线名称",Toast.LENGTH_SHORT).show();
@@ -988,4 +1181,129 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         });
         dialog.show();
     }
+
+
+    //xml读取
+    public synchronized  void readXML() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            File file = new File(Constant.filePath);
+            Document parse;
+            if (!file.exists()) {
+                parse = builder.parse(getContext().getAssets().open("map.xml"));
+            }else{
+                parse = builder.parse(file);
+            }
+            parse.normalize();
+            Element root = parse.getDocumentElement();
+            NodeList planLists = root.getElementsByTagName("key");
+            arrayPlanLists  = new HashMap<>();
+            if(planLists.getLength()==0){
+                parse = builder.parse(getContext().getAssets().open("map.xml"));
+                root = parse.getDocumentElement();
+                planLists = root.getElementsByTagName("key");
+            }
+            for (int i = 0,length = planLists.getLength(); i < length; i++) {
+                configArray = new HashMap<>();
+                Element item = (Element) planLists.item(i);
+                String key = item.getAttribute("key");
+                getFloat(item,"item_xs","point_xs");
+                getFloat(item,"item_ys","point_ys");
+                getFloat(item,"item_ws","point_ws");
+                getFloat(item,"item_serchtime","arrayserchtime");
+                getFloat(item,"item_scope","arrayscope");
+                getFloat(item,"item_gametime","arraygametime");
+                arrayPlanLists.put(key,configArray);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void getFloat(Element item,String keys,String key){
+        NodeList nodes = item.getElementsByTagName(keys);
+        Vector<Float> floats=new Vector<>();
+        for (int j = 0 ,length = nodes.getLength(); j < length; j++) {
+            Node node =  nodes.item(j);
+            String string = node.getFirstChild().getNodeValue();
+            floats.add(Float.valueOf(string));
+        }
+        configArray.put(key,floats);
+    }
+
+    //xml写入
+    public synchronized void writeXML() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.newDocument();
+            Element planLists = document.createElement("planLists");
+
+            Iterator<Map.Entry<String, HashMap<String,Vector<Float>>>> iter = arrayPlanLists.entrySet().iterator();
+            while(iter.hasNext()){
+                HashMap<String,Vector<Float>> planList;
+                Map.Entry entry = (Map.Entry) iter.next();
+
+                planList = (HashMap<String, Vector<Float>>) entry.getValue();
+
+                String key = (String) entry.getKey();
+                Element keysElement = document.createElement("key");
+                keysElement.setAttribute("key",key);
+
+                Vector<Float> point_xs = planList.get("point_xs");
+                Vector<Float> point_ys = planList.get("point_ys");
+                Vector<Float> point_ws = planList.get("point_ws");
+                Vector<Float> arrayserchtime = planList.get("arrayserchtime");
+                Vector<Float> arrayscope = planList.get("arrayscope");
+                Vector<Float> arraygametime = planList.get("arraygametime");
+                Element point_xs_ = document.createElement("point_xs");
+                Element point_ys_ = document.createElement("point_ys");
+                Element point_ws_ = document.createElement("point_ws");
+                Element arrayserchtime_ = document.createElement("arrayserchtime");
+                Element arrayscope_ = document.createElement("arrayscope");
+                Element arraygametime_ = document.createElement("arraygametime");
+
+                for(int x = 0;x < point_xs.size();x ++){
+                    Element item_xs = document.createElement("item_xs");
+                    item_xs.setTextContent(point_xs.elementAt(x)+"");
+                    Element item_ys = document.createElement("item_ys");
+                    item_ys.setTextContent(point_ys.elementAt(x)+"");
+                    Element item_ws = document.createElement("item_ws");
+                    item_ys.setTextContent(point_ys.elementAt(x)+"");
+                    Element item_serchtime = document.createElement("item_serchtime");
+                    item_serchtime.setTextContent(arrayserchtime.elementAt(x)+"");
+                    Element item_scope = document.createElement("item_scope");
+                    item_scope.setTextContent(arrayscope.elementAt(x)+"");
+                    Element item_gametime = document.createElement("item_gametime");
+                    item_gametime.setTextContent(arraygametime.elementAt(x)+"");
+                    point_xs_.appendChild(item_xs);
+                    point_ys_.appendChild(item_ys);
+                    point_ws_.appendChild(item_ws);
+                    arrayserchtime_.appendChild(item_serchtime);
+                    arrayscope_.appendChild(item_scope);
+                    arraygametime_.appendChild(item_gametime);
+                }
+                keysElement.appendChild(point_xs_);
+                keysElement.appendChild(point_ys_);
+                keysElement.appendChild(point_ws_);
+                keysElement.appendChild(arrayserchtime_);
+                keysElement.appendChild(arrayscope_);
+                keysElement.appendChild(arraygametime_);
+                planLists.appendChild(keysElement);
+            }
+            document.appendChild(planLists);
+            TransformerFactory transfactory = TransformerFactory.newInstance();
+            Transformer transformer = transfactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");// 设置输出采用的编码方式
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");// 是否自动添加额外的空白
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");// 是否忽略XML声明
+            FileOutputStream fos = new FileOutputStream(Constant.filePath);
+            Source source = new DOMSource(document);
+            Result result = new StreamResult(fos);
+            transformer.transform(source, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

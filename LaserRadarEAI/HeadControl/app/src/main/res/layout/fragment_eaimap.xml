@@ -231,7 +231,6 @@
                     <Button
                         android:id="@+id/button_plan_eai"
                         android:text="@string/button_plan"
-                        android:visibility="gone"
                         style="@style/MapButton"
                         />
                     <Button
