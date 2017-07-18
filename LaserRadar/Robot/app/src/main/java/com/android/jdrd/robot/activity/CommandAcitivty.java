@@ -41,6 +41,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
     private int command_id;
     private Map commandconfig;
     private List<Map> goallist;
+    private List<Map> list;
     private TextView speed,mp3,outime,shownum,showcolor;
     private TextView goal,direction;
     public static int goalnum = -1,directionnum = -1;
@@ -73,9 +74,20 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         showcolor.setOnClickListener(this);
         findViewById(R.id.btn_delete).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
-
+        findViewById(R.id.back).setOnClickListener(this);
         goallist = robotDBHelper.queryListMap("select * from card " ,null);
 
+         list = new ArrayList<>();
+        Map<String, Object> map ;
+        map = new HashMap<>();
+        map.put("name","直行");
+        list.add(map);
+        map = new HashMap<>();
+        map.put("name","左岔道");
+        list.add(map);
+        map = new HashMap<>();
+        map.put("name","右岔道");
+        list.add(map);
 
         List<Map> commandlist = robotDBHelper.queryListMap("select * from command where id = '"+ command_id +"'" ,null);
         if(commandlist !=null && commandlist.size() >0){
@@ -169,6 +181,9 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.back:
                 finish();
                 break;
             case R.id.btn_delete:
@@ -277,17 +292,6 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         if(gl){
             spinnerAdapter = new SpinnerAdapter(this,goallist,gl);
         }else{
-            List<Map> list = new ArrayList<>();
-            Map<String, Object> map ;
-            map = new HashMap<>();
-            map.put("name","直行");
-            list.add(map);
-            map = new HashMap<>();
-            map.put("name","左岔道");
-            list.add(map);
-            map = new HashMap<>();
-            map.put("name","右岔道");
-            list.add(map);
             spinnerAdapter = new SpinnerAdapter(this,list,gl);
         }
         spinnerdialog.getListView().setAdapter(spinnerAdapter);
@@ -342,7 +346,6 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
 
     private MyDialog textdialog ;
     private EditText editText;
-    private TextView title;
     private void dialog_Text(final int type) {
         textdialog = new MyDialog(this);
         switch (type){

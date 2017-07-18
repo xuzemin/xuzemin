@@ -12,13 +12,18 @@
         android:background="@color/green"
         android:layout_width="match_parent"
         android:layout_height="48dp">
-        <Button
+        <RelativeLayout
             android:id="@+id/setting_back"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/btn_back_selector"
-            android:layout_centerVertical="true"
-            android:layout_width="17dp"
-            android:layout_height="21dp" />
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/back"
+                android:background="@drawable/btn_back_selector"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_width="17dp"
+                android:layout_height="21dp" />
+        </RelativeLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

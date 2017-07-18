@@ -45,6 +45,7 @@ public class RobotActivity extends Activity implements View.OnClickListener {
         robotid = intent.getIntExtra("id",0);
         findViewById(R.id.setting_redact).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
         receiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.jdrd.activity.Robot");
@@ -130,6 +131,9 @@ public class RobotActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.back:
                 finish();
                 break;
         }

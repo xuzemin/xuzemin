@@ -48,6 +48,7 @@ public class RobotConfigActivity extends Activity implements View.OnClickListene
         name = ((EditText)findViewById(R.id.name));
         findViewById(R.id.sure).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
         area_text = (TextView) findViewById(R.id.area_text);
         findViewById(R.id.area).setOnClickListener(this);
         Intent intent =getIntent();
@@ -88,6 +89,9 @@ public class RobotConfigActivity extends Activity implements View.OnClickListene
                 finish();
                 break;
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.back:
                 finish();
                 break;
             case R.id.area:

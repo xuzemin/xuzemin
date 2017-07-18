@@ -27,6 +27,7 @@ public class DeleteDialog extends Dialog {
     private EditText editText;
     private Button positiveButton, negativeButton;
     private TextView title;
+    private TextView title_template;
 
     public DeleteDialog(Context context) {
         super(context, R.style.SoundRecorder);
@@ -36,6 +37,7 @@ public class DeleteDialog extends Dialog {
     private void setCustomDialog() {
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_delete_dialog,null);
         title = (TextView) mView.findViewById(R.id.title);
+        title_template = (TextView) mView.findViewById(R.id.title_template);
         editText = (EditText) mView.findViewById(R.id.editText);
         positiveButton = (Button) mView.findViewById(R.id.positiveButton);
         negativeButton = (Button) mView.findViewById(R.id.negativeButton);
@@ -45,8 +47,11 @@ public class DeleteDialog extends Dialog {
     public View getEditText(){
         return editText;
     }
-    public View getTextView(){
+    public TextView getTextView(){
         return title;
+    }
+    public TextView getTemplate(){
+        return title_template;
     }
     public View getNegative(){
         return negativeButton;

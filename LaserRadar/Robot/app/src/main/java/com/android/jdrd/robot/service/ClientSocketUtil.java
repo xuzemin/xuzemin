@@ -14,8 +14,10 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.android.jdrd.robot.R;
+import com.android.jdrd.robot.dialog.RobotDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +47,7 @@ public class ClientSocketUtil extends Service {
     private MyReceiver receiver;
     IntentFilter filter;
     public static List<Map> socketlist = new ArrayList<>();
+    private String function;
 
     @Override
     public void onCreate() {
@@ -190,11 +194,7 @@ public class ClientSocketUtil extends Service {
                             if(socket_cache.isClosed()){
                                 break;
                             }else{
-                                robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
-                                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
-                                        "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
-                                List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
-                                sendDateToClient("*"+robotList.toString()+"#", socket_ip, socket_cache);
+                                sendDateToClient("*heartbeat#", socket_ip, socket_cache);
                                 Thread.sleep(3000);
                             }
                         } catch (Exception e) {
@@ -260,119 +260,94 @@ public class ClientSocketUtil extends Service {
                 flag2 = true;
             }else if ('#' == buf) {
                 flag = false;
-            }else if (flag) {
+            }
+            if (flag) {
                 buffer[i] = buf;
                 i++;
             } else if (flag == false && flag2) {
                 msg = new String(buffer, 1, i);
                 msg = msg.trim();
-                if(msg.equals("heartbeat")){
-
-                }else if (msg != null) {
+                Constant.debugLog("msg"+msg);
+                if (msg != null) {
                     ++len;
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
-                    byte[] bytes = msg.getBytes();
-                    Constant.debugLog(bytes[0]+"bytes");
-                    flag = false;
-                    List<String> str = new ArrayList<>();
-                    int k = 0;
-                    for(int h = 1,size = bytes.length;h<size;h++){
-                        if(bytes[h]==43){
-                            if(flag){
-                                str.add(msg.substring(k+1,h));
-                                k = h;
-                            }else{
-                                flag = true;
-                                k = h;
-                            }
+                    function = getJSONString(msg, "function");
+                    if(function.equals("robot")){
+                        List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
+                        Map robot ;
+                        List<Map> datalist = new ArrayList<>();
+                        for(int k = 0,size = robotList.size();k<size;k++){
+                            robot = robotList.get(k);
+                            Map map  = new LinkedHashMap();
+                            map.put("ip",robot.get("ip"));
+                            map.put("name",robot.get("name"));
+                            map.put("id",robot.get("id"));
+                            map.put("outline",robot.get("outline"));
+                            map.put("electric",robot.get("electric"));
+                            map.put("area",robot.get("area"));
+                            map.put("state",robot.get("state"));
+                            map.put("robotstate",robot.get("robotstate"));
+                            map.put("obstacle",robot.get("obstacle"));
+                            map.put("excute",robot.get("excute"));
+                            map.put("excutetime",robot.get("excutetime"));
+                            map.put("commandnum",robot.get("commandnum"));
+                            map.put("commandstate",robot.get("commandstate"));
+                            map.put("lastlocation",robot.get("lastlocation"));
+                            map.put("lastcommandstate",robot.get("lastcommandstate"));
+                            datalist.add(map);
                         }
+                        Gson gson = new Gson();
+                        Map map = new LinkedHashMap();
+                        map.put("function", "robot");
+                        map.put("data", datalist);
+                        string = gson.toJson(map);
+                    }else if(function.equals("desk")){
+                        List<Map> deskList = robotDBHelper.queryListMap("select * from desk " ,null);
+                        Map desk ;
+                        List<Map> datalist = new ArrayList<>();
+                        for(int k = 0,size = deskList.size();k<size;k++){
+                            desk = deskList.get(k);
+                            Map map  = new LinkedHashMap();
+                            map.put("name",desk.get("name"));
+                            map.put("id",desk.get("id"));
+                            map.put("area",desk.get("area"));
+                            datalist.add(map);
+                        }
+                        Gson gson = new Gson();
+                        Map map = new LinkedHashMap();
+                        map.put("function", "desk");
+                        map.put("data", datalist);
+                        string = gson.toJson(map);
+                    }else if(function.equals("area")){
+                        List<Map> areaList = robotDBHelper.queryListMap("select * from area " ,null);
+                        Map area ;
+                        List<Map> datalist = new ArrayList<>();
+                        for(int k = 0,size = areaList.size();k<size;k++){
+                            area = areaList.get(k);
+                            Map map  = new LinkedHashMap();
+                            map.put("name",area.get("name"));
+                            map.put("id",area.get("id"));
+                            datalist.add(map);
+                        }
+                        Gson gson = new Gson();
+                        Map map = new LinkedHashMap();
+                        map.put("function", "area");
+                        map.put("data", datalist);
+                        string = gson.toJson(map);
+                    }else if(function.equals("command")){
+                        String data = getJSONString(msg, "data");
+                        List<Map> commandlit = robotDBHelper.queryListMap("select * from command where desk = '" + getJSONString(data,"desk") + "'", null);
+                        RobotDialog.IP = getJSONString(data,"robot");
+                        RobotDialog.robotlist = commandlit;
+                        RobotDialog.CurrentIndex = -1;
+                        RobotDialog.sendCommandList();
                     }
-                    if(Integer.valueOf(str.get(str.size()-1)) == msg.length() +2){
-                        Constant.debugLog("长度正确");
-                        switch (bytes[0]) {
-                            case 97:
-                                robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 98:
-                                robotDBHelper.execSQL("update robot set state = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 99:
-                                robotDBHelper.execSQL("update robot set robotstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 100:
-                                robotDBHelper.execSQL("update robot set obstacle = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 101:
-                                robotDBHelper.execSQL("update robot set lastlocation = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            //r
-                            case 114:
-                                if(str.get(0).equals("0")){
-                                    sendBroadcastMain("robot_receive_succus");
-                                }else{
-                                    sendBroadcastMain("robot_receive_fail");
-                                }
-                                break;
-                        }
-                    }else{
-                        Constant.debugLog("长度不对");
-                        if (out != null) {
-                            string = "*r+1+8+#";
-                            try {
-                                out.write(string.getBytes());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                    if(string !=null){
+                        try {
+                            out.write(string.getBytes());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Constant.debugLog(e.toString());
                         }
                     }
 
@@ -394,6 +369,7 @@ public class ClientSocketUtil extends Service {
                     Constant.debugLog(e.toString());
                 }
             }
+            string = null;
         }
     }
 

@@ -30,6 +30,7 @@ import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.AreaAdapter;
 import com.android.jdrd.robot.adapter.DeskAdapter;
 import com.android.jdrd.robot.adapter.GridViewAdapter;
+import com.android.jdrd.robot.dialog.DeleteDialog;
 import com.android.jdrd.robot.dialog.MyDialog;
 import com.android.jdrd.robot.dialog.RobotDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
@@ -384,8 +385,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 String ip = robotList.get(i).get("ip").toString();
                 j = 0;
                 int h = ServerSocketUtil.socketlist.size();
+                flag = false;
                 while( j < h){
                     if(ip.equals(ServerSocketUtil.socketlist.get(j).get("ip"))){
+                        Constant.debugLog("对比");
                         robotDBHelper.execSQL("update robot set outline= '1' where ip = '"+robotList.get(i).get("ip")+"'");
                         robotList.get(i).put("outline",1);
                         Robotdata_listcache.add(robotList.get(i));
@@ -633,7 +636,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         editText = (EditText) dialog.getEditText();
         editText.setText(name);
         title = (TextView) dialog.getTitle();
-        title.setText(R.string.change_area);
         dialog.setOnPositiveListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -647,6 +649,29 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         });
 
         dialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog(id);
+            }
+        });
+        ((Button)dialog.getNegative()).setText(R.string.btn_delete);
+        dialog.show();
+    }
+
+    private RobotDialog robotDialog ;
+    private void robotDialog(String str) {
+        robotDialog = new RobotDialog(this,str);
+        robotDialog.show();
+    }
+    private void robotDialog(List<Map> list) {
+        robotDialog = new RobotDialog(this,list);
+        robotDialog.show();
+    }
+    private DeleteDialog deleteDialog ;
+    private void deleteDialog(final int id) {
+        deleteDialog = new DeleteDialog(this);
+        deleteDialog.getTemplate().setText("确定删除区域吗？");
+        deleteDialog.setOnPositiveListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 robotDBHelper.execSQL("delete from area where id= '"+ id +"'");
@@ -665,21 +690,17 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                     area_text.setText("请选择左侧区域");
                 }
                 getDeskData();
+                deleteDialog.dismiss();
                 dialog.dismiss();
             }
         });
-        ((Button)dialog.getNegative()).setText(R.string.btn_delete);
-        dialog.show();
-    }
-
-    private RobotDialog robotDialog ;
-    private void robotDialog(String str) {
-        robotDialog = new RobotDialog(this,str);
-        robotDialog.show();
-    }
-    private void robotDialog(List<Map> list) {
-        robotDialog = new RobotDialog(this,list);
-        robotDialog.show();
+        deleteDialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        });
+        deleteDialog.show();
     }
 
     public class MyReceiver extends BroadcastReceiver {
@@ -696,14 +717,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         if(string.equals("robot_connect") || string.equals("robot_unconnect")){
             getRobotData();
             gridViewAdapter.notifyDataSetInvalidated();
-            Toast.makeText(getApplicationContext(),"连接 断开",Toast.LENGTH_SHORT).show();
         }else if(string.equals("robot_receive_succus")){
-            Toast.makeText(getApplicationContext(),"收到成功指令",Toast.LENGTH_SHORT).show();
             synchronized (RobotDialog.thread){
+                if(RobotDialog.CurrentIndex == -1){
+                    RobotDialog.CurrentIndex = 0;
+                }
                 RobotDialog.thread.notify();
             }
         }else if(string.equals("robot_receive_fail")){
-            Toast.makeText(getApplicationContext(),"收到失败指令",Toast.LENGTH_SHORT).show();
             if(RobotDialog.flag){
                 RobotDialog.sendCommandList();
             }else{

@@ -62,14 +62,13 @@ public class MyAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ViewHolder.btn.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CommandAcitivty.class);
                 Constant.debugLog("commandid"+list.get(position).get("id").toString());
                 intent.putExtra("id", (Integer) list.get(position).get("id"));
                 context.startActivity(intent);
-
             }
         });
 

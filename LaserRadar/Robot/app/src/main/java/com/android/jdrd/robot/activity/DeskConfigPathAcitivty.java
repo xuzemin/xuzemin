@@ -95,6 +95,7 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         name.setOnClickListener(this);
         findViewById(R.id.change_name).setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.btn_delete).setOnClickListener(this);
         findViewById(R.id.card).setOnClickListener(this);
 
@@ -137,6 +138,15 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
         commandlistview =(ListView)view.findViewById(R.id.added_command);
         myAdapter = new MyAdapter(this,command_list);
         commandlistview.setAdapter(myAdapter);
+        commandlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(DeskConfigPathAcitivty.this, CommandAcitivty.class);
+                Constant.debugLog("commandid"+command_list.get(position).get("id").toString());
+                intent.putExtra("id", (Integer) command_list.get(position).get("id"));
+                startActivity(intent);
+            }
+        });
         listViews.add(view);
 
         viewPager.setAdapter(new MyPagerAdapter(listViews));
@@ -240,6 +250,9 @@ public class DeskConfigPathAcitivty extends Activity implements View.OnClickList
                 startActivity(new Intent(DeskConfigPathAcitivty.this,CardConfig.class));
                 break;
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.back:
                 finish();
                 break;
             case R.id.change_name:

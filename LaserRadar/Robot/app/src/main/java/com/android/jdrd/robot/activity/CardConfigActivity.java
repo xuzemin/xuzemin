@@ -53,6 +53,7 @@ public class CardConfigActivity extends Activity implements View.OnClickListener
         btn_delete = (Button) findViewById(R.id.btn_delete);
         btn_delete.setOnClickListener(this);
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
         Constant.debugLog("card_id"+card_id);
         if(card_id == 0){
             btn_delete.setVisibility(View.GONE);
@@ -68,6 +69,9 @@ public class CardConfigActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.back:
                 finish();
                 break;
             case R.id.btn_delete:

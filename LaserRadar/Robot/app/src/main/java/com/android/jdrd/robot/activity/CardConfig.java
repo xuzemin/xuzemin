@@ -43,6 +43,7 @@ public class CardConfig extends Activity implements View.OnClickListener {
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
 
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.add_card).setOnClickListener(this);
         cardlist = (ListView) findViewById(R.id.cardlist);
 
@@ -69,6 +70,9 @@ public class CardConfig extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.back:
                 finish();
                 break;
             case R.id.add_card:

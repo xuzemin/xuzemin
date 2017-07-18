@@ -50,6 +50,7 @@ public class AreaConfig extends Activity implements View.OnClickListener {
 
 
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.add_card).setOnClickListener(this);
         arealist = (ListView) findViewById(R.id.cardlist);
         arealist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,6 +83,9 @@ public class AreaConfig extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.back:
                 finish();
                 break;
             case R.id.add_card:

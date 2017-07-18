@@ -35,14 +35,15 @@ import java.util.Map;
 public class RobotDialog extends Dialog {
     private GridView gridView;
     private SimpleAdapter robotadapter;
-    private static List<Map> list,robotlist;
+    public static List<Map> list,robotlist;
     private static RobotDBHelper robotDBHelper;
     private List<Map<String, Object>> Robotdata_list =  new ArrayList<>();
     private final String [] from ={"image","text","name","imageback"};
     private final int [] to = {R.id.imageview,R.id.text,R.id.name,R.id.imageback};
     private Context context;
+    public static  int CurrentIndex = -1;
     private static String sendstr;
-    private static String IP;
+    public static String IP;
     public static Thread thread = new Thread();
     public static boolean flag;
     public RobotDialog(Context context,String str) {
@@ -106,6 +107,7 @@ public class RobotDialog extends Dialog {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     IP = Robotdata_list.get(position).get("ip").toString();
                     if(flag){
+                        CurrentIndex = -1;
                         sendCommandList();
                         dismiss();
                     }else {
@@ -149,18 +151,22 @@ public class RobotDialog extends Dialog {
                     public void run() {
                         if (out != null) {
                             try {
-                                out.write("*s+6+#".getBytes());
-                                synchronized (thread){
-                                    thread.wait();
+                                if(CurrentIndex == -1){
+                                    out.write("*s+6+#".getBytes());
+                                    synchronized (thread){
+                                        thread.wait();
+                                    }
                                 }
-                                for(int i =0,size = robotlist.size();i<size;i++){
-                                    switch ((int)robotlist.get(i).get("type")){
+                                Constant.debugLog("CurrentIndex"+CurrentIndex);
+                                int size;
+                                for(size = robotlist.size();CurrentIndex<size;CurrentIndex++){
+                                    switch ((int)robotlist.get(CurrentIndex).get("type")){
                                         case 0:
-                                            List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '"+robotlist.get(i).get("goal")+"'" ,null);
+                                            List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '"+robotlist.get(CurrentIndex).get("goal")+"'" ,null);
                                             if(card_list !=null && card_list.size()>0){
-                                                sendstr="*g+"+card_list.get(0).get("address")+"+"+robotlist.get(i).get("direction")+"+"+robotlist.get(i).get("speed")
-                                                        +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
-                                                        +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                                sendstr="*g+"+card_list.get(0).get("address")+"+"+robotlist.get(CurrentIndex).get("direction")+"+"+robotlist.get(CurrentIndex).get("speed")
+                                                        +"+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
+                                                        +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
                                             }
                                             setSendstr(out,sendstr);
                                             synchronized (thread){
@@ -168,26 +174,26 @@ public class RobotDialog extends Dialog {
                                             }
                                             break;
                                         case 1:
-                                            sendstr="*d+"+robotlist.get(i).get("speed")
-                                                    +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
-                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            sendstr="*d+"+robotlist.get(CurrentIndex).get("speed")
+                                                    +"+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
+                                                    +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
                                             setSendstr(out,sendstr);
                                             synchronized (thread){
                                                 thread.wait();
                                             }
                                             break;
                                         case 2:
-                                            sendstr="*r+"+robotlist.get(i).get("speed")
-                                                    +"+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
-                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            sendstr="*r+"+robotlist.get(CurrentIndex).get("speed")
+                                                    +"+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
+                                                    +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
                                             setSendstr(out,sendstr);
                                             synchronized (thread){
                                                 thread.wait();
                                             }
                                             break;
                                         case 3:
-                                            sendstr="*w+"+robotlist.get(i).get("music")+"+"+robotlist.get(i).get("outime")+"+"
-                                                    +robotlist.get(i).get("shownumber")+"+"+robotlist.get(i).get("showcolor");
+                                            sendstr="*w+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
+                                                    +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
                                             setSendstr(out,sendstr);
                                             synchronized (thread){
                                                 thread.wait();
