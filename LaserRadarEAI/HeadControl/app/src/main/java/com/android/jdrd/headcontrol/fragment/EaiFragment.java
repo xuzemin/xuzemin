@@ -1036,7 +1036,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         }
     }
     public void planStart(final HashMap<String, Vector<Float>> array){
-        CurrentPoint = 0;
         Constant.debugLog("size"+robotList.size());
         Vector<Float> arrayserchtime_tmp;
         Vector<Float> arrayscope_tmp;
@@ -1051,6 +1050,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         arrayscope_tmp = array.get("arrayscope");
         arraygametime_tmp = array.get("arraygametime");
         Float ser,game;
+        CurrentPoint = 0;
         while(CurrentPoint < robotList.size()){
             try {
                 //
@@ -1096,8 +1096,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                         }
                         sendNativePoint(xs_tmp.get(CurrentPoint), ys_tmp.get(CurrentPoint), ws_tmp.get(CurrentPoint));
                         thread.wait();
-                        CurrentPoint++;
                     }
+                    CurrentPoint++;
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
