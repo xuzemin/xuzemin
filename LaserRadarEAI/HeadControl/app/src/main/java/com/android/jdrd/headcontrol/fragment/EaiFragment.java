@@ -794,11 +794,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                         markList = new ArrayList<>();
                         Constant.debugLog("robotPose"+robotPose.toString());
                         MarkPose markPose = new MarkPose(0,"point",robotPose);
-                        robotPose.setQuaternionX(0);
-                        robotPose.setQuaternionY(0);
-                        robotPose.setQuaternionZ(0);
-                        robotPose.setPointZ(0);
-                        Constant.debugLog("robotPose"+robotPose.toString());
                         markList.add(markPose);
                         goalPathLayer.setMarkPoses(markList);
                     }else{
@@ -1116,8 +1111,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 }else if(cirles > 0){
                     CURRENT_CRILES = false;
                 }
-                CURRENT_CRILES = false;
-                cirles = 1;
                 while (CURRENT_CRILES || cirles > 0) {
                     Constant.debugLog("CURRENT_CRILES" + CURRENT_CRILES);
 //                    synchronized (array) {
@@ -1127,6 +1120,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     }
 //                    }
                 }
+                goalPathLayer.clearAllMarkerGoals();
                 thread = new Thread();
             }
 
