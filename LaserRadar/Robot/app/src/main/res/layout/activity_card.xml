@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#EEEEEE"
+    android:background="@color/white"
     >
 
     <RelativeLayout
@@ -41,15 +41,14 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_height="23dp"
-            android:background="@animator/btn_add_desk_selector"
+            android:background="@animator/btn_add_card_selector"
             />
     </RelativeLayout>
 
     <ListView
         android:id="@+id/cardlist"
-        android:divider="#EEEEEE"
-        android:dividerHeight = "1dp"
         android:background="@color/white"
+        android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
