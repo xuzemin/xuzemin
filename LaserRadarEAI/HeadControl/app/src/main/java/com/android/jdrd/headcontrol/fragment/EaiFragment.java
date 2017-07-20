@@ -907,7 +907,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         @Override
         public void onReceive(Context context, Intent intent) {
             String StringE = intent.getStringExtra("msg");
-            Constant.debugLog(""+StringE);
+            Constant.debugLog("msg+"+StringE);
             if(StringE !=null && !StringE.equals("")){
                 pasreJson(StringE);
             }
@@ -999,7 +999,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                                     Map map  = new LinkedHashMap();
                                     map.put("degree",degree);
                                     map.put("distance",distance);
-                                    Constant.getConstant().sendCamera(0,getContext());
+                                    Constant.getConstant().sendCamera(0,mContext);
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
                                     Constant.debugLog("map"+map);
                                 }
@@ -1013,7 +1013,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                                 if(task!=null ){
                                     task.cancel();
                                 }
-                                Constant.getConstant().sendCamera(3,getContext());
+                                Constant.getConstant().sendCamera(3,mContext);
                                 ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
                                 handler.sendEmptyMessage(4);
                             }else if(tasknumber == 12 && IsAway){
@@ -1022,7 +1022,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                                     task.cancel();
                                 }
                                 ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
-                                Constant.getConstant().sendCamera(3,getContext());
+                                Constant.getConstant().sendCamera(3,mContext);
                                 handler.sendEmptyMessage(4);
                             }
                         }
@@ -1165,6 +1165,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         timer = new Timer();
         task = new TimerTask() {
             public void run () {
+                tasknumber = 4;
                 Constant.getConstant().sendCamera(3,mContext);
                 Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                 handler.sendEmptyMessage(4);
@@ -1179,13 +1180,9 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         task = new TimerTask() {
             public void run () {
                 //互动触发
+                tasknumber = 4;
                 Constant.getConstant().sendCamera(3,mContext);
                 handler.sendEmptyMessage(4);
-                try {
-                    ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
             }
         };
