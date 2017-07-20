@@ -151,7 +151,6 @@ public class ClientSocketUtil extends Service {
      * @param ip： 要发送的客户端的IP, Constant.ip_ros为小屏IP, Constant.ip_bigScreen为大屏IP
      */
     public static synchronized void sendDateToClient(String str, String ip,Socket socket) throws IOException {
-
         try {
             if(socket.isClosed()){
             }else {
@@ -211,7 +210,6 @@ public class ClientSocketUtil extends Service {
                     }
                 }
             }).start();
-
             try {
                 in = socket.getInputStream();
                 out = socket.getOutputStream();
@@ -345,6 +343,7 @@ public class ClientSocketUtil extends Service {
                         RobotDialog.robotlist = commandlit;
                         RobotDialog.CurrentIndex = -1;
                         RobotDialog.sendCommandList();
+                        string = "*r+0+8+#";
                     }
                     if(string !=null){
                         try {
@@ -354,24 +353,23 @@ public class ClientSocketUtil extends Service {
                             Constant.debugLog(e.toString());
                         }
                     }
-
                     i = 0;
                     for (int m = 0; m < buffer.length; m++) {
                         buffer[m] = 0;
                     }
-                    flag = false;
-                    flag2 = false;
+                }else {
+                    Constant.debugLog((char) buf + "");
+                    Constant.debugLog("数据格式不对");
+                    string = "*r+1+8+#";
+                    try {
+                        out.write(string.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Constant.debugLog(e.toString());
+                    }
                 }
-            } else {
-                Constant.debugLog((char) buf + "");
-                Constant.debugLog("数据格式不对");
-                string = "*r+1+8+#";
-                try {
-                    out.write(string.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Constant.debugLog(e.toString());
-                }
+                flag = false;
+                flag2 = false;
             }
             string = null;
         }
