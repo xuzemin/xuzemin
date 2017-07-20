@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerSocketUtil extends Service {
-
     private Context mContext;
     private RobotDBHelper robotDBHelper;
     private static ServerSocket serverSocket;
@@ -93,9 +92,10 @@ public class ServerSocketUtil extends Service {
         Constant.debugLog("serverSocket is create....");
         while (true) {
             Constant.debugLog("waiting for connect....");
-            socket = serverSocket.accept();
+            socket =
+                    serverSocket.accept();
             socket.setKeepAlive(true);
-            socket.setSoTimeout(9000);
+//            socket.setSoTimeout(9000);
             new Thread(new Task(socket)).start();
         }
     }

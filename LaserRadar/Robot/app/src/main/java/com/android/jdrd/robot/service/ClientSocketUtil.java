@@ -346,6 +346,7 @@ public class ClientSocketUtil extends Service {
                         string = "*r+0+8+#";
                     }
                     if(string !=null){
+                        string = ""+string+"#";
                         try {
                             out.write(string.getBytes());
                         } catch (IOException e) {
