@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.android.jdrd.headcontrol.R;
 import com.android.jdrd.headcontrol.common.BaseFragment;
+import com.android.jdrd.headcontrol.dialog.FaceDialog;
 import com.android.jdrd.headcontrol.dialog.MyDialog;
 import com.android.jdrd.headcontrol.service.ServerSocketUtil;
 import com.android.jdrd.headcontrol.util.Constant;
@@ -122,6 +123,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private NodeMain nodeMain;
     private ControlLayer controlLayer;
     private MapView mapview;
+    private boolean IsWait = false;
     private MapGridLayer mapGridLayer;
     private PathLayer pathLayer;
     private GoalPathLayer goalPathLayer;
@@ -148,7 +150,8 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     Constant.getConstant().sendCamera(3,mContext);
                     CURRENT_CRILES = false;
                     if(Constant.CURRENTINDEX_MAP == 2){
-                        ((Button)findViewById(R.id.button_plan_stop)).setText("继续执行");
+                        ((Button)findViewById(R.id.button_plan_stop_eai)).setText("继续执行");
+                        IsWait = true;
                     }
                     try {
                         ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
@@ -363,6 +366,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 tasknumber = 0;
                 CurrentPoint = 0;
                 plannumber = position;
+                IsWait = false;
                 goalPathLayer.clearAllMarkerGoals();
                 HashMap<String, Vector<Float>> array = arrayPlanLists.get(strings.get((int) plannumber));
                 Constant.debugLog("array"+array.toString());
@@ -484,6 +488,14 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         filter.addAction("com.jdrd.fragment.Map");
         if(mContext!=null && receiver != null ){
             mContext.registerReceiver(receiver,filter);
+        }
+        if(IsWait){
+            ((Button)findViewById(R.id.button_plan_stop_eai)).setText("继续路线");
+        }else{
+            ((Button)findViewById(R.id.button_plan_stop_eai)).setText("暂停路线");
+        }
+        if(Constant.DIALOG_SHOW){
+//            dialogFace();
         }
     }
 
@@ -609,21 +621,35 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 linear_point.setVisibility(View.GONE);
                 goalPathLayer.setInitPoseMode();
                 break;
-
             case R.id.button_roam_back_eai:
                 Constant.CURRENTINDEX_MAP = 0;
                 linearlayout_map.setVisibility(View.VISIBLE);
                 linear_roam.setVisibility(View.GONE);
                 goalPathLayer.setInitPoseMode();
                 break;
-
             //执行路线
             case R.id.button_execut_eai:
+                CurrentPoint = 0;
                 startPlan();
+//                dialogFace();
+                IsWait = false;
+                ((Button)findViewById(R.id.button_plan_stop_eai)).setText("暂停路线");
+                Toast.makeText(mContext,"开始执行路线",Toast.LENGTH_SHORT).show();
                 break;
             //暂停
             case R.id.button_plan_stop_eai:
-                handler.sendEmptyMessage(3);
+                if(!IsWait){
+                    handler.sendEmptyMessage(3);
+                    ((Button)findViewById(R.id.button_plan_stop_eai)).setText("继续路线");
+                    Toast.makeText(mContext,"暂停路线",Toast.LENGTH_SHORT).show();
+                }else{
+                    ((Button)findViewById(R.id.button_plan_stop_eai)).setText("暂停执行");
+                    Toast.makeText(mContext,"继续路线",Toast.LENGTH_SHORT).show();
+                    startPlan();
+//                    dialogFace();
+                    startAnimationRight();
+                    IsWait = false;
+                }
                 break;
             //新路线
             case R.id.button_plan_eai:
@@ -633,6 +659,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 scope_roam.setSelection(0,true);
                 gametime_roam.setSelection(0,true);
                 go_NewPlan();
+                IsWait = false;
                 robotList = new ArrayList<>();
                 arrayserchtime = new Vector<>();
                 arrayscope = new Vector<>();
@@ -724,6 +751,10 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         setVisible();
         linear_roam.setVisibility(View.VISIBLE);
     }
+    private void dialogFace(){
+        Constant.DIALOG_SHOW = true;
+        FaceDialog.getDialog(mContext,handler).show();
+    }
 
     //规划新路线
     private void go_NewPlan() {
@@ -794,11 +825,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                         markList = new ArrayList<>();
                         Constant.debugLog("robotPose"+robotPose.toString());
                         MarkPose markPose = new MarkPose(0,"point",robotPose);
-                        robotPose.setQuaternionX(0);
-                        robotPose.setQuaternionY(0);
-                        robotPose.setQuaternionZ(0);
-                        robotPose.setPointZ(0);
-                        Constant.debugLog("robotPose"+robotPose.toString());
                         markList.add(markPose);
                         goalPathLayer.setMarkPoses(markList);
                     }else{
@@ -881,7 +907,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         @Override
         public void onReceive(Context context, Intent intent) {
             String StringE = intent.getStringExtra("msg");
-            Constant.debugLog(""+StringE);
+            Constant.debugLog("msg+"+StringE);
             if(StringE !=null && !StringE.equals("")){
                 pasreJson(StringE);
             }
@@ -973,7 +999,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                                     Map map  = new LinkedHashMap();
                                     map.put("degree",degree);
                                     map.put("distance",distance);
-                                    Constant.getConstant().sendCamera(0,getContext());
+                                    Constant.getConstant().sendCamera(0,mContext);
                                     Constant.getConstant().sendBundle(Constant.Command,Constant.Roamsearch,map);
                                     Constant.debugLog("map"+map);
                                 }
@@ -987,7 +1013,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                                 if(task!=null ){
                                     task.cancel();
                                 }
-                                Constant.getConstant().sendCamera(3,getContext());
+                                Constant.getConstant().sendCamera(3,mContext);
                                 ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
                                 handler.sendEmptyMessage(4);
                             }else if(tasknumber == 12 && IsAway){
@@ -996,7 +1022,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                                     task.cancel();
                                 }
                                 ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
-                                Constant.getConstant().sendCamera(3,getContext());
+                                Constant.getConstant().sendCamera(3,mContext);
                                 handler.sendEmptyMessage(4);
                             }
                         }
@@ -1050,7 +1076,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         arrayscope_tmp = array.get("arrayscope");
         arraygametime_tmp = array.get("arraygametime");
         Float ser,game;
-        CurrentPoint = 0;
         while(CurrentPoint < robotList.size()){
             try {
                 //
@@ -1073,6 +1098,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                         }
                         IsFind = false;
                         Constant.getConstant().sendCamera(arrayscope_tmp.get(CurrentPoint), mContext);
+                        Constant.debugLog("Peoplesearch"+Constant.Peoplesearch);
                         Constant.getConstant().sendBundle(Constant.Command, Constant.Peoplesearch, "");
                         thread.wait();
                         //如果有找到人则到达指定位置
@@ -1116,8 +1142,6 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 }else if(cirles > 0){
                     CURRENT_CRILES = false;
                 }
-                CURRENT_CRILES = false;
-                cirles = 1;
                 while (CURRENT_CRILES || cirles > 0) {
                     Constant.debugLog("CURRENT_CRILES" + CURRENT_CRILES);
 //                    synchronized (array) {
@@ -1127,6 +1151,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     }
 //                    }
                 }
+                goalPathLayer.clearAllMarkerGoals();
                 thread = new Thread();
             }
 
@@ -1140,6 +1165,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         timer = new Timer();
         task = new TimerTask() {
             public void run () {
+                tasknumber = 4;
                 Constant.getConstant().sendCamera(3,mContext);
                 Constant.getConstant().sendBundle(Constant.Command,Constant.StopSearch,"");
                 handler.sendEmptyMessage(4);
@@ -1154,13 +1180,9 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         task = new TimerTask() {
             public void run () {
                 //互动触发
+                tasknumber = 4;
                 Constant.getConstant().sendCamera(3,mContext);
                 handler.sendEmptyMessage(4);
-                try {
-                    ServerSocketUtil.sendDateToClient("close", Constant.ip_bigScreen);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
             }
         };
@@ -1237,6 +1259,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     linear_plan.setVisibility(View.VISIBLE);
                     robotList.clear();
                     dialog.dismiss();
+                    updateplan();
                 }else {
                     Toast.makeText(mContext,"请输入合法的路线名称",Toast.LENGTH_SHORT).show();
                 }
