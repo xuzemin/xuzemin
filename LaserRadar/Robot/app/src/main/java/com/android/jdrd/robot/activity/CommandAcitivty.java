@@ -77,6 +77,15 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
         findViewById(R.id.back).setOnClickListener(this);
         goallist = robotDBHelper.queryListMap("select * from card " ,null);
 
+
+        findViewById(R.id.linear_goal).setOnClickListener(this);
+        findViewById(R.id.linear_direction).setOnClickListener(this);
+        findViewById(R.id.linear_speed).setOnClickListener(this);
+        findViewById(R.id.linear_mp3).setOnClickListener(this);
+        findViewById(R.id.linear_outime).setOnClickListener(this);
+        findViewById(R.id.linear_shownum).setOnClickListener(this);
+        findViewById(R.id.linear_showcolor).setOnClickListener(this);
+
          list = new ArrayList<>();
         Map<String, Object> map ;
         map = new HashMap<>();
@@ -108,7 +117,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                     }
                 }
             }else{
-                goal.setText("请选择站点");
+                goal.setHint("请选择站点");
             }
             if(commandconfig.get("direction") !=null){
                 directionnum = (int) commandconfig.get("direction");
@@ -124,7 +133,7 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                         break;
                 }
             }else{
-                direction.setText("请选择方向");
+                direction.setHint("请选择方向");
             }
 
             if(commandconfig.get("speed") !=null){
@@ -188,6 +197,27 @@ public class CommandAcitivty extends Activity implements View.OnClickListener {
                 break;
             case R.id.btn_delete:
                 dialog();
+                break;
+            case R.id.linear_goal:
+                dialog_spinner(true);
+                break;
+            case R.id.linear_direction:
+                dialog_spinner(false);
+                break;
+            case R.id.linear_speed:
+                dialog_Text(0);
+                break;
+            case R.id.linear_mp3:
+                dialog_Text(1);
+                break;
+            case R.id.linear_outime:
+                dialog_Text(2);
+                break;
+            case R.id.linear_shownum:
+                dialog_Text(3);
+                break;
+            case R.id.linear_showcolor:
+                dialog_Text(4);
                 break;
             case R.id.goal:
                 dialog_spinner(true);
