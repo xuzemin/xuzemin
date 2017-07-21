@@ -54,189 +54,233 @@
                 android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#333333"
-                    android:layout_height="match_parent"
-                    android:text="@string/name"
-                    android:id="@+id/textView7" />
-                <TextView
-                    android:id="@+id/name"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:layout_marginRight="20dp"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#333333"
+                        android:layout_height="53dp"
+                        android:text="@string/name"
+                        android:id="@+id/textView7" />
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_height="53dp"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center|left"
-                    android:textColor="#333333"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/ip"
-                    android:textSize="@dimen/robot_size" />
-                <TextView
-                    android:id="@+id/ip"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:layout_marginRight="20dp"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center|left"
+                        android:textColor="#333333"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/ip"
+                        android:textSize="@dimen/robot_size" />
+                    <TextView
+                        android:id="@+id/ip"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:textColor="#333333"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/outline"
-                    android:id="@+id/textView3" />
-                <TextView
-                    android:id="@+id/outline"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:layout_marginRight="20dp"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:textColor="#333333"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/outline"
+                        android:id="@+id/textView3" />
+                    <TextView
+                        android:id="@+id/outline"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#333333"
-                    android:layout_height="match_parent"
-                    android:text="@string/electric"/>
-                <TextView
-                    android:id="@+id/electric"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginRight="20dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#333333"
+                        android:layout_height="match_parent"
+                        android:text="@string/electric"/>
+                    <TextView
+                        android:id="@+id/electric"
+                        android:layout_width="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#333333"
-                    android:layout_height="match_parent"
-                    android:text="@string/area"/>
-                <TextView
-                    android:id="@+id/area"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:layout_marginRight="20dp"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#333333"
+                        android:layout_height="match_parent"
+                        android:text="@string/area"/>
+                    <TextView
+                        android:id="@+id/area"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right|center"
+                        android:hint="请选择区域"
+                        android:textColorHint="#999999"
+                        android:textColor="#666666"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#333333"
-                    android:layout_height="match_parent"
-                    android:text="@string/state"/>
-                <TextView
-                    android:id="@+id/state"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:layout_marginRight="20dp"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#333333"
+                        android:layout_height="match_parent"
+                        android:text="@string/state"/>
+                    <TextView
+                        android:id="@+id/state"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:textColor="#333333"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/robot_state"/>
-                <TextView
-                    android:id="@+id/robot_state"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_marginRight="20dp"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:textColor="#333333"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/robot_state"/>
+                    <TextView
+                        android:id="@+id/robot_state"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_marginRight="20dp"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
@@ -244,77 +288,95 @@
                 android:background="@color/white"
                 android:visibility="gone"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_height="match_parent"
-                    android:text="@string/command_num"/>
-                <TextView
-                    android:id="@+id/command_num"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="@string/command_num"/>
+                    <TextView
+                        android:id="@+id/command_num"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:textColor="#333333"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/last_location"/>
-                <TextView
-                    android:id="@+id/last_location"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:layout_marginRight="20dp"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:textColor="#333333"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/last_location"/>
+                    <TextView
+                        android:id="@+id/last_location"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:background="@color/white"
                 android:layout_height="@dimen/area_height">
-                <TextView
-                    android:layout_width="120dp"
-                    android:textSize="@dimen/robot_size"
-                    android:gravity="center|left"
-                    android:textColor="#333333"
-                    android:layout_marginLeft="10dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/obstacle"/>
-                <TextView
-                    android:id="@+id/obstacle"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/robot_size"
-                    android:layout_marginRight="20dp"
-                    android:gravity="right|center"
-                    android:textColor="#666666"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="53dp">
+                    <TextView
+                        android:layout_width="120dp"
+                        android:textSize="@dimen/robot_size"
+                        android:gravity="center|left"
+                        android:textColor="#333333"
+                        android:layout_marginLeft="10dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/obstacle"/>
+                    <TextView
+                        android:id="@+id/obstacle"
+                        android:layout_width="match_parent"
+                        android:textSize="@dimen/robot_size"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right|center"
+                        android:textColor="#666666"
+                        android:layout_height="match_parent"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="1dp"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.activity.MainActivity;
+import com.android.jdrd.robot.util.Constant;
 
 import java.util.List;
 import java.util.Map;
@@ -78,7 +79,16 @@ public class DeskAdapter extends BaseAdapter {
             }
             viewHolder.text.setVisibility(View.VISIBLE);
             viewHolder.image.setVisibility(View.GONE);
-            viewHolder.text.setText(list.get(position).get("name").toString());
+            String str = list.get(position).get("name").toString().trim();
+            if(str.length()>2){
+                StringBuilder sb=new StringBuilder(str);
+                sb.insert(2,"\n");
+                Constant.debugLog("str"+str+" sb"+sb);
+                viewHolder.text.setText(sb);
+            }else{
+                Constant.debugLog("str"+str);
+                viewHolder.text.setText(str);
+            }
         }
         return convertView;
     }
