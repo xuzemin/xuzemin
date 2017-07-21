@@ -193,7 +193,35 @@ public class ClientSocketUtil extends Service {
                             if(socket_cache.isClosed()){
                                 break;
                             }else{
-                                sendDateToClient("*heartbeat#", socket_ip, socket_cache);
+                                List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
+                                Map robot ;
+                                List<Map> datalist = new ArrayList<>();
+                                for(int k = 0,size = robotList.size();k<size;k++){
+                                    robot = robotList.get(k);
+                                    Map map  = new LinkedHashMap();
+                                    map.put("ip",robot.get("ip"));
+                                    map.put("name",robot.get("name"));
+                                    map.put("id",robot.get("id"));
+                                    map.put("outline",robot.get("outline"));
+                                    map.put("electric",robot.get("electric"));
+                                    map.put("area",robot.get("area"));
+                                    map.put("state",robot.get("state"));
+                                    map.put("robotstate",robot.get("robotstate"));
+                                    map.put("obstacle",robot.get("obstacle"));
+                                    map.put("excute",robot.get("excute"));
+                                    map.put("excutetime",robot.get("excutetime"));
+                                    map.put("commandnum",robot.get("commandnum"));
+                                    map.put("commandstate",robot.get("commandstate"));
+                                    map.put("lastlocation",robot.get("lastlocation"));
+                                    map.put("lastcommandstate",robot.get("lastcommandstate"));
+                                    datalist.add(map);
+                                }
+                                Gson gson = new Gson();
+                                Map map = new LinkedHashMap();
+                                map.put("function", "robot");
+                                map.put("data", datalist);
+                                String string = gson.toJson(map);
+                                sendDateToClient("*"+string+"#", socket_ip, socket_cache);
                                 Thread.sleep(3000);
                             }
                         } catch (Exception e) {
@@ -346,7 +374,7 @@ public class ClientSocketUtil extends Service {
                         string = "*r+0+8+#";
                     }
                     if(string !=null){
-                        string = ""+string+"#";
+                        string = "*"+string+"#";
                         try {
                             out.write(string.getBytes());
                         } catch (IOException e) {
