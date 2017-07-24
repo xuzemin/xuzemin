@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -61,7 +63,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     public static boolean DeskIsEdit = false,AreaIsEdit = false;
     private boolean IsRight = true,IsFinish = true;
     private ListView area;
-    private float density;
+    private static float density;
     private TextView area_text;
     private Button up,down,left,right,stop,shrink;
     public static int CURRENT_AREA_id = 0;
@@ -131,6 +133,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         //获取数据
         desk_adapter = new DeskAdapter(this, Deskdata_list);
         deskview.setAdapter(desk_adapter);
+//        deskview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         deskview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -660,11 +663,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 
     private RobotDialog robotDialog ;
     private void robotDialog(String str) {
-        robotDialog = new RobotDialog(this,str);
+        robotDialog = new RobotDialog(this,str,density);
         robotDialog.show();
     }
     private void robotDialog(List<Map> list) {
-        robotDialog = new RobotDialog(this,list);
+        robotDialog = new RobotDialog(this,list,density);
         robotDialog.show();
     }
     private DeleteDialog deleteDialog ;

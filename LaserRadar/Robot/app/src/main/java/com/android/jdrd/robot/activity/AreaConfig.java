@@ -48,7 +48,6 @@ public class AreaConfig extends Activity implements View.OnClickListener {
         List<Map> robotlist = robotDBHelper.queryListMap("select * from robot where id = '"+ robotid +"'" ,null);
         robotconfig = robotlist.get(0);
 
-
         findViewById(R.id.setting_back).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.add_card).setOnClickListener(this);
@@ -65,7 +64,6 @@ public class AreaConfig extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-
         area_list = robotDBHelper.queryListMap("select * from area " ,null);
         if(area_list!=null&& area_list.size()>0 && 0 != (int)robotconfig.get("area")){
             for(int i = 0,size = area_list.size();i<size;i++){

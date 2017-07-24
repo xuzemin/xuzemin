@@ -21,6 +21,7 @@
                 android:background="@drawable/btn_back_selector"
                 android:layout_centerVertical="true"
                 android:layout_width="21dp"
+                android:layout_marginLeft="5dp"
                 android:layout_height="21dp" />
         </RelativeLayout>
         <TextView
@@ -92,7 +93,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="8dp"
                     />
                 <Button
                     android:id="@+id/change_name"
@@ -134,7 +135,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 />
         </RelativeLayout>
 

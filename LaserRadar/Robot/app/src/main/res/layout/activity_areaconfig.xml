@@ -19,6 +19,7 @@
                 android:background="@drawable/btn_back_selector"
                 android:layout_centerVertical="true"
                 android:layout_width="21dp"
+                android:layout_marginLeft="5dp"
                 android:layout_height="21dp" />
         </RelativeLayout>
         <TextView

@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.android.jdrd.robot.R;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +21,11 @@ import java.util.Map;
 public class ChooseGridViewAdapter extends BaseAdapter {
     Context context;
     List<Map> list;
-
+    public static int Current_Index = -1;
     public ChooseGridViewAdapter(Context _context, List<Map>  _list) {
         this.list = _list;
         this.context = _context;
+        Current_Index = -1;
     }
 
     @Override
@@ -44,22 +47,19 @@ public class ChooseGridViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView == null){
-            final LayoutInflater inflater = (LayoutInflater) context
-                           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.grid_item, null);
+            final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.grid_dialog_item, null);
             viewHolder = new ViewHolder();
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageview);
+            viewHolder.chooseImage = (ImageView) convertView.findViewById(R.id.chooseImage);
             viewHolder.imageback = (ImageView) convertView.findViewById(R.id.imageback);
             viewHolder.text = (TextView) convertView.findViewById(R.id.text);
             viewHolder.name = (TextView) convertView.findViewById(R.id.name);
             convertView.setTag(viewHolder);//讲ViewHolder存储在View中
-
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
         Map map = list.get(position);
-
         if(("1").equals(map.get("outline").toString())){
             viewHolder.imageView.setImageResource(R.mipmap.zaixian);
         }else{
@@ -80,6 +80,11 @@ public class ChooseGridViewAdapter extends BaseAdapter {
                 viewHolder.imageback.setImageResource(R.mipmap.guzhang);
                 break;
         }
+        if(position == Current_Index){
+            viewHolder.chooseImage.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.chooseImage.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
@@ -89,6 +94,7 @@ public class ChooseGridViewAdapter extends BaseAdapter {
         TextView text;
         TextView name;
         ImageView imageback;
+        ImageView chooseImage;
     }
 
 }

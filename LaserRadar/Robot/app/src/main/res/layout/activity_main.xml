@@ -58,8 +58,9 @@
                     android:gravity="center"
                     android:dividerHeight = "9dp"
                     android:divider="#EEEEEE"
-                    android:horizontalSpacing="15dp"
-                    android:verticalSpacing="15dp"
+                    android:listSelector="@null"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
                     android:stretchMode="spacingWidthUniform"
                     >
                 </GridView>
@@ -111,11 +112,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            android:listSelector="@null"
             android:layout_marginRight="10dp"
             android:background="@color/white"
             android:numColumns="auto_fit"
-            android:columnWidth="106dp"
-            android:layout_marginBottom="20dp"
+            android:columnWidth="113dp"
             />
     </LinearLayout>
     <RelativeLayout

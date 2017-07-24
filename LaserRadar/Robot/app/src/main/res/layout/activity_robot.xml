@@ -19,6 +19,7 @@
                 android:background="@drawable/btn_back_selector"
                 android:layout_centerVertical="true"
                 android:layout_width="21dp"
+                android:layout_marginLeft="5dp"
                 android:layout_height="21dp" />
         </RelativeLayout>
         <TextView
@@ -64,7 +65,7 @@
                         android:layout_width="120dp"
                         android:textSize="@dimen/robot_size"
                         android:gravity="center|left"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:textColor="#333333"
                         android:layout_height="53dp"
                         android:text="@string/name"
@@ -73,7 +74,7 @@
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:textSize="@dimen/robot_size"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:textColor="#666666"
                         android:layout_height="53dp"
@@ -99,14 +100,14 @@
                         android:layout_height="match_parent"
                         android:gravity="center|left"
                         android:textColor="#333333"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:text="@string/ip"
                         android:textSize="@dimen/robot_size" />
                     <TextView
                         android:id="@+id/ip"
                         android:layout_width="match_parent"
                         android:textSize="@dimen/robot_size"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:textColor="#666666"
                         android:layout_height="match_parent"
@@ -132,14 +133,14 @@
                         android:gravity="center|left"
                         android:textColor="#333333"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:text="@string/outline"
                         android:id="@+id/textView3" />
                     <TextView
                         android:id="@+id/outline"
                         android:layout_width="match_parent"
                         android:textSize="@dimen/robot_size"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:textColor="#666666"
                         android:layout_height="match_parent"
@@ -163,7 +164,7 @@
                         android:layout_width="120dp"
                         android:textSize="@dimen/robot_size"
                         android:gravity="center|left"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:textColor="#333333"
                         android:layout_height="match_parent"
                         android:text="@string/electric"/>
@@ -195,7 +196,7 @@
                         android:layout_width="120dp"
                         android:textSize="@dimen/robot_size"
                         android:gravity="center|left"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:textColor="#333333"
                         android:layout_height="match_parent"
                         android:text="@string/area"/>
@@ -203,7 +204,7 @@
                         android:id="@+id/area"
                         android:layout_width="match_parent"
                         android:textSize="@dimen/robot_size"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:hint="请选择区域"
                         android:textColorHint="#999999"
@@ -229,7 +230,7 @@
                         android:layout_width="120dp"
                         android:textSize="@dimen/robot_size"
                         android:gravity="center|left"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:textColor="#333333"
                         android:layout_height="match_parent"
                         android:text="@string/state"/>
@@ -237,7 +238,7 @@
                         android:id="@+id/state"
                         android:layout_width="match_parent"
                         android:textSize="@dimen/robot_size"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:textColor="#666666"
                         android:layout_height="match_parent"
@@ -262,7 +263,7 @@
                         android:textSize="@dimen/robot_size"
                         android:gravity="center|left"
                         android:textColor="#333333"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_height="match_parent"
                         android:text="@string/robot_state"/>
                     <TextView
@@ -271,7 +272,7 @@
                         android:textSize="@dimen/robot_size"
                         android:gravity="right|center"
                         android:textColor="#666666"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:layout_height="match_parent"
                         />
                 </LinearLayout>
@@ -326,14 +327,14 @@
                         android:textSize="@dimen/robot_size"
                         android:gravity="center|left"
                         android:textColor="#333333"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_height="match_parent"
                         android:text="@string/last_location"/>
                     <TextView
                         android:id="@+id/last_location"
                         android:layout_width="match_parent"
                         android:textSize="@dimen/robot_size"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:textColor="#666666"
                         android:layout_height="match_parent"
@@ -358,14 +359,14 @@
                         android:textSize="@dimen/robot_size"
                         android:gravity="center|left"
                         android:textColor="#333333"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_height="match_parent"
                         android:text="@string/obstacle"/>
                     <TextView
                         android:id="@+id/obstacle"
                         android:layout_width="match_parent"
                         android:textSize="@dimen/robot_size"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginRight="8dp"
                         android:gravity="right|center"
                         android:textColor="#666666"
                         android:layout_height="match_parent"

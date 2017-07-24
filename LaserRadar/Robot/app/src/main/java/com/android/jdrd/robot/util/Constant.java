@@ -37,7 +37,7 @@ public class Constant {
     //是否打印日志
     private static final boolean isDebug = true;
     //日志标题
-    private static final String TAG = "HeadControl";
+    private static final String TAG = "Robot";
     //地图默认配置地图
     public static String filePath = "data/data/com.android.jdrd.headcontrol/cache/map.xml";
     public static int linearWidth;

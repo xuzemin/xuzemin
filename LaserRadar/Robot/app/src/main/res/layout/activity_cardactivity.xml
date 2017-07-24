@@ -19,6 +19,7 @@
                 android:background="@drawable/btn_back_selector"
                 android:layout_centerVertical="true"
                 android:layout_width="21dp"
+                android:layout_marginLeft="5dp"
                 android:layout_height="21dp" />
         </RelativeLayout>
         <TextView
@@ -77,8 +78,9 @@
                 android:gravity="left|center_vertical"
                 android:layout_marginLeft="13dp"
                 android:background="@color/white"
+                android:textColorHint="#999999"
                 android:textSize="15sp"
-                android:textColor="@color/black"
+                android:textColor="#666666"
                 />
         </LinearLayout>
         <View
@@ -105,7 +107,8 @@
                 android:id="@+id/cardaddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/black"
+                android:textColorHint="#999999"
+                android:textColor="#666666"
                 android:background="@color/white"
                 android:inputType="number"
                 android:layout_marginLeft="13dp"

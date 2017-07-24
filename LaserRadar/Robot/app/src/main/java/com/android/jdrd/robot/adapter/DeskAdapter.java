@@ -80,9 +80,9 @@ public class DeskAdapter extends BaseAdapter {
             viewHolder.text.setVisibility(View.VISIBLE);
             viewHolder.image.setVisibility(View.GONE);
             String str = list.get(position).get("name").toString().trim();
-            if(str.length()>2){
+            if(str.length()>3){
                 StringBuilder sb=new StringBuilder(str);
-                sb.insert(2,"\n");
+                sb.insert(3,"\n");
                 Constant.debugLog("str"+str+" sb"+sb);
                 viewHolder.text.setText(sb);
             }else{

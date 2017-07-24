@@ -61,6 +61,8 @@ public class AreaConfigAdapter extends BaseAdapter {
             viewHolder.text.setText(list.get(position).get("name").toString());
         if(position == AreaConfig.Current_position){
             viewHolder.imageview.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.imageview.setVisibility(View.GONE);
         }
         return convertView;
     }

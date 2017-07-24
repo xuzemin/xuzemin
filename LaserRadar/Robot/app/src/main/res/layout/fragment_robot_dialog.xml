@@ -14,29 +14,91 @@
             android:background="@drawable/bg_dialog"
             android:gravity="center"
             >
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@mipmap/tck02"
-                android:textColor="#FFFFFF"
-                android:text="@string/choose_robot"
-                android:textSize="15sp"
-                />
+                android:layout_height="48dp">
+
+                <Button
+                    android:id="@+id/positiveButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:textColor="#FFFFFF"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/btn_sure"
+                    android:textSize="13sp"
+                    />
+                <Button
+                    android:id="@+id/negativeButton"
+                    android:layout_width="wrap_content"
+                    android:background="@null"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_cancle"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="运动到站点"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/textView8" />
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#EEEEEE"
                 />
-            <GridView
-                android:id="@+id/robot_girdview"
-                android:layout_gravity="center"
+            <LinearLayout
+                android:id="@+id/linear_robot"
+                android:layout_below="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:layout_margin="5dp"
-                android:numColumns="auto_fit"
-                android:columnWidth="80dp"
-                android:layout_width="300dp"
-                android:layout_height="200dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                android:layout_height="149dp">
+
+                <HorizontalScrollView
+                    android:id="@+id/aas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        >
+                        <GridView
+                            android:id="@+id/robotgirdview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:dividerHeight = "9dp"
+                            android:divider="#EEEEEE"
+                            android:listSelector="@null"
+                            android:horizontalSpacing="10dp"
+                            android:verticalSpacing="10dp"
+                            android:stretchMode="spacingWidthUniform"
+                            >
+                        </GridView>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
         </LinearLayout>
 </LinearLayout>
