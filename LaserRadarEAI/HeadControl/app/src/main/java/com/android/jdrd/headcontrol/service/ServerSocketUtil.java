@@ -30,7 +30,6 @@ import java.net.Socket;
 public class ServerSocketUtil extends Service {
 
     private Context mContext;
-
     private static ServerSocket serverSocket;
     private static Socket socket1;
     private static Socket socket2;
@@ -43,13 +42,10 @@ public class ServerSocketUtil extends Service {
     private MyReceiver receiver;
     IntentFilter filter;
     private String function;
-
     @Override
     public void onCreate() {
         super.onCreate();
-
         intent = new Intent();
-
         new Thread(new Runnable() {
             @Override
             public void run() {

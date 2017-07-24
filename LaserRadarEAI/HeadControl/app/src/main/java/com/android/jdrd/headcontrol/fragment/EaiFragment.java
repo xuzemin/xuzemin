@@ -67,6 +67,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -127,7 +128,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
     private MapGridLayer mapGridLayer;
     private PathLayer pathLayer;
     private GoalPathLayer goalPathLayer;
-//        private MultiGoalPoseLayer goalPathLayer;
+    //        private MultiGoalPoseLayer goalPathLayer;
     @SuppressLint("ValidFragment")
     public EaiFragment(Context context){
         super(context);
@@ -379,7 +380,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     Vector<Float> point_ys = array.get("point_ys");
                     Vector<Float> point_ws = array.get("point_ws");
                     Constant.debugLog("point_xs"+point_xs.toString() +"\n"
-                    +"point_ys"+point_ys.toString() +"\n"
+                            +"point_ys"+point_ys.toString() +"\n"
                             +"point_ys"+point_ys.toString());
                     if(point_xs!=null && point_xs.size()>0){
                         for(int i = 0,size = point_xs.size();i<size;i++){
@@ -1188,21 +1189,26 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
         };
     }
 
-    public void startRoam(){
+    public void  startRoam(){
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true){
-//                    Random random=new Random();
-//                    float x = 0 , y = 0;
+                    Random random=new Random();
+                    double x  , y ,z ;
 //                    while(x  < 110 || x > Constant.MyView_Width - 120){
-//                        x = random.nextInt(Constant.MyView_Width - 120);
+                    x = random.nextInt(8);
 //                    }
 //                    while(y  < 250 || y > Constant.MyView_Height - 182){
-//                        y = random.nextInt(Constant.MyView_Height - 182);
+                    y = random.nextInt(8);
+                    x = x -4;
+                    y -= 4;
 //                    }
+                    z = random.nextInt(360);
                     synchronized (thread){
                         try {
+                            tasknumber = 10;
+                            sendNativePoint(x, y, z);
                             //前往地图标注地点
                             if(serchtimenumber_roam == 1) {
                                 Constant.getConstant().sendCamera(scopenumber_roam,mContext);
@@ -1226,7 +1232,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                                 thread.wait();
                             }
                             Constant.getConstant().sendCamera(3,mContext);
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                             //返回原点
                         } catch (InterruptedException e) {
                             e.printStackTrace();
