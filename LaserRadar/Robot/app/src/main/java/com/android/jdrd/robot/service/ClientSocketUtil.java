@@ -102,7 +102,7 @@ public class ClientSocketUtil extends Service {
             Constant.debugLog("waiting for connect....");
             socket = serverSocket.accept();
             socket.setKeepAlive(true);
-//            socket.setSoTimeout(9000);
+            socket.setSoTimeout(9000);
             new Thread(new Task(socket)).start();
         }
     }
@@ -299,7 +299,9 @@ public class ClientSocketUtil extends Service {
                     Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
                     function = getJSONString(msg, "function");
                     Constant.debugLog("function： " + function);
-                    if(function.equals("robot")){
+                    if(function ==null){
+
+                    }else if(function !=null &&function.equals("robot")){
                         List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
                         Map robot ;
                         List<Map> datalist = new ArrayList<>();
@@ -328,7 +330,7 @@ public class ClientSocketUtil extends Service {
                         map.put("function", "robot");
                         map.put("data", datalist);
                         string = gson.toJson(map);
-                    }else if(function.equals("desk")){
+                    }else if(function !=null &&function.equals("desk")){
                         List<Map> deskList = robotDBHelper.queryListMap("select * from desk " ,null);
                         Map desk ;
                         List<Map> datalist = new ArrayList<>();
@@ -345,7 +347,7 @@ public class ClientSocketUtil extends Service {
                         map.put("function", "desk");
                         map.put("data", datalist);
                         string = gson.toJson(map);
-                    }else if(function.equals("area")){
+                    }else if(function !=null &&function.equals("area")){
                         List<Map> areaList = robotDBHelper.queryListMap("select * from area " ,null);
                         Map area ;
                         List<Map> datalist = new ArrayList<>();
@@ -361,7 +363,7 @@ public class ClientSocketUtil extends Service {
                         map.put("function", "area");
                         map.put("data", datalist);
                         string = gson.toJson(map);
-                    }else if(function.equals("command")){
+                    }else if(function !=null &&function.equals("command")){
                         String data = getJSONString(msg, "data");
                         Constant.debugLog("data"+data);
                         List<Map> commandlit = robotDBHelper.queryListMap("select * from command where desk = '" + getJSONString(data,"deskid") + "'", null);

@@ -29,7 +29,7 @@
             android:textSize="17sp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="@string/card_list"
+            android:text="区域选择"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

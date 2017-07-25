@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.jdrd.robot.R;
 import com.android.jdrd.robot.adapter.CardAdapter;
@@ -78,12 +79,16 @@ public class CardConfigActivity extends Activity implements View.OnClickListener
                 dialog();
                 break;
             case R.id.btn_sure:
-                if(card_id == 0){
-                    robotDBHelper.insert("card",new String[]{"name","address"},new Object[]{cardName.getText().toString(),cardAdress.getText().toString().trim()});
+                if("".equals(cardName.getText().toString())){
+                    Toast.makeText(getApplicationContext(),"请输入系统卡名称",Toast.LENGTH_SHORT).show();
                 }else {
-                    robotDBHelper.execSQL("update card set name= '" + cardName.getText().toString().trim() + "',address = '" + cardAdress.getText().toString().trim() + "'  where id= '" + card_id + "'");
+                    if (card_id == 0) {
+                        robotDBHelper.insert("card", new String[]{"name", "address"}, new Object[]{cardName.getText().toString(), cardAdress.getText().toString().trim()});
+                    } else {
+                        robotDBHelper.execSQL("update card set name= '" + cardName.getText().toString().trim() + "',address = '" + cardAdress.getText().toString().trim() + "'  where id= '" + card_id + "'");
+                    }
+                    finish();
                 }
-                finish();
                 break;
         }
     }
