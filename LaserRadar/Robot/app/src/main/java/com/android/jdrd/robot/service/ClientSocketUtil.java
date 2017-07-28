@@ -35,18 +35,14 @@ import java.util.Map;
 
 public class ClientSocketUtil extends Service {
 
-    private Context mContext;
     private RobotDBHelper robotDBHelper;
     private static ServerSocket serverSocket;
-    private static Socket socket1;
-    private static Socket socket2;
     private static InputStream in = null;
     private static OutputStream out = null;
     private static String msg = null;
     public static Intent intent;
     private MyReceiver receiver;
     IntentFilter filter;
-    public static List<Map> socketlist = new ArrayList<>();
     private String function;
 
     @Override
@@ -102,7 +98,7 @@ public class ClientSocketUtil extends Service {
             Constant.debugLog("waiting for connect....");
             socket = serverSocket.accept();
             socket.setKeepAlive(true);
-            socket.setSoTimeout(9000);
+//            socket.setSoTimeout(9000);
             new Thread(new Task(socket)).start();
         }
     }

@@ -72,10 +72,8 @@ public class RobotDialog extends Dialog {
     }
 
     private void setCustomDialog(Context context,float density) {
-
         Constant.debugLog("density"+density);
-
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_robot_dialog, null);
+        View mView = LayoutInflater.from(context).inflate(R.layout.fragment_robot_dialog, null);
         gridView = (GridView) mView.findViewById(R.id.robotgirdview);
         positiveButton = (TextView) mView.findViewById(R.id.positiveButton);
         negativeButton = (TextView) mView.findViewById(R.id.negativeButton);
@@ -121,28 +119,32 @@ public class RobotDialog extends Dialog {
                     gridViewAdapter.notifyDataSetChanged();
                 }
             });
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        }
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gridViewAdapter.Current_Index == -1){
+                    dismiss();
+                }else {
                     IP = list.get(gridViewAdapter.Current_Index).get("ip").toString();
-                    if(flag){
+                    if (flag) {
                         CurrentIndex = -1;
                         sendCommandList();
                         dismiss();
-                    }else {
+                    } else {
                         sendCommand();
                         dismiss();
                     }
                     gridViewAdapter.Current_Index = -1;
                 }
-            });
-            negativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        dismiss();
-                }
-            });
-        }
+            }
+        });
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         super.setContentView(mView);
     }
