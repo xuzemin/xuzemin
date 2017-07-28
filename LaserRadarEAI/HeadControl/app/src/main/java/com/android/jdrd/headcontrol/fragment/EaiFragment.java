@@ -1194,21 +1194,10 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
             @Override
             public void run() {
                 while(true){
-                    Random random=new Random();
-                    double x  , y ,z ;
-//                    while(x  < 110 || x > Constant.MyView_Width - 120){
-                    x = random.nextInt(8);
-//                    }
-//                    while(y  < 250 || y > Constant.MyView_Height - 182){
-                    y = random.nextInt(8);
-                    x = x -4;
-                    y -= 4;
-//                    }
-                    z = random.nextInt(360);
                     synchronized (thread){
                         try {
                             tasknumber = 10;
-                            sendNativePoint(x, y, z);
+                            Constant.getConstant().sendBundle(Constant.Command,Constant.StartRandomWalk,"");
                             //前往地图标注地点
                             if(serchtimenumber_roam == 1) {
                                 Constant.getConstant().sendCamera(scopenumber_roam,mContext);

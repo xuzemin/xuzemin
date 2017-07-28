@@ -81,6 +81,7 @@ public class Constant {
     public static String State = "state";
     //	public static String Param = "param";
 //    public static String Walk = "walk";
+    public static String StartRandomWalk = "startRandomWalk";
     public static String Navigation = "navigation";
     public static String Peoplesearch = "peoplesearch";
     public static String Roamsearch = "roamsearch";
