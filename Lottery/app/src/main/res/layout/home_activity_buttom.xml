@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@mipmap/main_buttom_bg">
+    
+    <RadioGroup
+        android:id="@+id/radioGroup_home_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:layout_gravity="center_vertical">
+
+        <RadioButton
+            android:id="@+id/radio_btn_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/tab1_select"
+            android:gravity="center"
+            android:onClick="doClick"
+            android:layout_gravity="center_vertical"
+            android:text="@string/tab_one"
+            android:textColor="@drawable/tab_text_color_selector"
+            android:textSize="@dimen/tab_text_size"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radio_btn_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawableTop="@drawable/tab2_select"
+            android:gravity="center"
+            android:onClick="doClick"
+            android:layout_gravity="center_vertical"
+            android:text="@string/tab_two"
+            android:textColor="@drawable/tab_text_color_selector"
+            android:textSize="@dimen/tab_text_size"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radio_btn_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawableTop="@drawable/tab3_select"
+            android:gravity="center"
+            android:onClick="doClick"
+            android:layout_gravity="center_vertical"
+            android:text="@string/tab_three"
+            android:textColor="@drawable/tab_text_color_selector"
+            android:textSize="@dimen/tab_text_size"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radio_btn_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawableTop="@drawable/tab4_select"
+            android:gravity="center"
+            android:onClick="doClick"
+            android:layout_gravity="center_vertical"
+            android:text="@string/tab_four"
+            android:textColor="@drawable/tab_text_color_selector"
+            android:textSize="@dimen/tab_text_size"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+</FrameLayout>

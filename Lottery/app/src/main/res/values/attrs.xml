@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="roundedimageview">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_outside_color" format="color" />
+        <attr name="border_inside_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="WheelView">
+        <attr name="label" format="reference|string" />
+        <attr name="visibleItems" format="reference|integer" />
+        <attr name="textSize" format="reference|dimension" />
+        <attr name="currentItem" format="reference|integer" />
+    </declare-styleable>
+
+</resources>
