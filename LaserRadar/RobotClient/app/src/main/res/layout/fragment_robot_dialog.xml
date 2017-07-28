@@ -23,8 +23,8 @@
 
                 <Button
                     android:id="@+id/positiveButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="@null"
                     android:textColor="#FFFFFF"
@@ -36,11 +36,11 @@
                     />
                 <Button
                     android:id="@+id/negativeButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:background="@null"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="@string/btn_cancle"
                     android:textColor="#FFFFFF"
                     android:textSize="13sp"
