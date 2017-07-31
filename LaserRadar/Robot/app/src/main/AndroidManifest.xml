@@ -61,5 +61,9 @@
             android:name=".service.ClientSocketUtil"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".service.ServerUdpSocketUtil"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 </manifest>

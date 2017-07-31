@@ -38,6 +38,7 @@ import com.android.jdrd.robot.dialog.RobotDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.service.ClientSocketUtil;
 import com.android.jdrd.robot.service.ServerSocketUtil;
+import com.android.jdrd.robot.service.ServerUdpSocketUtil;
 import com.android.jdrd.robot.service.SetStaticIPService;
 import com.android.jdrd.robot.util.Constant;
 import java.util.ArrayList;
@@ -87,6 +88,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
         startService(new Intent(this, ClientSocketUtil.class));
+        startService(new Intent(this, ServerUdpSocketUtil.class));
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
         linearlayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
         imgViewmapnRight = (ImageView) findViewById(R.id.imgViewmapnRight);
