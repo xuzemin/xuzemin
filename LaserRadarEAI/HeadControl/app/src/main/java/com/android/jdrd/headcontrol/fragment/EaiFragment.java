@@ -555,6 +555,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
 
             case R.id.button_point_stop_eai:
                 goalPathLayer.cancelNavToGoalPose();
+                handler.sendEmptyMessage(3);
 //                goalPathLayer.cancelNavigation();
                 break;
 
@@ -579,6 +580,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
 
             case R.id.button_returnback_eai:
                 Toast.makeText(mContext,"返回原点",Toast.LENGTH_SHORT).show();
+                sendNativePoint(0.0,0.0,0.0);
                 break;
 
             case R.id.button_setreturn_eai:
@@ -648,7 +650,7 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                     Toast.makeText(mContext,"继续路线",Toast.LENGTH_SHORT).show();
                     startPlan();
 //                    dialogFace();
-                    startAnimationRight();
+//                    startAnimationRight();
                     IsWait = false;
                 }
                 break;
@@ -684,16 +686,19 @@ public class EaiFragment extends BaseFragment implements View.OnClickListener, A
                 break;
             //返回原点
             case R.id.button_return_eai:
-                handler.sendEmptyMessage(4);
+//                handler.sendEmptyMessage(4);
+                Toast.makeText(mContext,"返回原点",Toast.LENGTH_SHORT).show();
+                sendNativePoint(0.0,0.0,0.0);
                 break;
             //开始漫游
             case R.id.button_roam_start_eai:
                 startRoam();
                 Toast.makeText(mContext,"开始漫游行走",Toast.LENGTH_SHORT).show();
-                startAnimationRight();
+//                startAnimationRight();
                 break;
             //停止漫游
             case R.id.button_roam_stop_eai:
+                handler.sendEmptyMessage(3);
                 break;
             //清除当前
             case R.id.button_clearlast_eai:
