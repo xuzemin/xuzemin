@@ -28,11 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ServerSocketUtil extends Service {
-    private Context mContext;
     private RobotDBHelper robotDBHelper;
     private static ServerSocket serverSocket;
-    private static Socket socket1;
-    private static Socket socket2;
     private static InputStream in = null;
     private static OutputStream out = null;
     private static String msg = null;

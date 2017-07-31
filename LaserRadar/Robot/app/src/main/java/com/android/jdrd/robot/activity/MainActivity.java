@@ -240,6 +240,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     @Override
     protected void onStart() {
         super.onStart();
+        DeskIsEdit = false;
+        findViewById(R.id.config_redact).setBackground(getResources().getDrawable(R.animator.btn_direct_selector,null));
     }
 
     @Override

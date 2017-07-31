@@ -123,31 +123,34 @@ public class RobotDialog extends Dialog {
                     gridViewAdapter.notifyDataSetChanged();
                 }
             });
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    IP = list.get(gridViewAdapter.Current_Index).get("ip").toString();
-                    if(flag){
-                        CurrentIndex = -1;
-//                        sendCommandList();
-                        ClientSocketUtil.sendCommand(IP,deskid);
-                        dismiss();
-                    }else {
-//                        sendCommand();
-                        ClientSocketUtil.sendType(IP,deskid);
-                        dismiss();
-                    }
-                    gridViewAdapter.Current_Index = -1;
-                }
-            });
-            negativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        dismiss();
-                }
-            });
         }
-
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(gridViewAdapter.Current_Index ==-1){
+                    dismiss();
+                    return;
+                }
+                IP = list.get(gridViewAdapter.Current_Index).get("ip").toString();
+                if(flag){
+                    CurrentIndex = -1;
+//                        sendCommandList();
+                    ClientSocketUtil.sendCommand(IP,deskid);
+                    dismiss();
+                }else {
+//                        sendCommand();
+                    ClientSocketUtil.sendType(IP,deskid);
+                    dismiss();
+                }
+                gridViewAdapter.Current_Index = -1;
+            }
+        });
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         super.setContentView(mView);
     }
 //    public static void sendCommand(){
