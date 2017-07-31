@@ -190,6 +190,7 @@ public class ClientSocketUtil extends Service {
                             end_cache = new String(buff, rcvLen-1, rcvLen, "utf-8");
                             end_cache = new String(end_cache.getBytes(), 0,1, "utf-8");
                             if ((("*").equals(top_cache))&& (("#").equals(end_cache))){
+                                sendBroadcastRobot("robot");
                                 if ("heartbeat".equals(rcvMsg)) {
                                 } else {
                                     rcvMsg = new String(rcvMsg.getBytes(),1,rcvLen -1, "utf-8");
