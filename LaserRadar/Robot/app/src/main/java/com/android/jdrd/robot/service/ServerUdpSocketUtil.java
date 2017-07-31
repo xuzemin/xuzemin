@@ -38,18 +38,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.content.ContentValues.TAG;
 
 public class ServerUdpSocketUtil extends Service {
     private RobotDBHelper robotDBHelper;
-    private static ServerSocket serverSocket;
     public DatagramSocket udpServerSocket;
     private static InputStream in = null;
-    private static OutputStream out = null;
-    private static String msg = null;
     public static Intent intent;
-    private MyReceiver receiver;
+//    private MyReceiver receiver;
     IntentFilter filter;
     public static List<Map> socketlist = new ArrayList<>();
 
@@ -63,7 +62,7 @@ public class ServerUdpSocketUtil extends Service {
             @Override
             public void run() {
                 try {
-                    startServerUdpSocket(Constant.ServerPort);
+                    startServerUdpSocket();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -72,31 +71,30 @@ public class ServerUdpSocketUtil extends Service {
 
         connect();
 
-        receiver = new MyReceiver();
-        filter = new IntentFilter();
-        filter.addAction("com.jdrd.activity.Main");
-        registerReceiver(receiver, filter);
+//        receiver = new MyReceiver();
+//        filter = new IntentFilter();
+//        filter.addAction("com.jdrd.activity.Main");
+//        registerReceiver(receiver, filter);
     }
 
-    public class MyReceiver extends BroadcastReceiver {
+//    public class MyReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//
+//            String camera = intent.getStringExtra("camera");
+////            Constant.debugLog("收到摄像头数据" + camera);
+////            if (camera != null) {
+////                try {
+////                    sendDateToClient(camera, Constant.ip_ros);
+////                } catch (IOException e) {
+////                    e.printStackTrace();
+////                }
+////            }
+//        }
+//    }
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            String camera = intent.getStringExtra("camera");
-//            Constant.debugLog("收到摄像头数据" + camera);
-
-//            if (camera != null) {
-//                try {
-//                    sendDateToClient(camera, Constant.ip_ros);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-        }
-    }
-
-    public void startServerUdpSocket(int port) throws IOException {
+    public void startServerUdpSocket() throws IOException {
 
         //提升service进程优先级
         setServiceForeground();
@@ -177,8 +175,59 @@ public class ServerUdpSocketUtil extends Service {
             Constant.debugLog("packet"+ss);
             //把接收到的data转换为String字符串
             Constant.debugLog("packet"+packet.getAddress().getHostAddress()+""+packet.getPort()+""+packet.getSocketAddress());
-//            String ss = new String(packet.getAddress().getHostAddress());
-            senddata(ss,packet.getAddress().getHostAddress(),packet.getPort());
+
+            boolean IsHave = false;
+            final String ip = packet.getAddress().getHostAddress();
+            final int port = packet.getPort();
+            List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
+            if(robotList !=null && robotList.size() > 0) {
+                for (int i = 0, size = robotList.size(); i < size; i++) {
+                    if (robotList.get(i).get("ip").equals(ip)) {
+                        IsHave = true;
+                        robotDBHelper.execSQL("update robot set outline = '1' where ip= '"+ ip +"'");
+                        break;
+                    }
+                }
+                if(!IsHave){
+                    robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
+                            "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
+                            "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
+                }
+            }else{
+                robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
+                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
+                        "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
+            }
+            boolean flag = true;
+            if(socketlist!=null && socketlist.size()>0){
+                for(int i = 0,size = socketlist.size();i<size;i++){
+                    if(socketlist.get(i).get("ip").equals(ip)){
+                        ((Task)socketlist.get(i).get("task")).cancel();
+                        ((Task)socketlist.get(i).get("task")).thread = new Thread();
+                        ((Task)socketlist.get(i).get("task")).send = false;
+                        socketlist.get(i).put("task",
+                                new Task(ip, port));
+                        socketlist.get(i).put("port",port);
+                        flag = false;
+                        break;
+                    }
+                }
+            }
+            if(flag){
+                Map<String, Object> map;
+                map = new HashMap<>();
+                map.put("ip", ip);
+                map.put("task",new Task(ip,port));
+                map.put("port",port);
+                socketlist.add(map);
+            }
+            if(ss!=null){
+                if(ss.equals("heartbeat")){
+                    senddata(ss,ip,port);
+                }
+            }
+            sendBroadcastMain("robot_connect");
+            sendBroadcastRobot("robot");
         } catch (SocketException e) {
             Log.e(TAG, e.toString());
         } catch (IOException e) {
@@ -201,308 +250,55 @@ public class ServerUdpSocketUtil extends Service {
         }
     }
 
-    class Task implements Runnable {
-        private Socket socket;
-        public Task(Socket socket) {
-            this.socket = socket;
+    class Task extends TimerTask {
+        private String ip = null;
+        private Timer timer;
+        private Thread thread;
+        private boolean send;
+        public Task(final String ip, final int port) {
+            this.ip = ip;
+            timer = new Timer(true);
+            timer.schedule(this,9*1000);
+            send = true;
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(send){
+                        senddata("*heartbeat#",ip,port);
+                        try {
+                            thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            thread.start();
         }
         @Override
         public void run() {
-            String str = socket.getInetAddress().toString();
-            final String  ip = str.substring(1,str.length());
-            Constant.debugLog(ip);
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "连接客户端IP为： " + ip, Toast.LENGTH_LONG).show();
-                }
-            });
-            boolean IsHave = false;
-            List<Map> robotList = robotDBHelper.queryListMap("select * from robot " ,null);
-            if(robotList !=null && robotList.size() > 0) {
-                for (int i = 0, size = robotList.size(); i < size; i++) {
-                    if (robotList.get(i).get("ip").equals(ip)) {
-                        IsHave = true;
-                        robotDBHelper.execSQL("update robot set outline = '1' where ip= '"+ ip +"'");
-                        Constant.debugLog("socketlist"+socketlist.toString());
-                        break;
-                    }
-                }
-                if(!IsHave){
-                    robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
-                            "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
-                            "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
-                }
-            }else{
-                robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
-                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area) values " +
-                        "('新机器人','"+ip+"',0,1,100,0,0,0,0,0,0,0,0,0)");
-            }
-            sendBroadcastMain("robot_connect");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final Socket socket_cache = socket;
-                    final String socket_ip = ip;
-                    while(true) {
-                        try {
-                            if(socket_cache.isClosed()){
-                                break;
-                            }else{
-//                                senddata("*heartbeat#",socket_ip);
-                                Thread.sleep(3000);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Constant.debugLog(e.toString());
-                            try {
-                                socket.close();
-                                robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
-                                sendBroadcastMain("robot_connect");
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }).start();
-
-            try {
-                in = socket.getInputStream();
-                out = socket.getOutputStream();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        inputStreamParse(in,ip,out);
-                    }
-                }).start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Constant.debugLog(IsHave+"IsHAVE");
-            if(IsHave){
-                int j = 0;
-                Constant.debugLog(socketlist.size()+"IsHAVE");
-                while(j < socketlist.size()){
-                    Constant.debugLog(socketlist.get(j).get("ip")+"socketlist.get(j).get(\"ip\")"+ip+"ip");
-                    if(socketlist.get(j).get("ip").equals(ip)){
-                        try {
-                            Constant.debugLog("inclose");
-                            ((InputStream)socketlist.get(j).get("in")).close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            Constant.debugLog("socketclose");
-                            ((Socket)socketlist.get(j).get("socket")).close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        socketlist.remove(j);
-                        Constant.debugLog("socketlist"+socketlist.toString());
-                        break;
-                    }
-                    j++;
-                    Constant.debugLog("j socketlist" +j);
+            send = false;
+            if(thread!=null){
+                if(thread.isAlive()){
+                    thread = new Thread();
                 }
             }
-            Map<String, Object> map;
-            map = new HashMap<>();
-            map.put("socket", socket);
-            map.put("ip", ip);
-            map.put("in", in);
-            map.put("out", out);
-            socketlist.add(map);
-        }
-    }
-
-    public void inputStreamParse(InputStream in,String ip,OutputStream out) {
-        byte[] buffer = new byte[1024];
-        int i = 0;
-        boolean flag = false;
-        boolean flag2 = false;
-        int len = 0;
-        int len1 = 0;
-        String string = null;
-        while (true) {
-            byte buf = 0;
-            try {
-                buf = (byte) in.read();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Constant.debugLog(e.toString());
-                removeSocket(ip);
-            }
-            len1++;
-            Constant.debugLog("buf内容：" + buf +"len1"+len1);
-            if ( -1 == buf ) {
-                removeSocket(ip);
-                break;
-            }else if (0 == buf) {
-                removeSocket(ip);
-                break;
-            }else if ('*' == buf) {
-                flag = true;
-                flag2 = true;
-            }else if ('#' == buf) {
-                flag = false;
-            }
-            if (flag) {
-                buffer[i] = buf;
-                i++;
-            } else if (flag == false && flag2) {
-                msg = new String(buffer, 1, i);
-                msg = msg.trim();
-                if (msg != null) {
-                    ++len;
-                    Constant.debugLog("msg的内容： " + msg + "  次数：" + len);
-                    byte[] bytes = msg.getBytes();
-                    Constant.debugLog(bytes[0]+"bytes");
-                    flag = false;
-                    List<String> str = new ArrayList<>();
-                    int k = 0;
-                    for(int h = 1,size = bytes.length;h<size;h++){
-                        if(bytes[h]==43){
-                            if(flag){
-                                str.add(msg.substring(k+1,h));
-                                k = h;
-                            }else{
-                                flag = true;
-                                k = h;
-                            }
-                        }
-                    }
-                    if(Integer.valueOf(str.get(str.size()-1)) == msg.length() +2){
-                        Constant.debugLog("长度正确");
-                        switch (bytes[0]) {
-                            case 97:
-                                robotDBHelper.execSQL("update robot set electric = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 98:
-                                robotDBHelper.execSQL("update robot set state = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 99:
-                                robotDBHelper.execSQL("update robot set robotstate = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 100:
-                                robotDBHelper.execSQL("update robot set obstacle = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            case 101:
-                                robotDBHelper.execSQL("update robot set lastlocation = '"+str.get(0)+"' where ip= '"+ ip +"'");
-                                sendBroadcastRobot("robot");
-                                sendBroadcastMain("robot_connect");
-                                if (out != null) {
-                                    string = "*r+0+8+#";
-                                    try {
-                                        out.write(string.getBytes());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                break;
-                            //r
-                            case 114:
-                                if(str.get(0).equals("0")){
-                                    sendBroadcastMain("robot_receive_succus");
-                                }else{
-                                    sendBroadcastMain("robot_receive_fail");
-                                }
-                                break;
-                        }
-                    }else{
-                        Constant.debugLog("长度不对");
-                        if (out != null) {
-                            string = "*r+1+8+#";
-                            try {
-                                out.write(string.getBytes());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    i = 0;
-                    for (int m = 0; m < buffer.length; m++) {
-                        buffer[m] = 0;
-                    }
-                    flag = false;
-                    flag2 = false;
-                }
-            } else {
-                Constant.debugLog((char) buf + "");
-                Constant.debugLog("数据格式不对");
-                string = "*r+1+8+#";
-                try {
-                    out.write(string.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Constant.debugLog(e.toString());
-                }
-            }
+            removeSocket(ip);
         }
     }
 
     public void removeSocket(String ip){
-        Socket socket ;
-        int j = 0;
-        while(j < socketlist.size()){
-            if(socketlist.get(j).get("ip").equals(ip)){
-                socket = (Socket) socketlist.get(j).get("socket");
-                socketlist.remove(j);
-                robotDBHelper.execSQL("update robot set outline= '0' where ip= '"+ ip +"'");
-                sendBroadcastMain("robot_unconnect");
-                sendBroadcastRobot("robot");
-                try {
-                    in.close();
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if(socketlist!=null && socketlist.size()>0){
+            for(int i = 0,size = socketlist.size();i<size;i++){
+                if(socketlist.get(i).get("ip").equals(ip)){
+                    socketlist.remove(i);
+                    break;
                 }
-                break;
             }
-            j++;
         }
+        robotDBHelper.execSQL("update robot set outline = '0' where ip= '"+ ip +"'");
+        sendBroadcastMain("robot_connect");
+        sendBroadcastRobot("robot");
     }
 
 
