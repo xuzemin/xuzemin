@@ -42,7 +42,6 @@ public class ClientUdpSocketUtil extends Service {
     private RobotDBHelper robotDBHelper;
     public static DatagramSocket udpServerSocket;
     public static Intent intent;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -61,6 +60,45 @@ public class ClientUdpSocketUtil extends Service {
         }).start();
         connect();
     }
+
+
+    class Task extends TimerTask {
+        private Timer timer;
+        private Thread thread;
+        private boolean send;
+        public Task() {
+            timer = new Timer(true);
+            timer.schedule(this,9*1000);
+            send = true;
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(send){
+                        sendDesk();
+                        try {
+                            thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            thread.start();
+        }
+        @Override
+        public void run() {
+            send = false;
+            if(thread!=null){
+                if(thread.isAlive()){
+                    thread = new Thread();
+                    Toast.makeText(getApplicationContext(),"连接超时",Toast.LENGTH_SHORT).show();
+                    new Task();
+                }
+            }
+        }
+    }
+
+
 
 
     public void startServerUdpSocket() throws IOException {
@@ -91,7 +129,7 @@ public class ClientUdpSocketUtil extends Service {
                 super.run();
                 try {
                     udpServerSocket = new DatagramSocket(8839);
-                    senddata("*heartbeat#",Constant.ServerUdpIp,51111);
+                    senddata("*heartbeat#",Constant.ServerUdpIp,Constant.ServerUdpPort);
                     while(true) {
                         ReceiveServerSocketData();
                     }
@@ -100,7 +138,6 @@ public class ClientUdpSocketUtil extends Service {
                     e.printStackTrace();
                     Log.e(TAG, e.toString());
                 }
-
             }
         }.start();
     }
@@ -126,6 +163,7 @@ public class ClientUdpSocketUtil extends Service {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            new Task();
             if(0 == code){
                 JSONArray nameList = null;
                 try {
@@ -150,6 +188,8 @@ public class ClientUdpSocketUtil extends Service {
                                     "('" + jsonObject.getInt("carNo")+ "','" + jsonObject.getString("status")  + "'" +
                                     ",'" + jsonObject.getString("voltage") + "','" + jsonObject.getString("warning") +"','"+jsonObject.getString("position")+ "')");
                         }
+                    }else{
+                        Toast.makeText(getApplicationContext(),"当前没有机器人连接",Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     robotDBHelper.execSQL("delete from area");
@@ -174,9 +214,10 @@ public class ClientUdpSocketUtil extends Service {
                         }
                     }
                 }
-
-            }else{
-                Toast.makeText(getApplicationContext(),"指令错误",Toast.LENGTH_SHORT).show();
+            }else if(1 == code){
+                Toast.makeText(getApplicationContext(),object.getString("errMsg"),Toast.LENGTH_SHORT).show();
+            }else if(11 == code){
+                Toast.makeText(getApplicationContext(),object.getString("errMsg"),Toast.LENGTH_SHORT).show();
             }
 
             sendBroadcastMain("robot_connect");

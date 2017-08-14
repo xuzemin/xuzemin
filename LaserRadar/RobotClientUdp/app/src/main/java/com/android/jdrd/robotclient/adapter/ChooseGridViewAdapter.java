@@ -66,10 +66,19 @@ public class ChooseGridViewAdapter extends BaseAdapter {
 //            viewHolder.imageView.setImageResource(R.mipmap.lixiang02);
 //        }
 //        viewHolder.name.setText(map.get("name").toString());
+        viewHolder.name.setText(map.get("id").toString()+"号机器人");
 //        switch ((int)map.get("robotstate")){
 //            case 0:
-                viewHolder.text.setText("空闲");
-                viewHolder.imageback.setImageResource(R.mipmap.kongxian);
+        if(map.get("state").equals("空闲")){
+            viewHolder.text.setText("空闲");
+            viewHolder.imageback.setImageResource(R.mipmap.kongxian);
+        }else if(map.get("state").equals("送餐")){
+            viewHolder.text.setText("送餐");
+            viewHolder.imageback.setImageResource(R.mipmap.fuwuzhong);
+        }else if(map.get("state").equals("故障")){
+            viewHolder.text.setText("故障");
+            viewHolder.imageback.setImageResource(R.mipmap.guzhang);
+        }
 //                break;
 //            case 1:
 //                viewHolder.text.setText("送餐");
@@ -80,11 +89,11 @@ public class ChooseGridViewAdapter extends BaseAdapter {
 //                viewHolder.imageback.setImageResource(R.mipmap.guzhang);
 //                break;
 //        }
-//        if(position == Current_Index){
-//            viewHolder.chooseImage.setVisibility(View.VISIBLE);
-//        }else{
-//            viewHolder.chooseImage.setVisibility(View.GONE);
-//        }
+        if(position == Current_Index){
+            viewHolder.chooseImage.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.chooseImage.setVisibility(View.GONE);
+        }
         return convertView;
     }
 
