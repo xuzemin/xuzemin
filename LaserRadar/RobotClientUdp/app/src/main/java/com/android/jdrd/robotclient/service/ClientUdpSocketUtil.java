@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -15,23 +14,18 @@ import com.android.jdrd.robotclient.R;
 import com.android.jdrd.robotclient.helper.RobotDBHelper;
 import com.android.jdrd.robotclient.util.Constant;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,6 +36,10 @@ public class ClientUdpSocketUtil extends Service {
     private RobotDBHelper robotDBHelper;
     public static DatagramSocket udpServerSocket;
     public static Intent intent;
+    private static Timer timer;
+    private static Thread thread;
+    private boolean send;
+    private Task task;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -63,24 +61,23 @@ public class ClientUdpSocketUtil extends Service {
 
 
     class Task extends TimerTask {
-        private Timer timer;
-        private Thread thread;
-        private boolean send;
         public Task() {
             timer = new Timer(true);
-            timer.schedule(this,9*1000);
+            timer.schedule(this,5*1000);
             send = true;
+            if(thread!=null){
+                thread.interrupt();
+            }
+            thread = null;
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while(send){
-                        sendDesk();
                         try {
                             thread.sleep(3000);
+                            sendRobot();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }
                 }
             });
             thread.start();
@@ -91,8 +88,10 @@ public class ClientUdpSocketUtil extends Service {
             if(thread!=null){
                 if(thread.isAlive()){
                     thread = new Thread();
+                    send = false;
                     Toast.makeText(getApplicationContext(),"连接超时",Toast.LENGTH_SHORT).show();
-                    new Task();
+                    timer.cancel();
+                    task = new Task();
                 }
             }
         }
@@ -129,7 +128,7 @@ public class ClientUdpSocketUtil extends Service {
                 super.run();
                 try {
                     udpServerSocket = new DatagramSocket(8839);
-                    senddata("*heartbeat#",Constant.ServerUdpIp,Constant.ServerUdpPort);
+                    sendRobot();
                     while(true) {
                         ReceiveServerSocketData();
                     }
@@ -163,7 +162,12 @@ public class ClientUdpSocketUtil extends Service {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            new Task();
+            if(thread !=null){
+                if(thread.isAlive()){
+                    task.cancel();
+                }
+            }
+            task = new Task();
             if(0 == code){
                 JSONArray nameList = null;
                 try {
@@ -219,7 +223,6 @@ public class ClientUdpSocketUtil extends Service {
             }else if(11 == code){
                 Toast.makeText(getApplicationContext(),object.getString("errMsg"),Toast.LENGTH_SHORT).show();
             }
-
             sendBroadcastMain("robot_connect");
             sendBroadcastRobot("robot");
         } catch (SocketException e) {

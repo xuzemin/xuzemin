@@ -70,16 +70,22 @@ public class GridViewAdapter extends BaseAdapter {
         viewHolder.name.setText(map.get("id").toString()+"号机器人");
 //        switch ((int)map.get("robotstate")){
 //            case 0:
-        if(map.get("state").equals("空闲")){
-            viewHolder.text.setText("空闲");
-            viewHolder.imageback.setImageResource(R.mipmap.kongxian);
-        }else if(map.get("state").equals("送餐")){
-            viewHolder.text.setText("送餐");
-            viewHolder.imageback.setImageResource(R.mipmap.fuwuzhong);
-        }else if(map.get("state").equals("故障")){
-            viewHolder.text.setText("故障");
+        if("".equals(map.get("obstacle"))){
+            if(map.get("state").equals("空闲")){
+                viewHolder.text.setText("空闲");
+                viewHolder.imageback.setImageResource(R.mipmap.kongxian);
+            }else if(map.get("state").equals("执行线路指令")){
+                viewHolder.text.setText("执行线路指令");
+                viewHolder.imageback.setImageResource(R.mipmap.fuwuzhong);
+            }else if(map.get("state").equals("故障")){
+                viewHolder.text.setText("故障");
+                viewHolder.imageback.setImageResource(R.mipmap.guzhang);
+            }
+        }else{
+            viewHolder.text.setText(map.get("obstacle").toString());
             viewHolder.imageback.setImageResource(R.mipmap.guzhang);
         }
+
 //                break;
 //            case 1:
 //                viewHolder.text.setText("送餐");
