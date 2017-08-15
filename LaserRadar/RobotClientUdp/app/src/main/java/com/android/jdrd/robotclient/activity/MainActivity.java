@@ -411,30 +411,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             e.printStackTrace();
         }
 
-        Map<String, Object> map ;
-//        map = new HashMap<>();
-//        map.put("image", R.mipmap.qybianji_no);
-////        map.put("name",getString(R.string.config_redact));
-//        Areadata_list.add(map);
-        if(AreaIsEdit){
-            map = new HashMap<>();
-            map.put("image", R.mipmap.add_area);
-//            map.put("name",getString(R.string.config_add));
-            Areadata_list.add(map);
-        }
+        Map<String, Object> map,map1 = null;
         if(areaList !=null && areaList.size() >0){
             for(int i=0 ,size = areaList.size();i<size;i++){
-                map = new HashMap<>();
-                if(AreaIsEdit){
-//                    map.put("image", R.mipmap.ic_launcher);
+                if(!areaList.get(i).get("name").equals("测试")){
+                    map = new HashMap<>();
+                    map.put("id", areaList.get(i).get("id"));
+                    map.put("name", areaList.get(i).get("name"));
+                    Areadata_list.add(map);
                 }else{
-//                    map.put("image", R.mipmap.bg);
+                    map1 = new HashMap<>();
+                    map1.put("id", areaList.get(i).get("id"));
+                    map1.put("name", areaList.get(i).get("name"));
                 }
-                map.put("id", areaList.get(i).get("id"));
-                map.put("name", areaList.get(i).get("name"));
-                Areadata_list.add(map);
             }
         }
+        Areadata_list.add(map1);
         area_adapter.notifyDataSetChanged();
         return Areadata_list;
     }
