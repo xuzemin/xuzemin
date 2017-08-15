@@ -318,18 +318,6 @@ public class ClientSocketUtil extends Service {
         return jsonString;
     }
 
-    public static int getJSONInt(String data, String key) {
-        JSONObject object = null;
-        int jsonString = 0;
-        try {
-            object = new JSONObject(data);
-            jsonString = object.getInt(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonString;
-    }
-
     @Override
     public void onDestroy() {
         //若通讯服务挂掉，再次开启服务
