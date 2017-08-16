@@ -79,10 +79,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-//        Intent IPService = new Intent(this, SetStaticIPService.class);
-//        startService(IPService);
-        //启动后台通讯服务
-//        startService(new Intent(this, ClientSocketUtil.class));
         startService(new Intent(this, ClientUdpSocketUtil.class));
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
         linearlayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
@@ -102,13 +98,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if(!IsRight){
-//                    startAnimationLeft();
-//                }else {
-//                    Intent intent = new Intent(MainActivity.this, RobotActivity.class);
-//                    intent.putExtra("id", (Integer) Robotdata_list.get(position).get("id"));
-//                    startActivity(intent);
-//                }
+                    startAnimationLeft();
             }
         });
         findViewById(R.id.activity_main).setOnClickListener(this);
@@ -284,27 +274,13 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             case R.id.config_redact:
                 Toast.makeText(getApplicationContext(),"更新数据",Toast.LENGTH_SHORT).show();
                 try {
-//                    ClientSocketUtil.sendRobot();
-//                    Thread.sleep(500);
-//                    ClientSocketUtil.sendDesk();
-//                    Thread.sleep(500);
-//                    ClientSocketUtil.sendArea();
-
                     ClientUdpSocketUtil.sendRobot();
                     Thread.sleep(500);
                     ClientUdpSocketUtil.sendDesk();
                     Thread.sleep(500);
-//                    ClientSocketUtil.sendArea();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-//                if(DeskIsEdit){
-//                    DeskIsEdit = false;
-//                    findViewById(R.id.config_redact).setBackground(getResources().getDrawable(R.animator.btn_direct_selector,null));
-//                }else{
-//                    DeskIsEdit = true;
-//                    findViewById(R.id.config_redact).setBackground(getResources().getDrawable(R.animator.btn_exit_selector,null));
-//                }
                 getAreaData();
                 getDeskData();
                 break;
@@ -694,11 +670,6 @@ public class MyReceiver extends BroadcastReceiver {
                 RobotDialog.thread.notify();
             }
         }else if(string.equals("robot_receive_fail")){
-            if(RobotDialog.flag){
-//                RobotDialog.sendCommandList();
-            }else{
-//                RobotDialog.sendCommand();
-            }
         }else if(string.equals("robot_destory")){
             robotDBHelper.execSQL("update robot set outline= '0' ");
         }else {
