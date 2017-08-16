@@ -74,7 +74,7 @@ public class ChooseGridViewAdapter extends BaseAdapter {
                 viewHolder.text.setText("空闲");
                 viewHolder.imageback.setImageResource(R.mipmap.kongxian);
             }else if(map.get("state").equals("执行线路指令")){
-                viewHolder.text.setText("执行线路指令");
+                viewHolder.text.setText("执行线路");
                 viewHolder.imageback.setImageResource(R.mipmap.fuwuzhong);
             }else if(map.get("state").equals("故障")){
                 viewHolder.text.setText("故障");
