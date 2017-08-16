@@ -132,7 +132,7 @@ public class RobotDialog extends Dialog {
                         dismiss();
                         gridViewAdapter.Current_Index = -1;
                     } else {
-                        Toast.makeText(context, "当前选择机器人正忙", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "当前机器人正忙，请选择其他机器人", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -150,11 +150,9 @@ public class RobotDialog extends Dialog {
         Constant.debugLog("context" + context);
         if(context != null){
             list = robotDBHelper.queryListMap("select * from robot " ,null);
-//            gridViewAdapter.notifyDataSetChanged();
             gridViewAdapter = new ChooseGridViewAdapter(context,
                     list);
             gridView.setAdapter(gridViewAdapter);
         }
     }
-
 }
