@@ -89,7 +89,7 @@ public class ClientUdpSocketUtil extends Service {
                 if(thread.isAlive()){
                     thread = new Thread();
                     send = false;
-                    Toast.makeText(getApplicationContext(),"连接超时",Toast.LENGTH_SHORT).show();
+                    connect();
                     timer.cancel();
                     task = new Task();
                 }
@@ -193,7 +193,6 @@ public class ClientUdpSocketUtil extends Service {
                                     ",'" + jsonObject.getString("voltage") + "','" + jsonObject.getString("warning") +"','"+jsonObject.getString("position")+ "')");
                         }
                     }else{
-                        Toast.makeText(getApplicationContext(),"当前没有机器人连接",Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     robotDBHelper.execSQL("delete from area");
@@ -219,9 +218,7 @@ public class ClientUdpSocketUtil extends Service {
                     }
                 }
             }else if(1 == code){
-                Toast.makeText(getApplicationContext(),object.getString("errMsg"),Toast.LENGTH_SHORT).show();
             }else if(11 == code){
-                Toast.makeText(getApplicationContext(),object.getString("errMsg"),Toast.LENGTH_SHORT).show();
             }
             sendBroadcastMain("robot_connect");
             sendBroadcastRobot("robot");
@@ -238,15 +235,25 @@ public class ClientUdpSocketUtil extends Service {
         Gson gson = new Gson();
         Map map = new LinkedHashMap();
         map.put("action", "getLineList");
-        String string = gson.toJson(map);
-        senddata(string,Constant.ServerUdpIp,Constant.ServerUdpPort);
+        final String string = gson.toJson(map);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                senddata(string,Constant.ServerUdpIp,Constant.ServerUdpPort);
+            }
+        }).start();
     }
     public static void sendRobot(){
         Gson gson = new Gson();
         Map map = new LinkedHashMap();
         map.put("action", "getCarList");
-        String string = gson.toJson(map);
-        senddata(string,Constant.ServerUdpIp,Constant.ServerUdpPort);
+        final String string = gson.toJson(map);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                senddata(string,Constant.ServerUdpIp,Constant.ServerUdpPort);
+            }
+        }).start();
     }
     public static void sendCommand(int card,int line){
         Gson gson = new Gson();
@@ -254,8 +261,13 @@ public class ClientUdpSocketUtil extends Service {
         map.put("action", "run");
         map.put("cardNo",card);
         map.put("lineNo",line);
-        String string = gson.toJson(map);
-        senddata(string,Constant.ServerUdpIp,Constant.ServerUdpPort);
+        final String string = gson.toJson(map);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                senddata(string,Constant.ServerUdpIp,Constant.ServerUdpPort);
+            }
+        }).start();
     }
 
     public static void senddata(String str, String ip, int port){

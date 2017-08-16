@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private RelativeLayout map_right_Ralative;
     private ImageView imgViewmapnRight;
     private GridView deskview,robotgirdview;
-    public static int Current_INDEX = 1;
+    public static int Current_INDEX = 0;
     private TranslateAnimation translateAnimation;
     private List<Map<String, Object>> Areadata_list =  new ArrayList<>();
     private List<Map<String, Object>> Deskdata_list =  new ArrayList<>();
@@ -130,7 +130,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         //获取数据
         desk_adapter = new DeskAdapter(this, Deskdata_list);
         deskview.setAdapter(desk_adapter);
-//        deskview.setSelector(new ColorDrawable(Color.TRANSPARENT));
         deskview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -243,23 +242,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     protected void onResume() {
         super.onResume();
         getAreaData();
-        if(CURRENT_AREA_id == 0){
-            if(areaList !=null && areaList.size() >0){
-                CURRENT_AREA_id = (int) areaList.get(0).get("id");
-                Current_INDEX = 1;
-                area_text.setText( areaList.get(0).get("name").toString());
-            }else{
-                area_text.setText("请选择左侧区域");
-            }
-        }else{
-            for(int i = 0,size = areaList.size();i<size;i++){
-                if(((int)areaList.get(i).get("id")) == CURRENT_AREA_id){
-                    area_text.setText( areaList.get(i).get("name").toString());
-                    CURRENT_AREA_id = (int) areaList.get(i).get("id");
-                    Current_INDEX = i+1;
+            if (CURRENT_AREA_id == 0) {
+                if (Areadata_list != null && Areadata_list.size() > 0) {
+                    CURRENT_AREA_id = (int) Areadata_list.get(0).get("id");
+                    Current_INDEX = 0;
+                    area_text.setText(Areadata_list.get(0).get("name").toString());
+                } else {
+                    area_text.setText("请选择左侧区域");
+                }
+            } else {
+                for (int i = 0, size = Areadata_list.size(); i < size; i++) {
+                    if (((int) Areadata_list.get(i).get("id")) == CURRENT_AREA_id) {
+                        area_text.setText(Areadata_list.get(i).get("name").toString());
+                        CURRENT_AREA_id = (int) Areadata_list.get(i).get("id");
+                        Current_INDEX = i;
+                    }
                 }
             }
-        }
         getDeskData();
         getRobotData();
         gridViewAdapter.notifyDataSetInvalidated();
@@ -283,6 +282,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 startAnimationLeft();
                 break;
             case R.id.config_redact:
+                Toast.makeText(getApplicationContext(),"更新数据",Toast.LENGTH_SHORT).show();
                 try {
 //                    ClientSocketUtil.sendRobot();
 //                    Thread.sleep(500);
@@ -305,6 +305,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
 //                    DeskIsEdit = true;
 //                    findViewById(R.id.config_redact).setBackground(getResources().getDrawable(R.animator.btn_exit_selector,null));
 //                }
+                getAreaData();
                 getDeskData();
                 break;
             case R.id.robotgirdview:
@@ -351,21 +352,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             e.printStackTrace();
         }
         Map<String, Object> map;
-        if(DeskIsEdit){
-            map = new HashMap<>();
-            map.put("image", R.animator.btn_add_desk_selector);
-            map.put("id", 0);
-//            map.put("name",getString(R.string.config_add));
-            Deskdata_list.add(map);
-        }
         if(deskList !=null && deskList.size() >0){
             for(int i=0 ,size = deskList.size();i<size;i++){
                 map = new HashMap<>();
-                if(DeskIsEdit){
-//                    map.put("image", R.mipmap.ic_launcher);
-                }else{
-//                    map.put("image", R.mipmap.bg);
-                }
                 map.put("id", deskList.get(i).get("id"));
                 map.put("name", deskList.get(i).get("name"));
                 map.put("area", deskList.get(i).get("area"));
@@ -382,18 +371,6 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
             robotList = robotDBHelper.queryListMap("select * from robot" ,null);
             Constant.debugLog("robotList"+robotList.toString());
             List<Map> Robotdata_listcache =  new ArrayList<>();
-            int j;
-            boolean flag;
-            for(int i =0 ,size = robotList.size();i < size ; i++){
-//                Constant.debugLog("size" + size +" ip"+robotList.get(i).get("ip").toString());
-//                String ip = robotList.get(i).get("ip").toString();
-//                if(robotList.get(i).get("outline").equals("1")){
-//                    Robotdata_listcache.add(robotList.get(i));
-//                    robotList.remove(i);
-//                    i--;
-//                }
-                size = robotList.size();
-            }
             Robotdata_list.addAll(Robotdata_listcache);
             Robotdata_list.addAll(robotList);
         }catch (Exception e){
@@ -426,7 +403,9 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 }
             }
         }
-        Areadata_list.add(map1);
+        if(map1 !=null){
+            Areadata_list.add(map1);
+        }
         area_adapter.notifyDataSetChanged();
         return Areadata_list;
     }
@@ -666,7 +645,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 getAreaData();
                 if(areaList !=null && areaList.size() >0){
                     CURRENT_AREA_id = (int) areaList.get(0).get("id");
-                    Current_INDEX = 1;
+                    Current_INDEX = 0;
                     area_text.setText( areaList.get(0).get("name").toString());
                 }else{
                     area_text.setText("请选择左侧区域");
