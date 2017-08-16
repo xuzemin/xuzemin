@@ -91,13 +91,13 @@
                 android:textColor="#333333"
                 />
             <Button
-                    android:id="@+id/config_redact"
+                android:id="@+id/config_redact"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:textColor="@color/black"
                 android:layout_marginRight="17dp"
                 android:textSize="25sp"
-                android:background="@mipmap/refresh"
+                android:background="@drawable/btn_direct_selector"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 />
