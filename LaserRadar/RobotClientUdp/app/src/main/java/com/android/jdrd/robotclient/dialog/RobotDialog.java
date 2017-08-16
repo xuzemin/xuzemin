@@ -16,6 +16,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.jdrd.robotclient.R;
 import com.android.jdrd.robotclient.activity.MainActivity;
@@ -39,32 +40,20 @@ import java.util.Map;
  *  Tom.Cai
  */
 public class RobotDialog extends Dialog {
-    private GridView gridView;
-    private SimpleAdapter robotadapter;
+    private static GridView gridView;
     public static List<Map> list,robotlist;
     private static RobotDBHelper robotDBHelper;
-    private List<Map> Robotdata_list =  new ArrayList<>();
-    private final String [] from ={"image","text","name","imageback"};
-    private final int [] to = {R.id.imageview,R.id.text,R.id.name,R.id.imageback};
-    private Context context;
+    private static Context context;
     public static  int CurrentIndex = -1;
-    private static String sendstr;
-    public static String IP;
     public static Thread thread = new Thread();
-    public static boolean flag;
-    private ChooseGridViewAdapter gridViewAdapter;
+    public static boolean flag = false;
+    public static ChooseGridViewAdapter gridViewAdapter = null;
     private TextView positiveButton,negativeButton;
-    private static float density;
     private static int deskid;
-    private static int type;
     public RobotDialog(Context context,String str,float density,int type) {
         super(context, R.style.SoundRecorder);
         setCustomDialog(context,density);
         this.context = context;
-        this.sendstr = str;
-        this.type = type;
-        this.density = density;
-        flag = false;
     }
 
     public RobotDialog(Context context,List<Map> robotlist,float density,int deskid) {
@@ -73,10 +62,9 @@ public class RobotDialog extends Dialog {
         this.context = context;
         this.deskid = deskid;
         this.robotlist = robotlist;
-        flag = true;
     }
 
-    private void setCustomDialog(Context context,float density) {
+    private void setCustomDialog(final Context context, float density) {
         Constant.debugLog("density"+density);
         View mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_robot_dialog, null);
         gridView = (GridView) mView.findViewById(R.id.robotgirdview);
@@ -132,18 +120,21 @@ public class RobotDialog extends Dialog {
                     dismiss();
                     return;
                 }
-                int id = (int) list.get(gridViewAdapter.Current_Index).get("id");
-//                if(flag){
-//                    CurrentIndex = -1;
-////                        sendCommandList();
-//                    ClientSocketUtil.sendCommand(IP,deskid);
-//                    dismiss();
-//                }else {
-//                        sendCommand();
-                ClientUdpSocketUtil.sendCommand(id,deskid);
+                if(flag){
+                    int id = (int) list.get(gridViewAdapter.Current_Index).get("id");
+                    ClientUdpSocketUtil.sendCommand(id,deskid);
                     dismiss();
-//                }
-                gridViewAdapter.Current_Index = -1;
+                    gridViewAdapter.Current_Index = -1;
+                }else {
+                    if (list.get(gridViewAdapter.Current_Index).get("state").equals("空闲")) {
+                        int id = (int) list.get(gridViewAdapter.Current_Index).get("id");
+                        ClientUdpSocketUtil.sendCommand(id, deskid);
+                        dismiss();
+                        gridViewAdapter.Current_Index = -1;
+                    } else {
+                        Toast.makeText(context, "当前选择机器人正忙", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
         negativeButton.setOnClickListener(new View.OnClickListener() {
@@ -154,110 +145,15 @@ public class RobotDialog extends Dialog {
         });
         super.setContentView(mView);
     }
-//    public static void sendCommand(){
-//        for(Map map: ServerSocketUtil.socketlist){
-//            if(map.get("ip").equals(IP)){
-//                final OutputStream out = (OutputStream) map.get("out");
-//                thread = new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (out != null) {
-//                            try {
-//                                out.write(sendstr.getBytes());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                });
-//                thread.start();
-//            }
-//        }
-//    }
 
-//    public static void sendCommandList(){
-//        Constant.debugLog(robotlist.toString());
-//        for(Map map: ServerSocketUtil.socketlist){
-//            if(map.get("ip").equals(IP)){
-//                final OutputStream out = (OutputStream) map.get("out");
-//                thread = new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (out != null) {
-//                            try {
-//                                if(CurrentIndex == -1){
-//                                    out.write("*s+6+#".getBytes());
-//                                    synchronized (thread){
-//                                        thread.wait();
-//                                    }
-//                                }
-//                                Constant.debugLog("CurrentIndex"+CurrentIndex);
-//                                int size;
-//                                for(size = robotlist.size();CurrentIndex<size;CurrentIndex++){
-//                                    switch ((int)robotlist.get(CurrentIndex).get("type")){
-//                                        case 0:
-//                                            List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '"+robotlist.get(CurrentIndex).get("goal")+"'" ,null);
-//                                            if(card_list !=null && card_list.size()>0){
-//                                                sendstr="*g+"+card_list.get(0).get("address")+"+"+robotlist.get(CurrentIndex).get("direction")+"+"+robotlist.get(CurrentIndex).get("speed")
-//                                                        +"+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
-//                                                        +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
-//                                            }
-//                                            setSendstr(out,sendstr);
-//                                            synchronized (thread){
-//                                                thread.wait();
-//                                            }
-//                                            break;
-//                                        case 1:
-//                                            sendstr="*d+"+robotlist.get(CurrentIndex).get("speed")
-//                                                    +"+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
-//                                                    +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
-//                                            setSendstr(out,sendstr);
-//                                            synchronized (thread){
-//                                                thread.wait();
-//                                            }
-//                                            break;
-//                                        case 2:
-//                                            sendstr="*r+"+robotlist.get(CurrentIndex).get("speed")
-//                                                    +"+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
-//                                                    +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
-//                                            setSendstr(out,sendstr);
-//                                            synchronized (thread){
-//                                                thread.wait();
-//                                            }
-//                                            break;
-//                                        case 3:
-//                                            sendstr="*w+"+robotlist.get(CurrentIndex).get("music")+"+"+robotlist.get(CurrentIndex).get("outime")+"+"
-//                                                    +robotlist.get(CurrentIndex).get("shownumber")+"+"+robotlist.get(CurrentIndex).get("showcolor");
-//                                            setSendstr(out,sendstr);
-//                                            synchronized (thread){
-//                                                thread.wait();
-//                                            }
-//                                            break;
-//                                        default:
-//                                            break;
-//                                    }
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                });
-//                thread.start();
-//            }
-//        }
-//    }
-
-    private static void setSendstr(OutputStream out,String str){
-        if(str.length() >= 6){
-            str = str + "+"+(str.length()+5)+"+#";
-        }else{
-            str = str + "+"+(str.length()+4)+"+#";
-        }
-        try {
-            out.write(str.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void getData(){
+        Constant.debugLog("context" + context);
+        if(context != null){
+            list = robotDBHelper.queryListMap("select * from robot " ,null);
+//            gridViewAdapter.notifyDataSetChanged();
+            gridViewAdapter = new ChooseGridViewAdapter(context,
+                    list);
+            gridView.setAdapter(gridViewAdapter);
         }
     }
 

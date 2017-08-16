@@ -129,6 +129,7 @@ public class ClientUdpSocketUtil extends Service {
                 try {
                     udpServerSocket = new DatagramSocket(8839);
                     sendRobot();
+                    task = new Task();
                     while(true) {
                         ReceiveServerSocketData();
                     }

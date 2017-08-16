@@ -98,7 +98,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         robotgirdview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    startAnimationLeft();
+                startAnimationLeft();
             }
         });
         findViewById(R.id.activity_main).setOnClickListener(this);
@@ -145,24 +145,14 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                     }
                 }
             }
-    });
+        });
 
-    area_adapter = new AreaAdapter(this,Areadata_list);
-    area.setAdapter(area_adapter);
-    area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            getAreaData();
-            if(AreaIsEdit){
-                if(position == 0){
-                    AreaIsEdit = false;
-                }else if(position == 1){
-                    dialog();
-                }else{
-                    dialog(Areadata_list.get(position).get("name").toString(),(int)Areadata_list.get(position).get("id"));
-                }
+        area_adapter = new AreaAdapter(this,Areadata_list);
+        area.setAdapter(area_adapter);
+        area.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getAreaData();
-            }else{
                 if(!IsRight){
                     startAnimationLeft();
                 }
@@ -170,19 +160,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 CURRENT_AREA_id = (int) Areadata_list.get(position).get("id");
                 Current_INDEX = position;
                 area_text.setText( Areadata_list.get(position).get("name").toString());
+                if(Areadata_list.get(position).get("name").equals("测试")){
+                    RobotDialog.flag = true;
+                }else{
+                    RobotDialog.flag = false;
+                }
                 getDeskData();
                 getAreaData();
             }
+        });
+        robotDBHelper.execSQL("update robot set outline= '0' ");
+        receiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.jdrd.activity.Main");
+        if(receiver != null ){
+            this.registerReceiver(receiver,filter);
         }
-    });
-    robotDBHelper.execSQL("update robot set outline= '0' ");
-    receiver = new MyReceiver();
-    IntentFilter filter = new IntentFilter();
-    filter.addAction("com.jdrd.activity.Main");
-    if(receiver != null ){
-        this.registerReceiver(receiver,filter);
     }
-}
 
     private void setGridView() {
         int size = Robotdata_list.size();
@@ -232,23 +226,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     protected void onResume() {
         super.onResume();
         getAreaData();
-            if (CURRENT_AREA_id == 0) {
-                if (Areadata_list != null && Areadata_list.size() > 0) {
-                    CURRENT_AREA_id = (int) Areadata_list.get(0).get("id");
-                    Current_INDEX = 0;
-                    area_text.setText(Areadata_list.get(0).get("name").toString());
-                } else {
-                    area_text.setText("请选择左侧区域");
-                }
+        if (CURRENT_AREA_id == 0) {
+            if (Areadata_list != null && Areadata_list.size() > 0) {
+                CURRENT_AREA_id = (int) Areadata_list.get(0).get("id");
+                Current_INDEX = 0;
+                area_text.setText(Areadata_list.get(0).get("name").toString());
             } else {
-                for (int i = 0, size = Areadata_list.size(); i < size; i++) {
-                    if (((int) Areadata_list.get(i).get("id")) == CURRENT_AREA_id) {
-                        area_text.setText(Areadata_list.get(i).get("name").toString());
-                        CURRENT_AREA_id = (int) Areadata_list.get(i).get("id");
-                        Current_INDEX = i;
-                    }
+                area_text.setText("请选择左侧区域");
+            }
+        } else {
+            for (int i = 0, size = Areadata_list.size(); i < size; i++) {
+                if (((int) Areadata_list.get(i).get("id")) == CURRENT_AREA_id) {
+                    area_text.setText(Areadata_list.get(i).get("name").toString());
+                    CURRENT_AREA_id = (int) Areadata_list.get(i).get("id");
+                    Current_INDEX = i;
                 }
             }
+        }
         getDeskData();
         getRobotData();
         gridViewAdapter.notifyDataSetInvalidated();
@@ -640,22 +634,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
         deleteDialog.show();
     }
 
-public class MyReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        String StringE = intent.getStringExtra("msg");
-        Constant.debugLog("msg"+StringE);
-        if(StringE !=null && !StringE.equals("")){
-            pasreJson(StringE);
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String StringE = intent.getStringExtra("msg");
+            Constant.debugLog("msg"+StringE);
+            if(StringE !=null && !StringE.equals("")){
+                pasreJson(StringE);
+            }
         }
     }
-}
     public void pasreJson(String string){
         if(string.equals("robot_connect") || string.equals("robot_unconnect")){
             getRobotData();
             getDeskData();
             getAreaData();
             gridViewAdapter.notifyDataSetInvalidated();
+            RobotDialog.getData();
         }else if(string.equals("robot")){
             getRobotData();
         }else if(string.equals("desk")){
