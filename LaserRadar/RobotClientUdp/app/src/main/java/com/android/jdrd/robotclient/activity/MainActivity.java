@@ -395,22 +395,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 translateAnimation.setAnimationListener(MainActivity.this);
                 map_right_Ralative.startAnimation(translateAnimation);
 
-                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,Constant.linearWidth,
-                        Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,0.0F
-                );
-                translateAnimation.setDuration(500);
-                translateAnimation.setFillAfter(true);
-                linear_robot.startAnimation(translateAnimation);
-                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,Constant.linearWidth,
-                        Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,0.0F
-                );
-                translateAnimation.setDuration(500);
-                translateAnimation.setFillAfter(true);
-                linear_desk.startAnimation(translateAnimation);
+//                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,Constant.linearWidth,
+//                        Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,0.0F
+//                );
+//                translateAnimation.setDuration(500);
+//                translateAnimation.setFillAfter(true);
+//                linear_robot.startAnimation(translateAnimation);
+//                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,Constant.linearWidth,
+//                        Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,0.0F
+//                );
+//                translateAnimation.setDuration(500);
+//                translateAnimation.setFillAfter(true);
+//                linear_desk.startAnimation(translateAnimation);
             }else {
                 translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,0.0f,
                         Animation.ABSOLUTE,-Constant.linearWidth,
@@ -422,22 +422,22 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
                 translateAnimation.setAnimationListener(MainActivity.this);
                 map_right_Ralative.startAnimation(translateAnimation);
 
-                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
-                        Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,0.0f
-                );
-                translateAnimation.setDuration(500);
-                translateAnimation.setFillAfter(true);
-                linear_robot.startAnimation(translateAnimation);
-                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
-                        Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,0.0f,
-                        Animation.ABSOLUTE,0.0f
-                );
-                translateAnimation.setDuration(500);
-                translateAnimation.setFillAfter(true);
-                linear_desk.startAnimation(translateAnimation);
+//                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
+//                        Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,0.0f
+//                );
+//                translateAnimation.setDuration(500);
+//                translateAnimation.setFillAfter(true);
+//                linear_robot.startAnimation(translateAnimation);
+//                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE,Constant.linearWidth,
+//                        Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,0.0f,
+//                        Animation.ABSOLUTE,0.0f
+//                );
+//                translateAnimation.setDuration(500);
+//                translateAnimation.setFillAfter(true);
+//                linear_desk.startAnimation(translateAnimation);
             }
         }
     }

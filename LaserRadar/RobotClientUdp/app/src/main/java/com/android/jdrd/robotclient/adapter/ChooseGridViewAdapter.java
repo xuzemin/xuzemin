@@ -25,7 +25,6 @@ public class ChooseGridViewAdapter extends BaseAdapter {
     public ChooseGridViewAdapter(Context _context, List<Map>  _list) {
         this.list = _list;
         this.context = _context;
-        Current_Index = -1;
     }
 
     @Override
@@ -80,6 +79,9 @@ public class ChooseGridViewAdapter extends BaseAdapter {
                 viewHolder.text.setText("故障");
                 viewHolder.imageback.setImageResource(R.mipmap.guzhang);
             }
+        }else if("脱轨,".equals(map.get("obstacle"))){
+            viewHolder.text.setText("脱轨");
+            viewHolder.imageback.setImageResource(R.mipmap.guzhang);
         }else{
             viewHolder.text.setText(map.get("obstacle").toString());
             viewHolder.imageback.setImageResource(R.mipmap.guzhang);
