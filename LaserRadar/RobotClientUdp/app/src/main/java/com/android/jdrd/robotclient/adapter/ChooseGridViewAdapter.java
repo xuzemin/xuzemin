@@ -82,6 +82,9 @@ public class ChooseGridViewAdapter extends BaseAdapter {
         }else if("脱轨,".equals(map.get("obstacle"))){
             viewHolder.text.setText("脱轨");
             viewHolder.imageback.setImageResource(R.mipmap.guzhang);
+        }else if("障碍物停止,".equals(map.get("obstacle"))){
+            viewHolder.text.setText("障碍物");
+            viewHolder.imageback.setImageResource(R.mipmap.guzhang);
         }else{
             viewHolder.text.setText(map.get("obstacle").toString());
             viewHolder.imageback.setImageResource(R.mipmap.guzhang);
