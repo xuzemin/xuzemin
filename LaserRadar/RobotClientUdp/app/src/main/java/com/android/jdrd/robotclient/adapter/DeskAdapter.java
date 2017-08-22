@@ -64,12 +64,12 @@ public class DeskAdapter extends BaseAdapter {
             viewHolder.image.setVisibility(View.VISIBLE);
             viewHolder.text.setVisibility(View.GONE);
             if(position == 0){
-                viewHolder.image.setImageResource(R.animator.btn_add_desk_selector);
+                viewHolder.image.setImageResource(R.drawable.btn_add_desk_selector);
             }else{
                 if(MainActivity.DeskIsEdit){
                     viewHolder.bjzt.setVisibility(View.VISIBLE);
                 }
-                viewHolder.image.setImageResource(R.animator.btn_add_selector);
+                viewHolder.image.setImageResource(R.drawable.btn_add_selector);
             }
         }else{
             if(MainActivity.DeskIsEdit){

@@ -85,15 +85,15 @@ public class AreaAdapter extends BaseAdapter {
             if(position == 0){
                 viewHolder.image2.setVisibility(View.VISIBLE);
                 if(MainActivity.AreaIsEdit){
-                    viewHolder.image2.setImageResource(R.animator.btn_add_area_selector);
+                    viewHolder.image2.setImageResource(R.drawable.btn_add_area_selector);
                 }else{
-                    viewHolder.image2.setImageResource(R.animator.btn_exit_area_selector);
+                    viewHolder.image2.setImageResource(R.drawable.btn_exit_area_selector);
                 }
             }else{
                 if(MainActivity.AreaIsEdit){
                     viewHolder.bjzt.setVisibility(View.VISIBLE);
                     viewHolder.image.setVisibility(View.VISIBLE);
-                    viewHolder.image.setImageResource(R.animator.btn_add_selector);
+                    viewHolder.image.setImageResource(R.drawable.btn_add_selector);
                 }
             }
         }else{

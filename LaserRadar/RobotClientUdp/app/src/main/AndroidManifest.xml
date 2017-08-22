@@ -22,7 +22,7 @@
     <application
         android:allowBackup="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/appicon"
         android:supportsRtl="true"
         android:label="@string/app_name"
         >

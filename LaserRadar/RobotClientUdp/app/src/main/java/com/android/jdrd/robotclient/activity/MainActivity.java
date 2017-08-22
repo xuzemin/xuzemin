@@ -468,42 +468,42 @@ public class MainActivity extends Activity implements View.OnClickListener, Anim
     private void startAnimationShrink(){
         Animation translate;
         if (isShrink){
-            findViewById(R.id.shrink).setBackground(getResources().getDrawable(R.animator.btn_shrink_selector));
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_left);
+            findViewById(R.id.shrink).setBackground(getResources().getDrawable(R.drawable.btn_shrink_selector));
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_in_left);
             translate.setAnimationListener(animationListener);
             left.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_right);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_in_right);
             translate.setAnimationListener(animationListener);
             right.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_up);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_in_up);
             translate.setAnimationListener(animationListener);
             up.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_down);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_in_down);
             translate.setAnimationListener(animationListener);
             down.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_in_stop);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_in_stop);
             translate.setAnimationListener(animationListener);
             stop.startAnimation(translate);
         }else {
-            findViewById(R.id.shrink).setBackground(getResources().getDrawable(R.animator.btn_shrink_out_selector));
+            findViewById(R.id.shrink).setBackground(getResources().getDrawable(R.drawable.btn_shrink_out_selector));
             left.setVisibility(View.VISIBLE);
             down.setVisibility(View.VISIBLE);
             up.setVisibility(View.VISIBLE);
             right.setVisibility(View.VISIBLE);
             stop.setVisibility(View.VISIBLE);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_left);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_out_left);
             translate.setAnimationListener(animationListener);
             left.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_right);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_out_right);
             translate.setAnimationListener(animationListener);
             right.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_up);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_out_up);
             translate.setAnimationListener(animationListener);
             up.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_down);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_out_down);
             translate.setAnimationListener(animationListener);
             down.startAnimation(translate);
-            translate= AnimationUtils.loadAnimation(this,R.animator.translate_out_stop);
+            translate= AnimationUtils.loadAnimation(this,R.anim.translate_out_stop);
             translate.setAnimationListener(animationListener);
             stop.startAnimation(translate);
         }

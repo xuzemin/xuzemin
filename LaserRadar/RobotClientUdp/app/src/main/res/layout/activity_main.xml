@@ -261,5 +261,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="4dp"
         android:layout_marginRight="7dp"
-        android:background="@animator/btn_shrink_selector"/>
+        android:background="@drawable/btn_shrink_selector"/>
 </RelativeLayout>
