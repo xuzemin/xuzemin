@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.jdrd.robotclient.R;
+import com.android.jdrd.robotclient.util.Constant;
 
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,7 @@ public class ChooseGridViewAdapter extends BaseAdapter {
         viewHolder.name.setText(map.get("id").toString()+"号机器人");
 //        switch ((int)map.get("robotstate")){
 //            case 0:
+        Constant.debugLog("obstacle"+map.get("obstacle"));
         if("".equals(map.get("obstacle"))){
             if(map.get("state").equals("空闲")){
                 viewHolder.text.setText("空闲");
@@ -79,7 +81,7 @@ public class ChooseGridViewAdapter extends BaseAdapter {
                 viewHolder.text.setText("故障");
                 viewHolder.imageback.setImageResource(R.mipmap.guzhang);
             }
-        }else if("脱轨,".equals(map.get("obstacle"))){
+        }else if("脱轨,".equals(map.get("obstacle")) || "脱轨,障碍物停止,".equals(map.get("obstacle")) ){
             viewHolder.text.setText("脱轨");
             viewHolder.imageback.setImageResource(R.mipmap.guzhang);
         }else if("障碍物停止,".equals(map.get("obstacle"))){

@@ -20,7 +20,7 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
     <style name="AppWelcome" parent="AppTheme">
-        <item name="android:windowBackground">@mipmap/china</item>
+        <item name="android:windowBackground">@mipmap/flashview</item>
     </style>
     <style name="SoundRecorder" parent="android:style/Theme.Dialog">
         <item name="android:windowCloseOnTouchOutside">true</item>

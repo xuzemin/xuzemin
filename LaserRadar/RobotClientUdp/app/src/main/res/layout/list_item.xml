@@ -10,7 +10,7 @@
         android:layout_width="80.0dip"
         android:layout_height="80.0dip"
         android:layout_gravity="center_horizontal"
-        android:src="@mipmap/china" >
+        android:src="@mipmap/flashview" >
     </ImageView>
 
     <TextView
