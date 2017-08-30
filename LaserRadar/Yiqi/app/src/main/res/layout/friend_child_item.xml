@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/window_bg"
+    android:orientation="horizontal"
+    android:visibility="visible" >
+
+    <TextView
+		android:id="@+id/alpha"
+		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:paddingLeft="13dip"
+  		android:background="#333333"
+		android:textColor="#99CCFF"
+		android:textAppearance="?android:textAppearanceMedium"
+		android:visibility="gone" />
+		
+    
+    <ImageView
+        android:id="@+id/friend_icon"
+        android:layout_width="40.0dp"
+        android:layout_height="40.0dp"
+        android:layout_margin="3dip"
+        android:background="@drawable/bitboy" />
+
+    <TextView
+        android:id="@+id/friend_nickname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/friend_icon"
+        android:paddingTop="5.0dp"
+        android:text="游戏人间"
+        android:textColor="@color/title_bg"
+        android:textSize="16.0sp" />
+
+    <TextView
+        android:id="@+id/friend_mood"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/friend_nickname"
+        android:layout_toRightOf="@id/friend_icon"
+        android:text="Q我吧，期待..."
+        android:textSize="12.0sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/friend_icon"
+        android:background="@drawable/interval_line" />
+
+    <TextView
+        android:id="@+id/new_msg_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/new_msg"
+        android:paddingLeft="19dp"
+        android:paddingTop="13dp"
+        android:text="1"
+        android:textSize="18sp"
+        android:visibility="invisible" />
+    
+    
+
+</RelativeLayout>

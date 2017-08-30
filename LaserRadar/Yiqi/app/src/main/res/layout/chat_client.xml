@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rl_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:background="@drawable/title_bar"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/chat_back"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selector_btn_back"
+            android:text="会话"
+            android:textColor="#ffffff"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/chat_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="way"
+            android:textColor="#ffffff"
+            android:textSize="16.0sp" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/formclient_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:background="#FFFFFFFF"
+        android:cacheColorHint="@null"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:stackFromBottom="true" />
+    
+        <RelativeLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.01"
+            android:background="#FFEEEEEE" >
+
+        <LinearLayout
+            android:id="@+id/ll_anniu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/chatting_biaoqing_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@null"
+                android:minWidth="0.0dip"
+                android:paddingBottom="4.0dip"
+                android:paddingTop="5.0dip"
+                android:src="@animator/chatting_setmode_biaoqing_btn"
+                android:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/chatting_biaoqing_focuse_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@null"
+                android:minWidth="0.0dip"
+                android:paddingBottom="4.0dip"
+                android:paddingTop="5.0dip"
+                android:src="@animator/chatting_setmode_biaoqing_btn"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/ll_fasong"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+
+                <EditText
+                    android:id="@+id/formclient_text"
+                    android:layout_width="250dip"
+                    android:layout_height="40dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/login_edit_normal"
+                    android:paddingTop="5.0dip"
+                    android:singleLine="true"
+                    android:textSize="18sp" >
+
+                    <requestFocus />
+                </EditText>
+
+                <Button
+                    android:id="@+id/formclient_btsend"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="3dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/chat_send_btn"
+                    android:paddingTop="5.0dip"
+                    android:text="发送" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="140dip"
+            android:layout_below="@+id/ll_anniu"
+            android:layout_gravity="center"
+            android:background="#f32f33"
+            android:visibility="gone"
+             >
+        </android.support.v4.view.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/page_select"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewpager"
+            android:background="#ddd"
+            android:gravity="center_horizontal"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/page0_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="matrix"
+                android:src="@mipmap/page_focused" />
+
+            <ImageView
+                android:id="@+id/page1_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:scaleType="matrix"
+                android:src="@mipmap/page_unfocused" />
+
+            <ImageView
+                android:id="@+id/page2_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:scaleType="matrix"
+                android:src="@mipmap/page_unfocused" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

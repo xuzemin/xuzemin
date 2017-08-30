@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/ChatActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/FriendAddActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/FriendListActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/LoginActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/LoginActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/RegisterActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/RegisterActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/activity/WelcomeActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/adapter/ChatAdapter.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/listener/ImgInterceptor.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/listener/ImgListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/listener/MessageInterceptor.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/listener/MessageListener.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/model/Msg.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/model/OneFridenMessages.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/service/FriendAddService.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/service/XmppApplication.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/service/XmppConnection.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/service/XmppService.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/util/DateUtil.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/util/DbHelper.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/util/DialogFactory.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/util/MyToast.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/util/NotiUtil.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/util/StringUtil.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/d3/yiqi/util/TransUtils.java" charset="GBK" />
+  </component>
+</project>
