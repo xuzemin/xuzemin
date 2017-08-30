@@ -16,7 +16,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 
-
 public class MainActivity extends AppCompatActivity {
   private static final int RECORD_REQUEST_CODE  = 101;
   private static final int STORAGE_REQUEST_CODE = 102;

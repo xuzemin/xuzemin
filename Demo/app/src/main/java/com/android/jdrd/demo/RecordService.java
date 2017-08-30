@@ -128,7 +128,6 @@ public class RecordService extends Service {
       }
 
       Toast.makeText(getApplicationContext(), rootDir, Toast.LENGTH_SHORT).show();
-
       return rootDir;
     } else {
       return null;
