@@ -69,7 +69,7 @@ public class ChooseGridViewAdapter extends BaseAdapter {
         viewHolder.name.setText(map.get("id").toString()+"号机器人");
 //        switch ((int)map.get("robotstate")){
 //            case 0:
-        Constant.debugLog("obstacle"+map.get("obstacle"));
+//        Constant.debugLog("obstacle"+map.get("obstacle"));
         if("".equals(map.get("obstacle"))){
             if(map.get("state").equals("空闲")){
                 viewHolder.text.setText("空闲");

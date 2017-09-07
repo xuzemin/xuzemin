@@ -33,7 +33,7 @@ public class Constant {
     public static int ClientPort = 8839;
 
     public static int ServerUdpPort = 51111;
-    public static String ServerUdpIp = "192.168.1.4";
+    public static String ServerUdpIp = "192.168.2.103";
 //    public static String ip_bigScreen = "/192.168.88.110";
 //    public static String ip_ros = "/192.168.88.101";
 //    测试用IP

@@ -255,6 +255,7 @@ public class ClientUdpSocketUtil extends Service {
                 senddata(string,Constant.ServerUdpIp,Constant.ServerUdpPort);
             }
         }).start();
+        Log.e(TAG, "接受开始");
     }
     public static void sendCommand(int card,int line){
         Gson gson = new Gson();
@@ -263,6 +264,7 @@ public class ClientUdpSocketUtil extends Service {
         map.put("cardNo",card);
         map.put("lineNo",line);
         final String string = gson.toJson(map);
+        Constant.debugLog(string);
         new Thread(new Runnable() {
             @Override
             public void run() {
