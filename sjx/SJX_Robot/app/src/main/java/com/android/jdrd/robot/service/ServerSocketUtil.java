@@ -207,6 +207,23 @@ public class ServerSocketUtil extends Service {
         }
     }
 
+    public void btSendBytes(byte[] data, Map map) throws IOException {
+        try {
+            if (((Socket)map.get("socket")).isClosed()) {
+
+            } else {
+                //获取输出流
+//                out = socket.getOutputStream();
+                if (out != null) {
+                    //写入数据
+                    out.write(data);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //创建Task线程
     class Task implements Runnable {
         private Socket socket;
@@ -399,12 +416,16 @@ public class ServerSocketUtil extends Service {
         while (true) {
             try {
                 //读取输入流
-                b = (byte) in.read(buffer);
+                if(!((Socket)map.get("socket")).isClosed()){
+                    b = (byte) in.read(buffer);
+                }else{
+                    break;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 // 断开Socket
-                socketList.remove(socketnumber);
-//                removeSocket(ip);
+//                socketList.remove(socketnumber);
+                removeSocket(ip);
             }
             // 获取读取到的字节长度
             Constant.debugLog("b的长度:----->" + b);
@@ -412,8 +433,10 @@ public class ServerSocketUtil extends Service {
                 try {
                     in.close();
                     out.close();
-                    socketList.remove(socketnumber);
-//                    removeSocket(ip);
+//                    if(socketList.get(socketnumber)!=null) {
+//                        socketList.remove(socketnumber);
+                    removeSocket(ip);
+//                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -562,9 +585,14 @@ public class ServerSocketUtil extends Service {
                             if (out != null) {
                                 // 发送的数据
                                 data = Protocol.getSendData(Protocol.RECEIVE, Protocol.getCommandData(Protocol.ROBOT_RAIL_SUCCESS));
+//                                try {
+//                                    // 发送接收应答成功
+//                                    out.write(data);
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
                                 try {
-                                    // 发送接收应答成功
-                                    out.write(data);
+                                    btSendBytes(data,map);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -585,11 +613,12 @@ public class ServerSocketUtil extends Service {
                             Constant.debugLog("socketlist  收到反馈");
                             // 判断
 //                            if (buffer[5] == 0) {
+                            if (socketList.get(socketnumber)!=null) {
                                 final Map CurrentMap = socketList.get(socketnumber);
                                 int number = (int) CurrentMap.get("Cunrrent");
                                 List list = (List) CurrentMap.get("list");
-                                Constant.debugLog("socketlist"+number);
-                                Constant.debugLog("socketlist"+list.size());
+                                Constant.debugLog("socketlist" + number);
+                                Constant.debugLog("socketlist" + list.size());
                                 if (number != END) {
                                     number++;
                                     if (number >= list.size()) {
@@ -597,22 +626,23 @@ public class ServerSocketUtil extends Service {
                                     }
                                     socketList.get(socketnumber).put("Cunrrent", number);
                                     int waitime = (int) CurrentMap.get("waittime");
-                                    Constant.debugLog("socketlist waitime"+waitime);
+                                    Constant.debugLog("socketlist waitime" + waitime);
                                     if (waitime > 0) {
                                         Timer timer = new Timer();
-                                        TimerTask task= new TimerTask() {
+                                        TimerTask task = new TimerTask() {
                                             @Override
                                             public void run() {
                                                 sendlist(ip);
                                             }
                                         };
                                         timer.schedule(task, waitime * 1000);
-                                    }else{
+                                    } else {
                                         sendlist(ip);
                                     }
                                 } else {
                                     socketList.get(socketnumber).put("Cunrrent", 0);
                                 }
+                            }
 //                            }else {
 //                                sendlist(ip);
 ////                                sendBroadcastMain("robot_receive_fail");
@@ -650,12 +680,12 @@ public class ServerSocketUtil extends Service {
                         }
                     }
                 }
+                byteArray = new byte[ret.length() / 2];
                 // TODO 做是否以*<开始
             } else {
                 // 断开Socket
                 removeSocket(ip);
             }
-
         }
     }
 
