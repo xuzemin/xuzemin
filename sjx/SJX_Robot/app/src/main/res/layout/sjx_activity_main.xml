@@ -12,18 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:background="@mipmap/action_bar">
+
         <RelativeLayout
             android:id="@+id/setting_back"
             android:layout_width="40dp"
             android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/imgViewmapnRight"
-            android:layout_width="20dp"
-            android:layout_height="16dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@animator/btn_more_selector" />
+
+            <ImageView
+                android:id="@+id/imgViewmapnRight"
+                android:layout_width="20dp"
+                android:layout_height="16dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@animator/btn_more_selector" />
         </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -151,18 +154,57 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
 
-        <GridView
-            android:id="@+id/gview"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:columnWidth="109dp"
-            android:divider="#EEEEEE"
-            android:dividerHeight="1dp"
-            android:numColumns="auto_fit" />
+            android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/gview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/lay"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:columnWidth="109dp"
+                android:divider="#EEEEEE"
+                android:dividerHeight="1dp"
+                android:numColumns="auto_fit" />
+
+            <RelativeLayout
+                android:id="@+id/lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/len_48"
+                android:layout_alignParentBottom="true"
+                android:background="#548cff"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/operate_back"
+                    android:layout_width="@dimen/len_52"
+                    android:layout_height="@dimen/len_52"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:text="返回"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/operate_ok"
+                    android:layout_width="@dimen/len_52"
+                    android:layout_height="@dimen/len_52"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="4dp"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
     </LinearLayout>
 
     <RelativeLayout

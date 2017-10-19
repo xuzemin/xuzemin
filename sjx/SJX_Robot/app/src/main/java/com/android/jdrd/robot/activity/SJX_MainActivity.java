@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -123,8 +124,14 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
     private boolean isShrink = false;
     //密度
     private float density;
-
+    // Login
     public static String name = null;
+
+    // 底部确定取消
+    private RelativeLayout lay;
+    private ArrayList<Boolean> selectItems; //用于存储已选中项目的位置
+    private boolean isState;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +156,8 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
         //初始化控件
         // 左侧平移出来的LinearLayout
         linearLayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
+        // TODO
+        lay = (RelativeLayout) findViewById(R.id.lay);
 
         // 导航栏左侧ImageView菜单
         imgViewMapRight = (ImageView) findViewById(R.id.imgViewmapnRight);
@@ -239,7 +248,7 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
 
         //获取数据
         desk_adapter = new SJX_DeskAdapter(this, deskData_list);
-
+        selectItems = new ArrayList<>();
         // 初始化桌面列表
         deskView = (GridView) findViewById(R.id.gview);
         deskView.setAdapter(desk_adapter);
@@ -254,27 +263,43 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
                     // 获取区域数据
                     getAreaData();
                     if (areaList != null && areaList.size() > 0 && CURRENT_AREA_id != 0) {
-                        if (DeskIsEdit) {
-                            if (position == 0) {
-                                // 跳转到DeskConfigPathActivity 并传递area
-                                Intent intent = new Intent(SJX_MainActivity.this, SJX_DeskConfigPathActivity.class);
-                                intent.putExtra("area", CURRENT_AREA_id);
-                                startActivity(intent);
+                        // TODO 复选框
+                        if (isState) {
+                            CheckBox checkBox = (CheckBox) view.findViewById(R.id.ck_select);
+                            if (checkBox.isChecked()) {
+                                checkBox.setChecked(false);
+                                selectItems.set(position, false);
                             } else {
-                                // 跳转到DeskConfigPathActivity 并传递area
-                                Intent intent = new Intent(SJX_MainActivity.this, SJX_DeskConfigPathActivity.class);
-                                intent.putExtra("area", CURRENT_AREA_id);
-                                intent.putExtra("id", (Integer) deskData_list.get(position).get("id"));
-                                startActivity(intent);
+                                checkBox.setChecked(true);
+                                selectItems.set(position, true);
                             }
-                            // 获取桌面数据
-                            getDeskData();
+                            desk_adapter.notifyDataSetChanged();
                         } else {
-                            // 打印Log
-                            Constant.debugLog("position----->" + CURRENT_AREA_id);
-                            commandList = robotDBHelper.queryListMap("select * from command where desk = '" + deskData_list.get(position).get("id") + "'", null);
-                            SJX_RobotDialog.deskid = (int) deskData_list.get(position).get("id");
-                            robotDialog(commandList);
+
+                            if (DeskIsEdit) {
+                                if (position == 0) {
+                                    // 跳转到DeskConfigPathActivity 并传递area
+                                    Intent intent = new Intent(SJX_MainActivity.this, SJX_DeskConfigPathActivity.class);
+                                    intent.putExtra("area", CURRENT_AREA_id);
+                                    startActivity(intent);
+                                } else {
+                                    // 跳转到DeskConfigPathActivity 并传递area
+                                    Intent intent = new Intent(SJX_MainActivity.this, SJX_DeskConfigPathActivity.class);
+                                    intent.putExtra("area", CURRENT_AREA_id);
+                                    intent.putExtra("id", (Integer) deskData_list.get(position).get("id"));
+                                    startActivity(intent);
+                                }
+                                // 获取桌面数据
+                                getDeskData();
+                            } else {
+
+                                // 打印Log
+                                Constant.debugLog("position----->" + CURRENT_AREA_id);
+                                commandList = robotDBHelper.queryListMap("select * from command where desk = '" + deskData_list.get(position).get("id") + "'", null);
+                                Constant.debugLog("commandList的命令命令数:" + commandList.toString());
+                                SJX_RobotDialog.deskid = (int) deskData_list.get(position).get("id");
+                                robotDialog(commandList);
+                            }
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "请添加并选择区域", Toast.LENGTH_SHORT).show();
@@ -282,7 +307,30 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
                 }
             }
         });
+        // 长按监听
+        deskView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                getDeskData();
+                if (!isState) {
+                    selectItems = new ArrayList<>();
+                    for (int i = 0; i < deskList.size(); i++) {
+                        selectItems.add(false);
+                    }
+                    CheckBox box = (CheckBox) view.findViewById(R.id.ck_select);
+                    box.setChecked(true);
+                    selectItems.set(position, true);
+                    setState(true);
+                    desk_adapter.setIsState(true);
+                    showOpervate();
+                }
+                return false;
+            }
+        });
+
+
+        // 初始化区域适配器
         area_adapter = new SJX_AreaAdapter(this, areaData_list);
         area.setAdapter(area_adapter);
         // 区域子列表点击事件
@@ -345,6 +393,94 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
         // 注册广播
         if (receiver != null) {
             this.registerReceiver(receiver, filter);
+        }
+    }
+
+    // 获取选中的Items
+    public ArrayList<Boolean> getSelectItems() {
+        return selectItems;
+    }
+
+    //设置当前状态 是否在多选模式
+    private void setState(boolean b) {
+        isState = b;
+        if (b) {
+            showOpervate();
+        } else {
+            dismissOperate();
+        }
+    }
+
+    /**
+     * 显示操作界面
+     */
+    private void showOpervate() {
+        lay.setVisibility(View.VISIBLE);
+        config_redact.setVisibility(View.GONE);
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.operate_in);
+        lay.setAnimation(anim);
+        // 返回、删除、全选和反选按钮初始化及点击监听
+        TextView tvBack = (TextView) findViewById(R.id.operate_back);
+        TextView tvOk = (TextView) findViewById(R.id.operate_ok);
+
+        tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < deskList.size(); i++) {
+                    if (selectItems.get(i)) {
+                        deskList.set(i, null);
+                    }
+                }
+
+                getDeskData();
+                selectItems = new ArrayList<>();
+                for (int i = 0; i < deskList.size(); i++) {
+                    selectItems.add(false);
+                }
+                desk_adapter.notifyDataSetChanged();
+                if (deskList.size() == 0) {
+                    desk_adapter.setIsState(false);
+                    setState(false);
+                    return;
+                }
+            }
+        });
+
+        tvBack.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (isState) {
+                    selectItems.clear();
+                    desk_adapter.setIsState(false);
+                    setState(false);
+                    dismissOperate();
+                }
+            }
+        });
+
+    }
+
+    /**
+     * 隐藏操作界面
+     */
+    private void dismissOperate() {
+        Animation anim = AnimationUtils.loadAnimation(SJX_MainActivity.this, R.anim.operate_out);
+        lay.setVisibility(View.GONE);
+        config_redact.setVisibility(View.VISIBLE);
+        lay.setAnimation(anim);
+    }
+
+    // 返回键取消多选模式
+    @Override
+    public void onBackPressed() {
+        if (isState) {
+            selectItems.clear();
+            desk_adapter.setIsState(false);
+            setState(false);
+
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -992,6 +1128,7 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
         // 显示Dialog
         SJXDeleteDialog.show();
     }
+
 
     // 注册广播
     public class MyReceiver extends BroadcastReceiver {
