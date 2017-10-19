@@ -45,6 +45,7 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
     public static int areaid = 0;
     private Bitmap backbitmap;
     public static double point_x = 0,point_y = 0;
+    public static double point_x_init = 0,point_y_init = 0;
     private File file;
     private Map areaconfig;
     public static double initial_x = 14.4,initial_y = 13.8;
@@ -107,13 +108,15 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if(!SJX_CoordinateConfigActivity.pointx.getText().toString().equals("") && !CoordinateView.isWrite){
-            CoordinateView.point_x = ((Float.valueOf(SJX_CoordinateConfigActivity.pointx.getText().toString())+
-                    CoordinateView.initial_x) * 20) * CoordinateView.scale;
+            point_x = ((Float.valueOf(SJX_CoordinateConfigActivity.pointx.getText().toString())+
+                    initial_x) * 20) * CoordinateView.scale;
         }
         if(!SJX_CoordinateConfigActivity.pointy.getText().toString().equals("") && !CoordinateView.isWrite) {
-            CoordinateView.point_y = ((Float.valueOf(SJX_CoordinateConfigActivity.pointy.getText().toString()) / -1 -
-                    CoordinateView.initial_y) * 20 + Constant.Bitmap_HEIGHT) * CoordinateView.scale;
+            point_y = ((Float.valueOf(SJX_CoordinateConfigActivity.pointy.getText().toString()) / -1 -
+                    initial_y) * 20 + Constant.Bitmap_HEIGHT) * scale;
         }
+        point_x_init = ((initial_x) * 20) * scale;
+        point_y_init = ((-initial_y) * 20 + Constant.Bitmap_HEIGHT) * scale;
         new Thread(new MyLoop()).start();
     }
 
@@ -151,6 +154,10 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
         p.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL ));
         if(point_x !=0 || point_y != 0){
             canvas.drawCircle( (float) (point_x + translate_x) , (float) (point_y + translate_y), 14, p);
+        }
+        p.setColor(getResources().getColor(R.color.colorPrimary));
+        if(point_x !=0 || point_y != 0){
+            canvas.drawCircle( (float) (point_x_init + translate_x) , (float) (point_y_init + translate_y), 14, p);
         }
     }
 
@@ -253,17 +260,25 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
                         if (newdistance - distance > 40 && scale < 2) {
                             point_x = point_x / scale;
                             point_y = point_y / scale;
+                            point_x_init = point_x_init / scale;
+                            point_y_init = point_y_init / scale;
                             scale = (float) (scale + 0.1);
                             distance = newdistance;
                             point_x = point_x * scale;
                             point_y = point_y * scale;
+                            point_x_init = point_x_init * scale;
+                            point_y_init = point_y_init * scale;
                         } else if (newdistance - distance < -40 && scale > 1) {
                             point_x = point_x / scale;
                             point_y = point_y / scale;
+                            point_x_init = point_x_init / scale;
+                            point_y_init = point_y_init / scale;
                             scale = (float) (scale - 0.1);
                             distance = newdistance;
                             point_x = point_x * scale;
                             point_y = point_y * scale;
+                            point_x_init = point_x_init * scale;
+                            point_y_init = point_y_init * scale;
                         }
                         if (scale > 2) {
                             scale = 2;
