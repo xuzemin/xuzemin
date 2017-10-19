@@ -14,7 +14,6 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.android.jdrd.robot.R;
-import com.android.jdrd.robot.dialog.SJX_RobotDialog;
 import com.android.jdrd.robot.helper.RobotDBHelper;
 import com.android.jdrd.robot.util.Constant;
 
@@ -392,6 +391,8 @@ public class ServerSocketUtil extends Service {
             map.put("ip", ip);
             map.put("in", in);
             map.put("out", out);
+            map.put("Cunrrent",0);
+            map.put("Cunrrent",null);
             socketList.add(map);
             Constant.debugLog("socketList.size()-1"+socketList.size());
             new Thread(new Runnable() {
@@ -615,32 +616,34 @@ public class ServerSocketUtil extends Service {
 //                            if (buffer[5] == 0) {
                             if (socketList.get(socketnumber)!=null) {
                                 final Map CurrentMap = socketList.get(socketnumber);
-                                int number = (int) CurrentMap.get("Cunrrent");
-                                List list = (List) CurrentMap.get("list");
-                                Constant.debugLog("socketlist" + number);
-                                Constant.debugLog("socketlist" + list.size());
-                                if (number != END) {
-                                    number++;
-                                    if (number >= list.size()) {
-                                        number = END;
-                                    }
-                                    socketList.get(socketnumber).put("Cunrrent", number);
-                                    int waitime = (int) CurrentMap.get("waittime");
-                                    Constant.debugLog("socketlist waitime" + waitime);
-                                    if (waitime > 0) {
-                                        Timer timer = new Timer();
-                                        TimerTask task = new TimerTask() {
-                                            @Override
-                                            public void run() {
-                                                sendlist(ip);
-                                            }
-                                        };
-                                        timer.schedule(task, waitime * 1000);
+                                if(CurrentMap.get("Cunrrent")!=null) {
+                                    int number = (int) CurrentMap.get("Cunrrent");
+                                    List list = (List) CurrentMap.get("list");
+                                    Constant.debugLog("socketlist" + number);
+                                    Constant.debugLog("socketlist" + list.size());
+                                    if (number != END) {
+                                        number++;
+                                        if (number >= list.size()) {
+                                            number = END;
+                                        }
+                                        socketList.get(socketnumber).put("Cunrrent", number);
+                                        int waitime = (int) CurrentMap.get("waittime");
+                                        Constant.debugLog("socketlist waitime" + waitime);
+                                        if (waitime > 0) {
+                                            Timer timer = new Timer();
+                                            TimerTask task = new TimerTask() {
+                                                @Override
+                                                public void run() {
+                                                    sendlist(ip);
+                                                }
+                                            };
+                                            timer.schedule(task, waitime * 1000);
+                                        } else {
+                                            sendlist(ip);
+                                        }
                                     } else {
-                                        sendlist(ip);
+                                        socketList.get(socketnumber).put("Cunrrent", 0);
                                     }
-                                } else {
-                                    socketList.get(socketnumber).put("Cunrrent", 0);
                                 }
                             }
 //                            }else {

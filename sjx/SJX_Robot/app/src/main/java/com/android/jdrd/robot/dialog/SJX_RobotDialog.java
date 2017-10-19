@@ -39,6 +39,7 @@ public class SJX_RobotDialog extends Dialog {
     public static int deskid = 0,areaid = 0;
     // 存储机器人列表
     public static List<Map> list;
+    private List idList = new ArrayList();
     public static List<Map> robotList;
     private static Map deskmap,areamap;
     // 存储机器人数据列表
@@ -91,6 +92,17 @@ public class SJX_RobotDialog extends Dialog {
         setCustomDialog();
     }
 
+    // id集合列表
+    public SJX_RobotDialog(Context context, List<Map> robotList,List idList) {
+        super(context, R.style.SoundRecorder);
+        // 初始化数据
+        this.context = context;
+        this.robotList = robotList;
+        flag = true;
+        this.idList = idList;
+        setCustomDialog();
+    }
+
     /**
      * 初始化
      */
@@ -132,9 +144,11 @@ public class SJX_RobotDialog extends Dialog {
                 } else if (pathway == 1) {
                     IsCoordinate = true;
                     CurrentIndex = 0;
-                    List list = new ArrayList();
-                    list.add(deskid);
-                    ServerSocketUtil.sendCommandCoordinate(IP,list);
+                    if(idList==null && idList.size()<=0){
+                        idList = new ArrayList();
+                        idList.add(deskid);
+                    }
+                    ServerSocketUtil.sendCommandCoordinate(IP,idList);
 //                    sendCommandCoordinate();
                 }
                 Toast.makeText(context,"已发送指令",Toast.LENGTH_SHORT).show();
@@ -197,9 +211,11 @@ public class SJX_RobotDialog extends Dialog {
                         } else if (pathway == 1) {
                             IsCoordinate = true;
                             CurrentIndex = 0;
-                            List list = new ArrayList();
-                            list.add(deskid);
-                            ServerSocketUtil.sendCommandCoordinate(IP,list);
+                            if(idList==null && idList.size()<=0){
+                                idList = new ArrayList();
+                                idList.add(deskid);
+                            }
+                            ServerSocketUtil.sendCommandCoordinate(IP,idList);
 //                            sendCommandCoordinate();
                             dismiss();
                         }

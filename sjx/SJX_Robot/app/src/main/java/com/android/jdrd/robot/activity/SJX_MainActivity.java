@@ -275,7 +275,6 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
                             }
                             desk_adapter.notifyDataSetChanged();
                         } else {
-
                             if (DeskIsEdit) {
                                 if (position == 0) {
                                     // 跳转到DeskConfigPathActivity 并传递area
@@ -426,11 +425,15 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List list = new ArrayList();
                 for (int i = 0; i < deskList.size(); i++) {
                     if (selectItems.get(i)) {
-                        deskList.set(i, null);
+                        Constant.debugLog(""+deskList.toString());
+                        list.add(deskList.get(i).get("id"));
                     }
                 }
+
+                robotDialog(commandList,list);
 
                 getDeskData();
                 selectItems = new ArrayList<>();
@@ -443,6 +446,9 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
                     setState(false);
                     return;
                 }
+
+
+
             }
         });
 
@@ -765,6 +771,7 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
             e.printStackTrace();
         }
         setGridView();
+
         return robotData_List;
     }
 
@@ -1080,6 +1087,11 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
     // List集合
     private void robotDialog(List<Map> list) {
         SJXRobotDialog = new SJX_RobotDialog(this, list);
+    }
+
+    // List集合
+    private void robotDialog(List<Map> list,List idList) {
+        SJXRobotDialog = new SJX_RobotDialog(this, list,idList);
     }
 
     // 根据id删除区域
