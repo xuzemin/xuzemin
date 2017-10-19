@@ -291,7 +291,6 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
                                 // 获取桌面数据
                                 getDeskData();
                             } else {
-
                                 // 打印Log
                                 Constant.debugLog("position----->" + CURRENT_AREA_id);
                                 commandList = robotDBHelper.queryListMap("select * from command where desk = '" + deskData_list.get(position).get("id") + "'", null);
@@ -310,19 +309,20 @@ public class SJX_MainActivity extends Activity implements View.OnClickListener, 
         deskView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                getDeskData();
-                if (!isState) {
-                    selectItems = new ArrayList<>();
-                    for (int i = 0; i < deskList.size(); i++) {
-                        selectItems.add(false);
+                if (!DeskIsEdit){
+                    getDeskData();
+                    if (!isState) {
+                        selectItems = new ArrayList<>();
+                        for (int i = 0; i < deskList.size(); i++) {
+                            selectItems.add(false);
+                        }
+                        CheckBox box = (CheckBox) view.findViewById(R.id.ck_select);
+                        box.setChecked(true);
+                        selectItems.set(position, true);
+                        setState(true);
+                        desk_adapter.setIsState(true);
+                        showOpervate();
                     }
-                    CheckBox box = (CheckBox) view.findViewById(R.id.ck_select);
-                    box.setChecked(true);
-                    selectItems.set(position, true);
-                    setState(true);
-                    desk_adapter.setIsState(true);
-                    showOpervate();
                 }
                 return false;
             }

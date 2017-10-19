@@ -89,6 +89,7 @@ public class SJX_RobotDialog extends Dialog {
         this.context = context;
         this.robotList = robotList;
         flag = true;
+        this.idList = new ArrayList();
         setCustomDialog();
     }
 
@@ -144,10 +145,12 @@ public class SJX_RobotDialog extends Dialog {
                 } else if (pathway == 1) {
                     IsCoordinate = true;
                     CurrentIndex = 0;
-                    if(idList==null && idList.size()<=0){
+                    Constant.debugLog("idList"+idList.toString());
+                    if(idList==null || idList.size()<=0){
                         idList = new ArrayList();
                         idList.add(deskid);
                     }
+                    Constant.debugLog("idList"+idList.toString());
                     ServerSocketUtil.sendCommandCoordinate(IP,idList);
 //                    sendCommandCoordinate();
                 }
@@ -288,89 +291,89 @@ public class SJX_RobotDialog extends Dialog {
 //        }
 //    }
 
-    public static void sendlist(final OutputStream out){
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(out!=null){
-                    try {
-                        for(CurrentIndex = 1 ;CurrentIndex < 3 ;CurrentIndex++) {
-                            switch (CurrentIndex) {
-                                case 0:
-                                    out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandData(Protocol.ROBOT_START)));
-                                    synchronized (thread) {
-                                        thread.wait();
-                                    }
-                                    break;
-                                case 1:
-                                    List<Map> desk_list = robotDBHelper.queryListMap("select * from desk where id = '" + deskid + "'", null);
-                                    if (desk_list != null && desk_list.size() > 0) {
-                                        deskmap = desk_list.get(0);
-                                        Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
-                                                Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
-                                        if (deskmap.get("pointx") != null && deskmap.get("pointy") != null && deskmap.get("derection") != null
-                                                && deskmap.get("waittime") != null) {
-                                            areaid = (int) deskmap.get("area");
-                                            Protocol.coordinate_x = (int)(Float.valueOf(deskmap.get("pointx").toString().trim()) * 100);
-                                            Protocol.coordinate_y = (int)(Float.valueOf(deskmap.get("pointy").toString().trim()) * 100);
-                                            Protocol.orientation = 450 - Integer.valueOf(deskmap.get("derection").toString().trim());
-                                            Protocol.wait_time = Integer.valueOf(deskmap.get("waittime").toString().trim());
-                                            if(Protocol.orientation>360){
-                                                Protocol.orientation -= 360;
-                                            }
-                                            out.write(Protocol.getSendData(Protocol.COORDINATE_RUN, Protocol.getCommandDataByte(Protocol.RUN_COORDINATE)));
-                                        }
-                                        Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
-                                                Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
-                                    }
-                                    synchronized (thread) {
-                                        thread.wait();
-                                    }
-                                    break;
-                                case 2:
-                                    Constant.debugLog("areaid"+areaid);
-                                    List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
-                                    Constant.debugLog("area_list" + area_list.toString());
-                                    if (area_list != null && area_list.size() > 0) {
-                                        areamap = area_list.get(0);
-                                        Constant.debugLog("areamap" + areamap.toString());
-                                        if (areamap.get("point_x_back") != null && areamap.get("point_y_back") != null && areamap.get("derection") != null) {
-                                            Protocol.coordinate_x = Integer.valueOf(areamap.get("point_x_back").toString().trim()) * 100;
-                                            Protocol.coordinate_y = Integer.valueOf(areamap.get("point_y_back").toString().trim()) * 100;
-                                            Protocol.orientation = 450 - Integer.valueOf(areamap.get("derection").toString().trim());
-                                            if(Protocol.orientation>360){
-                                                Protocol.orientation -= 360;
-                                            }
-                                            out.write(Protocol.getSendData(Protocol.COORDINATE_CONFIG, Protocol.getCommandDataByte(Protocol.CONFIG_COORDINATE)));
-                                        }
-                                    }
-                                    Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
-                                            Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
-                                    synchronized (thread) {
-                                        thread.wait();
-                                    }
-                                    break;
-                                case 3:
-                                    // 命令发送完成
-                                    data = Protocol.getSendData(Protocol.END, Protocol.getCommandData(Protocol.ROBOT_END));
-                                    setSendStr(out, data);
-                                    synchronized (thread) {
-                                        thread.wait();
-                                    }
-                                    IsCoordinate = false;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }catch (Exception e){
-                        Constant.debugLog(e.toString());
-                    }
-                }
-            }
-        });
-        thread.start();
-    }
+//    public static void sendlist(final OutputStream out){
+//        thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(out!=null){
+//                    try {
+//                        for(CurrentIndex = 1 ;CurrentIndex < 3 ;CurrentIndex++) {
+//                            switch (CurrentIndex) {
+//                                case 0:
+//                                    out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandData(Protocol.ROBOT_START)));
+//                                    synchronized (thread) {
+//                                        thread.wait();
+//                                    }
+//                                    break;
+//                                case 1:
+//                                    List<Map> desk_list = robotDBHelper.queryListMap("select * from desk where id = '" + deskid + "'", null);
+//                                    if (desk_list != null && desk_list.size() > 0) {
+//                                        deskmap = desk_list.get(0);
+//                                        Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
+//                                                Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
+//                                        if (deskmap.get("pointx") != null && deskmap.get("pointy") != null && deskmap.get("derection") != null
+//                                                && deskmap.get("waittime") != null) {
+//                                            areaid = (int) deskmap.get("area");
+//                                            Protocol.coordinate_x = (int)(Float.valueOf(deskmap.get("pointx").toString().trim()) * 100);
+//                                            Protocol.coordinate_y = (int)(Float.valueOf(deskmap.get("pointy").toString().trim()) * 100);
+//                                            Protocol.orientation = 450 - Integer.valueOf(deskmap.get("derection").toString().trim());
+//                                            Protocol.wait_time = Integer.valueOf(deskmap.get("waittime").toString().trim());
+//                                            if(Protocol.orientation>360){
+//                                                Protocol.orientation -= 360;
+//                                            }
+//                                            out.write(Protocol.getSendData(Protocol.COORDINATE_RUN, Protocol.getCommandDataByte(Protocol.RUN_COORDINATE)));
+//                                        }
+//                                        Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
+//                                                Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
+//                                    }
+//                                    synchronized (thread) {
+//                                        thread.wait();
+//                                    }
+//                                    break;
+//                                case 2:
+//                                    Constant.debugLog("areaid"+areaid);
+//                                    List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
+//                                    Constant.debugLog("area_list" + area_list.toString());
+//                                    if (area_list != null && area_list.size() > 0) {
+//                                        areamap = area_list.get(0);
+//                                        Constant.debugLog("areamap" + areamap.toString());
+//                                        if (areamap.get("point_x_back") != null && areamap.get("point_y_back") != null && areamap.get("derection") != null) {
+//                                            Protocol.coordinate_x = Integer.valueOf(areamap.get("point_x_back").toString().trim()) * 100;
+//                                            Protocol.coordinate_y = Integer.valueOf(areamap.get("point_y_back").toString().trim()) * 100;
+//                                            Protocol.orientation = 450 - Integer.valueOf(areamap.get("derection").toString().trim());
+//                                            if(Protocol.orientation>360){
+//                                                Protocol.orientation -= 360;
+//                                            }
+//                                            out.write(Protocol.getSendData(Protocol.COORDINATE_CONFIG, Protocol.getCommandDataByte(Protocol.CONFIG_COORDINATE)));
+//                                        }
+//                                    }
+//                                    Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
+//                                            Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
+//                                    synchronized (thread) {
+//                                        thread.wait();
+//                                    }
+//                                    break;
+//                                case 3:
+//                                    // 命令发送完成
+//                                    data = Protocol.getSendData(Protocol.END, Protocol.getCommandData(Protocol.ROBOT_END));
+//                                    setSendStr(out, data);
+//                                    synchronized (thread) {
+//                                        thread.wait();
+//                                    }
+//                                    IsCoordinate = false;
+//                                    break;
+//                                default:
+//                                    break;
+//                            }
+//                        }
+//                    }catch (Exception e){
+//                        Constant.debugLog(e.toString());
+//                    }
+//                }
+//            }
+//        });
+//        thread.start();
+//    }
 
     // 发送命令列表
     public static void sendCommandList() {
