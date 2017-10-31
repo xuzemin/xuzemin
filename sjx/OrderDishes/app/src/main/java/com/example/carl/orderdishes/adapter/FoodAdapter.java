@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import com.example.carl.orderdishes.R;
 import com.example.carl.orderdishes.entity.Desk;
+import com.example.carl.orderdishes.entity.Food;
+import com.example.carl.orderdishes.util.Content;
+import com.example.carl.orderdishes.util.CustomBitmapUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 作者: jiayi.zhang
@@ -24,14 +26,16 @@ import java.util.Map;
  * 描述: 编辑桌子适配器
  */
 
-public class DeskChooseAdapter extends BaseAdapter {
-    private String Tag = "DeskChooseAdapter";
+public class FoodAdapter extends BaseAdapter {
+    private String Tag = "FoodAdapter";
     private Context context;
-    public List<Desk> list = new ArrayList<>();
-
-    public DeskChooseAdapter(Context _context, List<Desk> _list) {
+    public List<Food> list  = new ArrayList<>();
+    private CustomBitmapUtils utils;
+    public FoodAdapter(Context _context, List<Food> _list) {
         this.list = _list;
         this.context = _context;
+
+        utils = new CustomBitmapUtils();
     }
 
     /**
@@ -82,27 +86,30 @@ public class DeskChooseAdapter extends BaseAdapter {
             // 根据context上下文加载布局，这里的是AreaAdapter本身，即this
             final LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.deskchoose_item, null);
+            convertView = inflater.inflate(R.layout.food_item, null);
             viewHolder = new ViewHolder();
             // 根据自定义的Item布局加载布局
             viewHolder.text =  convertView.findViewById(R.id.name);
             viewHolder.state = convertView.findViewById(R.id.state);
+            viewHolder.image = convertView.findViewById(R.id.img);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Desk desk = list.get(position);
-        viewHolder.state.setText(desk.getDstatus());
-            viewHolder.text.setVisibility(View.VISIBLE);
-            String str = desk.getDname().trim();
-        Log.e("str",desk.getDname());
-            if (str.length() > 3) {
-                StringBuilder sb = new StringBuilder(str);
-                sb.insert(3, "\n");
-                viewHolder.text.setText(sb);
-            } else {
-                viewHolder.text.setText(str);
-            }
+        Food food = list.get(position);
+        viewHolder.state.setText(""+food.getFprice());
+        viewHolder.text.setVisibility(View.VISIBLE);
+        String str = food.getFname().trim();
+        Log.e("str",str);
+        if (str.length() > 3) {
+            StringBuilder sb = new StringBuilder(str);
+            sb.insert(3, "\n");
+            viewHolder.text.setText(sb);
+        } else {
+            viewHolder.text.setText(str);
+        }
+
+        utils.display(viewHolder.image, Content.HEADURL+food.getFimgurl());
         return convertView;
     }
 

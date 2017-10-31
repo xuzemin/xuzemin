@@ -68,7 +68,7 @@ public class LoginActivity extends BaseActivity {
         requestParams.add("userName",userName);
         requestParams.add("userPw",userPwd);
 
-        TwitterRestClient.get(url, requestParams, new AsyncHttpResponseHandler() {
+        TwitterRestClient.post(url, requestParams, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, byte[] responseBody) {
                 LOG_e(new String(responseBody));

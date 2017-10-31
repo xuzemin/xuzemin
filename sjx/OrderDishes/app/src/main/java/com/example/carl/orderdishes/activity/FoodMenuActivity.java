@@ -4,15 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import com.example.carl.orderdishes.R;
-import com.example.carl.orderdishes.adapter.DeskChooseAdapter;
-import com.example.carl.orderdishes.entity.Desk;
+import com.example.carl.orderdishes.adapter.FoodAdapter;
+import com.example.carl.orderdishes.entity.Food;
 import com.example.carl.orderdishes.util.Content;
 import com.example.carl.orderdishes.util.TwitterRestClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -24,16 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Carl on 2017/10/30.
+ * Created by Carl on 2017/10/31.
  *
  */
 
-public class DeskChooseActivity extends BaseActivity {
-    private GridView deskView;
-    private DeskChooseAdapter desk_adapter;
+public class FoodMenuActivity extends BaseActivity{
     private int user_id,sohp_id;
-    private static List<Desk> Desklist = new ArrayList<>();
-    // 桌面数据列
+    private GridView food;
+    private FoodAdapter foodAdapter;
+    private List<Food> Foolist = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,45 +38,30 @@ public class DeskChooseActivity extends BaseActivity {
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_deskchoose);
-
-        deskView = this.findViewById(R.id.deskchoose);
-        //获取数据
-        desk_adapter = new DeskChooseAdapter(this, Desklist);
-        // 初始化桌面列表
-        deskView.setAdapter(desk_adapter);
+        setContentView(R.layout.activity_footmenu);
 
         SharedPreferences sp = getSharedPreferences(Content.Model,0);
         user_id = sp.getInt("user_id", 0);
         sohp_id =  sp.getInt("sohp_id", 0);
 
-        LOG_e(user_id+""+sohp_id+"");
+//        LOG_e(user_id+""+sohp_id+"");
         if(user_id!=0&&sohp_id!=0) {
-            refreshDeskInfo();
+            refreashFood();
         }
 
         if(user_id == 0){
             Toast.makeText(getApplicationContext(),"信息获取有误，请重新登录",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(DeskChooseActivity.this,LoginActivity.class));
+            startActivity(new Intent(FoodMenuActivity.this,LoginActivity.class));
             finish();
         }
 
-        deskView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(Desklist.get(position).getDstatus().equals("空闲")){
-                    startActivity(new Intent(DeskChooseActivity.this,FoodMenuActivity.class));
-                }else{
-                    Toast.makeText(getApplicationContext(),"此餐桌目前已有人使用",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        food = findViewById(R.id.food);
+        foodAdapter = new FoodAdapter(this,Foolist);
+        food.setAdapter(foodAdapter);
     }
 
-
-
-    private void refreshDeskInfo(){
-        String url = "DeskInfoServlet";
+    private void refreashFood() {
+        String url = "FoodInfoServlet";
         RequestParams requestParams = new RequestParams();
         requestParams.add("sohpid", String.valueOf(sohp_id));
         requestParams.add("userid", String.valueOf(user_id));
@@ -91,26 +73,29 @@ public class DeskChooseActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(new String(responseBody));
                     int Result = jsonObject.getInt("ResultCode");
                     if(Result == Content.OK){
-                        String array = jsonObject.getString("deskinfo");
+                        String array = jsonObject.getString("foodinfo");
                         JSONArray jsonArray = new JSONArray(array);
                         if(jsonArray!=null && jsonArray.length() >0){
-                            Desklist = new ArrayList<>();
+                            Foolist = new ArrayList<>();
                             for(int i = 0 ,size = jsonArray.length();i<size;i++){
-                                Desk desk  = new Desk();
+                                Food food  = new Food();
                                 JSONObject json = (JSONObject) jsonArray.get(i);
-                                desk.setDid(json.getInt("did"));
-                                desk.setDname(json.getString("dname"));
-                                desk.setDstatus(json.getString("dstatus"));
-                                desk.setDdate(json.getString("ddate"));
-                                Desklist.add(desk);
+                                food.setFid(json.getInt("fid"));
+                                food.setFtname(json.getString("ftname"));
+                                food.setFprice(json.getInt("fprice"));
+                                food.setFvipprice(json.getInt("fvipprice"));
+                                food.setFname(json.getString("fname"));
+                                food.setFimgurl(json.getString("fimgurl"));
+                                Foolist.add(food);
                             }
                         }
                     }
-                    LOG_e(Desklist.toString());
-                    LOG_e(Desklist.size()+"");
-                    if (Desklist != null && Desklist.size() > 0) {
-                        desk_adapter.list = Desklist;
-                        desk_adapter.notifyDataSetChanged();
+                    LOG_e(Foolist.toString());
+                    LOG_e(Foolist.size()+"");
+
+                    if (Foolist != null && Foolist.size() > 0) {
+                        foodAdapter.list = Foolist;
+                        foodAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
