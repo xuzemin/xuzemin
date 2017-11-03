@@ -1,6 +1,7 @@
 package com.example.carl.orderdishes.util;
 
 import android.content.SharedPreferences;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 /**
@@ -13,8 +14,5 @@ public class Content {
     public static final int OK = 0;
     public static final int NOK = 1;
     public static final int NO = 2;
-
-
-    public void display(ImageView ivPic, String url) {
-    }
+    public static DisplayMetrics dm ;
 }

@@ -3,6 +3,7 @@ package com.example.carl.orderdishes.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -57,14 +58,22 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        Content.dm = dm;
+
     }
 
 
     private void login(){
         String url = "AppLogin";
         RequestParams requestParams = new RequestParams();
-        final String userName = userEditText.getText().toString().trim();
-        final String userPwd = pwdEditText.getText().toString().trim();
+//        final String userName = userEditText.getText().toString().trim();
+//        final String userPwd = pwdEditText.getText().toString().trim();
+
+        final String userName = "111";
+        final String userPwd = "123";
+
         requestParams.add("userName",userName);
         requestParams.add("userPw",userPwd);
 

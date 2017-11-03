@@ -1,21 +1,26 @@
 package com.example.carl.orderdishes.adapter;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Point;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.carl.orderdishes.R;
-import com.example.carl.orderdishes.entity.Desk;
+import com.example.carl.orderdishes.activity.FoodMenuActivity;
 import com.example.carl.orderdishes.entity.Food;
 import com.example.carl.orderdishes.util.Content;
 import com.example.carl.orderdishes.util.CustomBitmapUtils;
+import com.example.carl.orderdishes.view.CirclePointEvaluator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +36,10 @@ public class FoodAdapter extends BaseAdapter {
     private Context context;
     public List<Food> list  = new ArrayList<>();
     private CustomBitmapUtils utils;
+    private int[] location = new int[2];
     public FoodAdapter(Context _context, List<Food> _list) {
         this.list = _list;
         this.context = _context;
-
         utils = new CustomBitmapUtils();
     }
 
@@ -92,12 +97,13 @@ public class FoodAdapter extends BaseAdapter {
             viewHolder.text =  convertView.findViewById(R.id.name);
             viewHolder.state = convertView.findViewById(R.id.state);
             viewHolder.image = convertView.findViewById(R.id.img);
+            viewHolder.add_food = convertView.findViewById(R.id.add_food);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Food food = list.get(position);
-        viewHolder.state.setText(""+food.getFprice());
+        viewHolder.state.setText(String.valueOf(food.getFprice()));
         viewHolder.text.setVisibility(View.VISIBLE);
         String str = food.getFname().trim();
         Log.e("str",str);
@@ -110,6 +116,22 @@ public class FoodAdapter extends BaseAdapter {
         }
 
         utils.display(viewHolder.image, Content.HEADURL+food.getFimgurl());
+
+        viewHolder.add_food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FoodMenuActivity.imageView.getLocationOnScreen(location);
+                Log.e(Tag,FoodMenuActivity.imageView.getWidth()+""+FoodMenuActivity.imageView.getHeight());
+                mCircleEndPoint.x = location[0] + (FoodMenuActivity.imageView.getWidth()-60)/2;
+                mCircleEndPoint.y = location[1] + (FoodMenuActivity.imageView.getHeight()-60)/2;
+                viewHolder.add_food.getLocationInWindow(location);
+                Log.e(Tag,location[0]+""+location[1]);
+                viewHolder.add_food.getLocationOnScreen(location);
+                Log.e(Tag,location[0]+""+location[1]);
+                animation(location);
+            }
+        });
+
         return convertView;
     }
 
@@ -120,8 +142,43 @@ public class FoodAdapter extends BaseAdapter {
         public ImageView image;
         public ImageView bjzt;
         public CheckBox cb;
+        public Button add_food;
         RelativeLayout back;
     }
+    private Point mCircleMovePoint = new Point();
+    private Point mCircleEndPoint = new Point();
+    private void animation(int[] point){
+        Point mCircleStartPoint = new Point();
+        mCircleStartPoint.x = point[0];
+        mCircleStartPoint.y = point[1];
+        final ImageView img = new ImageView(context);
+        img.setImageResource(R.mipmap.ic_launcher);
+        img.setVisibility(View.VISIBLE);
+        FoodMenuActivity.relativeLayout.addView(img,new ViewGroup.LayoutParams(60, 60));
 
+        //设置值动画
+        final ValueAnimator valueAnimator = ValueAnimator.ofObject(new CirclePointEvaluator(), mCircleStartPoint, mCircleEndPoint);
+        valueAnimator.setDuration(600);
+        valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Point goodsViewPoint = (Point) animation.getAnimatedValue();
+                mCircleMovePoint.x = goodsViewPoint.x;
+                mCircleMovePoint.y = goodsViewPoint.y;
+                invalidate(img,valueAnimator);
+            }
+        });
+        valueAnimator.start();
+    }
+    public void invalidate(ImageView img,ValueAnimator valueAnimator){
+        img.setX(mCircleMovePoint.x);
+        img.setY(mCircleMovePoint.y);
+        if(mCircleMovePoint.x == mCircleEndPoint.x){
+            valueAnimator.cancel();
+            img.setVisibility(View.GONE);
+            img.destroyDrawingCache();
+        }
+    }
 }
 

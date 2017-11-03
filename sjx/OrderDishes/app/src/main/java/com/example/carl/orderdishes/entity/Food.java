@@ -11,8 +11,22 @@ public class Food {
 	public Food() {
 		super();
 	}
+
+	@Override
+	public String toString() {
+		return "Food{" +
+				"fid=" + fid +
+				", fname='" + fname + '\'' +
+				", ftname='" + ftname + '\'' +
+				", fprice=" + fprice +
+				", fvipprice=" + fvipprice +
+				", fimgurl='" + fimgurl + '\'' +
+				", fdescipt='" + fdescipt + '\'' +
+				'}';
+	}
+
 	public Food(int fid, String fname, String ftname, double fprice,
-			double fvipprice, String fimgurl, String fdescipt) {
+				double fvipprice, String fimgurl, String fdescipt) {
 		super();
 		this.fid = fid;
 		this.fname = fname;

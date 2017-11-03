@@ -29,4 +29,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile files('lib/android-async-http-1.4.8.jar')
     compile files('lib/httpcore-4.4.6.jar')
+    compile 'com.android.support:design:26.0.0-alpha1'
 }
