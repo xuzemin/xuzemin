@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="260dp"
+    android:layout_width="280dp"
     android:layout_height="80dp"
     android:background="@color/white"
     android:orientation="horizontal">
@@ -40,7 +40,22 @@
             android:background="@mipmap/ic_launcher"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="10dp"
+            android:focusable="false"
+            />
+        <TextView
+            android:id="@+id/number"
+            android:layout_toRightOf="@+id/delete_food"
+            android:layout_toLeftOf="@+id/add_food"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/delete_food"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/ic_launcher"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
             />
     </RelativeLayout>
 </LinearLayout>

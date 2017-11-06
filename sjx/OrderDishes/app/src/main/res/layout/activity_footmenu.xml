@@ -65,9 +65,9 @@
             android:text="A"
             android:textColor="#ffffff"
             android:textSize="26sp"
-            android:visibility="gone" />
-
-        <com.example.carl.orderdishes.view.IndexView
+            android:visibility="gone"
+            />
+        <ListView
             android:id="@+id/indexView"
             android:layout_width="80dp"
             android:layout_height="match_parent"
@@ -76,6 +76,7 @@
     <RelativeLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
         android:layout_height="60dp">
         <ImageView
@@ -95,6 +96,7 @@
             />
         <Button
             android:layout_width="60dp"
+            android:id="@+id/count"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>

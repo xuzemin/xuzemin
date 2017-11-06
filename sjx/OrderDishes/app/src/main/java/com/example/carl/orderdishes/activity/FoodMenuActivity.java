@@ -10,28 +10,27 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.carl.orderdishes.R;
 import com.example.carl.orderdishes.adapter.FoodAllInfo;
+import com.example.carl.orderdishes.adapter.IndexAdapter;
 import com.example.carl.orderdishes.adapter.RecyclerAdapter;
 import com.example.carl.orderdishes.entity.Food;
 import com.example.carl.orderdishes.entity.FoodType;
-import com.example.carl.orderdishes.entity.Mode;
 import com.example.carl.orderdishes.entity.SuspensionDecoration;
 import com.example.carl.orderdishes.util.Content;
 import com.example.carl.orderdishes.util.TwitterRestClient;
-import com.example.carl.orderdishes.view.IndexView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,11 +41,12 @@ import java.util.Map;
  *
  */
 
-public class FoodMenuActivity extends BaseActivity {
+public class FoodMenuActivity extends BaseActivity implements View.OnClickListener {
     private int user_id, sohp_id;
     public static ImageView imageView;
     private ArrayList<FoodAllInfo> foodAllInfosList = new ArrayList<>();
     public static RelativeLayout relativeLayout;
+    private IndexAdapter mIndexAdapter;
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
@@ -54,8 +54,7 @@ public class FoodMenuActivity extends BaseActivity {
         }
     };
 
-
-    private List<Mode> mList = new ArrayList<>();
+    private List<Food> mList = new ArrayList<>();
 
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
@@ -69,13 +68,10 @@ public class FoodMenuActivity extends BaseActivity {
     private Handler mHandler = new Handler();
 
     private int mCurIndex;
+    private List<String> list = new ArrayList<>();
+    private Button count;
+    private ListView mIndexView;
 
-    private IndexView mIndexView;
-
-    private String[] str = new String[]{"A", "B", "C", "D", "E", "F", "G",
-            "H", "I", "J", "K", "L", "M", "N",
-            "O", "P", "Q", "R", "S", "T", "U",
-            "V", "W", "X", "Y", "Z", "#"};
     /**
      * 存索引
      */
@@ -88,107 +84,106 @@ public class FoodMenuActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_footmenu);
-
-
-        setView();
-
         SharedPreferences sp = getSharedPreferences(Content.Model, 0);
         user_id = sp.getInt("user_id", 0);
         sohp_id = sp.getInt("sohp_id", 0);
-        if (user_id != 0 && sohp_id != 0) {
-        }
-
         if (user_id == 0) {
             Toast.makeText(getApplicationContext(), "信息获取有误，请重新登录", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(FoodMenuActivity.this, LoginActivity.class));
             finish();
-        } else {
-            setView();
         }
+        if (user_id != 0 && sohp_id != 0) {
+        }
+        setView();
         if (savedInstanceState != null) {
         }
 
     }
 
+    private void refreshData(){
+        mList = new ArrayList<>();
+        mMap = new HashMap<>();
+        list = new ArrayList<>();
+        int ALL_SIZE = foodAllInfosList.size();
+        for (int i = 0; i < ALL_SIZE; i++) {
+            LOG_e(foodAllInfosList.get(i).getFoodType().getFtname());
+            list.add(foodAllInfosList.get(i).getFoodType().getFtname());
+            LOG_e(list.get(i));
+            int FOOD_SIZE = foodAllInfosList.get(i).getFoolist().size();
+            for(int j = 0; j < FOOD_SIZE; j++){
+                Food food = foodAllInfosList.get(i).getFoolist().get(j);
+                mList.add(food);
+                mList.add(food);
+            }
+            if (!mMap.containsKey(foodAllInfosList.get(i).getFoodType().getFtname())) {
+                mMap.put(foodAllInfosList.get(i).getFoodType().getFtname(), i * 2);
+            }
+        }
+        mIndexAdapter.list = list;
+        mIndexAdapter.notifyDataSetChanged();
+        mAdapter.mList = mList;
+        mAdapter.notifyDataSetChanged();
+        if(mList.size()>0) {
+            mSuspensionDecoration = new SuspensionDecoration(this, mList);
+            mSuspensionDecoration.setOrien(SuspensionDecoration.Orien.VER);
+            mRecyclerView.addItemDecoration(mSuspensionDecoration);
+        }
+        mIndexView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int index = mMap.get(list.get(position));
+                LinearLayoutManager manager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                manager.scrollToPositionWithOffset(index, 0);
+            }
+        });
+    }
+
     private void setView() {
         imageView = findViewById(R.id.shownumber);
+        count = findViewById(R.id.count);
+        count.setOnClickListener(this);
+        imageView.setOnClickListener(this);
         mTvHint = findViewById(R.id.tv_hint);
         mIndexView = findViewById(R.id.indexView);
         mRecyclerView = findViewById(R.id.recycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         relativeLayout = findViewById(R.id.relayout);
-
-//        refreshData();
-
-
-        mList = new ArrayList<Mode>();
-        mMap = new HashMap<>();
-
-        for (int i = 0; i < str.length; i++) {
-            Mode mode = new Mode();
-            mode.setName("title" + i);
-            mode.setTitle("title" + i);
-            mode.setTag(str[i]);
-            mList.add(mode);
-
-            mode = new Mode();
-            mode.setName("title" + i + 1);
-            mode.setTitle("title" + i);
-            mode.setTag(str[i]);
-            mList.add(mode);
-
-            if (!mMap.containsKey(str[i])) {
-                mMap.put(str[i], i * 2);
-            }
-        }
-
+        mIndexAdapter = new IndexAdapter(this,list);
+        mIndexView.setAdapter(mIndexAdapter);
         mAdapter = new RecyclerAdapter(this, mList);
         mRecyclerView.setAdapter(mAdapter);
         //加标题
-        mSuspensionDecoration = new SuspensionDecoration(this, mList);
-        mSuspensionDecoration.setOrien(SuspensionDecoration.Orien.VER);
-        mRecyclerView.addItemDecoration(mSuspensionDecoration);
-
+        if(mList.size()>0) {
+            mSuspensionDecoration = new SuspensionDecoration(this, mList);
+            mSuspensionDecoration.setOrien(SuspensionDecoration.Orien.VER);
+            mRecyclerView.addItemDecoration(mSuspensionDecoration);
+        }
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int pos = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                Log.i("aaa", pos + "  " + mList.get(pos).getTag());
 
-                if (!mList.get(pos).getTag().equals(mList.get(mCurIndex).getTag())) {
+                if (!mList.get(pos).getFtname().equals(mList.get(mCurIndex).getFtname())) {
                     mHandler.removeCallbacks(mRunnable);
                     mTvHint.setVisibility(View.VISIBLE);
-                    mTvHint.setText(mList.get(pos).getTag());
-                    mIndexView.setIndexStr(mList.get(pos).getTag());
+                    mTvHint.setText(mList.get(pos).getFtname());
+//                    mIndexView.setIndexStr(mList.get(pos).getTag());
                     mHandler.postDelayed(mRunnable, 1000);
                 }
                 mCurIndex = pos;
             }
         });
 
-        mIndexView.setListener(new IndexView.ScrollListener() {
-            @Override
-            public void backDownString(String str, int pos) {
-                pos = mMap.get(str);
-                Log.i("aaa", pos + "  "  + str);
-                //这个有bug，在屏幕内不会移动
-                //mRecyclerView.smoothScrollToPosition(pos);
-                LinearLayoutManager manager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                manager.scrollToPositionWithOffset(pos, 0);
-            }
-        });
     }
 
     @Override
     protected void onStart() {
-        super.onStart();
+        super.onStart ();
     }
 
     @Override
@@ -237,8 +232,7 @@ public class FoodMenuActivity extends BaseActivity {
                     }
                     LOG_e(foodAllInfosList.toString());
                     LOG_e(foodAllInfosList.size() + "");
-//                    refreshData();
-//                    mAdapter.notifyDataSetChanged();
+                    refreshData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "数据解析有误，请重试", Toast.LENGTH_SHORT).show();
@@ -256,4 +250,16 @@ public class FoodMenuActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.shownumber:
+
+                break;
+            case R.id.count:
+
+                break;
+            default:break;
+        }
+    }
 }

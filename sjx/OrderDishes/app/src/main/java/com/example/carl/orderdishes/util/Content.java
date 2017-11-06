@@ -9,7 +9,7 @@ import android.widget.ImageView;
  */
 
 public class Content {
-    public static final String HEADURL = "http://192.168.0.100:8080/OrderDishes/upload/";
+    public static final String HEADURL = "http://192.168.2.109:8080/OrderDishes/upload/";
     public static final String Model = "ORDERDISHES";
     public static final int OK = 0;
     public static final int NOK = 1;

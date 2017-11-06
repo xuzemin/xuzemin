@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.example.carl.orderdishes.R;
 import com.example.carl.orderdishes.util.Content;
@@ -19,11 +20,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     // 声明登录、取消按钮
-    private Button cancelBtn,loginBtn,exitBtn,registerBtn;
+    private Button cancelBtn,loginBtn;
     // 声明用户名、密码输入框
     private EditText userEditText,pwdEditText;
+    private RelativeLayout login_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,33 +37,22 @@ public class LoginActivity extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
+        // 通过findViewById方法实例化组件
+        cancelBtn = findViewById(R.id.resetButton);
 
+        login_layout = findViewById(R.id.login_layout);
         // 通过findViewById方法实例化组件
-        cancelBtn = (Button)findViewById(R.id.cancelButton);
+        loginBtn = findViewById(R.id.loginButton);
         // 通过findViewById方法实例化组件
-        loginBtn = (Button)findViewById(R.id.loginButton);
-//        exitBtn = (Button)findViewById(R.id.exitButton);
-//        registerBtn = (Button)findViewById(R.id.registerButton);
+        userEditText = findViewById(R.id.userEditText);
         // 通过findViewById方法实例化组件
-        userEditText = (EditText)findViewById(R.id.userEditText);
-        // 通过findViewById方法实例化组件
-        pwdEditText = (EditText)findViewById(R.id.pwdEditText);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                userEditText.setText("");
-                pwdEditText.setText("");
-            }
-        });
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                login();
-            }
-        });
-
+        pwdEditText = findViewById(R.id.pwdEditText);
+        cancelBtn.setOnClickListener(this);
+        login_layout.setOnClickListener(this);
+        loginBtn.setOnClickListener(this);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Content.dm = dm;
-
     }
 
 
@@ -70,13 +61,10 @@ public class LoginActivity extends BaseActivity {
         RequestParams requestParams = new RequestParams();
 //        final String userName = userEditText.getText().toString().trim();
 //        final String userPwd = pwdEditText.getText().toString().trim();
-
         final String userName = "111";
         final String userPwd = "123";
-
         requestParams.add("userName",userName);
         requestParams.add("userPw",userPwd);
-
         TwitterRestClient.post(url, requestParams, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, byte[] responseBody) {
@@ -105,8 +93,6 @@ public class LoginActivity extends BaseActivity {
                 hideProgress();
             }
 
-
-
             @Override
             public void onFailure(int statusCode, org.apache.http.Header[] headers, byte[] responseBody, Throwable error) {
                 Toast.makeText(getApplicationContext(),"连接失败，请检查网络",Toast.LENGTH_SHORT).show();
@@ -114,5 +100,19 @@ public class LoginActivity extends BaseActivity {
             }
     });
         showProgress();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.login_layout:
+            case R.id.loginButton:
+                login();
+                break;
+            case R.id.resetButton:
+                userEditText.setText("");
+                pwdEditText.setText("");
+                break;
+        }
     }
 }

@@ -15,11 +15,12 @@ import java.util.List;
 
 /**
  * Created by dingqiqi on 2016/12/1.
+ *
  */
 public class SuspensionDecoration extends RecyclerView.ItemDecoration {
 
     private Context mContext;
-    private List<Mode> mList;
+    private List<Food> mList;
 
     private Paint mPaint;
     private Paint mPaintRect;
@@ -40,7 +41,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
      * @param mContext
      * @param mList
      */
-    public SuspensionDecoration(Context mContext, List<Mode> mList) {
+    public SuspensionDecoration(Context mContext, List<Food> mList) {
         this.mContext = mContext;
         this.mList = mList;
 
@@ -51,10 +52,10 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
         mPaint.setTextSize(DisplayUtil.dp2px(mContext, 14));
 
         mPaintRect = new Paint(mPaint);
-        mPaintRect.setColor(Color.RED);
+        mPaintRect.setColor(Color.WHITE);
 
         mPaintOver = new Paint(mPaint);
-        mPaintOver.setColor(Color.BLUE);
+        mPaintOver.setColor(Color.WHITE);
 
         mTitleHeight = DisplayUtil.dp2px(mContext, 26);
 
@@ -104,7 +105,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
                     flag = true;
                 } else {
                     //上下不同有标题
-                    if (!mList.get(pos).getTag().equals(mList.get(pos - 1).getTag())) {
+                    if (!mList.get(pos).getFtname().equals(mList.get(pos - 1).getFtname())) {
                         flag = true;
                     }
                 }
@@ -115,7 +116,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
                     //画标题矩形
                     c.drawRect(left, top, right, bottom, mPaintRect);
                     //画文字
-                    String text = mList.get(pos).getTag();
+                    String text = mList.get(pos).getFtname();
                     mPaint.getTextBounds(text, 0, text.length(), mTextBound);
                     c.drawText(text, (right - left - mTextBound.width()) / 2, bottom - (mTitleHeight - mTextBound.height()) / 2, mPaint);
                 }
@@ -140,7 +141,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
         //悬浮菜单
         boolean flag = false;
         if (pos + 1 < mList.size()) {
-            if (!mList.get(pos).getTag().equals(mList.get(pos + 1).getTag())) {
+            if (!mList.get(pos).getFtname().equals(mList.get(pos + 1).getFtname())) {
                 if (child.getTop() + child.getHeight() < mTitleHeight) {
                     //保存布局
                     c.save();
@@ -154,7 +155,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
         //画标题区域
         c.drawRect(parent.getPaddingLeft(), parent.getPaddingTop(), parent.getWidth() - parent.getPaddingRight(), parent.getPaddingTop() + mTitleHeight, mPaintRect);
         //画文字
-        String text = mList.get(pos).getTag();
+        String text = mList.get(pos).getFtname();
         mPaint.getTextBounds(text, 0, text.length(), mTextBound);
         c.drawText(text, (parent.getWidth() - parent.getPaddingRight() - parent.getPaddingLeft() - mTextBound.width()) / 2, parent.getPaddingTop() + mTitleHeight - (mTitleHeight - mTextBound.height()) / 2, mPaint);
         //还原布局
@@ -178,7 +179,7 @@ public class SuspensionDecoration extends RecyclerView.ItemDecoration {
                     outRect.set(0, mTitleHeight, 0, 0);
                 } else {
                     //标题不同的话就给标题间隔高度
-                    if (!mList.get(pos).getTag().equals(mList.get(pos - 1).getTag())) {
+                    if (!mList.get(pos).getFtname().equals(mList.get(pos - 1).getFtname())) {
                         outRect.set(0, mTitleHeight, 0, 0);
                     } else {
                         //标题相同的话就不给标题间隔高度

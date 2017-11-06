@@ -3,111 +3,127 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:background="@mipmap/login"
+    >
+
     <RelativeLayout
-        android:id="@+id/main"
-        android:background="@mipmap/action_bar"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
-        <RelativeLayout
-            android:id="@+id/setting_back"
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/back"
-                android:background="@drawable/btn_back_selector"
-                android:layout_marginLeft="10dp"
-                android:layout_centerVertical="true"
-                android:layout_width="17dp"
-                android:layout_height="21dp" />
-        </RelativeLayout>
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <Button
-            android:id="@+id/add_card"
-            android:layout_width="23dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            android:layout_marginRight="10dp"
-            android:layout_height="23dp"
-            />
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="120dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="200dp"
+        android:background="@mipmap/login_back"
         android:stretchColumns="1">
         <LinearLayout
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="50dp">
-            <TextView
-                android:text="@string/userName"
-                android:gravity="center"
-                android:id="@+id/TextView"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                style="@style/TextView"
-                />
-            <EditText
-                android:hint="@string/userNamehint"
-                android:id="@+id/userEditText"
-                android:background="@null"
-                style="@style/EditText"
+            android:layout_marginTop="50dp"
+            android:layout_height="40dp">
+            <ImageView
+                android:background="@mipmap/head"
+                android:layout_width="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_height="25dp" />
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:background="@mipmap/login_edittext"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/TextView"
+                    android:id="@+id/TextView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="60dp"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/username"
+                    android:layout_height="20dp"
+                    />
+                <EditText
+                    android:layout_toRightOf="@+id/TextView"
+                    android:id="@+id/userEditText"
+                    android:background="@null"
+                    android:layout_marginLeft="10dp"
+                    style="@style/EditText"
+                    android:gravity="left|center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/passwork"
+            android:layout_below="@+id/username"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:layout_height="50dp">
-            <TextView
-                android:text="@string/userpwd"
-                android:layout_width="100dp"
-                style="@style/TextView"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                />
-            <EditText
-                android:hint="@string/userpwdhint"
-                android:id="@+id/pwdEditText"
-                style="@style/EditText"
+            android:layout_marginTop="25dp"
+            android:layout_height="40dp">
+            <ImageView
+                android:background="@mipmap/lock"
+                android:layout_width="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_height="25dp" />
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:background="@null"
-                android:layout_height="match_parent"
-                />
+                android:background="@mipmap/login_edittext"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/passwork_Text"
+                    style="@style/TextView"
+                    android:background="@mipmap/password"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="20dp"
+                    />
+                <EditText
+                    android:layout_toRightOf="@+id/passwork_Text"
+                    android:id="@+id/pwdEditText"
+                    style="@style/EditText"
+                    android:layout_width="match_parent"
+                    android:background="@null"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left|center"
+                    android:layout_height="match_parent"
+                    />
+            </RelativeLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
-
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        android:layout_height="130dp">
+        <RelativeLayout
+            android:id="@+id/login_layout"
+            android:layout_width="320dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_corner"
+            android:layout_height="40dp">
             <Button
-                android:text="@string/login"
                 android:id="@+id/loginButton"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+                android:background="@mipmap/login_text"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:layout_width="40dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="320dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_height="40dp">
             <Button
-                android:text="@string/cancle"
-                android:id="@+id/cancelButton"
+                android:id="@+id/resetButton"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                android:background="@mipmap/reset_login"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:layout_width="40dp"/>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

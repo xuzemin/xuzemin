@@ -13,6 +13,7 @@ import android.view.View;
 import com.example.carl.orderdishes.util.DisplayUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,10 +27,11 @@ public class IndexView extends View {
     /**
      * 右侧标签
      */
-    private String[] str = new String[]{"A", "B", "C", "D", "E", "F", "G",
-            "H", "I", "J", "K", "L", "M", "N",
-            "O", "P", "Q", "R", "S", "T", "U",
-            "V", "W", "X", "Y", "Z", "#"};
+//    private String[] str = new String[]{"A", "B", "C", "D", "E", "F", "G",
+//            "H", "I", "J", "K", "L", "M", "N",
+//            "O", "P", "Q", "R", "S", "T", "U",
+//            "V", "W", "X", "Y", "Z", "#"};
+    public List<String> list;
     /**
      * 标签画笔
      */
@@ -104,8 +106,8 @@ public class IndexView extends View {
         mTextBounds = new Rect();
         //存储标签，当列表滑动时，用于联动
         mMap = new HashMap<>();
-        for (int i = 0; i < str.length; i++) {
-            mMap.put(str[i], i);
+        for (int i = 0; i < list.size(); i++) {
+            mMap.put(list.get(i), i);
         }
     }
 
@@ -121,8 +123,8 @@ public class IndexView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        for (int i = 0; i < str.length; i++) {
-            mPaint.getTextBounds(str[i], 0, str[i].length(), mTextBounds);
+        for (int i = 0; i < list.size(); i++) {
+            mPaint.getTextBounds(list.get(i), 0, list.get(i).length(), mTextBounds);
             //选中
             if (i == mIndex) {
                 mPaint.setColor(Color.WHITE);
@@ -131,7 +133,7 @@ public class IndexView extends View {
                 mPaint.setColor(Color.BLACK);
             }
             //画文字
-            canvas.drawText(str[i], getMeasuredWidth() / 2 - mTextBounds.width() / 2, mHeight * i + mHeight / 2 + mTextBounds.height() / 2, mPaint);
+            canvas.drawText(list.get(i), getMeasuredWidth() / 2 - mTextBounds.width() / 2, mHeight * i + mHeight / 2 + mTextBounds.height() / 2, mPaint);
         }
 
     }
@@ -157,15 +159,15 @@ public class IndexView extends View {
                 mIndex = y / (int) mHeight;
             }
             //预防越界
-            if (mIndex >= str.length) {
-                mIndex = str.length - 1;
+            if (mIndex >= list.size()) {
+                mIndex = list.size() - 1;
             }
             //相同的下标只返回一次
-            if (mListener != null && (!str[mIndex].equals(mIndexStr))) {
-                mListener.backDownString(str[mIndex], mIndex);
+            if (mListener != null && (!list.get(mIndex).equals(mIndexStr))) {
+                mListener.backDownString(list.get(mIndex), mIndex);
             }
 
-            mIndexStr = str[mIndex];
+            mIndexStr = list.get(mIndex);
             invalidate();
         }
 
@@ -176,8 +178,7 @@ public class IndexView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //获取单个标签最大高度
-        mHeight = h / (str.length * 1.0f);
-
+        mHeight = h / (list.size() * 1.0f);
         mRadius = Math.min(w / 2, mHeight / 2);
     }
 
