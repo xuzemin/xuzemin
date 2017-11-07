@@ -53,7 +53,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         if(mList !=null && mList.size()>0){
             Food food = mList.get(position);
             holder.name.setText(food.getFname());
-            utils.display(holder.img, Content.HEADURL + food.getFimgurl());
+            utils.display(holder.img, Content.HEADURL+Content.picture + food.getFimgurl());
             holder.state.setText(String.valueOf(mList.get(position).getFprice()));
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override

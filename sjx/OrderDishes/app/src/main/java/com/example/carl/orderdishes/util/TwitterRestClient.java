@@ -9,7 +9,6 @@ import com.loopj.android.http.RequestParams;
  */
 
 public class TwitterRestClient {
-    private static final String BASE_URL = "http://192.168.2.109:8080/OrderDishes/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -22,6 +21,6 @@ public class TwitterRestClient {
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
-        return BASE_URL + relativeUrl;
+        return Content.HEADURL + relativeUrl;
     }
 }

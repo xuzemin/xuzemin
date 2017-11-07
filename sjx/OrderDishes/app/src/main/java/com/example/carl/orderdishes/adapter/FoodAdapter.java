@@ -115,7 +115,7 @@ public class FoodAdapter extends BaseAdapter {
             viewHolder.text.setText(str);
         }
 
-        utils.display(viewHolder.image, Content.HEADURL+food.getFimgurl());
+        utils.display(viewHolder.image, Content.HEADURL+Content.picture+food.getFimgurl());
 
         viewHolder.add_food.setOnClickListener(new View.OnClickListener() {
             @Override

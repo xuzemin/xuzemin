@@ -44,6 +44,7 @@
             android:layout_height="23dp"
             />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_below="@+id/main"
         android:layout_above="@+id/bottom"
@@ -73,10 +74,43 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true" />
     </RelativeLayout>
+    <ImageView
+        android:id="@+id/view"
+        android:layout_above="@+id/bottom"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:clickable="true"
+        android:background="#e0000000"
+        android:layout_height="match_parent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#EEEEEE"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/popupwindow"
+        android:layout_marginTop="250dp"
+        android:visibility="invisible"
+        android:layout_above="@+id/bottom"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_launcher"
+                />
+        </RelativeLayout>
+        <ListView
+            android:id="@+id/shoplist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/bottom"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
         android:layout_alignParentBottom="true"
         android:layout_height="60dp">
         <ImageView
