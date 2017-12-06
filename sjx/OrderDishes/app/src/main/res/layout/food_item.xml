@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="80dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="left|center"
+        />
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/name"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="#666666"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:textColor="#666666"
+            android:textSize="12sp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/add_food"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/ic_launcher"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:focusable="false"
+            />
+        <TextView
+            android:id="@+id/number"
+            android:layout_toRightOf="@+id/delete_food"
+            android:layout_toLeftOf="@+id/add_food"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/delete_food"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/ic_launcher"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+</LinearLayout>
