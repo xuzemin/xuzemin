@@ -13,7 +13,7 @@ import android.util.Log;
 
 import net.yrom.screenrecorder.IScreenRecorderAidlInterface;
 import net.yrom.screenrecorder.ui.activity.ScreenRecordActivity;
-import net.yrom.screenrecorder.R;
+import net.android.screenrecorder.R;
 import net.yrom.screenrecorder.model.DanmakuBean;
 import net.yrom.screenrecorder.view.MyWindowManager;
 

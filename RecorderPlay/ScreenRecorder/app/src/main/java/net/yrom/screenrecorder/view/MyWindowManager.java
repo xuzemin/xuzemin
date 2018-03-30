@@ -8,7 +8,7 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
-import net.yrom.screenrecorder.R;
+import net.android.screenrecorder.R;
 
 /**
  * source code author : guolin

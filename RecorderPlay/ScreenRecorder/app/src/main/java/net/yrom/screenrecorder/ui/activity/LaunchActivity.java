@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import net.yrom.screenrecorder.R;
+import net.android.screenrecorder.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

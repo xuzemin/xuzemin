@@ -33,7 +33,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import net.yrom.screenrecorder.IScreenRecorderAidlInterface;
-import net.yrom.screenrecorder.R;
+import net.android.screenrecorder.R;
 import net.yrom.screenrecorder.core.RESAudioClient;
 import net.yrom.screenrecorder.core.RESCoreParameters;
 import net.yrom.screenrecorder.model.DanmakuBean;

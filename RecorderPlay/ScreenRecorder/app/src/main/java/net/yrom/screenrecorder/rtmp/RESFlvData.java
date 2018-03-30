@@ -9,8 +9,9 @@ public class RESFlvData {
     // video size
     public static final int VIDEO_WIDTH = 1080;
     public static final int VIDEO_HEIGHT = 1920;
+    public static final String Server_IP = "192.168.0.101";
     //public static final String Server_IP = "192.168.31.220";
-    public static final String Server_IP = "192.168.43.155";
+    //public static final String Server_IP = "192.168.43.155";
     public static final int Server_PORT = 53100;
     public static final int VIDEO_BITRATE = 1000000; // 500Kbps
     public static final int VIDEO_I_FRAME_INTERVAL = 0;

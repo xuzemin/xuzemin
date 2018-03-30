@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import net.yrom.screenrecorder.R;
+import net.android.screenrecorder.R;
 import net.yrom.screenrecorder.model.DanmakuBean;
 
 import java.lang.reflect.Field;

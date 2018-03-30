@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import net.yrom.screenrecorder.R;
+import net.android.screenrecorder.R;
 import net.yrom.screenrecorder.core.Packager;
 import net.yrom.screenrecorder.rtmp.RESFlvData;
 import net.yrom.screenrecorder.rtmp.RESFlvDataCollecter;
