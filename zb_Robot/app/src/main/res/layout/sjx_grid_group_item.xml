@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.android.jdrd.robot.view.MyImageView
+            android:id="@+id/group_image"
+            android:background="@mipmap/albums_bg"
+            android:src="@mipmap/friends_sends_pictures_no"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="30dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp" />
+
+        <TextView
+            android:id="@+id/group_count"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@drawable/albums_icon_bg"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:text="5"
+            android:layout_gravity="bottom|center_horizontal" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/group_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/framelayout"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:text="Camera"
+        android:textSize="16sp" />
+
+</RelativeLayout>

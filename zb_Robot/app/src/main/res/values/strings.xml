@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">智宝机器人</string>
+    <string name="btn_sure">确定</string>
+    <string name="btn_delete">删除</string>
+    <string name="btn_cancle">取消</string>
+    <string name="config_add">添加</string>
+    <string name="config_redact">编辑</string>
+    <string name="change_area">请修改区域名称</string>
+    <string name="add_area">请输入区域名称</string>
+    <string name="choose_area">请选择区域</string>
+    <string name="choose_robot">请选择执行的机器</string>
+    <string name="deskname_setting">设置</string>
+    <string name="coordinate">目标设置</string>
+    <string name="deskname">桌名</string>
+
+    <string name="mapsetting">地图设置</string>
+    <string name="image">地图选择</string>
+    <string name="mapshow">地图显示</string>
+
+    <string name="goalname">站点</string>
+    <string name="direction">方向</string>
+    <string name="speed">速度</string>
+    <string name="mp3">MP3通道</string>
+    <string name="outime">超时时间</string>
+    <string name="shownum">显示编号</string>
+    <string name="showcolor">显示颜色</string>
+
+    <string name="straight">直行</string>
+    <string name="derail">脱轨运行</string>
+    <string name="rotato">脱轨旋转</string>
+    <string name="wait">等待退出</string>
+    <string name="puthook">放牵引钩</string>
+    <string name="lockhook">锁牵引钩</string>
+
+    <string name="name">名称</string>
+    <string name="areaname">区域名称</string>
+    <string name="ip">IP地址</string>
+    <string name="outline">在线状态</string>
+    <string name="electric">电量电压</string>
+    <string name="area">服务区域</string>
+    <string name="state">运动状态</string>
+    <string name="robot_state">机器人状态</string>
+    <string name="command_num">指令总数</string>
+    <string name="excute_command">执行指令</string>
+    <string name="excute_time">执行时间</string>
+    <string name="command_state">指令状态</string>
+    <string name="last_command_state">前指令状态</string>
+    <string name="last_location">最后坐标</string>
+    <string name="obstacle">障碍物</string>
+    <string name="pathway">有轨无轨</string>
+    <string name="open_obstacle">障碍物打开</string>
+    <string name="main">首页</string>
+    <string name="dining">智宝机器人</string>
+    <string name="desk_add">添加桌子</string>
+    <string name="desk_settings">添加桌子</string>
+    <string name="desk_deract">编辑桌子</string>
+    <string name="command_deract">编辑命令</string>
+    <string name="robot_settings">机器人编辑</string>
+    <string name="command_settings">添加指令</string>
+    <string name="added_settings">已有指令</string>
+    <string name="add_desk">请输入桌子名称</string>
+    <string name="name_setting">确认修改</string>
+    <string name="remote_control">遥控器</string>
+
+    <string name="point_hint">请输入坐标值</string>
+    <string name="direction_hint">请输入方向值</string>
+    <string name="waittime_hint">请输入等待时间值</string>
+
+    <string name="system_card_hint">请输入ID卡编码值</string>
+
+    <string name="waittime">等待时间:</string>
+    <string name="pointx">横坐标</string>
+    <string name="pointy">纵坐标</string>
+    <string name="max">最大65535</string>
+    <string name="map">地图选点</string>
+    <string name="map_toast">(开启后可点击地图设置坐标)</string>
+    <string name="derection">方向</string>
+
+    <string name="initial">坐标系初始化</string>
+    <string name="back">返回坐标设置</string>
+    <string name="goal">目标坐标点设置</string>
+
+    <string name="derectionchoose">方向选择:</string>
+    <string name="up">上</string>
+    <string name="down">下</string>
+    <string name="left">左</string>
+    <string name="right">右</string>
+
+    <string name="add">添加</string>
+    <string name="card_settings">系统卡编辑</string>
+    <string name="coordinate_settings">无轨坐标设置</string>
+    <string name="card_list">系统卡列表</string>
+    <string name="area_list">区域编辑</string>
+    <string name="image_list">图片列表</string>
+    <string name="photo_list">相册列表</string>
+    <string name="arearedact">区域编辑</string>
+    <string name="card_address">ID卡编码</string>
+    <string name="add_card">请输入系统卡名称</string>
+    <array name="DATABASE_INFO">
+        <item>robot.db</item>
+        <item>1</item>
+    </array>
+
+    <array name="CREATE_TABLE_SQL">
+        <!--区域-->
+        <item>CREATE TABLE area (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,pointx INTEGER,
+            pointy INTEGER,point_x_back,point_y_back,derection INTEGER)
+        </item>
+        <!--餐桌-->
+        <item>CREATE TABLE desk (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,area INTEGER,
+            pointx INTEGER ,pointy INTEGER ,derection INTEGER,waittime INTEGER)
+        </item>
+
+        <!--命令-->
+        <item>CREATE TABLE command (id INTEGER PRIMARY KEY AUTOINCREMENT,type INTEGER,desk
+            INTEGER ,goal INTEGER ,direction INTEGER,
+            speed INTEGER ,music INTEGER ,Error INTEGER ,outime INTEGER ,shownumber
+            INTEGER ,showcolor INTEGER,up_obstacle INTEGER,down_obstacle INTEGER,side_obstacle
+            INTEGER)
+        </item>
+        <!--机器人状态-->
+        <item>CREATE TABLE robot (id INTEGER PRIMARY KEY AUTOINCREMENT ,ip TEXT ,name TEXT ,outline
+            INTEGER ,electric INTEGER ,area INTEGER,
+            state INTEGER,robotstate INTEGER,obstacle INTEGER, commandnum INTEGER ,excute
+            INTEGER , excutetime INTEGER ,commandstate INTEGER ,lastcommandstate INTEGER
+            ,lastlocation INTEGER,pathway INTEGER,point_x INTEGER,point_y INTEGER,direction INTEGER)
+        </item>
+        <!--ID卡-->
+        <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)
+        </item>
+    </array>
+
+    <array name="UPDATE_TABLE_SQL">
+        <item></item>
+    </array>
+</resources>
