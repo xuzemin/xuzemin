@@ -142,7 +142,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_main);
+        setContentView(R.layout.zb_activity_main);
 
         // 静态IP
         Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
@@ -552,6 +552,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         SJXGridViewAdapter.notifyDataSetInvalidated();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

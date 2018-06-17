@@ -63,7 +63,8 @@ public class Protocol {
             UP_SPEED = 17,// 设置前进速度为500
             UP_STOP = 23,
             RUN_COORDINATE = 30,
-            CONFIG_COORDINATE = 31;
+            CONFIG_COORDINATE = 31,
+            HEART_BEAT = 65;
 
     // 表示发送命令
     public static final int
@@ -86,7 +87,8 @@ public class Protocol {
             ROBOT_CONTROL_ROTATE_RIGHT = 55,// 右旋转
             ROBOT_CONTROL_STOP = 56,// 停止遥控
             ROBOT_CONTROL_CLEAR_SPEND = 57,// 速度清0
-            ROBOT_CONTROL_SPEND_DOWN = 58;// 后退
+            ROBOT_CONTROL_SPEND_DOWN = 58,// 后退
+            ROBOT_HRARTBEAD = 64; //心跳
     // 表示接收命令
     public static final int
             ROBOT_RAIL_SUCCESS = 6,// 有轨返回成功
@@ -194,7 +196,7 @@ public class Protocol {
             // 遥控前进方向 0->前进  1->后退
             case ROBOT_CONTROL_SPEND_UP:
                 up_down_direction = 0;
-                //bytes = new int[]{up_spend, up_down_direction};
+                bytes = new int[]{up_spend, up_down_direction};
                 break;
             // 遥控后退方向 0->前进  1->后退
             case ROBOT_CONTROL_SPEND_DOWN:
@@ -251,6 +253,9 @@ public class Protocol {
                 break;
             case CONFIG_COORDINATE:
                 bytes = new int[]{coordinate_x, coordinate_y, orientation};
+                break;
+            case ROBOT_HRARTBEAD:
+                //bytes = new int[]{01, 01};
                 break;
         }
 
@@ -346,6 +351,7 @@ public class Protocol {
 
                 cmdData.add((byte) ((speed >> 8) & 0xff));
                 cmdData.add((byte) ((speed) & 0xff));
+                cmdData.add((byte) ((direction) & 0xff));
                 break;
             // 等待退出
             case ROBOT_LIST_WAIT:

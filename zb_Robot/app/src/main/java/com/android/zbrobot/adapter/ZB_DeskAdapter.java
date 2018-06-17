@@ -90,7 +90,7 @@ public class ZB_DeskAdapter extends BaseAdapter {
             // 根据context上下文加载布局，这里的是AreaAdapter本身，即this
             final LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.sjx_desk_item, null);
+            convertView = inflater.inflate(R.layout.zb_desk_item, null);
             viewHolder = new ViewHolder();
             // 根据自定义的Item布局加载布局
             viewHolder.text = (TextView) convertView.findViewById(R.id.name);

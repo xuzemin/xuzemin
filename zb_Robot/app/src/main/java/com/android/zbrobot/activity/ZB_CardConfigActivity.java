@@ -44,7 +44,7 @@ public class ZB_CardConfigActivity extends Activity implements View.OnClickListe
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_cardactivity);
+        setContentView(R.layout.zb_activity_cardactivity);
 
         // 初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());

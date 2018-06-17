@@ -46,7 +46,7 @@ public class ZB_AreaConfig extends Activity implements View.OnClickListener {
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_areaconfig);
+        setContentView(R.layout.zb_activity_areaconfig);
 
         // 初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());

@@ -31,7 +31,7 @@ public class ZB_MyDialog extends Dialog {
      * 初始化
      */
     private void setCustomDialog() {
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.sjx_fragment_dialog,null);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.zb_fragment_dialog,null);
         title = (TextView) mView.findViewById(R.id.title);
         editText = (EditText) mView.findViewById(R.id.editText);
         positiveButton = (Button) mView.findViewById(R.id.positiveButton);

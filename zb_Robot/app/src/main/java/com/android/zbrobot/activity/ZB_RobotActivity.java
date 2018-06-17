@@ -48,7 +48,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_robot);
+        setContentView(R.layout.zb_activity_robot);
         //初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
         // 获取MainActivity传递的Id

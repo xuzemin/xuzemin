@@ -44,7 +44,7 @@ public class ZB_RobotConfigActivity extends Activity implements View.OnClickList
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_robot_config);
+        setContentView(R.layout.zb_activity_robot_config);
 
         //初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());

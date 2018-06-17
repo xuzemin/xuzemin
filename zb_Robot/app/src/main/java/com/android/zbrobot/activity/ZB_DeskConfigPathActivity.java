@@ -86,7 +86,7 @@ public class ZB_DeskConfigPathActivity extends Activity implements View.OnClickL
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_config);
+        setContentView(R.layout.zb_activity_config);
 
         //初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
@@ -152,9 +152,9 @@ public class ZB_DeskConfigPathActivity extends Activity implements View.OnClickL
 
         listViews = new ArrayList<>();
         // 加载tab_01 布局
-        listViews.add(this.getLayoutInflater().inflate(R.layout.sjx_tab_01, null));
+        listViews.add(this.getLayoutInflater().inflate(R.layout.zb_tab_01, null));
         // 加载tab_02 布局
-        View view = this.getLayoutInflater().inflate(R.layout.sjx_tab_02, null);
+        View view = this.getLayoutInflater().inflate(R.layout.zb_tab_02, null);
         // 初始化ListView
         commandListView = (ListView) view.findViewById(R.id.added_command);
         // 初始化 SJX_MyAdapter

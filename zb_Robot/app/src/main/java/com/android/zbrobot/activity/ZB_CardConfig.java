@@ -42,7 +42,7 @@ public class ZB_CardConfig extends Activity implements View.OnClickListener {
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_card);
+        setContentView(R.layout.zb_activity_card);
 
         // 初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());

@@ -49,7 +49,7 @@ public class ZB_CoordinateConfigActivity extends Activity implements View.OnClic
         areaId = intent.getIntExtra("area", 0);
         CoordinateView.areaid = areaId;
 
-        setContentView(R.layout.sjx_activity_coordinate);
+        setContentView(R.layout.zb_activity_coordinate);
         findViewById(R.id.setting_back).setOnClickListener(this);
         findViewById(R.id.btn_sure).setOnClickListener(this);
         pointx = (EditText) findViewById(R.id.pointx);

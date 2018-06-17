@@ -93,7 +93,7 @@
             android:thumb="@drawable/seekbar_thumb" />
     </LinearLayout>
 
-    <com.android.jdrd.robot.view.RoundView
+    <com.android.zbrobot.view.RoundView
         android:id="@+id/round_view"
         android:layout_width="300dp"
         android:layout_height="300dp"

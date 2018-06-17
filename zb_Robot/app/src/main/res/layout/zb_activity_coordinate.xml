@@ -47,7 +47,7 @@
             android:text="@string/btn_sure"
             tools:ignore="RelativeOverlap,RtlHardcoded" />
     </RelativeLayout>
-        <com.android.jdrd.robot.view.CoordinateView
+        <com.android.zbrobot.view.CoordinateView
             android:id="@+id/coordinate"
             android:layout_width="match_parent"
             android:layout_height="300dp"

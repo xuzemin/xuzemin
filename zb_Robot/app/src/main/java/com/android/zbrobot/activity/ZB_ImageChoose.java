@@ -68,7 +68,7 @@ public class ZB_ImageChoose extends Activity{
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_imagechoose);
+        setContentView(R.layout.zb_activity_imagechoose);
 
         Intent intent = getIntent();
         areaId = intent.getIntExtra("area", 0);

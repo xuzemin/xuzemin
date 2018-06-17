@@ -39,7 +39,7 @@ public class ZB_ShowImage extends Activity {
 		// 隐藏状态栏
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.sjx_show_image_activity);
+		setContentView(R.layout.zb_show_image_activity);
 
 		mGridView = (GridView) findViewById(R.id.child_grid);
 		Intent intent = getIntent();

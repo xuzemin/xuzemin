@@ -61,7 +61,7 @@ public class ChildAdapter extends BaseAdapter {
 		final ViewHolder viewHolder;
 		String path = list.get(position);
 		if(convertView == null){
-			convertView = mInflater.inflate(R.layout.sjx_grid_child_item, null);
+			convertView = mInflater.inflate(R.layout.zb_grid_child_item, null);
 			viewHolder = new ViewHolder();
 			viewHolder.mImageView = (MyImageView) convertView.findViewById(R.id.child_image);
 			viewHolder.mCheckBox = (ImageView) convertView.findViewById(R.id.child_checkbox);

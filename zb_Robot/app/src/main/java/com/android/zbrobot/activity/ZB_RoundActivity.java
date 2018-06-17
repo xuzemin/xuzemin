@@ -38,7 +38,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
     private int robotId;
     // 机器人信息
     private Map robotConfig;
-    public static Thread thread = new Thread();
+
+    public static Thread thread = null;
     // IP地址
     public static String IP;
     // 字节数组发送命令
@@ -60,6 +61,9 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
     // 自定义SeekBar
     private SeekBar mSeekBarSelf;
 
+    private OutputStream out;
+
+    private Map mapObject;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +72,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_round);
+        setContentView(R.layout.zb_activity_round);
 
         //初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
@@ -112,10 +116,23 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         Constant.debugLog("robotConfig----->" + robotConfig.toString());
         IP = (String) robotConfig.get("ip");
         Constant.debugLog("IP地址:" + IP);
+
+
+        for (Map map : ServerSocketUtil.socketList) {
+            if (map.get("ip").equals(IP)) {
+                out = (OutputStream) map.get("out");
+            }
+        }
         // 初始化时发送一条遥控命令
         data = Protocol.getSendData(Protocol.CONTROL_REMOTE, Protocol.getCommandData(Protocol.ROBOT_CONTROL_REMOTE));
         SendControl(data);
 
+        flag_start = false;
+        flag_stop = false;
+        if(thread!=null){
+            thread.interrupt();
+            thread = new Thread();
+        }
         /**
          * selectSolidColor:按下去的颜色
          * strokeColor:外圆外边的边线颜色
@@ -129,20 +146,28 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 // 停止线程
-                stop();
+                /*stop();
                 if (flag_stop == false) {
                     flag_start = true;
                     // 速度清0
                     data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
                     SendStop(data);
+                }*/
+
+                flag_start = false;
+                flag_stop = false;
+                if(thread!=null){
+                    thread.interrupt();
+                    thread = new Thread();
                 }
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
                 // 启动线程
-                start();
+                //start();
                 if (flag_start == false) {
                     flag_stop = true;
                     // 后退
@@ -167,20 +192,28 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 // 停止线程
-                stop();
+                /*stop();
                 if (flag_stop == false) {
                     flag_start = true;
                     // 速度清0
                     data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
                     SendStop(data);
+                }*/
+
+                flag_start = false;
+                flag_stop = false;
+                if(thread!=null){
+                    thread.interrupt();
+                    thread = new Thread();
                 }
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
                 // 启动线程
-                start();
+                //start();
                 if (flag_start == false) {
                     flag_stop = true;
                     // 左旋转
@@ -205,12 +238,19 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 // 停止线程
-                stop();
+                /*stop();
                 if (flag_stop == false) {
                     flag_start = true;
                     // 速度清0
                     data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
                     SendStop(data);
+                }*/
+
+                flag_start = false;
+                flag_stop = false;
+                if(thread!=null){
+                    thread.interrupt();
+                    thread = new Thread();
                 }
             }
         };
@@ -218,7 +258,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 // 启动线程
-                start();
+                //start();
                 if (flag_start == false) {
                     flag_stop = true;
                     // 前进
@@ -243,12 +283,19 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 // 停止线程
-                stop();
+                /*stop();
                 if (flag_stop == false) {
                     flag_start = true;
                     // 速度清0
                     data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
                     SendStop(data);
+                }*/
+
+                flag_start = false;
+                flag_stop = false;
+                if(thread!=null){
+                    thread.interrupt();
+                    thread = new Thread();
                 }
             }
         };
@@ -256,7 +303,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 // 启动线程
-                start();
+
+                //start();
                 if (flag_start == false) {
                     flag_stop = true;
                     // 右转
@@ -278,13 +326,36 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                 , 10, 0.37, BitmapFactory.decodeResource(getResources(), R.mipmap.zaixian), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        flag_start = false;
+                        flag_stop = false;
+                        if(thread!=null){
+                            thread.interrupt();
+                            thread = new Thread();
+                        }
                     }
                 }, new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
+                        flag_start = false;
+                        flag_stop = false;
+                        if(thread!=null){
+                            thread.interrupt();
+                            thread = new Thread();
+                        }
                         return false;
                     }
                 });
+
+        Protocol.up_spend = mSeekBarDef.getProgress();
+        Protocol.rotate_spend = mSeekBarSelf.getProgress();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        flag_start = false;
+        flag_stop = false;
+        thread = new Thread();
     }
 
     @Override
@@ -310,84 +381,77 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
      *
      * @param sendData
      */
-    public void SendStart(final byte[] sendData) {
-        for (Map map : ServerSocketUtil.socketList) {
-            if (map.get("ip").equals(IP)) {
-                Constant.debugLog("传递过来的IP:" + map.get("ip").toString());
-                final OutputStream out = (OutputStream) map.get("out");
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (flag_stop) {
-                            try {
-                                out.write(sendData);
-                                // 1000毫秒发一次
-                                Thread.sleep(300);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }
-                });
-                thread.start();
-            }
+    public void SendStart(byte[] sendData) {
+        if(thread!=null){
+            thread.interrupt();
+            thread = new Thread();
+            flag_start = false;
         }
+        final byte[] bty = sendData;
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (flag_stop) {
+                    try {
+                        out.write(bty);
+                        // 1000毫秒发一次
+                        thread.sleep(1000);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
      * 停止发送
      */
     public void SendStop(final byte[] sendData) {
-        for (Map map : ServerSocketUtil.socketList) {
-            if (map.get("ip").equals(IP)) {
-                Constant.debugLog("传递过来的IP:" + map.get("ip").toString());
-                final OutputStream out = (OutputStream) map.get("out");
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (flag_start) {
-                            try {
-                                out.write(sendData);
-                                // 1000毫秒发一次
-                                Thread.sleep(100);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }
-                });
-                thread.start();
-            }
+        if(thread!=null){
+            thread.interrupt();
+            thread = new Thread();
+            flag_stop = false;
         }
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (flag_start) {
+                    try {
+                        out.write(sendData);
+                        // 1000毫秒发一次
+                        thread.sleep(1000);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
      * 发送遥控器命令
      */
     public void SendControl(final byte[] sendData) {
-        for (Map map : ServerSocketUtil.socketList) {
-            if (map.get("ip").equals(IP)) {
-                Constant.debugLog("传递过来的IP:" + map.get("ip").toString());
-                final OutputStream out = (OutputStream) map.get("out");
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            out.write(sendData);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                thread.start();
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    out.write(sendData);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
+        thread.start();
     }
 
     // 开启线程
@@ -438,4 +502,5 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
 }

@@ -108,7 +108,7 @@ public class ZB_RobotDialog extends Dialog {
      */
     private void setCustomDialog() {
         // 加载要执行的机器人布局
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.sjx_fragment_robot_dialog, null);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.zb_fragment_robot_dialog, null);
         // 初始化要执行的机器人列表
         gridView = (GridView) mView.findViewById(R.id.robot_girdview);
         list = new ArrayList<>();
@@ -188,7 +188,7 @@ public class ZB_RobotDialog extends Dialog {
                 // 打印log
                 Constant.debugLog(robotData_list.toString());
                 // 简单的适配器   没有自定义  调用系统提供的适配器
-                robotAdapter = new SimpleAdapter(getContext(), robotData_list, R.layout.sjx_robot_grid_item, from, to);
+                robotAdapter = new SimpleAdapter(getContext(), robotData_list, R.layout.zb_robot_grid_item, from, to);
                 // 加载适配器
                 gridView.setAdapter(robotAdapter);
                 // 要执行的机器人子项列表
@@ -436,17 +436,12 @@ public class ZB_RobotDialog extends Dialog {
                                                         Protocol.up_obstacle = 0;
                                                     }
                                                     //Protocol.up_obstacle = (((int) robotList.get(CurrentIndex).get("up_obstacle"))==0);
-                                                    Constant.debugLog(""+Protocol.up_obstacle);
-
                                                     if(((int)robotList.get(CurrentIndex).get("down_obstacle")) == 0){
                                                         Protocol.down_obstacle = 1;
                                                     }else{
                                                         Protocol.down_obstacle = 0;
                                                     }
-
                                                     //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
-                                                    Constant.debugLog(""+Protocol.down_obstacle);
-
                                                     if(((int)robotList.get(CurrentIndex).get("side_obstacle")) == 0){
                                                         Protocol.side_obstacle = 1;
                                                     }else{
@@ -454,7 +449,6 @@ public class ZB_RobotDialog extends Dialog {
                                                     }
 
                                                     //Protocol.side_obstacle = (int) robotList.get(CurrentIndex).get("side_obstacle");
-                                                    Constant.debugLog(""+Protocol.side_obstacle);
                                                     // 解析
                                                     data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_UP));
                                                     //data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandData(Protocol.ROBOT_LIST_UP));
@@ -479,13 +473,31 @@ public class ZB_RobotDialog extends Dialog {
                                             // 脱轨旋转
                                             case 2:
                                                 Protocol.speed = (int) robotList.get(CurrentIndex).get("speed");
+                                                Protocol.direction = (int) robotList.get(CurrentIndex).get("direction");
                                                 Protocol.music = (int) robotList.get(CurrentIndex).get("music");
                                                 Protocol.outime = (int) robotList.get(CurrentIndex).get("outime");
                                                 Protocol.shownumber = (int) robotList.get(CurrentIndex).get("shownumber");
                                                 Protocol.showcolor = (int) robotList.get(CurrentIndex).get("showcolor");
-                                                Protocol.up_obstacle = (int) robotList.get(CurrentIndex).get("up_obstacle");
-                                                Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
-                                                Protocol.side_obstacle = (int) robotList.get(CurrentIndex).get("side_obstacle");
+                                                //Protocol.up_obstacle = (int) robotList.get(CurrentIndex).get("up_obstacle");
+                                                //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
+                                                //Protocol.side_obstacle = (int) robotList.get(CurrentIndex).get("side_obstacle");
+                                                if(((int)robotList.get(CurrentIndex).get("up_obstacle")) == 0){
+                                                    Protocol.up_obstacle = 1;
+                                                }else{
+                                                    Protocol.up_obstacle = 0;
+                                                }
+                                                //Protocol.up_obstacle = (((int) robotList.get(CurrentIndex).get("up_obstacle"))==0);
+                                                if(((int)robotList.get(CurrentIndex).get("down_obstacle")) == 0){
+                                                    Protocol.down_obstacle = 1;
+                                                }else{
+                                                    Protocol.down_obstacle = 0;
+                                                }
+                                                //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
+                                                if(((int)robotList.get(CurrentIndex).get("side_obstacle")) == 0){
+                                                    Protocol.side_obstacle = 1;
+                                                }else{
+                                                    Protocol.side_obstacle = 0;
+                                                }
                                                 // 解析
                                                 data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
                                                 // data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandData(Protocol.ROBOT_LIST_DERAILMENT));

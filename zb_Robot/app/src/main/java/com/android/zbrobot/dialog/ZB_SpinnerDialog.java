@@ -32,7 +32,7 @@ public class ZB_SpinnerDialog extends Dialog {
      */
     private void setCustomDialog() {
         // 加载布局
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.sjx_fragment_spinner_dialog, null);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.zb_fragment_spinner_dialog, null);
         title = (TextView) mView.findViewById(R.id.title);
         listView = (ListView) mView.findViewById(R.id.listview);
         positiveButton = (Button) mView.findViewById(R.id.positiveButton);

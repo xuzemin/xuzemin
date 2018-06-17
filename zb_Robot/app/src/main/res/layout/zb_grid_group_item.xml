@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <com.android.jdrd.robot.view.MyImageView
+        <com.android.zbrobot.view.MyImageView
             android:id="@+id/group_image"
             android:background="@mipmap/albums_bg"
             android:src="@mipmap/friends_sends_pictures_no"

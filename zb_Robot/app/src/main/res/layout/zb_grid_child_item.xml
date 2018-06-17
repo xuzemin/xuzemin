@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp" >
 
-    <com.android.jdrd.robot.view.MyImageView
+    <com.android.zbrobot.view.MyImageView
         android:id="@+id/child_image"
         android:layout_width="wrap_content"
         android:layout_height="100dp"

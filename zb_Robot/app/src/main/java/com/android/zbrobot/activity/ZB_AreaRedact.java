@@ -55,7 +55,7 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_arearedact);
+        setContentView(R.layout.zb_activity_arearedact);
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
         Intent intent = getIntent();
         areaId = intent.getIntExtra("area", 0);

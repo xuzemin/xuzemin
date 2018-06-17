@@ -33,7 +33,7 @@ public class ZB_DeleteDialog extends Dialog {
      */
     private void setCustomDialog() {
         // 加载布局
-        View mView = LayoutInflater.from(getContext()).inflate(R.layout.sjx_fragment_delete_dialog,null);
+        View mView = LayoutInflater.from(getContext()).inflate(R.layout.zb_fragment_delete_dialog,null);
         title = (TextView) mView.findViewById(R.id.title);
         title_template = (TextView) mView.findViewById(R.id.title_template);
         editText = (EditText) mView.findViewById(R.id.editText);

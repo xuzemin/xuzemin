@@ -77,7 +77,7 @@ public class ZB_AreaConfigAdapter extends BaseAdapter {
             // 根据context上下文加载布局，这里的是AreaAdapter本身，即this
             final LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.sjx_listview_card, null);
+            convertView = inflater.inflate(R.layout.zb_listview_card, null);
             viewHolder = new ViewHolder();
             // 根据自定义的Item布局加载布局
             viewHolder.text = (TextView) convertView.findViewById(R.id.text);

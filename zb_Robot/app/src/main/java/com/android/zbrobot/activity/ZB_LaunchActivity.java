@@ -40,7 +40,7 @@ public class ZB_LaunchActivity extends AppCompatActivity {
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_launch);
+        setContentView(R.layout.zb_activity_launch);
         //初始化
         initWidget();
         initData();

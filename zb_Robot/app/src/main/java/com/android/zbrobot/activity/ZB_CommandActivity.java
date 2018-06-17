@@ -22,6 +22,8 @@ import com.android.zbrobot.dialog.ZB_MyDialog;
 import com.android.zbrobot.dialog.ZB_SpinnerDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +46,7 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
     private TextView goal, direction;
     private CheckBox cb_top, cb_bottom, cb_side;
     // 目标数和方向数
-    public static int goalNum = -1, directionNum = -1;
+    public static int goalNum = -1, directionNum = -1,type = 0;
     // 障碍物是否打开up_obstacle(上)
     public static int up_obstacle = 1;
 
@@ -56,7 +58,7 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.sjx_activity_command_config);
+        setContentView(R.layout.zb_activity_command_config);
 
         // 初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
@@ -150,16 +152,25 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
             } else {
                 goal.setText("请选择站点");
             }
+            type = (int) commandConfig.get("type");
             // 获取机器人运行的目标
             if (commandConfig.get("direction") != null) {
                 directionNum = (int) commandConfig.get("direction");
                 // 设置机器人运行的方向 0->直行  1->左岔道  2->右岔道
                 switch (directionNum) {
                     case 0:
-                        direction.setText("直行");
+                        if(type == 2){
+                            direction.setText("左转");
+                        }else {
+                            direction.setText("直行");
+                        }
                         break;
                     case 1:
-                        direction.setText("左岔道");
+                        if(type == 2){
+                            direction.setText("右转");
+                        }else {
+                            direction.setText("左岔道");
+                        }
                         break;
                     case 2:
                         direction.setText("右岔道");
@@ -208,7 +219,7 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
 
 
             // 添加指令列表
-            switch ((int) commandConfig.get("type")) {
+            switch (type) {
                 case 0:
                     break;
                 case 1:
@@ -218,7 +229,20 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
                     break;
                 case 2:
                     findViewById(R.id.linear_goal).setVisibility(View.GONE);
-                    findViewById(R.id.linear_direction).setVisibility(View.GONE);
+                    //findViewById(R.id.linear_direction).setVisibility(View.GONE);
+                    ((TextView)findViewById(R.id.textView6)).setText("旋转时间");
+                    // 存储map的数据
+                    list = new ArrayList<>();
+
+                    map = new HashMap<>();
+                    map.put("name", "左转");
+                    list.add(map);
+
+                    map = new HashMap<>();
+                    map.put("name", "右转");
+                    list.add(map);
+
+
                     ((TextView) findViewById(R.id.speed_text)).setText("旋转速度");
                     break;
                 case 3:
@@ -284,7 +308,7 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
                 break;
             // 确定
             case R.id.btn_sure:
-                switch ((int) commandConfig.get("type")) {
+                switch (type) {
                     // 直行
                     case 0:
                         if (!speed.getText().toString().equals("")
@@ -320,10 +344,12 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
                                 && !showColor.getText().toString().equals("")
                                 && !cb_top.getText().toString().equals("")
                                 && !cb_bottom.getText().toString().equals("")
-                                && !cb_side.getText().toString().equals("")) {
+                                && !cb_side.getText().toString().equals("")
+                                && !direction.getText().toString().equals("")
+                                ) {
                             // 修改站点
                             robotDBHelper.execSQL("update command set goal= '" + 0 + "' ," +
-                                    "direction = '" + 0 + "' ," +
+                                    //"direction = '" + direction.getText().toString().trim() + "' ," +
                                     "speed = '" + speed.getText().toString().trim() + "'," +
                                     "music = '" + mp3.getText().toString().trim() + "' ," +
                                     "outime = '" + outTime.getText().toString().trim() + "' ," +
@@ -410,18 +436,18 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
     }
 
     private ZB_SpinnerDialog spinnerDialog;
-    private ZB_SpinnerAdapter SJXSpinnerAdapter;
+    private ZB_SpinnerAdapter ZBSpinnerAdapter;
 
     // 自定义运动到站点对话框
     private void dialog_spinner(final boolean gl) {
         spinnerDialog = new ZB_SpinnerDialog(this);
         if (gl) {
-            SJXSpinnerAdapter = new ZB_SpinnerAdapter(this, goalList, gl);
+            ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, goalList, gl);
         } else {
-            SJXSpinnerAdapter = new ZB_SpinnerAdapter(this, list, gl);
+            ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, list, gl);
         }
         // 加载适配器
-        spinnerDialog.getListView().setAdapter(SJXSpinnerAdapter);
+        spinnerDialog.getListView().setAdapter(ZBSpinnerAdapter);
         // 子列表点击事件
         spinnerDialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -431,7 +457,7 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
                 } else {
                     directionNum = position;
                 }
-                SJXSpinnerAdapter.notifyDataSetChanged();
+                ZBSpinnerAdapter.notifyDataSetChanged();
             }
         });
         // 确定Dialog
@@ -450,10 +476,18 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
                     robotDBHelper.execSQL("update command set direction = '" + directionNum + "' where id= '" + command_id + "'");
                     switch (directionNum) {
                         case 0:
-                            direction.setText("直行");
+                            if(type == 2){
+                                direction.setText("左转");
+                            }else {
+                                direction.setText("直行");
+                            }
                             break;
                         case 1:
-                            direction.setText("左岔道");
+                            if(type == 2){
+                                direction.setText("右转");
+                            }else {
+                                direction.setText("左岔道");
+                            }
                             break;
                         case 2:
                             direction.setText("右岔道");

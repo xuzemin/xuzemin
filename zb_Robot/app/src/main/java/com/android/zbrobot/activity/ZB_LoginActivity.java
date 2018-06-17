@@ -30,7 +30,7 @@ public class ZB_LoginActivity extends AppCompatActivity implements View.OnClickL
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_sjx__login);
+        setContentView(R.layout.activity_zb__login);
         // 初始化
         initView();
         boolean isLogin = PreferencesUtils.getBoolean(this, "save_name", true);
