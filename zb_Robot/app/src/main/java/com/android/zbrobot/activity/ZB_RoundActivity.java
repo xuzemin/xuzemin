@@ -161,11 +161,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                     thread = new Thread();
                 }
                 data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                try {
-                    out.write(data);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                SendControl(data);
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
@@ -213,11 +209,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                     thread = new Thread();
                 }
                 data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                try {
-                    out.write(data);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                SendControl(data);
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
@@ -265,11 +257,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                     thread = new Thread();
                 }
                 data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                try {
-                    out.write(data);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                SendControl(data);
+
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
@@ -316,11 +305,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                     thread = new Thread();
                 }
                 data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                try {
-                    out.write(data);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                SendControl(data);
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
@@ -381,11 +366,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         flag_stop = false;
         thread = new Thread();
         data = Protocol.getSendData(Protocol.CONTROL_STOP, Protocol.getCommandData(Protocol.ROBOT_CONTROL_STOP));
-        try {
-            out.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SendControl(data);
     }
 
     @Override
@@ -411,19 +392,18 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
      *
      * @param sendData
      */
-    public void SendStart(byte[] sendData) {
+    public void SendStart(final byte[] sendData) {
         if(thread!=null){
             thread.interrupt();
             thread = new Thread();
             flag_start = false;
         }
-        final byte[] bty = sendData;
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (flag_stop) {
                     try {
-                        out.write(bty);
+                        out.write(sendData);
                         // 1000毫秒发一次
                         thread.sleep(1000);
                     } catch (IOException e) {
