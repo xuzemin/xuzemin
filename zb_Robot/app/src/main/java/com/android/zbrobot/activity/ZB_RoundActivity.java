@@ -160,6 +160,12 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                     thread.interrupt();
                     thread = new Thread();
                 }
+                data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                try {
+                    out.write(data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
@@ -205,6 +211,12 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                 if(thread!=null){
                     thread.interrupt();
                     thread = new Thread();
+                }
+                data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                try {
+                    out.write(data);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         };
@@ -252,6 +264,12 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                     thread.interrupt();
                     thread = new Thread();
                 }
+                data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                try {
+                    out.write(data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
@@ -296,6 +314,12 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                 if(thread!=null){
                     thread.interrupt();
                     thread = new Thread();
+                }
+                data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                try {
+                    out.write(data);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         };
@@ -356,6 +380,12 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         flag_start = false;
         flag_stop = false;
         thread = new Thread();
+        data = Protocol.getSendData(Protocol.CONTROL_STOP, Protocol.getCommandData(Protocol.ROBOT_CONTROL_STOP));
+        try {
+            out.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
