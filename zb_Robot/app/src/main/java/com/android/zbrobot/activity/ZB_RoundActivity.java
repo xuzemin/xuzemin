@@ -91,16 +91,16 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         // 直行速度SeekBar
         mSeekBarDef = (SeekBar) findViewById(R.id.seekbar_def);
         mSeekBarDef.setOnSeekBarChangeListener(this);
-        mSeekBarDef.setMax(100 * 30);
-        mSeekBarDef.setProgress(10 * 200);
+        mSeekBarDef.setMax(100 * 18);
+        mSeekBarDef.setProgress(10 * 120);
 
         // TextView显示旋转速度
         mTvSelf = (TextView) findViewById(R.id.tv_self);
         // 旋转速度SeekBar
         mSeekBarSelf = (SeekBar) findViewById(R.id.seekbar_self);
         mSeekBarSelf.setOnSeekBarChangeListener(this);
-        mSeekBarSelf.setMax(100 * 10);
-        mSeekBarSelf.setProgress(10 * 50);
+        mSeekBarSelf.setMax(100 * 5);
+        mSeekBarSelf.setProgress(10 * 40);
         // 初始化数据
         initData();
     }
@@ -145,15 +145,6 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         roundMenu.onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 停止线程
-                /*stop();
-                if (flag_stop == false) {
-                    flag_start = true;
-                    // 速度清0
-                    data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                    SendStop(data);
-                }*/
-
                 flag_start = false;
                 flag_stop = false;
                 if(thread!=null){
@@ -167,16 +158,27 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         roundMenu.onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                // 启动线程
-                //start();
-                if (flag_start == false) {
-                    flag_stop = true;
-                    // 后退
-                    data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_SPEND_DOWN));
-                    SendStart(data);
+                switch(motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        flag_start = false;
+                        flag_stop = false;
+                        if(thread!=null){
+                            thread.interrupt();
+                            thread = new Thread();
+                        }
+                        data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                        SendControl(data);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        if (flag_start == false) {
+                            flag_stop = true;
+                            // 后退
+                            data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_SPEND_DOWN));
+                            SendStart(data);
+                        }
+                        break;
                 }
-                return false;
+                return true;
             }
         };
         round_view.addRoundMenu(roundMenu);
@@ -193,15 +195,6 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         roundMenu.onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 停止线程
-                /*stop();
-                if (flag_stop == false) {
-                    flag_start = true;
-                    // 速度清0
-                    data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                    SendStop(data);
-                }*/
-
                 flag_start = false;
                 flag_stop = false;
                 if(thread!=null){
@@ -215,16 +208,27 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         roundMenu.onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                // 启动线程
-                //start();
-                if (flag_start == false) {
-                    flag_stop = true;
-                    // 左旋转
-                    data = Protocol.getSendData(Protocol.CONTROL_ROTATE, Protocol.getCommandData(Protocol.ROBOT_CONTROL_ROTATE_LEFT));
-                    SendStart(data);
+                switch(motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        flag_start = false;
+                        flag_stop = false;
+                        if(thread!=null){
+                            thread.interrupt();
+                            thread = new Thread();
+                        }
+                        data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                        SendControl(data);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        if (flag_start == false) {
+                            flag_stop = true;
+                            // 左旋转
+                            data = Protocol.getSendData(Protocol.CONTROL_ROTATE, Protocol.getCommandData(Protocol.ROBOT_CONTROL_ROTATE_LEFT));
+                            SendStart(data);
+                        }
+                        break;
                 }
-                return false;
+                return true;
             }
         };
         round_view.addRoundMenu(roundMenu);
@@ -241,15 +245,6 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         roundMenu.onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 停止线程
-                /*stop();
-                if (flag_stop == false) {
-                    flag_start = true;
-                    // 速度清0
-                    data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                    SendStop(data);
-                }*/
-
                 flag_start = false;
                 flag_stop = false;
                 if(thread!=null){
@@ -258,21 +253,32 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                 }
                 data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
                 SendControl(data);
-
             }
         };
         roundMenu.onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                // 启动线程
-                //start();
-                if (flag_start == false) {
-                    flag_stop = true;
-                    // 前进
-                    data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_SPEND_UP));
-                    SendStart(data);
+                switch(motionEvent.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        flag_start = false;
+                        flag_stop = false;
+                        if(thread!=null){
+                            thread.interrupt();
+                            thread = new Thread();
+                        }
+                        data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                        SendControl(data);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        if (flag_start == false) {
+                            flag_stop = true;
+                            // 前进
+                            data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_SPEND_UP));
+                            SendStart(data);
+                        }
+                        break;
                 }
-                return false;
+                return true;
             }
         };
         round_view.addRoundMenu(roundMenu);
@@ -289,15 +295,6 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         roundMenu.onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 停止线程
-                /*stop();
-                if (flag_stop == false) {
-                    flag_start = true;
-                    // 速度清0
-                    data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
-                    SendStop(data);
-                }*/
-
                 flag_start = false;
                 flag_stop = false;
                 if(thread!=null){
@@ -311,16 +308,27 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         roundMenu.onTouchListener = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                // 启动线程
-
-                //start();
-                if (flag_start == false) {
-                    flag_stop = true;
-                    // 右转
-                    data = Protocol.getSendData(Protocol.CONTROL_ROTATE, Protocol.getCommandData(Protocol.ROBOT_CONTROL_ROTATE_RIGHT));
-                    SendStart(data);
+                switch(motionEvent.getAction()){
+                    case MotionEvent.ACTION_UP:
+                        flag_start = false;
+                        flag_stop = false;
+                        if(thread!=null){
+                            thread.interrupt();
+                            thread = new Thread();
+                        }
+                        data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                        SendControl(data);
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        if (flag_start == false) {
+                            flag_stop = true;
+                            // 右转
+                            data = Protocol.getSendData(Protocol.CONTROL_ROTATE, Protocol.getCommandData(Protocol.ROBOT_CONTROL_ROTATE_RIGHT));
+                            SendStart(data);
+                        }
+                        break;
                 }
-                return false;
+                return true;
             }
         };
         round_view.addRoundMenu(roundMenu);
@@ -345,13 +353,25 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                 }, new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
-                        flag_start = false;
-                        flag_stop = false;
-                        if(thread!=null){
-                            thread.interrupt();
-                            thread = new Thread();
+                        switch(motionEvent.getAction()){
+                            case MotionEvent.ACTION_DOWN:
+                                flag_start = false;
+                                flag_stop = false;
+                                if(thread!=null){
+                                    thread.interrupt();
+                                    thread = new Thread();
+                                }
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                flag_start = false;
+                                flag_stop = false;
+                                if(thread!=null){
+                                    thread.interrupt();
+                                    thread = new Thread();
+                                }
+                                break;
                         }
-                        return false;
+                        return true;
                     }
                 });
 
@@ -393,14 +413,20 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
      * @param sendData
      */
     public void SendStart(final byte[] sendData) {
+        flag_stop = false;
         if(thread!=null){
             thread.interrupt();
             thread = new Thread();
-            flag_start = false;
         }
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    thread.sleep(1000);
+                    flag_stop = true;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 while (flag_stop) {
                     try {
                         out.write(sendData);
@@ -418,34 +444,6 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         thread.start();
     }
 
-    /**
-     * 停止发送
-     */
-    public void SendStop(final byte[] sendData) {
-        if(thread!=null){
-            thread.interrupt();
-            thread = new Thread();
-            flag_stop = false;
-        }
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (flag_start) {
-                    try {
-                        out.write(sendData);
-                        // 1000毫秒发一次
-                        thread.sleep(1000);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        });
-        thread.start();
-    }
 
     /**
      * 发送遥控器命令
