@@ -422,9 +422,12 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void run() {
                 try {
+                    out.write(sendData);
                     thread.sleep(1000);
                     flag_stop = true;
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 while (flag_stop) {
