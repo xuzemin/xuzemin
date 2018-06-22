@@ -91,7 +91,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         // 直行速度SeekBar
         mSeekBarDef = (SeekBar) findViewById(R.id.seekbar_def);
         mSeekBarDef.setOnSeekBarChangeListener(this);
-        mSeekBarDef.setMax(100 * 18);
+        mSeekBarDef.setMax(100 * 14);
         mSeekBarDef.setProgress(10 * 120);
 
         // TextView显示旋转速度
@@ -340,7 +340,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
          */
         round_view.setCoreMenu(Color.parseColor("#D7E5FA"),
                 Color.parseColor("#D7E5FA"), Color.parseColor("#F1F6F5")
-                , 10, 0.37, BitmapFactory.decodeResource(getResources(), R.mipmap.zaixian), new View.OnClickListener() {
+                , 10, 0.37, BitmapFactory.decodeResource(getResources(), R.mipmap.ting), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         flag_start = false;
@@ -487,8 +487,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         switch (seekBar.getId()) {
             case R.id.seekbar_def:
                 // 直行速度
-                Protocol.up_spend = seekBar.getProgress();
-                mTvDef.setText("直行速度:" + String.valueOf(seekBar.getProgress()));
+                Protocol.up_spend = seekBar.getProgress()+400;
+                mTvDef.setText("直行速度:" + String.valueOf(seekBar.getProgress()+400));
                 break;
             case R.id.seekbar_self:
                 // 旋转速度
