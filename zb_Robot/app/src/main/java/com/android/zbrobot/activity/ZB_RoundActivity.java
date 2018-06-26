@@ -92,7 +92,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         mSeekBarDef = (SeekBar) findViewById(R.id.seekbar_def);
         mSeekBarDef.setOnSeekBarChangeListener(this);
         mSeekBarDef.setMax(100 * 14);
-        mSeekBarDef.setProgress(10 * 120);
+        mSeekBarDef.setProgress(10 * 80);
 
         // TextView显示旋转速度
         mTvSelf = (TextView) findViewById(R.id.tv_self);
@@ -100,7 +100,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         mSeekBarSelf = (SeekBar) findViewById(R.id.seekbar_self);
         mSeekBarSelf.setOnSeekBarChangeListener(this);
         mSeekBarSelf.setMax(100 * 5);
-        mSeekBarSelf.setProgress(10 * 40);
+        mSeekBarSelf.setProgress(10 * 50);
+        mSeekBarSelf.setEnabled(false);
         // 初始化数据
         initData();
     }
@@ -126,7 +127,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         // 初始化时发送一条遥控命令
         data = Protocol.getSendData(Protocol.CONTROL_REMOTE, Protocol.getCommandData(Protocol.ROBOT_CONTROL_REMOTE));
         SendControl(data);
-
+        ServerSocketUtil.sendHeartBeat = false;
         flag_start = false;
         flag_stop = false;
         if(thread!=null){
@@ -340,7 +341,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
          */
         round_view.setCoreMenu(Color.parseColor("#D7E5FA"),
                 Color.parseColor("#D7E5FA"), Color.parseColor("#F1F6F5")
-                , 10, 0.37, BitmapFactory.decodeResource(getResources(), R.mipmap.ting), new View.OnClickListener() {
+                , 10, 0.37, BitmapFactory.decodeResource(getResources(), R.mipmap.ting1), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         flag_start = false;
@@ -349,6 +350,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                             thread.interrupt();
                             thread = new Thread();
                         }
+                        data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                        SendControl(data);
                     }
                 }, new View.OnTouchListener() {
                     @Override
@@ -361,6 +364,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                                     thread.interrupt();
                                     thread = new Thread();
                                 }
+                                data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                                SendControl(data);
                                 break;
                             case MotionEvent.ACTION_UP:
                                 flag_start = false;
@@ -369,6 +374,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
                                     thread.interrupt();
                                     thread = new Thread();
                                 }
+                                data = Protocol.getSendData(Protocol.CONTROL_SPEND, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR_SPEND));
+                                SendControl(data);
                                 break;
                         }
                         return true;
@@ -387,6 +394,7 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         thread = new Thread();
         data = Protocol.getSendData(Protocol.CONTROL_STOP, Protocol.getCommandData(Protocol.ROBOT_CONTROL_STOP));
         SendControl(data);
+        ServerSocketUtil.sendHeartBeat = true;
     }
 
     @Override

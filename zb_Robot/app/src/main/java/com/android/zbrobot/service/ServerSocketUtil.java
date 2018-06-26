@@ -53,6 +53,8 @@ public class ServerSocketUtil extends Service {
     IntentFilter filter;
     public static List<Map> socketList = new ArrayList<>();
 
+    public static boolean sendHeartBeat = true;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -318,8 +320,10 @@ public class ServerSocketUtil extends Service {
                                 //btSendBytes(Protocol.getSendData(Protocol.STOP, Protocol.getCommandData(Protocol.ROBOT_STOP)), socket_ip, socket_cache);
 
                                 // 测试最长数据
-                                //btSendBytes(Protocol.getSendData(Protocol.HEART_BEAT, Protocol.getCommandData(Protocol.ROBOT_HRARTBEAD)), socket_ip, socket_cache);
-                                //Thread.sleep(3000);
+                                if(sendHeartBeat) {
+                                    btSendBytes(Protocol.getSendData(Protocol.HEART_BEAT, Protocol.getCommandData(Protocol.ROBOT_HRARTBEAD)), socket_ip, socket_cache);
+                                }
+                                Thread.sleep(3*1000);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
