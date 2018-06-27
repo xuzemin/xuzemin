@@ -119,6 +119,9 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         Constant.debugLog("robot----->" + robotList.toString());
         Constant.debugLog("robotConfig----->" + robotConfig.toString());
 
+
+        List<Map> goalList = robotDBHelper.queryListMap("select * from card ", null);
+
         //查询区域列表 根据id查询
         List<Map> areaList = robotDBHelper.queryListMap("select * from area where id = '" + robotConfig.get("area") + "'", null);
         // 打印Log
@@ -160,6 +163,33 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         ((TextView) findViewById(R.id.electric)).setText(robotConfig.get("electric").toString());// 电压
         ((TextView) findViewById(R.id.command_num)).setText(robotConfig.get("commandnum").toString());// 指令总数
         ((TextView) findViewById(R.id.last_location)).setText(robotConfig.get("lastlocation").toString());// 最后坐标
+        ((TextView) findViewById(R.id.outtime)).setText(robotConfig.get("outtime").toString());
+        if((int)robotConfig.get("turnback") == 1){
+            ((TextView)findViewById(R.id.turnback)).setText("是");
+            //findViewById(R.id.outime).setVisibility(View.VISIBLE);
+        }else{
+            ((TextView)findViewById(R.id.turnback)).setText("否");
+            //findViewById(R.id.outime).setVisibility(View.GONE);
+        }
+
+
+        if((int)robotConfig.get("goal") == 0) {
+            ((TextView) findViewById(R.id.goal)).setText("请选择站点");
+        }else{
+            if (goalList != null && goalList.size() > 0) {
+                boolean flag = false;
+                for (int i = 0, size = goalList.size(); i < size; i++) {
+                    if (goalList.get(i).get("id").equals(robotConfig.get("goal"))) {
+                        ((TextView) findViewById(R.id.goal)).setText(goalList.get(i).get("name").toString());
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    ((TextView) findViewById(R.id.goal)).setText("请选择站点");
+                }
+            }
+        }
         // 是否有障碍物 0->无  1->有
         if ((int) robotConfig.get("obstacle") == 0) {
             ((TextView) findViewById(R.id.obstacle)).setText("无");

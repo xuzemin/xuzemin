@@ -46,6 +46,7 @@
     <string name="command_state">指令状态</string>
     <string name="last_command_state">前指令状态</string>
     <string name="last_location">最后坐标</string>
+    <string name="turnback">旋转返回</string>
     <string name="obstacle">障碍物</string>
     <string name="pathway">有轨无轨</string>
     <string name="open_obstacle">障碍物打开</string>
@@ -123,7 +124,8 @@
             INTEGER ,electric INTEGER ,area INTEGER,
             state INTEGER,robotstate INTEGER,obstacle INTEGER, commandnum INTEGER ,excute
             INTEGER , excutetime INTEGER ,commandstate INTEGER ,lastcommandstate INTEGER
-            ,lastlocation INTEGER,pathway INTEGER,point_x INTEGER,point_y INTEGER,direction INTEGER)
+            ,lastlocation INTEGER,pathway INTEGER,point_x INTEGER,point_y INTEGER,direction INTEGER
+            ,outtime INTEGER,turnback INTEGER,goal INTERGER)
         </item>
         <!--ID卡-->
         <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)

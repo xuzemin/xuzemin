@@ -275,13 +275,15 @@ public class ServerSocketUtil extends Service {
                 //收到客户端的连接之后，添加新的机器人
                 if (!IsHave) {
                     robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
-                            "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway) values " +
-                            "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0)");
+                            "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway,outtime" +
+                            ",turnback,goal) values " +
+                            "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0)");
                 }
             } else {
                 robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
-                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway) values " +
-                        "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0)");
+                        "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway,outtime" +
+                        ",turnback,goal) values " +
+                        "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0)");
             }
             //广播发送连接
             sendBroadcastMain("robot_connect");

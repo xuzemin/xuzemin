@@ -305,6 +305,93 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center|left"
+                    android:text="@string/goalname"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/robot_size" />
+
+                <TextView
+                    android:id="@+id/goal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right|center"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/robot_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/area_height"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center|left"
+                    android:text="@string/turnback"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/robot_size" />
+
+                <TextView
+                    android:id="@+id/turnback"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right|center"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/robot_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/area_height"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center|left"
+                    android:text="@string/outime"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/robot_size" />
+
+                <TextView
+                    android:id="@+id/outtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right|center"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/robot_size" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/area_height"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center|left"
                     android:text="@string/last_location"
                     android:textColor="#333333"
                     android:textSize="@dimen/robot_size" />
