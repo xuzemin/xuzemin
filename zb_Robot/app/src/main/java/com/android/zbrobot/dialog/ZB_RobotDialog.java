@@ -40,11 +40,10 @@ public class ZB_RobotDialog extends Dialog {
     // 存储机器人列表
     public static List<Map> list;
     private List idList = new ArrayList();
-    public static List<Map> robotList;
+    public static List<Map> commandall;
     private static Map deskmap, areamap;
     // 存储机器人数据列表
     private List<Map<String, Object>> robotData_list = new ArrayList<>();
-
     private final String[] from = {"image", "text", "name", "imageback"};
     private final int[] to = {R.id.imageview, R.id.text, R.id.name, R.id.imageback};
     // 当前下标
@@ -59,6 +58,10 @@ public class ZB_RobotDialog extends Dialog {
 
     // IP地址
     public static String IP;
+    public static int GOALID;
+    public static int OUTIME;//menumber;
+    public static int TURNBACK;
+
     // 创建线程
     public static Thread thread = new Thread();
     public static boolean flag, IsCoordinate = false;
@@ -83,21 +86,18 @@ public class ZB_RobotDialog extends Dialog {
     }
 
     // 集合列表
-    public ZB_RobotDialog(Context context, List<Map> robotList) {
+    public ZB_RobotDialog(Context context) {
         super(context, R.style.SoundRecorder);
         // 初始化数据
         this.context = context;
-        this.robotList = robotList;
         flag = true;
         setCustomDialog();
     }
-
     // id集合列表
-    public ZB_RobotDialog(Context context, List<Map> robotList, List idList) {
+    public ZB_RobotDialog(Context context, List idList) {
         super(context, R.style.SoundRecorder);
         // 初始化数据
         this.context = context;
-        this.robotList = robotList;
         flag = true;
         this.idList = idList;
         setCustomDialog();
@@ -125,26 +125,18 @@ public class ZB_RobotDialog extends Dialog {
         if (list != null && list.size() > 0) {
             if (list.size() == 1) {
                 IP = list.get(0).get("ip").toString();
+                GOALID = (int) list.get(0).get("goal");
+                TURNBACK = (int) list.get(0).get("turnback");
+                OUTIME = (int) list.get(0).get("outtime");
                 int pathway = (int) list.get(0).get("pathway");
                 if (pathway == 0) {
-                    List<Map> commandList = robotDBHelper.queryListMap("select * from command where desk = '" + deskid + "'", null);
-                    if (commandList != null && commandList.size() > 0) {
-                        if (flag) {
-                            CurrentIndex = 0;
-                            // 发送命令
-                            if (idList == null || idList.size() <= 0) {
-                                idList = new ArrayList();
-                                idList.add(deskid);
-                            }
-                            sendCommandList(idList);
-//                        // 销毁当前Dialog
-                        } else {
-//                        // 发送字符串命令
-//                        //sendCommand();
-//                        // 发送字节数组命令
-//                        btSendBytes();
-                        }
+                    CurrentIndex = 0;
+                    // 发送命令
+                    if (idList == null || idList.size() <= 0) {
+                        idList = new ArrayList();
+                        idList.add(deskid);
                     }
+                    sendCommandList(idList);
                 } else if (pathway == 1) {
                     IsCoordinate = true;
                     CurrentIndex = 0;
@@ -196,6 +188,9 @@ public class ZB_RobotDialog extends Dialog {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         IP = robotData_list.get(position).get("ip").toString();
+                        GOALID = (int) robotData_list.get(position).get("goal");
+                        TURNBACK = (int) robotData_list.get(position).get("turnback");
+                        OUTIME = (int) robotData_list.get(position).get("outtime");
                         int pathway = (int) robotData_list.get(position).get("pathway");
                         if (pathway == 0) {
                             if (flag) {
@@ -384,7 +379,6 @@ public class ZB_RobotDialog extends Dialog {
     public static void sendCommandList(final List isList) {
         // 打印log
         Constant.debugLog("isList" + isList.toString());
-
         for (Map map : ServerSocketUtil.socketList) {
             // 检查IP是否相同
             if (map.get("ip").equals(IP)) {
@@ -397,68 +391,62 @@ public class ZB_RobotDialog extends Dialog {
                                 if (CurrentIndex == 0) {
 //                                    // 清除所有命令集
                                     out.write(Protocol.getSendData(Protocol.CONTROL_CLEAR, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR)));
-                                    setThread(thread);
-
-                                    // 开始发送命令集
-                                    //Constant.debugLog("111"+Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START,isList.size())).toString());
-//                                    out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START,robotList.size())));
-//                                    Constant.debugLog(""+robotList.size());
-//                                    setThread(thread);
+                                    //setThread(thread);
+                                    commandall = new ArrayList<>();
+                                    Constant.debugLog("isList"+isList.size());
+                                    for (int i = 0, idSize = isList.size(); i < idSize; i++) {
+                                        List<Map> robotList = robotDBHelper.queryListMap("select * from command where desk = '" + isList.get(i) + "'", null);
+                                        commandall.addAll(robotList);
+                                    }
+                                    Constant.debugLog("commandall" + commandall.size());
+                                    out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START, commandall.size()+2)));
+                                    //setThread(thread);
                                 }
-                                for (int i = 0, idSize = isList.size(); i < idSize; i++) {
-                                    Constant.debugLog(isList.toString());
-                                    robotList = robotDBHelper.queryListMap("select * from command where desk = '" + isList.get(i) + "'", null);
-                                    Constant.debugLog("isList" + idSize + "" + CurrentIndex);
-
-                                    out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START,robotList.size())));
-                                    Constant.debugLog(""+robotList.size());
-                                    setThread(thread);
-
-                                    CurrentIndex = 0;
-                                    for (int size = robotList.size(); CurrentIndex < size; CurrentIndex++) {
-                                        Constant.debugLog("robotList" + size + "" + CurrentIndex);
-                                        switch ((int) robotList.get(CurrentIndex).get("type")) {
-                                            // 直行
-                                            case 0:
-                                                // 查询系统卡 根据ID查询
-                                                List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '" + robotList.get(CurrentIndex).get("goal") + "'", null);
-                                                if (card_list != null && card_list.size() > 0) {
-                                                    Protocol.address = (int) card_list.get(0).get("address");
-                                                    Protocol.direction = (int) robotList.get(CurrentIndex).get("direction");
-                                                    Protocol.speed = (int) robotList.get(CurrentIndex).get("speed");
-                                                    Protocol.music = (int) robotList.get(CurrentIndex).get("music");
-                                                    Protocol.outime = (int) robotList.get(CurrentIndex).get("outime");
-                                                    Protocol.shownumber = (int) robotList.get(CurrentIndex).get("shownumber");
-                                                    Protocol.showcolor = (int) robotList.get(CurrentIndex).get("showcolor");
-                                                    if(((int)robotList.get(CurrentIndex).get("up_obstacle")) == 0){
-                                                        Protocol.up_obstacle = 1;
-                                                    }else{
-                                                        Protocol.up_obstacle = 0;
-                                                    }
-                                                    //Protocol.up_obstacle = (((int) robotList.get(CurrentIndex).get("up_obstacle"))==0);
-                                                    if(((int)robotList.get(CurrentIndex).get("down_obstacle")) == 0){
-                                                        Protocol.down_obstacle = 1;
-                                                    }else{
-                                                        Protocol.down_obstacle = 0;
-                                                    }
-                                                    //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
-                                                    if(((int)robotList.get(CurrentIndex).get("side_obstacle")) == 0){
-                                                        Protocol.side_obstacle = 1;
-                                                    }else{
-                                                        Protocol.side_obstacle = 0;
-                                                    }
-
-                                                    //Protocol.side_obstacle = (int) robotList.get(CurrentIndex).get("side_obstacle");
-                                                    // 解析
-                                                    data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_UP));
-                                                    //data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandData(Protocol.ROBOT_LIST_UP));
-                                                    // 发送 data[]
-                                                    setSendStr(out, data);
-                                                    setThread(thread);
+                                for (int size = commandall.size(); CurrentIndex < size; CurrentIndex++) {
+                                    Constant.debugLog("robotList" + size + "" + CurrentIndex);
+                                    switch ((int) commandall.get(CurrentIndex).get("type")) {
+                                        // 直行
+                                        case 0:
+                                            // 查询系统卡 根据ID查询
+                                            Constant.debugLog("直行"+CurrentIndex);
+                                            List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '" + commandall.get(CurrentIndex).get("goal") + "'", null);
+                                            if (card_list != null && card_list.size() > 0) {
+                                                Protocol.address = (int) card_list.get(0).get("address");
+                                                Protocol.direction = (int) commandall.get(CurrentIndex).get("direction");
+                                                Protocol.speed = (int) commandall.get(CurrentIndex).get("speed");
+                                                Protocol.music = (int) commandall.get(CurrentIndex).get("music");
+                                                Protocol.outime = (int) commandall.get(CurrentIndex).get("outime");
+                                                Protocol.shownumber = (int) commandall.get(CurrentIndex).get("shownumber");
+                                                Protocol.showcolor = (int) commandall.get(CurrentIndex).get("showcolor");
+                                                if(((int)commandall.get(CurrentIndex).get("up_obstacle")) == 0){
+                                                    Protocol.up_obstacle = 1;
+                                                }else{
+                                                    Protocol.up_obstacle = 0;
                                                 }
-                                                break;
-                                            // 脱轨运行
-                                            case 1:
+                                                //Protocol.up_obstacle = (((int) robotList.get(CurrentIndex).get("up_obstacle"))==0);
+                                                if(((int)commandall.get(CurrentIndex).get("down_obstacle")) == 0){
+                                                    Protocol.down_obstacle = 1;
+                                                }else{
+                                                    Protocol.down_obstacle = 0;
+                                                }
+                                                //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
+                                                if(((int)commandall.get(CurrentIndex).get("side_obstacle")) == 0){
+                                                    Protocol.side_obstacle = 1;
+                                                }else{
+                                                    Protocol.side_obstacle = 0;
+                                                }
+
+                                                //Protocol.side_obstacle = (int) robotList.get(CurrentIndex).get("side_obstacle");
+                                                // 解析
+                                                data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_UP));
+                                                //data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandData(Protocol.ROBOT_LIST_UP));
+                                                // 发送 data[]
+                                                setSendStr(out, data);
+                                                //setThread(thread);
+                                            }
+                                            break;
+                                        // 脱轨运行
+                                        case 1:
 /*                                            Protocol.speed = (int) robotList.get(CurrentIndex).get("speed");
                                             Protocol.music = (int) robotList.get(CurrentIndex).get("music");
                                             Protocol.outime = (int) robotList.get(CurrentIndex).get("outime");
@@ -468,70 +456,101 @@ public class ZB_RobotDialog extends Dialog {
 /*                                            synchronized (thread) {
                                                 thread.wait();
                                             }*/
-                                                break;
+                                            break;
+                                        // 脱轨旋转
+                                        case 2:
+                                            Protocol.speed = (int) commandall.get(CurrentIndex).get("speed");
+                                            Protocol.direction = (int) commandall.get(CurrentIndex).get("direction");
+                                            Protocol.music = (int) commandall.get(CurrentIndex).get("music");
+                                            Protocol.outime = (int) commandall.get(CurrentIndex).get("outime");
+                                            Protocol.shownumber = (int) commandall.get(CurrentIndex).get("shownumber");
+                                            Protocol.showcolor = (int) commandall.get(CurrentIndex).get("showcolor");
+                                            //Protocol.up_obstacle = (int) robotList.get(CurrentIndex).get("up_obstacle");
+                                            //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
+                                            //Protocol.side_obstacle = (int) robotList.get(CurrentIndex).get("side_obstacle");
+                                            if(((int)commandall.get(CurrentIndex).get("up_obstacle")) == 0){
+                                                Protocol.up_obstacle = 1;
+                                            }else{
+                                                Protocol.up_obstacle = 0;
+                                            }
+                                            //Protocol.up_obstacle = (((int) robotList.get(CurrentIndex).get("up_obstacle"))==0);
+                                            if(((int)commandall.get(CurrentIndex).get("down_obstacle")) == 0){
+                                                Protocol.down_obstacle = 1;
+                                            }else{
+                                                Protocol.down_obstacle = 0;
+                                            }
+                                            //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
+                                            if(((int)commandall.get(CurrentIndex).get("side_obstacle")) == 0){
+                                                Protocol.side_obstacle = 1;
+                                            }else{
+                                                Protocol.side_obstacle = 0;
+                                            }
+                                            // 解析
+                                            data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
+                                            // data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandData(Protocol.ROBOT_LIST_DERAILMENT));
+                                            // 发送 data[]
+                                            setSendStr(out, data);
+                                            //setThread(thread);
+                                            break;
 
-                                            // 脱轨旋转
-                                            case 2:
-                                                Protocol.speed = (int) robotList.get(CurrentIndex).get("speed");
-                                                Protocol.direction = (int) robotList.get(CurrentIndex).get("direction");
-                                                Protocol.music = (int) robotList.get(CurrentIndex).get("music");
-                                                Protocol.outime = (int) robotList.get(CurrentIndex).get("outime");
-                                                Protocol.shownumber = (int) robotList.get(CurrentIndex).get("shownumber");
-                                                Protocol.showcolor = (int) robotList.get(CurrentIndex).get("showcolor");
-                                                //Protocol.up_obstacle = (int) robotList.get(CurrentIndex).get("up_obstacle");
-                                                //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
-                                                //Protocol.side_obstacle = (int) robotList.get(CurrentIndex).get("side_obstacle");
-                                                if(((int)robotList.get(CurrentIndex).get("up_obstacle")) == 0){
-                                                    Protocol.up_obstacle = 1;
-                                                }else{
-                                                    Protocol.up_obstacle = 0;
-                                                }
-                                                //Protocol.up_obstacle = (((int) robotList.get(CurrentIndex).get("up_obstacle"))==0);
-                                                if(((int)robotList.get(CurrentIndex).get("down_obstacle")) == 0){
-                                                    Protocol.down_obstacle = 1;
-                                                }else{
-                                                    Protocol.down_obstacle = 0;
-                                                }
-                                                //Protocol.down_obstacle = (int) robotList.get(CurrentIndex).get("down_obstacle");
-                                                if(((int)robotList.get(CurrentIndex).get("side_obstacle")) == 0){
-                                                    Protocol.side_obstacle = 1;
-                                                }else{
-                                                    Protocol.side_obstacle = 0;
-                                                }
-                                                // 解析
-                                                data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
-                                                // data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandData(Protocol.ROBOT_LIST_DERAILMENT));
-                                                // 发送 data[]
-                                                setSendStr(out, data);
-                                                setThread(thread);
-                                                break;
-
-                                            // 等待退出
-                                            case 3:
-                                                //Protocol.music = (int) robotList.get(CurrentIndex).get("music");
-                                                Protocol.outime = (int) robotList.get(CurrentIndex).get("outime");
-                                                Protocol.shownumber = (int) robotList.get(CurrentIndex).get("shownumber");
-                                                Protocol.showcolor = (int) robotList.get(CurrentIndex).get("showcolor");
-                                                // 解析
-                                                data = Protocol.getSendData(Protocol.LIST_WAIT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_WAIT));
-                                                //data = Protocol.getSendData(Protocol.LIST_WAIT, Protocol.getCommandData(Protocol.ROBOT_LIST_WAIT));
-                                                // 发送 data[]
-                                                setSendStr(out, data);
-                                                setThread(thread);
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                        // 等待退出
+                                        case 3:
+                                            //Protocol.music = (int) robotList.get(CurrentIndex).get("music");
+                                            Protocol.outime = (int) commandall.get(CurrentIndex).get("outime");
+                                            Protocol.shownumber = (int) commandall.get(CurrentIndex).get("shownumber");
+                                            Protocol.showcolor = (int) commandall.get(CurrentIndex).get("showcolor");
+                                            // 解析
+                                            data = Protocol.getSendData(Protocol.LIST_WAIT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_WAIT));
+                                            //data = Protocol.getSendData(Protocol.LIST_WAIT, Protocol.getCommandData(Protocol.ROBOT_LIST_WAIT));
+                                            // 发送 data[]
+                                            setSendStr(out, data);
+                                            //setThread(thread);
+                                            break;
+                                        default:
+                                            break;
                                     }
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
+                        Constant.debugLog("旋转end");
+                        if(TURNBACK == 0){
+                            Protocol.speed = 500;
+                            Protocol.direction = 0;
+                            Protocol.music = 1;
+                            Protocol.outime = OUTIME;
+                            Protocol.shownumber = 0;
+                            Protocol.showcolor = 0;
+                            Protocol.up_obstacle = 1;//(int) robotList.get(CurrentIndex).get("up_obstacle");
+                            Protocol.down_obstacle = 1;//(int) robotList.get(CurrentIndex).get("down_obstacle");
+                            Protocol.side_obstacle = 1;//(int) robotList.get(CurrentIndex).get("side_obstacle");
+                            data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
+                            setSendStr(out, data);
+                            //setThread(thread);
+                        }
+                        Constant.debugLog("直行end");
+                        List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '" + GOALID + "'", null);
+                        if (card_list != null && card_list.size() > 0) {
+                            Protocol.address = (int) card_list.get(0).get("address");
+                            Protocol.direction = 0;//(int) robotList.get(CurrentIndex).get("direction");
+                            Protocol.speed = 1200;//(int) robotList.get(CurrentIndex).get("speed");
+                            Protocol.music = 0;//(int) robotList.get(CurrentIndex).get("music");
+                            Protocol.outime = 6000;//(int) robotList.get(CurrentIndex).get("outime");
+                            Protocol.shownumber = 0;//(int) robotList.get(CurrentIndex).get("shownumber");
+                            Protocol.showcolor = 0;//(int) robotList.get(CurrentIndex).get("showcolor");
+                            Protocol.up_obstacle = 1;
+                            Protocol.down_obstacle = 1;
+                            Protocol.side_obstacle = 1;
+                            data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_UP));
+                            setSendStr(out, data);
+                            //setThread(thread);
+                        }
+
                         // 命令发送完成
                         data = Protocol.getSendData(Protocol.END, Protocol.getCommandData(Protocol.ROBOT_END));
                         setSendStr(out, data);
-                        setThread(thread);
+                        //setThread(thread);
                         try {
                             Thread.sleep(2000);
                         } catch (InterruptedException e) {

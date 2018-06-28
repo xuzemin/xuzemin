@@ -295,9 +295,12 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                             } else {
                                 // 打印Log
                                 Constant.debugLog("position----->" + CURRENT_AREA_id);
-                                commandList = robotDBHelper.queryListMap("select * from command where desk = '" + deskData_list.get(position).get("id") + "'", null);
-                                ZB_RobotDialog.deskid = (int) deskData_list.get(position).get("id");
-                                robotDialog(commandList, isList);
+                                //commandList = robotDBHelper.queryListMap("select * from command where desk = '" + deskData_list.get(position).get("id") + "'", null);
+                                //ZB_RobotDialog.deskid = (int) deskData_list.get(position).get("id");
+                                ZB_RobotDialog.CurrentIndex = 0;
+                                isList = new ArrayList();
+                                isList.add(deskData_list.get(position).get("id"));
+                                robotDialog(isList);
                             }
                         }
                     } else {
@@ -432,7 +435,8 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         isList.add(deskList.get(i).get("id"));
                     }
                 }
-                robotDialog(commandList, isList);
+                ZB_RobotDialog.CurrentIndex = 0;
+                robotDialog(isList);
                 selectItems = new ArrayList<>();
                 for (int i = 0; i < deskList.size(); i++) {
                     selectItems.add(false);
@@ -1086,14 +1090,10 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         SJXRobotDialog = new ZB_RobotDialog(this, data);
     }
 
-    // List集合
-    private void robotDialog(List<Map> list) {
-        SJXRobotDialog = new ZB_RobotDialog(this, list);
-    }
 
     // List集合
-    private void robotDialog(List<Map> list, List idList) {
-        SJXRobotDialog = new ZB_RobotDialog(this, list, idList);
+    private void robotDialog(List idList) {
+        SJXRobotDialog = new ZB_RobotDialog(this, idList);
     }
 
     // 根据id删除区域

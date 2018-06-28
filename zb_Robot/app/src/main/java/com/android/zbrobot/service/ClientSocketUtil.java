@@ -326,7 +326,7 @@ public class ClientSocketUtil extends Service {
                         String data = getJSONString(msg, "data");
                         List<Map> commandLit = robotDBHelper.queryListMap("select * from command where desk = '" + getJSONString(data, "desk") + "'", null);
                         ZB_RobotDialog.IP = getJSONString(data, "robot");
-                        ZB_RobotDialog.robotList = commandLit;
+                        ZB_RobotDialog.commandall = commandLit;
                         ZB_RobotDialog.CurrentIndex = -1;
                         ZB_RobotDialog.sendCommandList(commandLit);
                     }
