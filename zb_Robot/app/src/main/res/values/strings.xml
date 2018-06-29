@@ -12,7 +12,7 @@
     <string name="deskname_setting">设置</string>
     <string name="coordinate">目标设置</string>
     <string name="deskname">桌名</string>
-
+    <string name="outtime">旋转超时</string>
     <string name="mapsetting">地图设置</string>
     <string name="image">地图选择</string>
     <string name="mapshow">地图显示</string>

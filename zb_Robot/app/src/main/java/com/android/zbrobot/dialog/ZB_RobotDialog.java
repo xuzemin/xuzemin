@@ -391,7 +391,8 @@ public class ZB_RobotDialog extends Dialog {
                                 if (CurrentIndex == 0) {
 //                                    // 清除所有命令集
                                     out.write(Protocol.getSendData(Protocol.CONTROL_CLEAR, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR)));
-                                    //setThread(thread);
+                                    setThread(thread);
+
                                     commandall = new ArrayList<>();
                                     Constant.debugLog("isList"+isList.size());
                                     for (int i = 0, idSize = isList.size(); i < idSize; i++) {
@@ -400,7 +401,7 @@ public class ZB_RobotDialog extends Dialog {
                                     }
                                     Constant.debugLog("commandall" + commandall.size());
                                     out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START, commandall.size()+2)));
-                                    //setThread(thread);
+                                    setThread(thread);
                                 }
                                 for (int size = commandall.size(); CurrentIndex < size; CurrentIndex++) {
                                     Constant.debugLog("robotList" + size + "" + CurrentIndex);
@@ -442,7 +443,7 @@ public class ZB_RobotDialog extends Dialog {
                                                 //data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandData(Protocol.ROBOT_LIST_UP));
                                                 // 发送 data[]
                                                 setSendStr(out, data);
-                                                //setThread(thread);
+                                                setThread(thread);
                                             }
                                             break;
                                         // 脱轨运行
@@ -490,7 +491,7 @@ public class ZB_RobotDialog extends Dialog {
                                             // data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandData(Protocol.ROBOT_LIST_DERAILMENT));
                                             // 发送 data[]
                                             setSendStr(out, data);
-                                            //setThread(thread);
+                                            setThread(thread);
                                             break;
 
                                         // 等待退出
@@ -504,7 +505,7 @@ public class ZB_RobotDialog extends Dialog {
                                             //data = Protocol.getSendData(Protocol.LIST_WAIT, Protocol.getCommandData(Protocol.ROBOT_LIST_WAIT));
                                             // 发送 data[]
                                             setSendStr(out, data);
-                                            //setThread(thread);
+                                            setThread(thread);
                                             break;
                                         default:
                                             break;
@@ -515,7 +516,7 @@ public class ZB_RobotDialog extends Dialog {
                             }
                         }
                         Constant.debugLog("旋转end");
-                        if(TURNBACK == 0){
+                        if(TURNBACK == 1){
                             Protocol.speed = 500;
                             Protocol.direction = 0;
                             Protocol.music = 1;
@@ -527,7 +528,7 @@ public class ZB_RobotDialog extends Dialog {
                             Protocol.side_obstacle = 1;//(int) robotList.get(CurrentIndex).get("side_obstacle");
                             data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
                             setSendStr(out, data);
-                            //setThread(thread);
+                            setThread(thread);
                         }
                         Constant.debugLog("直行end");
                         List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '" + GOALID + "'", null);
@@ -544,13 +545,13 @@ public class ZB_RobotDialog extends Dialog {
                             Protocol.side_obstacle = 1;
                             data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_UP));
                             setSendStr(out, data);
-                            //setThread(thread);
+                            setThread(thread);
                         }
 
                         // 命令发送完成
                         data = Protocol.getSendData(Protocol.END, Protocol.getCommandData(Protocol.ROBOT_END));
                         setSendStr(out, data);
-                        //setThread(thread);
+                        setThread(thread);
                         try {
                             Thread.sleep(2000);
                         } catch (InterruptedException e) {

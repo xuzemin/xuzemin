@@ -6,18 +6,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.zbrobot.R;
+import com.android.zbrobot.adapter.ZB_SpinnerAdapter;
+import com.android.zbrobot.dialog.ZB_MyDialog;
+import com.android.zbrobot.dialog.ZB_SpinnerDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +44,10 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
     private MyReceiver receiver;
     // 机器人信息
     private Map robotConfig;
+
+    public static int goalNum = -1, isturnback = -1;
+
+    private List<Map> list;
 
     // 设置按钮
     private Button setting_redact;
@@ -120,7 +132,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         Constant.debugLog("robotConfig----->" + robotConfig.toString());
 
 
-        List<Map> goalList = robotDBHelper.queryListMap("select * from card ", null);
+        goalList = robotDBHelper.queryListMap("select * from card ", null);
 
         //查询区域列表 根据id查询
         List<Map> areaList = robotDBHelper.queryListMap("select * from area where id = '" + robotConfig.get("area") + "'", null);
@@ -167,12 +179,15 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         if((int)robotConfig.get("turnback") == 1){
             ((TextView)findViewById(R.id.turnback)).setText("是");
             //findViewById(R.id.outime).setVisibility(View.VISIBLE);
+            isturnback = 1;
         }else{
             ((TextView)findViewById(R.id.turnback)).setText("否");
+            isturnback = 0;
             //findViewById(R.id.outime).setVisibility(View.GONE);
         }
-
-
+        findViewById(R.id.outtime).setOnClickListener(this);
+        findViewById(R.id.turnback).setOnClickListener(this);
+        findViewById(R.id.goal).setOnClickListener(this);
         if((int)robotConfig.get("goal") == 0) {
             ((TextView) findViewById(R.id.goal)).setText("请选择站点");
         }else{
@@ -182,6 +197,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
                     if (goalList.get(i).get("id").equals(robotConfig.get("goal"))) {
                         ((TextView) findViewById(R.id.goal)).setText(goalList.get(i).get("name").toString());
                         flag = true;
+                        goalNum = i;
                         break;
                     }
                 }
@@ -190,6 +206,17 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
                 }
             }
         }
+
+        list = new ArrayList<>();
+        // 以键值对来传递值
+        Map<String, Object> map;
+        map = new HashMap<>();
+        map.put("name", "否");
+        list.add(map);
+        map = new HashMap<>();
+        map.put("name", "是");
+        list.add(map);
+
         // 是否有障碍物 0->无  1->有
         if ((int) robotConfig.get("obstacle") == 0) {
             ((TextView) findViewById(R.id.obstacle)).setText("无");
@@ -228,6 +255,15 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             case R.id.back:
                 finish();
                 break;
+            case R.id.outtime:
+                dialog_Text();
+                break;
+            case R.id.goal:
+                dialog_spinner(true);
+                break;
+            case R.id.turnback:
+                dialog_spinner(false);
+                break;
         }
     }
 
@@ -250,5 +286,104 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             init();
         } else {
         }
+    }
+
+    private ZB_MyDialog textDialog;
+    private EditText editText;
+    private void dialog_Text() {
+        textDialog = new ZB_MyDialog(this);
+        // type=  0->速度  1->MP3通道  2->超时时间  3->显示编号  4->显示颜色
+        textDialog.getTitle().setText("旋转超时时间修改");
+        textDialog.getTitleTemp().setText("请输入超时时间");
+        editText = (EditText) textDialog.getEditText();
+        // 输入类型为数字文本
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        // 确定Dialog
+        textDialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!editText.getText().toString().trim().equals("")) {
+                    robotDBHelper.execSQL("update robot set outtime = '" + editText.getText().toString().trim() + "' where id= '" + robotId + "'");
+                    textDialog.dismiss();
+                    ((TextView) findViewById(R.id.outtime)).setText(editText.getText().toString().trim());
+                } else {
+                    Toast.makeText(getApplicationContext(), "请输入参数", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        // 取消Dialog
+        textDialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 销毁窗体
+                textDialog.dismiss();
+            }
+        });
+        // 显示Dialog
+        textDialog.show();
+    }
+    private List<Map> goalList;
+    private ZB_SpinnerDialog spinnerDialog;
+    private ZB_SpinnerAdapter ZBSpinnerAdapter;
+
+    // 自定义运动到站点对话框
+    private void dialog_spinner(final boolean gl) {
+        spinnerDialog = new ZB_SpinnerDialog(this);
+
+        if (gl) {
+            ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, goalList, gl);
+        } else {
+            ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, list, gl);
+        }
+        // 加载适配器
+        spinnerDialog.getListView().setAdapter(ZBSpinnerAdapter);
+        // 子列表点击事件
+        spinnerDialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (gl) {
+                    goalNum = position;
+                } else {
+                    isturnback = position;
+                }
+                ZBSpinnerAdapter.notifyDataSetChanged();
+            }
+        });
+        // 确定Dialog
+        spinnerDialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (gl) {
+                    if (goalList != null && goalList.size() > 0 && goalNum != -1) {
+                        robotDBHelper.execSQL("update robot set goal= '" + goalList.get(goalNum).get("id") + "' where id= '" + robotId + "'");
+                        ((TextView)findViewById(R.id.goal)).setText(goalList.get(goalNum).get("name").toString());
+                        spinnerDialog.dismiss();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "请选择站点系统卡", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    robotDBHelper.execSQL("update robot set turnback = '" + isturnback + "' where id= '" + robotId + "'");
+                    switch (isturnback) {
+                        case 0:
+                            ((TextView)findViewById(R.id.turnback)).setText("否");
+                            break;
+                        case 1:
+                            ((TextView)findViewById(R.id.turnback)).setText("是");
+                            break;
+                    }
+                    spinnerDialog.dismiss();
+                }
+            }
+        });
+        // 取消Dialog
+        spinnerDialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 销毁窗体
+                spinnerDialog.dismiss();
+            }
+        });
+        // 显示Dialog
+        spinnerDialog.show();
     }
 }

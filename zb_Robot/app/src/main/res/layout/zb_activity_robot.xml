@@ -363,7 +363,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center|left"
-                    android:text="@string/outime"
+                    android:text="@string/outtime"
                     android:textColor="#333333"
                     android:textSize="@dimen/robot_size" />
 

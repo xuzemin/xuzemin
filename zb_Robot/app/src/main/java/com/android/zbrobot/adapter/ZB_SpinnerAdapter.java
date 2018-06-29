@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.zbrobot.R;
 import com.android.zbrobot.activity.ZB_CommandActivity;
+import com.android.zbrobot.activity.ZB_RobotActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -91,11 +92,11 @@ public class ZB_SpinnerAdapter extends BaseAdapter {
         }
         viewHolder.imageview.setVisibility(View.GONE);
         if (flag) {
-            if (position == ZB_CommandActivity.goalNum) {
+            if (position == ZB_CommandActivity.goalNum || position == ZB_RobotActivity.goalNum) {
                 viewHolder.imageview.setVisibility(View.VISIBLE);
             }
         } else {
-            if (position == ZB_CommandActivity.directionNum) {
+            if (position == ZB_CommandActivity.directionNum || position == ZB_RobotActivity.isturnback) {
                 viewHolder.imageview.setVisibility(View.VISIBLE);
             }
         }
