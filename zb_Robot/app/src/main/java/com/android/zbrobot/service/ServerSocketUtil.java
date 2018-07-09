@@ -325,7 +325,7 @@ public class ServerSocketUtil extends Service {
                                 if(sendHeartBeat) {
                                     btSendBytes(Protocol.getSendData(Protocol.HEART_BEAT, Protocol.getCommandData(Protocol.ROBOT_HRARTBEAD)), socket_ip, socket_cache);
                                 }
-                                Thread.sleep(3*1000);
+                                Thread.sleep(60*1000);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

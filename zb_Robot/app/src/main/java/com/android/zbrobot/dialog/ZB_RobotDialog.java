@@ -47,7 +47,7 @@ public class ZB_RobotDialog extends Dialog {
     private final String[] from = {"image", "text", "name", "imageback"};
     private final int[] to = {R.id.imageview, R.id.text, R.id.name, R.id.imageback};
     // 当前下标
-    public static int CurrentIndex = -1;
+    public static int CurrentIndex = 0;
     // 发送数据
     private static String sendStr;
 
@@ -281,99 +281,6 @@ public class ZB_RobotDialog extends Dialog {
             }
         }
     }
-//    public static void sendCommandCoordinate(){
-//        for (Map map : ServerSocketUtil.socketList) {
-//            // 检查IP是否相同
-//            if (map.get("ip").equals(IP)) {
-//                out = (OutputStream) map.get("out");
-//                sendlist(out);
-//            }
-//        }
-//    }
-
-//    public static void sendlist(final OutputStream out){
-//        thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                if(out!=null){
-//                    try {
-//                        for(CurrentIndex = 1 ;CurrentIndex < 3 ;CurrentIndex++) {
-//                            switch (CurrentIndex) {
-//                                case 0:
-//                                    out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandData(Protocol.ROBOT_START)));
-//                                    synchronized (thread) {
-//                                        thread.wait();
-//                                    }
-//                                    break;
-//                                case 1:
-//                                    List<Map> desk_list = robotDBHelper.queryListMap("select * from desk where id = '" + deskid + "'", null);
-//                                    if (desk_list != null && desk_list.size() > 0) {
-//                                        deskmap = desk_list.get(0);
-//                                        Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
-//                                                Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
-//                                        if (deskmap.get("pointx") != null && deskmap.get("pointy") != null && deskmap.get("derection") != null
-//                                                && deskmap.get("waittime") != null) {
-//                                            areaid = (int) deskmap.get("area");
-//                                            Protocol.coordinate_x = (int)(Float.valueOf(deskmap.get("pointx").toString().trim()) * 100);
-//                                            Protocol.coordinate_y = (int)(Float.valueOf(deskmap.get("pointy").toString().trim()) * 100);
-//                                            Protocol.orientation = 450 - Integer.valueOf(deskmap.get("derection").toString().trim());
-//                                            Protocol.wait_time = Integer.valueOf(deskmap.get("waittime").toString().trim());
-//                                            if(Protocol.orientation>360){
-//                                                Protocol.orientation -= 360;
-//                                            }
-//                                            out.write(Protocol.getSendData(Protocol.COORDINATE_RUN, Protocol.getCommandDataByte(Protocol.RUN_COORDINATE)));
-//                                        }
-//                                        Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
-//                                                Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
-//                                    }
-//                                    synchronized (thread) {
-//                                        thread.wait();
-//                                    }
-//                                    break;
-//                                case 2:
-//                                    Constant.debugLog("areaid"+areaid);
-//                                    List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
-//                                    Constant.debugLog("area_list" + area_list.toString());
-//                                    if (area_list != null && area_list.size() > 0) {
-//                                        areamap = area_list.get(0);
-//                                        Constant.debugLog("areamap" + areamap.toString());
-//                                        if (areamap.get("point_x_back") != null && areamap.get("point_y_back") != null && areamap.get("derection") != null) {
-//                                            Protocol.coordinate_x = Integer.valueOf(areamap.get("point_x_back").toString().trim()) * 100;
-//                                            Protocol.coordinate_y = Integer.valueOf(areamap.get("point_y_back").toString().trim()) * 100;
-//                                            Protocol.orientation = 450 - Integer.valueOf(areamap.get("derection").toString().trim());
-//                                            if(Protocol.orientation>360){
-//                                                Protocol.orientation -= 360;
-//                                            }
-//                                            out.write(Protocol.getSendData(Protocol.COORDINATE_CONFIG, Protocol.getCommandDataByte(Protocol.CONFIG_COORDINATE)));
-//                                        }
-//                                    }
-//                                    Constant.debugLog("areamap Protocol.coordinate_x" +Protocol.coordinate_x +"Protocol.coordinate_y"+
-//                                            Protocol.coordinate_y+"Protocol.orientation"+Protocol.orientation);
-//                                    synchronized (thread) {
-//                                        thread.wait();
-//                                    }
-//                                    break;
-//                                case 3:
-//                                    // 命令发送完成
-//                                    data = Protocol.getSendData(Protocol.END, Protocol.getCommandData(Protocol.ROBOT_END));
-//                                    setSendStr(out, data);
-//                                    synchronized (thread) {
-//                                        thread.wait();
-//                                    }
-//                                    IsCoordinate = false;
-//                                    break;
-//                                default:
-//                                    break;
-//                            }
-//                        }
-//                    }catch (Exception e){
-//                        Constant.debugLog(e.toString());
-//                    }
-//                }
-//            }
-//        });
-//        thread.start();
-//    }
 
     // 发送命令列表
     public static void sendCommandList(final List isList) {
@@ -390,8 +297,9 @@ public class ZB_RobotDialog extends Dialog {
                             try {
                                 if (CurrentIndex == 0) {
 //                                    // 清除所有命令集
-                                    out.write(Protocol.getSendData(Protocol.CONTROL_CLEAR, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR)));
-                                    setThread(thread);
+                                    data = Protocol.getSendData(Protocol.CONTROL_CLEAR, Protocol.getCommandData(Protocol.ROBOT_CONTROL_CLEAR));
+                                    setSendStr(out, data);
+                                    //setThread(thread);
 
                                     commandall = new ArrayList<>();
                                     Constant.debugLog("isList"+isList.size());
@@ -400,8 +308,9 @@ public class ZB_RobotDialog extends Dialog {
                                         commandall.addAll(robotList);
                                     }
                                     Constant.debugLog("commandall" + commandall.size());
-                                    out.write(Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START, commandall.size()+2)));
-                                    setThread(thread);
+                                    data = Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START, commandall.size()+2));
+                                    setSendStr(out, data);
+                                    //setThread(thread);
                                 }
                                 for (int size = commandall.size(); CurrentIndex < size; CurrentIndex++) {
                                     Constant.debugLog("robotList" + size + "" + CurrentIndex);
@@ -443,7 +352,7 @@ public class ZB_RobotDialog extends Dialog {
                                                 //data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandData(Protocol.ROBOT_LIST_UP));
                                                 // 发送 data[]
                                                 setSendStr(out, data);
-                                                setThread(thread);
+                                                //setThread(thread);
                                             }
                                             break;
                                         // 脱轨运行
@@ -491,7 +400,7 @@ public class ZB_RobotDialog extends Dialog {
                                             // data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandData(Protocol.ROBOT_LIST_DERAILMENT));
                                             // 发送 data[]
                                             setSendStr(out, data);
-                                            setThread(thread);
+                                            //setThread(thread);
                                             break;
 
                                         // 等待退出
@@ -505,7 +414,7 @@ public class ZB_RobotDialog extends Dialog {
                                             //data = Protocol.getSendData(Protocol.LIST_WAIT, Protocol.getCommandData(Protocol.ROBOT_LIST_WAIT));
                                             // 发送 data[]
                                             setSendStr(out, data);
-                                            setThread(thread);
+                                            //setThread(thread);
                                             break;
                                         default:
                                             break;
@@ -515,6 +424,7 @@ public class ZB_RobotDialog extends Dialog {
                                 e.printStackTrace();
                             }
                         }
+                        CurrentIndex = 0;
                         Constant.debugLog("旋转end");
                         if(TURNBACK == 1){
                             Protocol.speed = 500;
@@ -528,7 +438,7 @@ public class ZB_RobotDialog extends Dialog {
                             Protocol.side_obstacle = 1;//(int) robotList.get(CurrentIndex).get("side_obstacle");
                             data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
                             setSendStr(out, data);
-                            setThread(thread);
+                            //setThread(thread);
                         }
                         Constant.debugLog("直行end");
                         List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '" + GOALID + "'", null);
@@ -545,18 +455,14 @@ public class ZB_RobotDialog extends Dialog {
                             Protocol.side_obstacle = 1;
                             data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_UP));
                             setSendStr(out, data);
-                            setThread(thread);
+                            //setThread(thread);
                         }
 
                         // 命令发送完成
                         data = Protocol.getSendData(Protocol.END, Protocol.getCommandData(Protocol.ROBOT_END));
                         setSendStr(out, data);
-                        setThread(thread);
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        //setThread(thread);
+
 
 /*                       // 清除电机故障
                         data = Protocol.getSendData(Protocol.CLEAR_FAULT, Protocol.getCommandDataByte(Protocol.ROBOT_CONTROL_FAULT));
@@ -600,7 +506,10 @@ public class ZB_RobotDialog extends Dialog {
             try {
                 out.write(data);
                 Constant.debugLog(data.length+"");
+                Thread.sleep(200);
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
