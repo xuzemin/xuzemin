@@ -99,8 +99,8 @@ public class ZB_RoundActivity extends AppCompatActivity implements View.OnClickL
         // 旋转速度SeekBar
         mSeekBarSelf = (SeekBar) findViewById(R.id.seekbar_self);
         mSeekBarSelf.setOnSeekBarChangeListener(this);
-        mSeekBarSelf.setMax(100 * 5);
-        mSeekBarSelf.setProgress(10 * 50);
+        mSeekBarSelf.setMax(10 * 22);
+        mSeekBarSelf.setProgress(10 * 22);
         mSeekBarSelf.setEnabled(false);
         // 初始化数据
         initData();
