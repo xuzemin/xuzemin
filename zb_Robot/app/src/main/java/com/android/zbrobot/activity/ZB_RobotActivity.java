@@ -329,11 +329,12 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
     // 自定义运动到站点对话框
     private void dialog_spinner(final boolean gl) {
         spinnerDialog = new ZB_SpinnerDialog(this);
-
         if (gl) {
+            Constant.IsView = Constant.RobotActivity;
             ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, goalList, gl);
         } else {
             ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, list, gl);
+            Constant.IsView = Constant.TurnBack;
         }
         // 加载适配器
         spinnerDialog.getListView().setAdapter(ZBSpinnerAdapter);

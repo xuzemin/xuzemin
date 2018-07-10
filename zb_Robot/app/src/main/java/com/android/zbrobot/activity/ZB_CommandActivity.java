@@ -21,6 +21,7 @@ import com.android.zbrobot.dialog.ZB_DeleteDialog;
 import com.android.zbrobot.dialog.ZB_MyDialog;
 import com.android.zbrobot.dialog.ZB_SpinnerDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
+import com.android.zbrobot.util.Constant;
 
 import org.w3c.dom.Text;
 
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.android.zbrobot.util.Constant.CommandActivity;
 
 /**
  * 作者: jiayi.zhang
@@ -440,11 +443,14 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
 
     // 自定义运动到站点对话框
     private void dialog_spinner(final boolean gl) {
+
         spinnerDialog = new ZB_SpinnerDialog(this);
         if (gl) {
             ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, goalList, gl);
+            Constant.IsView = Constant.CommandActivity;
         } else {
             ZBSpinnerAdapter = new ZB_SpinnerAdapter(this, list, gl);
+            Constant.IsView = Constant.TYPE;
         }
         // 加载适配器
         spinnerDialog.getListView().setAdapter(ZBSpinnerAdapter);

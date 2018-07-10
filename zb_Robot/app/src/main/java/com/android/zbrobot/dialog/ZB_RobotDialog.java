@@ -308,7 +308,11 @@ public class ZB_RobotDialog extends Dialog {
                                         commandall.addAll(robotList);
                                     }
                                     Constant.debugLog("commandall" + commandall.size());
-                                    data = Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START, commandall.size()+2));
+                                    if(TURNBACK == 1){
+                                        data = Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START, commandall.size()+3));
+                                    }else{
+                                        data = Protocol.getSendData(Protocol.START, Protocol.getCommandDataByte(Protocol.ROBOT_START, commandall.size()+1));
+                                    }
                                     setSendStr(out, data);
                                     //setThread(thread);
                                 }
@@ -427,7 +431,7 @@ public class ZB_RobotDialog extends Dialog {
                         CurrentIndex = 0;
                         Constant.debugLog("旋转end");
                         if(TURNBACK == 1){
-                            Protocol.speed = 220;
+                            Protocol.speed = 300;
                             Protocol.direction = 0;
                             Protocol.music = 1;
                             Protocol.outime = OUTIME;
@@ -460,7 +464,7 @@ public class ZB_RobotDialog extends Dialog {
 
                         Constant.debugLog("旋转end");
                         if(TURNBACK == 1){
-                            Protocol.speed = 220;
+                            Protocol.speed = 300;
                             Protocol.direction = 1;
                             Protocol.music = 1;
                             Protocol.outime = OUTIME;

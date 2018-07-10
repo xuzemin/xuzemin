@@ -132,6 +132,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private ArrayList<Boolean> selectItems; //用于存储已选中项目的位置
     private boolean isState;
     private List isList = new ArrayList();
+    private boolean ischeck = false;
 
 
     @Override
@@ -267,13 +268,14 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         // TODO 复选框
                         if (isState) {
                             CheckBox checkBox = (CheckBox) view.findViewById(R.id.ck_select);
-                            if (checkBox.isChecked()) {
+                            if (checkBox.isChecked() && !ischeck) {
                                 checkBox.setChecked(false);
                                 selectItems.set(position, false);
                             } else {
                                 checkBox.setChecked(true);
                                 selectItems.set(position, true);
                             }
+                            ischeck = false;
                             desk_adapter.notifyDataSetChanged();
                         } else {
                             if (DeskIsEdit) {
@@ -325,6 +327,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         selectItems.set(position, true);
                         setState(true);
                         desk_adapter.setIsState(true);
+                        ischeck = true;
                         showOpervate();
                     }
                     return false;

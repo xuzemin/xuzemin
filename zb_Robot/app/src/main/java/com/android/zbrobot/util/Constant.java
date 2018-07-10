@@ -19,6 +19,11 @@ public class Constant {
     static String gateway = "";
     static int prefix = 24;
     static String IP = "";
+    public static int IsView = 0;
+    public static final int CommandActivity = 1;
+    public static final int RobotActivity = 2;
+    public static final int TurnBack = 4;
+    public static final int TYPE = 3;
     static final String IPLast = "178";
     static String isConnectSocket = "";
     //测试用WIFI USR-C215
