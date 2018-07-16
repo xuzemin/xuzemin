@@ -526,7 +526,7 @@ public class ZB_RobotDialog extends Dialog {
             try {
                 out.write(data);
                 Constant.debugLog(data.length+"");
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
