@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.android.zbrobot.R;
@@ -20,7 +22,7 @@ import java.util.Map;
  * 描述: 机器人编辑页面
  */
 
-public class ZB_RobotConfigActivity extends Activity implements View.OnClickListener {
+public class ZB_RobotConfigActivity extends Activity implements View.OnClickListener , CompoundButton.OnCheckedChangeListener {
     // 初始化数据库类
     private RobotDBHelper robotDBHelper;
     // 机器人id
@@ -35,6 +37,8 @@ public class ZB_RobotConfigActivity extends Activity implements View.OnClickList
     public int areaId;
     // 存储区域数据
     private List<Map> areaList;
+
+    private CheckBox robot_top,robot_botton,roobotside;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,14 @@ public class ZB_RobotConfigActivity extends Activity implements View.OnClickList
         // 获取RobotActivity传递过来的Id
         Intent intent = getIntent();
         robotId = intent.getIntExtra("id", 0);
+        robot_top = (CheckBox) findViewById(R.id.robot_top);
+        robot_botton = (CheckBox) findViewById(R.id.robot_bottom);
+        roobotside = (CheckBox) findViewById(R.id.robot_side);
+
+        robot_top.setOnCheckedChangeListener(this);
+        robot_botton.setOnCheckedChangeListener(this);
+        roobotside.setOnCheckedChangeListener(this);
+
     }
 
     @Override
@@ -78,6 +90,17 @@ public class ZB_RobotConfigActivity extends Activity implements View.OnClickList
 
         }
 
+        if (robotConfig.get("up_obstacle") != null) {
+            robot_top.setChecked(0 == (int)robotConfig.get("up_obstacle") ? true : false);
+        }
+        // 下边障碍物
+        if (robotConfig.get("down_obstacle") != null) {
+            robot_botton.setChecked(0 == (int)robotConfig.get("down_obstacle") ? true : false);
+        }
+        // 侧边障碍物
+        if (robotConfig.get("side_obstacle") != null) {
+            roobotside.setChecked(0 == (int)robotConfig.get("side_obstacle") ? true : false);
+        }
 
         name.setHint(robotConfig.get("name").toString());
         // 查询区域列表
@@ -125,6 +148,45 @@ public class ZB_RobotConfigActivity extends Activity implements View.OnClickList
                 Intent intent = new Intent(ZB_RobotConfigActivity.this, ZB_AreaConfig.class);
                 intent.putExtra("id", robotId);
                 startActivity(intent);
+                break;
+        }
+    }
+
+    /**
+     * 是否打开障碍物
+     *
+     * @param buttonView CheckBox
+     * @param isChecked  是否选中
+     */
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.robot_top:
+                if (robot_top.isChecked()) {
+                    // up_obstacle = 0;
+                    robotDBHelper.execSQL("update robot set up_obstacle = '" + 0 + "' where id= '" + robotId + "'");
+                } else {
+                    // up_obstacle = 1;
+                    robotDBHelper.execSQL("update robot set up_obstacle = '" + 1 + "' where id= '" + robotId + "'");
+                }
+                break;
+            case R.id.robot_bottom:
+                if (robot_botton.isChecked()) {
+                    // up_obstacle = 0;
+                    robotDBHelper.execSQL("update robot set down_obstacle = '" + 0 + "' where id= '" + robotId + "'");
+                } else {
+                    // up_obstacle = 1;
+                    robotDBHelper.execSQL("update robot set down_obstacle = '" + 1 + "' where id= '" + robotId + "'");
+                }
+                break;
+            case R.id.robot_side:
+                if (roobotside.isChecked()) {
+                    // up_obstacle = 0;
+                    robotDBHelper.execSQL("update robot set side_obstacle = '" + 0 + "' where id= '" + robotId + "'");
+                } else {
+                    // up_obstacle = 1;
+                    robotDBHelper.execSQL("update robot set side_obstacle = '" + 1 + "' where id= '" + robotId + "'");
+                }
                 break;
         }
     }

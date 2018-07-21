@@ -61,6 +61,7 @@ public class ZB_RobotDialog extends Dialog {
     public static int GOALID;
     public static int OUTIME;//menumber;
     public static int TURNBACK;
+    public static int up_obstacle,down_obstacle,side_obstacle;
 
     // 创建线程
     public static Thread thread = new Thread();
@@ -128,6 +129,21 @@ public class ZB_RobotDialog extends Dialog {
                 GOALID = (int) list.get(0).get("goal");
                 TURNBACK = (int) list.get(0).get("turnback");
                 OUTIME = (int) list.get(0).get("outtime");
+                if(((int) list.get(0).get("up_obstacle")==0)){
+                    up_obstacle = 1;
+                }else{
+                    up_obstacle = 0;
+                }
+                if(((int) list.get(0).get("down_obstacle")==0)){
+                    down_obstacle = 1;
+                }else{
+                    down_obstacle = 0;
+                }
+                if(((int) list.get(0).get("side_obstacle")==0)){
+                    side_obstacle = 1;
+                }else{
+                    side_obstacle = 0;
+                }
                 int pathway = (int) list.get(0).get("pathway");
                 if (pathway == 0) {
                     CurrentIndex = 0;
@@ -437,9 +453,9 @@ public class ZB_RobotDialog extends Dialog {
                             Protocol.outime = OUTIME;
                             Protocol.shownumber = 0;
                             Protocol.showcolor = 0;
-                            Protocol.up_obstacle = 1;//(int) robotList.get(CurrentIndex).get("up_obstacle");
-                            Protocol.down_obstacle = 1;//(int) robotList.get(CurrentIndex).get("down_obstacle");
-                            Protocol.side_obstacle = 1;//(int) robotList.get(CurrentIndex).get("side_obstacle");
+                            Protocol.up_obstacle = up_obstacle;//(int) robotList.get(CurrentIndex).get("up_obstacle");
+                            Protocol.down_obstacle = down_obstacle;//(int) robotList.get(CurrentIndex).get("down_obstacle");
+                            Protocol.side_obstacle = side_obstacle;//(int) robotList.get(CurrentIndex).get("side_obstacle");
                             data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
                             setSendStr(out, data);
                             //setThread(thread);
@@ -459,7 +475,7 @@ public class ZB_RobotDialog extends Dialog {
                             Protocol.side_obstacle = 1;
                             data = Protocol.getSendData(Protocol.LIST_UP, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_UP));
                             setSendStr(out, data);
-                            //setThread(thread);
+                            //setThread(thread);down_obstacle
                         }
 
                         Constant.debugLog("旋转end");
@@ -470,9 +486,9 @@ public class ZB_RobotDialog extends Dialog {
                             Protocol.outime = OUTIME;
                             Protocol.shownumber = 0;
                             Protocol.showcolor = 0;
-                            Protocol.up_obstacle = 1;//(int) robotList.get(CurrentIndex).get("up_obstacle");
-                            Protocol.down_obstacle = 1;//(int) robotList.get(CurrentIndex).get("down_obstacle");
-                            Protocol.side_obstacle = 1;//(int) robotList.get(CurrentIndex).get("side_obstacle");
+                            Protocol.up_obstacle = up_obstacle;//(int) robotList.get(CurrentIndex).get("up_obstacle");
+                            Protocol.down_obstacle = down_obstacle;//(int) robotList.get(CurrentIndex).get("down_obstacle");
+                            Protocol.side_obstacle = side_obstacle;//(int) robotList.get(CurrentIndex).get("side_obstacle");
                             data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
                             setSendStr(out, data);
                             //setThread(thread);

@@ -125,7 +125,8 @@
             state INTEGER,robotstate INTEGER,obstacle INTEGER, commandnum INTEGER ,excute
             INTEGER , excutetime INTEGER ,commandstate INTEGER ,lastcommandstate INTEGER
             ,lastlocation INTEGER,pathway INTEGER,point_x INTEGER,point_y INTEGER,direction INTEGER
-            ,outtime INTEGER,turnback INTEGER,goal INTERGER)
+            ,outtime INTEGER,turnback INTEGER,goal INTERGER,up_obstacle INTEGER,down_obstacle INTEGER,side_obstacle
+            INTEGER)
         </item>
         <!--ID卡-->
         <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)
