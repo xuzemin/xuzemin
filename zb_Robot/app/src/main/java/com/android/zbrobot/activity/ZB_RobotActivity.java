@@ -188,6 +188,9 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         findViewById(R.id.outtime).setOnClickListener(this);
         findViewById(R.id.turnback).setOnClickListener(this);
         findViewById(R.id.goal).setOnClickListener(this);
+        findViewById(R.id.robot_card).setOnClickListener(this);
+        findViewById(R.id.robot_turnback).setOnClickListener(this);
+        findViewById(R.id.robot_outtime).setOnClickListener(this);
         if((int)robotConfig.get("goal") == 0) {
             ((TextView) findViewById(R.id.goal)).setText("请选择站点");
         }else{
@@ -256,11 +259,14 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.outtime:
+            case R.id.robot_outtime:
                 dialog_Text();
                 break;
+            case R.id.robot_card:
             case R.id.goal:
                 dialog_spinner(true);
                 break;
+            case R.id.robot_turnback:
             case R.id.turnback:
                 dialog_spinner(false);
                 break;

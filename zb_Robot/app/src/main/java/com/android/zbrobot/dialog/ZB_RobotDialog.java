@@ -425,8 +425,10 @@ public class ZB_RobotDialog extends Dialog {
 
                                         // 等待退出
                                         case 3:
-                                            //Protocol.music = (int) robotList.get(CurrentIndex).get("music");
+                                            Protocol.music = (int) commandall.get(CurrentIndex).get("music");
+
                                             Protocol.outime = (int) commandall.get(CurrentIndex).get("outime");
+
                                             Protocol.shownumber = (int) commandall.get(CurrentIndex).get("shownumber");
                                             Protocol.showcolor = (int) commandall.get(CurrentIndex).get("showcolor");
                                             // 解析

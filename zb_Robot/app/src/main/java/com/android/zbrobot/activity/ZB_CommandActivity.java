@@ -94,6 +94,15 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
         showColor = (TextView) findViewById(R.id.showcolor);
         showColor.setOnClickListener(this);
         // 上障碍物
+
+        findViewById(R.id.linear_goal).setOnClickListener(this);
+        findViewById(R.id.linear_direction).setOnClickListener(this);
+        findViewById(R.id.linear_speed).setOnClickListener(this);
+        findViewById(R.id.linear_mp3).setOnClickListener(this);
+        findViewById(R.id.linear_outime).setOnClickListener(this);
+        findViewById(R.id.linear_shownum).setOnClickListener(this);
+        findViewById(R.id.linear_showcolor).setOnClickListener(this);
+
         cb_top = (CheckBox) findViewById(R.id.cb_top);
         cb_top.setOnCheckedChangeListener(this);
         //cb_top.setChecked(true);
@@ -253,7 +262,7 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
                     findViewById(R.id.linear_direction).setVisibility(View.GONE);
                     findViewById(R.id.linear_speed).setVisibility(View.GONE);
                     findViewById(R.id.linear_obstacle).setVisibility(View.GONE);
-                    findViewById(R.id.linear_mp3).setVisibility(View.GONE);
+                    //findViewById(R.id.linear_mp3).setVisibility(View.GONE);
                     break;
                 default:
                     break;
@@ -283,29 +292,36 @@ public class ZB_CommandActivity extends Activity implements View.OnClickListener
                 dialog();
                 break;
             // 站点
+            case R.id.linear_goal:
             case R.id.goal:
                 dialog_spinner(true);
                 break;
             // 方向
             case R.id.direction:
+            case R.id.linear_direction:
                 dialog_spinner(false);
                 break;
             // 速度
+            case R.id.linear_speed:
             case R.id.speed:
                 dialog_Text(0);
                 break;
             // MP3音乐
+            case R.id.linear_mp3:
             case R.id.mp3:
                 dialog_Text(1);
                 break;
             case R.id.outime:
+            case R.id.linear_outime:
                 dialog_Text(2);
                 break;
             // 显示编号
+            case R.id.linear_shownum:
             case R.id.shownum:
                 dialog_Text(3);
                 break;
             // 显示颜色
+            case R.id.linear_showcolor:
             case R.id.showcolor:
                 dialog_Text(4);
                 break;

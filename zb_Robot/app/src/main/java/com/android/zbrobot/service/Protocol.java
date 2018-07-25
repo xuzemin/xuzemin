@@ -177,7 +177,7 @@ public class Protocol {
                 break;
             // 等待退出
             case ROBOT_LIST_WAIT:
-                bytes = new int[]{outime, shownumber, showcolor};
+                bytes = new int[]{outime, shownumber, showcolor,music};
                 break;
             // 脱轨运行
             case ROBOT_LIST_DERAIL:
