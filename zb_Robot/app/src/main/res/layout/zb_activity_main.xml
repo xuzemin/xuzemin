@@ -35,16 +35,22 @@
             android:text="@string/dining"
             android:textColor="#FFFFFF"
             android:textSize="17sp" />
-
-        <ImageView
-            android:id="@+id/img_cancel"
-            android:layout_width="@dimen/len_28"
-            android:layout_height="@dimen/len_28"
+        <RelativeLayout
+            android:id="@+id/img_cancel_re"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/len_10"
-            android:background="@animator/btn_clone_right" />
+            >
 
+            <ImageView
+                android:id="@+id/img_cancel"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/len_10"
+                android:background="@animator/btn_clone_right" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -137,17 +143,22 @@
                 android:text="@string/choose_area"
                 android:textColor="#333333"
                 android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/config_redact"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+            <RelativeLayout
+                android:id="@+id/config_redact_re"
+                android:layout_width="50dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="17dp"
-                android:background="@animator/btn_direct_selector"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/config_redact"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="17dp"
+                    android:background="@animator/btn_direct_selector"
+                    android:textColor="@color/black"
+                    android:textSize="25sp" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <View

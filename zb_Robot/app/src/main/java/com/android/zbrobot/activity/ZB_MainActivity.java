@@ -194,7 +194,8 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
 
         // 系统卡编辑
         findViewById(R.id.card).setOnClickListener(this);
-
+        findViewById(R.id.config_redact_re).setOnClickListener(this);
+        findViewById(R.id.img_cancel_re).setOnClickListener(this);
         // 头RelativeLayout
         findViewById(R.id.activity_main).setOnClickListener(this);
 
@@ -590,6 +591,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                 startAnimationLeft();
                 break;
             // 导航栏右侧注销按钮
+            case R.id.img_cancel_re:
             case R.id.img_cancel:
                 // 修改存储的账号
                 PreferencesUtils.putBoolean(this, "save_name", true);
@@ -599,6 +601,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                 finish();
                 break;
             // 区域右侧编辑按钮
+            case R.id.config_redact_re:
             case R.id.config_redact:
                 if (DeskIsEdit) {
                     DeskIsEdit = false;

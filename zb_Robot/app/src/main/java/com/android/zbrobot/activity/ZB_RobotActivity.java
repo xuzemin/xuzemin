@@ -70,6 +70,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         // 设置
         setting_redact = (Button) findViewById(R.id.setting_redact);
         setting_redact.setOnClickListener(this);
+        findViewById(R.id.setting_redact_re).setOnClickListener(this);
         // 返回
         findViewById(R.id.setting_back).setOnClickListener(this);
         // 返回
@@ -237,6 +238,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             // 机器人状态设置
+            case R.id.setting_redact_re:
             case R.id.setting_redact:
                 // 跳转到 机器人编辑页面 并传递id
                 Intent intent = new Intent(ZB_RobotActivity.this, ZB_RobotConfigActivity.class);

@@ -50,6 +50,7 @@ public class ZB_CardConfig extends Activity implements View.OnClickListener {
         findViewById(R.id.setting_back).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.add_card).setOnClickListener(this);
+        findViewById(R.id.add_card_Re).setOnClickListener(this);
         cardList = (ListView) findViewById(R.id.cardlist);
         // 子列表点击事件
         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,6 +90,7 @@ public class ZB_CardConfig extends Activity implements View.OnClickListener {
             case R.id.back:
                 finish();
                 break;
+            case R.id.add_card_Re:
             case R.id.add_card:
                 // 跳转到系统卡编辑页面CardConfigActivity 并传值
                 Intent intent = new Intent(ZB_CardConfig.this, ZB_CardConfigActivity.class);

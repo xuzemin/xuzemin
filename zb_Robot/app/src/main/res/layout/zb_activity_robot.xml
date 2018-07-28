@@ -33,15 +33,20 @@
             android:text="@string/robot_state"
             android:textColor="@color/white"
             android:textSize="17sp" />
-
-        <Button
-            android:id="@+id/setting_redact"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+        <RelativeLayout
+            android:id="@+id/setting_redact_re"
+            android:layout_width="50dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/btn_settings_selector" />
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/setting_redact"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/btn_settings_selector" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <ScrollView

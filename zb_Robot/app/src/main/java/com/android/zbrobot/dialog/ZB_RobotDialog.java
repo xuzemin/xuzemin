@@ -207,6 +207,21 @@ public class ZB_RobotDialog extends Dialog {
                         GOALID = (int) robotData_list.get(position).get("goal");
                         TURNBACK = (int) robotData_list.get(position).get("turnback");
                         OUTIME = (int) robotData_list.get(position).get("outtime");
+                        if(((int) list.get(0).get("up_obstacle")==0)){
+                            up_obstacle = 1;
+                        }else{
+                            up_obstacle = 0;
+                        }
+                        if(((int) list.get(0).get("down_obstacle")==0)){
+                            down_obstacle = 1;
+                        }else{
+                            down_obstacle = 0;
+                        }
+                        if(((int) list.get(0).get("side_obstacle")==0)){
+                            side_obstacle = 1;
+                        }else{
+                            side_obstacle = 0;
+                        }
                         int pathway = (int) robotData_list.get(position).get("pathway");
                         if (pathway == 0) {
                             if (flag) {
