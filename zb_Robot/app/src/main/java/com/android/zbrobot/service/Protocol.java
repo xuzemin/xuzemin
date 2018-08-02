@@ -364,7 +364,7 @@ public class Protocol {
                 cmdData.add((byte) ((shownumber) & 0xff));
 
                 cmdData.add((byte) ((showcolor) & 0xff));
-
+                cmdData.add((byte) ((music) & 0xff));
                 break;
 
             // 无轨执行命令
