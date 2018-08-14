@@ -96,25 +96,26 @@ public class ZB_GridViewAdapter extends BaseAdapter {
             viewHolder.imageView.setImageResource(R.mipmap.zaixian);
 
             // 机器人状态  0->空闲   1->送餐   2->故障
-            switch ((int) map.get("robotstate")) {
-                case 0:
-                    viewHolder.text.setText("空闲");
-                    viewHolder.imageback.setImageResource(R.mipmap.kongxian);
-                    break;
-                case 1:
-                    viewHolder.text.setText("送餐");
-                    viewHolder.imageback.setImageResource(R.mipmap.fuwuzhong);
-                    break;
-                case 2:
-                    viewHolder.text.setText("故障");
-                    viewHolder.imageback.setImageResource(R.mipmap.guzhang);
-                    break;
-            }
+//            switch ((int) map.get("robotstate")) {
+//                case 0:
+//                    viewHolder.text.setText("空闲");
+//                    viewHolder.imageback.setImageResource(R.mipmap.kongxian);
+//                    break;
+//                case 1:
+//                    viewHolder.text.setText("送餐");
+//                    viewHolder.imageback.setImageResource(R.mipmap.fuwuzhong);
+//                    break;
+//                case 2:
+//                    viewHolder.text.setText("故障");
+//                    viewHolder.imageback.setImageResource(R.mipmap.guzhang);
+//                    break;
+//            }
+            viewHolder.imageback.setImageResource(R.mipmap.lanse);
         } else {
             viewHolder.imageView.setImageResource(R.mipmap.lixiang02);
 
             viewHolder.text.setText("离线");
-            viewHolder.imageback.setImageResource(R.mipmap.lixian);
+            viewHolder.imageback.setImageResource(R.mipmap.huise);
         }
         viewHolder.name.setText(map.get("name").toString());
         return convertView;

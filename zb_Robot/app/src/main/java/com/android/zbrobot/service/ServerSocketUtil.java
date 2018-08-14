@@ -112,7 +112,7 @@ public class ServerSocketUtil extends Service {
             // 1.连接服务器超时，即连接超时;
             // 2.连接服务器成功后，接收服务器数据超时，即接收超时
             //设置socket 读取数据流的超时时间
-//            socket.setSoTimeout(9000);
+            socket.setSoTimeout(9000);
 
             //开启线程
             new Thread(new Task(socket)).start();
@@ -325,7 +325,7 @@ public class ServerSocketUtil extends Service {
                                 if(sendHeartBeat) {
                                     btSendBytes(Protocol.getSendData(Protocol.HEART_BEAT, Protocol.getCommandData(Protocol.ROBOT_HRARTBEAD)), socket_ip, socket_cache);
                                 }
-                                Thread.sleep(60*1000);
+                                Thread.sleep(3*1000);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -669,16 +669,16 @@ public class ServerSocketUtil extends Service {
                             Constant.debugLog("4"+buffer[4]);
                             Constant.debugLog("3"+buffer[3]);
                             // 判断是否为空
-                            if (out != null) {
-                                // 发送的数据
-                                data = Protocol.getSendData(Protocol.RECEIVE, Protocol.getCommandData(Protocol.ROBOT_RAIL_FAIL));
-                                try {
-                                    // 发送接收应答失败
-                                    out.write(data);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+//                            if (out != null) {
+//                                // 发送的数据
+//                                data = Protocol.getSendData(Protocol.RECEIVE, Protocol.getCommandData(Protocol.ROBOT_RAIL_FAIL));
+//                                try {
+//                                    // 发送接收应答失败
+//                                    out.write(data);
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
                             break;
                     }
                 } else {

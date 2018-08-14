@@ -175,6 +175,7 @@ public class ZB_RobotDialog extends Dialog {
                     map.put("name", list.get(i).get("name"));
                     map.put("ip", list.get(i).get("ip"));
                     map.put("pathway", list.get(i).get("pathway"));
+                    map.put("id", list.get(i).get("id"));
                     // 机器人状态 0->空闲  1->送餐  2->故障
                     switch ((int) list.get(i).get("robotstate")) {
                         case 0:
@@ -204,9 +205,11 @@ public class ZB_RobotDialog extends Dialog {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         IP = robotData_list.get(position).get("ip").toString();
-                        GOALID = (int) robotData_list.get(position).get("goal");
-                        TURNBACK = (int) robotData_list.get(position).get("turnback");
-                        OUTIME = (int) robotData_list.get(position).get("outtime");
+                        List<Map> robotList = robotDBHelper.queryListMap("select * from robot where id = '" + robotData_list.get(position).get("id") + "'", null);
+                        Map map1 = robotList.get(0);
+                        GOALID = (int) map1.get("goal");
+                        TURNBACK = (int) map1.get("turnback");
+                        OUTIME = (int) map1.get("outtime");
                         if(((int) list.get(0).get("up_obstacle")==0)){
                             up_obstacle = 1;
                         }else{
@@ -462,21 +465,21 @@ public class ZB_RobotDialog extends Dialog {
                             }
                         }
                         CurrentIndex = 0;
-                        Constant.debugLog("旋转end");
-                        if(TURNBACK == 1){
-                            Protocol.speed = 300;
-                            Protocol.direction = 0;
-                            Protocol.music = 1;
-                            Protocol.outime = OUTIME;
-                            Protocol.shownumber = 0;
-                            Protocol.showcolor = 0;
-                            Protocol.up_obstacle = up_obstacle;//(int) robotList.get(CurrentIndex).get("up_obstacle");
-                            Protocol.down_obstacle = down_obstacle;//(int) robotList.get(CurrentIndex).get("down_obstacle");
-                            Protocol.side_obstacle = side_obstacle;//(int) robotList.get(CurrentIndex).get("side_obstacle");
-                            data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
-                            setSendStr(out, data);
-                            //setThread(thread);
-                        }
+//                        Constant.debugLog("旋转end");
+//                        if(TURNBACK == 1){
+//                            Protocol.speed = 300;
+//                            Protocol.direction = 0;
+//                            Protocol.music = 1;
+//                            Protocol.outime = OUTIME;
+//                            Protocol.shownumber = 0;
+//                            Protocol.showcolor = 0;
+//                            Protocol.up_obstacle = up_obstacle;//(int) robotList.get(CurrentIndex).get("up_obstacle");
+//                            Protocol.down_obstacle = down_obstacle;//(int) robotList.get(CurrentIndex).get("down_obstacle");
+//                            Protocol.side_obstacle = side_obstacle;//(int) robotList.get(CurrentIndex).get("side_obstacle");
+//                            data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
+//                            setSendStr(out, data);
+//                            //setThread(thread);
+//                        }
                         Constant.debugLog("直行end");
                         List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '" + GOALID + "'", null);
                         if (card_list != null && card_list.size() > 0) {
