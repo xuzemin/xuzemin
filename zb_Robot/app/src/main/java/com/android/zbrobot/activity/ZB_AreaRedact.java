@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,7 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.zbrobot.R;
+import com.android.zbrobot.adapter.ZB_SpinnerAdapter;
+import com.android.zbrobot.adapter.ZB_SpinnerAdapter2;
 import com.android.zbrobot.dialog.ZB_MyDialog;
+import com.android.zbrobot.dialog.ZB_SpinnerDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
 import com.android.zbrobot.view.CoordinateView;
@@ -29,6 +33,8 @@ import com.android.zbrobot.view.CoordinateView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +52,8 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
     private File file;
     private Button btn_sure;
     private Bitmap bitmap;
+    private List<Map> list;
+    public static int moreDeskNum = -1;
     private ImageView imageView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,10 +87,20 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
         findViewById(R.id.image).setOnClickListener(this);
         findViewById(R.id.btn_delete).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
+        findViewById(R.id.moredesk).setOnClickListener(this);
         imageView = (ImageView) findViewById(R.id.bitmap);
         btn_sure = (Button) findViewById(R.id.btn_sure);
         btn_sure.setOnClickListener(this);
 
+        list = new ArrayList<>();
+        // 以键值对来传递值
+        Map<String, Object> map;
+        map = new HashMap<>();
+        map.put("name", "否");
+        list.add(map);
+        map = new HashMap<>();
+        map.put("name", "是");
+        list.add(map);
     }
 
     @Override
@@ -118,6 +136,13 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
             }
             if(areainfo.get("derection") != null){
                 derection_area.setText(areainfo.get("derection").toString());
+            }
+            if(areainfo.get("moredesk") != null){
+                if(((int)areainfo.get("moredesk")) == 1){
+                    ((TextView)findViewById(R.id.moredesk)).setText("是");
+                }else{
+                    ((TextView)findViewById(R.id.moredesk)).setText("否");
+                }
             }
         }else{
             btn_delete.setVisibility(View.GONE);
@@ -192,17 +217,17 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
                         if(!pointx.getText().toString().equals("") &&!pointy.getText().toString().equals("")
                                 &&!point_x_area.getText().toString().equals("") &&!point_y_area.getText().toString().equals("")
                                 &&!derection_area.getText().toString().equals("")){
-                            robotDBHelper.insert("area", new String[]{"name", "pointx", "pointy","point_x_back","point_y_back","derection"}, new Object[]{
+                            robotDBHelper.insert("area", new String[]{"name", "pointx", "pointy","point_x_back","point_y_back","derection","moredesk"}, new Object[]{
                                     areaname.getText().toString().trim(), pointx.getText().toString().trim(),
                                     pointy.getText().toString().trim(),point_x_area.getText().toString().trim(),
-                                    point_y_area.getText().toString().trim(),derection_area.getText().toString().trim()});
+                                    point_y_area.getText().toString().trim(),derection_area.getText().toString().trim(),0});
                         }else{
 //                            robotDBHelper.insert("area", new String[]{"name"}, new Object[]{
 //                                    areaname.getText().toString().trim(), });
 //                            Toast.makeText(getApplicationContext(),"请输入地图无轨坐标"，)
-                            robotDBHelper.insert("area", new String[]{"name", "pointx", "pointy","point_x_back","point_y_back","derection"}, new Object[]{
+                            robotDBHelper.insert("area", new String[]{"name", "pointx", "pointy","point_x_back","point_y_back","derection","moredesk"}, new Object[]{
                                     areaname.getText().toString().trim(), 0,
-                                    0,0,0,0});
+                                    0,0,0,0,0});
                         }
                         List<Map> areaList = robotDBHelper.queryListMap("select * from area ", null);
                         areainfo = areaList.get(areaList.size() - 1);
@@ -237,9 +262,59 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
                 }
                 finish();
                 break;
+            case R.id.moredesk:
+                dialog_spinner();
+                break;
             default:
                 break;
         }
+    }
+
+    private ZB_SpinnerDialog spinnerDialog;
+    private ZB_SpinnerAdapter2 ZBSpinnerAdapter;
+
+    // 自定义运动到站点对话框
+    private void dialog_spinner() {
+
+        spinnerDialog = new ZB_SpinnerDialog(this);
+        ZBSpinnerAdapter = new ZB_SpinnerAdapter2(this, list);
+        Constant.IsView = Constant.CommandActivity;
+        // 加载适配器
+        spinnerDialog.getListView().setAdapter(ZBSpinnerAdapter);
+        // 子列表点击事件
+        spinnerDialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                moreDeskNum = position;
+                ZBSpinnerAdapter.notifyDataSetChanged();
+            }
+        });
+        // 确定Dialog
+        spinnerDialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                robotDBHelper.execSQL("update area set moredesk = '" + moreDeskNum + "' where id= '" + areaId + "'");
+                switch (moreDeskNum) {
+                    case 0:
+                        ((TextView)findViewById(R.id.moredesk)).setText("否");
+                        break;
+                    case 1:
+                        ((TextView)findViewById(R.id.moredesk)).setText("是");
+                        break;
+                }
+                spinnerDialog.dismiss();
+            }
+        });
+        // 取消Dialog
+        spinnerDialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 销毁窗体
+                spinnerDialog.dismiss();
+            }
+        });
+        // 显示Dialog
+        spinnerDialog.show();
     }
 
     private ZB_MyDialog textDialog;
@@ -304,9 +379,9 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
                         }else{
 
                             if (!editText.getText().toString().trim().equals("")) {
-                                robotDBHelper.insert("area", new String[]{"name", "pointx", "pointy","point_x_back","point_y_back","derection"}, new Object[]{
+                                robotDBHelper.insert("area", new String[]{"name", "pointx", "pointy","point_x_back","point_y_back","derection","moredesk"}, new Object[]{
                                         editText.getText().toString().trim(), 0,
-                                        0,0,0,0});
+                                        0,0,0,0,0});
                                 textDialog.dismiss();
                                 areaname.setText(editText.getText().toString().trim());
                                 List<Map> areaList = robotDBHelper.queryListMap("select * from area ", null);

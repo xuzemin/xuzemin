@@ -75,6 +75,7 @@ public class ZB_RobotConfigActivity extends Activity implements View.OnClickList
         robot_botton.setOnCheckedChangeListener(this);
         roobotside.setOnCheckedChangeListener(this);
 
+
     }
 
     @Override

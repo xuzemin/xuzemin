@@ -201,15 +201,17 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
 
         // 获取传递过来的数据
         name = getIntent().getStringExtra("name");
-        if (name.equals(Constant.ADMIN)) {
+        if(name !=null) {
+            if (name.equals(Constant.ADMIN)) {
 
-        } else if (name.equals(Constant.SINGLE)) {
-            imgViewMapRight.setVisibility(View.GONE);
-            config_redact.setVisibility(View.GONE);
-            DeskIsEdit = false;
-        } else if (name.equals(Constant.MANY)) {
-            config_redact.setVisibility(View.GONE);
-            DeskIsEdit = false;
+            } else if (name.equals(Constant.SINGLE)) {
+                imgViewMapRight.setVisibility(View.GONE);
+                config_redact.setVisibility(View.GONE);
+                DeskIsEdit = false;
+            } else if (name.equals(Constant.MANY)) {
+                config_redact.setVisibility(View.GONE);
+                DeskIsEdit = false;
+            }
         }
 
         // 初始化机器人列表
@@ -392,7 +394,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
 
         findViewById(R.id.setting_back).setOnClickListener(this);
 
-        robotDBHelper.execSQL("update robot set outline= '0' ");
+        robotDBHelper.execSQL("update robot set outline = '0' ");
         receiver = new MyReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.jdrd.activity.Main");

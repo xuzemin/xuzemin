@@ -147,9 +147,11 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         if ((int) robotConfig.get("outline") == 1) {
             ((TextView) findViewById(R.id.outline)).setText("在线");
             findViewById(R.id.linear_control).setVisibility(View.VISIBLE);
+            ((Button)findViewById(R.id.remote_control)).setText("遥控器");
         } else {
             ((TextView) findViewById(R.id.outline)).setText("离线");
-            findViewById(R.id.linear_control).setVisibility(View.GONE);
+            ((Button)findViewById(R.id.remote_control)).setText("删除");
+            findViewById(R.id.linear_control).setVisibility(View.VISIBLE);
         }
         //机器人状态  0->空闲   1->送餐   2->故障
         if ((int) robotConfig.get("robotstate") == 0) {
@@ -248,9 +250,14 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             // 遥控器
             case R.id.remote_control:
                 // 跳转到遥控器页面 并传递id
-                Intent intent1 = new Intent(ZB_RobotActivity.this, ZB_RoundActivity.class);
-                intent1.putExtra("id", robotId);
-                startActivity(intent1);
+                if((int) robotConfig.get("outline") == 1) {
+                    Intent intent1 = new Intent(ZB_RobotActivity.this, ZB_RoundActivity.class);
+                    intent1.putExtra("id", robotId);
+                    startActivity(intent1);
+                }else{
+                    robotDBHelper.execSQL("delete from robot where id= '" + robotId + "'");
+                    finish();
+                }
                 break;
             // 返回
             case R.id.setting_back:

@@ -195,21 +195,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal"
-                android:text="@string/derection"
+                android:text="@string/moredesk"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                android:visibility="invisible"
                 />
-
-            <EditText
-                android:id="@+id/derection_"
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#EDEDED"/>
+            <TextView
+                android:id="@+id/moredesk"
                 android:layout_weight="1"
-                android:visibility="invisible"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="numberSigned|numberDecimal"
                 />
         </LinearLayout>
     </LinearLayout>

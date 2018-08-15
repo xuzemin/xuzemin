@@ -42,6 +42,7 @@ public class ZB_RobotDialog extends Dialog {
     private List idList = new ArrayList();
     public static List<Map> commandall;
     private static Map deskmap, areamap;
+    private static List<Map> areaList;
     // 存储机器人数据列表
     private List<Map<String, Object>> robotData_list = new ArrayList<>();
     private final String[] from = {"image", "text", "name", "imageback"};
@@ -115,6 +116,8 @@ public class ZB_RobotDialog extends Dialog {
         list = new ArrayList<>();
         // 初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(context);
+        areaList = robotDBHelper.queryListMap("select * from area where id = '" + ZB_MainActivity.CURRENT_AREA_id + "'", null);
+
         try {
             // 查询机器人列表 根据区域名称 and 在线状态
             list = robotDBHelper.queryListMap("select * from robot where area = '" + ZB_MainActivity.CURRENT_AREA_id + "' and outline = '1'", null);
@@ -465,21 +468,23 @@ public class ZB_RobotDialog extends Dialog {
                             }
                         }
                         CurrentIndex = 0;
-//                        Constant.debugLog("旋转end");
-//                        if(TURNBACK == 1){
-//                            Protocol.speed = 300;
-//                            Protocol.direction = 0;
-//                            Protocol.music = 1;
-//                            Protocol.outime = OUTIME;
-//                            Protocol.shownumber = 0;
-//                            Protocol.showcolor = 0;
-//                            Protocol.up_obstacle = up_obstacle;//(int) robotList.get(CurrentIndex).get("up_obstacle");
-//                            Protocol.down_obstacle = down_obstacle;//(int) robotList.get(CurrentIndex).get("down_obstacle");
-//                            Protocol.side_obstacle = side_obstacle;//(int) robotList.get(CurrentIndex).get("side_obstacle");
-//                            data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
-//                            setSendStr(out, data);
-//                            //setThread(thread);
-//                        }
+                        Constant.debugLog("旋转end");
+                        if(((int)areaList.get(0).get("moredesk")) == 1) {
+                            if (TURNBACK == 1) {
+                                Protocol.speed = 300;
+                                Protocol.direction = 0;
+                                Protocol.music = 1;
+                                Protocol.outime = OUTIME;
+                                Protocol.shownumber = 0;
+                                Protocol.showcolor = 0;
+                                Protocol.up_obstacle = up_obstacle;//(int) robotList.get(CurrentIndex).get("up_obstacle");
+                                Protocol.down_obstacle = down_obstacle;//(int) robotList.get(CurrentIndex).get("down_obstacle");
+                                Protocol.side_obstacle = side_obstacle;//(int) robotList.get(CurrentIndex).get("side_obstacle");
+                                data = Protocol.getSendData(Protocol.LIST_DERAILMENT, Protocol.getCommandDataByte(Protocol.ROBOT_LIST_DERAILMENT));
+                                setSendStr(out, data);
+                                //setThread(thread);
+                            }
+                        }
                         Constant.debugLog("直行end");
                         List<Map> card_list = robotDBHelper.queryListMap("select * from card where id = '" + GOALID + "'", null);
                         if (card_list != null && card_list.size() > 0) {

@@ -76,6 +76,7 @@
     <string name="map">地图选点</string>
     <string name="map_toast">(开启后可点击地图设置坐标)</string>
     <string name="derection">方向</string>
+    <string name="moredesk">多桌</string>
 
     <string name="initial">坐标系初始化</string>
     <string name="back">返回坐标设置</string>
@@ -105,7 +106,7 @@
     <array name="CREATE_TABLE_SQL">
         <!--区域-->
         <item>CREATE TABLE area (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,pointx INTEGER,
-            pointy INTEGER,point_x_back,point_y_back,derection INTEGER)
+            pointy INTEGER,point_x_back,point_y_back,derection INTEGER,moredesk INTERGER)
         </item>
         <!--餐桌-->
         <item>CREATE TABLE desk (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,area INTEGER,
