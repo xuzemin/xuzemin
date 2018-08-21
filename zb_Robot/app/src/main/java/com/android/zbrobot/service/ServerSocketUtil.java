@@ -606,7 +606,10 @@ public class ServerSocketUtil extends Service {
                             }
                             Constant.debugLog("最后坐标状态获取成功");
                             break;
-
+                        case 65:
+                            robotDBHelper.execSQL("update robot set robotstate = '" + buffer[4]+"' where ip= '" + ip + "'");
+                            Constant.debugLog("buffer[5]下标为5的值" + buffer[5]);
+                            break;
                         // 接收应答成功
                         case 40:
                         case 41:
