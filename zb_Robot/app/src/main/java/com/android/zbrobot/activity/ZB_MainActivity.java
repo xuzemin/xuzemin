@@ -96,7 +96,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
 
     // 编辑桌子
     private Button config_redact;
-
+    private int moredesk = 0;
     // 当前的下标
     public static int Current_INDEX = 1;
     // 当前桌面id
@@ -314,28 +314,30 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                 }
             }
         });
-            // 长按监听
-//            deskView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//                @Override
-//                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                    getDeskData();
-//                    if (!isState) {
-//                        selectItems = new ArrayList<>();
-//                        for (int i = 0; i < deskList.size(); i++) {
-//                            selectItems.add(false);
-//                        }
-//                        CheckBox box = (CheckBox) view.findViewById(R.id.ck_select);
-//                        box.setChecked(true);
-//                        selectItems.set(position, true);
-//                        setState(true);
-//                        desk_adapter.setIsState(true);
-//                        ischeck = true;
-//                        showOpervate();
-//                    }
-//                    return false;
-//                }
-//            });
+            deskView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    List<Map> list = robotDBHelper.queryListMap("select * from area where id = '" + CURRENT_AREA_id + "'", null);
+                    moredesk = (int) list.get(0).get("moredesk");
+                    if(moredesk == 1) {
+                        getDeskData();
+                        if (!isState) {
+                            selectItems = new ArrayList<>();
+                            for (int i = 0; i < deskList.size(); i++) {
+                                selectItems.add(false);
+                            }
+                            CheckBox box = (CheckBox) view.findViewById(R.id.ck_select);
+                            box.setChecked(true);
+                            selectItems.set(position, true);
+                            setState(true);
+                            desk_adapter.setIsState(true);
+                            ischeck = true;
+                            showOpervate();
+                        }
+                    }
+                    return false;
+                }
+            });
 
 
         // 初始化区域适配器
