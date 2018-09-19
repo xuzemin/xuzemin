@@ -13,6 +13,7 @@ public class Constant {
     public static int SCALE = 20;
     public static int Bitmap_WIDTH = 0;
     public static int Bitmap_HEIGHT = 0;
+    public static final int MSG_REFRESH_CONNECT = 0;
     //wifi静态ip参数
     static final String dns1 = "192.168.1.1";
     static final String dns2 = "192.168.0.1";

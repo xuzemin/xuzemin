@@ -1,5 +1,6 @@
 package com.android.zbrobot.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -40,6 +43,13 @@ import com.android.zbrobot.service.ServerSocketUtil;
 import com.android.zbrobot.service.SetStaticIPService;
 import com.android.zbrobot.util.Constant;
 import com.android.zbrobot.util.PreferencesUtils;
+import com.android.zbrobot.util.RobotUtils;
+import com.ls.lsros.callback.CallBack;
+import com.ls.lsros.data.provide.bean.MapOperationResult;
+import com.ls.lsros.helper.ROSConnectHelper;
+import com.ls.lsros.helper.RobotMapOperationHelper;
+import com.ls.lsros.helper.RosSDKInitHelper;
+import com.ls.lsros.websocket.ROSClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,6 +114,8 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     //初始化平移动画
     private TranslateAnimation translateAnimation;
 
+    public static boolean isGetMap = false;
+
     // 桌面适配器
     private ZB_DeskAdapter desk_adapter;
     // 区域适配器
@@ -133,8 +145,37 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private boolean isState;
     private List isList = new ArrayList();
     private boolean ischeck = false;
+    @SuppressLint("HandlerLeak")
+    public static Handler mhandle = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case Constant.MSG_REFRESH_CONNECT:
+                    Constant.debugLog("RobotUtils.getInstance().STEP"+RobotUtils.STEP);
+                    switch (RobotUtils.STEP){
+                        case 0:
+                        case 3:
+                            RobotUtils.getInstance().Connect();
+                            break;
+                        case 1:
+                            RobotUtils.getInstance().importMap();
+                            break;
+                        case 2:
+                            RobotUtils.getInstance().setImageInfo();
+                            break;
+                        case 4:
+                            RobotUtils.getInstance().setInitPose(0.11,0.11,0.11);
+                            break;
+                        case 5:
 
-
+                            break;
+                    }
+                    mhandle.sendEmptyMessageDelayed(Constant.MSG_REFRESH_CONNECT,3000);
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -314,30 +355,30 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                 }
             }
         });
-            deskView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    List<Map> list = robotDBHelper.queryListMap("select * from area where id = '" + CURRENT_AREA_id + "'", null);
-                    moredesk = (int) list.get(0).get("moredesk");
-                    if(moredesk == 1) {
-                        getDeskData();
-                        if (!isState) {
-                            selectItems = new ArrayList<>();
-                            for (int i = 0; i < deskList.size(); i++) {
-                                selectItems.add(false);
-                            }
-                            CheckBox box = (CheckBox) view.findViewById(R.id.ck_select);
-                            box.setChecked(true);
-                            selectItems.set(position, true);
-                            setState(true);
-                            desk_adapter.setIsState(true);
-                            ischeck = true;
-                            showOpervate();
+        deskView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                List<Map> list = robotDBHelper.queryListMap("select * from area where id = '" + CURRENT_AREA_id + "'", null);
+                moredesk = (int) list.get(0).get("moredesk");
+                if(moredesk == 1) {
+                    getDeskData();
+                    if (!isState) {
+                        selectItems = new ArrayList<>();
+                        for (int i = 0; i < deskList.size(); i++) {
+                            selectItems.add(false);
                         }
+                        CheckBox box = (CheckBox) view.findViewById(R.id.ck_select);
+                        box.setChecked(true);
+                        selectItems.set(position, true);
+                        setState(true);
+                        desk_adapter.setIsState(true);
+                        ischeck = true;
+                        showOpervate();
                     }
-                    return false;
                 }
-            });
+                return false;
+            }
+        });
 
 
         // 初始化区域适配器
@@ -356,12 +397,12 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         Intent intent = new Intent(ZB_MainActivity.this, ZB_AreaRedact.class);
                         intent.putExtra("area", 0);
                         startActivity(intent);
-//                        dialog();
+                        //                        dialog();
                     } else {
                         Intent intent = new Intent(ZB_MainActivity.this, ZB_AreaRedact.class);
                         intent.putExtra("area", (int) areaData_list.get(position).get("id"));
                         startActivity(intent);
-//                        dialog(areaData_list.get(position).get("name").toString(), (int) areaData_list.get(position).get("id"));
+                        //                        dialog(areaData_list.get(position).get("name").toString(), (int) areaData_list.get(position).get("id"));
                     }
                     getAreaData();
                 } else {
@@ -404,6 +445,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         if (receiver != null) {
             this.registerReceiver(receiver, filter);
         }
+        mhandle.sendEmptyMessageDelayed(Constant.MSG_REFRESH_CONNECT,1000);
     }
 
     // 获取选中的Items
@@ -472,6 +514,8 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
 
     }
 
+
+
     /**
      * 隐藏操作界面
      */
@@ -536,6 +580,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         if (receiver != null) {
             this.unregisterReceiver(receiver);
         }
+        mhandle.removeMessages(Constant.MSG_REFRESH_CONNECT);
     }
 
     @Override
@@ -721,16 +766,16 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             map = new HashMap<>();
             map.put("image", R.animator.btn_add_desk_selector);
             map.put("id", 0);
-//            map.put("name",getString(R.string.config_add));
+            //            map.put("name",getString(R.string.config_add));
             deskData_list.add(map);
         }
         if (deskList != null && deskList.size() > 0) {
             for (int i = 0, size = deskList.size(); i < size; i++) {
                 map = new HashMap<>();
                 if (DeskIsEdit) {
-//                    map.put("image", R.mipmap.ic_launcher);
+                    //                    map.put("image", R.mipmap.ic_launcher);
                 } else {
-//                    map.put("image", R.mipmap.bg);
+                    //                    map.put("image", R.mipmap.bg);
                 }
                 map.put("id", deskList.get(i).get("id"));
                 map.put("name", deskList.get(i).get("name"));
@@ -806,12 +851,12 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         if (name.equals(Constant.ADMIN)) {
             map = new HashMap<>();
             map.put("image", R.mipmap.qybianji_no);
-//        map.put("name",getString(R.string.config_redact));
+            //        map.put("name",getString(R.string.config_redact));
             areaData_list.add(map);
             if (AreaIsEdit) {
                 map = new HashMap<>();
                 map.put("image", "2654");
-//            map.put("name",getString(R.string.config_add));
+                //            map.put("name",getString(R.string.config_add));
                 areaData_list.add(map);
             }
         }
@@ -819,9 +864,9 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             for (int i = 0, size = areaList.size(); i < size; i++) {
                 map = new HashMap<>();
                 if (AreaIsEdit) {
-//                    map.put("image", R.mipmap.ic_launcher);
+                    //                    map.put("image", R.mipmap.ic_launcher);
                 } else {
-//                    map.put("image", R.mipmap.bg);
+                    //                    map.put("image", R.mipmap.bg);
                 }
                 map.put("id", areaList.get(i).get("id"));
                 map.put("name", areaList.get(i).get("name"));
@@ -1197,7 +1242,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                     ZB_RobotDialog.sendCommand();
                 }
             } else {
-//                SJX_RobotDialog.sendCommandCoordinate();
+                //                SJX_RobotDialog.sendCommandCoordinate();
             }
         } else if (string.equals("robot_destory")) {
             Constant.debugLog("=====销毁机器人=====");

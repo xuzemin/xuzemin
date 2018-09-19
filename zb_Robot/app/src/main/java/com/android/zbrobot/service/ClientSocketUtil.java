@@ -10,8 +10,9 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
+
 
 import com.android.zbrobot.R;
 import com.android.zbrobot.dialog.ZB_RobotDialog;
