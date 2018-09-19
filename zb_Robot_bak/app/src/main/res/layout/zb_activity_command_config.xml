@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDEDED"
+    android:orientation="vertical"
+    tools:context="com.android.jdrd.robot.activity.ZB_MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:background="@mipmap/action_bar">
+
+        <RelativeLayout
+            android:id="@+id/setting_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="17dp"
+                android:layout_height="21dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_back_selector" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/command_deract"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="50dp"
+            android:layout_height="36dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:text="@string/btn_delete"
+            android:textColor="@animator/btn_delete_selector"
+            android:textSize="@dimen/topic_size"  />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear_goal"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/goalname"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/goal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:text="请选择站点" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/xyb" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@mipmap/round_activity_bg" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_direction"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/direction"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/direction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:text="请选择方向" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/xyb" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_speed"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/speed_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/speed"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/speed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:inputType="number"
+                        android:text="请输入速度"
+                        android:textColor="#999999"
+                        android:textColorHint="@color/aliceblue"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/xyb" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    />
+            </LinearLayout>
+
+            <!-- 障碍物-->
+            <LinearLayout
+                android:id="@+id/linear_obstacle"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/open_obstacle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/open_obstacle"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/len_10"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/cb_top"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.4"
+                            android:text="上"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <CheckBox
+                            android:id="@+id/cb_bottom"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.4"
+                            android:text="下"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                        <CheckBox
+                            android:id="@+id/cb_side"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.4"
+                            android:text="侧"
+                            android:textColor="#333333"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_mp3"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/mp3"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/mp3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:inputType="number"
+                        android:text="请输入MP3通道"
+                        android:textColor="#999999"
+                        android:textColorHint="@color/aliceblue"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/xyb" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_outime"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/outime"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/outime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:inputType="number"
+                        android:text="请输入超时时间"
+                        android:textColor="#999999"
+                        android:textColorHint="@color/aliceblue"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/xyb" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_shownum"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/shownum"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/shownum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:inputType="number"
+                        android:text="请输入显示编号"
+                        android:textColor="#999999"
+                        android:textColorHint="@color/aliceblue"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/xyb" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_showcolor"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/showcolor"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/showcolor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/white"
+                        android:gravity="right|center"
+                        android:inputType="number"
+                        android:text="请输入显示颜色"
+                        android:textColor="#999999"
+                        android:textColorHint="@color/aliceblue"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="13dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/xyb" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_sure"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="52dp"
+                android:background="@animator/btn_sure_selector"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
