@@ -65,7 +65,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     // 初始化广播
     private MyReceiver receiver;
     // 初始化数据库帮助类
-    private RobotDBHelper robotDBHelper;
+    private static RobotDBHelper robotDBHelper;
 
     // 存储数据  以Map键值对的形式存储
     private static List<Map> areaList = new ArrayList<>();// 区域
@@ -146,7 +146,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private List isList = new ArrayList();
     private boolean ischeck = false;
     @SuppressLint("HandlerLeak")
-    public static Handler mhandle = new Handler(){
+    public Handler mhandle = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -156,19 +156,26 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                     switch (RobotUtils.STEP){
                         case 0:
                         case 3:
+                            robotDBHelper.execSQL("update robot set outline = '0' where ip = '192.168.106.1'");
                             RobotUtils.getInstance().Connect();
+                            getRobotData();
+                            // 刷新
+                            SJXGridViewAdapter.notifyDataSetInvalidated();
                             break;
                         case 1:
+                            robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
                             RobotUtils.getInstance().importMap();
+                            getRobotData();
+                            // 刷新
+                            SJXGridViewAdapter.notifyDataSetInvalidated();
                             break;
                         case 2:
                             RobotUtils.getInstance().setImageInfo();
                             break;
                         case 4:
-                            RobotUtils.getInstance().setInitPose(0.11,0.11,0.11);
+                            RobotUtils.getInstance().setInitPose(1,1,90);
                             break;
                         case 5:
-
                             break;
                     }
                     mhandle.sendEmptyMessageDelayed(Constant.MSG_REFRESH_CONNECT,3000);
@@ -198,25 +205,25 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
 
         //初始化控件
         // 左侧平移出来的LinearLayout
-        linearLayout_all = (LinearLayout) findViewById(R.id.linearlayout_all);
+        linearLayout_all =  findViewById(R.id.linearlayout_all);
         // TODO
-        lay = (RelativeLayout) findViewById(R.id.lay);
+        lay =  findViewById(R.id.lay);
 
         // 导航栏左侧ImageView菜单
-        imgViewMapRight = (ImageView) findViewById(R.id.imgViewmapnRight);
+        imgViewMapRight =  findViewById(R.id.imgViewmapnRight);
         imgViewMapRight.setOnClickListener(this);
         // 导航栏右侧ImageView注销
-        img_cancel = (ImageView) findViewById(R.id.img_cancel);
+        img_cancel =  findViewById(R.id.img_cancel);
         img_cancel.setOnClickListener(this);
 
         // 左侧平移出来的RelativeLayout
-        map_right_Relative = (RelativeLayout) findViewById(R.id.map_right_Ralative);
+        map_right_Relative =  findViewById(R.id.map_right_Ralative);
 
         // 区域列表
-        area = (ListView) findViewById(R.id.area);
+        area =  findViewById(R.id.area);
 
         // 区域右侧编辑桌子按钮
-        config_redact = (Button) findViewById(R.id.config_redact);
+        config_redact =  findViewById(R.id.config_redact);
         config_redact.setOnClickListener(this);
 
         // 初始化区域名称
@@ -446,6 +453,21 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             this.registerReceiver(receiver, filter);
         }
         mhandle.sendEmptyMessageDelayed(Constant.MSG_REFRESH_CONNECT,1000);
+
+        List<Map> listrobot = robotDBHelper.queryListMap("select * from robot ", null);
+        boolean ishaverobot = false;
+        for(Map map : listrobot){
+            if(map.get("ip").equals("192.168.106.1")){
+                ishaverobot = true;
+                break;
+            }
+        }
+        if(!ishaverobot){
+            robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
+                    "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway,outtime" +
+                    ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle) values " +
+                    "('雷达','" + "192.168.106.1" + "',0,0,100,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0)");
+        }
     }
 
     // 获取选中的Items

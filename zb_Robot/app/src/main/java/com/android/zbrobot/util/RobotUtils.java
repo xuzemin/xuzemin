@@ -1,5 +1,8 @@
 package com.android.zbrobot.util;
 
+import android.content.Context;
+
+import com.android.zbrobot.helper.RobotDBHelper;
 import com.ls.lsros.callback.CallBack;
 import com.ls.lsros.data.provide.bean.ImageInfo;
 import com.ls.lsros.data.provide.bean.MapOperationResult;
@@ -24,6 +27,7 @@ public class RobotUtils {
     private RobotSensorResult robotSensorResult;
     private RobotPoseResult robotPoseResult;
     private RobotStatus robotStatus;
+    private static RobotDBHelper robotDBHelper;
     public static RobotUtils getInstance(){
         return robotUtils==null? new RobotUtils() :robotUtils;
     }

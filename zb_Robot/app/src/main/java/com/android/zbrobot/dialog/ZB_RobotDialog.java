@@ -163,7 +163,16 @@ public class ZB_RobotDialog extends Dialog {
                         idList = new ArrayList();
                         idList.add(deskid);
                     }
-                    ServerSocketUtil.sendCommandCoordinate(IP, idList);
+
+                    List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
+                    if(area_list!=null && area_list.size()>0){
+                        areamap = area_list.get(0);
+                    }
+                    ServerSocketUtil.LsCurrent = 0;
+                    Constant.debugLog("idList"+idList.toString());
+                    ServerSocketUtil.sendLSList(idList);
+                    //Socket通讯
+//                    ServerSocketUtil.sendCommandCoordinate(IP, idList);
 //                    sendCommandCoordinate();
                 }
                 Toast.makeText(context, "已发送指令", Toast.LENGTH_SHORT).show();
@@ -255,7 +264,10 @@ public class ZB_RobotDialog extends Dialog {
                                 idList = new ArrayList();
                                 idList.add(deskid);
                             }
-                            ServerSocketUtil.sendCommandCoordinate(IP,idList);
+                            ServerSocketUtil.LsCurrent = 0;
+                            ServerSocketUtil.sendLSList(idList);
+                            Constant.debugLog("idList"+idList.toString());
+//                            ServerSocketUtil.sendCommandCoordinate(IP,idList);
 //                            sendCommandCoordinate();
                             dismiss();
                         }

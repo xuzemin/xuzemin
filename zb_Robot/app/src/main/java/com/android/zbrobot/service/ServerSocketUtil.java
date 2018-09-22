@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.android.zbrobot.R;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
+import com.ls.lsros.callback.CallBack;
+import com.ls.lsros.data.provide.bean.NavigationResult;
+import com.ls.lsros.helper.RobotNavigationHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +48,7 @@ public class ServerSocketUtil extends Service {
     //消息
     private static String msg = null;
 
+    public static int LsCurrent = 0;
 
     private static final int END = 100;
 
@@ -797,6 +801,56 @@ public class ServerSocketUtil extends Service {
                 break;
             }
         }
+    }
+    public static void sendLSList(final List list){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Map deskmap;
+                if(LsCurrent < list.size()){
+                    Constant.debugLog("list"+LsCurrent);
+                    List<Map> desk_list = robotDBHelper.queryListMap("select * from desk where id = '" + list.get(LsCurrent) + "'", null);
+                    deskmap = desk_list.get(0);
+                    Constant.debugLog("list"+deskmap.toString());
+                    if(deskmap!=null) {
+                        if (deskmap.get("pointx") != null && deskmap.get("pointy") != null && deskmap.get("derection") != null) {
+//                        Protocol.coordinate_x = Integer.valueOf(deskmap.get("pointx").toString().trim()) * 100;
+//                        Protocol.coordinate_y = Integer.valueOf(deskmap.get("pointy").toString().trim()) * 100;
+//                        Protocol.orientation = 450 - Integer.valueOf(deskmap.get("derection").toString().trim());
+                            Protocol.coordinate_x = 1;
+                            Protocol.coordinate_y = 1;
+                            Protocol.orientation = 90;
+                            if (Protocol.orientation > 360) {
+                                Protocol.orientation -= 360;
+                            }
+                            RobotNavigationHelper.getInstance().sendGoal(Protocol.coordinate_x, Protocol.coordinate_y,
+                                    Protocol.orientation);
+
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
+                                @Override
+                                public void call(NavigationResult data) {
+                                    Constant.debugLog("开始导航-->" + data.getCode() +
+                                            "isSuccess" + data.isSuccess());
+                                    switch (data.getCode()) {
+
+                                    }
+                                    if (data.isSuccess()) {
+                                        Constant.debugLog("下一个");
+                                        sendLSList(list);
+                                        LsCurrent++;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }).start();
     }
     public static void sendlist(final String IP){
         Constant.debugLog("socketList  sendlist"+ IP);
