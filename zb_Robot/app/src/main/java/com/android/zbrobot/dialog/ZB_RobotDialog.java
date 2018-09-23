@@ -15,6 +15,7 @@ import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.service.Protocol;
 import com.android.zbrobot.service.ServerSocketUtil;
 import com.android.zbrobot.util.Constant;
+import com.android.zbrobot.util.RobotUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -157,6 +158,10 @@ public class ZB_RobotDialog extends Dialog {
                     }
                     sendCommandList(idList);
                 } else if (pathway == 1) {
+                    if(RobotUtils.STEP != 5){
+                        Toast.makeText(context,"雷达未初始化",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     IsCoordinate = true;
                     CurrentIndex = 0;
                     if (idList == null || idList.size() <= 0) {
@@ -258,6 +263,10 @@ public class ZB_RobotDialog extends Dialog {
                                 dismiss();
                             }
                         } else if (pathway == 1) {
+                            if(RobotUtils.STEP != 5){
+                                Toast.makeText(context,"雷达未初始化",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             IsCoordinate = true;
                             CurrentIndex = 0;
                             if(idList==null && idList.size()<=0){

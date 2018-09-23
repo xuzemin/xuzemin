@@ -1,7 +1,17 @@
 package com.android.zbrobot.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.View;
 
+import com.android.zbrobot.activity.ZB_MainActivity;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.ls.lsros.callback.CallBack;
 import com.ls.lsros.data.provide.bean.ImageInfo;
@@ -16,11 +26,20 @@ import com.ls.lsros.helper.RobotMapOperationHelper;
 import com.ls.lsros.helper.RobotNavigationHelper;
 import com.ls.lsros.websocket.ROSClient;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class RobotUtils {
     public static int STEP = 0;
     private static RobotUtils robotUtils = null;
-    private static ImageInfo imageInfo;
+    public static ImageInfo imageInfo;
     private static boolean isRunning = false;
+    public static String fileName = Environment.getExternalStorageDirectory().getPath()+"/DCIM/"+"map.JPEG";
     private int width;
     private int height;
     private int getstat;
@@ -70,8 +89,10 @@ public class RobotUtils {
                 imageInfo = data;
                 width = data.getWidth();
                 height = data.getHeight();
+                saveBitmap(imageInfo.getBitmap());
                 RobotMapOperationHelper.getInstance().stopGetMap();
                 STEP = 4;
+
             }
         });
     }
@@ -157,4 +178,40 @@ public class RobotUtils {
 
         RobotInfoHelper.getInstance().stopGetRobotSensor();
     }
+
+
+
+    public void saveBitmap(Bitmap bitmap){
+        File file ;
+        file = new File(fileName);
+        if(file.exists()){
+            file.delete();
+        }
+        FileOutputStream out;
+        try{
+            out = new FileOutputStream(file);
+            // 格式为 JPEG，照相机拍出的图片为JPEG格式的，PNG格式的不能显示在相册中
+            if(bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out))
+            {
+                Constant.debugLog("file"+file.getAbsolutePath());
+                out.flush();
+                out.close();
+//// 插入图库
+//                MediaStore.Images.Media.insertImage(ZB_MainActivity.getContentResolver(), file.getAbsolutePath(), bitName, null);
+
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            Constant.debugLog(e.toString());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            Constant.debugLog(e.toString());
+        }
+
+    }
+
 }

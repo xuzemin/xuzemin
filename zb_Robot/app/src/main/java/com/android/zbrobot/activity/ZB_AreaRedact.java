@@ -28,11 +28,14 @@ import com.android.zbrobot.dialog.ZB_MyDialog;
 import com.android.zbrobot.dialog.ZB_SpinnerDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
+import com.android.zbrobot.util.RobotUtils;
 import com.android.zbrobot.view.CoordinateView;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,7 +110,18 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         refresh();
-        getImage();
+//        getImage();
+        FileOutputStream fos = null;
+        File file = new File(RobotUtils.fileName);
+        Constant.debugLog(""+(file.exists()));
+        if(file.exists()){
+            Bitmap bitmap = BitmapFactory.decodeFile(RobotUtils.fileName);
+            Constant.debugLog(""+bitmap.getHeight());
+            imageView.setImageBitmap(bitmap);
+            imageView.setVisibility(View.VISIBLE);
+        }else{
+            imageView.setVisibility(View.GONE);
+        }
     }
 
     public void refresh(){
@@ -253,7 +267,7 @@ public class ZB_AreaRedact extends Activity implements View.OnClickListener {
                     Toast.makeText(getApplicationContext(),"请填写区域名称",Toast.LENGTH_SHORT).show();
                 }
                 refresh();
-                getImage();
+//                getImage();
                 break;
             case R.id.btn_delete:
                 robotDBHelper.execSQL("delete from area where id= '" + areaId + "'");

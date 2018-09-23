@@ -6,10 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -51,10 +53,14 @@ import com.ls.lsros.helper.RobotMapOperationHelper;
 import com.ls.lsros.helper.RosSDKInitHelper;
 import com.ls.lsros.websocket.ROSClient;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.android.zbrobot.util.RobotUtils.fileName;
 
 /**
  * 作者: jiayi.zhang
@@ -171,9 +177,22 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                             break;
                         case 2:
                             RobotUtils.getInstance().setImageInfo();
+                            File file = new File(fileName);
+                            try {
+                                MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), "map.JPEG", null);
+                                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + fileName)));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 4:
-                            RobotUtils.getInstance().setInitPose(1,1,90);
+                            if(robotDBHelper!=null){
+                                List<Map> List = robotDBHelper.queryListMap("select * from area where id = '"+CURRENT_AREA_id+"'", null);
+                                if(List != null && List.size() >0){
+                                    RobotUtils.getInstance().setInitPose(Integer.valueOf(List.get(0).get("pointx").toString())
+                                            ,Integer.valueOf(List.get(0).get("pointy").toString()),90);
+                                }
+                            }
                             break;
                         case 5:
                             break;
