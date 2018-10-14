@@ -12,11 +12,15 @@ import android.provider.MediaStore;
 import android.view.View;
 
 import com.android.zbrobot.activity.ZB_MainActivity;
+import com.android.zbrobot.dialog.ZB_RobotDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
+import com.android.zbrobot.service.ServerSocketUtil;
+import com.android.zbrobot.view.CoordinateView;
 import com.ls.lsros.callback.CallBack;
 import com.ls.lsros.data.provide.bean.ImageInfo;
 import com.ls.lsros.data.provide.bean.MapOperationResult;
 import com.ls.lsros.data.provide.bean.NavigationResult;
+import com.ls.lsros.data.provide.bean.RobotNaviStatusResult;
 import com.ls.lsros.data.provide.bean.RobotPoseResult;
 import com.ls.lsros.data.provide.bean.RobotSensorResult;
 import com.ls.lsros.data.provide.bean.RobotStatus;
@@ -38,15 +42,15 @@ public class RobotUtils {
     public static int STEP = 0;
     private static RobotUtils robotUtils = null;
     public static ImageInfo imageInfo;
-    private static boolean isRunning = false;
-    public static String fileName = Environment.getExternalStorageDirectory().getPath()+"/DCIM/"+"map.JPEG";
+    public static boolean isRunning = false;
+    public static String fileName = "/data/data/com.android.zbrobot/cache/map.JPEG";
+    public static double originX;
+    public static double originY;
     private int width;
     private int height;
-    private int getstat;
-    private RobotSensorResult robotSensorResult;
-    private RobotPoseResult robotPoseResult;
-    private RobotStatus robotStatus;
-    private static RobotDBHelper robotDBHelper;
+    public RobotSensorResult robotSensorResult;
+    public RobotPoseResult robotPoseResult;
+    public static RobotNaviStatusResult robotStatus ;
     public static RobotUtils getInstance(){
         return robotUtils==null? new RobotUtils() :robotUtils;
     }
@@ -55,7 +59,6 @@ public class RobotUtils {
             return;
         }
         isRunning = true;
-
         ROSConnectHelper.getInstance().connect("192.168.106.1", 8080, new ROSClient.ConnectionStatusListener() {
             @Override
             public void onConnect() {
@@ -82,6 +85,7 @@ public class RobotUtils {
     }
 
     public void setImageInfo(){
+        isRunning = true;
         RobotMapOperationHelper.getInstance().getMap(new CallBack<ImageInfo>() {
             @Override
             public void call(final ImageInfo data) {
@@ -89,27 +93,34 @@ public class RobotUtils {
                 imageInfo = data;
                 width = data.getWidth();
                 height = data.getHeight();
+                originX = data.getOriginX();
+                originY = data.getOriginY();
                 saveBitmap(imageInfo.getBitmap());
                 RobotMapOperationHelper.getInstance().stopGetMap();
                 STEP = 4;
+                isRunning =false;
 
             }
         });
     }
 
     public void importMap(){
-        RobotMapOperationHelper.getInstance().importMap("/home/fa/map/ditu", new CallBack<MapOperationResult>() {
+        isRunning = true;
+        RobotMapOperationHelper.getInstance().importMap("/home/fa/map/1", new CallBack<MapOperationResult>() {
             @Override
             public void call(MapOperationResult mapOperationResult) {
                 STEP = 2;
                 Constant.debugLog("mapOperationResult"+mapOperationResult);
             }
         });
+        isRunning = false;
     }
 
     public void setInitPose(double x,double y,double z){
+        isRunning = true;
         RobotNavigationHelper.getInstance().setInitPose( x, y, z);
         STEP = 5;
+        isRunning = false;
     }
 
     public void setGoal(double x,double y,double z){
@@ -117,6 +128,7 @@ public class RobotUtils {
     }
 
     public void startNav(){
+        isRunning = true;
         RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
             @Override
             public void call(NavigationResult data) {
@@ -124,6 +136,7 @@ public class RobotUtils {
                 switch (data.getCode()){
 
                 }
+                isRunning = false;
             } });
     }
 
@@ -146,29 +159,39 @@ public class RobotUtils {
     }
 
     public void startGetstat(){
-        RobotInfoHelper.getInstance().getRobotCurrentStatus(2 * 1000, new
-                CallBack<RobotStatus>() {
-                    @Override
-                    public void call(RobotStatus data) {
-                        Constant.debugLog("获取机器人导航状态--->"+data);
-                        robotStatus = data;
-                    }
+        RobotInfoHelper.getInstance().getNaviStatus(10, new CallBack<RobotNaviStatusResult>() {
+            @Override
+            public void call(RobotNaviStatusResult robotNaviStatusResult) {
+                Constant.debugLog("获取机器人导航状态--->"+robotNaviStatusResult);
+                robotStatus = robotNaviStatusResult;
+            }
+        });
+//        RobotInfoHelper.getInstance().getRobotCurrentStatus(2 * 1000, new
+//                CallBack<RobotStatus>() {
+//                    @Override
+//                    public void call(RobotStatus data) {
+//                        Constant.debugLog("获取机器人导航状态--->"+data);
+//                    }
+//
+//                });
+//        RobotInfoHelper.getInstance().getRobotPose(2 * 1000, new
+//                CallBack<RobotPoseResult>() {
+//                    @Override
+//                    public void call(RobotPoseResult data) {
+//                        Constant.debugLog("获取机器人位置信息--->" + data);
+//                        robotPoseResult = data;
+//
+//
+//                    } });
+//        RobotInfoHelper.getInstance().getRobotSensor(2 * 1000, new
+//                CallBack<RobotSensorResult>() {
+//                    @Override
+//                    public void call(RobotSensorResult data) {
+//                        Constant.debugLog("获取机器人传感器信息--->" + data);
+//                        robotSensorResult = data;
+//                    } });
+        STEP = 6;
 
-                });
-        RobotInfoHelper.getInstance().getRobotPose(2 * 1000, new
-                CallBack<RobotPoseResult>() {
-                    @Override
-                    public void call(RobotPoseResult data) {
-                        Constant.debugLog("获取机器人位置信息--->" + data);
-                        robotPoseResult = data;
-                    } });
-        RobotInfoHelper.getInstance().getRobotSensor(2 * 1000, new
-                CallBack<RobotSensorResult>() {
-                    @Override
-                    public void call(RobotSensorResult data) {
-                        Constant.debugLog("获取机器人传感器信息--->" + data);
-                        robotSensorResult = data;
-                    } });
     }
 
     public void stopGetstat(){

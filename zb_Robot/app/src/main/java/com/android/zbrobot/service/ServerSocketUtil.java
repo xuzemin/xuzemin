@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.android.zbrobot.R;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
+import com.android.zbrobot.util.RobotUtils;
 import com.ls.lsros.callback.CallBack;
 import com.ls.lsros.data.provide.bean.NavigationResult;
 import com.ls.lsros.helper.RobotNavigationHelper;
@@ -814,20 +815,21 @@ public class ServerSocketUtil extends Service {
                     Constant.debugLog("list"+deskmap.toString());
                     if(deskmap!=null) {
                         if (deskmap.get("pointx") != null && deskmap.get("pointy") != null && deskmap.get("derection") != null) {
-//                        Protocol.coordinate_x = Integer.valueOf(deskmap.get("pointx").toString().trim()) * 100;
-//                        Protocol.coordinate_y = Integer.valueOf(deskmap.get("pointy").toString().trim()) * 100;
-//                        Protocol.orientation = 450 - Integer.valueOf(deskmap.get("derection").toString().trim());
-                            Protocol.coordinate_x = 1;
-                            Protocol.coordinate_y = 1;
-                            Protocol.orientation = 90;
+//                        Protocol.coordinate_x = Integer.valueOf(deskmap.get("pointx").toString().trim()) * 100 ;
+//                        Protocol.coordinate_y = Integer.valueOf(deskmap.get("pointy").toString().trim())  * 100;
+//                        Protocol.orientation = Integer.valueOf(deskmap.get("derection").toString().trim()) * 100;
+//                            Protocol.coordinate_x = 1;
+//                            Protocol.coordinate_y = 1;
+//                            Protocol.orientation = 90;
                             if (Protocol.orientation > 360) {
                                 Protocol.orientation -= 360;
                             }
-                            RobotNavigationHelper.getInstance().sendGoal(Protocol.coordinate_x, Protocol.coordinate_y,
-                                    Protocol.orientation);
+                            RobotNavigationHelper.getInstance().sendGoal(Double.parseDouble(deskmap.get("pointx").toString().trim())
+                                    , Double.parseDouble(deskmap.get("pointy").toString().trim()),
+                                    Double.parseDouble(deskmap.get("derection").toString().trim()));
 
                             try {
-                                Thread.sleep(2000);
+                                Thread.sleep(500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -836,17 +838,14 @@ public class ServerSocketUtil extends Service {
                                 public void call(NavigationResult data) {
                                     Constant.debugLog("开始导航-->" + data.getCode() +
                                             "isSuccess" + data.isSuccess());
-                                    switch (data.getCode()) {
-
-                                    }
-                                    if (data.isSuccess()) {
-                                        Constant.debugLog("下一个");
-                                        sendLSList(list);
-                                        LsCurrent++;
-                                    }
                                 }
                             });
                         }
+                    }
+                }else{
+                    if(list.size() >1){
+                        ServerSocketUtil.LsCurrent = 0;
+                        ServerSocketUtil.sendLSList(list);
                     }
                 }
             }

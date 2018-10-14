@@ -133,16 +133,16 @@ public class ZB_CoordinateConfigActivity extends Activity implements View.OnClic
                 }
                 break;
             case R.id.up:
-                derection.setText("0");
-                break;
-            case R.id.down:
-                derection.setText("180");
-                break;
-            case R.id.right:
                 derection.setText("90");
                 break;
-            case R.id.left:
+            case R.id.down:
                 derection.setText("270");
+                break;
+            case R.id.right:
+                derection.setText("0");
+                break;
+            case R.id.left:
+                derection.setText("180");
                 break;
 //            case R.id.map:
 //                CoordinateView.isWrite = true;

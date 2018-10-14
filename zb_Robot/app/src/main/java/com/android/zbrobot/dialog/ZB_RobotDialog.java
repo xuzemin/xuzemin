@@ -40,7 +40,7 @@ public class ZB_RobotDialog extends Dialog {
     public static int deskid = 0, areaid = 0;
     // 存储机器人列表
     public static List<Map> list;
-    private List idList = new ArrayList();
+    public static List idList = new ArrayList();
     public static List<Map> commandall;
     private static Map deskmap, areamap;
     private static List<Map> areaList;
@@ -158,7 +158,7 @@ public class ZB_RobotDialog extends Dialog {
                     }
                     sendCommandList(idList);
                 } else if (pathway == 1) {
-                    if(RobotUtils.STEP != 5){
+                    if(RobotUtils.STEP != 6){
                         Toast.makeText(context,"雷达未初始化",Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -263,7 +263,7 @@ public class ZB_RobotDialog extends Dialog {
                                 dismiss();
                             }
                         } else if (pathway == 1) {
-                            if(RobotUtils.STEP != 5){
+                            if(RobotUtils.STEP != 6){
                                 Toast.makeText(context,"雷达未初始化",Toast.LENGTH_SHORT).show();
                                 return;
                             }

@@ -19,6 +19,8 @@ import com.android.zbrobot.R;
 import com.android.zbrobot.activity.ZB_CoordinateConfigActivity;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
+import com.android.zbrobot.util.RobotUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,7 +49,7 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
     public static double point_x = 0,point_y = 0;
     private File file;
     private Map areaconfig;
-    public static double initial_x = 14.4,initial_y = 13.8;
+    public static double initial_x = 0,initial_y = 0;
     private RobotDBHelper robotDBHelper;
     private Context context;
     public CoordinateView(Context context , AttributeSet attr) {
@@ -64,23 +66,28 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
         robotDBHelper = RobotDBHelper.getInstance(context);
 
         if(areaid !=0){
-            File appDir = new File(Environment.getExternalStorageDirectory(),Constant.DIR_NAME);
-            if(appDir.exists()){
-                String fileName = areaid + ".png";
-                // 查询机器人列表
-                List<Map> robotList = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
-                if(robotList!=null && robotList.size() >0){
-                    areaconfig = robotList.get(0);
-                    if(areaconfig !=null){
-                        if(areaconfig.get("pointx").toString() !=null && areaconfig.get("pointy").toString()!=null){
-                            initial_x = Double.valueOf(areaconfig.get("pointx").toString());
-                            initial_y = Double.valueOf(areaconfig.get("pointy").toString());
-                        }else{
-                            Toast.makeText(getContext(),"区域地图坐标未设置初始化",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-                file = new File(appDir, fileName);
+//            File appDir = new File(Environment.getExternalStorageDirectory(),Constant.DIR_NAME);
+//            if(appDir.exists()){
+//                String fileName = areaid + ".png";
+//                // 查询机器人列表
+//                List<Map> robotList = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
+//                if(robotList!=null && robotList.size() >0){
+//                    areaconfig = robotList.get(0);
+//                    if(areaconfig !=null){
+//                        if(areaconfig.get("pointx").toString() !=null && areaconfig.get("pointy").toString()!=null){
+//                            initial_x = Double.valueOf(areaconfig.get("pointx").toString());
+//                            initial_y = Double.valueOf(areaconfig.get("pointy").toString());
+//                        }else{
+//                            Toast.makeText(getContext(),"区域地图坐标未设置初始化",Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+            List<Map> List = robotDBHelper.queryListMap("select * from area where id = '"+areaid+"'", null);
+            if(List != null && List.size() >0){
+                initial_x = Double.parseDouble(List.get(0).get("pointx").toString().trim()) * -1;
+                initial_y = Double.parseDouble(List.get(0).get("pointy").toString().trim()) * -1;
+            }
+            file = new File(RobotUtils.fileName);
                 FileInputStream fis = null;
                 try {
                     fis = new FileInputStream(file);
@@ -101,7 +108,7 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
                     Toast.makeText(context,"区域未设置导航地图",Toast.LENGTH_SHORT).show();
                 }
             }
-        }
+//        }
     }
 
     @Override

@@ -1,18 +1,24 @@
 package com.android.zbrobot.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
@@ -47,10 +53,15 @@ import com.android.zbrobot.util.Constant;
 import com.android.zbrobot.util.PreferencesUtils;
 import com.android.zbrobot.util.RobotUtils;
 import com.ls.lsros.callback.CallBack;
+import com.ls.lsros.data.bean.Position;
 import com.ls.lsros.data.provide.bean.MapOperationResult;
+import com.ls.lsros.data.provide.bean.NavigationResult;
 import com.ls.lsros.helper.ROSConnectHelper;
+import com.ls.lsros.helper.RobotInfoHelper;
 import com.ls.lsros.helper.RobotMapOperationHelper;
+import com.ls.lsros.helper.RobotNavigationHelper;
 import com.ls.lsros.helper.RosSDKInitHelper;
+import com.ls.lsros.util.CoordinatesUtils;
 import com.ls.lsros.websocket.ROSClient;
 
 import java.io.File;
@@ -105,6 +116,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private GridView robotGirdView;
     // 区域列表
     private ListView area;
+    private boolean isRunning = false;
     // 区域名称
     private TextView area_text;
     // 上 下 左 右 停止 收缩
@@ -152,7 +164,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private List isList = new ArrayList();
     private boolean ischeck = false;
     @SuppressLint("HandlerLeak")
-    public Handler mhandle = new Handler(){
+    public final Handler mhandle = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -163,41 +175,88 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         case 0:
                         case 3:
                             robotDBHelper.execSQL("update robot set outline = '0' where ip = '192.168.106.1'");
-                            RobotUtils.getInstance().Connect();
-                            getRobotData();
-                            // 刷新
-                            SJXGridViewAdapter.notifyDataSetInvalidated();
+                            if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                                Toast.makeText(getApplicationContext(), "暂无外部存储", Toast.LENGTH_SHORT).show();
+                            }else {
+                                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                        != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(ZB_MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                                }else {
+                                    RobotUtils.getInstance().Connect();
+                                    getRobotData();
+                                    // 刷新
+                                    SJXGridViewAdapter.notifyDataSetInvalidated();
+                                }
+                            }
                             break;
                         case 1:
-                            robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
                             RobotUtils.getInstance().importMap();
-                            getRobotData();
                             // 刷新
                             SJXGridViewAdapter.notifyDataSetInvalidated();
                             break;
                         case 2:
                             RobotUtils.getInstance().setImageInfo();
-                            File file = new File(fileName);
-                            try {
-                                MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), "map.JPEG", null);
-                                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + fileName)));
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
+//                            File file = new File(fileName);
+//                            try {
+//                                MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), "map.JPEG", null);
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            }
                             break;
                         case 4:
+                            robotDBHelper.execSQL("update area set pointx = '"+RobotUtils.originX+"',pointy = '"+RobotUtils.originY
+                                    +"' where id = '"+CURRENT_AREA_id+"'");
+                            robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
                             if(robotDBHelper!=null){
                                 List<Map> List = robotDBHelper.queryListMap("select * from area where id = '"+CURRENT_AREA_id+"'", null);
                                 if(List != null && List.size() >0){
-                                    RobotUtils.getInstance().setInitPose(Integer.valueOf(List.get(0).get("pointx").toString())
-                                            ,Integer.valueOf(List.get(0).get("pointy").toString()),90);
+                                    RobotUtils.getInstance().setInitPose(0
+                                            ,0,0);
                                 }
                             }
                             break;
                         case 5:
+                            RobotUtils.getInstance().startGetstat();
+                            RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
+                                @Override
+                                public void call(NavigationResult data) {
+                                    Constant.debugLog("开始导航-->" + data.getCode() +
+                                            "isSuccess" + data.isSuccess());
+                                }
+                            });
+                            break;
+                        case 6:
+                            robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
+                            getRobotData();
+                            Constant.debugLog("aaaa");
+//                            robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
+                            if(RobotUtils.robotStatus !=null) {
+                                Constant.debugLog("aaaa"+RobotUtils.robotStatus.getStatus());
+                                switch (RobotUtils.robotStatus.getStatus()) {
+                                    case 0:
+                                        break;
+                                    case 1:
+                                        isRunning = true;
+                                        break;
+                                    case 2:
+                                        break;
+                                    case 3:
+                                        if (isRunning) {
+                                            isRunning = false;
+                                            ServerSocketUtil.LsCurrent++;
+                                            ServerSocketUtil.sendLSList(ZB_RobotDialog.idList);
+                                        }
+                                        break;
+                                    case 9:
+                                        ServerSocketUtil.sendLSList(ZB_RobotDialog.idList);
+                                        break;
+                                    case 4:
+                                        break;
+                                }
+                            }
                             break;
                     }
-                    mhandle.sendEmptyMessageDelayed(Constant.MSG_REFRESH_CONNECT,3000);
+                    mhandle.sendEmptyMessageDelayed(Constant.MSG_REFRESH_CONNECT,1000);
                     break;
             }
         }
@@ -219,6 +278,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);
 
+        RobotUtils.STEP = 0;
         // 初始化数据库
         robotDBHelper = RobotDBHelper.getInstance(getApplicationContext());
 
@@ -240,7 +300,6 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
 
         // 区域列表
         area =  findViewById(R.id.area);
-
         // 区域右侧编辑桌子按钮
         config_redact =  findViewById(R.id.config_redact);
         config_redact.setOnClickListener(this);
@@ -521,9 +580,11 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             public void onClick(View v) {
                 isList = new ArrayList();
                 for (int i = 0; i < deskList.size(); i++) {
-                    if (selectItems.get(i)) {
-                        Constant.debugLog("" + deskList.toString());
-                        isList.add(deskList.get(i).get("id"));
+                    if(selectItems != null && selectItems.size() >0 ) {
+                        if (selectItems.get(i)) {
+                            Constant.debugLog("" + deskList.toString());
+                            isList.add(deskList.get(i).get("id"));
+                        }
                     }
                 }
                 ZB_RobotDialog.CurrentIndex = 0;
@@ -1292,5 +1353,14 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Constant.debugLog("requestCode"+requestCode+"permissions"+permissions+"grantResults"+grantResults);
+        if(1 == requestCode){
 
+        }else{
+            Toast.makeText(getApplicationContext(),"已取消获取存储权限",Toast.LENGTH_SHORT).show();
+        }
+    }
 }
