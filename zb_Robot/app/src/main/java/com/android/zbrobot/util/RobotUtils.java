@@ -1,21 +1,6 @@
 package com.android.zbrobot.util;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.view.View;
-
-import com.android.zbrobot.activity.ZB_MainActivity;
-import com.android.zbrobot.dialog.ZB_RobotDialog;
-import com.android.zbrobot.helper.RobotDBHelper;
-import com.android.zbrobot.service.ServerSocketUtil;
-import com.android.zbrobot.view.CoordinateView;
 import com.ls.lsros.callback.CallBack;
 import com.ls.lsros.data.provide.bean.ImageInfo;
 import com.ls.lsros.data.provide.bean.MapOperationResult;
@@ -23,7 +8,6 @@ import com.ls.lsros.data.provide.bean.NavigationResult;
 import com.ls.lsros.data.provide.bean.RobotNaviStatusResult;
 import com.ls.lsros.data.provide.bean.RobotPoseResult;
 import com.ls.lsros.data.provide.bean.RobotSensorResult;
-import com.ls.lsros.data.provide.bean.RobotStatus;
 import com.ls.lsros.helper.ROSConnectHelper;
 import com.ls.lsros.helper.RobotInfoHelper;
 import com.ls.lsros.helper.RobotMapOperationHelper;
@@ -34,9 +18,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class RobotUtils {
     public static int STEP = 0;
@@ -159,7 +140,7 @@ public class RobotUtils {
     }
 
     public void startGetstat(){
-        RobotInfoHelper.getInstance().getNaviStatus(10, new CallBack<RobotNaviStatusResult>() {
+        RobotNavigationHelper.getInstance().getNaviStatus(1000, new CallBack<RobotNaviStatusResult>() {
             @Override
             public void call(RobotNaviStatusResult robotNaviStatusResult) {
                 Constant.debugLog("获取机器人导航状态--->"+robotNaviStatusResult);

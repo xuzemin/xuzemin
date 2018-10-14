@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">智宝机器人</string>
+    <string name="app_name">智宝机器人SLAM</string>
     <string name="btn_sure">确定</string>
     <string name="btn_delete">删除</string>
     <string name="btn_cancle">取消</string>
