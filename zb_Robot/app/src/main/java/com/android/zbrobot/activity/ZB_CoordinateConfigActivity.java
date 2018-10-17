@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -32,6 +33,7 @@ public class ZB_CoordinateConfigActivity extends Activity implements View.OnClic
     public static EditText pointx,pointy,derection,waittime;
     private int deskId,areaId;
     public static ToggleButton map;
+    public static int heightPixels,widthPixels;
     private Map deskinfo,areainfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,13 @@ public class ZB_CoordinateConfigActivity extends Activity implements View.OnClic
         deskId = intent.getIntExtra("desk", 0);
         areaId = intent.getIntExtra("area", 0);
         CoordinateView.areaid = areaId;
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        // 获取Manager对象后获取Display对象，然后调用getMetrics()方法
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        // 从DisplayMetrics对象中获取宽、高
+        heightPixels = metrics.heightPixels;
+        widthPixels = metrics.widthPixels;
 
         setContentView(R.layout.zb_activity_coordinate);
         findViewById(R.id.setting_back).setOnClickListener(this);
@@ -75,6 +84,7 @@ public class ZB_CoordinateConfigActivity extends Activity implements View.OnClic
         });
         setTextWatcher();
         CoordinateView.isWrite = false;
+
     }
 
 
@@ -162,32 +172,33 @@ public class ZB_CoordinateConfigActivity extends Activity implements View.OnClic
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
-                        s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + 3);
-                        pointx.setText(s);
-                        pointx.setSelection(s.length());
-                    }
-                }
-                if (s.toString().trim().substring(0).equals(".")) {
-                    s = "0" + s;
-                    pointx.setText(s);
-                    pointx.setSelection(2);
-                }
+//                if (s.toString().contains(".")) {
+//                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+//                        s = s.toString().subSequence(0,
+//                                s.toString().indexOf(".") + 3);
+//                        pointx.setText(s);
+//                        pointx.setSelection(s.length());
+//                    }
+//                }
+//                if (s.toString().trim().substring(0).equals(".")) {
+//                    s = "0" + s;
+//                    pointx.setText(s);
+//                    pointx.setSelection(2);
+//                }
+//
+//                if (s.toString().startsWith("0")
+//                        && s.toString().trim().length() > 1) {
+//                    if (!s.toString().substring(1, 2).equals(".")) {
+//                        pointx.setText(s.subSequence(0, 1));
+//                        pointx.setSelection(1);
+//                        return;
+//                    }
+//                }
 
-                if (s.toString().startsWith("0")
-                        && s.toString().trim().length() > 1) {
-                    if (!s.toString().substring(1, 2).equals(".")) {
-                        pointx.setText(s.subSequence(0, 1));
-                        pointx.setSelection(1);
-                        return;
-                    }
-                }
-
-                if(!pointx.getText().toString().equals("") && !CoordinateView.isWrite){
-                    CoordinateView.point_x = ((Float.valueOf(pointx.getText().toString())+
-                            CoordinateView.initial_x) * 20) * CoordinateView.scale;
+                if(!pointx.getText().toString().equals("") ){
+                    CoordinateView.point_x = (Float.valueOf(pointx.getText().toString())+
+                            CoordinateView.initial_x) * 20 * CoordinateView.scale  ;
+                    Log.e("logutil",CoordinateView.point_x+"x");
                 }
             }
 
@@ -229,10 +240,10 @@ public class ZB_CoordinateConfigActivity extends Activity implements View.OnClic
                     }
                 }
 
-                if(!pointy.getText().toString().equals("") && !CoordinateView.isWrite) {
+                if(!pointy.getText().toString().equals("") ) {
                     CoordinateView.point_y = ((Float.valueOf(pointy.getText().toString()) / -1 -
-                            CoordinateView.initial_y) * 20 + Constant.Bitmap_HEIGHT) * CoordinateView.scale;
-
+                            CoordinateView.initial_y) * 20 + Constant.Bitmap_HEIGHT) * CoordinateView.scale ;
+                    Log.e("logutil",CoordinateView.point_y+"y");
                 }
             }
 
