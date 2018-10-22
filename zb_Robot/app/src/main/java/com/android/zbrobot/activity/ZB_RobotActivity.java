@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,8 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
 
     // 设置按钮
     private Button setting_redact;
+
+    private Spinner loopSp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +236,19 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             ((TextView) findViewById(R.id.pathway)).setText("有");
         } else {
             ((TextView) findViewById(R.id.pathway)).setText("无");
+            findViewById(R.id.robot_loop).setVisibility(View.VISIBLE);
+            loopSp = findViewById(R.id.loop);
+            loopSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    robotDBHelper.execSQL("update robot set loop_number = '" + loopSp.getSelectedItemPosition() + "' where id= '" + robotId + "'");
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
         }
     }
 

@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.android.zbrobot.R;
+import com.android.zbrobot.dialog.ZB_RobotDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
 import com.android.zbrobot.util.RobotUtils;
@@ -44,6 +45,8 @@ public class ServerSocketUtil extends Service {
     private static ServerSocket serverSocket;
     //获取输入流
     private static InputStream in = null;
+
+    public static int serverLoop = 0;
     //获取输出流
     private static OutputStream out = null;
     //消息
@@ -281,14 +284,14 @@ public class ServerSocketUtil extends Service {
                 if (!IsHave) {
                     robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
                             "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway,outtime" +
-                            ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle) values " +
-                            "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)");
+                            ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle,loop) values " +
+                            "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)");
                 }
             } else {
                 robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
                         "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway,outtime" +
                         ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle) values " +
-                        "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)");
+                        "('新机器人','" + ip + "',0,1,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)");
             }
             //广播发送连接
             sendBroadcastMain("robot_connect");
@@ -815,18 +818,10 @@ public class ServerSocketUtil extends Service {
                     Constant.debugLog("list"+deskmap.toString());
                     if(deskmap!=null) {
                         if (deskmap.get("pointx") != null && deskmap.get("pointy") != null && deskmap.get("derection") != null) {
-//                        Protocol.coordinate_x = Integer.valueOf(deskmap.get("pointx").toString().trim()) * 100 ;
-//                        Protocol.coordinate_y = Integer.valueOf(deskmap.get("pointy").toString().trim())  * 100;
-//                        Protocol.orientation = Integer.valueOf(deskmap.get("derection").toString().trim()) * 100;
-//                            Protocol.coordinate_x = 1;
-//                            Protocol.coordinate_y = 1;
-//                            Protocol.orientation = 90;
-                            if (Protocol.orientation > 360) {
-                                Protocol.orientation -= 360;
-                            }
                             RobotNavigationHelper.getInstance().sendGoal(Double.parseDouble(deskmap.get("pointx").toString().trim())
                                     , Double.parseDouble(deskmap.get("pointy").toString().trim()),
-                                    Double.parseDouble(deskmap.get("derection").toString().trim()));
+                                    Double.parseDouble(deskmap.get("derection").toString().trim())*Math.PI/180);
+
 
                             try {
                                 Thread.sleep(500);
@@ -842,10 +837,50 @@ public class ServerSocketUtil extends Service {
                             });
                         }
                     }
+                }else if(LsCurrent == list.size()){
+                    int numberid = 0;
+                    for (int i = 0,size = socketList.size();i<size; i++) {
+                        if (socketList.get(i).get("ip").equals(ZB_RobotDialog.IP)) {
+                            numberid = i;
+                            break;
+                        }
+                    }
+                    Map areamap;
+                    int areaid;
+                    areaid = (int) socketList.get(numberid).get("areaid");
+                    Constant.debugLog("areaid" + areaid);
+                    List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
+                    if (area_list != null && area_list.size() > 0) {
+                        areamap = area_list.get(0);
+                        Constant.debugLog("areamap" + areamap.toString());
+                        if (areamap.get("point_x_back") != null && areamap.get("point_y_back") != null && areamap.get("derection") != null) {
+                            RobotNavigationHelper.getInstance().sendGoal(Double.parseDouble(areamap.get("point_x_back").toString().trim())
+                                    , Double.parseDouble(areamap.get("point_y_back").toString().trim()),
+                                    Double.parseDouble(areamap.get("derection").toString().trim())*Math.PI/180);
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
+                                @Override
+                                public void call(NavigationResult data) {
+                                    Constant.debugLog("开始导航-->" + data.getCode() +
+                                            "isSuccess" + data.isSuccess());
+                                }
+                            });
+                        }
+                    }
                 }else{
-                    if(list.size() >1){
-                        ServerSocketUtil.LsCurrent = 0;
-                        ServerSocketUtil.sendLSList(list);
+                    if (list.size() > 1) {
+                        if (ZB_RobotDialog.loop == 0) {
+                                ServerSocketUtil.LsCurrent = 0;
+                                ServerSocketUtil.sendLSList(list);
+                        } else if (serverLoop < ZB_RobotDialog.loop) {
+                                ServerSocketUtil.LsCurrent = 0;
+                                ServerSocketUtil.sendLSList(list);
+                                serverLoop++;
+                        }
                     }
                 }
             }

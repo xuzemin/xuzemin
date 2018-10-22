@@ -174,7 +174,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                     switch (RobotUtils.STEP){
                         case 0:
                         case 3:
-                            robotDBHelper.execSQL("update robot set outline = '0' where ip = '192.168.106.1'");
+                            robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
                             if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
                                 Toast.makeText(getApplicationContext(), "暂无外部存储", Toast.LENGTH_SHORT).show();
                             }else {
@@ -217,6 +217,8 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                             break;
                         case 5:
                             RobotUtils.getInstance().startGetstat();
+
+                            RobotNavigationHelper.getInstance().sendGoal(0,0,0);
                             RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
                                 @Override
                                 public void call(NavigationResult data) {
@@ -396,7 +398,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                     if (areaList != null && areaList.size() > 0 && CURRENT_AREA_id != 0) {
                         // TODO 复选框
                         if (isState) {
-                            CheckBox checkBox = (CheckBox) view.findViewById(R.id.ck_select);
+                            CheckBox checkBox =  view.findViewById(R.id.ck_select);
                             if (checkBox.isChecked() && !ischeck) {
                                 checkBox.setChecked(false);
                                 selectItems.set(position, false);
@@ -541,10 +543,10 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             }
         }
         if(!ishaverobot){
-            robotDBHelper.execSQL("insert into  robot (name,ip,state,outline,electric,robotstate,obstacle," +
+            robotDBHelper.execSQL("insert into robot (name,ip,state,outline,electric,robotstate,obstacle," +
                     "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway,outtime" +
-                    ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle) values " +
-                    "('雷达','" + "192.168.106.1" + "',0,0,100,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0)");
+                    ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle , loop_number) values " +
+                    "('雷达','" + "192.168.106.1" + "',0,0,100,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0)");
         }
     }
 

@@ -60,6 +60,7 @@ public class ZB_RobotDialog extends Dialog {
 
     // IP地址
     public static String IP;
+    public static int loop = 0;
     public static int GOALID;
     public static int OUTIME;//menumber;
     public static int TURNBACK;
@@ -158,6 +159,7 @@ public class ZB_RobotDialog extends Dialog {
                     }
                     sendCommandList(idList);
                 } else if (pathway == 1) {
+                    loop = Integer.valueOf(list.get(0).get("loop_number").toString());
                     if(RobotUtils.STEP != 6){
                         Toast.makeText(context,"雷达未初始化",Toast.LENGTH_SHORT).show();
                         return;
@@ -175,6 +177,7 @@ public class ZB_RobotDialog extends Dialog {
                     }
                     ServerSocketUtil.LsCurrent = 0;
                     Constant.debugLog("idList"+idList.toString());
+                    ServerSocketUtil.serverLoop = 0;
                     ServerSocketUtil.sendLSList(idList);
                     //Socket通讯
 //                    ServerSocketUtil.sendCommandCoordinate(IP, idList);
@@ -223,26 +226,26 @@ public class ZB_RobotDialog extends Dialog {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         IP = robotData_list.get(position).get("ip").toString();
                         List<Map> robotList = robotDBHelper.queryListMap("select * from robot where id = '" + robotData_list.get(position).get("id") + "'", null);
-                        Map map1 = robotList.get(0);
-                        GOALID = (int) map1.get("goal");
-                        TURNBACK = (int) map1.get("turnback");
-                        OUTIME = (int) map1.get("outtime");
-                        if(((int) list.get(0).get("up_obstacle")==0)){
+                        Map robotData = robotList.get(0);
+                        GOALID = (int) robotData.get("goal");
+                        TURNBACK = (int) robotData.get("turnback");
+                        OUTIME = (int) robotData.get("outtime");
+                        if(((int) robotData.get("up_obstacle")==0)){
                             up_obstacle = 1;
                         }else{
                             up_obstacle = 0;
                         }
-                        if(((int) list.get(0).get("down_obstacle")==0)){
+                        if(((int) robotData.get("down_obstacle")==0)){
                             down_obstacle = 1;
                         }else{
                             down_obstacle = 0;
                         }
-                        if(((int) list.get(0).get("side_obstacle")==0)){
+                        if(((int) robotData.get("side_obstacle")==0)){
                             side_obstacle = 1;
                         }else{
                             side_obstacle = 0;
                         }
-                        int pathway = (int) robotData_list.get(position).get("pathway");
+                        int pathway = (int) robotData.get("pathway");
                         if (pathway == 0) {
                             if (flag) {
                                 CurrentIndex = 0;
@@ -263,6 +266,7 @@ public class ZB_RobotDialog extends Dialog {
                                 dismiss();
                             }
                         } else if (pathway == 1) {
+                            loop = Integer.valueOf(robotData.get("loop_number").toString());
                             if(RobotUtils.STEP != 6){
                                 Toast.makeText(context,"雷达未初始化",Toast.LENGTH_SHORT).show();
                                 return;
@@ -274,6 +278,7 @@ public class ZB_RobotDialog extends Dialog {
                                 idList.add(deskid);
                             }
                             ServerSocketUtil.LsCurrent = 0;
+                            ServerSocketUtil.serverLoop = 0;
                             ServerSocketUtil.sendLSList(idList);
                             Constant.debugLog("idList"+idList.toString());
 //                            ServerSocketUtil.sendCommandCoordinate(IP,idList);

@@ -325,6 +325,38 @@
                     android:textSize="@dimen/robot_size" />
             </LinearLayout>
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:id="@+id/robot_loop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/area_height"
+                android:background="@color/white"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center|left"
+                    android:text="循环"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/robot_size" />
+
+                <Spinner
+                    android:entries="@array/loop_number"
+                    android:id="@+id/loop"
+                    android:textStyle="normal|italic"
+                    android:layout_width="150dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dropdown"
+                    />
+            </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />

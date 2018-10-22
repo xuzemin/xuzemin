@@ -127,7 +127,7 @@
             INTEGER , excutetime INTEGER ,commandstate INTEGER ,lastcommandstate INTEGER
             ,lastlocation INTEGER,pathway INTEGER,point_x INTEGER,point_y INTEGER,direction INTEGER
             ,outtime INTEGER,turnback INTEGER,goal INTERGER,up_obstacle INTEGER,down_obstacle INTEGER,side_obstacle
-            INTEGER)
+            INTEGER,loop_number INTEGER)
         </item>
         <!--ID卡-->
         <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)
@@ -137,4 +137,17 @@
     <array name="UPDATE_TABLE_SQL">
         <item></item>
     </array>
+    <string-array name="loop_number">
+        <item>无限循环</item>
+        <item>1次</item>
+        <item>2次</item>
+        <item>3次</item>
+        <item>4次</item>
+        <item>5次</item>
+        <item>6次</item>
+        <item>7次</item>
+        <item>8次</item>
+        <item>9次</item>
+        <item>10次</item>
+    </string-array>
 </resources>

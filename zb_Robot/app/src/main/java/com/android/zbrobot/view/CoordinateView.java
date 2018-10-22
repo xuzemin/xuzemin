@@ -143,8 +143,8 @@ public class CoordinateView extends SurfaceView implements SurfaceHolder.Callbac
 //        translate_x = 0;
 //        translate_y = 0;
 //        scale = 1;
-        translate_x = (ZB_CoordinateConfigActivity.widthPixels-backbitmap.getWidth())/2;
-        translate_y = (int) ((300*density-backbitmap.getWidth())/2);
+        translate_x = (ZB_CoordinateConfigActivity.widthPixels - Constant.Bitmap_WIDTH) / 2;
+        translate_y = (int) ((300 * density - Constant.Bitmap_HEIGHT) / 2);
         new Thread(new MyLoop()).start();
     }
 
