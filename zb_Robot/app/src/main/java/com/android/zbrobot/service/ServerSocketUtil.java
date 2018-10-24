@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.android.zbrobot.R;
+import com.android.zbrobot.activity.ZB_MainActivity;
 import com.android.zbrobot.dialog.ZB_RobotDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
 import com.android.zbrobot.util.Constant;
@@ -812,7 +813,7 @@ public class ServerSocketUtil extends Service {
             public void run() {
                 Map deskmap;
                 if(LsCurrent < list.size()){
-                    Constant.debugLog("list"+LsCurrent);
+                    Constant.debugLog("LsCurrent"+LsCurrent);
                     List<Map> desk_list = robotDBHelper.queryListMap("select * from desk where id = '" + list.get(LsCurrent) + "'", null);
                     deskmap = desk_list.get(0);
                     Constant.debugLog("list"+deskmap.toString());
@@ -837,19 +838,9 @@ public class ServerSocketUtil extends Service {
                             });
                         }
                     }
-                }else if(LsCurrent == list.size()){
-                    int numberid = 0;
-                    for (int i = 0,size = socketList.size();i<size; i++) {
-                        if (socketList.get(i).get("ip").equals(ZB_RobotDialog.IP)) {
-                            numberid = i;
-                            break;
-                        }
-                    }
+                }else if(LsCurrent == list.size() && ZB_RobotDialog.loop == 1){
                     Map areamap;
-                    int areaid;
-                    areaid = (int) socketList.get(numberid).get("areaid");
-                    Constant.debugLog("areaid" + areaid);
-                    List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + areaid + "'", null);
+                    List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + ZB_MainActivity.CURRENT_AREA_id + "'", null);
                     if (area_list != null && area_list.size() > 0) {
                         areamap = area_list.get(0);
                         Constant.debugLog("areamap" + areamap.toString());
@@ -873,13 +864,9 @@ public class ServerSocketUtil extends Service {
                     }
                 }else{
                     if (list.size() > 1) {
-                        if (ZB_RobotDialog.loop == 0) {
-                                ServerSocketUtil.LsCurrent = 0;
+                        if (ZB_RobotDialog.loop == 2) {
+                                LsCurrent = 0;
                                 ServerSocketUtil.sendLSList(list);
-                        } else if (serverLoop < ZB_RobotDialog.loop) {
-                                ServerSocketUtil.LsCurrent = 0;
-                                ServerSocketUtil.sendLSList(list);
-                                serverLoop++;
                         }
                     }
                 }
