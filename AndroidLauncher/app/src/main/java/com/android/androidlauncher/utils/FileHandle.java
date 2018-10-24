@@ -23,7 +23,7 @@ public class FileHandle {
             byte[] content = new byte[2048];
             length = isfile.read(content,length,content.length-length);
             if(length != 0 ){
-
+                MyConstant.CurrentNumber = 0;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

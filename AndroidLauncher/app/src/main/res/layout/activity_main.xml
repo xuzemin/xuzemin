@@ -3,13 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#000000"
     tools:context=".MainActivity">
-
-    <GridView
-        android:id="@+id/gameGird"
+    <LinearLayout
+        android:id="@+id/ll_video"
         android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <SurfaceView
+        android:id="@+id/surfaceview"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/ll_game"
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:visibility="gone"
         android:layout_height="match_parent"
-        android:numColumns="3"
-        />
+        >
+        <GridView
+            android:id="@+id/gameGird"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            />
+    </LinearLayout>
 
 </LinearLayout>

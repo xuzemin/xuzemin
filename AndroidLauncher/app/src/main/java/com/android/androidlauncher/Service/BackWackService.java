@@ -4,10 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.android.androidlauncher.utils.MyConstant;
+
 public class BackWackService extends Service {
     private static Thread backthread;
-    private static boolean isRun = false;
-    private static int CurrentNumber;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -31,39 +31,16 @@ public class BackWackService extends Service {
     }
 
     public void resetBack(){
-        if(isRun && backthread != null){
-            CurrentNumber = 60;
+        if(MyConstant.isVideoPlay && backthread != null){
+            MyConstant.CurrentNumber = 5;
         }else{
             startThread();
         }
     }
 
     public void startThread(){
-        isRun = true;
-        CurrentNumber = 60;
-        backthread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isRun){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    CurrentNumber --;
-                    if(CurrentNumber == 0){
-                        isRun = false;
-                    }
-                }
-            }
-        });
     }
 
     public void stopThread(){
-        isRun = false;
-        if(backthread != null){
-            backthread.interrupt();
-            backthread = null;
-        }
     }
 }

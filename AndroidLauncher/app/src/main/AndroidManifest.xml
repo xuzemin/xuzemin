@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.androidlauncher">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+
     <application
         android:name=".activity.LauncherApplication"
         android:allowBackup="true"
@@ -11,10 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        >
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity"
             android:windowNoTitle="true"
             android:screenOrientation="landscape"
+            android:launchMode="singleTask"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
