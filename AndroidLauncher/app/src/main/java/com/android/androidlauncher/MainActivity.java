@@ -1,24 +1,23 @@
 package com.android.androidlauncher;
 
-import android.media.AudioManager;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.SimpleAdapter;
-import android.widget.VideoView;
+import android.widget.Toast;
+
 import com.android.androidlauncher.utils.MyConstant;
 import com.android.androidlauncher.view.LauncherVideoView;
 
@@ -28,17 +27,18 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private GridView gameGird;
-    private LauncherVideoView videoView;
+    private static LauncherVideoView videoView;
     private SimpleAdapter adapter;
     private static Thread thread = null;
     private LinearLayout ll_video,ll_game;
+    private PackageManager packageManager;
+    private Intent intent;
     private ArrayList<Map<String, Object>> dataList;
     public Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case MyConstant.EVENT_START_VIDEO:
-                    stopThread();
                     startPlay();
                     break;
             }
@@ -67,19 +67,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     long arg3) {
                 MyConstant.debugLog("onItemClick");
                 MyConstant.isResetPlay = true;
-//                AlertDialog.Builder builder= new AlertDialog.Builder(MainActivity.this);
-//                builder.setTitle("提示").setMessage(dataList.get(arg2).get("text").toString()).create().show();
+                packageManager = getPackageManager();
+                /**获得Intent*/
+                intent = packageManager.getLaunchIntentForPackage("com.android.settings"); //com.xx.xx是我们获取到的包名 
+                if(intent!=null){
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"包名不存在",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         ll_video.setOnClickListener(this);
         ll_game.setOnClickListener(this);
-
+        setVideoPath();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setVideoPath();
         handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
     }
 
@@ -119,17 +124,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void startPlay() {
         MyConstant.CurrentNumber = 0;
         MyConstant.isVideoPlay = true;
-//        setVideoPath();
         videoView.start();
         ll_video.setVisibility(View.VISIBLE);
         ll_game.setVisibility(View.GONE);
-//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mp) {
-//                mp.start();
-//                mp.setLooping(true);
-//            }
-//        });
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -151,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
         };
         //图标下的文字
-        String name[]={"时钟","信号","宝箱","秒钟","大象","FF"};
+        String name[]={"游戏","游戏","游戏","游戏","游戏","游戏"};
         dataList = new ArrayList<>();
         for (int i = 0; i <icno.length; i++) {
             Map<String, Object> map=new HashMap<>();
@@ -165,13 +162,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_video:
-                MyConstant.isVideoPlay = false;
                 startThread();
                 break;
             case R.id.ll_game:
                 MyConstant.debugLog("ll_game");
                 MyConstant.isResetPlay = true;
-//                startThread();
                 break;
         }
     }
@@ -185,21 +180,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        stopThread();
+        MyConstant.CurrentNumber = 0;
+        MyConstant.isVideoPlay = true;
+        videoView.pause();
     }
 
-    public void stopThread(){
-//        videoView.pause();
-//        ll_video.setVisibility(View.GONE);
-//        ll_game.setVisibility(View.VISIBLE);
-        if(thread!=null){
-            thread.interrupt();
-            thread = null;
-        }
-    }
 
     public void startThread(){
         videoView.pause();
+        MyConstant.isVideoPlay = false;
         ll_video.setVisibility(View.GONE);
         ll_game.setVisibility(View.VISIBLE);
         thread = new Thread(new Runnable() {
@@ -212,13 +201,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
 
-                    MyConstant.CurrentNumber ++;
                     if(MyConstant.isResetPlay){
                         MyConstant.CurrentNumber = 0;
                         MyConstant.isResetPlay = false;
                     }
                     if(MyConstant.CurrentNumber == 5){
+                        MyConstant.CurrentNumber = 0;
                         handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+                        MyConstant.isVideoPlay = true;
+                    }else{
+                        MyConstant.CurrentNumber ++;
                     }
                     MyConstant.debugLog("MyConstant.CurrentNumber"+MyConstant.CurrentNumber);
                 }
@@ -227,4 +219,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         thread.start();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        MyConstant.debugLog( "onKeyDown: keyCode -- " + keyCode);
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                MyConstant.CurrentNumber = 0;
+                MyConstant.debugLog("KeyEvent.KEYCODE_BACK");
+//                break;
+                return true;//拦截事件
+            case KeyEvent.KEYCODE_MENU:
+                MyConstant.debugLog("KeyEvent.KEYCODE_MENU");
+                return true;
+            case KeyEvent.KEYCODE_HOME:
+                MyConstant.CurrentNumber = 0;
+                MyConstant.debugLog("KeyEvent.KEYCODE_HOME");
+                // 收不到
+                return true;
+            case KeyEvent.KEYCODE_APP_SWITCH:
+                MyConstant.debugLog("KeyEvent.KEYCODE_APP_SWITCH");
+                // 收不到
+                return true;
+            default:
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
 }

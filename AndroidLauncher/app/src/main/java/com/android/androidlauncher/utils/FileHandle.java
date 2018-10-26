@@ -16,9 +16,9 @@ public class FileHandle {
         return fileHandle;
     }
 
-    public void readFile(String mfilename){
+    public void readFile(String filename){
         try {
-            isfile = new FileInputStream(new File(mfilename));
+            isfile = new FileInputStream(new File(filename));
             int length = 0;
             byte[] content = new byte[2048];
             length = isfile.read(content,length,content.length-length);

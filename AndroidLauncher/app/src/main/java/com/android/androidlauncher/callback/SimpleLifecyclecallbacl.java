@@ -11,7 +11,10 @@ import com.android.androidlauncher.utils.MyConstant;
 
 public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCallbacks {
     private static Thread threadMain;
-    private static Thread threadKey;
+    private static Thread threadKey1;
+    private static Thread threadKey2;
+    private static Thread threadKey3;
+
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
 
@@ -19,20 +22,19 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityStarted(Activity activity) {
-        if(threadMain!=null){
-            threadMain.interrupt();
-            threadMain = null;
-        }
-        if(threadKey!=null){
-            threadKey.interrupt();
-            threadKey = null;
-        }
-        MyConstant.isApplicationPause = false;
+        MyConstant.debugLog("onActivityStarted");
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-
+        MyConstant.debugLog("onActivityResumed");
+        MyConstant.isApplicationPause = false;
+        threadMain = null;
+        threadKey1 = null;
+        threadKey2 = null;
+        threadKey3 = null;
+        MyConstant.debugLog("onActivityResumed"+threadMain+
+                threadKey1+threadKey2+threadKey3);
     }
 
     @Override
@@ -43,35 +45,69 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
             @Override
             public void run() {
                 while(MyConstant.isApplicationPause){
-                    MyConstant.debugLog("MyConstant.CurrentNumber"+MyConstant.CurrentNumber);
-
+                    MyConstant.debugLog("onActivityPaused MyConstant.CurrentNumber"+MyConstant.CurrentNumber);
                     try {
                         threadMain.sleep(1000);
-                        MyConstant.CurrentNumber ++;
                         if(MyConstant.CurrentNumber > 5){
                             ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
                             activityManager.moveTaskToFront(activity.getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
                             MyConstant.isApplicationPause = false;
                             MyConstant.CurrentNumber = 0;
+                        }else{
+                            MyConstant.CurrentNumber ++;
                         }
-//                        FileHandle.getFileHandle().readFile("");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                threadMain.interrupt();
+            }
+        });
+        threadKey1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(MyConstant.isApplicationPause){
+                    try {
+                        threadKey1.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    MyConstant.debugLog("threadKey1");
+                    FileHandle.getFileHandle().readFile(MyConstant.EventPath);
+                }
+            }
+        });
+        threadKey2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(MyConstant.isApplicationPause){
+                    try {
+                        threadKey3.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    MyConstant.debugLog("threadKey2");
+                    FileHandle.getFileHandle().readFile(MyConstant.EventPath1);
+                }
+            }
+        });
+        threadKey3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(MyConstant.isApplicationPause){
+                    try {
+                        threadKey3.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    MyConstant.debugLog("threadKey3");
+                    FileHandle.getFileHandle().readFile(MyConstant.EventPath2);
+                }
             }
         });
         threadMain.start();
-//        threadKey = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while(true){
-//                    FileHandle.getFileHandle().readFile(MyConstant.EventPath);
-//                }
-//            }
-//        });
-//        threadKey.start();
+        threadKey1.start();
+        threadKey2.start();
+        threadKey3.start();
 
     }
 
