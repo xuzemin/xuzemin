@@ -16,21 +16,19 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.SimpleAdapter;
 import android.widget.VideoView;
-
-
-import com.android.androidlauncher.Service.BackWackService;
 import com.android.androidlauncher.utils.MyConstant;
+import com.android.androidlauncher.view.LauncherVideoView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private GridView gameGird;
-    private VideoView videoView;
+    private LauncherVideoView videoView;
     private SimpleAdapter adapter;
     private static Thread thread = null;
     private LinearLayout ll_video,ll_game;
@@ -84,35 +82,73 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
     }
 
+    public void setVideoPath(){
+        MyConstant.debugLog("Video"+MyConstant.Current_Video);
+        switch (MyConstant.Current_Video){
+            case 0:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.one;
+                break;
+            case 1:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.two;
+                break;
+            case 2:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.three;
+                break;
+            case 3:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.four;
+                break;
+            case 4:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.five;
+                break;
+            case 5:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.six;
+                break;
+            case 6:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.seven;
+                break;
+            case 7:
+                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.eight;
+                break;
+            case 8:
+                break;
+        }
+        videoView.setVideoURI(Uri.parse(MyConstant.VideoPath));
+    }
+
     public void startPlay() {
         ll_video.setVisibility(View.VISIBLE);
         ll_game.setVisibility(View.GONE);
         MyConstant.CurrentNumber = 0;
         MyConstant.isVideoPlay = true;
-        videoView.setVideoURI(Uri.parse(MyConstant.VideoPath));
+        setVideoPath();
         videoView.start();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                mp.start();
+//                mp.setLooping(true);
+//            }
+//        });
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.start();
-                mp.setLooping(true);
-
+            public void onCompletion(MediaPlayer mp) {
+                MyConstant.debugLog("播放完毕");
+                if(MyConstant.Current_Video < 7){
+                    MyConstant.Current_Video ++;
+                }else{
+                    MyConstant.Current_Video = 0;
+                }
+                setVideoPath();
+                videoView.start();
             }
         });
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        videoView.setVideoURI(Uri.parse(MyConstant.VideoPath));
-                        videoView.start();
-                    }
-                });
-}
+    }
 
     void initData() {
         //图标
         int icno[] = { R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
                 R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
-                 };
+        };
         //图标下的文字
         String name[]={"时钟","信号","宝箱","秒钟","大象","FF"};
         dataList = new ArrayList<>();
@@ -128,9 +164,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_video:
-                videoView.pause();
-                ll_video.setVisibility(View.GONE);
-                ll_game.setVisibility(View.VISIBLE);
                 MyConstant.isVideoPlay = false;
                 startThread();
                 break;
@@ -155,9 +188,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void stopThread(){
-        videoView.pause();
-        ll_video.setVisibility(View.GONE);
-        ll_game.setVisibility(View.VISIBLE);
+//        videoView.pause();
+//        ll_video.setVisibility(View.GONE);
+//        ll_game.setVisibility(View.VISIBLE);
         if(thread!=null){
             thread.interrupt();
             thread = null;
@@ -165,6 +198,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void startThread(){
+        videoView.pause();
+        ll_video.setVisibility(View.GONE);
+        ll_game.setVisibility(View.VISIBLE);
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
