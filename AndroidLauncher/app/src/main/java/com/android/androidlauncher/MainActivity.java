@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        setVideoPath();
         handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
     }
 
@@ -116,12 +117,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void startPlay() {
-        ll_video.setVisibility(View.VISIBLE);
-        ll_game.setVisibility(View.GONE);
         MyConstant.CurrentNumber = 0;
         MyConstant.isVideoPlay = true;
-        setVideoPath();
+//        setVideoPath();
         videoView.start();
+        ll_video.setVisibility(View.VISIBLE);
+        ll_game.setVisibility(View.GONE);
 //        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 //            @Override
 //            public void onPrepared(MediaPlayer mp) {
