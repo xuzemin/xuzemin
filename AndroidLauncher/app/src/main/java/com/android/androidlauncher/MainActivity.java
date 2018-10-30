@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         MyConstant.CurrentNumber = 0;
                         MyConstant.isResetPlay = false;
                     }
-                    if(MyConstant.CurrentNumber == 5){
+                    if(MyConstant.CurrentNumber >= MyConstant.OUTTIME){
                         MyConstant.CurrentNumber = 0;
                         handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
                         MyConstant.isVideoPlay = true;

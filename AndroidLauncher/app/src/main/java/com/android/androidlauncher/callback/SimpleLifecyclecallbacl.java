@@ -48,7 +48,7 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
                     MyConstant.debugLog("onActivityPaused MyConstant.CurrentNumber"+MyConstant.CurrentNumber);
                     try {
                         threadMain.sleep(1000);
-                        if(MyConstant.CurrentNumber > 5){
+                        if(MyConstant.CurrentNumber >= MyConstant.OUTTIME){
                             ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
                             activityManager.moveTaskToFront(activity.getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
                             MyConstant.isApplicationPause = false;
