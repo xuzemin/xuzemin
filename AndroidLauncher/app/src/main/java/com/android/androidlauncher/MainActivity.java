@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.android.androidlauncher.utils.MyConstant;
 import com.android.androidlauncher.view.LauncherVideoView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         ll_video.setOnClickListener(this);
         ll_game.setOnClickListener(this);
+        getSDPath();
         setVideoPath();
     }
 
@@ -245,6 +248,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
 
+    public String getSDPath(){
+        File externalStorageDirectory = Environment.getExternalStorageDirectory();
+        MyConstant.debugLog(externalStorageDirectory.getAbsolutePath());
+        return null;
     }
 }
