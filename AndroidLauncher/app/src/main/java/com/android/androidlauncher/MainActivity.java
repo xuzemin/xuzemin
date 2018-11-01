@@ -221,18 +221,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void initData() {
         packageNameList = new ArrayList<>();
-        packageNameList.add("com.tencent.tmgp.sgame");
-        packageNameList.add("");
-        packageNameList.add("");
-        packageNameList.add("");
-        packageNameList.add("");
-        packageNameList.add("");
+        packageNameList.add("com.carrot.iceworld");
+        packageNameList.add("com.gameloft.android.ANMP.GloftA8CN");
+        packageNameList.add("com.ipeaksoft.pitDadGame2");
+        packageNameList.add("com.yodo1.sniper3dv2.uc");
+        packageNameList.add("com.DefiantDev.SkiSafari");
+        packageNameList.add("com.szgd.GodBeastKingKong.egame");
         //图标
-        int icno[] = { R.mipmap.baowei, R.mipmap.huaxue, R.mipmap.ic_launcher,
-                R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
+        int icno[] = { R.mipmap.luobo, R.mipmap.kuangye, R.mipmap.shishang,
+                R.mipmap.juji, R.mipmap.huaxue, R.mipmap.shenshou,
         };
         //图标下的文字
-        String name[]={"保卫萝卜","滑雪大冒险","王者荣耀","游戏","游戏","游戏"};
+        String name[]={"保卫萝卜2","狂野飚车","史上最坑爹游戏2","狙击行动","滑雪大冒险","神兽金刚"};
         dataList = new ArrayList<>();
         for (int i = 0; i <icno.length; i++) {
             Map<String, Object> map=new HashMap<>();
