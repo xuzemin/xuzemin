@@ -1,13 +1,20 @@
 package com.android.androidlauncher;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,8 +40,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SimpleAdapter adapter;
     private static Thread thread = null;
     private LinearLayout ll_video,ll_game;
+    private static int REQUEST_EXTERNAL_STRONGE = 1;
     private PackageManager packageManager;
     private Intent intent;
+    private static ArrayList<String> packageNameList;
     private ArrayList<Map<String, Object>> dataList;
     public Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -61,17 +70,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initData();
         String[] from={"img","text"};
         int[] to={R.id.img,R.id.text};
+
+
+
         adapter=new SimpleAdapter(this, dataList, R.layout.gridview_item, from, to);
         gameGird.setAdapter(adapter);
         gameGird.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MyConstant.debugLog("onItemClick");
                 MyConstant.isResetPlay = true;
                 packageManager = getPackageManager();
                 /**获得Intent*/
-                intent = packageManager.getLaunchIntentForPackage("com.android.settings"); //com.xx.xx是我们获取到的包名 
+                intent = packageManager.getLaunchIntentForPackage(packageNameList.get(position)); //com.xx.xx是我们获取到的包名 
                 if(intent!=null){
                     startActivity(intent);
                 }else{
@@ -79,49 +90,105 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
         ll_video.setOnClickListener(this);
         ll_game.setOnClickListener(this);
-        getSDPath();
-        setVideoPath();
+//        getSDPath();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STRONGE);
+        }//REQUEST_EXTERNAL_STRONGE是自定义个的一个对应码，用来验证请求是否通过
+        else {
+            setVideoPath();
+            handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//根据请求是否通过的返回码进行判断，然后进一步运行程序
+        if (grantResults.length > 0 && requestCode == REQUEST_EXTERNAL_STRONGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            setVideoPath();
+            handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+        }
+
     }
 
     public void setVideoPath(){
         MyConstant.debugLog("Video"+MyConstant.Current_Video);
+        File file = null;
         switch (MyConstant.Current_Video){
             case 0:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.one;
+                MyConstant.VideoPath = MyConstant.VideoDir+"video.mp4";
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background));
+                }
                 break;
             case 1:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.two;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background1));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 2:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.three;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background2));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 3:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.four;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background3));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 4:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.five;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background4));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 5:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.six;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background1));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 6:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.seven;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background2));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 7:
-                MyConstant.VideoPath = MyConstant.VideoDir+R.raw.eight;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background3));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 8:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ll_game.setBackground(getDrawable(R.mipmap.background4));
+                }
+                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
         }
-        videoView.setVideoURI(Uri.parse(MyConstant.VideoPath));
+        MyConstant.debugLog("file"+MyConstant.VideoPath);
+        file = new File(MyConstant.VideoPath);
+        MyConstant.debugLog("file"+file.exists());
+        if(file.exists()) {
+            videoView.setVideoPath(MyConstant.VideoPath);
+        }else{
+            MyConstant.Current_Video = 0;
+            setVideoPath();
+        }
+
     }
 
     public void startPlay() {
@@ -143,15 +210,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 videoView.start();
             }
         });
+        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+
+                return false;
+            }
+        });
     }
 
     void initData() {
+        packageNameList = new ArrayList<>();
+        packageNameList.add("com.tencent.tmgp.sgame");
+        packageNameList.add("");
+        packageNameList.add("");
+        packageNameList.add("");
+        packageNameList.add("");
+        packageNameList.add("");
         //图标
-        int icno[] = { R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
+        int icno[] = { R.mipmap.baowei, R.mipmap.huaxue, R.mipmap.ic_launcher,
                 R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
         };
         //图标下的文字
-        String name[]={"游戏","游戏","游戏","游戏","游戏","游戏"};
+        String name[]={"保卫萝卜","滑雪大冒险","王者荣耀","游戏","游戏","游戏"};
         dataList = new ArrayList<>();
         for (int i = 0; i <icno.length; i++) {
             Map<String, Object> map=new HashMap<>();
@@ -251,8 +332,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public String getSDPath(){
-        File externalStorageDirectory = Environment.getExternalStorageDirectory();
-        MyConstant.debugLog(externalStorageDirectory.getAbsolutePath());
+        MyConstant.debugLog("3"+Environment.getRootDirectory());
+        MyConstant.debugLog("21"+Environment.getExternalStorageDirectory());
+        MyConstant.debugLog("2"+this.getExternalFilesDir("Video"));
         return null;
     }
 }
