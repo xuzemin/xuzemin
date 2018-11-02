@@ -107,7 +107,7 @@ public class ClientSocketUtil extends Service {
     private void setServiceForeground() {
         //系统通知栏
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.mipmap.sjx_launch);//通知图标
+        builder.setSmallIcon(R.mipmap.zb_logo);//通知图标
         builder.setContentTitle("Socket通讯服务");//通知标题
         builder.setContentText("此服务用于通讯，请勿关闭");//通知内容
 
