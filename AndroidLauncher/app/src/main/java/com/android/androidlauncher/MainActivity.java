@@ -103,8 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STRONGE);
         }//REQUEST_EXTERNAL_STRONGE是自定义个的一个对应码，用来验证请求是否通过
         else {
-            setVideoPath();
-            handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+            if(!MyConstant.isVideoPlay) {
+                setVideoPath();
+                handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+            }
         }
 
     }
