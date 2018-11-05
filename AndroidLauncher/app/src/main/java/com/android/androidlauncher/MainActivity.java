@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String[] from={"img","text"};
         int[] to={R.id.img,R.id.text};
 
-
-
         adapter=new SimpleAdapter(this, dataList, R.layout.gridview_item, from, to);
         gameGird.setAdapter(adapter);
         gameGird.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ll_video.setOnClickListener(this);
         ll_game.setOnClickListener(this);
-//        getSDPath();
     }
 
     @Override
@@ -103,10 +100,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STRONGE);
         }//REQUEST_EXTERNAL_STRONGE是自定义个的一个对应码，用来验证请求是否通过
         else {
-            if(!MyConstant.isVideoPlay) {
-                setVideoPath();
-                handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
-            }
+//            if(!MyConstant.isVideoPlay) {
+//                setVideoPath();
+//                handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+//            }
+            startThread();
         }
 
     }
@@ -194,11 +192,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void startPlay() {
+        ll_video.setVisibility(View.VISIBLE);
+        ll_game.setVisibility(View.GONE);
         MyConstant.CurrentNumber = 0;
         MyConstant.isVideoPlay = true;
         videoView.start();
-        ll_video.setVisibility(View.VISIBLE);
-        ll_game.setVisibility(View.GONE);
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -261,14 +259,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy()
     {
         super.onDestroy();
+        MyConstant.CurrentNumber = 0;
+        MyConstant.isVideoPlay = false;
+        videoView.pause();
+        ll_video.setVisibility(View.GONE);
+        ll_game.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MyConstant.CurrentNumber = 0;
-        MyConstant.isVideoPlay = true;
-        videoView.pause();
     }
 
 

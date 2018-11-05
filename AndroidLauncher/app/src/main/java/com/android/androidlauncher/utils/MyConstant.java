@@ -14,9 +14,9 @@ public class MyConstant {
     public static final int EVENT_START_VIDEO = 0;
 //    public static final String VideoDir = "android.resource://com.android.androidlauncher/";
     public static final String VideoDir = "/sdcard/Video/";
-    public static final String EventPath = "/dev/input/event1";
+    public static final String EventPath = "/dev/input/event3";
     public static final String EventPath1 = "/dev/input/event2";
-    public static final String EventPath2 = "/dev/input/event0";
+    public static final String EventPath2 = "/dev/input/event4";
 //    public static String VideoPath = MyConstant.VideoDir+R.raw.one;
     public static String VideoPath = "/sdcard/Video/video.mp4";
     public static void debugLog(String log){
