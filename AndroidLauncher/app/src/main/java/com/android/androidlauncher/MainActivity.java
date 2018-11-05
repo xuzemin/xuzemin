@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -23,28 +24,38 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.android.androidlauncher.utils.MyConstant;
+import com.android.androidlauncher.view.GridItem;
+import com.android.androidlauncher.view.GridViewAdapter;
 import com.android.androidlauncher.view.LauncherVideoView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private GridViewAdapter mGridViewAdapter = null;
+    private ArrayList<GridItem> mGridData = null;
     private GridView gameGird;
+    private ImageView img;
     private static LauncherVideoView videoView;
-    private SimpleAdapter adapter;
     private static Thread thread = null;
-    private LinearLayout ll_video,ll_game;
+    private LinearLayout ll_video;
+    private RelativeLayout ll_game;
     private static int REQUEST_EXTERNAL_STRONGE = 1;
     private PackageManager packageManager;
     private Intent intent;
     private static ArrayList<String> packageNameList;
+    private static ArrayList<String> VideoNameList;
+    private static ArrayList<String> ImageNameList;
     private ArrayList<Map<String, Object>> dataList;
     public Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -67,13 +78,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gameGird = findViewById(R.id.gameGird);
         videoView = findViewById(R.id.videoView);
         ll_video = findViewById(R.id.ll_video);
+        img = findViewById(R.id.img);
         ll_game = findViewById(R.id.ll_game);
         initData();
-        String[] from={"img","text"};
-        int[] to={R.id.img,R.id.text};
 
-        adapter=new SimpleAdapter(this, dataList, R.layout.gridview_item, from, to);
-        gameGird.setAdapter(adapter);
+        mGridViewAdapter = new GridViewAdapter(this, R.layout.gridview_item, mGridData);
+        gameGird.setAdapter(mGridViewAdapter);
         gameGird.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,15 +111,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STRONGE);
         }//REQUEST_EXTERNAL_STRONGE是自定义个的一个对应码，用来验证请求是否通过
         else {
-//            if(!MyConstant.isVideoPlay) {
-//                setVideoPath();
-//                handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
-//            }
-            if(!MyConstant.isVideoPlay) {
-                setVideoPath();
-                startPlay();
-            }else{
+            MyConstant.debugLog(MyConstant.isInit+""+videoView.isPlaying());
+            if(MyConstant.isInit ) {
+                ll_video.setVisibility(View.VISIBLE);
+                ll_game.setVisibility(View.GONE);
+                MyConstant.CurrentNumber = 0;
+                MyConstant.isVideoPlay = true;
                 videoView.start();
+            }else{
+                setVideoPath();
+                MyConstant.isInit = true;
+                startPlay();
             }
         }
 
@@ -129,55 +141,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressLint("NewApi")
     public void setVideoPath(){
         MyConstant.debugLog("Video"+MyConstant.Current_Video);
-        File file = null;
-        switch (MyConstant.Current_Video){
-            case 0:
-                MyConstant.VideoPath = MyConstant.VideoDir+"video.mp4";
-                    ll_game.setBackground(getDrawable(R.mipmap.background));
-                break;
-            case 1:
-                    ll_game.setBackground(getDrawable(R.mipmap.background1));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
-            case 2:
-                    ll_game.setBackground(getDrawable(R.mipmap.background2));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
-            case 3:
-                    ll_game.setBackground(getDrawable(R.mipmap.background3));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
-            case 4:
-                    ll_game.setBackground(getDrawable(R.mipmap.background4));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
-            case 5:
-                    ll_game.setBackground(getDrawable(R.mipmap.background1));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
-            case 6:
-                    ll_game.setBackground(getDrawable(R.mipmap.background2));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
-            case 7:
-                    ll_game.setBackground(getDrawable(R.mipmap.background3));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
-            case 8:
-                    ll_game.setBackground(getDrawable(R.mipmap.background4));
-                MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
-                break;
+        if(VideoNameList!=null && VideoNameList.size()>0){
+            if(MyConstant.Current_Video < VideoNameList.size()-1){
+                videoView.setVideoPath(VideoNameList.get(MyConstant.Current_Video));
+            }else{
+                MyConstant.Current_Video = 0;
+                videoView.setVideoPath(VideoNameList.get(0));
+            }
         }
-        MyConstant.debugLog("file"+MyConstant.VideoPath);
-        file = new File(MyConstant.VideoPath);
-        MyConstant.debugLog("file"+file.exists());
-        if(file.exists()) {
-            videoView.setVideoPath(MyConstant.VideoPath);
-        }else{
-            MyConstant.Current_Video = 0;
-            setVideoPath();
+        if(ImageNameList!=null && ImageNameList.size()>0){
+            if(MyConstant.Current_Image < ImageNameList.size()-1){
+                img.setImageURI(Uri.fromFile(new File(ImageNameList.get(MyConstant.Current_Image))));
+            }else{
+                MyConstant.Current_Image = 0;
+                img.setImageURI(Uri.fromFile(new File(ImageNameList.get(0))));
+            }
         }
-
     }
 
     public void startPlay() {
@@ -192,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 MyConstant.debugLog("播放完毕");
                 if(MyConstant.Current_Video < 7){
                     MyConstant.Current_Video ++;
+                    MyConstant.Current_Image ++;
                 }else{
                     MyConstant.Current_Video = 0;
                 }
@@ -202,12 +182,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
-
                 return false;
             }
         });
     }
 
+    @SuppressLint("NewApi")
     void initData() {
         packageNameList = new ArrayList<>();
         packageNameList.add("com.carrot.iceworld");
@@ -229,6 +209,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             map.put("text",name[i]);
             dataList.add(map);
         }
+        mGridData = new ArrayList<>();
+        for (int i=0; i<icno.length; i++) {
+            GridItem item = new GridItem();
+            item.setTitle(name[i]);
+            item.setImage(getDrawable(icno[i]));
+            mGridData.add(item);
+        }
+        getAPKPath();
+        getVideoPath();
+        getPhotoVideoPath();
     }
 
     @Override
@@ -297,7 +287,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         MyConstant.debugLog( "onKeyDown: keyCode -- " + keyCode);
-
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 MyConstant.CurrentNumber = 0;
@@ -322,10 +311,90 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onKeyDown(keyCode, event);
     }
 
-    public String getSDPath(){
-        MyConstant.debugLog("3"+Environment.getRootDirectory());
-        MyConstant.debugLog("21"+Environment.getExternalStorageDirectory());
-        MyConstant.debugLog("2"+this.getExternalFilesDir("Video"));
+    @SuppressLint("NewApi")
+    public String getAPKPath(){
+        File path = new File(MyConstant.ApkDir);
+        if (Environment.getExternalStorageState().
+                equals(Environment.MEDIA_MOUNTED)) {
+            File[] files = path.listFiles();// 读取文件夹下文件
+            getApkName(files);
+        }
         return null;
+    }
+
+    protected void getApkName(File[] files) {
+        if(files != null){
+            PackageManager pm = getPackageManager();
+            packageNameList = new ArrayList<>();
+            mGridData = new ArrayList<>();
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    if (file.getName().endsWith(".apk")){
+                        PackageInfo pi = pm.getPackageArchiveInfo(MyConstant.ApkDir+file.getName(), 0);
+                        ApplicationInfo applicationInfo = pi.applicationInfo;
+                        MyConstant.debugLog(applicationInfo.packageName);
+                        packageNameList.add(applicationInfo.packageName);
+                        try {
+                            String Name=pm.getApplicationLabel(pm.getApplicationInfo(applicationInfo.packageName,PackageManager.GET_META_DATA)).toString();
+                            MyConstant.debugLog("Name"+Name);
+                            GridItem item = new GridItem();
+                            item.setTitle(Name);
+                            item.setImage(applicationInfo.loadIcon(pm));
+                            mGridData.add(item);
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    public String getVideoPath(){
+        File path = new File(MyConstant.VideoDir);
+        if (Environment.getExternalStorageState().
+                equals(Environment.MEDIA_MOUNTED)) {
+            File[] files = path.listFiles();// 读取文件夹下文件
+            getVideoName(files);
+        }
+        return null;
+    }
+
+    protected void getVideoName(File[] files) {
+        if(files != null){
+            VideoNameList = new ArrayList<>();
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    if (file.getName().endsWith(".mp4")){
+                        VideoNameList.add(MyConstant.VideoDir+file.getName());
+                        MyConstant.debugLog(MyConstant.VideoDir+file.getName()+"");
+                    }
+                }
+            }
+        }
+    }
+    public String getPhotoVideoPath(){
+        File path = new File(MyConstant.ImgDir);
+        if (Environment.getExternalStorageState().
+                equals(Environment.MEDIA_MOUNTED)) {
+            File[] files = path.listFiles();// 读取文件夹下文件
+            getPhotoName(files);
+        }
+        return null;
+    }
+
+    protected void getPhotoName(File[] files) {
+        if(files != null){
+            ImageNameList = new ArrayList<>();
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    if (file.getName().endsWith(".jpg")){
+                        ImageNameList.add(MyConstant.ImgDir+file.getName());
+                        MyConstant.debugLog(MyConstant.ImgDir+file.getName()+"");
+                    }
+                }
+            }
+        }
     }
 }
