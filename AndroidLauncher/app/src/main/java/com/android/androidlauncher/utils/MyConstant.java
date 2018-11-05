@@ -5,7 +5,7 @@ import android.util.Log;
 public class MyConstant {
     public static final String TAG = "Launcher";
     public static final int OUTTIME = 30;
-    public static boolean isInit =false;
+    public static boolean isInit = false;
     private static final boolean IsDebug = true;
     public static boolean isResetPlay = false;
     public static boolean isVideoPlay = false;
@@ -16,8 +16,8 @@ public class MyConstant {
     public static final int EVENT_START_VIDEO = 0;
 //    public static final String VideoDir = "android.resource://com.android.androidlauncher/";
     public static final String VideoDir = "/sdcard/Video/";
-    public static final String ApkDir = "/sdcard/apk/";
-    public static final String ImgDir = "/sdcard/img/";
+    public static final String ApkDir = "/sdcard/Apk/";
+    public static final String ImgDir = "/sdcard/Image/";
     public static final String EventPath = "/dev/input/event3";
     public static final String EventPath1 = "/dev/input/event2";
     public static final String EventPath2 = "/dev/input/event4";
