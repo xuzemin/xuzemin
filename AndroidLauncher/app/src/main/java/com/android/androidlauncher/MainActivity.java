@@ -1,6 +1,7 @@
 package com.android.androidlauncher;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -104,7 +105,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                setVideoPath();
 //                handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
 //            }
-            startThread();
+            if(!MyConstant.isVideoPlay) {
+                setVideoPath();
+                startPlay();
+            }else{
+                videoView.start();
+            }
         }
 
     }
@@ -113,69 +119,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 //根据请求是否通过的返回码进行判断，然后进一步运行程序
-        if (grantResults.length > 0 && requestCode == REQUEST_EXTERNAL_STRONGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setVideoPath();
-            handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
-        }
+//        if (grantResults.length > 0 && requestCode == REQUEST_EXTERNAL_STRONGE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            setVideoPath();
+//            handler.sendEmptyMessage(MyConstant.EVENT_START_VIDEO);
+//        }
 
     }
 
+    @SuppressLint("NewApi")
     public void setVideoPath(){
         MyConstant.debugLog("Video"+MyConstant.Current_Video);
         File file = null;
         switch (MyConstant.Current_Video){
             case 0:
                 MyConstant.VideoPath = MyConstant.VideoDir+"video.mp4";
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background));
-                }
                 break;
             case 1:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background1));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 2:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background2));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 3:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background3));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 4:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background4));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 5:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background1));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 6:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background2));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 7:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background3));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
             case 8:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ll_game.setBackground(getDrawable(R.mipmap.background4));
-                }
                 MyConstant.VideoPath = MyConstant.VideoDir+"video"+MyConstant.Current_Video+".mp4";
                 break;
         }
