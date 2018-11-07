@@ -183,6 +183,7 @@
                 android:layout_height="1dp" />
 
             <LinearLayout
+                android:id="@+id/ll_area"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/area_height"
                 android:background="@color/white"
@@ -212,6 +213,7 @@
                 android:layout_height="1dp" />
 
             <LinearLayout
+                android:id="@+id/ll_state"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/area_height"
                 android:background="@color/white"

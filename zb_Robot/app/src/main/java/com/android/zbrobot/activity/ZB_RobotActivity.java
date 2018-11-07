@@ -236,6 +236,11 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             ((TextView) findViewById(R.id.pathway)).setText("有");
         } else {
             ((TextView) findViewById(R.id.pathway)).setText("无");
+            findViewById(R.id.ll_state).setVisibility(View.GONE);
+            findViewById(R.id.ll_area).setVisibility(View.GONE);
+            findViewById(R.id.robot_outtime).setVisibility(View.GONE);
+            findViewById(R.id.robot_card).setVisibility(View.GONE);
+            findViewById(R.id.robot_turnback).setVisibility(View.GONE);
             findViewById(R.id.robot_loop).setVisibility(View.VISIBLE);
             loopSp = findViewById(R.id.loop);
             loopSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -249,6 +254,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
 
                 }
             });
+            loopSp.setSelection((int) robotConfig.get("loop_number"));
         }
     }
 

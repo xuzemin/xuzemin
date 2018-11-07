@@ -22,20 +22,26 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_game"
         android:layout_width="match_parent"
-        android:background="@mipmap/ic_launcher"
         android:visibility="gone"
         android:layout_height="match_parent"
         >
+        <ImageView
+            android:id="@+id/img"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
         <GridView
+            android:layout_margin="50dp"
             android:id="@+id/gameGird"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:numColumns="3"
+            android:gravity="center"
+            android:numColumns="5"
             />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
