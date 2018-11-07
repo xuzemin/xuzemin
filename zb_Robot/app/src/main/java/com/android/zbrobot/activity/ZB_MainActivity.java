@@ -273,9 +273,9 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.zb_activity_main);
 
-        // 静态IP
-        Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
-        startService(SetStaticIPService);
+//        // 静态IP
+//        Intent SetStaticIPService = new Intent(this, SetStaticIPService.class);
+//        startService(SetStaticIPService);
         // 启动后台通讯服务
         Intent serverSocket = new Intent(this, ServerSocketUtil.class);
         startService(serverSocket);

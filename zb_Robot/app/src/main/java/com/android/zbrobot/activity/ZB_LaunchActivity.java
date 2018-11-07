@@ -15,9 +15,11 @@ import android.util.Property;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.android.zbrobot.R;
 import com.android.zbrobot.helper.RobotDBHelper;
+import com.jni.android.myjniproject.JniUtils;
 
 import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.compat.UiCompat;
@@ -44,6 +46,7 @@ public class ZB_LaunchActivity extends AppCompatActivity {
         //初始化
         initWidget();
         initData();
+        ((TextView)findViewById(R.id.application_text)).setText(JniUtils.stringFromJNI());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

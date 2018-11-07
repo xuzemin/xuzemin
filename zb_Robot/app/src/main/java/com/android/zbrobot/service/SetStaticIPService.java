@@ -84,7 +84,7 @@ public class SetStaticIPService extends Service {
 
                 if (state.toString().equals("CONNECTED")) {
                     if (networkInfo != null && SSID != null) {
-                        String extrainfo = networkInfo.getExtraInfo().toString();
+                        String extrainfo = networkInfo.getExtraInfo();
                         if (("\"" + Constant.wifiname + "\"").equals(extrainfo)) {
                             Toast.makeText(SetStaticIPService.this, "指定网络连接成功",
                                     Toast.LENGTH_LONG).show();
