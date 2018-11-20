@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             item.setImage(getDrawable(icno[i]));
             mGridData.add(item);
         }
-        getAPKPath();
+//        getAPKPath();
         getVideoPath();
         getPhotoVideoPath();
     }

@@ -34,13 +34,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <GridView
-            android:layout_margin="50dp"
             android:id="@+id/gameGird"
+            android:layout_marginTop="100dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:verticalSpacing= "100dp"
             android:gravity="center"
-            android:numColumns="5"
+            android:numColumns="3"
             />
     </RelativeLayout>
 

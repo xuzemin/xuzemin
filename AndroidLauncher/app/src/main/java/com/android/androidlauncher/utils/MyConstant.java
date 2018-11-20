@@ -8,7 +8,7 @@ public class MyConstant {
     public static boolean isInit = false;
     private static final boolean IsDebug = true;
     public static boolean isResetPlay = false;
-    public static boolean isVideoPlay = false;
+    public static boolean isVideoPlay = true;
     public static int Current_Video = 0;
     public static int Current_Image = 0;
     public static boolean isApplicationPause = false;
