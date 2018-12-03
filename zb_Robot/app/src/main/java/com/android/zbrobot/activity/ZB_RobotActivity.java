@@ -23,7 +23,12 @@ import com.android.zbrobot.adapter.ZB_SpinnerAdapter;
 import com.android.zbrobot.dialog.ZB_MyDialog;
 import com.android.zbrobot.dialog.ZB_SpinnerDialog;
 import com.android.zbrobot.helper.RobotDBHelper;
+import com.android.zbrobot.service.ServerSocketUtil;
 import com.android.zbrobot.util.Constant;
+import com.android.zbrobot.util.RobotUtils;
+import com.ls.lsros.callback.CallBack;
+import com.ls.lsros.data.provide.bean.NavigationResult;
+import com.ls.lsros.helper.RobotNavigationHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -148,9 +153,15 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
         }
         // 机器人在线状态   1->在线     0->离线
         if ((int) robotConfig.get("outline") == 1) {
-            ((TextView) findViewById(R.id.outline)).setText("在线");
-            findViewById(R.id.linear_control).setVisibility(View.VISIBLE);
-            ((Button)findViewById(R.id.remote_control)).setText("遥控器");
+            if((int) robotConfig.get("pathway") == 0) {
+                ((TextView) findViewById(R.id.outline)).setText("在线");
+                findViewById(R.id.linear_control).setVisibility(View.VISIBLE);
+                ((Button) findViewById(R.id.remote_control)).setText("遥控器");
+            }else{
+                ((TextView) findViewById(R.id.outline)).setText("在线");
+                findViewById(R.id.linear_control).setVisibility(View.VISIBLE);
+                ((Button) findViewById(R.id.remote_control)).setText("停止");
+            }
         } else {
             ((TextView) findViewById(R.id.outline)).setText("离线");
             ((Button)findViewById(R.id.remote_control)).setText("删除");
@@ -273,9 +284,17 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             case R.id.remote_control:
                 // 跳转到遥控器页面 并传递id
                 if((int) robotConfig.get("outline") == 1) {
-                    Intent intent1 = new Intent(ZB_RobotActivity.this, ZB_RoundActivity.class);
-                    intent1.putExtra("id", robotId);
-                    startActivity(intent1);
+                    if((int) robotConfig.get("pathway") == 0) {
+                        Intent intent1 = new Intent(ZB_RobotActivity.this, ZB_RoundActivity.class);
+                        intent1.putExtra("id", robotId);
+                        startActivity(intent1);
+                    }else{
+                        if(RobotUtils.STEP == 6) {
+                            ServerSocketUtil.stopLSList();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"机器人目前没有运行或未初始化完成",Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }else{
                     robotDBHelper.execSQL("delete from robot where id= '" + robotId + "'");
                     finish();

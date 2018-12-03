@@ -191,17 +191,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void initData() {
         packageNameList = new ArrayList<>();
         packageNameList.add("com.carrot.iceworld");
-        packageNameList.add("com.gameloft.android.ANMP.GloftA8CN");
-        packageNameList.add("com.ipeaksoft.pitDadGame2");
-        packageNameList.add("com.yodo1.sniper3dv2.uc");
+//        packageNameList.add("com.gameloft.android.ANMP.GloftA8CN");
+        packageNameList.add("com.halfbrick.fruitninjahd");
+//        packageNameList.add("com.ipeaksoft.pitDadGame2");
+        packageNameList.add("com.YuanMingwei.ActionDungeon");
+        packageNameList.add("com.donutgames.beachgames");
+//        packageNameList.add("com.yodo1.sniper3dv2.uc");
         packageNameList.add("com.DefiantDev.SkiSafari");
-        packageNameList.add("com.szgd.GodBeastKingKong.egame");
+        packageNameList.add("com.wepie.snake.tencent");
+//        packageNameList.add("com.szgd.GodBeastKingKong.egame");
         //图标
-        int icno[] = { R.mipmap.luobo, R.mipmap.kuangye, R.mipmap.shishang,
-                R.mipmap.juji, R.mipmap.huaxue, R.mipmap.shenshou,
+        int icno[] = { R.mipmap.luobo, R.mipmap.shuiguo, R.mipmap.yiming,
+                R.mipmap.shatan, R.mipmap.huaxue, R.mipmap.tanchi,
         };
         //图标下的文字
-        String name[]={"保卫萝卜2","狂野飚车","史上最坑爹游戏2","狙击行动","滑雪大冒险","神兽金刚"};
+        String name[]={"保卫萝卜2","水果忍者","一命通关","沙滩运动会","滑雪大冒险","贪吃蛇大作战"};
         dataList = new ArrayList<>();
         for (int i = 0; i <icno.length; i++) {
             Map<String, Object> map=new HashMap<>();
@@ -219,6 +223,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        getAPKPath();
         getVideoPath();
         getPhotoVideoPath();
+        if(VideoNameList==null || VideoNameList.size() < 0 || ImageNameList == null || ImageNameList.size() < 0){
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
     }
 
     @Override

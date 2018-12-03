@@ -116,7 +116,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private GridView robotGirdView;
     // 区域列表
     private ListView area;
-    private boolean isRunning = false;
+    public static boolean isRunning = false;
     // 区域名称
     private TextView area_text;
     // 上 下 左 右 停止 收缩

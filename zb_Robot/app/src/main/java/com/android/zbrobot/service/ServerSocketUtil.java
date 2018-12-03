@@ -47,6 +47,7 @@ public class ServerSocketUtil extends Service {
     //获取输入流
     private static InputStream in = null;
 
+    private static boolean isRunLS = false;
     public static int serverLoop = 0;
     //获取输出流
     private static OutputStream out = null;
@@ -807,12 +808,18 @@ public class ServerSocketUtil extends Service {
             }
         }
     }
+    public static void stopLSList(){
+        ZB_MainActivity.isRunning = false;
+        isRunLS = false;
+        RobotNavigationHelper.getInstance().stopGetNaviStatus();
+    }
     public static void sendLSList(final List list){
+        isRunLS = true;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Map deskmap;
-                if(LsCurrent < list.size()){
+                if(LsCurrent < list.size() && isRunLS){
                     Constant.debugLog("LsCurrent"+LsCurrent);
                     List<Map> desk_list = robotDBHelper.queryListMap("select * from desk where id = '" + list.get(LsCurrent) + "'", null);
                     deskmap = desk_list.get(0);
