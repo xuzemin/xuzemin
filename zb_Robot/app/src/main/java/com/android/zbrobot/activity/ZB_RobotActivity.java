@@ -244,6 +244,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             ((TextView) findViewById(R.id.obstacle)).setText("有");
         }
         if ((int) robotConfig.get("pathway") == 0) {
+            findViewById(R.id.robot_outimesetting).setVisibility(View.GONE);
             ((TextView) findViewById(R.id.pathway)).setText("有");
         } else {
             ((TextView) findViewById(R.id.pathway)).setText("无");
@@ -253,6 +254,14 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             findViewById(R.id.robot_card).setVisibility(View.GONE);
             findViewById(R.id.robot_turnback).setVisibility(View.GONE);
             findViewById(R.id.robot_loop).setVisibility(View.VISIBLE);
+            findViewById(R.id.robot_outimesetting).setVisibility(View.GONE);
+//            findViewById(R.id.robot_outimesetting).setVisibility(View.VISIBLE);
+//            if(robotConfig.get("setting_outime")!=null){
+//                ((TextView)findViewById(R.id.setting_outime)).setText(""+robotConfig.get("setting_outime"));
+//            }else{
+//                ((TextView)findViewById(R.id.setting_outime)).setText("null");
+//            }
+//            findViewById(R.id.setting_outime).setOnClickListener(this);
             loopSp = findViewById(R.id.loop);
             loopSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -272,6 +281,9 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.setting_outime:
+                dialog_Text();
+                break;
             // 机器人状态设置
             case R.id.setting_redact_re:
             case R.id.setting_redact:
@@ -349,8 +361,13 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
     private void dialog_Text() {
         textDialog = new ZB_MyDialog(this);
         // type=  0->速度  1->MP3通道  2->超时时间  3->显示编号  4->显示颜色
-        textDialog.getTitle().setText("旋转超时时间修改");
-        textDialog.getTitleTemp().setText("请输入超时时间");
+        if((int) robotConfig.get("pathway") == 0) {
+            textDialog.getTitle().setText("旋转超时时间修改");
+            textDialog.getTitleTemp().setText("请输入超时时间");
+        }else{
+            textDialog.getTitle().setText("运行超时时间修改");
+            textDialog.getTitleTemp().setText("请输入超时时间");
+        }
         editText = (EditText) textDialog.getEditText();
         // 输入类型为数字文本
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -359,9 +376,15 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 if (!editText.getText().toString().trim().equals("")) {
-                    robotDBHelper.execSQL("update robot set outtime = '" + editText.getText().toString().trim() + "' where id= '" + robotId + "'");
-                    textDialog.dismiss();
-                    ((TextView) findViewById(R.id.outtime)).setText(editText.getText().toString().trim());
+                    if((int) robotConfig.get("pathway") == 0) {
+                        robotDBHelper.execSQL("update robot set outtime = '" + editText.getText().toString().trim() + "' where id= '" + robotId + "'");
+                        textDialog.dismiss();
+                        ((TextView) findViewById(R.id.outtime)).setText(editText.getText().toString().trim());
+                    }else{
+//                        robotDBHelper.execSQL("update robot set setting_outime = '" + editText.getText().toString().trim() + "' where id= '" + robotId + "'");
+//                        textDialog.dismiss();
+//                        ((TextView) findViewById(R.id.setting_outime)).setText(editText.getText().toString().trim());
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "请输入参数", Toast.LENGTH_SHORT).show();
                 }

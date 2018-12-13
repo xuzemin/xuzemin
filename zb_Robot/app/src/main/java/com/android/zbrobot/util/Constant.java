@@ -11,6 +11,7 @@ public class Constant {
     public static int Area_X = 1;
     public static int SKEWING_Y = 1;
     public static int SCALE = 20;
+    public final static boolean isRestaurant = true;
     public static int Bitmap_WIDTH = 0;
     public static int Bitmap_HEIGHT = 0;
     public static final int MSG_REFRESH_CONNECT = 0;

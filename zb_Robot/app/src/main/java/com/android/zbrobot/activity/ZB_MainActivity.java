@@ -163,6 +163,8 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private boolean isState;
     private List isList = new ArrayList();
     private boolean ischeck = false;
+    public static int Timeout = 0;
+    public static int TimeSettings = 0;
     @SuppressLint("HandlerLeak")
     public final Handler mhandle = new Handler(){
         @Override
@@ -196,12 +198,6 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                             break;
                         case 2:
                             RobotUtils.getInstance().setImageInfo();
-//                            File file = new File(fileName);
-//                            try {
-//                                MediaStore.Images.Media.insertImage(getContentResolver(), file.getAbsolutePath(), "map.JPEG", null);
-//                            } catch (FileNotFoundException e) {
-//                                e.printStackTrace();
-//                            }
                             break;
                         case 4:
                             robotDBHelper.execSQL("update area set pointx = '"+RobotUtils.originX+"',pointy = '"+RobotUtils.originY
@@ -217,7 +213,6 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                             break;
                         case 5:
                             RobotUtils.getInstance().startGetstat();
-
                             RobotNavigationHelper.getInstance().sendGoal(0,0,0);
                             RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
                                 @Override
@@ -230,30 +225,67 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         case 6:
                             robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
                             getRobotData();
-                            Constant.debugLog("aaaa");
-//                            robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
-                            if(RobotUtils.robotStatus !=null) {
-                                Constant.debugLog("aaaa"+RobotUtils.robotStatus.getStatus());
-                                switch (RobotUtils.robotStatus.getStatus()) {
-                                    case 0:
-                                        break;
-                                    case 1:
-                                        isRunning = true;
-                                        break;
-                                    case 2:
-                                        break;
-                                    case 3:
-                                        if (isRunning) {
-                                            isRunning = false;
-                                            ServerSocketUtil.LsCurrent++;
-                                            ServerSocketUtil.sendLSList(ZB_RobotDialog.idList);
+                            if(ServerSocketUtil.isRunLS & isRunning){
+                                TimeSettings ++;
+                                Timeout++;
+                            }
+                            if(TimeSettings >= 600){   //10800){
+                                TimeSettings = 0;
+                                ServerSocketUtil.stopLSList();
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Map areamap;
+                                List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + ZB_MainActivity.CURRENT_AREA_id + "'", null);
+                                if (area_list != null && area_list.size() > 0) {
+                                    areamap = area_list.get(0);
+                                    if (areamap.get("point_x_back") != null && areamap.get("point_y_back") != null && areamap.get("derection") != null) {
+                                        RobotNavigationHelper.getInstance().sendGoal(Double.parseDouble(areamap.get("point_x_back").toString().trim())
+                                                , Double.parseDouble(areamap.get("point_y_back").toString().trim()),
+                                                Double.parseDouble(areamap.get("derection").toString().trim())*Math.PI/180);
+                                        try {
+                                            Thread.sleep(500);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
                                         }
-                                        break;
-                                    case 9:
-                                        ServerSocketUtil.sendLSList(ZB_RobotDialog.idList);
-                                        break;
-                                    case 4:
-                                        break;
+                                        RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
+                                            @Override
+                                            public void call(NavigationResult data) {
+                                                Constant.debugLog("开始导航-->" + data.getCode() +
+                                                        "isSuccess" + data.isSuccess());
+                                            }
+                                        });
+                                    }
+                                }
+                            }else {
+                                if (ServerSocketUtil.isRunLS) {
+                                    if (RobotUtils.robotStatus != null) {
+                                        Constant.debugLog("aaaa" + RobotUtils.robotStatus.getStatus());
+                                        switch (RobotUtils.robotStatus.getStatus()) {
+                                            case 0:
+                                                break;
+                                            case 1:
+                                                isRunning = true;
+                                                if (Timeout >= 180) {
+                                                    sendNest();
+                                                }
+                                                break;
+                                            case 2:
+                                                break;
+                                            case 3:
+                                                if (isRunning) {
+                                                    sendNest();
+                                                }
+                                                break;
+                                            case 9:
+                                                sendNest();
+                                                break;
+                                            case 4:
+                                                break;
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -263,6 +295,13 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             }
         }
     };
+
+    public void sendNest(){
+        Timeout = 0;
+        isRunning = false;
+        ServerSocketUtil.LsCurrent++;
+        ServerSocketUtil.sendLSList(ZB_RobotDialog.idList);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

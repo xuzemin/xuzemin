@@ -179,6 +179,9 @@ public class ZB_RobotDialog extends Dialog {
                     ServerSocketUtil.LsCurrent = 0;
                     Constant.debugLog("idList"+idList.toString());
                     ServerSocketUtil.serverLoop = 0;
+                    ZB_MainActivity.TimeSettings = 0;
+                    ZB_MainActivity.Timeout = 0;
+                    ServerSocketUtil.isRunLS = true;
                     ServerSocketUtil.sendLSList(idList);
                     //Socket通讯
 //                    ServerSocketUtil.sendCommandCoordinate(IP, idList);
@@ -280,10 +283,11 @@ public class ZB_RobotDialog extends Dialog {
                             }
                             ServerSocketUtil.LsCurrent = 0;
                             ServerSocketUtil.serverLoop = 0;
+                            ServerSocketUtil.isRunLS = true;
+                            ZB_MainActivity.Timeout = 0;
+                            ZB_MainActivity.TimeSettings = 0;
                             ServerSocketUtil.sendLSList(idList);
                             Constant.debugLog("idList"+idList.toString());
-//                            ServerSocketUtil.sendCommandCoordinate(IP,idList);
-//                            sendCommandCoordinate();
                             dismiss();
                         }
                     }

@@ -47,7 +47,7 @@ public class ServerSocketUtil extends Service {
     //获取输入流
     private static InputStream in = null;
 
-    private static boolean isRunLS = false;
+    public static boolean isRunLS = false;
     public static int serverLoop = 0;
     //获取输出流
     private static OutputStream out = null;
@@ -814,7 +814,6 @@ public class ServerSocketUtil extends Service {
         RobotNavigationHelper.getInstance().stopGetNaviStatus();
     }
     public static void sendLSList(final List list){
-        isRunLS = true;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -829,8 +828,6 @@ public class ServerSocketUtil extends Service {
                             RobotNavigationHelper.getInstance().sendGoal(Double.parseDouble(deskmap.get("pointx").toString().trim())
                                     , Double.parseDouble(deskmap.get("pointy").toString().trim()),
                                     Double.parseDouble(deskmap.get("derection").toString().trim())*Math.PI/180);
-
-
                             try {
                                 Thread.sleep(500);
                             } catch (InterruptedException e) {
@@ -845,7 +842,7 @@ public class ServerSocketUtil extends Service {
                             });
                         }
                     }
-                }else if(LsCurrent == list.size() && ZB_RobotDialog.loop == 1){
+                }else if(LsCurrent == list.size() && (ZB_RobotDialog.loop == 1 || ZB_RobotDialog.loop == 3)){
                     Map areamap;
                     List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + ZB_MainActivity.CURRENT_AREA_id + "'", null);
                     if (area_list != null && area_list.size() > 0) {
@@ -871,9 +868,9 @@ public class ServerSocketUtil extends Service {
                     }
                 }else{
                     if (list.size() > 1) {
-                        if (ZB_RobotDialog.loop == 2) {
-                                LsCurrent = 0;
-                                ServerSocketUtil.sendLSList(list);
+                        if (ZB_RobotDialog.loop == 2 || ZB_RobotDialog.loop == 3) {
+                            LsCurrent = 0;
+                            ServerSocketUtil.sendLSList(list);
                         }
                     }
                 }

@@ -97,7 +97,7 @@ public class ZB_DeskConfigPathActivity extends Activity implements View.OnClickL
         areaId = intent.getIntExtra("area", 0);
 
         // 桌子名称
-        name = (TextView) findViewById(R.id.deskname);
+        name = findViewById(R.id.deskname);
         name.setOnClickListener(this);
 
         // 确定
@@ -114,10 +114,18 @@ public class ZB_DeskConfigPathActivity extends Activity implements View.OnClickL
         findViewById(R.id.coordinate).setOnClickListener(this);
         if (deskId == 0) {
             findViewById(R.id.btn_delete).setVisibility(View.GONE);
-            ((TextView) findViewById(R.id.title)).setText(R.string.desk_add);
+            if(Constant.isRestaurant){
+                ((TextView) findViewById(R.id.title)).setText(R.string.desk_location);
+            }else {
+                ((TextView) findViewById(R.id.title)).setText(R.string.desk_add);
+            }
             IsADD = true;
         } else {
-            ((TextView) findViewById(R.id.title)).setText(R.string.desk_settings);
+            if(Constant.isRestaurant){
+                ((TextView) findViewById(R.id.title)).setText(R.string.desk_deract_location);
+            }else {
+                ((TextView) findViewById(R.id.title)).setText(R.string.desk_settings);
+            }
             IsADD = false;
             // 查询桌子列表
             List<Map> deskList = robotDBHelper.queryListMap("select * from desk where id = '" + deskId + "'", null);
