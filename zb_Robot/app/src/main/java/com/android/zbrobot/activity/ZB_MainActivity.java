@@ -225,11 +225,11 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         case 6:
                             robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
                             getRobotData();
-                            if(ServerSocketUtil.isRunLS & isRunning){
+                            if(ServerSocketUtil.isRunLS  && isRunning ){
                                 TimeSettings ++;
                                 Timeout++;
                             }
-                            if(TimeSettings >= 600){   //10800){
+                            if(TimeSettings >= 300){   //10800){
                                 TimeSettings = 0;
                                 ServerSocketUtil.stopLSList();
                                 try {
@@ -259,32 +259,31 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                                         });
                                     }
                                 }
-                            }else {
-                                if (ServerSocketUtil.isRunLS) {
-                                    if (RobotUtils.robotStatus != null) {
-                                        Constant.debugLog("aaaa" + RobotUtils.robotStatus.getStatus());
-                                        switch (RobotUtils.robotStatus.getStatus()) {
-                                            case 0:
-                                                break;
-                                            case 1:
-                                                isRunning = true;
-                                                if (Timeout >= 180) {
-                                                    sendNest();
-                                                }
-                                                break;
-                                            case 2:
-                                                break;
-                                            case 3:
-                                                if (isRunning) {
-                                                    sendNest();
-                                                }
-                                                break;
-                                            case 9:
+                            }
+                            if (Timeout >= 60) {
+                                sendNest();
+                            }
+                            if (ServerSocketUtil.isRunLS) {
+                                if (RobotUtils.robotStatus != null) {
+                                    Constant.debugLog("aaaa" + RobotUtils.robotStatus.getStatus());
+                                    switch (RobotUtils.robotStatus.getStatus()) {
+                                        case 0:
+                                            break;
+                                        case 1:
+                                            isRunning = true;
+                                            break;
+                                        case 2:
+                                            break;
+                                        case 3:
+                                            if (isRunning) {
                                                 sendNest();
-                                                break;
-                                            case 4:
-                                                break;
-                                        }
+                                            }
+                                            break;
+                                        case 9:
+                                            sendNest();
+                                            break;
+                                        case 4:
+                                            break;
                                     }
                                 }
                             }

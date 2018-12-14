@@ -143,6 +143,5 @@
         <item>不回原点</item>
         <item>回原点</item>
         <item>循环</item>
-        <item>回原点并循环</item>
     </string-array>
 </resources>

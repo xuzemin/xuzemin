@@ -811,7 +811,13 @@ public class ServerSocketUtil extends Service {
     public static void stopLSList(){
         ZB_MainActivity.isRunning = false;
         isRunLS = false;
-        RobotNavigationHelper.getInstance().stopGetNaviStatus();
+        RobotNavigationHelper.getInstance().stopNav(new CallBack<NavigationResult>() {
+            @Override
+            public void call(NavigationResult navigationResult) {
+                Constant.debugLog("开始导航-->" + navigationResult.getCode() +
+                        "isSuccess" + navigationResult.isSuccess());
+            }
+        });
     }
     public static void sendLSList(final List list){
         new Thread(new Runnable() {
@@ -842,7 +848,7 @@ public class ServerSocketUtil extends Service {
                             });
                         }
                     }
-                }else if(LsCurrent == list.size() && (ZB_RobotDialog.loop == 1 || ZB_RobotDialog.loop == 3)){
+                }else if(LsCurrent == list.size() && ZB_RobotDialog.loop == 1 ){
                     Map areamap;
                     List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + ZB_MainActivity.CURRENT_AREA_id + "'", null);
                     if (area_list != null && area_list.size() > 0) {
@@ -868,7 +874,7 @@ public class ServerSocketUtil extends Service {
                     }
                 }else{
                     if (list.size() > 1) {
-                        if (ZB_RobotDialog.loop == 2 || ZB_RobotDialog.loop == 3) {
+                        if (ZB_RobotDialog.loop == 2 ) {
                             LsCurrent = 0;
                             ServerSocketUtil.sendLSList(list);
                         }
