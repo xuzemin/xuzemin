@@ -20,6 +20,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -95,6 +96,9 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
     private List<Map<String, Object>> areaData_list = new ArrayList<>();
     // 桌面数据列
     private List<Map<String, Object>> deskData_list = new ArrayList<>();
+
+    private static int runtime = 0;
+    private static int outime = 0;
 
     // 左侧平移出的linearLayout_all
     private LinearLayout linearLayout_all;
@@ -225,43 +229,29 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                         case 6:
                             robotDBHelper.execSQL("update robot set outline = '1' where ip = '192.168.106.1'");
                             getRobotData();
-                            if(ServerSocketUtil.isRunLS  && isRunning ){
-                                TimeSettings ++;
-                                Timeout++;
-                            }
-                            if(TimeSettings >= 300){   //10800){
-                                TimeSettings = 0;
-                                ServerSocketUtil.stopLSList();
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                            if(ServerSocketUtil.isRunLS ){
+                                if(runtime !=0){
+                                    TimeSettings ++;
                                 }
-                                Map areamap;
-                                List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + ZB_MainActivity.CURRENT_AREA_id + "'", null);
-                                if (area_list != null && area_list.size() > 0) {
-                                    areamap = area_list.get(0);
-                                    if (areamap.get("point_x_back") != null && areamap.get("point_y_back") != null && areamap.get("derection") != null) {
-                                        RobotNavigationHelper.getInstance().sendGoal(Double.parseDouble(areamap.get("point_x_back").toString().trim())
-                                                , Double.parseDouble(areamap.get("point_y_back").toString().trim()),
-                                                Double.parseDouble(areamap.get("derection").toString().trim())*Math.PI/180);
-                                        try {
-                                            Thread.sleep(500);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                        RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
-                                            @Override
-                                            public void call(NavigationResult data) {
-                                                Constant.debugLog("开始导航-->" + data.getCode() +
-                                                        "isSuccess" + data.isSuccess());
-                                            }
-                                        });
-                                    }
+                                if(outime !=0){
+                                    Timeout++;
                                 }
                             }
-                            if (Timeout >= 60) {
-                                sendNest();
+                            if(runtime != 0) {
+                                if (TimeSettings >= (runtime * 60)) {   //10800){
+                                    TimeSettings = 0;
+                                    Timeout = 0;
+                                    isRunning = false;
+                                    ServerSocketUtil.isRunLS = false;
+                                    Toast.makeText(getApplicationContext(), "停止运动", Toast.LENGTH_LONG).show();
+                                    goBack();
+                                }
+                            }
+                            if(outime !=0) {
+                                if (Timeout >= outime*60) {
+                                    sendNest();
+                                    Toast.makeText(getApplicationContext(), "行走超时，出发下一点", Toast.LENGTH_LONG).show();
+                                }
                             }
                             if (ServerSocketUtil.isRunLS) {
                                 if (RobotUtils.robotStatus != null) {
@@ -277,6 +267,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                                         case 3:
                                             if (isRunning) {
                                                 sendNest();
+                                                Toast.makeText(getApplicationContext(),"到达目标，出发下一点",Toast.LENGTH_LONG).show();
                                             }
                                             break;
                                         case 9:
@@ -294,6 +285,30 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             }
         }
     };
+    public void goBack(){
+        Map areamap;
+        List<Map> area_list = robotDBHelper.queryListMap("select * from area where id = '" + ZB_MainActivity.CURRENT_AREA_id + "'", null);
+        if (area_list != null && area_list.size() > 0) {
+            areamap = area_list.get(0);
+            if (areamap.get("point_x_back") != null && areamap.get("point_y_back") != null && areamap.get("derection") != null) {
+                RobotNavigationHelper.getInstance().sendGoal(Double.parseDouble(areamap.get("point_x_back").toString().trim())
+                        , Double.parseDouble(areamap.get("point_y_back").toString().trim()),
+                        Double.parseDouble(areamap.get("derection").toString().trim())*Math.PI/180);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
+                    @Override
+                    public void call(NavigationResult data) {
+                        Constant.debugLog("开始导航-->" + data.getCode() +
+                                "isSuccess" + data.isSuccess());
+                    }
+                });
+            }
+        }
+    }
 
     public void sendNest(){
         Timeout = 0;
@@ -572,19 +587,16 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         }
         mhandle.sendEmptyMessageDelayed(Constant.MSG_REFRESH_CONNECT,1000);
 
-        List<Map> listrobot = robotDBHelper.queryListMap("select * from robot ", null);
+        List<Map> listrobot = robotDBHelper.queryListMap("select * from robot where ip = '192.168.106.1'", null);
         boolean ishaverobot = false;
-        for(Map map : listrobot){
-            if(map.get("ip").equals("192.168.106.1")){
-                ishaverobot = true;
-                break;
-            }
+        if(listrobot!=null && listrobot.size()>0){
+            ishaverobot = true;
         }
         if(!ishaverobot){
             robotDBHelper.execSQL("insert into robot (name,ip,state,outline,electric,robotstate,obstacle," +
                     "commandnum,excute,excutetime,commandstate,lastcommandstate,lastlocation,area,pathway,outtime" +
-                    ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle , loop_number) values " +
-                    "('雷达','" + "192.168.106.1" + "',0,0,100,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0)");
+                    ",turnback,goal,up_obstacle,down_obstacle ,side_obstacle , loop_number,runtime) values " +
+                    "('雷达','" + "192.168.106.1" + "',0,0,100,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,5)");
         }
     }
 
@@ -749,6 +761,15 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
         getDeskData();
         getRobotData();
         SJXGridViewAdapter.notifyDataSetInvalidated();
+        List<Map> robotSlam = robotDBHelper.queryListMap("select * from robot where ip = '192.168.106.1'", null);
+        if(robotSlam != null && robotSlam.size() >0) {
+            runtime = (int) robotSlam.get(0).get("runtime");
+            outime = (int) robotSlam.get(0).get("outtime");
+        }else{
+            runtime = 0;
+            outime = 0;
+        }
+        Log.e("传值","value"+runtime +" "+outime );
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

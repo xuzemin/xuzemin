@@ -811,13 +811,21 @@ public class ServerSocketUtil extends Service {
     public static void stopLSList(){
         ZB_MainActivity.isRunning = false;
         isRunLS = false;
-        RobotNavigationHelper.getInstance().stopNav(new CallBack<NavigationResult>() {
-            @Override
-            public void call(NavigationResult navigationResult) {
-                Constant.debugLog("开始导航-->" + navigationResult.getCode() +
-                        "isSuccess" + navigationResult.isSuccess());
-            }
-        });
+//        RobotNavigationHelper.getInstance().stopNav(new CallBack<NavigationResult>() {
+//            @Override
+//            public void call(NavigationResult navigationResult) {
+//                Constant.debugLog("开始导航-->" + navigationResult.getCode() +
+//                        "isSuccess" + navigationResult.isSuccess());
+//                if(navigationResult.isSuccess()){
+//                    RobotNavigationHelper.getInstance().startNav(new CallBack<NavigationResult>() {
+//                        @Override
+//                        public void call(NavigationResult navigationResult) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//        });
     }
     public static void sendLSList(final List list){
         new Thread(new Runnable() {

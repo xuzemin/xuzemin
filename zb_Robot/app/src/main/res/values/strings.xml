@@ -52,16 +52,16 @@
     <string name="open_obstacle">障碍物打开</string>
     <string name="main">首页</string>
     <string name="dining">智宝机器人</string>
-    <string name="desk_add">添加桌子</string>
-    <string name="desk_settings">添加桌子</string>
-    <string name="desk_deract">编辑桌子</string>
+    <string name="desk_add">添加位置</string>
+    <string name="desk_settings">添加位置</string>
+    <string name="desk_deract">编辑名称</string>
     <string name="desk_location">添加位置</string>
     <string name="desk_deract_location">编辑位置</string>
     <string name="command_deract">编辑命令</string>
     <string name="robot_settings">机器人编辑</string>
     <string name="command_settings">添加指令</string>
     <string name="added_settings">已有指令</string>
-    <string name="add_desk">请输入桌子名称</string>
+    <string name="add_desk">请输入名称</string>
     <string name="name_setting">确认修改</string>
     <string name="remote_control">遥控器</string>
 
@@ -129,7 +129,7 @@
             INTEGER , excutetime INTEGER ,commandstate INTEGER ,lastcommandstate INTEGER
             ,lastlocation INTEGER,pathway INTEGER,point_x INTEGER,point_y INTEGER,direction INTEGER
             ,outtime INTEGER,turnback INTEGER,goal INTERGER,up_obstacle INTEGER,down_obstacle INTEGER,side_obstacle
-            INTEGER,loop_number INTEGER)
+            INTEGER,loop_number INTEGER,runtime INTEGER)
         </item>
         <!--ID卡-->
         <item>CREATE TABLE card (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,address INTERGER)

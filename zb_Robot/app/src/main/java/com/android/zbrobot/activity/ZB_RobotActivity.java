@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -54,6 +55,8 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
     public static int goalNum = -1, isturnback = -1;
 
     private List<Map> list;
+
+    private static boolean isouttime = false;
 
     // 设置按钮
     private Button setting_redact;
@@ -244,7 +247,7 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             ((TextView) findViewById(R.id.obstacle)).setText("有");
         }
         if ((int) robotConfig.get("pathway") == 0) {
-            findViewById(R.id.robot_outimesetting).setVisibility(View.GONE);
+            findViewById(R.id.runtime).setVisibility(View.GONE);
             ((TextView) findViewById(R.id.pathway)).setText("有");
         } else {
             ((TextView) findViewById(R.id.pathway)).setText("无");
@@ -254,14 +257,34 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             findViewById(R.id.robot_card).setVisibility(View.GONE);
             findViewById(R.id.robot_turnback).setVisibility(View.GONE);
             findViewById(R.id.robot_loop).setVisibility(View.VISIBLE);
-            findViewById(R.id.robot_outimesetting).setVisibility(View.GONE);
-//            findViewById(R.id.robot_outimesetting).setVisibility(View.VISIBLE);
-//            if(robotConfig.get("setting_outime")!=null){
-//                ((TextView)findViewById(R.id.setting_outime)).setText(""+robotConfig.get("setting_outime"));
-//            }else{
-//                ((TextView)findViewById(R.id.setting_outime)).setText("null");
-//            }
-//            findViewById(R.id.setting_outime).setOnClickListener(this);
+            findViewById(R.id.runtime).setVisibility(View.VISIBLE);
+            if(robotConfig.get("runtime")!=null){
+                int runtime = (int)(robotConfig.get("runtime"));
+                Log.e("传值 runtime","runtime"+runtime);
+                if(runtime != 0) {
+                    ((TextView) findViewById(R.id.runtime_text)).setText("" + runtime+ "分钟");
+                }else{
+                    ((TextView) findViewById(R.id.runtime_text)).setText("不设置运行时间");
+                }
+            }else{
+                ((TextView)findViewById(R.id.runtime_text)).setText("不设置运行时间");
+            }
+            findViewById(R.id.runtime).setOnClickListener(this);
+
+            findViewById(R.id.runouttime).setVisibility(View.VISIBLE);
+            if(robotConfig.get("outtime")!=null){
+                int outtime = (int)(robotConfig.get("outtime"));
+                Log.e("传值 runtime","outtime"+outtime);
+                if(outtime != 0) {
+                    ((TextView) findViewById(R.id.runouttime_text)).setText("" + outtime+ "分钟");
+                }else{
+                    ((TextView) findViewById(R.id.runouttime_text)).setText("不设置运行时间");
+                }
+            }else{
+                ((TextView)findViewById(R.id.runouttime_text)).setText("不设置运行时间");
+            }
+            findViewById(R.id.runouttime).setOnClickListener(this);
+
             loopSp = findViewById(R.id.loop);
             loopSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -281,7 +304,12 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.setting_outime:
+            case R.id.runtime:
+                isouttime = true;
+                dialog_Text();
+                break;
+            case R.id.runouttime:
+                isouttime = false;
                 dialog_Text();
                 break;
             // 机器人状态设置
@@ -365,8 +393,12 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
             textDialog.getTitle().setText("旋转超时时间修改");
             textDialog.getTitleTemp().setText("请输入超时时间");
         }else{
-            textDialog.getTitle().setText("运行超时时间修改");
-            textDialog.getTitleTemp().setText("请输入超时时间");
+            if(isouttime) {
+                textDialog.getTitle().setText("运行时间修改");
+            }else{
+                textDialog.getTitle().setText("超时时间修改");
+            }
+            textDialog.getTitleTemp().setText("请输入时间(分钟)");
         }
         editText = (EditText) textDialog.getEditText();
         // 输入类型为数字文本
@@ -381,9 +413,23 @@ public class ZB_RobotActivity extends Activity implements View.OnClickListener {
                         textDialog.dismiss();
                         ((TextView) findViewById(R.id.outtime)).setText(editText.getText().toString().trim());
                     }else{
-//                        robotDBHelper.execSQL("update robot set setting_outime = '" + editText.getText().toString().trim() + "' where id= '" + robotId + "'");
-//                        textDialog.dismiss();
-//                        ((TextView) findViewById(R.id.setting_outime)).setText(editText.getText().toString().trim());
+                        if(isouttime) {
+                            robotDBHelper.execSQL("update robot set runtime = '" + editText.getText().toString().trim() + "' where id= '" + robotId + "'");
+                            if(!editText.getText().toString().trim().equals("0")) {
+                                ((TextView) findViewById(R.id.runtime_text)).setText(editText.getText().toString().trim() + "分钟");
+                            }else{
+                                ((TextView) findViewById(R.id.runtime_text)).setText("不设置运行时间");
+                            }
+                            textDialog.dismiss();
+                        }else{
+                            robotDBHelper.execSQL("update robot set outtime = '" + editText.getText().toString().trim() + "' where id= '" + robotId + "'");
+                            if(editText.getText().toString().trim().equals("0")){
+                                ((TextView) findViewById(R.id.runouttime_text)).setText("不设置运行时间");
+                            }else{
+                                ((TextView) findViewById(R.id.runouttime_text)).setText(editText.getText().toString().trim() + "分钟");
+                            }
+                            textDialog.dismiss();
+                        }
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "请输入参数", Toast.LENGTH_SHORT).show();

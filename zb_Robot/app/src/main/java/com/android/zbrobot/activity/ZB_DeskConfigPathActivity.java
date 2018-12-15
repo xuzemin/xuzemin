@@ -393,8 +393,8 @@ public class ZB_DeskConfigPathActivity extends Activity implements View.OnClickL
     private void dialog_Text() {
         textDialog = new ZB_MyDialog(this);
         editText = (EditText) textDialog.getEditText();
-        textDialog.getTitle().setText("桌名修改");
-        textDialog.getTitleTemp().setText("请输入新桌名");
+        textDialog.getTitle().setText("名称修改");
+        textDialog.getTitleTemp().setText("请输入新名称");
         // 确定Dialog
         textDialog.setOnPositiveListener(new View.OnClickListener() {
             @Override
