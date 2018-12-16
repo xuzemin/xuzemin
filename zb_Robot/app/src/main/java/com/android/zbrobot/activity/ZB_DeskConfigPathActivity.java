@@ -226,7 +226,7 @@ public class ZB_DeskConfigPathActivity extends Activity implements View.OnClickL
 
     public void testClick(View v) {
         if (IsADD) {
-            Toast.makeText(getApplicationContext(), "请先添加餐桌名称", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "请先添加位置名称", Toast.LENGTH_SHORT).show();
         }
         switch (v.getId()) {
             // 添加直行
