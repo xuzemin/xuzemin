@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.Application.Object.HttpCode;
 import com.Application.Object.Person;
 import com.Application.utils.Constant;
+import com.Application.utils.DataUtils;
 import com.google.gson.Gson;
 import com.web.sql.MySqlConnector;
 
@@ -61,7 +62,9 @@ public class LoginServlet extends HttpServlet {
 						try {
 							person.setUserId(rs.getInt("userId"));
 							person.setUserType(rs.getInt("userType"));
-							person.setLastlogin(rs.getTimestamp("lastLogintime"));
+							
+							person.setLastlogin(DataUtils.getInstance().getDateString(rs.getTimestamp("lastLogintime")
+									, DataUtils.BaseDateType));
 							person.setMacAddress(rs.getString("macAddress"));
 							person.setUserUseName(rs.getString("userUseName"));
 							System.out.println(rs.getString("userUseName"));
@@ -94,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 			Gson gson=new Gson();
 			String stuJson=gson.toJson(httpcode);
 			response.setCharacterEncoding("GBK");
-//			response.setContentType("text/html;charset=utf-8");
+			response.setContentType("text/html;charset=utf-8");
 			response.getWriter().append(stuJson);
 			
 			

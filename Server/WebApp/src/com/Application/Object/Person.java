@@ -1,13 +1,12 @@
 package com.Application.Object;
 
-import java.sql.Timestamp;
 
 public class Person {
 	private int userId;
 	private String userName;
 	private String userPassword;
 	private int userType;
-	private Timestamp lastlogin;
+	private String lastlogin;
 	private String macAddress;
 	private String userUseName;
 	public String getUserUseName() {
@@ -16,10 +15,10 @@ public class Person {
 	public void setUserUseName(String userUseName) {
 		this.userUseName = userUseName;
 	}
-	public Timestamp getLastlogin() {
+	public String getLastlogin() {
 		return lastlogin;
 	}
-	public void setLastlogin(Timestamp lastlogin) {
+	public void setLastlogin(String lastlogin) {
 		this.lastlogin = lastlogin;
 	}
 	public String getMacAddress() {

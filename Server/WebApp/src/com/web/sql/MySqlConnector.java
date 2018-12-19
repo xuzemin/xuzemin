@@ -55,8 +55,6 @@ public class MySqlConnector {
 				String sql = "select * from "+table+" where userName = '"+name+"'";
 				rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					System.out.println(rs.getString("userName"));
-					System.out.println(rs.getString("userPassword"));
 					return rs;
 				}
 			} catch (SQLException e) {
@@ -68,7 +66,6 @@ public class MySqlConnector {
 	}
 	public boolean updateSql(String table,String userid,int id,HashMap<String, ?> map){
 		if(connect != null && stmt != null) {
-			PreparedStatement ps = null;
 			String sql = "update "+ table +" set " ;
 			List<Object> list = new ArrayList<Object>();
 			Set<String> keys = map.keySet();
