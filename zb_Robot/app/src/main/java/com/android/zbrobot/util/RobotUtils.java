@@ -40,6 +40,12 @@ public class RobotUtils {
             return;
         }
         isRunning = true;
+        ROSConnectHelper.getInstance().disconnect();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ROSConnectHelper.getInstance().connect("192.168.106.1", 8080, new ROSClient.ConnectionStatusListener() {
             @Override
             public void onConnect() {

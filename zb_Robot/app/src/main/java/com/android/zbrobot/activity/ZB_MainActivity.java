@@ -243,14 +243,14 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                                     Timeout = 0;
                                     isRunning = false;
                                     ServerSocketUtil.isRunLS = false;
-                                    Toast.makeText(getApplicationContext(), "停止运动", Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(getApplicationContext(), "停止运动", Toast.LENGTH_LONG).show();
                                     goBack();
                                 }
                             }
                             if(outime !=0) {
                                 if (Timeout >= outime*60) {
                                     sendNest();
-                                    Toast.makeText(getApplicationContext(), "行走超时，出发下一点", Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(getApplicationContext(), "行走超时，出发下一点", Toast.LENGTH_LONG).show();
                                 }
                             }
                             if (ServerSocketUtil.isRunLS) {
@@ -267,7 +267,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
                                         case 3:
                                             if (isRunning) {
                                                 sendNest();
-                                                Toast.makeText(getApplicationContext(),"到达目标，出发下一点",Toast.LENGTH_LONG).show();
+//                                                Toast.makeText(getApplicationContext(),"到达目标，出发下一点",Toast.LENGTH_LONG).show();
                                             }
                                             break;
                                         case 9:
@@ -735,6 +735,7 @@ public class ZB_MainActivity extends Activity implements View.OnClickListener, A
             this.unregisterReceiver(receiver);
         }
         mhandle.removeMessages(Constant.MSG_REFRESH_CONNECT);
+        ROSConnectHelper.getInstance().disconnect();
     }
 
     @Override
