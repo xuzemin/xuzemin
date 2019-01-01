@@ -19,7 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
 
-            <com.android.lottery.lottery.view.RoundImageView
+            <com.android.lottery.view.RoundImageView
                 android:id="@+id/book_fragment_head_img"
                 android:layout_width="@dimen/head_img_size"
                 android:layout_height="@dimen/head_img_size"

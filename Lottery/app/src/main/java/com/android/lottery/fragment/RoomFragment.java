@@ -75,9 +75,9 @@ public class RoomFragment extends Fragment {
 		RoundImageView headImg = (RoundImageView) view
 				.findViewById(R.id.book_fragment_head_img);
 
-		TextView userName = (TextView) view
+		TextView userName =  view
 				.findViewById(R.id.book_fragment_head_name);
-		TextView userDeclaration = (TextView) view
+		TextView userDeclaration =  view
 				.findViewById(R.id.book_fragment_head_declaration);
 		setDateView(headImg, userName, userDeclaration);
 	}
