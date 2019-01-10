@@ -19,8 +19,9 @@
     <string name="logo_youku">Youku</string>
     <string name="logo_youtube">Youtube</string>
 
-    <string name="video">video</string>
-    <string name="news">news</string>
-
+    <string name="video">Video</string>
+    <string name="news">News</string>
+    <string name="message">Message</string>
+    <string name="social_contact">Social Contact</string>
     <string name="all">All Content</string>
 </resources>

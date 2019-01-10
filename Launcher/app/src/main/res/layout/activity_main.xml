@@ -3,12 +3,22 @@
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="@mipmap/back">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="@dimen/layout_left"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_settings_selector"
+            />
+    </RelativeLayout>
     <HorizontalScrollView
         android:id="@+id/horizontal"
-        android:paddingTop="20dp"
-        android:paddingLeft="30dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="match_parent">
@@ -18,66 +28,248 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="@dimen/layout_left"
+                android:layout_height="match_parent"
+                android:background="@mipmap/logo_qiy"
+                android:visibility="invisible" />
+
             <LinearLayout
                 android:layout_width="@dimen/layout_width"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/layout_top"
+                android:layout_marginBottom="@dimen/layout_bottom"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:background="@drawable/shape_title"
                     android:layout_height="@dimen/layout_height">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/news"
+                        android:layout_marginLeft="@dimen/layout_left"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/layout_textSize" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/relayout_top"
+                    android:background="@drawable/shape_corner"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:id="@+id/bbc"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_bbc"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_bbc" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/bbc"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/cnn"
+                        android:layout_toRightOf="@+id/bbc"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_cnn"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_cnn" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/ccn"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/google"
+                        android:layout_below="@+id/bbc"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_google"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_googlenews" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/google_news"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/economist"
+                        android:layout_toRightOf="@+id/google"
+                        android:layout_below="@+id/cnn"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_economist"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_economist" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/economist"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/layout_width"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/layout_left"
+                android:layout_marginBottom="@dimen/layout_bottom"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/shape_title"
+                    android:layout_height="@dimen/layout_height">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/video"
-                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/layout_left"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/layout_textSize" />
                 </LinearLayout>
-
                 <RelativeLayout
-                    android:id="@+id/amazon"
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/relayout_top"
+                    android:background="@drawable/shape_corner"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:id="@+id/spotify"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_spotify"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_spotify" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/logo_spotify"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/btn_amazon"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_amazon" />
+                    <LinearLayout
+                        android:id="@+id/youku"
+                        android:layout_toRightOf="@+id/spotify"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_youku"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_youku" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/amazon"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/logo_youku"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/bbc"
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
+                    <LinearLayout
+                        android:id="@+id/iqy"
+                        android:layout_below="@+id/spotify"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_iqy"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_qiy" />
 
-                    <ImageButton
-                        android:id="@+id/btn_bbc"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_bbc" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/logo_qiy"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/bbc"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                    <LinearLayout
+                        android:id="@+id/youtube"
+                        android:layout_toRightOf="@+id/iqy"
+                        android:layout_below="@+id/youku"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_youtube"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_youtube" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/logo_youtube"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -85,278 +277,163 @@
                 android:layout_width="@dimen/layout_width"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/layout_left"
-                android:layout_marginTop="@dimen/layout_top"
+                android:layout_marginBottom="@dimen/layout_bottom"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:background="@drawable/shape_title"
                     android:layout_height="@dimen/layout_height">
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/news"
-                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/layout_left"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/layout_textSize" />
                 </LinearLayout>
-
                 <RelativeLayout
-                    android:id="@+id/youtube"
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
-
-                    <ImageButton
-                        android:id="@+id/btn_youtube"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_youtube" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_youtube"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/iqy"
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
-
-                    <ImageButton
-                        android:id="@+id/btn_iqy"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_qiy" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_qiy"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="@dimen/layout_width"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/layout_left"
-                android:layout_marginTop="@dimen/layout_top"
-                android:orientation="vertical">
-
-                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/layout_height">
+                    android:layout_marginTop="@dimen/relayout_top"
+                    android:background="@drawable/shape_corner"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:id="@+id/weibo"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_weibo"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_weibo" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/logo_weibo"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/news"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/layout_textSize" />
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/facebook"
+                        android:layout_toRightOf="@+id/weibo"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_fb"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_fb" />
 
-                <RelativeLayout
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/fb"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
 
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_youtube" />
+                    <LinearLayout
+                        android:id="@+id/instagram"
+                        android:layout_below="@+id/weibo"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_ig"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_ig" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_youtube"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/logo_ig"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
+                    <LinearLayout
+                        android:id="@+id/twitter"
+                        android:layout_toRightOf="@+id/instagram"
+                        android:layout_below="@+id/facebook"
+                        android:layout_width="@dimen/relayout_wid"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="@dimen/btn_left"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/btn_top">
+                        <ImageView
+                            android:id="@+id/btn_twitter"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/relayout_wid"
+                            android:background="@mipmap/logo_twitter" />
 
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_qiy" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_qiy"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/layout_left"
-                android:layout_marginTop="@dimen/layout_top"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/layout_height">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/news"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/layout_textSize" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_youtube" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_youtube"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_qiy" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_qiy"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/logo_twitter"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="@dimen/layout_width"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/layout_left"
-                android:layout_marginTop="@dimen/layout_top"
-                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/layout_height">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/news"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/layout_textSize" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_youtube" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_youtube"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="@dimen/layout_width"
-                    android:layout_height="@dimen/layout_width"
-                    android:layout_marginTop="@dimen/btn_top">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/logo_qiy" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/text_height"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:text="@string/logo_qiy"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size" />
-                </RelativeLayout>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="900dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="@dimen/layout_top"
+                android:layout_marginLeft="@dimen/layout_left"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:background="@drawable/shape_title"
                     android:layout_height="@dimen/layout_height">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/all"
-                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/layout_left"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/layout_textSize" />
                 </LinearLayout>
-
-                <GridView
-                    android:id="@+id/all_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/layout_top"
-                    android:gravity="center"
-                    android:numColumns="6"
-                    android:verticalSpacing="15dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:background="@drawable/shape_corner"
+                    android:layout_marginTop="@dimen/relayout_top"
+                    android:layout_marginBottom="@dimen/layout_bottom"
+                    android:layout_height="match_parent">
+                    <GridView
+                        android:id="@+id/all_content"
+                        android:layout_marginTop="25dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:numColumns="6"
+                        android:verticalSpacing="15dp" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
-                android:layout_width="60dp"
+                android:layout_width="@dimen/layout_left"
                 android:layout_height="match_parent"
                 android:background="@mipmap/logo_qiy"
                 android:visibility="invisible" />

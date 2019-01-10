@@ -22,5 +22,7 @@
 
     <string name="video">在线视频</string>
     <string name="news">新闻</string>
+    <string name="message">资讯</string>
+    <string name="social_contact">社交</string>
     <string name="all">所有内容</string>
 </resources>

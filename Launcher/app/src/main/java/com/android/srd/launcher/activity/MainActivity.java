@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -27,10 +28,8 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements View.OnClickListener {
     private IntentUrl intentUrl;
     private Intent intent;
-    private RelativeLayout amazon;
-    private RelativeLayout bbc;
-    private ImageButton btn_amazon;
-    private ImageButton btn_bbc;
+    private LinearLayout amazon;
+    private LinearLayout bbc;
     private GridView gridView;
     private GridViewAdapter gridViewAdapter;
     private ArrayList<GridItem> mGridData;
@@ -49,13 +48,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
 
-        amazon = findViewById(R.id.amazon);
+//        amazon = findViewById(R.id.amazon);
         bbc = findViewById(R.id.bbc);
-        btn_amazon = findViewById(R.id.btn_amazon);
-        btn_bbc = findViewById(R.id.btn_bbc);
-        amazon.setOnClickListener(this);
-        btn_amazon.setOnClickListener(this);
-        btn_bbc.setOnClickListener(this);
+//        amazon.setOnClickListener(this);
         bbc.setOnClickListener(this);
 
         gridView = findViewById(R.id.all_content);
@@ -125,37 +120,41 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.amazon:
-                intentUrl=new IntentUrl();
-                intentUrl.setUrl("https://www.amazon.com/");
-                intent=new Intent(this,WebViewActivty.class);
-                intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
-                startActivity(intent);
-                break;
-
+//            case R.id.amazon:
+//                intentUrl=new IntentUrl();
+//                intentUrl.setUrl("https://www.amazon.com/");
+//                intent=new Intent(this,WebViewActivty.class);
+//                intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
+//                startActivity(intent);
+//                break;
+//
             case R.id.bbc:
-                intentUrl=new IntentUrl();
-                intentUrl.setUrl("https://www.bbc.co.uk/news");
-                intent=new Intent(this,WebViewActivty.class);
-                intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
-                startActivity(intent);
+                starIntent("https://www.bbc.co.uk/news");
                 break;
-
-            case R.id.btn_amazon:
-                intentUrl=new IntentUrl();
-                intentUrl.setUrl("https://www.amazon.com/");
-                intent=new Intent(this,WebViewActivty.class);
-                intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
-                startActivity(intent);
-                break;
-
-            case R.id.btn_bbc:
-                intentUrl=new IntentUrl();
-                intentUrl.setUrl("https://www.bbc.co.uk/news");
-                intent=new Intent(this,WebViewActivty.class);
-                intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
-                startActivity(intent);
-                break;
+//
+//            case R.id.btn_amazon:
+//                intentUrl=new IntentUrl();
+//                intentUrl.setUrl("https://www.amazon.com/");
+//                intent=new Intent(this,WebViewActivty.class);
+//                intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
+//                startActivity(intent);
+//                break;
+//
+//            case R.id.btn_bbc:
+//                intentUrl=new IntentUrl();
+//                intentUrl.setUrl("https://www.bbc.co.uk/news");
+//                intent=new Intent(this,WebViewActivty.class);
+//                intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
+//                startActivity(intent);
+//                break;
         }
+    }
+
+    public void starIntent(String url){
+        intentUrl=new IntentUrl();
+        intentUrl.setUrl(url);
+        intent=new Intent(this,WebViewActivty.class);
+        intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
+        startActivity(intent);
     }
 }
