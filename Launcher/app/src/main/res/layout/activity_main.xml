@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@mipmap/back">
+    <HorizontalScrollView
+        android:id="@+id/horizontal"
+        android:paddingTop="20dp"
+        android:paddingLeft="30dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/layout_width"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/video"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/layout_textSize" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/amazon"
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:id="@+id/btn_amazon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_amazon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/amazon"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bbc"
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:id="@+id/btn_bbc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_bbc" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/bbc"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/layout_width"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/layout_left"
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/news"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/layout_textSize" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/youtube"
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:id="@+id/btn_youtube"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_youtube" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_youtube"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/iqy"
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:id="@+id/btn_iqy"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_qiy" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_qiy"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/layout_width"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/layout_left"
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/news"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/layout_textSize" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_youtube" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_youtube"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_qiy" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_qiy"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/layout_left"
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/news"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/layout_textSize" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_youtube" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_youtube"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_qiy" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_qiy"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/layout_width"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/layout_left"
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/news"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/layout_textSize" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_youtube" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_youtube"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/layout_width"
+                    android:layout_height="@dimen/layout_width"
+                    android:layout_marginTop="@dimen/btn_top">
+
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/logo_qiy" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_height"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:text="@string/logo_qiy"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="900dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_height">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/all"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/layout_textSize" />
+                </LinearLayout>
+
+                <GridView
+                    android:id="@+id/all_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/layout_top"
+                    android:gravity="center"
+                    android:numColumns="6"
+                    android:verticalSpacing="15dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/logo_qiy"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout >
