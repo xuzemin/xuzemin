@@ -5,12 +5,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.srd.launcher.Object.GridItem;
@@ -19,6 +24,7 @@ import com.android.srd.launcher.R;
 import com.android.srd.launcher.activity.WebViewActivty;
 import com.android.srd.launcher.adapter.GridViewAdapter;
 import com.android.srd.launcher.util.Constant;
+import com.android.srd.launcher.util.ScreenUtil;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -35,21 +41,24 @@ public class MyDialog extends Dialog {
     private Intent intent;
     private TextView title;
     private Context context;
+    private LinearLayout background;
     private ArrayList<GridItem> mGridData;
     private GridViewAdapter gridViewAdapter;
     private static ArrayList<String> urllist;
     private GridView girdView;
     private Bitmap bmp;
+    private View.OnClickListener backgoundClick;
     public MyDialog(@NonNull Context context, @StyleRes int themeResId,int xmlId) {
         super(context, themeResId);
         this.xmlId = xmlId;
         this.context = context;
     }
-    public MyDialog(@NonNull Context context, @StyleRes int themeResId, int xmlId, Bitmap bmp) {
+    public MyDialog(@NonNull Context context, @StyleRes int themeResId, int xmlId, Bitmap bmp, View.OnClickListener backgoundClick) {
         super(context, themeResId);
         this.xmlId = xmlId;
         this.context = context;
         this.bmp = bmp;
+        this.backgoundClick = backgoundClick;
     }
 
     @Override
@@ -81,6 +90,13 @@ public class MyDialog extends Dialog {
         }
         setCancelable(true);
         setCanceledOnTouchOutside(true);
+//        if(bmp !=null){
+        background = findViewById(R.id.background);
+        if(bmp !=null) {
+            background.setBackgroundDrawable(new BitmapDrawable(bmp));
+        }
+        background.setOnClickListener(backgoundClick);
+//        }
         title = findViewById(R.id.title);
         girdView = findViewById(R.id.news_girdview);
     }
@@ -193,6 +209,22 @@ public class MyDialog extends Dialog {
         switch (xmlId){
 
         }
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        /**
+         * 设置宽度全屏，要设置在show的后面
+         */
+
+        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+        layoutParams.gravity = Gravity.BOTTOM;
+        layoutParams.width = ScreenUtil.getScreenWidth(context);
+        layoutParams.height = ScreenUtil.getScreenHeight(context);
+        getWindow().getDecorView().setPadding(0, 0, 0, 0);
+        getWindow().setAttributes(layoutParams);
+        getWindow().setWindowAnimations(R.style.dialogWindowAnim);
     }
 
 }
