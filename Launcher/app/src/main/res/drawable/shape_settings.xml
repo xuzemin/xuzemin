@@ -10,9 +10,14 @@
     android:centerY="0.5"       渐变中心相对Y坐标只有渐变类型为放射渐变时有效
     android:gradientRadius="100"    渐变半径 非线性放射有效
      -->
+    <!--<gradient-->
+        <!--android:startColor="#8F8F8F"-->
+        <!--android:endColor="#A9A9A9"-->
+        <!--android:angle="270"-->
+        <!--/>-->
     <gradient
-        android:startColor="#8F8F8F"
-        android:endColor="#A9A9A9"
+        android:startColor="#497AD7"
+        android:endColor="#497AD7"
         android:angle="270"
         />
     <corners android:topLeftRadius="20dp"

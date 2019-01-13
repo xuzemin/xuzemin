@@ -64,6 +64,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView(){
         if(!Constant.isCN) {
+
+
+
             girdview_layout.setVisibility(View.GONE);
             layout_cn.setVisibility(View.VISIBLE);
             shipin = findViewById(R.id.shipin);

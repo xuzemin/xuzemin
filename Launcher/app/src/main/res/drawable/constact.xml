@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+<shape xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
     <!--
     android:startColor="#aa000000"  渐变起始色值
     android:centerColor=""      渐变中间色值
@@ -9,10 +11,17 @@
     android:centerX="0.5"       渐变中心相对X坐标只有渐变类型为放射渐变时有效
     android:centerY="0.5"       渐变中心相对Y坐标只有渐变类型为放射渐变时有效
     android:gradientRadius="100"    渐变半径 非线性放射有效
+    228B22
+    2E8B57
      -->
+    <!--<gradient-->
+        <!--android:startColor="#A2B5CD"-->
+        <!--android:endColor="#A2B5CD"-->
+        <!--android:angle="90"-->
+        <!--/>-->
     <gradient
-        android:startColor="#228B22"
-        android:endColor="#2E8B57"
+        android:startColor="#20C7B3"
+        android:endColor="#20C7B3"
         android:angle="90"
         />
     <corners android:topLeftRadius="20dp"
