@@ -19,4 +19,14 @@
     <dimen name="relayout_wid">100dp</dimen>
 
     <dimen name="desire">10dp</dimen>
+
+    <dimen name="first_height">300dp</dimen>
+    <dimen name="video_width">300dp</dimen>
+    <dimen name="textview_botton">10dp</dimen>
+    <dimen name="imageview_bottom">10dp</dimen>
+    <dimen name="imageview_size">60dp</dimen>
+
+    <dimen name="half_first_height">145dp</dimen>
+    <dimen name="half_first_width">145dp</dimen>
+    <dimen name="half_first_width_one">150dp</dimen>
 </resources>

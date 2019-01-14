@@ -204,6 +204,12 @@ public class WebViewActivty extends Activity {
     }
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.down_in, R.anim.down_out);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         //释放资源

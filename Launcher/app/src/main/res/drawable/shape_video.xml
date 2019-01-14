@@ -14,10 +14,10 @@
     FF6A6A
     EED2EE
      -->
-    <corners android:topLeftRadius="20dp"
-        android:topRightRadius="20dp"
-        android:bottomRightRadius="20dp"
-        android:bottomLeftRadius="20dp"/>
+    <!--<corners android:topLeftRadius="20dp"-->
+        <!--android:topRightRadius="20dp"-->
+        <!--android:bottomRightRadius="20dp"-->
+        <!--android:bottomLeftRadius="20dp"/>-->
 
     <gradient
         android:startColor="#EA4D44"
