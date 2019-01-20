@@ -5,7 +5,7 @@ import android.util.Log;
 public class Constant {
     public static final Boolean isDebug = true;
     public static final Boolean isCN = false;
-    public static final String TAG = "Launcher";
+    public static final String TAG = "Lightning";
     public static final int VIDEO = 0;
     public static final int NEW = 1;
     public static final int MESSAGE = 2;

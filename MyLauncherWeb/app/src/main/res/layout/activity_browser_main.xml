@@ -23,7 +23,7 @@
                 <include layout="@layout/browser_toolbar" />
                 <HorizontalScrollView
                     android:id="@+id/shortcut_toolbar"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:background="@color/gray_lighter"
                     android:layout_width="match_parent">

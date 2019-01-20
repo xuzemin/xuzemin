@@ -171,7 +171,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         ImageInit();
                     }
                 }
-                reBackground();
             }else{
                 ImageInit();
             }
@@ -354,7 +353,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         urllist.add("https://twitter.com/");
         urllist.add("https://www.weibo.com/");
         urllist.add("https://www.youku.com/");
-        urllist.add("https://www.youtube.com/");
+        urllist.add("https://www.youtube.com/?app=desktop");//"https://www.youtube.com/");
         int icno[] = { R.mipmap.logo_amazon, R.mipmap.logo_bbc, R.mipmap.logo_cnn,
                 R.mipmap.logo_discovery, R.mipmap.logo_economist, R.mipmap.logo_fb,
                 R.mipmap.logo_googlenews, R.mipmap.logo_ig, R.mipmap.logo_mlb,
@@ -372,15 +371,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mGridData = new ArrayList<>();
         GridItem items = new GridItem();
         items.setTitle("Settings");
-        items.setImage(getResources().getDrawable(R.mipmap.shezhi));
+        items.setImage(getResources().getDrawable(R.mipmap.settings));
         mGridData.add(items);
         items = new GridItem();
         items.setTitle("Wallpaper");
-        items.setImage(getResources().getDrawable(R.mipmap.bak));
+        items.setImage(getResources().getDrawable(R.mipmap.photo));
         mGridData.add(items);
         items = new GridItem();
         items.setTitle("Google Play");
-        items.setImage(getResources().getDrawable(R.mipmap.googleplay));
+        items.setImage(getResources().getDrawable(R.mipmap.google_play));
         mGridData.add(items);
         for (int i=0; i<icno.length; i++) {
             items = new GridItem();

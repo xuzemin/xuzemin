@@ -634,7 +634,6 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 
 			@Override
 			public boolean onLongClick(View v) {
-
 				return true;
 			}
 
@@ -1179,6 +1178,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		}
 		this.finish();
 		this.startActivity(new Intent(this,MainActivity.class));
+		overridePendingTransition(R.anim.down_in, R.anim.down_out);
 
 	}
 
@@ -1420,12 +1420,8 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		if (view == null) {
 			return;
 		}
-
-
 		// Set the background color so the color mode color doesn't show through
 		mBrowserFrame.setBackgroundColor(mBackgroundColor);
-
-
 		LightningView lv=getCurrentWebView();
 		if (lv != null) {
 			lv.setForegroundTab(false);
@@ -1444,15 +1440,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			updateUrl("", true);
 			updateProgress(0);
 		}
-
-
-
-
-
-
 		//mBrowserFrame.setDisplayedChild(index);
-
-
 		// Remove browser frame background to reduce overdraw
 		mBrowserFrame.setBackgroundColor(0);
 		view.requestFocus();
@@ -1550,8 +1538,6 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 	void closeAllTab(){
 		int s=mWebViews.size();
 		LightningView lv=getCurrentWebView();
-
-
 		for (int i=0;i<s;i++){
 			LightningView reference = mWebViews.get(i);
 			if(reference!=null&&reference!=lv) {
@@ -1564,7 +1550,6 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		windowsText.setText(String.valueOf(1));
 		hideTabsPanel();
 		hideSettingPanel();
-
 	}
 
 
@@ -1581,7 +1566,6 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 
 	//private String currentUrl="";
 	protected synchronized boolean newTab(String url, boolean show) {
-
 		// Limit number of tabs for limited version of app
 		if ( mWebViews.size() >= ServerConfig.BrowserTabMax) {
 			Utils.showToast(this, this.getString(R.string.max_tabs));
@@ -1620,8 +1604,6 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		mIdGenerator++;
 		mWebViews.add(startingTab);
 
-
-
 		mTitleAdapter.notifyDataSetChanged();
 		if (show) {
 			mDrawerListLeft.setItemChecked(mWebViews.size() - 1, true);
@@ -1633,22 +1615,17 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 				mSearch.setText(url);
 			}
 		}
-
 		LightningView curview=getCurrentWebView();
 		if(curview!=null) {
 			//MobclickAgent.onPageEnd(this.getClass().getName() + ":" +curview.getUrl());
 		}
-
 		//MobclickAgent.onPageStart(this.getClass().getName() + ":" +url);
-
 		//browserTabsFragment.addTabBitmap(getCurrentWebView().getScreenShot());
 		SoftKeyboardUtil.hideSoftKeyboard(this);
 		return true;
 	}
 
 	int getSelectedTabIndex(){
-
-
 		LightningView lv=getCurrentWebView();
 		for(int i=0;i<mWebViews.size();i++){
 			LightningView v=mWebViews.get(i);
@@ -1657,7 +1634,6 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			}
 		}
 		return 0;
-
 	}
 	int getTabIndex(LightningView lv){
 		for(int i=0;i<mWebViews.size();i++){
@@ -1938,7 +1914,6 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 	@Override
 	protected void onStop() {
 		super.onStop();
-
 		mI2PHelperBound = false;
 	}
 
@@ -2831,7 +2806,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			winParams.flags |= bits;
 		} else {
 			winParams.flags &= ~bits;
-			if (mCustomView != null) {
+			if (mFullScreen) {
 				mCustomView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 			} else {
 				mBrowserFrame.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
