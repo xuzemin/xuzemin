@@ -71,6 +71,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/dividerColor"
         android:baselineAligned="false"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:weightSum="3" >
 

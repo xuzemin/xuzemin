@@ -27,7 +27,7 @@ public final class Constants {
 	public static final String HOME_Bookmark = "about:bookmarks";
 	public static final String BAIDU_SEARCH = "https://www.baidu.com/s?wd=";
 
-	public static final String Default_Page = "https://www.mgtv.com";//https://www.iqiyi.com/";
+	public static final String Default_Page = "https://www.amazon.com/";//https://www.mgtv.com";//https://www.iqiyi.com/";
 
 	public static final String YANDEX_SEARCH = "https://yandex.ru/yandsearch?lr=21411&text=";
 	public static final String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory()
@@ -43,28 +43,19 @@ public final class Constants {
 	public static final String FILE = "file://";
 	public static final String FOLDER = "folder://";
 	public static final String TAG = "Lightning";
-
 	// These should match the order of @array/proxy_choices_array
 	public static final int NO_PROXY = 0;
 	public static final int PROXY_ORBOT = 1;
 	public static final int PROXY_I2P = 2;
 	public static final int PROXY_MANUAL = 3;
-
-
 	public static final String Web_Title = "title";
 	public static final String Web_Url = "url";
-
-
-
 	public static final String EXTRA_ID_NEW_TAB = "EXTRA_ID_NEW_TAB";
 	public static final String EXTRA_ID_URL = "EXTRA_ID_URL";
-
 	public static final String EXTRA_ID_BOOKMARK_ID = "EXTRA_ID_BOOKMARK_ID";
 	public static final String EXTRA_ID_BOOKMARK_URL = "EXTRA_ID_BOOKMARK_URL";
 	public static final String EXTRA_ID_BOOKMARK_TITLE = "EXTRA_ID_BOOKMARK_TITLE";
-
 	public static final String EXTRA_SAVED_URL = "EXTRA_SAVED_URL";
-
 	public static final int BOOKMARK_THUMBNAIL_WIDTH_FACTOR = 70;
 	public static final int BOOKMARK_THUMBNAIL_HEIGHT_FACTOR = 60;
 
@@ -76,24 +67,17 @@ public final class Constants {
 	public static final String URL_ACTION_SEARCH = "action:search?q=";
 	public static final String URL_GOOGLE_MOBILE_VIEW = "http://www.google.com/gwt/x?u=%s";
 	public static final String URL_GOOGLE_MOBILE_VIEW_NO_FORMAT = "http://www.google.com/gwt/x?u=";
-
 	/**
 	 * Search urls.
 	 */
 	public static String URL_SEARCH_GOOGLE = "http://www.google.com/search?ie=UTF-8&sourceid=navclient&gfns=1&q=%s";
-
 	public static String URL_Search_Baidu = "http://m.baidu.com/s?word=%s";
-
-
-
 	public static String URL_SEARCH_WIKIPEDIA = "http://en.wikipedia.org/w/index.php?search=%s&go=Go";
-
 	/**
 	 * User agents.
 	 */
 	public static String USER_AGENT_DEFAULT = "";
 	public static String USER_AGENT_DESKTOP = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.517.44 Safari/534.7";
-
 	/**
 	 * Preferences.
 	 */
@@ -105,11 +89,8 @@ public final class Constants {
 	public static final String PREFERENCES_SHOW_FULL_SCREEN = "GeneralFullScreen";
 	public static final String PREFERENCES_GENERAL_HIDE_TITLE_BARS = "GeneralHideTitleBars";
 	public static final String PREFERENCES_SHOW_TOAST_ON_TAB_SWITCH = "GeneralShowToastOnTabSwitch";
-
 	public static final String PREFERENCES_UI_VOLUME_KEYS_BEHAVIOUR = "GeneralVolumeKeysBehaviour";
-
 	public static final String PREFERENCES_DEFAULT_ZOOM_LEVEL = "DefaultZoomLevel";
-
 	public static final String PREFERENCES_BROWSER_HISTORY_SIZE = "BrowserHistorySize";
 	public static final String PREFERENCES_BROWSER_ENABLE_JAVASCRIPT = "BrowserEnableJavascript";
 	public static final String PREFERENCES_BROWSER_ENABLE_IMAGES = "BrowserEnableImages";
@@ -123,34 +104,24 @@ public final class Constants {
 	public static final String PREFERENCES_BROWSER_ENABLE_PROXY_SETTINGS = "BrowserEnableProxySettings";
 	public static final String PREFERENCES_BROWSER_ENABLE_PLUGINS = "BrowserEnablePlugins";
 	public static final String PREFERENCES_BROWSER_RESTORE_LAST_PAGE = "PREFERENCES_BROWSER_RESTORE_LAST_PAGE";
-
 	public static final String PREFERENCES_PRIVACY_CLEAR_CACHE_ON_EXIT = "PrivacyClearCacheOnExit";
-
 	public static final String PREFERENCES_ADBLOCKER_ENABLE = "AdBlockerEnable";
-
 	public static final String PREFERENCES_BOOKMARKS_SORT_MODE = "BookmarksSortMode";
-
 	public static final String PREFERENCES_LAST_VERSION_CODE = "LastVersionCode";
-
 	public static final String PREFERENCES_START_PAGE_SHOW_SEARCH = "StartPageEnableSearch";
 	public static final String PREFERENCES_START_PAGE_SHOW_BOOKMARKS = "StartPageEnableBookmarks";
 	public static final String PREFERENCES_START_PAGE_SHOW_HISTORY = "StartPageEnableHistory";
 	public static final String PREFERENCES_START_PAGE_BOOKMARKS_LIMIT = "StartPageBookmarksLimit";
 	public static final String PREFERENCES_START_PAGE_HISTORY_LIMIT = "StartPageHistoryLimit";
-
 	public static final String PREFERENCE_USE_WEAVE = "PREFERENCE_USE_WEAVE";
 	public static final String PREFERENCE_WEAVE_SERVER = "PREFERENCE_WEAVE_SERVER";
 	public static final String PREFERENCE_WEAVE_USERNAME = "PREFERENCE_WEAVE_USERNAME";
 	public static final String PREFERENCE_WEAVE_PASSWORD = "PREFERENCE_WEAVE_PASSWORD";
 	public static final String PREFERENCE_WEAVE_KEY = "PREFERENCE_WEAVE_KEY";
 	public static final String PREFERENCE_WEAVE_LAST_SYNC_DATE = "PREFERENCE_WEAVE_LAST_SYNC_DATE";
-
 	public static final String WEAVE_AUTH_TOKEN_SCHEME = "{\"secret\":\"%s\",\"password\":\"%s\",\"username\":\"%s\",\"server\":\"%s\"}";
-
 	public static final String WEAVE_DEFAULT_SERVER = "https://auth.services.mozilla.com/";
-
 	public static final String PREFERENCE_BOOKMARKS_DATABASE = "PREFERENCE_BOOKMARKS_DATABASE";
-
 	/**
 	 * Methods.
 	 */

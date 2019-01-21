@@ -69,7 +69,7 @@ public class CustomWebView extends WebView {
 			ClipData clip = ClipData.newPlainText("simple text", text);
 			clipboard.setPrimaryClip(clip);
 			// gives the toast for selected text
-			Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
+//			Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
 		}
 	}
 

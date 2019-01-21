@@ -27,10 +27,11 @@
     <string name="google_play">Play</string>
     <string name="all">All Content</string>
     <string name="add">Add</string>
-
     <string name="google_play_not_exit">The Google store app does not exist</string>
     <string name="settings_not_exit">System Settings application does not exist</string>
     <string name="get_file_no_permission">The application does not have local file permissions</string>
+
+
 
 
     <string name="app_name_inner">浏览器</string>
@@ -138,32 +139,22 @@
     <string name="hobby_circle">兴趣圈</string>
     <string name="hobby_circle_select">选择兴趣圈</string>
     <string name="page_select_prompt">page_select_prompt</string>
-
     <string name="hint_chapter_go">跳到章节</string>
-
-
     <string name="chapter_jump">跳到章节</string>
     <string name="chapter_prev">前章</string>
     <string name="chapter_next">后章</string>
-
     <string name="server_error">服务器错误</string>
-
     <string name="page_prev">上页</string>
     <string name="page_next">下页</string>
-
     <string name="hint_search_article">下页</string>
     <string name="filter">筛选</string>
-
     <string name="focus">关注</string>
     <string name="focus_cancel">取消关注</string>
-
     <string name="read">阅读</string>
-
     <string name="novel">小说</string>
     <string name="comic">漫画</string>
     <string name="novel_add">添加小说</string>
     <string name="novel_add_chapter">添加章节</string>
-
     <string name="news_sufix">的新闻</string>
     <string name="news_my">我的新闻</string>
     <string name="video_upload">上传视频</string>
@@ -171,16 +162,11 @@
     <string name="video_cloud_upload">上传视频到云盘</string>
     <string name="video_my">我的视频</string>
     <string name="post_news">发布新闻</string>
-
     <string name="note_sufix">的文章</string>
-
     <string name="topic_circle_name">话题圈名</string>
-    
     <string name="topic_circle_my">我的话题圈</string>
     <string name="topic_my">我的话题</string>
-
     <string name="hint_text">文本</string>
-
     <string name="topic_circle_name_empty">话题圈名为空</string>
     <string name="main_contact">通讯录</string>
     <string name="map">地图</string>
@@ -263,7 +249,6 @@
     <string name="shop">店铺</string>
     <string name="same_city">同城</string>
     <string name="campus">校园</string>
-
     <string name="travel">旅行</string>
     <string name="travel_spot">景点</string>
     <string name="travel_note">游记</string>
@@ -292,7 +277,7 @@
     <string name="tags_add">添加标签</string>
     <string name="img_add">添加图片</string>
     <string name="cover_set">设置封面</string>
-    <string name="tags">标签</string>
+    <string name="tags">Tag</string>
     <string name="add_shortcut">添加快捷方式</string>
     <string name="add_article">添加文章</string>
     <string name="article">文章</string>

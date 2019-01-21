@@ -176,7 +176,7 @@ public class SuperListView extends ListView {
 		 * @param totalItemCount
 		 */
 		public void onSuperScroll(AbsListView view, int firstVisibleItem,
-                                  int visibleItemCount, int totalItemCount);
+								  int visibleItemCount, int totalItemCount);
 	}
 
 	/**

@@ -12,7 +12,7 @@ public class ToastUtil {
     private static Toast toast = null;
     private static Object synObj = new Object();
     public static void showMessage(final String msg) {
-        showMessage(msg, Toast.LENGTH_SHORT);
+//        showMessage(msg, Toast.LENGTH_SHORT);
     }
     public static void showMessageLong(final String msg) {
         showMessage(msg, Toast.LENGTH_LONG);

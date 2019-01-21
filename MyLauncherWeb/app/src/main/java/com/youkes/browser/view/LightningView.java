@@ -29,7 +29,6 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.HttpAuthHandler;
@@ -47,7 +46,6 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.youkes.browser.R;
 import com.youkes.browser.constant.Constants;
 import com.youkes.browser.constant.StartPage;
@@ -62,8 +60,6 @@ import com.youkes.browser.utils.IntentUtils;
 import com.youkes.browser.utils.ScreenShotUtil;
 import com.youkes.browser.utils.ToastUtil;
 import com.youkes.browser.utils.Utils;
-
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -79,24 +75,18 @@ public class LightningView {
 
 	WebViewAction webViewAction=null;
 	private OnTouchListener onTouchListener;
-
 	public void setOnTouchListener(OnTouchListener onTouchListener) {
 		this.onTouchListener = onTouchListener;
 		this.mWebView.setOnTouchListener(this.onTouchListener);
 	}
-
 	public String getBrowserScreenShotPath(int index){
 		String path = FileAccessor.Share_Image_Dir + "/" + "browser"+index+".png";
 		return path;
 	}
 
-
 	public Bitmap getScreenShot(int index) {
-
 		int w = mWebView.getWidth();
 		int h = mWebView.getHeight();
-
-
 		String path = getBrowserScreenShotPath(index);
 		if (w == 0 || h == 0) {
 			return BitmapUtil.loadFromFile(path);
@@ -180,26 +170,19 @@ this.webViewAction=action;
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public LightningView(Activity activity, String url, boolean darkTheme) {
-
 		mActivity = activity;
 		mTitle = new Title(activity, darkTheme);
 		mAdBlock = AdBlock.getInstance(activity.getApplicationContext());
 		this.darkTheme=darkTheme;
 		initNewWebView(url);
-
 		//mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 		//mWebView.setBackgroundColor(Color.argb(255, 255, 255, 255));
-
 	}
 
 	private void initNewWebView(String url) {
-
 		Activity activity=mActivity;
 		mWebView = new CustomWebView(activity);
-
-
 		mWebpageBitmap = Utils.getWebpageBitmap(activity.getResources(), darkTheme);
-
 		try {
 			mBrowserController = (BrowserController) activity;
 		} catch (ClassCastException e) {
@@ -214,7 +197,6 @@ this.webViewAction=action;
 		mWebView.setWillNotCacheDrawing(true);
 		mWebView.setAlwaysDrawnWithCacheEnabled(false);
 		mWebView.setBackgroundColor(activity.getResources().getColor(android.R.color.white));
-
 		if (API > 15) {
 			mWebView.setBackground(null);
 			mWebView.getRootView().setBackground(null);
@@ -232,7 +214,6 @@ this.webViewAction=action;
 		mSettings = mWebView.getSettings();
 		initializeSettings(mWebView.getSettings(), activity);
 		initializePreferences(activity);
-
 		if (url != null) {
 			if (!url.trim().isEmpty()) {
 				mWebView.loadUrl(url);
@@ -250,7 +231,6 @@ this.webViewAction=action;
 		}
 		parserInterface=new HtmlParserJavascriptInterface(null);
 		mWebView.addJavascriptInterface(parserInterface, "HtmlParser");
-
 	}
 
 	public String getHomepage() {
@@ -302,9 +282,7 @@ this.webViewAction=action;
 		} else if (mSettings == null) {
 			return;
 		}
-
 		setColorMode(mPreferences.getRenderingMode());
-
 		if (!mBrowserController.isIncognito()) {
 			mSettings.setGeolocationEnabled(mPreferences.getLocationEnabled());
 		} else {
@@ -325,25 +303,25 @@ this.webViewAction=action;
 					break;
 			}
 		}
-
-		switch (mPreferences.getUserAgentChoice()) {
-			case 1:
-				if (API > 16) {
-					mSettings.setUserAgentString(WebSettings.getDefaultUserAgent(context));
-				} else {
-					mSettings.setUserAgentString(mDefaultUserAgent);
-				}
-				break;
-			case 2:
-				mSettings.setUserAgentString(Constants.DESKTOP_USER_AGENT);
-				break;
-			case 3:
-				mSettings.setUserAgentString(Constants.MOBILE_USER_AGENT);
-				break;
-			case 4:
-				mSettings.setUserAgentString(mPreferences.getUserAgentString(mDefaultUserAgent));
-				break;
-		}
+		mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36");
+//		switch (mPreferences.getUserAgentChoice()) {
+//			case 1:
+//				if (API > 16) {
+//					mSettings.setUserAgentString(WebSettings.getDefaultUserAgent(context));
+//				} else {
+//					mSettings.setUserAgentString(mDefaultUserAgent);
+//				}
+//				break;
+//			case 2:
+//				mSettings.setUserAgentString(Constants.DESKTOP_USER_AGENT);
+//				break;
+//			case 3:
+//				mSettings.setUserAgentString(Constants.MOBILE_USER_AGENT);
+//				break;
+//			case 4:
+//				mSettings.setUserAgentString(mPreferences.getUserAgentString(mDefaultUserAgent));
+//				break;
+//		}
 
 		if (mPreferences.getSavePasswordsEnabled() && !mBrowserController.isIncognito()) {
 			if (API < 18) {
@@ -461,6 +439,8 @@ this.webViewAction=action;
 		settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 		settings.setDatabaseEnabled(true);
 		settings.setSupportZoom(true);
+		settings.setUseWideViewPort(true);
+		settings.setLoadWithOverviewMode(true);
 		settings.setBuiltInZoomControls(true);
 		settings.setDisplayZoomControls(false);
 		settings.setAllowContentAccess(true);
@@ -577,7 +557,6 @@ this.webViewAction=action;
 				ColorMatrixColorFilter filterInvertGray = new ColorMatrixColorFilter(concat);
 				mPaint.setColorFilter(filterInvertGray);
 				setHardwareRendering();
-
 				mInvertPage = true;
 				break;
 
@@ -871,7 +850,7 @@ this.webViewAction=action;
 
 		@Override
 		public void onReceivedError(WebView view, int errorCod,String description, String failingUrl) {
-			ToastUtil.showMessage("" + description, Toast.LENGTH_LONG);
+//			ToastUtil.showMessage("" + description, Toast.LENGTH_LONG);
 		}
 
 		@Override
@@ -1044,75 +1023,73 @@ this.webViewAction=action;
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			view.loadUrl(url);
-			return true;
+
 			//viewUrls.add(url);
 			// Check if configured proxy is available
-//			if (!mBrowserController.isProxyReady()) {
-//				// User has been notified
-//				return true;
-//			}
-//
-//			if (mBrowserController.isIncognito()) {
-//				return super.shouldOverrideUrlLoading(view, url);
-//			}
-//			if (url.startsWith("about:")) {
-//				return super.shouldOverrideUrlLoading(view, url);
-//			}
-//			if (url.contains("mailto:")) {
-//				MailTo mailTo = MailTo.parse(url);
-//				Intent i = Utils.newEmailIntent(mActivity, mailTo.getTo(), mailTo.getSubject(),
-//						mailTo.getBody(), mailTo.getCc());
-//				mActivity.startActivity(i);
-//				view.reload();
-//				return true;
-//			} else if (url.startsWith("intent://")) {
-//				view.loadUrl(url);
-////				Intent intent;
-////				try {
-////					intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
-////				} catch (URISyntaxException ex) {
-////					return false;
-////				}
-////				if (intent != null) {
-////					try {
-////						mActivity.startActivity(intent);
-////					} catch (ActivityNotFoundException e) {
-////						Log.e(Constants.TAG, "ActivityNotFoundException");
-////					}
-////					return true;
-////				}
-//			}
-//
-//			boolean ret= mIntentUtils.startActivityForUrl(mWebView, url);
-//			if(!ret){
-//				/*
-//				mWebView.onPause();
-//				mWebView.pauseTimers();
-//				if(lastWebView!=null) {
-//					lastWebView.destroy();
-//				}
-//
-//				lastWebView=mWebView;
-//				cachedWebView.add(mWebView);
-//				openNewView(url);
-//				return true;
-//				*/
-//			}
-//
-//			if (url.endsWith(".mp3")) {
-//				Intent intent = new Intent(Intent.ACTION_VIEW);
-//				intent.setDataAndType(Uri.parse(url), "audio/*");
-//				view.getContext().startActivity(intent);
-//				return true;
-//			} else if (url.endsWith(".mp4") || url.endsWith(".3gp")) {
-//				Intent intent = new Intent(Intent.ACTION_VIEW);
-//				intent.setDataAndType(Uri.parse(url), "video/*");
-//				view.getContext().startActivity(intent);
-//				return true;
-//			}
-//
-//			return ret;
+			if (!mBrowserController.isProxyReady()) {
+				// User has been notified
+				return true;
+			}
+
+			if (mBrowserController.isIncognito()) {
+				return super.shouldOverrideUrlLoading(view, url);
+			}
+			if (url.startsWith("about:")) {
+				return super.shouldOverrideUrlLoading(view, url);
+			}
+			if (url.contains("mailto:")) {
+				MailTo mailTo = MailTo.parse(url);
+				Intent i = Utils.newEmailIntent(mActivity, mailTo.getTo(), mailTo.getSubject(),
+						mailTo.getBody(), mailTo.getCc());
+				mActivity.startActivity(i);
+				view.reload();
+				return true;
+			} else if (url.startsWith("intent://")) {
+				Intent intent;
+				try {
+					intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+				} catch (URISyntaxException ex) {
+					return false;
+				}
+				if (intent != null) {
+					try {
+						mActivity.startActivity(intent);
+					} catch (ActivityNotFoundException e) {
+						Log.e(Constants.TAG, "ActivityNotFoundException");
+					}
+					return true;
+				}
+			}
+
+			boolean ret= mIntentUtils.startActivityForUrl(mWebView, url);
+			if(!ret){
+				/*
+				mWebView.onPause();
+				mWebView.pauseTimers();
+				if(lastWebView!=null) {
+					lastWebView.destroy();
+				}
+
+				lastWebView=mWebView;
+				cachedWebView.add(mWebView);
+				openNewView(url);
+				return true;
+				*/
+			}
+
+			if (url.endsWith(".mp3")) {
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setDataAndType(Uri.parse(url), "audio/*");
+				view.getContext().startActivity(intent);
+				return true;
+			} else if (url.endsWith(".mp4") || url.endsWith(".3gp")) {
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setDataAndType(Uri.parse(url), "video/*");
+				view.getContext().startActivity(intent);
+				return true;
+			}
+
+			return ret;
 			/*
 
 			*/

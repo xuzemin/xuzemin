@@ -108,7 +108,7 @@ public class ImageSaveUtil {
 	//save to jpg only but if
 	public static void saveImage(String downImgUrl) {
 
-		ToastUtil.showMessage("下载图片:"+downImgUrl);
+//		ToastUtil.showMessage("下载图片:"+downImgUrl);
 		if(downImgUrl.indexOf("http://")==0||downImgUrl.indexOf("https://")==0){
 			new SaveImage(downImgUrl).execute();
 			return;

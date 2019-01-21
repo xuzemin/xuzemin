@@ -31,9 +31,9 @@
 
         <meta-data android:value="56c3061067e58e16c4001be3" android:name="UMENG_APPKEY"/>
         <meta-data android:value="youkes_browser_qq" android:name="UMENG_CHANNEL"/>
-
         <activity android:name=".activity.MainActivity"
             android:alwaysRetainTaskState="true"
+            android:screenOrientation="landscape"
             android:launchMode="singleTask"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             >
@@ -50,9 +50,10 @@
         <activity
             android:name="com.youkes.browser.activity.BrowserMainActivity"
             android:alwaysRetainTaskState="true"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
+            android:screenOrientation="landscape"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
         >
             <intent-filter>
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -97,7 +98,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name="com.youkes.browser.site.SiteHotActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
     </application>

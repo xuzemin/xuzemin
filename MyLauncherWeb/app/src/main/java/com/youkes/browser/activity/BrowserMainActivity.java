@@ -2,6 +2,7 @@ package com.youkes.browser.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ public class BrowserMainActivity extends BrowserActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		inputMethodManager.toggleSoftInput(0,
 				InputMethodManager.HIDE_NOT_ALWAYS);
@@ -33,7 +35,7 @@ public class BrowserMainActivity extends BrowserActivity {
 			CookieSyncManager.createInstance(this);
 		}
 
-//		mCookieManager.setAcceptCookie(PreferenceManager.getInstance().getCookiesEnabled());
+		mCookieManager.setAcceptCookie(PreferenceManager.getInstance().getCookiesEnabled());
 		super.updateCookiePreference();
 
 	}
@@ -56,7 +58,7 @@ public class BrowserMainActivity extends BrowserActivity {
 	protected void onPause() {
 		super.onPause();
 		if(!isFinished) {
-//			saveOpenTabs();
+			saveOpenTabs();
 		}
 
 	}
@@ -64,7 +66,7 @@ public class BrowserMainActivity extends BrowserActivity {
 	@Override
 	public void updateHistory(String title, String url) {
 		super.updateHistory(title, url);
-//		addItemToHistory(title, url);
+		addItemToHistory(title, url);
 	}
 
 	@Override

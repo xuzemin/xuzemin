@@ -171,10 +171,10 @@ public class BookmarkManager {
 				bookmarkWriter.newLine();
 			}
 			bookmarkWriter.close();
-			Toast.makeText(
-					mContext,
-					mContext.getString(R.string.bookmark_export_path) + " "
-							+ bookmarksExport.getPath(), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(
+//					mContext,
+//					mContext.getString(R.string.bookmark_export_path) + " "
+//							+ bookmarksExport.getPath(), Toast.LENGTH_SHORT).show();
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		}
@@ -367,8 +367,8 @@ public class BookmarkManager {
 			}
 			bookmarksReader.close();
 			addBookmarkList(list);
-			Utils.showToast(mContext,
-					number + " " + mContext.getResources().getString(R.string.message_import));
+//			Utils.showToast(mContext,
+//					number + " " + mContext.getResources().getString(R.string.message_import));
 		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 			Utils.createInformativeDialog(context,
@@ -422,27 +422,21 @@ public class BookmarkManager {
 	private static final String[] Sohu = {"http://m.sohu.com/", "搜狐网"};
 	private static final String[] Netease = {"http://3g.163.com/", "网易"};
 	private static final String[] Ifeng = {"http://i.ifeng.com/", "凤凰网"};
-
 	private static final String[] Youku = {"http://www.youku.com/", "优酷视频"};
 	private static final String[] sohuTv = {"http://m.tv.sohu.com/", "搜狐视频"};
 	private static final String[] Iqiyi = {"http://m.iqiyi.com/", "爱奇艺视频"};
 	private static final String[] Tudou = {"http://www.tudou.com/", "土豆视频"};
-
 	private static final String[] Qidan = {"http://m.qidian.com/", "起点阅读"};
 	private static final String[] Hongxiu = {"http://m.hongxiu.com/", "红袖阅读"};
-
 	private static final String[] Kugou = {"http://m.kugou.com/", "酷狗音乐"};
 	private static final String[] Kuwo = {"http://m.kuwo.cn/", "酷我音乐"};
 	private static final String[] BaiduMusic = {"http://music.baidu.com/", "百度音乐"};
 	private static final String[] BaiduBaike = {"https://baike.baidu.com/", "百度百科"};
 	private static final String[] BaiduTieba = {"http://tieba.baidu.com/", "百度贴吧"};
 	private static final String[] BaiduMap = {"http://map.baidu.com/", "百度地图"};
-
-
 	private static final String[] eastmoney = {"http://wap.eastmoney.com/", "东方财富"};
 	private static final String[] hexun = {"http://m.hexun.com/", "和讯"};
 	private static final String[] sinafinance = {"http://finance.sina.cn/", "新浪财经"};
-
 	private static final String[] Taobao = {"https://m.taobao.com/", "淘宝"};
 	private static final String[] JD = {"http://m.jd.com/", "京东"};
 	private static final String[] Vipcom = {"http://m.vip.com/", "唯品会"};
@@ -451,110 +445,101 @@ public class BookmarkManager {
 	private static final String[] tongcheng58 = {"http://m.58.com/", "58同城"};
 	private static final String[] ganji = {"http://ganji.com", "赶集"};
 	private static final String[] Ctrip = {"http://m.ctrip.com/", "携程"};
-
 	private static final String[] Hupu = {"http://m.hupu.com/", "虎扑"};
 	private static final String[] cnBing = {"http://cn.bing.com/", "必应"};
 	private static final String[] Tianya = {"http://www.tianya.cn/", "天涯社区"};
 	private static final String[] Qiushibaike = {"http://www.qiushibaike.com/", "糗事百科"};
-
 	private static final String[] rayli = {"http://m.rayli.com.cn/", "瑞丽"};
 	private static final String[] Tiexue = {"http://m.tiexue.net/", "铁血军事"};
-
-
 	private static final String[] Hao123 = {"http://m.hao123.com/", "Hao123"};
 	private static final String[] Nav2345 = {"http://m.2345.com/", "2345导航"};
 	private static final String[] Sogou123 = {"http://123.sogou.com", "搜狗导航"};
 	private static final String[] Bing123 = {"http://123.msn.com", "微软导航"};
 	private static final String[] Hao360 = {"http://hao.360.cn/", "360导航"};
-
 	private static final String[] Huaban = {"http://huaban.com/", "花瓣"};
-
 	private static final String[] Toutiao = {"http://toutiao.eastday.com/", "头条新闻"};
 	private static final String[] JingriToutiao = {"http://m.toutiao.com/", "今日头条"};
 	private static final String[] Game7K7K = {"http://www.7k7k.com/", "7K7K小游戏"};
 	private static final String[] Game17173 = {"http://m.17173.com/", "17173游戏"};
-
 	private static final String[] Meipai = {"http://www.meipai.com/", "美拍"};
-
 	private static final String[] YidianZhixun = {"http://www.yidianzixun.com/", "一点资讯"};
 
 
-
-
-
-
-
-
-
+	private static final String[] Amazon = {"https://www.amazon.com/", "Amazon"};
+	private static final String[] NEWS = {"https://www.bbc.co.uk/news", "NEWS"};
+	private static final String[] CNN = {"https://www.cnn.com/", "CNN"};
+	private static final String[] Discovery = {"https://www.discovery.com/", "Discovery"};
+	private static final String[] Economist = {"https://www.economist.com/", "Economist"};
 	private static final String[] FACEBOOK = {"https://www.facebook.com/", "Facebook"};
+	private static final String[] Google_News = {"https://news.google.com/", "Google News"};
+	private static final String[] Instagram = {"https://www.instagram.com/", "Instagram"};
+	private static final String[] MLB = {"https://www.mlb.com/", "MLB"};
+	private static final String[] NASA = {"https://www.nasa.gov/", "NASA"};
+	private static final String[] NBA = {"https://www.nba.com/", "NBA"};
+	private static final String[] IQIYI = {"https://www.iqiyi.com/", "IQIYI"};
+	private static final String[] Spotify = {"https://www.spotify.com/", "Spotify"};
+	private static final String[] TED = {"https://www.ted.com/", "TED"};
+	private static final String[] Twitter = {"https://twitter.com/", "Twitter"};
+	private static final String[] WeiBo = {"https://www.weibo.com/", "WeiBo"};
+	private static final String[] YouKu = {"https://www.youku.com/", "YouKu"};
+	private static final String[] YouTuBe = {"https://www.youtube.com/", "YouTuBe"};
+
 	private static final String[] TWITTER = {"https://twitter.com", "Twitter"};
 	private static final String[] GOOGLE = {"https://www.google.com/", "Google"};
 	private static final String[] YAHOO = {"https://www.yahoo.com/", "Yahoo"};
 
 	public static final String[][] DEFAULT_BOOKMARKS = {
-			Youkes,
-			Baidu,
-			Sina,
-			//
-			Sohu,
-			Netease,
-			QQ3G,
-			Ifeng,
-			JingriToutiao,
-			cnBing,
-			Youku,
-			sohuTv,
-			Iqiyi,
-			Tudou,
-
-			YidianZhixun,
-			Hongxiu,
-
-			Kugou,
-			Qidan,
-			Kuwo,
-			BaiduMusic,
-			BaiduBaike,
-			BaiduTieba,
-			BaiduMap,
-
-
-
-			eastmoney,
-			hexun,
-			sinafinance,
-
-			Taobao ,
-			JD,
-			Vipcom,
-			Meituan,
-			dianping,
-			tongcheng58,
-			ganji,
-			Ctrip,
-
-			Hupu,
-
-			Tianya,
-			Qiushibaike,
-
-			rayli,
-			Tiexue ,
-
-
-			Hao123,
-			Nav2345,
-			Sogou123,
-			Bing123,
-			Hao360,
-
-			Huaban,
-
-			Toutiao ,
-			Game7K7K ,
-			Game17173
-
-
-
+			Amazon,NEWS,CNN,Discovery,Economist,FACEBOOK,Google_News,Instagram,MLB,NASA,NBA,IQIYI,Spotify,TED,
+			Twitter,WeiBo,YouKu,YouTuBe
 	};
+//	public static final String[][] DEFAULT_BOOKMARKS = {
+//			Youkes,
+//			Baidu,
+//			Sina,
+//			//
+//			Sohu,
+//			Netease,
+//			QQ3G,
+//			Ifeng,
+//			JingriToutiao,
+//			cnBing,
+//			Youku,
+//			sohuTv,
+//			Iqiyi,
+//			Tudou,
+//			YidianZhixun,
+//			Hongxiu,
+//			Kugou,
+//			Qidan,
+//			Kuwo,
+//			BaiduMusic,
+//			BaiduBaike,
+//			BaiduTieba,
+//			BaiduMap,
+//			eastmoney,
+//			hexun,
+//			sinafinance,
+//			Taobao ,
+//			JD,
+//			Vipcom,
+//			Meituan,
+//			dianping,
+//			tongcheng58,
+//			ganji,
+//			Ctrip,
+//			Hupu,
+//			Tianya,
+//			Qiushibaike,
+//			rayli,
+//			Tiexue ,
+//			Hao123,
+//			Nav2345,
+//			Sogou123,
+//			Bing123,
+//			Hao360,
+//			Huaban,
+//			Toutiao ,
+//			Game7K7K ,
+//			Game17173
+//	};
 }
