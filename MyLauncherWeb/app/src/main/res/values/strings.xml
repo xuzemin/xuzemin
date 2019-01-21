@@ -1153,7 +1153,7 @@
 
     <string name="action_history">历史记录</string>
     <string name="action_hotsite">热门站点</string>
-    <string name="action_bookmarks">书签列表</string>
+    <string name="action_bookmarks">Bookmark List</string>
     <string name="action_add_bookmark">添加书签</string>
     <string name="action_copy">复制链接</string>
     <string name="action_forward">前进</string>
@@ -1368,7 +1368,7 @@
         <item >标题</item>
     </string-array>
     <string name="settings_privacy">隐私设置</string>
-    <string name="tabs">标签</string>
+    <string name="tabs">Label Page</string>
     <string name="third_party">阻止第三方 Cookies</string>
     <string name="url_contents">URL 框内容</string>
 

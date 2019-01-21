@@ -71,7 +71,6 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/dividerColor"
         android:baselineAligned="false"
-        android:visibility="gone"
         android:orientation="horizontal"
         android:weightSum="3" >
 
@@ -100,8 +99,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:visibility="invisible"
             android:background="?attr/listBackground"
-            android:clickable="true" >
+            android:clickable="false" >
 
             <ImageView
                 android:layout_width="wrap_content"

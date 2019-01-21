@@ -1909,6 +1909,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			}
 //			mWebViews.clear();
 			newTab(MainActivity.intentUrl.getUrl(), true);
+//			mDrawerLayout.openDrawer(mDrawerRight);
 		}
 
 	}
