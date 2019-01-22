@@ -64,6 +64,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private RelativeLayout shipin,news_layout,message_layout,contact,settings,play,content;
     private GridViewAdapter gridViewAdapter,gridViewAdapter_video,gridViewAdapter_news,gridViewAdapter_message,gridViewAdapter_contact,gridViewAdapter_background;
     private ArrayList<GridItem> mGridData;
+    public static Boolean isDelete = false;
     private static ArrayList<String> urllist,video_urllist,news_urllist,message_urllist,contact_urllist;
     private PackageManager packageManager;
     private ProgressDialog progressDialog;
@@ -133,15 +134,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         settings.setOnClickListener(this);
         content = findViewById(R.id.content);
         content.setOnClickListener(this);
-        background.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                currentIndex = Constant.BACKGROUND;
-                isMain = false;
-                setAnimation(Constant.BACKGROUND,layout_cn,layout_background);
-                return false;
-            }
-        });
+//        background.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                currentIndex = Constant.BACKGROUND;
+//                isMain = false;
+//                setAnimation(Constant.BACKGROUND,layout_cn,layout_background);
+//                return false;
+//            }
+//        });
         intdata();
     }
 
@@ -160,8 +161,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //            SaveBitmap.saveBitmap(getApplicationContext(), backgroundback, Constant.backround);
                 RefreshArray();
                 if(ImageNameList !=null && ImageNameList.size() >= 4){
-                    Constant.debugLog(ImageNameList.get(0));
-                    Constant.debugLog(""+ImageBitmapList.get(0).getHeight());
                     reBackground();
                 }else{
                     if(backgroundback !=null) {
@@ -199,7 +198,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         SaveBitmap.getInstance().getPhotoVideoPath();
         ImageNameList = SaveBitmap.getInstance().getImageNameList();
         ImageBitmapList = SaveBitmap.getInstance().getImageBitmapList();
-
         mGridData = new ArrayList<>();
         if(ImageNameList !=null && ImageNameList.size()>0 &&
                 ImageBitmapList !=null && ImageBitmapList.size()>0
@@ -214,25 +212,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 item.setImage(new BitmapDrawable(ImageBitmapList.get(i)));
                 mGridData.add(item);
             }
-
-            gridViewAdapter_background = new GridViewAdapter(this, R.layout.gridview_item, mGridData);
+            gridViewAdapter_background = new GridViewAdapter(this, R.layout.gridview_item_background, mGridData,true);
             gridview_background.setAdapter(gridViewAdapter_background);
-            gridview_background.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    /**获得Intent*/
-                    if(position == 0){
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");//无类型限制
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        startActivityForResult(intent, 1);
-                    }else{
-                        Constant.debugLog(ImageNameList.get(position - 1));
-                        sharedPreferencesHelper.put(Constant.fileName,ImageNameList.get(position - 1));
-                        reBackground();
-                    }
-                }
-            });
+        }else{
+            ImageInit();
         }
     }
 
@@ -305,12 +288,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void ImageInit(){
         backgroundback = ((BitmapDrawable)getResources().getDrawable(R.mipmap.beijing4)).getBitmap();
         SaveBitmap.getInstance().saveBitmap(getApplicationContext(), backgroundback, Constant.Default);
-        Bitmap cache = ((BitmapDrawable)getResources().getDrawable(R.mipmap.beijing1)).getBitmap();
-        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), cache, "backround");
+        Bitmap cache = ((BitmapDrawable)getResources().getDrawable(R.mipmap.beijing3)).getBitmap();
+        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), cache, "dark");
         cache = ((BitmapDrawable)getResources().getDrawable(R.mipmap.beijing2)).getBitmap();
-        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), cache, "backround1");
+        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), cache, "dawn");
+        cache = ((BitmapDrawable)getResources().getDrawable(R.mipmap.beijing1)).getBitmap();
+        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), cache, "bridge");
         cache = ((BitmapDrawable)getResources().getDrawable(R.mipmap.beijing)).getBitmap();
-        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), cache, "backround2");
+        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), cache, "sea");
         sharedPreferencesHelper.put(Constant.fileName,Constant.Default);
         FileName = "default";
         RefreshArray();
@@ -333,6 +318,39 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private void intdata(){
+        gridview_background.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                isDelete = true;
+                gridViewAdapter_background.notifyDataSetChanged();
+                return true;
+            }
+        });
+        gridview_background.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /**获得Intent*/
+                if(!isDelete) {
+                    if (position == 0) {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");//无类型限制
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        startActivityForResult(intent, 1);
+                    } else {
+                        Constant.debugLog(ImageNameList.get(position - 1));
+                        sharedPreferencesHelper.put(Constant.fileName, ImageNameList.get(position - 1));
+                        reBackground();
+                    }
+                }else{
+                    if(ImageNameList != null && ImageNameList.size() > 0 && position != 0) {
+                        if(SaveBitmap.delete(SaveBitmap.SD_PATH + ImageNameList.get(position - 1) + ".jpg")){
+                            RefreshArray();
+                        }
+                    }
+                }
+            }
+        });
+
         urllist = new ArrayList<>();
         urllist.add("https://www.amazon.com/");
         urllist.add("https://www.bbc.co.uk/news");
@@ -412,7 +430,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                         backgroundback,ScreenUtil.getScreenWidth(getApplicationContext()),ScreenUtil.getScreenHeight(getApplicationContext()))));
                                 Toast.makeText(getApplicationContext(),R.string.get_file_no_permission,Toast.LENGTH_SHORT).show();
                                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STRONGE);
+
                             }else {
+                                RefreshArray();
                                 currentIndex = Constant.BACKGROUND;
                                 isMain = false;
                                 setAnimation(Constant.BACKGROUND, layout_content, layout_background);
@@ -651,6 +671,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if(!isMain) {
+                    if(isDelete){
+                        isDelete = false;
+                        gridViewAdapter_background.notifyDataSetChanged();
+                        return true;
+                    }
                     isMain = true;
                     switch (currentIndex) {
                         case Constant.BACKGROUND:
