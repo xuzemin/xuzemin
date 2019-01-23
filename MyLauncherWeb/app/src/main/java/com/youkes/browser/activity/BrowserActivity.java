@@ -1257,8 +1257,11 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			if(wv==null){
 				return;
 			}
-
-
+			if(position == 11 ){
+				wv.initializePreferences(BrowserActivity.this,true);
+			}else{
+				wv.initializePreferences(BrowserActivity.this,false);
+			}
 			wv.loadUrl(mBookmarkList.get(position).getUrl());
 
 			// keep any jank from happening when the drawer is closed after the
@@ -1880,7 +1883,11 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		if (mWebViews != null) {
 			for (int n = 0; n < mWebViews.size(); n++) {
 				if (mWebViews.get(n) != null) {
-					mWebViews.get(n).initializePreferences(this);
+					if(!mWebViews.get(n).getUrl().contains("iqyi") ) {
+						mWebViews.get(n).initializePreferences(this, false);
+					}else{
+						mWebViews.get(n).initializePreferences(this, true);
+					}
 				} else {
 					mWebViews.remove(n);
 				}

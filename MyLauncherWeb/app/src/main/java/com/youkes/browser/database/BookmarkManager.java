@@ -476,7 +476,7 @@ public class BookmarkManager {
 	private static final String[] MLB = {"https://www.mlb.com/", "MLB"};
 	private static final String[] NASA = {"https://www.nasa.gov/", "NASA"};
 	private static final String[] NBA = {"https://www.nba.com/", "NBA"};
-	private static final String[] IQIYI = {"https://www.iqiyi.com/", "IQIYI"};
+	public static final String[] IQIYI = {"https://www.iqiyi.com/", "IQIYI"};
 	private static final String[] Spotify = {"https://www.spotify.com/", "Spotify"};
 	private static final String[] TED = {"https://www.ted.com/", "TED"};
 	private static final String[] Twitter = {"https://twitter.com/", "Twitter"};

@@ -27,7 +27,7 @@ public final class Constants {
 	public static final String HOME_Bookmark = "about:bookmarks";
 	public static final String BAIDU_SEARCH = "https://www.baidu.com/s?wd=";
 
-	public static final String Default_Page = "https://www.amazon.com/";//https://www.mgtv.com";//https://www.iqiyi.com/";
+	public static final String Default_Page = "https://www.youtube.com/";//"https://www.amazon.com/";//https://www.mgtv.com";//https://www.iqiyi.com/";
 
 	public static final String YANDEX_SEARCH = "https://yandex.ru/yandsearch?lr=21411&text=";
 	public static final String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory()

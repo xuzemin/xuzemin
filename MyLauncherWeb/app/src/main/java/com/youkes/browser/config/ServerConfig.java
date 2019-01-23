@@ -11,7 +11,7 @@ public class ServerConfig {
 	public static String API_HOST = "api.youkes.com";
 	public static int API_PORT = 8081;
 	public static final int Interval = 3;
-	public static final int BrowserTabMax = 9;
+	public static final int BrowserTabMax = 18;
 
 	public static String STS_Server= "http://"+API_HOST+":"+API_PORT+"/api/aliyun/oss/sts";
 	public static String Cloud_Upload_Bucket= "youkesupload";

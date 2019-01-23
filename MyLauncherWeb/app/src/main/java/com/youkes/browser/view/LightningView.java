@@ -47,6 +47,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.youkes.browser.R;
+import com.youkes.browser.activity.MainActivity;
 import com.youkes.browser.constant.Constants;
 import com.youkes.browser.constant.StartPage;
 import com.youkes.browser.controller.BrowserController;
@@ -127,9 +128,9 @@ public class LightningView {
 
 	}
 
-public void setWebViewAction(WebViewAction action){
-this.webViewAction=action;
-}
+	public void setWebViewAction(WebViewAction action){
+		this.webViewAction=action;
+	}
 	private final Title mTitle;
 
 	//private ArrayList<WebView> cachedWebView=new ArrayList<WebView>();
@@ -213,7 +214,11 @@ this.webViewAction=action;
 		mDefaultUserAgent = mWebView.getSettings().getUserAgentString();
 		mSettings = mWebView.getSettings();
 		initializeSettings(mWebView.getSettings(), activity);
-		initializePreferences(activity);
+		if(!url.contains("iqiyi") ) {
+			initializePreferences(activity,false);
+		}else{
+			initializePreferences(activity,true);
+		}
 		if (url != null) {
 			if (!url.trim().isEmpty()) {
 				mWebView.loadUrl(url);
@@ -273,7 +278,7 @@ this.webViewAction=action;
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "NewApi", "SetJavaScriptEnabled" })
-	public synchronized void initializePreferences(Context context) {
+	public synchronized void initializePreferences(Context context ,boolean isIQYI) {
 		mPreferences = PreferenceManager.getInstance();
 		mHomepage = mPreferences.getHomepage();
 		mAdBlock.updatePreference();
@@ -303,7 +308,13 @@ this.webViewAction=action;
 					break;
 			}
 		}
-		mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36");
+		mSettings.setPluginState(WebSettings.PluginState.ON);
+		if(isIQYI) {
+			mSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 4.4.4; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36");
+		}else {
+			mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.91 Safari/537.36");
+		}
+//		mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36");
 //		switch (mPreferences.getUserAgentChoice()) {
 //			case 1:
 //				if (API > 16) {
@@ -525,7 +536,7 @@ this.webViewAction=action;
 		switch (mode) {
 			case 0:
 				mPaint.setColorFilter(null);
-				 //setSoftwareRendering(); // Some devices get segfaults
+				//setSoftwareRendering(); // Some devices get segfaults
 				// in the WebView with Hardware Acceleration enabled,
 				// the only fix is to disable hardware rendering
 				//setNormalRendering();
@@ -891,7 +902,7 @@ this.webViewAction=action;
 
 		@Override
 		public void onReceivedHttpAuthRequest(final WebView view, @NonNull final HttpAuthHandler handler,
-				final String host, final String realm) {
+											  final String host, final String realm) {
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
 			final EditText name = new EditText(mActivity);
@@ -1092,7 +1103,7 @@ this.webViewAction=action;
 			return ret;
 			/*
 
-			*/
+			 */
 		}
 	}
 
@@ -1143,7 +1154,7 @@ this.webViewAction=action;
 
 		@Override
 		public void onGeolocationPermissionsShowPrompt(final String origin,
-				final GeolocationPermissions.Callback callback) {
+													   final GeolocationPermissions.Callback callback) {
 			final boolean remember = true;
 			AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
 			builder.setTitle(mActivity.getString(R.string.location));
@@ -1176,7 +1187,7 @@ this.webViewAction=action;
 
 		@Override
 		public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture,
-				Message resultMsg) {
+									  Message resultMsg) {
 			mBrowserController.onCreateWindow(isUserGesture, resultMsg);
 			return true;
 		}
@@ -1200,7 +1211,7 @@ this.webViewAction=action;
 		}
 
 		public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback,
-				FileChooserParams fileChooserParams) {
+										 FileChooserParams fileChooserParams) {
 			mBrowserController.showFileChooser(filePathCallback);
 			return true;
 		}
@@ -1273,7 +1284,7 @@ this.webViewAction=action;
 		@Override
 		@Deprecated
 		public void onShowCustomView(View view, int requestedOrientation,
-				CustomViewCallback callback) {
+									 CustomViewCallback callback) {
 
 			// While these lines might look like they work, in practice,
 			// Full-screen videos won't work correctly. I may test this out some
@@ -1401,7 +1412,7 @@ this.webViewAction=action;
 		/**
 		 * Without this, onLongPress is not called when user is zooming using
 		 * two fingers, but is when using only one.
-		 * 
+		 *
 		 * The required behaviour is to not trigger this when the user is
 		 * zooming, it shouldn't matter how much fingers the user's using.
 		 */
