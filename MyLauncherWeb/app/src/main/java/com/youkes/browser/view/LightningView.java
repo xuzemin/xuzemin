@@ -311,6 +311,24 @@ public class LightningView {
 		mSettings.setPluginState(WebSettings.PluginState.ON);
 		if(isIQYI) {
 			mSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 4.4.4; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36");
+			switch (mPreferences.getUserAgentChoice()) {
+				case 1:
+					if (API > 16) {
+						mSettings.setUserAgentString(WebSettings.getDefaultUserAgent(context));
+					} else {
+						mSettings.setUserAgentString(mDefaultUserAgent);
+					}
+					break;
+				case 2:
+					mSettings.setUserAgentString(Constants.DESKTOP_USER_AGENT);
+					break;
+				case 3:
+					mSettings.setUserAgentString(Constants.MOBILE_USER_AGENT);
+					break;
+				case 4:
+					mSettings.setUserAgentString(mPreferences.getUserAgentString(mDefaultUserAgent));
+					break;
+			}
 		}else {
 			mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.91 Safari/537.36");
 		}
