@@ -214,7 +214,7 @@ public class LightningView {
 		mDefaultUserAgent = mWebView.getSettings().getUserAgentString();
 		mSettings = mWebView.getSettings();
 		initializeSettings(mWebView.getSettings(), activity);
-		if(!url.contains("iqiyi") ) {
+		if(!url.contains("iqiyi")) {
 			initializePreferences(activity,false);
 		}else{
 			initializePreferences(activity,true);
@@ -463,17 +463,21 @@ public class LightningView {
 			// We're in Incognito mode, reject
 			settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
 		}
-		settings.setDomStorageEnabled(true);
+		settings.setMediaPlaybackRequiresUserGesture(false);
+		settings.setJavaScriptEnabled(true);
 		settings.setAppCacheEnabled(true);
 		settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 		settings.setDatabaseEnabled(true);
 		settings.setSupportZoom(true);
+		settings.setGeolocationEnabled(true);
+		settings.setDomStorageEnabled(true);
 		settings.setUseWideViewPort(true);
 		settings.setLoadWithOverviewMode(true);
 		settings.setBuiltInZoomControls(true);
 		settings.setDisplayZoomControls(false);
 		settings.setAllowContentAccess(true);
 		settings.setAllowFileAccess(true);
+		settings.setPluginState(PluginState.ON);
 		settings.setDefaultTextEncodingName("utf-8");
 		if (API > 16) {
 			settings.setAllowFileAccessFromFileURLs(false);

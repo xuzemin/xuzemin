@@ -52,6 +52,7 @@
             android:alwaysRetainTaskState="true"
             android:screenOrientation="landscape"
             android:launchMode="singleTask"
+            android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
         >
