@@ -610,7 +610,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 
 			@Override
 			public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-
+				LogUtil.e("keyCode1"+arg1);
 				switch (arg1) {
 					case KeyEvent.KEYCODE_ENTER:
 						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -621,6 +621,9 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 							v.requestFocus();
 						}
 						return true;
+					case KeyEvent.KEYCODE_BACK:
+//						backto();
+						break;
 					default:
 						break;
 				}
@@ -1086,6 +1089,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		LogUtil.e("keyCode2"+keyCode);
 		if (keyCode == KeyEvent.KEYCODE_ENTER) {
 			if (mSearch.hasFocus()) {
 				searchTheWeb(mSearch.getText().toString());
@@ -1094,7 +1098,9 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 				&& (Build.MANUFACTURER.compareTo("LGE") == 0)) {
 			// Workaround for stupid LG devices that crash
 			return true;
-		}
+		}else if(keyCode==KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+//		    backto();
+        }
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -1258,9 +1264,9 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 				return;
 			}
 			if(position == 11 ){
-				wv.initializePreferences(BrowserActivity.this,true);
+				wv.initializePreferences(BrowserActivity.this,1);
 			}else{
-				wv.initializePreferences(BrowserActivity.this,false);
+				wv.initializePreferences(BrowserActivity.this,0);
 			}
 			wv.loadUrl(mBookmarkList.get(position).getUrl());
 
@@ -1750,49 +1756,58 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		}
 	}
 
+	private void backto(){
+		LogUtil.e("showTabs"+showTabs);
+        if(showTabs){
+            hideTabsPanel();
+            return;
+        }
+		LogUtil.e("showSetting"+showSetting);
+        if(showSetting){
+            hideSettingPanel();
+            return;
+        }
+        LogUtil.e("isToast"+isToast);
+        if(isToast) {
+            SoftKeyboardUtil.hideSoftKeyboard(this);
+            isToast = false;
+            return;
+        }
+        if (mDrawerLayout.isDrawerOpen(mDrawerLeft)) {
+            mDrawerLayout.closeDrawer(mDrawerLeft);
+            return;
+        } else if (mDrawerLayout.isDrawerOpen(mDrawerRight)) {
+            mDrawerLayout.closeDrawer(mDrawerRight);
+            return;
+        }
+		LightningView v = getCurrentWebView();
+        LogUtil.e("onBackPressed "+ (v==null));
+        if (v != null) {
+            Log.d(Constants.TAG, "onBackPressed");
+            if (mSearch.hasFocus()) {
+				v.requestFocus();
+            } else if (v.canGoBack()) {
+                if (!v.isShown()) {
+                    onHideCustomView();
+                } else {
+					v.goBack();
+                }
+            } else {
+                browserExit();
+                ToastUtil.showMessage(getString(R.string.browser_no_back));
+                //deleteTab(mDrawerListLeft.getCheckedItemPosition());
+            }
+        } else {
+            Log.e(Constants.TAG, "This shouldn't happen ever");
+            super.onBackPressed();
+        }
+
+    }
 	@Override
 	public void onBackPressed() {
-		if(showTabs==true){
-			hideTabsPanel();
-			return;
-		}
-		if(showSetting==true){
-			hideSettingPanel();
-			return;
-		}
-		if(isToast) {
-			SoftKeyboardUtil.hideSoftKeyboard(this);
-			return;
-		}
-		if (mDrawerLayout.isDrawerOpen(mDrawerLeft)) {
-			mDrawerLayout.closeDrawer(mDrawerLeft);
-			return;
-		} else if (mDrawerLayout.isDrawerOpen(mDrawerRight)) {
-			mDrawerLayout.closeDrawer(mDrawerRight);
-			return;
-		}
-
-		if (getCurrentWebView() != null) {
-			Log.d(Constants.TAG, "onBackPressed");
-			if (mSearch.hasFocus()) {
-				getCurrentWebView().requestFocus();
-			} else if (getCurrentWebView().canGoBack()) {
-				if (!getCurrentWebView().isShown()) {
-					onHideCustomView();
-				} else {
-					getCurrentWebView().goBack();
-				}
-			} else {
-				browserExit();
-				ToastUtil.showMessage(getString(R.string.browser_no_back));
-				//deleteTab(mDrawerListLeft.getCheckedItemPosition());
-			}
-		} else {
-			Log.e(Constants.TAG, "This shouldn't happen ever");
-			super.onBackPressed();
-		}
-
-	}
+		LogUtil.e("keyCode3+onBackPressed");
+	    backto();
+    }
 
 	@Override
 	protected void onPause() {
@@ -1883,10 +1898,10 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		if (mWebViews != null) {
 			for (int n = 0; n < mWebViews.size(); n++) {
 				if (mWebViews.get(n) != null) {
-					if(!mWebViews.get(n).getUrl().contains("iqyi") ) {
-						mWebViews.get(n).initializePreferences(this, false);
+					if(!mWebViews.get(n).getUrl().contains("iqiyi") ) {
+						mWebViews.get(n).initializePreferences(this, 0);
 					}else{
-						mWebViews.get(n).initializePreferences(this, true);
+						mWebViews.get(n).initializePreferences(this, 1);
 					}
 				} else {
 					mWebViews.remove(n);
@@ -1902,7 +1917,8 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 				//获取View可见区域的bottom
 				Rect rect = new Rect();
 				getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-				if(bottom!=0 && oldBottom!=0 && bottom - rect.bottom <= 0){
+				LogUtil.e("" + bottom +" "+oldBottom + " "+rect.bottom);
+				if(bottom!=0 && oldBottom!=0 && (bottom - rect.bottom < 500)){
 					isToast = false;
 				}else {
 					isToast = true;

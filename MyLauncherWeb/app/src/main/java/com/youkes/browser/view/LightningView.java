@@ -58,6 +58,7 @@ import com.youkes.browser.utils.AdBlock;
 import com.youkes.browser.utils.BitmapUtil;
 import com.youkes.browser.utils.ImageSaveUtil;
 import com.youkes.browser.utils.IntentUtils;
+import com.youkes.browser.utils.LogUtil;
 import com.youkes.browser.utils.ScreenShotUtil;
 import com.youkes.browser.utils.ToastUtil;
 import com.youkes.browser.utils.Utils;
@@ -215,9 +216,9 @@ public class LightningView {
 		mSettings = mWebView.getSettings();
 		initializeSettings(mWebView.getSettings(), activity);
 		if(!url.contains("iqiyi")) {
-			initializePreferences(activity,false);
+			initializePreferences(activity,0);
 		}else{
-			initializePreferences(activity,true);
+			initializePreferences(activity,1);
 		}
 		if (url != null) {
 			if (!url.trim().isEmpty()) {
@@ -278,7 +279,7 @@ public class LightningView {
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "NewApi", "SetJavaScriptEnabled" })
-	public synchronized void initializePreferences(Context context ,boolean isIQYI) {
+	public synchronized void initializePreferences(Context context ,int isIQYI) {
 		mPreferences = PreferenceManager.getInstance();
 		mHomepage = mPreferences.getHomepage();
 		mAdBlock.updatePreference();
@@ -309,48 +310,38 @@ public class LightningView {
 			}
 		}
 		mSettings.setPluginState(WebSettings.PluginState.ON);
-		if(isIQYI) {
-			mSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 4.4.4; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36");
-			switch (mPreferences.getUserAgentChoice()) {
-				case 1:
-					if (API > 16) {
-						mSettings.setUserAgentString(WebSettings.getDefaultUserAgent(context));
-					} else {
-						mSettings.setUserAgentString(mDefaultUserAgent);
-					}
-					break;
-				case 2:
-					mSettings.setUserAgentString(Constants.DESKTOP_USER_AGENT);
-					break;
-				case 3:
-					mSettings.setUserAgentString(Constants.MOBILE_USER_AGENT);
-					break;
-				case 4:
-					mSettings.setUserAgentString(mPreferences.getUserAgentString(mDefaultUserAgent));
-					break;
-			}
-		}else {
+		switch (isIQYI){
+			case 0:
+//				mSettings.setUserAgentString("ozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/32.0.0.142 Safari/537.1");
+//				mSettings.setUserAgentString("ozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1");
+//			mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36");
 			mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.91 Safari/537.36");
+//				mSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 7.0; MI PAD 3 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/72.0.3626.105 Safari/537.36");
+//				mSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 5.1.1; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36");
+
+				break;
+			case 1:
+				switch (mPreferences.getUserAgentChoice()) {
+					case 1:
+						if (API > 16) {
+							mSettings.setUserAgentString(WebSettings.getDefaultUserAgent(context));
+						} else {
+							mSettings.setUserAgentString(mDefaultUserAgent);
+						}
+						break;
+					case 2:
+						mSettings.setUserAgentString(Constants.DESKTOP_USER_AGENT);
+						break;
+					case 3:
+						mSettings.setUserAgentString(Constants.MOBILE_USER_AGENT);
+						break;
+					case 4:
+						mSettings.setUserAgentString(mPreferences.getUserAgentString(mDefaultUserAgent));
+						break;
+				}
+				break;
 		}
-//		mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36");
-//		switch (mPreferences.getUserAgentChoice()) {
-//			case 1:
-//				if (API > 16) {
-//					mSettings.setUserAgentString(WebSettings.getDefaultUserAgent(context));
-//				} else {
-//					mSettings.setUserAgentString(mDefaultUserAgent);
-//				}
-//				break;
-//			case 2:
-//				mSettings.setUserAgentString(Constants.DESKTOP_USER_AGENT);
-//				break;
-//			case 3:
-//				mSettings.setUserAgentString(Constants.MOBILE_USER_AGENT);
-//				break;
-//			case 4:
-//				mSettings.setUserAgentString(mPreferences.getUserAgentString(mDefaultUserAgent));
-//				break;
-//		}
+		LogUtil.e("setUserAgentString"+mSettings.getUserAgentString());
 
 		if (mPreferences.getSavePasswordsEnabled() && !mBrowserController.isIncognito()) {
 			if (API < 18) {
@@ -386,27 +377,28 @@ public class LightningView {
 			mSettings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
 		}
 
+
 		mSettings.setBlockNetworkImage(mPreferences.getBlockImagesEnabled());
 		mSettings.setSupportMultipleWindows(mPreferences.getPopupsEnabled());
 		mSettings.setUseWideViewPort(mPreferences.getUseWideViewportEnabled());
 		mSettings.setLoadWithOverviewMode(mPreferences.getOverviewModeEnabled());
-		switch (mPreferences.getTextSize()) {
-			case 1:
-				mSettings.setTextZoom(200);
-				break;
-			case 2:
-				mSettings.setTextZoom(150);
-				break;
-			case 3:
-				mSettings.setTextZoom(100);
-				break;
-			case 4:
-				mSettings.setTextZoom(75);
-				break;
-			case 5:
-				mSettings.setTextZoom(50);
-				break;
-		}
+//		switch (mPreferences.getTextSize()) {
+//			case 1:
+//				mSettings.setTextZoom(200);
+//				break;
+//			case 2:
+//				mSettings.setTextZoom(150);
+//				break;
+//			case 3:
+//				mSettings.setTextZoom(100);
+//				break;
+//			case 4:
+//				mSettings.setTextZoom(75);
+//				break;
+//			case 5:
+//				mSettings.setTextZoom(50);
+//				break;
+//		}
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			CookieManager.getInstance().setAcceptThirdPartyCookies(mWebView,
 					!mPreferences.getBlockThirdPartyCookiesEnabled());
@@ -468,21 +460,26 @@ public class LightningView {
 		settings.setAppCacheEnabled(true);
 		settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 		settings.setDatabaseEnabled(true);
-		settings.setSupportZoom(true);
+//		settings.setSupportZoom(true);
 		settings.setGeolocationEnabled(true);
 		settings.setDomStorageEnabled(true);
 		settings.setUseWideViewPort(true);
 		settings.setLoadWithOverviewMode(true);
-		settings.setBuiltInZoomControls(true);
-		settings.setDisplayZoomControls(false);
+//		settings.setBuiltInZoomControls(true);
+//		settings.setDisplayZoomControls(false);
 		settings.setAllowContentAccess(true);
 		settings.setAllowFileAccess(true);
+
+		settings.setBuiltInZoomControls(false);
+		settings.setSupportZoom(false);
+		settings.setDisplayZoomControls(false);
 		settings.setPluginState(PluginState.ON);
 		settings.setDefaultTextEncodingName("utf-8");
 		if (API > 16) {
 			settings.setAllowFileAccessFromFileURLs(false);
 			settings.setAllowUniversalAccessFromFileURLs(false);
 		}
+		settings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
 
 		settings.setAppCachePath(context.getDir("appcache", 0).getPath());
 		settings.setGeolocationDatabasePath(context.getDir("geolocation", 0).getPath());
