@@ -215,7 +215,8 @@ public class LightningView {
 		mDefaultUserAgent = mWebView.getSettings().getUserAgentString();
 		mSettings = mWebView.getSettings();
 		initializeSettings(mWebView.getSettings(), activity);
-		if(!url.contains("iqiyi")) {
+		if(!url.contains("iqiyi")
+				&& !url.contains("twitter")) {
 			initializePreferences(activity,0);
 		}else{
 			initializePreferences(activity,1);

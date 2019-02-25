@@ -60,7 +60,6 @@ public class BrowserMainActivity extends BrowserActivity {
 		if(!isFinished) {
 			saveOpenTabs();
 		}
-
 	}
 
 	@Override

@@ -957,24 +957,18 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 	}
 
 	public void restoreOrNewTab() {
-//		if(MainActivity.intentUrl !=null) {
-//			if(mWebViews.size() >= ServerConfig.BrowserTabMax){
-//				mWebViews.remove(0);
-//			}
-//			mWebViews.clear();
-//			newTab(MainActivity.intentUrl.getUrl(), true);
-//		}else{
 			mIdGenerator = 0;
-			int type = getIntent().getIntExtra("type", 0);
-			if (type == BrowserType.Search_Page) {
-				openSearchTab();
-				return;
-			}
+//			int type = getIntent().getIntExtra("type", 0);
+//			if (type == BrowserType.Search_Page) {
+//				openSearchTab();
+//				return;
+//			}
 			int selectTabIndex = mPreferences.getSelectedIndex();
-			String url = getIntent().getStringExtra("url");
+			String url = MainActivity.intentUrl.getUrl();
 			if (url != null && (url.startsWith(Constants.HTTP) || url.startsWith(Constants.HTTPS))) {
 				newTab(url, true);
 				selectTabIndex = 0;
+				MainActivity.intentUrl.setUrl(null);
 			}
 			if (mPreferences.getRestoreLostTabsEnabled()) {
 				String mem = mPreferences.getMemoryUrl();
@@ -1263,7 +1257,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			if(wv==null){
 				return;
 			}
-			if(position == 11 ){
+			if(position == 11 || position == 14){
 				wv.initializePreferences(BrowserActivity.this,1);
 			}else{
 				wv.initializePreferences(BrowserActivity.this,0);
@@ -1856,6 +1850,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 	protected void onStop() {
 		super.onStop();
 		mI2PHelperBound = false;
+		mPreferences.setRestoreLostTabsEnabled(false);
 	}
 
 	@Override
@@ -1864,6 +1859,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		if (mHistoryDatabase != null) {
 			mHistoryDatabase.close();
 		}
+        mPreferences.setRestoreLostTabsEnabled(true);
 		super.onDestroy();
 
 	}
@@ -1898,7 +1894,8 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		if (mWebViews != null) {
 			for (int n = 0; n < mWebViews.size(); n++) {
 				if (mWebViews.get(n) != null) {
-					if(!mWebViews.get(n).getUrl().contains("iqiyi") ) {
+					if(!mWebViews.get(n).getUrl().contains("iqiyi")
+							&& !mWebViews.get(n).getUrl().contains("twitter") ) {
 						mWebViews.get(n).initializePreferences(this, 0);
 					}else{
 						mWebViews.get(n).initializePreferences(this, 1);
@@ -1911,6 +1908,16 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		supportInvalidateOptionsMenu();
 		setFullscreen(true);
 		restoreOrNewTab();
+//		if(MainActivity.intentUrl !=null) {
+//			if (mWebViews.size() >= ServerConfig.BrowserTabMax) {
+//				mWebViews.remove(0);
+//			}
+////			mWebViews.clear();
+//			newTab(MainActivity.intentUrl.getUrl(), true);
+//			MainActivity.intentUrl = null;
+////			mDrawerLayout.openDrawer(mDrawerRight);
+//		}
+
 		getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 			@Override
 			public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -1926,14 +1933,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			}
 		});
 
-		if(MainActivity.intentUrl !=null) {
-			if (mWebViews.size() >= ServerConfig.BrowserTabMax) {
-				mWebViews.remove(0);
-			}
-//			mWebViews.clear();
-			newTab(MainActivity.intentUrl.getUrl(), true);
-//			mDrawerLayout.openDrawer(mDrawerRight);
-		}
+
 
 	}
 
@@ -2688,7 +2688,10 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			}
 		}
 		mCustomViewCallback = callback;
+		hideBottomUIMenu(true);
 	}
+
+
 
 	@Override
 	public void onHideCustomView() {
@@ -2723,6 +2726,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			mVideoView = null;
 		}
 		setRequestedOrientation(mOriginalOrientation);
+		hideBottomUIMenu(false);
 	}
 
 	private class VideoCompletionListener implements MediaPlayer.OnCompletionListener,
@@ -4003,5 +4007,34 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 		Intent intent = new Intent(this,BrowserTab2Activity.class);
 		startActivity(intent);
 		*/
+	}
+
+	protected void hideBottomUIMenu(boolean isShow) {
+		View decorView = null;
+		int uiOptions = 0;
+		if(isShow) {
+			//隐藏虚拟按键，并且全屏
+			if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+				View v = this.getWindow().getDecorView();
+				v.setSystemUiVisibility(View.GONE);
+			} else if (Build.VERSION.SDK_INT >= 19) {
+				//for new api versions.
+				decorView = getWindow().getDecorView();
+				uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+			}
+		}else{
+			//隐藏虚拟按键，并且全屏
+			if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+				View v = this.getWindow().getDecorView();
+				v.setSystemUiVisibility(View.VISIBLE);
+			} else if (Build.VERSION.SDK_INT >= 19) {
+				//for new api versions.
+				decorView = getWindow().getDecorView();
+				uiOptions = View.SYSTEM_UI_FLAG_VISIBLE
+						 ;
+			}
+		}
+		decorView.setSystemUiVisibility(uiOptions);
 	}
 }

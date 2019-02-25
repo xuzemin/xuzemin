@@ -368,7 +368,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         urllist.add("https://www.spotify.com/");
         urllist.add("https://www.ted.com/");
-        urllist.add("https://twitter.com/");
+        urllist.add("https://www.twitter.com/");
         urllist.add("https://www.weibo.com/");
         urllist.add("https://www.youku.com/");
         urllist.add("https://www.youtube.com/");//"https://www.youtube.com/");
