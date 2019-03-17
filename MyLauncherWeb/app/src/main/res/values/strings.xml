@@ -1425,7 +1425,19 @@
     <string name="VideoView_error_button">好的</string>
     <string name="mediacontroller_play_pause">Play/Pause</string>
 
+    <array name="DATABASE_INFO">
+        <item>url.db</item>
+        <item>1</item>
+    </array>
+    <array name="CREATE_TABLE_SQL">
+        <item>CREATE TABLE url (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,url
+            TEXT , show INTEGER ,type INTEGER , bitname TEXT)
+        </item>
+    </array>
 
+    <array name="UPDATE_TABLE_SQL">
+        <item></item>
+    </array>
 
 
 </resources>

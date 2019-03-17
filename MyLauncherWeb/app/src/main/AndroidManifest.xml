@@ -35,6 +35,7 @@
             android:alwaysRetainTaskState="true"
             android:screenOrientation="landscape"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             >
             <intent-filter>
@@ -52,10 +53,10 @@
             android:alwaysRetainTaskState="true"
             android:screenOrientation="landscape"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
-        >
+            >
             <intent-filter>
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.APP_BROWSER" />
@@ -104,5 +105,13 @@
             android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+        <receiver android:name=".reciever.UsbStateReceiver">
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

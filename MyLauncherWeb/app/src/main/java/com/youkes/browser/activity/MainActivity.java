@@ -4,20 +4,26 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -28,6 +34,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,16 +47,23 @@ import com.youkes.browser.adapter.GridViewAdapter;
 import com.youkes.browser.object.GridItem;
 import com.youkes.browser.object.IntentUrl;
 import com.youkes.browser.utils.Constant;
+import com.youkes.browser.utils.DBHelper;
+import com.youkes.browser.utils.LogUtil;
+import com.youkes.browser.utils.RootCmd;
 import com.youkes.browser.utils.SaveBitmap;
 import com.youkes.browser.utils.ScreenUtil;
 import com.youkes.browser.utils.SharedPreferencesHelper;
 import com.youkes.browser.view.BlurBuilder;
 import com.youkes.browser.view.MyDialog;
+import com.youkes.browser.view.ZB_MyDialog;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -57,6 +72,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private LinearLayout layout_cn,layout_content,layout_video,layout_new,layout_message,layout_contact,background,layout_background;
     private boolean isMain = true;
     private int currentIndex = 0;
+    private RelativeLayout admin_relative;
     private static Bitmap backgroundback = null;
     private GridView gridView,video_girdview,news_girdview,message_girdview,contact_girdview,gridview_background;
     private MyDialog myDialog;
@@ -71,7 +87,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static ArrayList<String> ImageNameList;
     private static ArrayList<Bitmap> ImageBitmapList;
     private static String FileName = null;
+    private RelativeLayout admin_layout;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    private static DBHelper dbHelper;
+    public static boolean isAdmin = false;
+    private static List<Map> urlList = new ArrayList<>();// 机器人
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -103,6 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_first);
         layout_cn = findViewById(R.id.layout_cn);
+        findViewById(R.id.admin).setOnClickListener(this);
         gridView = findViewById(R.id.all_content);
         video_girdview = findViewById(R.id.video_girdview);
         layout_content = findViewById(R.id.layout_content);
@@ -116,6 +137,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         background = findViewById(R.id.background);
         layout_background =findViewById(R.id.layout_background);
         gridview_background = findViewById(R.id.gridview_background);
+        dbHelper = DBHelper.getInstance(getApplicationContext());
+        admin_layout = findViewById(R.id.admin_layout);
+        admin_relative = findViewById(R.id.admin_relative);
         initView();
     }
     private void initView(){
@@ -134,6 +158,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         settings.setOnClickListener(this);
         content = findViewById(R.id.content);
         content.setOnClickListener(this);
+        admin_layout.setOnClickListener(this);
 //        background.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {
@@ -316,8 +341,147 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
+    private void initDb(){
+        insert("Settings","com.android.settings",0);
+        insert("Google Play","com.android.vending",0);
+        insert("Wallpaper","Wallpaper",1);
+        insert("Chrome","com.android.chrome",2);
+        insert(getString(R.string.amazon),"https://www.amazon.com/",2);
+        insert(getString(R.string.bbc),"https://www.bbc.co.uk/news",2);
+        insert(getString(R.string.ccn),"https://www.cnn.com/",2);
+        insert(getString(R.string.discovery),"https://www.discovery.com/",2);
+        insert(getString(R.string.economist),"https://www.economist.com/",2);
+        insert(getString(R.string.fb),"https://www.facebook.com/",2);
+        insert(getString(R.string.google_news),"https://news.google.com/",2);
+        insert(getString(R.string.logo_ig),"https://www.instagram.com/",2);
+        insert(getString(R.string.logo_mlb),"https://www.mlb.com/",2);
+        insert(getString(R.string.lnasa),"https://www.nasa.gov/",2);
+        insert(getString(R.string.logo_nba),"https://www.nba.com/",2);
+        insert(getString(R.string.logo_qiy),"https://www.iqiyi.com/",2);
+        insert(getString(R.string.logo_spotify),"https://www.spotify.com/",2);
+        insert(getString(R.string.logo_ted),"https://www.ted.com/",2);
+        insert(getString(R.string.logo_twitter),"https://www.twitter.com/",2);
+        insert(getString(R.string.logo_weibo),"https://www.weibo.com/",2);
+        insert(getString(R.string.logo_youku),"https://www.youku.com",2);
+        insert(getString(R.string.logo_youtube),"https://www.youtube.com/",2);
+    }
+
+    public void getUrl(boolean isAdmin){
+        this.isAdmin = isAdmin;
+        if(isAdmin){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                admin_relative.setBackground(getDrawable(R.drawable.btn_show_on));
+            }
+            urlList = dbHelper.queryListMap("select * from url ", null);
+            if (urlList != null && urlList.size() > 0) {
+                LogUtil.e("urlList first" + urlList.size());
+            } else {
+                initDb();
+                urlList = dbHelper.queryListMap("select * from url ", null);
+                LogUtil.e("urlList first" + urlList.size());
+            }
+        }else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                admin_relative.setBackground(getDrawable(R.drawable.btn_show));
+            }
+            urlList = dbHelper.queryListMap("select * from url where type = 2 and show = 0", null);
+            if (urlList != null && urlList.size() > 0) {
+                LogUtil.e("urlList first" + urlList.size());
+            } else {
+                initDb();
+                urlList = dbHelper.queryListMap("select * from url where type = 2 and show = 0 ", null);
+                LogUtil.e("urlList first" + urlList.size());
+            }
+        }
+        setUrlContent();
+    }
+
+    private void setUrlContent(){
+        if(urlList != null && urlList.size() > 0) {
+            mGridData = new ArrayList<>();
+            GridItem items = new GridItem();
+            mGridData.add(items);
+            for (int i = 0, size = urlList.size() - 1; i < size; i++) {
+                items = new GridItem();
+                items.setTitle("");
+                items.setImage(getResources().getDrawable(R.mipmap.photo));
+                mGridData.add(items);
+            }
+            gridViewAdapter = new GridViewAdapter(this, R.layout.gridview_item_main, mGridData, urlList);
+            gridView.setAdapter(gridViewAdapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    /**获得Intent*/
+                    if(isAdmin){
+                        if (position <= 2) {
+                            switch (position) {
+                                case 0:
+                                    packageManager = getPackageManager();
+                                    Intent intentSetting = packageManager.getLaunchIntentForPackage("com.android.settings"); //com.xx.xx是我们获取到的包名 
+                                    if (intentSetting != null) {
+                                        startActivity(intentSetting);
+                                        overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), R.string.settings_not_exit, Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                                case 2:
+                                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                        backgroundback = ((BitmapDrawable) getResources().getDrawable(R.mipmap.beijing4)).getBitmap();
+                                        background.setBackgroundDrawable(new BitmapDrawable(SaveBitmap.getInstance().resizeBitmap(
+                                                backgroundback, ScreenUtil.getScreenWidth(getApplicationContext()), ScreenUtil.getScreenHeight(getApplicationContext()))));
+                                        Toast.makeText(getApplicationContext(), R.string.get_file_no_permission, Toast.LENGTH_SHORT).show();
+                                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STRONGE);
+
+                                    } else {
+                                        RefreshArray();
+                                        currentIndex = Constant.BACKGROUND;
+                                        isMain = false;
+                                        setAnimation(Constant.BACKGROUND, layout_content, layout_background);
+                                    }
+                                    break;
+                                case 1:
+                                    packageManager = getPackageManager();
+                                    Intent intent1 = packageManager.getLaunchIntentForPackage("com.android.vending"); //com.xx.xx是我们获取到的包名 
+                                    if (intent1 != null) {
+                                        startActivity(intent1);
+                                        overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), R.string.google_play_not_exit, Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                            }
+                        }else{
+                            if((int)(urlList.get(position).get("show")) == 0){
+                                dbHelper.execSQL("update url set show = 1 where id = "+ urlList.get(position).get("id"));
+                            }else{
+                                dbHelper.execSQL("update url set show = 0 where id = "+ urlList.get(position).get("id"));
+                            }
+                            getUrl(true);
+                        }
+                    }else{
+                        if(urlList.get(position).get("url").equals("com.android.chrome")){
+                            packageManager = getPackageManager();
+                            Intent intent = packageManager.getLaunchIntentForPackage("com.android.chrome"); //com.xx.xx是我们获取到的包名 
+                            if (intent != null) {
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.google_play_not_exit, Toast.LENGTH_SHORT).show();
+                            }
+                            return;
+                        }else{
+                            starIntent(urlList.get(position).get("url").toString());
+                        }
+                    }
+                }
+            });
+        }
+    }
 
     private void intdata(){
+        getUrl(false);
         gridview_background.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -351,109 +515,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        urllist = new ArrayList<>();
-        urllist.add("https://www.amazon.com/");
-        urllist.add("https://www.bbc.co.uk/news");
-        urllist.add("https://www.cnn.com/");
-        urllist.add("https://www.discovery.com/");
-        urllist.add("https://www.economist.com/");
-        urllist.add("https://www.facebook.com/");
-
-        urllist.add("https://news.google.com/");
-        urllist.add("https://www.instagram.com/");
-        urllist.add("https://www.mlb.com/");
-        urllist.add("https://www.nasa.gov/");
-        urllist.add("https://www.nba.com/");
-        urllist.add("https://www.iqiyi.com/");
-
-        urllist.add("https://www.spotify.com/");
-        urllist.add("https://www.ted.com/");
-        urllist.add("https://www.twitter.com/");
-        urllist.add("https://www.weibo.com/");
-        urllist.add("https://www.youku.com/");
-        urllist.add("https://www.youtube.com/");//"https://www.youtube.com/");
-        int icno[] = { R.mipmap.logo_amazon, R.mipmap.logo_bbc, R.mipmap.logo_cnn,
-                R.mipmap.logo_discovery, R.mipmap.logo_economist, R.mipmap.logo_fb,
-                R.mipmap.logo_googlenews, R.mipmap.logo_ig, R.mipmap.logo_mlb,
-                R.mipmap.logo_nasa, R.mipmap.logo_nba, R.mipmap.logo_qiy,
-                R.mipmap.logo_spotify, R.mipmap.logo_ted, R.mipmap.logo_twitter,
-                R.mipmap.logo_weibo, R.mipmap.logo_youku, R.mipmap.logo_youtube
-        };
-        String name[]={ getString(R.string.amazon),getString(R.string.bbc),getString(R.string.ccn),
-                getString(R.string.discovery),getString(R.string.economist),getString(R.string.fb),
-                getString(R.string.google_news),getString(R.string.logo_ig),getString(R.string.logo_mlb),
-                getString(R.string.lnasa),getString(R.string.logo_nba),getString(R.string.logo_qiy),
-                getString(R.string.logo_spotify),getString(R.string.logo_ted),getString(R.string.logo_twitter),
-                getString(R.string.logo_weibo),getString(R.string.logo_youku),getString(R.string.logo_youtube)
-        };
-        mGridData = new ArrayList<>();
-        GridItem items = new GridItem();
-        items.setTitle("Settings");
-        items.setImage(getResources().getDrawable(R.mipmap.settings));
-        mGridData.add(items);
-        items = new GridItem();
-        items.setTitle("Wallpaper");
-        items.setImage(getResources().getDrawable(R.mipmap.photo));
-        mGridData.add(items);
-        items = new GridItem();
-        items.setTitle("Google Play");
-        items.setImage(getResources().getDrawable(R.mipmap.google_play));
-        mGridData.add(items);
-        for (int i=0; i<icno.length; i++) {
-            items = new GridItem();
-            items.setTitle(name[i]);
-            items.setImage(getResources().getDrawable(icno[i]));
-            mGridData.add(items);
-        }
-        gridViewAdapter = new GridViewAdapter(this, R.layout.gridview_item_main, mGridData);
-        gridView.setAdapter(gridViewAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /**获得Intent*/
-                if(position <= 2){
-                    switch (position){
-                        case 0:
-                            packageManager = getPackageManager();
-                            Intent intentSetting = packageManager.getLaunchIntentForPackage("com.android.settings"); //com.xx.xx是我们获取到的包名 
-                            if(intentSetting!=null){
-                                startActivity(intentSetting);
-                                overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
-                            }else{
-                                Toast.makeText(getApplicationContext(),R.string.settings_not_exit,Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        case 1:
-                            if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                backgroundback = ((BitmapDrawable)getResources().getDrawable(R.mipmap.beijing4)).getBitmap();
-                                background.setBackgroundDrawable(new BitmapDrawable(SaveBitmap.getInstance().resizeBitmap(
-                                        backgroundback,ScreenUtil.getScreenWidth(getApplicationContext()),ScreenUtil.getScreenHeight(getApplicationContext()))));
-                                Toast.makeText(getApplicationContext(),R.string.get_file_no_permission,Toast.LENGTH_SHORT).show();
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STRONGE);
-
-                            }else {
-                                RefreshArray();
-                                currentIndex = Constant.BACKGROUND;
-                                isMain = false;
-                                setAnimation(Constant.BACKGROUND, layout_content, layout_background);
-                            }
-                            break;
-                        case 2:
-                            packageManager = getPackageManager();
-                            Intent intent = packageManager.getLaunchIntentForPackage("com.android.vending"); //com.xx.xx是我们获取到的包名 
-                            if(intent!=null){
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
-                            }else{
-                                Toast.makeText(getApplicationContext(),R.string.google_play_not_exit,Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                    }
-                }else {
-                    starIntent(urllist.get(position - 3));
-                }
-            }
-        });
 
         video_urllist = new ArrayList<>();
         video_urllist.add("https://www.iqiyi.com/");
@@ -578,6 +639,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
+    public void insert(String Name,String url,int type){
+        dbHelper.execSQL("insert into url (name,url,show,type) values " +
+                "('"+Name+"','"+url+"',0,"+type+")");
+    }
+
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -645,7 +711,53 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 isMain = false;
                 setAnimation(Constant.CONTENT,layout_cn,layout_content);
                 break;
+            case R.id.admin_layout:
+            case R.id.admin:
+                getAPKPath(this);
+//                if(isAdmin){
+//                    getUrl(false);
+//                }else{
+//                    adminDialog();
+//                }
+                break;
         }
+    }
+
+
+
+    private ZB_MyDialog dialog;
+    private EditText editText;
+    public void adminDialog(){
+        // 区域Dialog
+        dialog = new ZB_MyDialog(this);
+        editText = (EditText) dialog.getEditText();
+        // 确定Dialog
+        dialog.setOnPositiveListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.getText().toString().trim().equals("")) {
+                    Toast.makeText(getApplicationContext(), "password is empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    if(editText.getText().toString().trim().equals(Constant.AdminPassword)){
+                        Toast.makeText(getApplicationContext(), "Login Succes", Toast.LENGTH_SHORT).show();
+                        getUrl(true);
+                        dialog.dismiss();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "input password error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+        // 取消Dialog
+        dialog.setOnNegativeListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 销毁当前Dialog
+                dialog.dismiss();
+            }
+        });
+        // 显示Dialog
+        dialog.show();
     }
 
     public void starIntent(String url){
@@ -670,6 +782,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
+                if(isAdmin){
+                    getUrl(false);
+                    return true;
+                }
                 if(!isMain) {
                     if(isDelete){
                         isDelete = false;
@@ -855,5 +971,77 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void hideProgressDialog() {
         if(progressDialog!=null)
             progressDialog.dismiss();
+    }
+
+    public String getAPKPath(Context context){
+        File path = new File(Constant.ApkDir);
+        if (Environment.getExternalStorageState().
+                equals(Environment.MEDIA_MOUNTED)) {
+            File[] files = path.listFiles();// 读取文件夹下文件
+            Log.e("传值","versionCode"+files.length);
+            getApkName(files,context);
+        }
+        return null;
+    }
+
+    protected void getApkName(File[] files, Context context) {
+        if(files != null){
+            PackageManager pm = context.getPackageManager();
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    if (file.getName().equals(Constant.ApkName) ){
+                        PackageInfo pi = pm.getPackageArchiveInfo(Constant.ApkDir+Constant.ApkName, 0);
+                        ApplicationInfo applicationInfo = pi.applicationInfo;
+                        try {
+                            getVersionName(context);
+                            Log.e("传值","versionCode"+pi.versionCode);
+                            Log.e("传值","versionCode"+versionCode);
+                            if(applicationInfo.packageName.equals(Constant.Package)
+                                    && versionName !=null && versionCode != 0
+                                    && !pi.versionName.equals(versionName)
+                                    && pi.versionCode > versionCode
+                            ){
+                                install(Constant.ApkDir+Constant.ApkName,context);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private static String versionName = "";
+    private static int versionCode = 0;
+    public static void getVersionName(Context context) throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名
+        PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+        versionName = packInfo.versionName;
+        versionCode = packInfo.versionCode;
+
+    }
+
+    private void install(String filePath,Context context) {
+        Log.i("传值", "开始执行安装: " + filePath);
+//        File apkFile = new File(filePath);
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            Log.w("传值", "版本大于 N ，开始使用 fileProvider 进行安装");
+//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            Uri contentUri = FileProvider.getUriForFile(
+//                    context
+//                    , Constant.Package
+//                    , apkFile);
+//            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+//        } else {
+        Log.w("传值", "正常进行安装");
+        RootCmd.execRootCmdSilent("adb install -r "+ filePath);
+        Log.w("传值", "adb install -r "+ filePath);
+//        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+//        }
+//        context.startActivity(intent);
     }
 }

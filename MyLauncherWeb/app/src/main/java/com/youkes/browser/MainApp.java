@@ -23,7 +23,7 @@ import com.youkes.browser.database.BookmarkDatabase;
 import com.youkes.browser.database.HistoryDatabase;
 import com.youkes.browser.file.FileAccessor;
 import com.youkes.browser.preference.PreferenceUtils;
-
+import com.youkes.browser.utils.DBHelper;
 
 
 public class MainApp extends Application {
@@ -114,6 +114,7 @@ public class MainApp extends Application {
         FileAccessor.initFileAccess();
         initDatabases();
 
+        DBHelper.getInstance(getApplicationContext());
 
     }
 
