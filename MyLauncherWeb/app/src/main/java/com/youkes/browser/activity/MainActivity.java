@@ -53,6 +53,7 @@ import com.youkes.browser.utils.RootCmd;
 import com.youkes.browser.utils.SaveBitmap;
 import com.youkes.browser.utils.ScreenUtil;
 import com.youkes.browser.utils.SharedPreferencesHelper;
+import com.youkes.browser.utils.ToastUtil;
 import com.youkes.browser.view.BlurBuilder;
 import com.youkes.browser.view.MyDialog;
 import com.youkes.browser.view.ZB_MyDialog;
@@ -252,44 +253,46 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Uri mImageCaptureUri = data.getData();
             Constant.debugLog("mImageCaptureUri:"+mImageCaptureUri);
             String fileName = SaveBitmap.getInstance().getPath(this,mImageCaptureUri);
-            if(fileName != null) {
-                String[] array = fileName.split("/");
-                Constant.debugLog("fileName:" + fileName);
-                if (array.length > 0) {
-                    fileName = array[array.length - 1];
-                    Constant.debugLog("path:" + fileName);
-                    array = fileName.split("\\.");
+            try {
+
+                if(fileName != null) {
+                    String[] array = fileName.split("/");
+                    Constant.debugLog("fileName:" + fileName);
                     if (array.length > 0) {
-                        Constant.debugLog("path:" + array[array.length - 1] + " " + array[array.length - 1].length());
-                        finalName = fileName.substring(0, fileName.length() - (array[array.length - 1].length() + 1));
+                        fileName = array[array.length - 1];
+                        Constant.debugLog("path:" + fileName);
+                        array = fileName.split("\\.");
+                        if (array.length > 0) {
+                            Constant.debugLog("path:" + array[array.length - 1] + " " + array[array.length - 1].length());
+                            finalName = fileName.substring(0, fileName.length() - (array[array.length - 1].length() + 1));
+                        }
+                    }
+                }else{
+                    String[] array = mImageCaptureUri.toString().split("/");
+                    Constant.debugLog("fileName:" + fileName);
+                    if (array.length > 0) {
+                        fileName = array[array.length - 1];
+                        Constant.debugLog("path:" + fileName);
+                        array = fileName.split("\\.");
+                        if (array.length > 0) {
+                            Constant.debugLog("path:" + array[array.length - 1] + " " + array[array.length - 1].length());
+                            finalName = fileName.substring(0, fileName.length() - (array[array.length - 1].length() + 1));
+                        }
                     }
                 }
-            }else{
-                String[] array = mImageCaptureUri.toString().split("/");
-                Constant.debugLog("fileName:" + fileName);
-                if (array.length > 0) {
-                    fileName = array[array.length - 1];
-                    Constant.debugLog("path:" + fileName);
-                    array = fileName.split("\\.");
-                    if (array.length > 0) {
-                        Constant.debugLog("path:" + array[array.length - 1] + " " + array[array.length - 1].length());
-                        finalName = fileName.substring(0, fileName.length() - (array[array.length - 1].length() + 1));
-                    }
-                }
-            }
-            Constant.debugLog("path:"+finalName);
-            if (mImageCaptureUri != null) {
-                try {
-                    photoBmp = SaveBitmap.getInstance().getBitmapFormUri(this, mImageCaptureUri);
+                Constant.debugLog("path:"+finalName);
+                if (mImageCaptureUri != null) {
+                    try {
+                        photoBmp = SaveBitmap.getInstance().getBitmapFormUri(this, mImageCaptureUri);
 //                    photoBmp = SaveBitmap.getInstance().getBitmapFormUri(this, Uri.fromFile(file));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 //            int degree = SaveBitmap.getInstance().getBitmapDegree(file.getAbsolutePath());
-            /**
-             * 把图片旋转为正的方向
-             */
+                /**
+                 * 把图片旋转为正的方向
+                 */
 //            Bitmap bitmap = SaveBitmap.getInstance().rotateBitmapByDegree(photoBmp, degree);
 //            Uri uri = data.getData();
 //            Constant.debugLog("uri"+uri);
@@ -297,15 +300,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //            Constant.debugLog("oldpath"+oldpath);
 //            Bitmap bitmap = SaveBitmap.getInstance().getBitMBitmap(oldpath);
 
-            if(photoBmp !=null) {
-                if(finalName== null) {
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");// HH:mm:ss
-                    Date date = new Date(System.currentTimeMillis());
-                    SaveBitmap.getInstance().saveBitmap(getApplicationContext(), photoBmp, simpleDateFormat.format(date));
-                }else{
-                    SaveBitmap.getInstance().saveBitmap(getApplicationContext(), photoBmp, finalName);
+                if(photoBmp !=null) {
+                    if(finalName== null) {
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");// HH:mm:ss
+                        Date date = new Date(System.currentTimeMillis());
+                        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), photoBmp, simpleDateFormat.format(date));
+                    }else{
+                        SaveBitmap.getInstance().saveBitmap(getApplicationContext(), photoBmp, finalName);
+                    }
+                    RefreshArray();
                 }
-                RefreshArray();
+            }catch (Exception e){
+                ToastUtil.showMessage("Pictures are not available,Please confirm the path and file name. ");
             }
         }
     }
@@ -713,12 +719,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.admin_layout:
             case R.id.admin:
-                getAPKPath(this);
-//                if(isAdmin){
-//                    getUrl(false);
-//                }else{
-//                    adminDialog();
-//                }
+//                getAPKPath(this);
+                if(isAdmin){
+                    getUrl(false);
+                }else{
+                    adminDialog();
+                }
                 break;
         }
     }

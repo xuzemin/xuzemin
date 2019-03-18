@@ -4017,6 +4017,8 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
 				View v = this.getWindow().getDecorView();
 				v.setSystemUiVisibility(View.GONE);
+				ToastUtil.showMessage("The system navigation bar has been hidden.Please use the slide at the bottom of" +
+						" the screen to resume");
 			} else if (Build.VERSION.SDK_INT >= 19) {
 				//for new api versions.
 				decorView = getWindow().getDecorView();
