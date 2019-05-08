@@ -19,7 +19,6 @@ package application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.android.jdrd.ijkplayer.R;
 
 

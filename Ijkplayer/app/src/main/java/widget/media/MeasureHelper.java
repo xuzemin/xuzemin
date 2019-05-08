@@ -17,7 +17,6 @@
 package widget.media;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.android.jdrd.ijkplayer.R;
@@ -217,7 +216,7 @@ public final class MeasureHelper {
         mCurrentAspectRatio = aspectRatio;
     }
 
-    @NonNull
+    
     public static String getAspectRatioText(Context context, int aspectRatio) {
         String text;
         switch (aspectRatio) {

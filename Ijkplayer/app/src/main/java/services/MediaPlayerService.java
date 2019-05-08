@@ -20,7 +20,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
@@ -40,7 +39,7 @@ public class MediaPlayerService extends Service {
         context.stopService(newIntent(context));
     }
 
-    @Nullable
+    
     @Override
     public IBinder onBind(Intent intent) {
         return null;

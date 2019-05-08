@@ -17,6 +17,7 @@
 package widget.media;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -24,8 +25,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -613,7 +612,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
     IRenderView.IRenderCallback mSHCallback = new IRenderView.IRenderCallback() {
         @Override
-        public void onSurfaceChanged(@NonNull IRenderView.ISurfaceHolder holder, int format, int w, int h) {
+        public void onSurfaceChanged(IRenderView.ISurfaceHolder holder, int format, int w, int h) {
             if (holder.getRenderView() != mRenderView) {
                 Log.e(TAG, "onSurfaceChanged: unmatched render callback\n");
                 return;
@@ -632,7 +631,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         }
 
         @Override
-        public void onSurfaceCreated(@NonNull IRenderView.ISurfaceHolder holder, int width, int height) {
+        public void onSurfaceCreated( IRenderView.ISurfaceHolder holder, int width, int height) {
             if (holder.getRenderView() != mRenderView) {
                 Log.e(TAG, "onSurfaceCreated: unmatched render callback\n");
                 return;
@@ -646,7 +645,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         }
 
         @Override
-        public void onSurfaceDestroyed(@NonNull IRenderView.ISurfaceHolder holder) {
+        public void onSurfaceDestroyed( IRenderView.ISurfaceHolder holder) {
             if (holder.getRenderView() != mRenderView) {
                 Log.e(TAG, "onSurfaceDestroyed: unmatched render callback\n");
                 return;
@@ -912,7 +911,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         return mCurrentRender;
     }
 
-    @NonNull
     public static String getRenderText(Context context, int render) {
         String text;
         switch (render) {
@@ -945,7 +943,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         return mSettings.getPlayer();
     }
 
-    @NonNull
     public static String getPlayerText(Context context, int player) {
         String text;
         switch (player) {
