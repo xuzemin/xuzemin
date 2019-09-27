@@ -1,0 +1,68 @@
+package com.ctv.settings.view;
+
+import android.app.Activity;
+import android.os.Handler;
+import android.view.View;
+
+import com.ctv.settings.base.IBaseViewHolder;
+
+/**
+ * @Description: 主界面UI
+ * @Author: wanghang
+ * @CreateDate: 2019/9/25 11:09
+ * @UpdateUser: 更新者：
+ * @UpdateDate: 2019/9/25 11:09
+ * @UpdateRemark: 更新说明：
+ * @Version: 1.0
+ */
+public class MainViewHolder implements IBaseViewHolder {
+    private Activity mActivity;
+    private Handler handler;
+
+    /**
+     * 构造方法
+     * @param activity
+     * @param handler
+     */
+    public MainViewHolder(Activity activity, Handler handler){
+        this.mActivity = activity;
+        this.handler = handler;
+    }
+    /**
+     * 初始化UI
+     *
+     * @param activity
+     */
+    @Override
+    public void initUI(Activity activity) {
+
+    }
+
+    /**
+     * 初始化数据
+     *
+     * @param activity
+     */
+    @Override
+    public void initData(Activity activity) {
+
+    }
+
+    /**
+     * 初始化监听
+     */
+    @Override
+    public void initListener() {
+
+    }
+
+    /**
+     * 刷新指定view
+     *
+     * @param view
+     */
+    @Override
+    public void refreshUI(View view) {
+
+    }
+}

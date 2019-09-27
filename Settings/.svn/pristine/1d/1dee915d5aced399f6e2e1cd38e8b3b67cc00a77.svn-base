@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_abort"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        >
+    <TextView
+            style="@style/first_title"
+            android:text="@string/header_abort"/>
+    <LinearLayout
+            style="@style/ll_list"
+            android:orientation="vertical">
+        <RelativeLayout
+                style="@style/rl_item">
+            <TextView
+                    android:text="@string/item_boot_options"
+                    style="@style/item_textView" />
+            <TextView
+                    style="@style/item_textView_right"
+                    android:text="@string/right_boot_options"/>
+            <ImageView
+                    android:visibility="visible"
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+        <RelativeLayout style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_upgrade"/>
+            <ImageView
+                    android:visibility="visible"
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+        <RelativeLayout style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_system_restore_factory"/>
+            <ImageView
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+        <RelativeLayout style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_abort"/>
+            <TextView
+                    style="@style/item_textView_right"
+                    android:text="@string/right_device_name"/>
+            <ImageView
+                    style="@style/more_image_style" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

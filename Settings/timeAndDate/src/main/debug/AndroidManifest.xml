@@ -1,0 +1,33 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.ctv.settings.timeanddate"
+          android:sharedUserId="android.uid.system">
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SET_TIME_ZONE" />
+
+    <application
+            android:allowBackup="true"
+            android:persistent="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:excludeFromRecents="true"
+            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".activity.TimeAndDateActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.TimeZoneActivity">
+        </activity>
+        <activity android:name=".activity.DateFormatActivity">
+        </activity>
+        <activity android:name=".activity.AutoShutdownActivity">
+        </activity>
+        <activity android:name=".activity.AutoBootupActivity">
+        </activity>
+    </application>
+</manifest>

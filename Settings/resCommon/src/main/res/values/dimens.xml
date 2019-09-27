@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="item_width">200dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="bg_radius">10dp</dimen>
+
+    <dimen name="ll_main_size">750dp</dimen>
+
+    <integer name="scale_time">200</integer>
+
+
+    
+        <!-- greneral -->
+    <dimen name="greneral_top_margin">26dip</dimen>
+    <dimen name="greneral_title_sp">25sp</dimen>
+    <dimen name="greneral_item_height">49dip</dimen>
+    <dimen name="greneral_item_left_margin">36.7dip</dimen>
+    <dimen name="greneral_item_right_margin">36.7dip</dimen>
+    <dimen name="greneral_item_iv_margin">32.7dip</dimen>
+    <dimen name="greneral_content_sp">19sp</dimen>
+    <dimen name="greneral_btn_sp">17sp</dimen>
+    <dimen name="greneral_list_width">620dip</dimen>
+</resources>

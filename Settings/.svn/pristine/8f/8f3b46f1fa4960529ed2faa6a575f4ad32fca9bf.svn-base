@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Settings</string>
+
+    <!--  item device -->
+    <string name="header_device">Device</string>
+    <string name="item_light">Light</string>
+    <string name="item_volume">Volume</string>
+    <string name="item_theme_background">Theme Background</string>
+    <string name="right_background">Gradient</string>
+    <string name="item_theme_style">Theme Style</string>
+    <string name="right_theme_style">EDU</string>
+    <string name="item_device_name">Device Name</string>
+    <string name="right_device_name">Smart TV</string>
+
+    <!--  item network -->
+    <string name="header_network">Network</string>
+    <string name="item_wire">Wire</string>
+    <string name="item_wifi">Wifi</string>
+    <string name="item_pppoe">PPPoE</string>
+    <string name="screen_hot_spot">Screen Hotspot</string>
+    <string name="item_hotspot">Hotspot</string>
+    <string name="item_bluetooth">Bluetooth</string>
+
+    <string name="status_on">ON</string>
+    <string name="status_off">OFF</string>
+
+    <!-- item general -->
+    <string name="header_general">General</string>
+    <string name="item_not_appstore">Allow installation of non-APPStore apps</string>
+    <string name="item_touch_sound">Touch Sound</string>
+    <string name="item_child_lock">Child Lock</string>
+    <string name="item_usb_lock">USB Lock</string>
+    <string name="item_floating_button">Floating Button</string>
+    <string name="item_four_distribution">Four Distribution</string>
+    <string name="item_triple_bonding">Triple Bonding</string>
+
+    <!-- item input and language -->
+    <string name="header_input_language">Language And Input Method</string>
+    <string name="item_language">Language</string>
+    <string name="right_language">English</string>
+    <string name="item_keyboard">Keyboard</string>
+    <string name="item_input_method">Input Method Settings</string>
+
+    <!-- item time and date -->
+    <string name="header_time_date">Time And Date</string>
+    <string name="item_24_hour_format">Use 24-hour format</string>
+    <string name="item_automatic">Automatic</string>
+    <string name="item_timezone">Timezone</string>
+    <string name="right_timezone">Beijing</string>
+    <string name="item_time_format">Select date format</string>
+    <string name="right_time_format">2019-08-29</string>
+    <string name="item_on_off">Turn on and off time</string>
+
+    <!-- item security -->
+    <string name="header_security">Security and Privacy</string>
+    <string name="item_app_permissions">Application Permissions</string>
+    <string name="item_unknown_store">App From Unknown Store</string>
+    <string name="item_camera_permissions">Camera Permissions</string>
+    <string name="item_udisk_permissions">U Disk Permissions</string>
+
+    <!-- item about -->
+    <string name="header_about">About</string>
+    <string name="item_boot_options">Boot Options</string>
+    <string name="right_boot_options">OPS</string>
+    <string name="item_upgrade">Upgrade</string>
+    <string name="item_system_restore_factory">Restoring the factory state</string>
+    <string name="item_about">About</string>
+</resources>

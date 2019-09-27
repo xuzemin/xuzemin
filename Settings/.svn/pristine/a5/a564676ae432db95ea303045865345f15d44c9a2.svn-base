@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="themeBg">
+        <item>Meeting style</item>
+        <item>Minimalist style </item>
+        <item>Business style</item>
+        <item>Educational style</item>
+    </string-array>
+
+
+</resources>

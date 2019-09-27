@@ -1,0 +1,140 @@
+package com.ctv.settings.security;
+
+import android.app.Activity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.ctv.settings.base.BaseViewHolder;
+import com.ctv.settings.utils.L;
+import com.ctv.settings.utils.T;
+import com.ctv.settings.utils.Tools;
+
+/**
+ * 安全ViewHolder
+ * @author wanghang
+ * @date 2019/09/17
+ */
+public class SecurityViewHolder extends BaseViewHolder implements View.OnClickListener {
+    private final static String TAG = SecurityViewHolder.class.getCanonicalName();
+
+    private View mainSecurity; // 安全模块根界面
+    private View itemAppPermissions; // 安全模块根界面
+    private View itemUnknownStore; // 安全模块根界面
+    private View itemCameraPermissions; // 安全模块根界面
+    private View itemUdiskPermissions; // 安全模块根界面
+
+    private ImageView imAppPermissions; // app权限
+    private ImageView imUnknownStore; // 位置来源开关
+    private ImageView imUdiskPermissions; // U盘权限
+    private ImageView imCameraPermissions; // 摄像头权限
+
+    private boolean isAllowInstallNonMarket = false;
+
+    public SecurityViewHolder(Activity activity) {
+        super(activity);
+    }
+
+    /**
+     * 初始化UI
+     *
+     * @param activity
+     */
+    @Override
+    public void initUI(Activity activity) {
+        Log.d(TAG, "initUI");
+        mainSecurity = activity.findViewById(R.id.main_security);
+
+        itemAppPermissions = activity.findViewById(R.id.item_app_permissions);
+        itemUnknownStore = activity.findViewById(R.id.item_unknown_store);
+        itemCameraPermissions = activity.findViewById(R.id.item_camera_permissions);
+        itemUdiskPermissions = activity.findViewById(R.id.item_udisk_permissions);
+
+        imAppPermissions = activity.findViewById(R.id.im_item_app_permissions);
+        imUnknownStore = activity.findViewById(R.id.im_item_unknown_store);
+        imUdiskPermissions = activity.findViewById(R.id.im_item_udisk_permissions);
+        imCameraPermissions = activity.findViewById(R.id.im_item_camera_permissions);
+    }
+
+    /**
+     * 初始化数据
+     *
+     * @param activity
+     */
+    @Override
+    public void initData(Activity activity) {
+        Log.d(TAG, "initData");
+        isAllowInstallNonMarket = Tools.isNonMarketAppsAllowed(activity);
+    }
+
+    /**
+     * 初始化监听
+     */
+    @Override
+    public void initListener() {
+        Log.d(TAG, "initListener");
+        itemAppPermissions.setOnClickListener(this);
+        itemUnknownStore.setOnClickListener(this);
+        itemCameraPermissions.setOnClickListener(this);
+        itemUdiskPermissions.setOnClickListener(this);
+
+        imAppPermissions.setOnClickListener(this);
+        imUnknownStore.setOnClickListener(this);
+        imUdiskPermissions.setOnClickListener(this);
+        imCameraPermissions.setOnClickListener(this);
+    }
+
+    /**
+     * 刷新指定view
+     *
+     * @param view
+     */
+    @Override
+    public void refreshUI(View view) {
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        L.d(TAG, "mOnClickListener view.id->%s", id);
+        switch (id){
+            case R.id.im_item_app_permissions:{
+                L.d(TAG, "im_item_app_permissions click");
+                view.requestFocus();
+                break;
+            }
+            case R.id.item_app_permissions:{ // 应用权限
+                T.showLong(mActivity, "点击了应用权限!");
+                view.requestFocus();
+                break;
+            }
+            case R.id.item_unknown_store:{ // 位置来源
+                view.requestFocus();
+
+                isAllowInstallNonMarket = !isAllowInstallNonMarket;
+                Tools.setNonMarketAppsAllowed(mActivity, isAllowInstallNonMarket);
+
+                int resId = isAllowInstallNonMarket ? R.mipmap.on : R.mipmap.off;
+                imUnknownStore.setBackgroundResource(resId);
+                T.showLong(mActivity, "位置来源!");
+                break;
+            }
+            case R.id.item_camera_permissions:{ // 摄像头权限
+                view.requestFocus();
+
+                T.showLong(mActivity, "摄像头权限!");
+                break;
+            }
+            case R.id.item_udisk_permissions:{ // U盘权限
+                view.requestFocus();
+
+                T.showLong(mActivity, "U盘权限!");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+    }
+
+}

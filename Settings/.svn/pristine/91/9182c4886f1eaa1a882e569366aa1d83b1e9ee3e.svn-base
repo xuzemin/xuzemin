@@ -1,0 +1,161 @@
+
+package com.ctv.settings.greneral;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+public class SetPWDDialog extends Dialog {
+
+    private static final String TAG = "LockScreenDialog";
+
+    private static final String PWKEY = "password";
+
+    private final Context ctvContext;
+
+    private SharedPreferences mPWPreferences;
+
+    private LinearLayout old_pwd, first_pwd, second_pwd, pwd_ly;
+
+    private EditText et_old_pwd, et_first_pwd, et_sec_pwd;
+
+    private Button pwd_save, pwd_cancel;
+
+    private View old_view;
+
+    private String mOldStr;
+
+    private String mFirstStr;
+
+    private String mSecStr;
+
+    private String mPassWord;
+
+    public SetPWDDialog(Context ctvContext) {
+        super(ctvContext);
+        this.ctvContext = ctvContext;
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.general_custom_dialog_pwd);
+        setWindowStyle();
+        findViews();
+    }
+
+    private void setWindowStyle() {
+        Window w = getWindow();
+        Resources res = ctvContext.getResources();
+        Drawable drab = res.getDrawable(R.drawable.transparency_bg);
+        w.setBackgroundDrawable(drab);
+        WindowManager.LayoutParams lp = w.getAttributes();
+        final float scale = res.getDisplayMetrics().density;
+        // In the mid-point to calculate the offset x and y
+        lp.y = (int) (-36 * scale + 0.5f);
+        lp.width = (int) (680 * scale + 0.5f);
+        lp.height = (int) (408 * scale + 0.5f);
+        // Range is from 1.0 for completely opaque to 0.0 for no dim.
+        w.setDimAmount(0.0f);
+        w.setAttributes(lp);
+    }
+
+    /**
+     * findViews(The function of the method)
+     * 
+     * @Title: findViews
+     * @Description: TODO
+     */
+    private void findViews() {
+        pwd_ly = (LinearLayout) findViewById(R.id.pwd_ly);
+        old_pwd = (LinearLayout) findViewById(R.id.old_pwd);
+        old_view = findViewById(R.id.old_view);
+        et_old_pwd = (EditText) findViewById(R.id.et_old_pwd);
+        first_pwd = (LinearLayout) findViewById(R.id.first_pwd);
+        et_first_pwd = (EditText) findViewById(R.id.et_first_pwd);
+        second_pwd = (LinearLayout) findViewById(R.id.second_pwd);
+        et_sec_pwd = (EditText) findViewById(R.id.et_sec_pwd);
+        pwd_save = (Button) findViewById(R.id.pwd_save);
+        pwd_cancel = (Button) findViewById(R.id.pwd_cancel);
+
+        mPWPreferences = ctvContext
+                .getSharedPreferences("lock-screen", Context.MODE_WORLD_READABLE);
+        mPassWord = mPWPreferences.getString(PWKEY, " ");
+        if (" ".equals(mPassWord)) {
+            old_pwd.setVisibility(View.GONE);
+            old_view.setVisibility(View.GONE);
+            setNewPassWord(false);
+        } else {
+            old_pwd.setVisibility(View.VISIBLE);
+            old_pwd.setVisibility(View.VISIBLE);
+            setNewPassWord(true);
+        }
+    }
+
+    private void setNewPassWord(final boolean haveOldStr) {
+        pwd_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (haveOldStr) {
+                    mOldStr = et_old_pwd.getText().toString();
+                    if (!mOldStr.equals(mPassWord)) {
+                        Toast.makeText(ctvContext, "初始密码输入错误，请再次输入！", Toast.LENGTH_LONG).show();
+                        et_old_pwd.getText().clear();
+                        et_first_pwd.getText().clear();
+                        et_sec_pwd.getText().clear();
+                        return;
+                    }
+                }
+                mFirstStr = et_first_pwd.getText().toString();
+                mSecStr = et_sec_pwd.getText().toString();
+                Log.d(TAG, "zhu..firstStr:" + mFirstStr + "..secStr:" + mSecStr);
+                if (mFirstStr.equals(mSecStr) && mFirstStr.length() == 6) {
+                    // save password...
+                    mPWPreferences.edit().putString(PWKEY, mSecStr).commit();
+                    Toast.makeText(ctvContext, "设置密码成功！", Toast.LENGTH_LONG).show();
+                    // 进入锁屏状态
+                    // keyInjection(KeyEvent.KEYCODE_CLEAR);
+                    /*
+                     * if
+                     * ("on".equals(SystemProperties.get("persist.sys.lockScreen"
+                     * ))) { CtvPictureManager.getInstance().disableBacklight();
+                     * Settings.System.putInt(ctvContext.getContentResolver(),
+                     * "isSeperateHear", 1); }
+                     */
+                    pwd_ly.setVisibility(View.GONE);
+                    LockScreenDialog lockScreenDialog = new LockScreenDialog(ctvContext);
+                    lockScreenDialog.show();
+                    return;
+                } else if (!mFirstStr.equals(mSecStr)) {
+                    Toast.makeText(ctvContext, "两次输入密码不同，请再次输入！", Toast.LENGTH_SHORT).show();
+                } else if (mFirstStr.length() != 6) {
+                    Toast.makeText(ctvContext, "请输入6位数字！", Toast.LENGTH_SHORT).show();
+                }
+                et_first_pwd.getText().clear();
+                et_sec_pwd.getText().clear();
+            }
+        });
+        pwd_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                pwd_ly.setVisibility(View.GONE);
+                LockScreenDialog lockScreenDialog = new LockScreenDialog(ctvContext);
+                lockScreenDialog.show();
+            }
+        });
+    }
+
+}

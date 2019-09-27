@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 不需要_做国际化处理的_国家语言处理 translatable="false" -->
+
+
+    <!-- 阿拉伯语 ar -->
+    <string-array name="language_names_ar" translatable="false">
+        <item>العربية</item>
+        <!-- 埃及（阿拉伯语） ar-rEG -->
+        <item>مصري</item>
+    </string-array>
+
+    <!-- 德语 de -->
+    <string-array name="language_names_de" translatable="false">
+        <item>Deutsch</item>
+    </string-array>
+
+    <!-- 英语 en -->
+    <string-array name="language_names_en" translatable="false">
+        <item>English</item>
+        <!-- 英语 en-US -->
+        <!-- <item>English</item> -->
+    </string-array>
+
+    <!-- 西班牙语 es -->
+    <string-array name="language_names_es" translatable="false">
+        <item>Español</item>
+    </string-array>
+
+    <!-- 波斯语 -->
+    <string-array name="language_names_fa" translatable="false">
+        <item>فارسی</item>
+        <!-- 伊朗(波斯语)fa-rIR -->
+    </string-array>
+
+    <!-- 法语 -->
+    <string-array name="language_names_fr" translatable="false">
+        <item>Français</item>
+    </string-array>
+
+    <!-- 意大利语 it -->
+    <string-array name="language_names_it" translatable="false">
+        <item>Italiana</item>
+    </string-array>
+
+    <!-- 希伯来语 iw-rIL -->
+    <string-array name="language_names_iw" translatable="false">
+        <item>עברית</item>
+    </string-array>
+
+    <!-- 葡萄牙语 -->
+    <string-array name="language_names_pt" translatable="false">
+        <item>Português</item>
+    </string-array>
+
+    <!-- 俄语 ru -->
+    <string-array name="language_names_ru" translatable="false">
+        <item>Русский</item>
+        <!-- ru-rRU -->
+    </string-array>
+
+    <!-- 泰语 th -->
+    <string-array name="language_names_th" translatable="false">
+        <item>ไทย</item>
+        <!-- th-rTH -->
+    </string-array>
+
+    <!-- 土耳其语 tr -->
+    <string-array name="language_names_tr" translatable="false">
+        <item>Türkçe</item>
+    </string-array>
+
+    <!-- 中文 zh-rCN -->
+    <string-array name="language_names_zh" translatable="false">
+        <item>中文 (简体)</item>
+        <!-- zh-rTW -->
+        <item>中文 (繁體)</item>
+    </string-array>
+
+</resources>

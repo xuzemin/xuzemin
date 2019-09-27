@@ -1,0 +1,31 @@
+package com.ctv.settings.security;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+/**
+ * 安全模块
+ * @author wanghang
+ * @date 2019/09/17
+ */
+public class SecurityActivity extends AppCompatActivity {
+    private final static String TAG = "SecurityLib";
+    private SecurityViewHolder mSecurityViewHolder;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_security);
+
+        Log.d(TAG, "SecurityActivity onCreate");
+        // 初始化viewHolder
+        mSecurityViewHolder = new SecurityViewHolder(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSecurityViewHolder.onDestroy();
+    }
+}

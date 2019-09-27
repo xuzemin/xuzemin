@@ -1,0 +1,183 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion versions.compileSdkVersion
+    defaultConfig {
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode versions.versionCode
+        versionName "V" + buildVersionName()
+        applicationId appIds.app
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+    }
+
+    //配置keystore签名
+    signingConfigs {
+        debugConfig {
+            storeFile file(keystore.storeFile)
+            storePassword keystore.storePassword
+            keyAlias keystore.keyAlias
+            keyPassword keystore.keyPassword
+        }
+
+        releaseConfig {
+            storeFile file(keystore.storeFile)
+            storePassword keystore.storePassword
+            keyAlias keystore.keyAlias
+            keyPassword keystore.keyPassword
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix ""//""-debug"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debugConfig
+        }
+
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix "_signed"//
+            //混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs "src/main/java"
+            java.srcDirs += 'src/main/kotlin'
+            jniLibs.srcDirs = ['libs']
+            res.srcDirs "src/main/res"
+        }
+//        CTV.res.srcDirs = ['src/main/res-ctv']
+    }
+
+    //渠道配置
+    flavorDimensions "default"
+
+    productFlavors {
+        CTV {
+            dimension "default"
+        }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def fileName
+            if(variant.buildType.name=="release"){
+                fileName = "Settings_${variant.productFlavors[0].name}_release_${getDate()}.apk"
+            } else {
+                fileName = "Settings_${variant.productFlavors[0].name}_debug_${getDate()}.apk"
+            }
+
+            outputFileName = fileName
+        }
+    }
+}
+
+//获取时间戳
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmmss')
+    return formattedDate
+}
+
+def buildVersionName() {
+    return "1.0"
+}
+
+
+dependencies {
+
+
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutine}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutine}"
+
+    // support
+    implementation "com.android.support:appcompat-v7:${versions.support}"
+    implementation "com.android.support:support-v4:${versions.support}"
+    implementation "com.android.support:design:${versions.support}"
+    implementation "com.android.support:recyclerview-v7:${versions.support}"
+    implementation "com.android.support:multidex:${versions.multidex}"
+    implementation "com.android.support.constraint:constraint-layout:${versions.constraint}"
+
+    testImplementation "junit:junit:${versions.junit}"
+    androidTestImplementation "com.android.support.test:runner:${versions.runner}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso}"
+
+    // other aar/jareventbus
+    // recyclerViewHelper
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${versions.recyclerViewHelper}"
+
+    // logutils
+    implementation "com.apkfuns.logutils:library:${versions.logutils}"
+    implementation "com.apkfuns.log2file:log2file:${versions.log2file}"
+
+    // EventBus3依赖
+    implementation "org.greenrobot:eventbus:${versions.eventbus}"
+
+    // include module
+    implementation project(path: ':timeAndDate')
+    implementation project(path: ':security')
+    implementation project(path: ':network')
+    implementation project(path: ':greneral')
+    implementation project(path: ':language')
+    implementation project(path: ':about')
+    implementation project(path: ':device')
+    api project(path: ':libCommon')
+    implementation project(path: ':resCommon')
+
+    configurations {
+        all*.exclude group: 'com.cultraview.tv'
+//        all*.exclude group: 'com.android.support'
+    }
+
+}
+
+//kotlin {
+//    experimental {
+//        coroutines "enable"
+//    }
+//}
+
+//androidExtensions {
+//    experimental = true
+//}

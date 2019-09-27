@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.apkfuns.logutils:library:1.7.5@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.7.5.aar/af71a89810ddd3acc5e2fe1bdcdb38ca/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.7.5.aar/af71a89810ddd3acc5e2fe1bdcdb38ca/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.apkfuns.logutils/library/1.7.5/c617828b9bcd240bc5bf3bd14f3ca0b53c79a9c0/library-1.7.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

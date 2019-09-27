@@ -1,0 +1,308 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <!--<TextView style="@style/tv_net_title" />-->
+
+    <FrameLayout
+        android:id="@+id/screen_hotspot_open_fl"
+        android:layout_width="469.3dip"
+        android:layout_height="29.3dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/selector_list_item_bg"
+        android:focusable="true" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="18.7dip"
+            android:gravity="left|center_vertical"
+            android:text="@string/hot_spot_type"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/screen_hotspot_open_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="15dip"
+            android:background="@mipmap/off"
+            android:focusable="false" />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="469.3dip"
+        android:layout_height="29.3dip"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/wifi_hotspot_info_bg"
+        android:layout_marginTop="90dp"
+        android:focusable="false" >
+
+        <TextView
+            android:id="@+id/screen_hotspot_ssid_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="18.7dip"
+            android:gravity="left|center_vertical"
+            android:text="@string/ss_id1"
+            android:textColor="@color/half_white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/screen_hotspot_secure_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="220dip"
+            android:gravity="left|center_vertical"
+            android:text="@string/wifi_secure1"
+            android:textColor="@color/half_white"
+            android:textSize="16sp" />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="469.3dip"
+        android:layout_height="29.3dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="109.3dp"
+        android:focusable="false"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/screen_frequency_band_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="18.7dip"
+            android:gravity="left|center_vertical"
+            android:text="@string/frequency_band"
+            android:textColor="@color/half_white"
+            android:textSize="16sp" />
+
+          <TextView
+            android:id="@+id/hot_spot_type_one_two"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="center"
+            android:text="@string/hot_spot_type_two"
+            android:textColor="@color/half_white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/hot_spot_type_one_tv"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="300dp"
+            android:gravity="center"
+            android:text="@string/hot_spot_type_one"
+            android:textColor="@color/half_white"
+            android:textSize="16sp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/screen_hotspot_ll"
+        android:layout_width="469.3dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="120dp"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="469.3dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/screen_hotspot_ssid_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="18.7dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/hot_spot_name"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/screen_hotspot_ssid_edt"
+                android:layout_width="253.3dp"
+                android:layout_height="29.3dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                android:inputType="textNoSuggestions"
+                android:paddingLeft="20dip"
+                android:paddingRight="20dip"
+                android:singleLine="true"
+                android:textColor="@drawable/item_text_color"
+                android:textColorHighlight="@color/edit_select"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/screen_hotspot_secure_fl"
+            android:layout_width="469.3dip"
+            android:layout_height="29.3dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_list_item_bg" >
+
+            <TextView
+                android:id="@+id/screen_hotspot_secure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="18.7dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/wifi_secure"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/screen_hotspot_secure_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:focusable="true"
+                android:src="@drawable/l_and_r_bg" />
+
+            <TextView
+                android:id="@+id/screen_hotspot_secure_sele_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="60dp"
+                android:gravity="center"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="16sp" />
+        </FrameLayout>
+<FrameLayout
+            android:id="@+id/screen_hot_spot_channel_fl"
+            android:layout_width="469.3dip"
+            android:layout_height="29.3dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_list_item_bg" >
+
+            <TextView
+                android:id="@+id/screen_hot_spot_channel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="18.7dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/screen_hot_spot_channel"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/screen_hot_spot_channel_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:focusable="true"
+                android:src="@drawable/l_and_r_bg" />
+
+            <TextView
+                android:id="@+id/screen_hot_spot_channel_sele_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="80dp"
+                android:gravity="center"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="16sp" />
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/screen_hotspot_pwd_fl"
+            android:layout_width="469.3dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/screen_hotspot_pwd_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="18.7dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/password"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/screen_hotspot_pwd_edt"
+                android:layout_width="253.3dp"
+                android:layout_height="29.3dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                android:inputType="textPassword"
+                android:paddingLeft="20dip"
+                android:paddingRight="20dip"
+                android:singleLine="true"
+                android:textColor="@drawable/item_text_color"
+                android:textColorHighlight="@color/edit_select"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/screen_hotspot_show_pwd_fl"
+            android:layout_width="469.3dip"
+            android:layout_height="29.3dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_list_item_bg"
+            android:focusable="true" >
+
+            <TextView
+                android:id="@+id/screen_hotspot_show_pwd_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="18.7dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/show_password"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/screen_hotspot_show_pwd_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="15dip"
+                android:background="@mipmap/off"
+                android:focusable="false" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="469.3dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="15dip" >
+
+        <Button
+            android:id="@+id/screen_hotspot_save_btn"
+            android:layout_width="60dip"
+            android:layout_height="29.3dip"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_btn_bg"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@drawable/item_text_color"
+            android:textSize="17sp" />
+    </FrameLayout>
+
+</FrameLayout>

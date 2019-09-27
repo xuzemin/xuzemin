@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="themeBg">
+        <item>会议风格</item>
+        <item>极简风格 </item>
+        <item>商务风格</item>
+        <item>教育风格</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,65 @@
+// module和lib控制
+if (isModule) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode versions.versionCode
+        versionName "1.0"
+
+        if (isModule) {
+            applicationId appIds.network
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs "src/main/java"
+            java.srcDirs += 'src/main/kotlin'
+            jniLibs.srcDirs = ['libs']
+            res.srcDirs "src/main/res"
+
+            if (isModule) {// module app形式
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else { // lib形式
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "com.android.support:appcompat-v7:${versions.support}"
+
+    testImplementation "junit:junit:${versions.junit}"
+    androidTestImplementation "com.android.support.test:runner:${versions.runner}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso}"
+    api project(path: ':libCommon')
+    api project(path: ':resCommon')
+}

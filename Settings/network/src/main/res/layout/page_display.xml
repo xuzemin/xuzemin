@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="680dip"
+        android:layout_height="408dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="120dp"
+        android:id="@+id/mcast_main_fl"
+        android:background="@drawable/icon_bg5"  >
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="26dp"
+            android:text="@string/wifi_display"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <FrameLayout
+            android:id="@+id/display_setting_fl"
+            android:layout_width="620dip"
+            android:layout_height="49dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dip"
+            android:background="@drawable/list_item_selector_bg"
+            android:focusable="true" >
+
+            <TextView
+                android:id="@+id/display_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="30dip"
+                android:gravity="left"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
+
+            <ImageView
+                android:id="@+id/display_swich_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="21dip"
+            />
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="620dip"
+            android:layout_height="1px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="119dip"
+            android:background="@mipmap/list_divider"
+        />
+
+        <ImageView
+            android:id="@+id/display_wifi_state_iv"
+            android:layout_width="330.7dip"
+            android:layout_height="236.7dip"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="25dip"
+        />
+
+        <fragment
+            android:id="@+id/sync_settings"
+            android:name="com.ctv.settings.network.mcast.WifiDisplaySettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="85dp" />
+
+</FrameLayout>

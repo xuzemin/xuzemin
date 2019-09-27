@@ -1,0 +1,146 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+    </style>
+
+    <style name="wire_fl_sty">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="wire_left_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">left|center_vertical</item>
+        <item name="android:textColor">@drawable/item_text_color</item>
+        <item name="android:layout_marginLeft">18.7dip</item>
+    </style>
+
+    <style name="wire_right_edt1">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@drawable/item_text_color</item>
+        <item name="android:layout_marginRight">150dp</item>
+        <item name="android:background">@drawable/transparency_bg</item>
+        <item name="android:imeOptions">actionNext|flagNoExtractUi|flagNoFullscreen</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHighlight">@color/edit_select</item>
+    </style>
+
+    <style name="wire_right_point1">
+        <item name="android:layout_width">5dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/half_white</item>
+        <item name="android:layout_marginRight">145dp</item>
+        <item name="android:text">@string/str_point</item>
+    </style>
+
+    <style name="wire_right_point2">
+        <item name="android:layout_width">5dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:paddingBottom">3dip</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/half_white</item>
+        <item name="android:layout_marginRight">95dp</item>
+        <item name="android:text">@string/str_point</item>
+    </style>
+
+    <style name="wire_right_point3">
+        <item name="android:layout_width">5dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginRight">45dp</item>
+        <item name="android:text">@string/str_point</item>
+    </style>
+
+    <style name="wire_right_edt2">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@drawable/item_text_color</item>
+        <item name="android:layout_marginRight">105dp</item>
+        <item name="android:background">@drawable/transparency_bg</item>
+        <item name="android:imeOptions">actionNext|flagNoExtractUi|flagNoFullscreen</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHighlight">@color/edit_select</item>
+    </style>
+
+    <style name="wire_right_edt3">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@drawable/item_text_color</item>
+        <item name="android:layout_marginRight">55dp</item>
+        <item name="android:background">@drawable/transparency_bg</item>
+        <item name="android:imeOptions">actionNext|flagNoExtractUi|flagNoFullscreen</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHighlight">@color/edit_select</item>
+    </style>
+
+    <style name="wire_right_edt4">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@drawable/item_text_color</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:background">@drawable/transparency_bg</item>
+        <item name="android:imeOptions">actionDone|flagNoExtractUi|flagNoFullscreen</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHighlight">@color/edit_select</item>
+    </style>
+
+    <style name="wire_v4_iv_style">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginRight">15dip</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:background">@drawable/selector_btn_bg</item>
+    </style>
+
+    <style name="wire_v6_edt">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="android:textColor">@drawable/item_text_color</item>
+        <item name="android:background">@drawable/selector_btn_bg</item>
+        <item name="android:imeOptions">actionDone|flagNoExtractUi|flagNoFullscreen</item>
+        <item name="android:inputType">number</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginRight">15dip</item>
+        <item name="android:paddingLeft">33dip</item>
+        <item name="android:paddingRight">33dip</item>
+        <item name="android:textColorHighlight">@color/edit_select</item>
+    </style>
+
+</resources>

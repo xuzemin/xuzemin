@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/permissions_ly"
+    android:layout_width="680dip"
+    android:layout_height="408dip"
+    android:layout_gravity="center"
+    android:background="@drawable/icon_bg1"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_theme_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/se_top_margin"
+        android:text="@string/item_app_permissions"
+        android:textColor="@color/white"
+        android:textSize="@dimen/se_title_sp" />
+
+    <ListView
+        android:id="@+id/application_permission_lv"
+        android:layout_width="644dip"
+        android:layout_height="300dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dip"
+        android:divider="@drawable/list_divider"
+        android:fadeScrollbars="false"
+        android:listSelector="@drawable/select_item_bg"
+        android:paddingLeft="12dip"
+        android:paddingRight="12dip"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:scrollbars="vertical" />
+
+</LinearLayout>

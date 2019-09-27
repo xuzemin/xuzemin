@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">security</string>
+
+    <!-- item security -->
+    <string name="header_security">Security and Privacy</string>
+    <string name="item_app_permissions">Application Permissions</string>
+    <string name="item_unknown_store">App From Unknown Store</string>
+    <string name="item_camera_permissions">Camera Permissions</string>
+    <string name="item_udisk_permissions">U Disk Permissions</string>
+
+
+    <string name="device_name2">Device Name</string>
+    <string name="save">Save</string>
+
+    <string name="correct_device_name">The device name can not be empty</string>
+
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="six_black">#99000000</color>
+    <color name="black_seventy_f">#A9A9A9</color>
+    <color name="white_seven">#B2FFFFFF</color>
+    <color name="gray">#4CFFFFFF</color>
+    <color name="divider_color">#bfbfbf</color>
+    <!--<color name="divider_color">#bfbfbf</color>-->
+    <color name="com_bg_gray">#aaaaaaaa</color>
+    <color name="edit_select">#1597E2</color>
+    <color name="colorLeft">#f9f9f9</color>
+
+    <color name="black">#000000</color>
+    <color name="light_grey">#D3D3D3</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="little_white">#F7F7F7</color>
+    <color name="grey">#666666</color>
+    <color name="dark_grey">#555555</color>
+    <color name="dark_gray">#a9a9a9</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="half_white">#B2FFFFFF</color> <!-- 半透明 白色 -->
+    <color name="click_focus">#ff087aed</color>
+    <!-- night bg color -->
+    <color name="bg_sec_color_1">#2389D0</color>
+    <color name="bg_sec_color_2">#8CB20A</color>
+    <color name="bg_sec_color_3">#CE6A22</color>
+    <color name="bg_sec_color_4">#13B33A</color>
+    <color name="bg_sec_color_5">#CD305D</color>
+    <color name="bg_sec_color_6">#6B1EC4</color>
+    <color name="bg_sec_color_7">#C5941C</color>
+    <color name="bg_sec_color_8">#1EA8B9</color>
+    <color name="nig_bg_color">#388DCB</color>
+    <color name="nig_icon_bg_color">#26A6FF</color>
+    <color name="nig_icon_color">#B227A6FF</color>
+    <color name="half_black">#7F000000</color>
+    <color name="btn_focus">#62b5f5</color>
+    <color name="main_color">#66000000</color>
+    <color name="icon_bg_color">#403c3c3c</color>
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+
+
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="83dp"
+            android:layout_marginTop="63dp"
+            android:orientation="horizontal" >
+
+        <ImageView
+                android:id="@+id/img_setting_back"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_launcher_background" />
+
+        <TextView
+                android:id="@+id/common_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/item_theme_background"
+                android:layout_marginLeft="12dp" />
+    </LinearLayout>
+
+
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            app:spanCount="3"
+            android:layout_gravity="center"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            tools:listitem="@layout/item_theme_bg" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/btn_save"
+                android:layout_width="72dip"
+                android:layout_height="34.7dip"
+                android:layout_marginTop="22dip"
+                android:background="@drawable/selector_btn_bg"
+                android:text="@string/save"
+                android:textColor="@color/item_text_color"
+                android:textSize="@dimen/btn_sp" />
+
+        <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="72dip"
+                android:layout_height="34.7dip"
+                android:layout_marginLeft="210dip"
+                android:layout_marginTop="22dip"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:text="@android:string/cancel"
+                android:textColor="@color/item_text_color"
+                android:textSize="@dimen/btn_sp" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

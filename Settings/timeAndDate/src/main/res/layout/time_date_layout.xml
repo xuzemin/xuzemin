@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/main_time_date"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:layout_margin="0dp"
+              android:padding="0dp"
+>
+    <TextView
+            style="@style/first_title"
+            android:text="@string/header_time_date"/>
+    <LinearLayout
+            style="@style/ll_list"
+            android:orientation="vertical">
+        <RelativeLayout
+                android:id="@+id/rl_is_24_hour_format"
+                style="@style/rl_item">
+            <TextView
+                    android:text="@string/item_24_hour_format"
+                    style="@style/item_textView" />
+
+            <ImageView
+                    android:id="@+id/iv_is_24_hour_format"
+                    android:visibility="visible"
+                    style="@style/switch_image_style" />
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_auto_date_time"
+                style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_automatic"/>
+
+            <ImageView
+                    android:id="@+id/iv_auto_date_time"
+                    android:visibility="visible"
+                    style="@style/switch_image_style" />
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_timezone"
+                style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_timezone"/>
+            <TextView
+                    android:layout_width="220dp"
+                    android:id="@+id/tv_timezone"
+                    style="@style/item_textView_right"
+                    android:text="@string/right_timezone"/>
+            <ImageView
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_date_format"
+                style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_time_format"/>
+            <TextView
+                    android:id="@+id/tv_date_format"
+                    style="@style/item_textView_right"
+                    android:text="@string/right_time_format"/>
+            <ImageView
+                    style="@style/more_image_style" />
+
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_turn_off"
+                style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_off"/>
+            <ImageView
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_turn_on"
+                style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_on"/>
+            <ImageView
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,672 @@
+
+package com.ctv.settings.network.holder;
+
+import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiConfiguration.AuthAlgorithm;
+import android.net.wifi.WifiConfiguration.KeyMgmt;
+import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemProperties;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.ctv.settings.network.Listener.ConnectivityListener;
+import com.ctv.settings.network.R;
+import com.ctv.settings.network.activity.NetWorkActivity;
+import com.ctv.settings.network.dialog.TipDialog;
+import com.ctv.settings.network.utils.Constants;
+import com.ctv.settings.network.utils.InitDataInfo;
+import com.ctv.settings.network.utils.Tools;
+import com.ctv.settings.utils.L;
+import com.mstar.android.pppoe.PPPOE_STA;
+import com.mstar.android.wifi.MWifiManager;
+
+public class ScreenHotSponViewHolder implements OnFocusChangeListener, OnClickListener {
+
+    private static final String TAG = "ScreenHotSponViewHolder";
+
+    private static final int[] SECURE_TYPE = {
+            R.string.wifi_security_wpa, R.string.wifi_security_wpa2, R.string.wifi_security_open
+    };
+
+    private final Context ctvContext;
+
+    private LinearLayout screen_hotspot_ll;
+
+    private FrameLayout screen_hotspot_open_fl;
+
+    private FrameLayout screen_hotspot_show_pwd_fl;
+
+    private FrameLayout screen_hotspot_pwd_fl;
+
+    private FrameLayout screen_hotspot_secure_fl;
+
+    private EditText screen_hotspot_ssid_edt;
+
+    private EditText screen_hotspot_pwd_edt;
+
+    private ImageView screen_hotspot_open_iv;
+
+    private ImageView screen_hotspot_secure_iv;
+
+    private ImageView screen_hotspot_show_pwd_iv;
+
+    private TextView screen_hotspot_ssid_tv;
+
+    private TextView screen_hotspot_secure_tv;
+
+    private TextView screen_hotspot_secure_sele_tv;
+
+    private TextView screen_hotspot_pwd_tv;
+
+    private TextView screen_hotspot_ssid_value_tv;
+
+    private TextView screen_hotspot_secure_value_tv;
+
+    private TextView screen_hotspot_show_pwd_tv;
+
+    private Button screen_hotspot_save_btn;
+
+    private boolean isShowPwd = false;
+
+    public boolean isOpenHotspot = false;
+
+    private boolean isSecureOpenType = false;
+
+    private int secureType = Constants.SECURE_TYPE_WPA;
+
+    private String secureString;
+
+    private String ss_id1, wifi_secure1;
+
+    public NotificationManager notificationManager;
+
+    private final NetWorkActivity activity;
+
+    private final ConnectivityListener mListener;
+
+    private ProgressDialog mDialog = null;
+
+    final Handler wifiHotHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.i(TAG, "wifiHotHandler setOpenHotspot");
+            isOpenHotspot = true;
+            try {
+                if (Constants.setWifiApEnabled(mListener.getWifiManager(),null,isOpenHotspot)
+    //                    mListener.getWifiManager().setWifiApEnabled(null, isOpenHotspot)
+                ) {
+                    Log.i(TAG, "setOpenHotspot-setWifiApEnabled:" + isOpenHotspot);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            screen_hotspot_open_iv.setBackgroundResource(R.mipmap.on);
+            screen_hotspot_ll.setVisibility(View.VISIBLE);
+            screen_hotspot_save_btn.setVisibility(View.VISIBLE);
+            ShowSaveStatusDialog();
+        }
+    };
+
+    public ScreenHotSponViewHolder(Context ctvContext, ConnectivityListener conListener) throws Exception {
+        super();
+        this.ctvContext = ctvContext.getApplicationContext();
+        this.mListener = conListener;
+        activity = (NetWorkActivity) ctvContext;
+        initView();
+        initData();
+        Log.i(TAG, "----last-isOpenHotspot:" + isOpenHotspot);
+    }
+
+    private void initView() {
+    	screen_hotspot_ll = (LinearLayout) activity.findViewById(R.id.screen_hotspot_ll);
+    	screen_hotspot_open_fl = (FrameLayout) activity.findViewById(R.id.screen_hotspot_open_fl);
+    	screen_hotspot_secure_fl = (FrameLayout) activity.findViewById(R.id.screen_hotspot_secure_fl);
+    	screen_hotspot_show_pwd_fl = (FrameLayout) activity.findViewById(R.id.screen_hotspot_show_pwd_fl);
+    	screen_hotspot_pwd_fl = (FrameLayout) activity.findViewById(R.id.screen_hotspot_pwd_fl);
+    	screen_hotspot_ssid_edt = (EditText) activity.findViewById(R.id.screen_hotspot_ssid_edt);
+    	screen_hotspot_pwd_edt = (EditText) activity.findViewById(R.id.screen_hotspot_pwd_edt);
+    	screen_hotspot_open_iv = (ImageView) activity.findViewById(R.id.screen_hotspot_open_iv);
+    	screen_hotspot_secure_iv = (ImageView) activity.findViewById(R.id.screen_hotspot_secure_iv);
+    	screen_hotspot_show_pwd_iv = (ImageView) activity.findViewById(R.id.screen_hotspot_show_pwd_iv);
+    	screen_hotspot_ssid_tv = (TextView) activity.findViewById(R.id.screen_hotspot_ssid_tv);
+    	screen_hotspot_secure_tv = (TextView) activity.findViewById(R.id.screen_hotspot_secure_tv);
+    	screen_hotspot_secure_sele_tv = (TextView) activity.findViewById(R.id.screen_hotspot_secure_sele_tv);
+    	screen_hotspot_pwd_tv = (TextView) activity.findViewById(R.id.screen_hotspot_pwd_tv);
+    	screen_hotspot_show_pwd_tv = (TextView) activity.findViewById(R.id.screen_hotspot_show_pwd_tv);
+    	screen_hotspot_ssid_value_tv = (TextView) activity.findViewById(R.id.screen_hotspot_ssid_value_tv);
+    	screen_hotspot_secure_value_tv = (TextView) activity.findViewById(R.id.screen_hotspot_secure_value_tv);
+    	screen_hotspot_save_btn = (Button) activity.findViewById(R.id.screen_hotspot_save_btn);
+    	screen_hotspot_open_fl.setOnFocusChangeListener(this);
+    	screen_hotspot_ssid_edt.setOnFocusChangeListener(this);
+    	screen_hotspot_secure_iv.setOnFocusChangeListener(this);
+    	screen_hotspot_pwd_edt.setOnFocusChangeListener(this);
+    	screen_hotspot_show_pwd_fl.setOnFocusChangeListener(this);
+    	screen_hotspot_save_btn.setOnFocusChangeListener(this);
+    	screen_hotspot_open_fl.setOnClickListener(this);
+    	screen_hotspot_secure_iv.setOnClickListener(this);
+    	screen_hotspot_show_pwd_fl.setOnClickListener(this);
+    	screen_hotspot_save_btn.setOnClickListener(this);
+        ss_id1 = ctvContext.getString(R.string.ss_id1) + "  ";
+        wifi_secure1 = ctvContext.getString(R.string.wifi_secure1) + "  ";
+    }
+
+    /**
+     * initData(The function of the method)
+     * 
+     * @Title: initData
+     * @Description: TODO
+     */
+    void initData() throws Exception {
+        isOpenHotspot = Constants.isWifiApEnabled(mListener.getWifiManager());// mListener.getWifiManager().isWifiApEnabled();
+        String wifiapband = SystemProperties.get("Wifiapband");
+        Log.d(TAG, "wifiap isOpenHotspot = " + isOpenHotspot + " ----- wifiapband : " + wifiapband);
+        if(isOpenHotspot && ("".equals(wifiapband) || wifiapband == null || wifiapband.equals("Apband2G"))) {
+            isOpenHotspot = false;
+        }
+        setOpenHotspot(false);
+        Log.d(TAG, "wifiap isOpenHotspot 111111111111111 = " + isOpenHotspot);
+        if (isOpenHotspot) {
+        	screen_hotspot_open_iv.setBackgroundResource(R.mipmap.on);
+        	screen_hotspot_ll.setVisibility(View.VISIBLE);
+        	screen_hotspot_save_btn.setVisibility(View.VISIBLE);
+        } else {
+        	screen_hotspot_open_iv.setBackgroundResource(R.mipmap.off);
+        	screen_hotspot_ll.setVisibility(View.INVISIBLE);
+        	screen_hotspot_save_btn.setVisibility(View.INVISIBLE);
+        }
+        setShowPwd();
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                if (screen_hotspot_secure_iv.hasFocus()) {
+                    switchSecure(false);
+                    return true;
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+//                if (activity.getNetworkSettingsViewHolder().isFocuseWifiHotspotTextView()) {
+//                	screen_hotspot_open_fl.requestFocus();
+//                    return true;
+//                } else
+                    if (screen_hotspot_secure_iv.hasFocus()) {
+                    switchSecure(true);
+                    return true;
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                if (isSecureOpenType && screen_hotspot_secure_iv.hasFocus()) {
+                	screen_hotspot_save_btn.requestFocus();
+                }
+                break;
+            case KeyEvent.KEYCODE_DPAD_UP:
+                if (isSecureOpenType && screen_hotspot_save_btn.hasFocus()) {
+                	screen_hotspot_secure_iv.requestFocus();
+                }
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int i = view.getId();
+        if (i == R.id.screen_hotspot_show_pwd_fl) {
+            isShowPwd = !isShowPwd;
+            setShowPwd();
+        } else if (i == R.id.screen_hotspot_open_fl) {
+            isOpenHotspot = !isOpenHotspot;
+            try {
+                setOpenHotspot(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (i == R.id.screen_hotspot_secure_iv) {
+            switchSecure(true);
+        } else if (i == R.id.screen_hotspot_save_btn) {
+            secureString = screen_hotspot_secure_sele_tv.getText().toString();
+            if (secureString.equals(ctvContext.getString(R.string.wifi_security_wpa2))) {
+                secureType = Constants.SECURE_TYPE_WPA2;
+            } else if (secureString.equals(ctvContext.getString(R.string.wifi_security_open))) {
+                secureType = Constants.SECURE_TYPE_OPEN;
+            } else {
+                secureType = Constants.SECURE_TYPE_WPA;
+            }
+            try {
+                saveWifiApConfig();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void saveWifiApConfig() throws Exception {
+        String passwd = screen_hotspot_pwd_edt.getText().toString().trim();
+        if (secureType != Constants.SECURE_TYPE_OPEN
+                && (TextUtils.isEmpty(passwd) || passwd.length() < 8)) {
+        	screen_hotspot_pwd_edt.setText("");
+            // hotspot_ssid_edt.setHint(R.string.wifiap_pwd_notice);
+        	screen_hotspot_pwd_edt.requestFocus();
+            showToast(R.string.wifiap_pwd_notice);
+            return;
+        }
+        String ssid = screen_hotspot_ssid_edt.getText().toString().trim();
+        if (TextUtils.isEmpty(ssid)) {
+        	screen_hotspot_ssid_edt.setText("");
+        	screen_hotspot_ssid_edt.setHint(R.string.please_input_ssid);
+            showToast(R.string.please_input_ssid);
+            return;
+        }
+        WifiConfiguration config = new WifiConfiguration();
+        config.SSID = ssid;
+        /* hotspot_ssid_value_tv.setText(ss_id1 + config.SSID); */
+        // set secure type
+        switch (secureType) {
+            case Constants.SECURE_TYPE_WPA:
+                config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
+                /*
+                 * hotspot_secure_value_tv.setText(wifi_secure1 +
+                 * ctvContext.getString(R.string.wifi_security_wpa));
+                 */
+                config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
+                config.preSharedKey = passwd;
+                break;
+            case Constants.SECURE_TYPE_WPA2:
+                /*
+                 * hotspot_secure_value_tv.setText(wifi_secure1 +
+                 * ctvContext.getString(R.string.wifi_security_wpa2));
+                 */
+                config.allowedKeyManagement.set(Constants.WPA2_PSK);
+                config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
+                config.preSharedKey = passwd;
+                break;
+            case Constants.SECURE_TYPE_OPEN:
+                /*
+                 * hotspot_secure_value_tv.setText(wifi_secure1 +
+                 * ctvContext.getString(R.string.wifi_security_open));
+                 */
+                config.allowedKeyManagement.set(KeyMgmt.NONE);
+                break;
+            default:
+                return;
+
+        }
+        WifiManager wifiManager = mListener.getWifiManager();
+        L.d(TAG, "state=" + Constants.getWifiApState(wifiManager));
+        if (Constants.WIFI_AP_STATE_ENABLED == Constants.getWifiApState(wifiManager)) {
+            // restart wifiap
+//            wifiManager.setWifiApEnabled(null, false);
+//            wifiManager.setWifiApEnabled(config, true);
+            Constants.setWifiApEnabled(wifiManager,null,false);
+            Constants.setWifiApEnabled(wifiManager,config,true);
+        } else {
+//            wifiManager.setWifiApConfiguration(config);
+            Constants.setWifiApConfiguration(wifiManager,config);
+        }
+        // configure successful
+        ShowSaveStatusDialog();
+    }
+
+    private void switchSecure(boolean isIncrease) {
+        if (isIncrease) {
+            secureType = (secureType + 1) % 3;
+        } else {
+            secureType = (secureType + 3 - 1) % 3;
+        }
+        Log.d(TAG, "mSecureType, " + secureType);
+        switch (secureType) {
+            case Constants.SECURE_TYPE_WPA:
+            	screen_hotspot_secure_sele_tv.setText(SECURE_TYPE[0]);
+                break;
+            case Constants.SECURE_TYPE_WPA2:
+            	screen_hotspot_secure_sele_tv.setText(SECURE_TYPE[1]);
+                break;
+            case Constants.SECURE_TYPE_OPEN:
+            	screen_hotspot_secure_sele_tv.setText(SECURE_TYPE[2]);
+                break;
+            default:
+                break;
+        }
+        // hide passwd layout
+        if (secureType == Constants.SECURE_TYPE_OPEN) {
+            isSecureOpenType = true;
+            screen_hotspot_pwd_fl.setVisibility(View.INVISIBLE);
+            screen_hotspot_show_pwd_fl.setVisibility(View.INVISIBLE);
+        } else {
+            isSecureOpenType = false;
+            screen_hotspot_pwd_fl.setVisibility(View.VISIBLE);
+            screen_hotspot_show_pwd_fl.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private boolean hasReady(boolean isClick) {
+        MWifiManager mWifiManager = MWifiManager.getInstance();
+        // check wifiDevice
+        if (!mWifiManager.isWifiDeviceExist()) {
+            if (isClick) {
+                showToast(R.string.please_insert_dongle);
+            }
+            Log.d(TAG, "hasReady -- wifiDevice?");
+            return false;
+        }
+        // check is wifiDevice support wifi hotspot.
+        if (!mWifiManager.isWifiDeviceSupportSoftap()) {
+            if (isClick) {
+                showToast(R.string.device_do_not_support);
+            }
+            Log.d(TAG, "hasReady -- support wifi hotspot?");
+            return false;
+        }
+        // WifiManager wifiManager = mListener.getWifiManager();
+        int flag = 0;// binary mark
+        if (mListener.isWifiEnabled() || getWifiStatus()) {
+            flag = flag + 1;// check whether wifi is open
+        }
+//        if (!mListener.getPPPoeStatusDescription().equals(
+//                activity.getString(R.string.pppoe_disconnected))) {
+//            flag = flag + 2; // check WiFi pppoe
+//        }
+        if (!mListener.isEthernetAvailable()) {
+            flag = flag + 4; // check ethernet_connection
+        }
+        if (flag != 0) {
+            Log.d(TAG, "to tipDialog....flag: " + flag);
+            if (flag % 2 == 1 && Tools.is638CIBN()) {
+                mListener.setWifiEnabled(false);
+                return true;
+            } else {
+                if (isClick) {
+                    TipDialog tipDialog = new TipDialog(activity, Constants.WIFI_HOTSPOT, flag);
+                    tipDialog.show();
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void setOpenHotspotUi(boolean isOpenHotspot) {
+        Log.d(TAG, "setOpenHotspotUi-setOpenHotspotUi:" + isOpenHotspot);
+        this.isOpenHotspot = isOpenHotspot;
+        String wifiapband = SystemProperties.get("Wifiapband");
+        if(isOpenHotspot && ("".equals(wifiapband) || wifiapband == null || wifiapband.equals("Apband2G"))) {
+            isOpenHotspot = false;
+        }
+        if (isOpenHotspot) {
+        	screen_hotspot_open_iv.setBackgroundResource(R.mipmap.on);
+        	screen_hotspot_ll.setVisibility(View.VISIBLE);
+        	screen_hotspot_save_btn.setVisibility(View.VISIBLE);
+        } else {
+        	screen_hotspot_open_iv.setBackgroundResource(R.mipmap.off);
+        	screen_hotspot_ll.setVisibility(View.INVISIBLE);
+        	screen_hotspot_save_btn.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void setOpenHotspot(boolean isClik) throws Exception {
+        int apState =Constants.getWifiApState(mListener.getWifiManager()) ;
+        Log.i(TAG, "setOpenHotspot 1111-isOpenHotspot:" + isOpenHotspot);
+        /*if (isOpenHotspot) {
+            if (!hasReady(isClik)) {
+                Log.d(TAG, "wifiap have not ready.");
+                isOpenHotspot = false;
+                return;
+            }
+            if (apState == WifiManager.WIFI_AP_STATE_ENABLING
+                    || apState == WifiManager.WIFI_AP_STATE_ENABLED) {
+                isOpenHotspot = true;
+                screen_hotspot_open_iv.setBackgroundResource(R.drawable.on);
+                screen_hotspot_ll.setVisibility(View.VISIBLE);
+                screen_hotspot_save_btn.setVisibility(View.VISIBLE);
+                return;
+            }
+        } else {*/
+            /*if (apState == WifiManager.WIFI_AP_STATE_DISABLING
+                    || apState == WifiManager.WIFI_AP_STATE_DISABLED) {
+                isOpenHotspot = false;
+                return;
+            }*/
+        //}
+        if (isClik) {
+            if(isOpenHotspot){
+                if (Constants.setWifiApEnabled(mListener.getWifiManager(),null,false)
+//                        mListener.getWifiManager().setWifiApEnabled(null, false)
+            ) {
+                    Log.i(TAG, "setOpenHotspot-setWifiApEnabled: false , close Apband2G");
+                }
+                SystemProperties.set("Wifiapband", "Apband5G");
+            }
+            if (Constants.setWifiApEnabled(mListener.getWifiManager(),null,isOpenHotspot)
+//                    mListener.getWifiManager().setWifiApEnabled(null, isOpenHotspot)
+        ) {
+                Log.i(TAG, "setOpenHotspot-setWifiApEnabled:" + isOpenHotspot);
+            }
+            if(isOpenHotspot){
+                ShowSaveStatusDialog();
+            }
+        }
+        if (isOpenHotspot) {
+        	screen_hotspot_open_iv.setBackgroundResource(R.mipmap.on);
+        	screen_hotspot_ll.setVisibility(View.VISIBLE);
+        	screen_hotspot_save_btn.setVisibility(View.VISIBLE);
+        } else {
+        	screen_hotspot_open_iv.setBackgroundResource(R.mipmap.off);
+        	screen_hotspot_ll.setVisibility(View.INVISIBLE);
+        	screen_hotspot_save_btn.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void refreshWifiApUi(boolean isInit, InitDataInfo data) {
+        WifiConfiguration config = null;
+        if (isInit) {
+            config = data.getConfig();
+        } else {
+            WifiManager wifiManager = mListener.getWifiManager();
+//            config = wifiManager.getWifiApConfiguration();
+            config = Constants.getWifiApConfiguration(wifiManager);
+        }
+        if (config == null) {
+            return;
+        } else {
+            // show Wi-Fi Ap info
+        	screen_hotspot_ssid_value_tv.setText(ss_id1 + config.SSID);
+        	screen_hotspot_ssid_edt.setText(config.SSID);
+            if (config.allowedKeyManagement.get(KeyMgmt.WPA_PSK)) {
+            	screen_hotspot_secure_value_tv.setText(wifi_secure1
+                        + ctvContext.getString(R.string.wifi_security_wpa));
+            	screen_hotspot_secure_sele_tv.setText(R.string.wifi_security_wpa);
+            	screen_hotspot_pwd_edt.setText(config.preSharedKey);
+                secureType = Constants.SECURE_TYPE_WPA;
+
+            } else if (config.allowedKeyManagement.get(Constants.WPA2_PSK)) {
+            	screen_hotspot_secure_value_tv.setText(wifi_secure1
+                        + ctvContext.getString(R.string.wifi_security_wpa2));
+            	screen_hotspot_secure_sele_tv.setText(R.string.wifi_security_wpa2);
+            	screen_hotspot_pwd_edt.setText(config.preSharedKey);
+                secureType = Constants.SECURE_TYPE_WPA2;
+            } else {
+            	screen_hotspot_secure_value_tv.setText(wifi_secure1
+                        + ctvContext.getString(R.string.wifi_security_open));
+            	screen_hotspot_secure_sele_tv.setText(R.string.wifi_security_open);
+                secureType = Constants.SECURE_TYPE_OPEN;
+                screen_hotspot_pwd_edt.setText("");
+            }
+            if (secureType == Constants.SECURE_TYPE_OPEN) {
+            	screen_hotspot_pwd_fl.setVisibility(View.INVISIBLE);
+            	screen_hotspot_show_pwd_fl.setVisibility(View.INVISIBLE);
+                isSecureOpenType = true;
+            } else {
+                isSecureOpenType = false;
+                screen_hotspot_pwd_fl.setVisibility(View.VISIBLE);
+                screen_hotspot_show_pwd_fl.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void setShowPwd() {
+        if (isShowPwd) {
+        	screen_hotspot_show_pwd_iv.setBackgroundResource(R.mipmap.on);
+        	screen_hotspot_pwd_edt.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        } else {
+        	screen_hotspot_show_pwd_iv.setBackgroundResource(R.mipmap.off);
+        	screen_hotspot_pwd_edt.setInputType(InputType.TYPE_CLASS_TEXT
+                    | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        }
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean has_focus) {
+        int i = view.getId();
+        if (i == R.id.screen_hotspot_open_fl) {
+            if (has_focus) {
+                screen_hotspot_open_fl.setSelected(true);
+            } else {
+                screen_hotspot_open_fl.setSelected(false);
+            }
+        } else if (i == R.id.screen_hotspot_ssid_edt) {
+            if (has_focus) {
+                screen_hotspot_ssid_edt.setSelected(true);
+                screen_hotspot_ssid_tv.setSelected(true);
+                screen_hotspot_ssid_edt.selectAll();
+            } else {
+                screen_hotspot_ssid_edt.setSelected(false);
+                screen_hotspot_ssid_tv.setSelected(false);
+            }
+        } else if (i == R.id.screen_hotspot_secure_iv) {
+            if (has_focus) {
+                screen_hotspot_secure_fl.setSelected(true);
+                screen_hotspot_secure_tv.setSelected(true);
+                screen_hotspot_secure_sele_tv.setSelected(true);
+            } else {
+                screen_hotspot_secure_tv.setSelected(false);
+                screen_hotspot_secure_fl.setSelected(false);
+                screen_hotspot_secure_sele_tv.setSelected(false);
+            }
+        } else if (i == R.id.screen_hotspot_pwd_edt) {
+            if (has_focus) {
+                screen_hotspot_pwd_tv.setSelected(true);
+                screen_hotspot_pwd_edt.setSelected(true);
+                screen_hotspot_pwd_edt.selectAll();
+            } else {
+                screen_hotspot_pwd_tv.setSelected(false);
+                screen_hotspot_pwd_edt.setSelected(false);
+            }
+        } else if (i == R.id.screen_hotspot_show_pwd_fl) {
+            if (has_focus) {
+                screen_hotspot_show_pwd_tv.setSelected(true);
+                screen_hotspot_show_pwd_fl.setSelected(true);
+            } else {
+                screen_hotspot_show_pwd_tv.setSelected(false);
+                screen_hotspot_show_pwd_fl.setSelected(false);
+            }
+        } else if (i == R.id.screen_hotspot_save_btn) {
+            if (has_focus) {
+                // hotspot_save_btn.setSelected(true);
+            } else {
+                screen_hotspot_show_pwd_tv.setSelected(false);
+            }
+        }
+    }
+
+    private void showToast(int id) {
+        Toast.makeText(ctvContext, id, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * wifi ap state change receiver
+     */
+    public void upApStateChange(Intent intent) throws Exception {
+        int state = intent.getIntExtra(Constants.EXTRA_WIFI_AP_STATE,
+                Constants.WIFI_AP_STATE_FAILED);
+        switch (state) {
+            default:
+            case Constants.WIFI_AP_STATE_ENABLING:
+                Log.d(TAG, "WIFI_AP_STATE_ENABLING");
+                break;
+            case Constants.WIFI_AP_STATE_ENABLED:
+                Log.d(TAG, "WIFI_AP_STATE_ENABLED   ---------- 1111  isOpenHotspot ： " + isOpenHotspot);
+                String wifiapband = SystemProperties.get("Wifiapband");
+                if(!isOpenHotspot && ("".equals(wifiapband) || wifiapband == null || wifiapband.equals("Apband2G"))) {
+                    setOpenHotspot(false);
+                    refreshWifiApUi(false,null);
+                    break;
+                }
+                if (mDialog != null) {
+                    mDialog.cancel();
+                }
+                showToast(R.string.wifiap_config_success);
+                if (!isOpenHotspot) {
+                    isOpenHotspot = true;
+                    setOpenHotspot(false);
+                    refreshWifiApUi(false,null);
+                }
+                break;
+            case Constants.WIFI_AP_STATE_DISABLING:
+                Log.d(TAG, "WIFI_AP_STATE_DISABLING");
+                break;
+            case Constants.WIFI_AP_STATE_DISABLED:
+                Log.d(TAG, "WIFI_AP_STATE_DISABLED");
+                if (isOpenHotspot) {
+                    isOpenHotspot = false;
+                    /*
+                     * setOpenHotspot(false); refreshWifiApUi();
+                     */
+                }
+                break;
+        }
+    }
+
+    private boolean getWifiStatus() {
+        SharedPreferences sp = ctvContext.getSharedPreferences("wifi_status", Context.MODE_PRIVATE);
+        boolean status = sp.getBoolean("wifi_on", false);
+        return status;
+    }
+
+    private void ShowSaveStatusDialog() {
+        if (mDialog != null) {
+            mDialog.cancel();
+        }
+        mDialog = new ProgressDialog(activity);
+        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mDialog.setCancelable(false);
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setTitle(ctvContext.getString(R.string.tip));
+        mDialog.setOnKeyListener((dialog, keyCode, event) -> {
+            // TODO Auto-generated method stub
+            return false;
+        });
+        mDialog.setMessage(ctvContext.getString(R.string.wifi_ap_submitting));
+        mDialog.show();
+    }
+    public void onExit(){
+        if(mDialog != null){
+            mDialog.cancel();
+            mDialog = null;
+        }
+        wifiHotHandler.removeCallbacksAndMessages(null);
+    }
+}

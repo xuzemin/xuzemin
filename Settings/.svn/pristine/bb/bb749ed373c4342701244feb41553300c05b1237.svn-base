@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_language"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        >
+    <TextView
+            style="@style/first_title"
+            android:text="@string/header_input_language"/>
+    <LinearLayout
+            android:id="@+id/item_language"
+            style="@style/ll_list"
+            android:orientation="vertical">
+        <RelativeLayout
+                style="@style/rl_item">
+            <TextView
+                    android:id="@+id/item_language_txt"
+                    android:text="@string/item_language"
+                    style="@style/item_textView" />
+            <TextView
+                    style="@style/item_textView_right"
+                    android:text="@string/right_language"/>
+            <ImageView
+                    android:visibility="visible"
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/item_keyboard"
+                style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_keyboard"/>
+            <TextView
+                    android:id="@+id/item_keyboard_txt"
+                    style="@style/item_textView_right"
+                    android:visibility="visible"/>
+            <ImageView
+                    android:visibility="visible"
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/item_input_method"
+                style="@style/rl_item">
+            <TextView
+                    style="@style/item_textView"
+                    android:text="@string/item_input_method"/>
+            <TextView
+                    style="@style/item_textView_right"
+                    android:visibility="invisible"
+                    android:text="@string/status_off"/>
+            <ImageView
+                    style="@style/more_image_style" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

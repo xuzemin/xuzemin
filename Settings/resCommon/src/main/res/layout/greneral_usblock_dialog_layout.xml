@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lockscreen_ly"
+    android:layout_width="680dip"
+    android:layout_height="408dip"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/icon_bg1">
+
+    <TextView
+        android:id="@+id/tv_theme_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/greneral_top_margin"
+        android:text="@string/greneral_usb_lock_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/greneral_title_sp"
+        android:focusable="false"/>
+    
+    <RelativeLayout
+        android:id="@+id/usb_lock_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/greneral_item_height"
+        android:background="@drawable/greneral_list_item_selector_bg"
+        android:layout_marginTop="@dimen/greneral_top_margin"
+        android:layout_marginStart="@dimen/greneral_item_left_margin"
+        android:layout_marginEnd="@dimen/greneral_item_iv_margin"
+        android:focusable="true"
+        android:descendantFocusability="blocksDescendants" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/greneral_usb_lock_item"
+            android:textColor="@color/half_white"
+            android:textSize="@dimen/greneral_content_sp"
+            />
+        <ImageView
+            android:id="@+id/usb_lock_switch_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/greneral_img"
+            android:background="@mipmap/off"/>
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="@dimen/greneral_list_width"
+        android:layout_height="1px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="3dip"
+        android:background="@drawable/greneral_list_divider"
+        android:focusable="false"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/greneral_title_sp"
+        android:text="@string/greneral_usb_lock_tip_title"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/half_white"
+        android:focusable="false"/>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/greneral_title_sp"
+        android:text="@string/greneral_usb_lock_tip_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/half_white"
+        android:focusable="false"/>
+</LinearLayout>

@@ -1,0 +1,27 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.ctv.settings.network" >
+    <application>
+
+        <activity android:name="com.ctv.settings.network.activity.NetWorkActivity"
+                  android:excludeFromRecents="true"
+                  android:hardwareAccelerated="true"
+                  android:launchMode="singleTask">
+
+            <intent-filter android:priority="1" >
+                <action android:name="android.settings.WIFI_SETTINGS" />
+                <action android:name="android.net.wifi.PICK_WIFI_NETWORK" />
+                <action android:name="android.settings.WIRELESS_SETTINGS" />
+                <action android:name="android.settings.ETHERNET_SETTINGS" />
+                <action android:name="android.settings.WIFI_IP_SETTINGS" />
+                <action android:name="com.cultraview.settings.net.NETWORK_SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"
+                    android:value="true" />
+        </activity>
+
+    </application>
+</manifest>

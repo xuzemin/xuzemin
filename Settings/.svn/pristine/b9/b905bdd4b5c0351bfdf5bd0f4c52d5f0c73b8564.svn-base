@@ -1,0 +1,73 @@
+package com.ctv.settings.security;
+
+import android.app.Activity;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.ctv.settings.base.BaseViewHolder;
+
+/**
+ * 安全ViewHolder
+ * @author wanghang
+ * @date 2019/09/17
+ */
+public class SecurityViewHolder extends BaseViewHolder {
+    private View mainSecurity; // 安全模块根界面
+    private ImageView imUnknownStore; // 位置来源开关
+    private boolean isUnknownStore = true;
+
+    public SecurityViewHolder(Activity activity) {
+        super(activity);
+    }
+
+    /**
+     * 初始化UI
+     *
+     * @param activity
+     */
+    @Override
+    public void initUI(Activity activity) {
+        mainSecurity = activity.findViewById(R.id.main_security);
+        imUnknownStore = activity.findViewById(R.id.im_item_unknown_store);
+    }
+
+    /**
+     * 初始化数据
+     *
+     * @param activity
+     */
+    @Override
+    public void initData(Activity activity) {
+
+    }
+
+    /**
+     * 初始化监听
+     */
+    @Override
+    public void initListener() {
+        imUnknownStore.setOnClickListener(mOnClickListener);
+    }
+
+    /**
+     * 刷新指定view
+     *
+     * @param view
+     */
+    @Override
+    public void refreshUI(View view) {
+    }
+
+    private View.OnClickListener mOnClickListener = view -> {
+        int id = view.getId();
+        switch (id){
+            case R.id.im_item_unknown_store:
+                isUnknownStore = !isUnknownStore;
+                int resId = isUnknownStore ? R.mipmap.on : R.mipmap.off;
+                imUnknownStore.setBackgroundResource(resId);
+                break;
+            default:
+                break;
+        }
+    };
+}

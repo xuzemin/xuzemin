@@ -1,0 +1,256 @@
+package com.ctv.settings
+
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.RelativeLayout
+import android.widget.TextView
+import com.apkfuns.logutils.LogUtils
+import com.ctv.settings.base.BaseKtActivity
+import com.ctv.settings.event.Event
+import com.ctv.settings.extensions.executeRequest
+import com.ctv.settings.network.Listener.ConnectivityListener
+import com.ctv.settings.network.Listener.LoadDataAsyncTask
+import com.ctv.settings.network.activity.NetWorkActivity
+import com.ctv.settings.network.utils.NetUtils
+import com.ctv.settings.utils.L
+import kotlinx.coroutines.Job
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+
+/**
+ * Desc:主界面
+ *
+ * @author wanghang
+ * *
+ * @time 2019/9/10.
+ */
+class MainActivity : BaseKtActivity(), View.OnClickListener, ConnectivityListener.Listener {
+    override fun onConnectivityChange(intent: Intent?) {
+        if (intent != null) {
+            checkStatus()
+        }
+    }
+
+    override fun onPPPoeChanged(status: String?) {
+        if (status != null) {
+            updateUI(tv_pppoe,status)
+        }
+    }
+
+    override fun onEthernetAvailabilityChanged(isAvailable: Boolean) {
+        if(isAvailable) {
+            updateUI(tv_wire, getString(R.string.bluetooth_connected))
+        }else{
+
+            if (mConnectivityListener != null && mConnectivityListener.isEthernetEnable) {
+                updateUI(tv_wire, getString(R.string.status_on))
+            } else {
+                updateUI(tv_wire, getString(R.string.status_off))
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+//        var id = v!!.getId()
+        when(v!!.id){
+            R.id.rl_wire-> goNetWorkActivity(1)
+            R.id.rl_wifi-> goNetWorkActivity(3)
+            R.id.rl_pppoe-> goNetWorkActivity(2)
+            R.id.rl_host_wifi-> goNetWorkActivity(6)
+            R.id.rl_bluetooth -> goNetWorkActivity(4)
+            R.id.rl_screen_hot -> goNetWorkActivity(5)
+        }
+    }
+
+    var rechecktime:Long = 0
+    lateinit var rl_wire:RelativeLayout
+    lateinit var rl_wifi:RelativeLayout
+    lateinit var rl_pppoe:RelativeLayout
+    lateinit var rl_host_spot:RelativeLayout
+    lateinit var rl_bluetooth:RelativeLayout
+    lateinit var rl_screen_hot:RelativeLayout
+
+    private lateinit var mAyncTask: LoadDataAsyncTask
+
+    lateinit var tv_wire:TextView
+    lateinit var tv_wifi:TextView
+    lateinit var tv_pppoe:TextView
+    lateinit var tv_host_spot:TextView
+    lateinit var tv_bluetooth:TextView
+    lateinit var tv_screen_hot:TextView
+
+    companion object {
+        val TAG = MainActivity::class.java.simpleName // 是否开启日志
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // 注册事件
+//        EventBus.getDefault().register(this)
+
+        // 初始化UI
+        initView()
+
+        // 初始化数据
+        initData()
+
+        LogUtils.d("MainActivity is OK!")
+    }
+
+    /**
+     * 初始化UI
+     */
+    private fun initView(){
+
+        rl_pppoe = findViewById(R.id.rl_pppoe)
+        rl_wire = findViewById(R.id.rl_wire)
+        rl_wifi = findViewById(R.id.rl_wifi)
+        rl_host_spot = findViewById(R.id.rl_host_wifi)
+        rl_bluetooth = findViewById(R.id.rl_bluetooth)
+        rl_screen_hot = findViewById(R.id.rl_screen_hot)
+
+        rl_pppoe.setOnClickListener(this)
+        rl_wire.setOnClickListener(this)
+        rl_wifi.setOnClickListener(this)
+        rl_host_spot.setOnClickListener(this)
+        rl_bluetooth.setOnClickListener(this)
+        rl_screen_hot.setOnClickListener(this)
+
+        tv_pppoe = findViewById(R.id.tv_pppoe)
+        tv_wire = findViewById(R.id.tv_wire)
+        tv_wifi = findViewById(R.id.tv_wifi)
+        tv_host_spot = findViewById(R.id.tv_host_wifi)
+        tv_bluetooth = findViewById(R.id.tv_bluetooth)
+        tv_screen_hot = findViewById(R.id.tv_screen_hot)
+
+    }
+
+    /**
+     * 初始化数据
+     */
+    private fun initData(){}
+
+    /**
+     * 处理事件:更新音量刷新开关
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun handleVoiceBarEvent(event: Event.UpdateVoiceBarEvent) {
+        if (!isFinishing){
+//            updateVoiceBarUI(event.state)
+        }
+    }
+
+    private fun updateUI(resStr: String) {
+//        test_result.text = resStr
+    }
+    
+    private fun updateUI(view: TextView,isOpen: String) {
+//        test_result.text = resStr
+        view.text = isOpen
+    }
+
+    private fun goNetWorkActivity(id:Int){
+        val intent= Intent(this,NetWorkActivity::class.java)
+        intent.putExtra("CurrentTag",id)
+        startActivity(intent)
+    }
+
+    private fun loadData(username: String): Job {
+        return executeRequest(
+            //  请求调用
+            request = {
+                getUserInfo(username)
+            },
+            //  成功回调
+            onSuccess = {
+                updateUI(it)
+            },
+            //  失败回调
+            onFail = {
+                it.printStackTrace()
+            })
+    }
+
+    private fun getUserInfo(useName:String): String {
+        return useName + "Hello"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkStatus()
+
+    }
+
+    private lateinit var mBluetoothAdapter : BluetoothAdapter
+    private lateinit var mConnectivityListener : ConnectivityListener
+    fun refreshView(){
+        //有线开关判断
+        if(mConnectivityListener.isEthernetEnable){
+            updateUI(tv_wire,getString(R.string.status_on))
+            if(mConnectivityListener.isEthernetAvailable){
+                updateUI(tv_wire,getString(R.string.bluetooth_connected))
+            }
+        }else{
+            updateUI(tv_wire,getString(R.string.status_off))
+        }
+        //WIFI开关判断
+        if(mConnectivityListener.isWifiEnabled){
+            updateUI(tv_wifi,getString(R.string.status_on))
+        }else{
+            updateUI(tv_wifi,getString(R.string.status_off))
+        }
+
+        //热点开关判断
+        var wifiapband:String = android.os.SystemProperties.get("Wifiapband")
+        L.e("Wifiapband:"+wifiapband)
+        L.e("Constants.isWifiApEnabled(mConnectivityListener.wifiManager):"+NetUtils.isWifiApEnabled(mConnectivityListener.wifiManager))
+        updateUI(tv_host_spot,getString(R.string.status_off))
+        updateUI(tv_screen_hot,getString(R.string.status_off))
+        if(NetUtils.isWifiApEnabled(mConnectivityListener.wifiManager)){
+            if (wifiapband == "Apband2G") {
+                updateUI(tv_host_spot, getString(R.string.status_on))
+            }
+            if (wifiapband == "Apband5G") {
+                updateUI(tv_screen_hot, getString(R.string.status_on))
+            }
+        }
+
+        //PPPOE开关判断
+        updateUI(tv_pppoe,mConnectivityListener.ppPoeStatusDescription)
+
+    }
+
+    fun checkStatus(){
+//        if(System.currentTimeMillis() - rechecktime < 1000){
+//            return
+//        }
+
+        //蓝牙开关判断
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (mBluetoothAdapter.isEnabled) {
+            updateUI(tv_bluetooth,getString(R.string.status_on))
+        }else{
+            updateUI(tv_bluetooth,getString(R.string.status_off))
+        }
+
+
+
+        mConnectivityListener = ConnectivityListener(this,this)
+        mAyncTask = LoadDataAsyncTask(this, mConnectivityListener)
+        mAyncTask.setFinishListener {
+                data -> refreshView()
+        }
+        mAyncTask.execute()
+        rechecktime = System.currentTimeMillis()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        deviceViewHolder.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+}

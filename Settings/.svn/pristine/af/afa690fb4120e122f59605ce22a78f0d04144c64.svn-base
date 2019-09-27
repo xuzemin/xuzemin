@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">timeAndDate</string>
+    <string name="img">img</string>
+    <string-array name="date_format_values" translatable="false">
+        <item>Month - Day - Year</item>
+        <item>Day - Month - Year</item>
+        <item>Year - Month - Day</item>
+    </string-array>
+    <string-array name="repeat_values" translatable="false">
+        <item>@string/tv_close</item>
+        <item>@string/tv_repeat</item>
+    </string-array>
+    <string name="result_save">Determine to save the current settings?</string>
+    <string name="result_ok">OK</string>
+    <string name="result_cancel">Cancel</string>
+    <string name="result_tip">Tip</string>
+</resources>

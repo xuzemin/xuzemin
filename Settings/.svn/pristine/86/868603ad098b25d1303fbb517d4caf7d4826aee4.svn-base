@@ -1,0 +1,208 @@
+
+package com.ctv.settings.network.holder;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.wifi.WifiInfo;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.ctv.settings.network.Listener.ConnectivityListener;
+import com.ctv.settings.network.R;
+import com.ctv.settings.network.activity.NetWorkAcitivy;
+import com.ctv.settings.network.adapter.NetstateAdapter;
+import com.ctv.settings.network.utils.Constants;
+import com.ctv.settings.network.utils.InitDataInfo;
+import com.ctv.settings.network.utils.Tools;
+
+
+public class NetstateViewHolder {
+
+    private static final String TAG = "NetstateViewHolder";
+
+    public NetstateAdapter netstateAdapter;
+
+    private final Context ctvContext;
+
+    private String[] ADDR_NAME_STRING;
+
+    private ListView state_addr_lv;
+
+    public TextView state_connect_value_tv;
+
+    private final NetWorkAcitivy activity;
+
+    private ConnectivityManager mConnectivityManager;
+
+    public static int status;
+
+    public final static int TYPE_PPPOE = 15;
+
+    private final ConnectivityListener mListener;
+    private InitDataInfo mInitData = null;
+
+    public NetstateViewHolder(Context ctvContext, ConnectivityListener conListener) {
+        super();
+        this.ctvContext = ctvContext.getApplicationContext();
+        this.mListener = conListener;
+        this.activity = (NetWorkAcitivy) ctvContext;
+        initData();
+    }
+
+    private void initData() {
+        state_addr_lv =  activity.findViewById(R.id.state_addr_lv);
+        state_connect_value_tv = activity.findViewById(R.id.state_connect_value_tv);
+        ADDR_NAME_STRING = ctvContext.getResources().getStringArray(R.array.state_addrname_vals);
+    }
+
+    /**
+     * initData(The function of the method)
+     *
+     * @Title: initData
+     * @Description: TODO
+     */
+    public void setData(InitDataInfo data) {
+        mInitData = data;
+        status = data.getNetStatus();
+        Log.i(TAG, "-----------status:" + status);
+        netstateAdapter = new NetstateAdapter(activity, ADDR_NAME_STRING, status, true);
+        state_addr_lv.setAdapter(netstateAdapter);
+        switch (status) {
+            case TYPE_PPPOE:
+                refreshPPPoEStatus(true);
+                break;
+            case ConnectivityManager.TYPE_ETHERNET:
+                refreshEthernetStatus(true);
+                break;
+            case ConnectivityManager.TYPE_WIFI:
+                refreshWifiStatus(true);
+                break;
+            case Constants.TYPE_NONE:
+                state_connect_value_tv.setText(R.string.connect_break);
+                netstateAdapter.setConnect(false);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void refreshWifiStatus(boolean isInit) {
+        Log.d(TAG, "refreshWifiStatus");
+        if (isInit) {
+            state_connect_value_tv.setText(R.string.wireless_connect);
+            netstateAdapter.setConnect(true);
+            if (mInitData.getWifiLinkProperties()!= null) {
+                state_connect_value_tv.setText(R.string.wireless_connect);
+                netstateAdapter.setConnect(true);
+                netstateAdapter.setWifiDevInfo(mInitData.getWifiLinkProperties(),
+                        mInitData.getWifiInfo());
+            }
+
+        } else {
+            if (mListener.isWifiEnabled()) {
+                WifiInfo wifiInfo = mListener.getWifiInfo();
+                if (null != wifiInfo && null != wifiInfo.getSSID()
+                        && wifiInfo.getNetworkId() != Constants.INVALID_NETWORK_ID) {
+                    LinkProperties linkProperties = mListener.getWifiLinkProperties();
+                    state_connect_value_tv.setText(R.string.wireless_connect);
+                    netstateAdapter.setConnect(true);
+                    if (linkProperties != null) {
+                        state_connect_value_tv.setText(R.string.wireless_connect);
+                        netstateAdapter.setConnect(true);
+                        netstateAdapter.setWifiDevInfo(linkProperties, wifiInfo);
+                    }
+                }
+
+            }
+        }
+    }
+
+    void refreshEthernetStatus(boolean isInit) {
+        Log.d(TAG, "refreshEthernetStatus");
+        LinkProperties linkProperties = null;
+        if (isInit) {
+            linkProperties = mInitData.getErthernetLinkProperties();
+            if (linkProperties != null) {
+                status = ConnectivityManager.TYPE_ETHERNET;
+                netstateAdapter.setConnect(true);
+                state_connect_value_tv.setText(R.string.wire_connect);
+                netstateAdapter.setEthernetDevInfo(linkProperties);
+            } else {
+                status = Constants.TYPE_NONE;
+                state_connect_value_tv.setText(R.string.connect_break);
+                netstateAdapter.setConnect(false);
+            }
+        } else {
+
+            if (mListener.isEthernetAvailable() && Tools.isNetInterfaceAvailable("eth0")) {
+                linkProperties = mListener.getEthernetLinkProperties();
+                if (linkProperties != null) {
+                    status = ConnectivityManager.TYPE_ETHERNET;
+                    netstateAdapter.setConnect(true);
+                    state_connect_value_tv.setText(R.string.wire_connect);
+                    netstateAdapter.setEthernetDevInfo(linkProperties);
+                } else {
+                    status = Constants.TYPE_NONE;
+                    state_connect_value_tv.setText(R.string.connect_break);
+                    netstateAdapter.setConnect(false);
+                }
+            }
+        }
+    }
+
+    public void refreshPPPoEStatus(boolean isInit) {
+        Log.d(TAG, "refreshPPPoEStatus");
+        if (mListener.getConnectivityStatus().isPPPoeConnected()) {
+            status = TYPE_PPPOE;
+            netstateAdapter.setConnect(true);
+            state_connect_value_tv.setText(R.string.pppoe_connect);
+            netstateAdapter.setPppoeManager(mListener.getPPPoEDialer().getPppoeManager());
+            netstateAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void refreshDisconnectStatus() {
+        Log.d(TAG, "refreshDisconnectStatus");
+        status = Constants.TYPE_NONE;
+        state_connect_value_tv.setText(R.string.connect_break);
+        netstateAdapter.setConnect(false);
+    }
+
+    public void refreshNetworkStatus() {
+        if (mListener.getConnectivityStatus().isEthernetConnected()) {
+        	refreshEthernetStatus(false);
+        } else if (mListener.getConnectivityStatus().isPPPoeConnected()) {
+            refreshPPPoEStatus(false);
+        } else if (mListener.getConnectivityStatus().isWifiConnected()) {
+        	refreshWifiStatus(false);
+        } else if (mListener.getConnectivityStatus().isDisconnect()) {
+            refreshDisconnectStatus();
+        }
+
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                return true;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    public void onExit() {
+        if(netstateAdapter!=null){
+            netstateAdapter.onExit();
+        }
+        netstateAdapter = null;
+        ADDR_NAME_STRING = null;
+        state_addr_lv = null;
+        state_connect_value_tv = null;
+        status = -1;
+        mInitData = null;
+    }
+}

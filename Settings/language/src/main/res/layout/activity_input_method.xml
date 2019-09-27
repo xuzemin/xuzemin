@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:background="@mipmap/main_bg">
+
+    <include
+            layout="@layout/top_back_layout"/>
+
+    <LinearLayout
+            android:layout_width="@dimen/ll_main_size"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/lang_top_margin"
+                android:text="@string/keyboard_setting"
+                android:textColor="@color/white"
+                android:textSize="@dimen/lang_title_sp" />
+
+        <ListView
+                android:id="@+id/keyboard_listView"
+                android:layout_width="match_parent"
+                android:layout_height="300dip"
+                android:layout_marginTop="07dip"
+                android:divider="@drawable/list_divider"
+                android:listSelector="@drawable/select_item_bg"
+                android:scrollbars="none" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
