@@ -77,6 +77,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static Bitmap backgroundback = null;
     private GridView gridView,video_girdview,news_girdview,message_girdview,contact_girdview,gridview_background;
     private MyDialog myDialog;
+    private List<PackageInfo> packageInfoList = null;
     private static int REQUEST_EXTERNAL_STRONGE = 1;
     private RelativeLayout shipin,news_layout,message_layout,contact,settings,play,content;
     private GridViewAdapter gridViewAdapter,gridViewAdapter_video,gridViewAdapter_news,gridViewAdapter_message,gridViewAdapter_contact,gridViewAdapter_background;
@@ -92,6 +93,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private SharedPreferencesHelper sharedPreferencesHelper;
     private static DBHelper dbHelper;
     public static boolean isAdmin = false;
+    public static int applicationNumber = -1;
     private static List<Map> urlList = new ArrayList<>();// 机器人
     Handler handler = new Handler(){
         @Override
@@ -402,6 +404,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setUrlContent();
     }
 
+
+    public void getApplicantInfo(){
+        PackageManager pm = getPackageManager();
+        List<PackageInfo> packageInfos = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+        for(PackageInfo packageInfo : packageInfos){
+            if(packageInfo.packageName != ""){
+
+
+            }
+        }
+    }
+
+
     private void setUrlContent(){
         if(urlList != null && urlList.size() > 0) {
             mGridData = new ArrayList<>();
@@ -413,6 +428,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 items.setImage(getResources().getDrawable(R.mipmap.photo));
                 mGridData.add(items);
             }
+
+            getApplicantInfo();
+            if(packageInfoList != null && packageInfoList.size() > 0){
+                applicationNumber = urlList.size();
+
+            }else{
+                applicationNumber = -1;
+            }
+
             gridViewAdapter = new GridViewAdapter(this, R.layout.gridview_item_main, mGridData, urlList);
             gridView.setAdapter(gridViewAdapter);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
