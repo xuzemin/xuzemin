@@ -4,15 +4,19 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +41,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -55,6 +60,7 @@ import com.youkes.browser.utils.ScreenUtil;
 import com.youkes.browser.utils.SharedPreferencesHelper;
 import com.youkes.browser.utils.ToastUtil;
 import com.youkes.browser.view.BlurBuilder;
+import com.youkes.browser.view.LauncherVideoView;
 import com.youkes.browser.view.MyDialog;
 import com.youkes.browser.view.ZB_MyDialog;
 
@@ -63,8 +69,17 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.youkes.browser.constant.Constants.TAG;
+import static com.youkes.browser.utils.Constant.Current_Image;
+import static com.youkes.browser.utils.Constant.Current_Video;
+import static com.youkes.browser.utils.Constant.EVENT_START_VIDEO;
+import static com.youkes.browser.utils.Constant.SHOWTIME;
+import static com.youkes.browser.utils.Constant.isImagePlay;
+import static com.youkes.browser.utils.Constant.isVideoPlay;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -77,7 +92,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static Bitmap backgroundback = null;
     private GridView gridView,video_girdview,news_girdview,message_girdview,contact_girdview,gridview_background;
     private MyDialog myDialog;
-    private List<PackageInfo> packageInfoList = null;
+    private ImageView imgview;
+    private static LauncherVideoView videoView;
+    private LinearLayout ll_video,ll_image;
+    private RelativeLayout main_layout;
+    private static Thread thread = null;
+    public  static List<PackageInfo> packageInfoList = null;
     private static int REQUEST_EXTERNAL_STRONGE = 1;
     private RelativeLayout shipin,news_layout,message_layout,contact,settings,play,content;
     private GridViewAdapter gridViewAdapter,gridViewAdapter_video,gridViewAdapter_news,gridViewAdapter_message,gridViewAdapter_contact,gridViewAdapter_background;
@@ -86,15 +106,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static ArrayList<String> urllist,video_urllist,news_urllist,message_urllist,contact_urllist;
     private PackageManager packageManager;
     private ProgressDialog progressDialog;
+
+    public static PackageManager pm;
+    private static ArrayList<String> VideoNameList;
+    private static ArrayList<String> ImageList;
     private static ArrayList<String> ImageNameList;
     private static ArrayList<Bitmap> ImageBitmapList;
     private static String FileName = null;
     private RelativeLayout admin_layout;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private static DBHelper dbHelper;
+    private static BroadcastReceiver installedReceiver;
     public static boolean isAdmin = false;
     public static int applicationNumber = -1;
     private static List<Map> urlList = new ArrayList<>();// 机器人
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -109,6 +135,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         hideProgressDialog();
                         RefreshArray();
                     }
+                    break;
+                case EVENT_START_VIDEO:
+                    startPlay();
                     break;
             }
         }
@@ -143,6 +172,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         dbHelper = DBHelper.getInstance(getApplicationContext());
         admin_layout = findViewById(R.id.admin_layout);
         admin_relative = findViewById(R.id.admin_relative);
+        main_layout = findViewById(R.id.main_layout);
+        videoView = findViewById(R.id.videoView);
+        ll_video = findViewById(R.id.ll_video);
+        imgview = findViewById(R.id.imgview);
+        ll_image = findViewById(R.id.ll_image);
         initView();
     }
     private void initView(){
@@ -162,6 +196,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         content = findViewById(R.id.content);
         content.setOnClickListener(this);
         admin_layout.setOnClickListener(this);
+        ll_video.setOnClickListener(this);
+        ll_image.setOnClickListener(this);
 //        background.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {
@@ -171,7 +207,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //                return false;
 //            }
 //        });
-        intdata();
+        initData();
     }
 
     @Override
@@ -202,8 +238,122 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 ImageInit();
             }
 
+            getPhotoVideoPath();
+            getVideoPath();
+//            Constant.CurrentNumber = 0;
+            if(!isImagePlay && !isVideoPlay) {
+                startThread();
+            }else{
+                startPlay();
+            }
+//            Constant.debugLog(Constant.isInit+""+videoView.isPlaying());
+//            if(Constant.isInit ) {
+//                Constant.CurrentNumber = 0;
+//                Constant.isVideoPlay = true;
+//                videoView.start();
+//            }else{
+//                setVideoPath();
+//                Constant.isInit = true;
+//                startPlay();
+//            }
+        }
+
+        installedReceiver = new BootReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.PACKAGE_ADDED");
+        filter.addAction("android.intent.action.PACKAGE_REMOVED");
+        filter.addDataScheme("package");
+        this.registerReceiver(installedReceiver, filter);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unregisterReceiver(installedReceiver);
+        if(thread != null){
+            thread.interrupt();
+            thread = null;
         }
     }
+
+    public void startPlay() {
+        Constant.debugLog(" VideoNameList"+ VideoNameList.size());
+        Constant.debugLog(" isVideoPlay"+ isVideoPlay);
+        Constant.debugLog(" Current_Video"+ Current_Video);
+        handler.removeMessages(EVENT_START_VIDEO);
+        main_layout.setVisibility(View.GONE);
+        if(isVideoPlay) {
+            if(VideoNameList!=null && VideoNameList.size() > 0) {
+                ll_video.setVisibility(View.VISIBLE);
+                ll_image.setVisibility(View.GONE);
+                if (Current_Video < VideoNameList.size()) {
+                    videoView.setVideoPath(VideoNameList.get(Current_Video));
+                    videoView.start();
+                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            handler.sendEmptyMessage(EVENT_START_VIDEO);
+                        }
+                    });
+                    videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                        @Override
+                        public boolean onError(MediaPlayer mp, int what, int extra) {
+                            ChangeToVideo(false);
+                            return false;
+                        }
+                    });
+                    Current_Video++;
+                } else {
+                    ChangeToVideo(false);
+                }
+            }else{
+                ChangeToVideo(false);
+            }
+        }
+
+        Constant.debugLog(" ImageList"+ ImageList.size());
+        Constant.debugLog(" isImagePlay"+ isImagePlay);
+        Constant.debugLog(" Current_Image"+ Current_Image);
+        if(isImagePlay) {
+            if(videoView.isPlaying()){
+                videoView.pause();
+            }
+            if(ImageList!=null && ImageList.size() > 0){
+                ll_video.setVisibility(View.GONE);
+                ll_image.setVisibility(View.VISIBLE);
+                if (Current_Image < ImageList.size()) {
+                    Bitmap bmp = BitmapFactory.decodeFile(ImageList.get(Current_Image));
+                    imgview.setImageBitmap(bmp);
+                    Current_Image++;
+                    handler.sendEmptyMessageDelayed(EVENT_START_VIDEO, SHOWTIME);
+                } else {
+                    ChangeToVideo(true);
+                    handler.sendEmptyMessage(EVENT_START_VIDEO);
+                }
+            }else{
+                ChangeToVideo(true);
+                if(VideoNameList !=null && VideoNameList.size() > 0) {
+                    startPlay();
+                }
+            }
+        }
+    }
+
+    public void ChangeToVideo(boolean isVideo){
+        if(isVideo){
+            Current_Image = 0;
+            Current_Video = 0;
+            isImagePlay = false;
+            isVideoPlay = true;
+        }else{
+            Current_Image = 0;
+            Current_Video = 0;
+            isImagePlay = true;
+            isVideoPlay = false;
+        }
+    }
+
     private void reBackground(){
         if(!sharedPreferencesHelper.contain(Constant.fileName)){
             ImageInit();
@@ -406,18 +556,34 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     public void getApplicantInfo(){
-        PackageManager pm = getPackageManager();
+        pm = getPackageManager();
+        packageInfoList = new ArrayList<>();
         List<PackageInfo> packageInfos = pm.getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES);
+        LogUtil.e("packageInfos size "+packageInfos.size());
         for(PackageInfo packageInfo : packageInfos){
-            if(packageInfo.packageName != ""){
-
-
+            if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                // 系统程序
+            }else{
+                packageInfoList.add(packageInfo);
             }
         }
     }
 
 
     private void setUrlContent(){
+        getApplicantInfo();
+        if(packageInfoList != null && packageInfoList.size() > 0){
+            applicationNumber = urlList.size();
+            for(PackageInfo packageInfo : packageInfoList){
+                HashMap map = new HashMap();
+                map.put("name",packageInfo.applicationInfo.loadLabel(pm).toString());
+                map.put("packagename",packageInfo.packageName);
+                urlList.add(map);
+                LogUtil.e("map"+map.toString());
+            }
+        }else{
+            applicationNumber = -1;
+        }
         if(urlList != null && urlList.size() > 0) {
             mGridData = new ArrayList<>();
             GridItem items = new GridItem();
@@ -429,13 +595,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 mGridData.add(items);
             }
 
-            getApplicantInfo();
-            if(packageInfoList != null && packageInfoList.size() > 0){
-                applicationNumber = urlList.size();
-
-            }else{
-                applicationNumber = -1;
-            }
 
             gridViewAdapter = new GridViewAdapter(this, R.layout.gridview_item_main, mGridData, urlList);
             gridView.setAdapter(gridViewAdapter);
@@ -443,6 +602,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     /**获得Intent*/
+                    Constant.isResetPlay = true;
                     if(isAdmin){
                         if (position <= 2) {
                             switch (position) {
@@ -482,27 +642,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                     }
                                     break;
                             }
-                        }else{
+                        }else if(position < applicationNumber){
                             if((int)(urlList.get(position).get("show")) == 0){
                                 dbHelper.execSQL("update url set show = 1 where id = "+ urlList.get(position).get("id"));
                             }else{
                                 dbHelper.execSQL("update url set show = 0 where id = "+ urlList.get(position).get("id"));
                             }
                             getUrl(true);
+                        }else{
+                            unInstall(packageInfoList.get(position - applicationNumber).packageName);
                         }
                     }else{
-                        if(urlList.get(position).get("url").equals("com.android.chrome")){
-                            packageManager = getPackageManager();
-                            Intent intent = packageManager.getLaunchIntentForPackage("com.android.chrome"); //com.xx.xx是我们获取到的包名 
-                            if (intent != null) {
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
-                            } else {
-                                Toast.makeText(getApplicationContext(), R.string.google_play_not_exit, Toast.LENGTH_SHORT).show();
+                        if(position < applicationNumber){
+                            if(urlList.get(position).get("url").equals("com.android.chrome")){
+                                packageManager = getPackageManager();
+                                Intent intent = packageManager.getLaunchIntentForPackage("com.android.chrome"); //com.xx.xx是我们获取到的包名 
+                                if (intent != null) {
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), R.string.google_play_not_exit, Toast.LENGTH_SHORT).show();
+                                }
+                                return;
+                            }else{
+                                starIntent(urlList.get(position).get("url").toString());
                             }
-                            return;
                         }else{
-                            starIntent(urlList.get(position).get("url").toString());
+                            startActivity(packageInfoList.get(position - applicationNumber).packageName);
                         }
                     }
                 }
@@ -510,7 +676,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void intdata(){
+    private void startActivity(String packageName){
+        packageManager = getPackageManager();
+        Intent intent1 = packageManager.getLaunchIntentForPackage(packageName); //com.xx.xx是我们获取到的包名 
+        if (intent1 != null) {
+            startActivity(intent1);
+            overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.google_play_not_exit, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void initData(){
+        getVideoPath();
+        getPhotoVideoPath();
         getUrl(false);
         gridview_background.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -669,6 +848,53 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     }
 
+    public String getVideoPath(){
+        File path = new File(Constant.VideoDir);
+        if (Environment.getExternalStorageState().
+                equals(Environment.MEDIA_MOUNTED)) {
+            File[] files = path.listFiles();// 读取文件夹下文件
+            getVideoName(files);
+        }
+        return null;
+    }
+
+    protected void getVideoName(File[] files) {
+        if(files != null){
+            VideoNameList = new ArrayList<>();
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    if (file.getName().endsWith(".mp4") || file.getName().endsWith(".mov")){
+                        VideoNameList.add(Constant.VideoDir+file.getName());
+                        Constant.debugLog(Constant.VideoDir+file.getName()+"");
+                    }
+                }
+            }
+        }
+    }
+    public String getPhotoVideoPath(){
+        File path = new File(Constant.ImgDir);
+        if (Environment.getExternalStorageState().
+                equals(Environment.MEDIA_MOUNTED)) {
+            File[] files = path.listFiles();// 读取文件夹下文件
+            getPhotoName(files);
+        }
+        return null;
+    }
+
+    protected void getPhotoName(File[] files) {
+        if(files != null){
+            ImageList = new ArrayList<>();
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    if (file.getName().endsWith(".jpg") || file.getName().endsWith(".png")){
+                        ImageList.add(Constant.ImgDir+file.getName());
+                        Constant.debugLog(Constant.ImgDir+file.getName()+"");
+                    }
+                }
+            }
+        }
+    }
+
     public void insert(String Name,String url,int type){
         dbHelper.execSQL("insert into url (name,url,show,type) values " +
                 "('"+Name+"','"+url+"',0,"+type+")");
@@ -687,6 +913,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 //        BlurBuilder.snapShotWithoutStatusBar(this);
+        Constant.isResetPlay = true;
         switch (v.getId()){
             case R.id.message_layout:
 //                myDialog=new MyDialog(MainActivity.this,R.style.MyDialog,Constant.MESSAGE,backgroundback,onClickListener);
@@ -750,6 +977,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     adminDialog();
                 }
                 break;
+            case R.id.ll_image:
+            case R.id.ll_video:
+                startThread();
+                break;
         }
     }
 
@@ -768,7 +999,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if (editText.getText().toString().trim().equals("")) {
                     Toast.makeText(getApplicationContext(), "password is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(editText.getText().toString().trim().equals(Constant.AdminPassword)){
+                    if(editText.getText().toString().trim().equals(Constant.AdminPassword_bak)){
                         Toast.makeText(getApplicationContext(), "Login Succes", Toast.LENGTH_SHORT).show();
                         getUrl(true);
                         dialog.dismiss();
@@ -810,6 +1041,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Constant.isResetPlay = true;
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if(isAdmin){
@@ -1068,10 +1300,94 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
 //        } else {
         Log.w("传值", "正常进行安装");
-        RootCmd.execRootCmdSilent("adb install -r "+ filePath);
-        Log.w("传值", "adb install -r "+ filePath);
+        RootCmd.execRootCmdSilent("pm install -r "+ filePath);
+        Log.w("传值", "pm install -r "+ filePath);
 //        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
 //        }
 //        context.startActivity(intent);
+    }
+
+    private void unInstall(String packageName) {
+        Log.i("传值", "开始执行安装: " + packageName);
+//        File apkFile = new File(filePath);
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            Log.w("传值", "版本大于 N ，开始使用 fileProvider 进行安装");
+//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            Uri contentUri = FileProvider.getUriForFile(
+//                    context
+//                    , Constant.Package
+//                    , apkFile);
+//            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+//        } else {
+        Log.w("传值", "卸载");
+        RootCmd.execRootCmdSilent("pm uninstall "+ packageName);
+        Log.w("传值", "pm uninstall "+ packageName);
+//        intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+//        }
+//        context.startActivity(intent);
+    }
+
+    public class BootReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            PackageManager manager = context.getPackageManager();
+            Log.i("这是监听事件：", "监听");
+            getUrl(isAdmin);
+            if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
+                String packageName = intent.getData().getSchemeSpecificPart();
+                Toast.makeText(context, "安装成功"+packageName, Toast.LENGTH_LONG).show();
+            }
+            if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED)) {
+                String packageName = intent.getData().getSchemeSpecificPart();
+                Toast.makeText(context, "卸载成功"+packageName, Toast.LENGTH_LONG).show();
+            }
+            if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
+                String packageName = intent.getData().getSchemeSpecificPart();
+                Toast.makeText(context, "替换成功"+packageName, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public void startThread(){
+        if(videoView.isPlaying()){
+            videoView.pause();
+        }
+        isVideoPlay = false;
+        isImagePlay = false;
+        handler.removeMessages(EVENT_START_VIDEO);
+        ll_image.setVisibility(View.GONE);
+        ll_video.setVisibility(View.GONE);
+        main_layout.setVisibility(View.VISIBLE);
+        ll_video.setVisibility(View.GONE);
+        ll_image.setVisibility(View.VISIBLE);
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isVideoPlay && !isImagePlay) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (Constant.isResetPlay) {
+                        Constant.CurrentNumber = 0;
+                        Constant.isResetPlay = false;
+                    }
+                    if (Constant.CurrentNumber >= Constant.OUTTIME) {
+                        Constant.CurrentNumber = 0;
+                        handler.sendEmptyMessage(Constant.EVENT_START_VIDEO);
+                        Constant.isVideoPlay = true;
+                    } else {
+                        Constant.CurrentNumber++;
+                    }
+                    Constant.debugLog("MyConstant.Constant" + Constant.CurrentNumber);
+                }
+            }
+        });
+        thread.start();
     }
 }

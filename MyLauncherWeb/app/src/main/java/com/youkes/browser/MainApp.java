@@ -18,7 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 
-
+import com.youkes.browser.callback.SimpleLifecyclecallbacl;
 import com.youkes.browser.database.BookmarkDatabase;
 import com.youkes.browser.database.HistoryDatabase;
 import com.youkes.browser.file.FileAccessor;
@@ -39,7 +39,6 @@ public class MainApp extends Application {
      */
     public static MainApp getInstance() {
         if (instance == null) {
-
         }
         return instance;
     }
@@ -105,6 +104,9 @@ public class MainApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        registerActivityLifecycleCallbacks(new SimpleLifecyclecallbacl());
+
         context = getApplicationContext();
         instance = this;
 

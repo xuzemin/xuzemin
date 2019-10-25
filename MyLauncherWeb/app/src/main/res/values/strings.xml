@@ -30,7 +30,7 @@
     <string name="google_play_not_exit">The Google store app does not exist</string>
     <string name="settings_not_exit">System Settings application does not exist</string>
     <string name="get_file_no_permission">The application does not have local file permissions</string>
-
+    <string name="package_not_exit">The app does not exist</string>
 
 
 

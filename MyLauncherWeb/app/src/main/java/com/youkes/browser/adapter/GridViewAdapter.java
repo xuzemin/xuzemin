@@ -74,11 +74,20 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
         }
         if(urlList != null && urlList.size() > 0){
             holder.textView.setText(urlList.get(position).get("name").toString());
-            holder.imageView.setBackground(mContext.getResources().getDrawable(icno[(int) urlList.get(position).get("id") -1 ]));
+            if(position < MainActivity.applicationNumber ){
+                holder.imageView.setBackground(mContext.getResources().getDrawable(icno[(int) urlList.get(position).get("id") -1 ]));
+            }else{
+                holder.imageView.setBackground(MainActivity.packageInfoList.get(position-MainActivity.applicationNumber).applicationInfo.loadIcon(MainActivity.pm));
+            }
+//            holder.imageView.setBackground(mContext.getResources().getDrawable(icno[(int) urlList.get(position).get("id") -1 ]));
             if(MainActivity.isAdmin) {
-                if ((int) (urlList.get(position).get("show")) == 0) {
-                    holder.delete.setVisibility(View.GONE);
-                } else {
+                if(position < MainActivity.applicationNumber) {
+                    if ((int) (urlList.get(position).get("show")) == 0) {
+                        holder.delete.setVisibility(View.GONE);
+                    } else {
+                        holder.delete.setVisibility(View.VISIBLE);
+                    }
+                }else{
                     holder.delete.setVisibility(View.VISIBLE);
                 }
             }else{
