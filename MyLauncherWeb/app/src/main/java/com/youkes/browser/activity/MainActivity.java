@@ -63,6 +63,8 @@ import com.youkes.browser.view.BlurBuilder;
 import com.youkes.browser.view.LauncherVideoView;
 import com.youkes.browser.view.MyDialog;
 import com.youkes.browser.view.ZB_MyDialog;
+import com.youkes.browser.widget.media.IjkVideoView;
+import com.youkes.browser.widget.media.Settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +74,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 import static com.youkes.browser.constant.Constants.TAG;
 import static com.youkes.browser.utils.Constant.Current_Image;
@@ -93,7 +97,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private GridView gridView,video_girdview,news_girdview,message_girdview,contact_girdview,gridview_background;
     private MyDialog myDialog;
     private ImageView imgview;
-    private static LauncherVideoView videoView;
+    private static IjkVideoView videoView;
     private LinearLayout ll_video,ll_image;
     private RelativeLayout main_layout;
     private static Thread thread = null;
@@ -108,12 +112,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private ProgressDialog progressDialog;
 
     public static PackageManager pm;
-    private static ArrayList<String> VideoNameList;
+    public static ArrayList<String> VideoNameList;
     private static ArrayList<String> ImageList;
-    private static ArrayList<String> ImageNameList;
+    public static ArrayList<String> ImageNameList;
     private static ArrayList<Bitmap> ImageBitmapList;
     private static String FileName = null;
     private RelativeLayout admin_layout;
+
+    private Settings mSettings;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private static DBHelper dbHelper;
     private static BroadcastReceiver installedReceiver;
@@ -153,6 +159,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        mSettings = new Settings(this);
         setContentView(R.layout.activity_first);
         layout_cn = findViewById(R.id.layout_cn);
         findViewById(R.id.admin).setOnClickListener(this);
@@ -290,19 +298,31 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if (Current_Video < VideoNameList.size()) {
                     videoView.setVideoPath(VideoNameList.get(Current_Video));
                     videoView.start();
-                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    videoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
                         @Override
-                        public void onCompletion(MediaPlayer mp) {
+                        public void onPrepared(IMediaPlayer mp) {
+                            videoView.start();
+                        }
+                    });
+                    videoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(IMediaPlayer mp) {
                             handler.sendEmptyMessage(EVENT_START_VIDEO);
                         }
                     });
-                    videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                        @Override
-                        public boolean onError(MediaPlayer mp, int what, int extra) {
-                            ChangeToVideo(false);
-                            return false;
-                        }
-                    });
+//                    videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//                        @Override
+//                        public void onCompletion(MediaPlayer mp) {
+//                            handler.sendEmptyMessage(EVENT_START_VIDEO);
+//                        }
+//                    });
+//                    videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//                        @Override
+//                        public boolean onError(MediaPlayer mp, int what, int extra) {
+//                            ChangeToVideo(false);
+//                            return false;
+//                        }
+//                    });
                     Current_Video++;
                 } else {
                     ChangeToVideo(false);
@@ -862,8 +882,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(files != null){
             VideoNameList = new ArrayList<>();
             for (File file : files) {
-                if (!file.isDirectory()) {
-                    if (file.getName().endsWith(".mp4") || file.getName().endsWith(".mov")){
+                if (!file.isDirectory()) { // wmv gif mkv（无法播放） 3pg(无声音)  avi
+                    if (file.getName().endsWith(".mp4") || file.getName().endsWith(".mov")
+//                  || file.getName().endsWith(".flv")
+//                    ||file.getName().endsWith(".mpg")
+//                            || file.getName().endsWith(".rmvb")
+//                            ||file.getName().endsWith(".swf") || file.getName().endsWith(".vob")
+                    ){
                         VideoNameList.add(Constant.VideoDir+file.getName());
                         Constant.debugLog(Constant.VideoDir+file.getName()+"");
                     }
@@ -1352,6 +1377,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void startThread(){
+        if(VideoNameList == null && ImageNameList == null
+                && VideoNameList.size() == 0 && ImageNameList.size() == 0){
+            return;
+        }
         if(videoView.isPlaying()){
             videoView.pause();
         }

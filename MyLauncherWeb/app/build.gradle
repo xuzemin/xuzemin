@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId 'com.youkes.browser'
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 2
         versionName '1.0.1'
@@ -34,4 +34,14 @@ dependencies {
     implementation files('libs/mta-sdk-1.6.2.jar')
     implementation 'org.webjars.bower:assert:0.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'
+
+    implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.5.1'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.5.1'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.5.1'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.5.1'
+
+    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.5.1'
 }

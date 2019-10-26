@@ -24,11 +24,15 @@ import com.youkes.browser.database.HistoryDatabase;
 import com.youkes.browser.file.FileAccessor;
 import com.youkes.browser.preference.PreferenceUtils;
 import com.youkes.browser.utils.DBHelper;
+import com.youkes.browser.widget.media.Settings;
+
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 
 public class MainApp extends Application {
 
     private static MainApp instance;
+    private Settings mSettings;
     public static Context getContext() {
         return context;
     }
@@ -107,6 +111,8 @@ public class MainApp extends Application {
 
         registerActivityLifecycleCallbacks(new SimpleLifecyclecallbacl());
 
+        mSettings = new Settings(this);
+
         context = getApplicationContext();
         instance = this;
 
@@ -115,6 +121,9 @@ public class MainApp extends Application {
         
         FileAccessor.initFileAccess();
         initDatabases();
+
+        IjkMediaPlayer.loadLibrariesOnce(null);
+        IjkMediaPlayer.native_profileBegin("libijkplayer.so");
 
         DBHelper.getInstance(getApplicationContext());
 

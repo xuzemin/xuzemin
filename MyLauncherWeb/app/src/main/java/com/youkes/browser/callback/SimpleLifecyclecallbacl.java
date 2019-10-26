@@ -6,6 +6,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.youkes.browser.activity.MainActivity;
 import com.youkes.browser.utils.Constant;
 import com.youkes.browser.utils.FileHandle;
 
@@ -39,6 +40,10 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityPaused(final Activity activity) {
+        if(MainActivity.VideoNameList == null && MainActivity.ImageNameList == null
+                && MainActivity.VideoNameList.size() == 0 && MainActivity.ImageNameList.size() == 0){
+            return;
+        }
         Constant.CurrentNumber = 0;
         Constant.isApplicationPause = true;
         threadMain = new Thread(new Runnable() {

@@ -104,6 +104,10 @@ public class BrowserMainActivity extends BrowserActivity {
 	}
 
 	public void startThread(){
+		if(MainActivity.VideoNameList == null && MainActivity.ImageNameList == null
+				&& MainActivity.VideoNameList.size() == 0 && MainActivity.ImageNameList.size() == 0){
+			return;
+		}
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
