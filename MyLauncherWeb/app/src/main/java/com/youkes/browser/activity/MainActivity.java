@@ -297,11 +297,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 ll_image.setVisibility(View.GONE);
                 if (Current_Video < VideoNameList.size()) {
                     videoView.setVideoPath(VideoNameList.get(Current_Video));
-                    videoView.start();
+//                    videoView.start();
                     videoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(IMediaPlayer mp) {
                             videoView.start();
+                            videoView.stopBackgroundPlay();
                         }
                     });
                     videoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
