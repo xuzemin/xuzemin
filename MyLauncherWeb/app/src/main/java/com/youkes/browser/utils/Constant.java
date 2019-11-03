@@ -1,6 +1,13 @@
 package com.youkes.browser.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.util.Log;
+
+import static android.content.Context.AUDIO_SERVICE;
 
 public class Constant {
     public static final Boolean isDebug = true;
@@ -29,9 +36,29 @@ public class Constant {
         }
     }
 
-    public static final int OUTTIME = 10;
-    public static int Current_Show = 0;
+    public static boolean isPlay(Activity context){
+        AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
+        LogUtil.e("isPlay"+ audioManager.isMusicActive());
+        return audioManager.isMusicActive();
+    }
+
+    public static synchronized String getAppName(Context context,String packageName) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    packageName, 0);
+            String labelRes = packageInfo.applicationInfo.loadLabel(packageManager).toString();
+            return labelRes;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static final int OUTTIME = 30;
     public static final int EVENT_START_VIDEO = 1;
+    public static final int EVENT_GETEVENT = 2;
+    public static final int EVENT_TO_MAIN = 3;
     public static final int SHOWTIME = 3 * 1000;
     public static boolean isResetPlay = false;
     public static boolean isVideoPlay = true;
@@ -41,7 +68,7 @@ public class Constant {
     public static boolean isApplicationPause = false;
     public static final String VideoDir = "/sdcard/Video/";
     public static final String ImgDir = "/sdcard/Image/";
-    public static final String EventPath = "/dev/input/event3";
-    public static final String EventPath1 = "/dev/input/event2";
+    public static final String EventPath = "/dev/input/event4";
+    public static final String EventPath1 = "/dev/input/event3";
     public static final String EventPath2 = "/dev/input/event4";
 }

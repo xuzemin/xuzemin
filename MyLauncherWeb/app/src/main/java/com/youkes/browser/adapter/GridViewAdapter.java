@@ -13,18 +13,21 @@ import android.widget.TextView;
 import com.youkes.browser.R;
 import com.youkes.browser.activity.MainActivity;
 import com.youkes.browser.object.GridItem;
+import com.youkes.browser.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.youkes.browser.activity.MainActivity.mBackgroudData;
+import static com.youkes.browser.activity.MainActivity.mGridData;
+import static com.youkes.browser.activity.MainActivity.urlList;
 
 
 public class GridViewAdapter extends ArrayAdapter<GridItem> {
     private Context mContext;
     private int  layoutResourceId;
     private boolean isBackground = false;
-    private List<Map> urlList = new ArrayList<>();//
-    private ArrayList<GridItem> mGridData;
     int icno[] = {R.mipmap.settings,R.mipmap.google_play,R.mipmap.photo,
             R.mipmap.throme, R.mipmap.logo_amazon, R.mipmap.logo_bbc, R.mipmap.logo_cnn,
             R.mipmap.logo_discovery, R.mipmap.logo_economist, R.mipmap.logo_fb,
@@ -36,22 +39,33 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
     public GridViewAdapter(Context context, int resource, ArrayList<GridItem> objects,List<Map> urlList) {
         super(context, resource, objects);
         this.mContext = context; this.layoutResourceId = resource;
-        this.mGridData = objects;
-        this.urlList = urlList;
     }
 
     public GridViewAdapter(Context context, int resource, ArrayList<GridItem> objects) {
         super(context, resource, objects);
         this.mContext = context; this.layoutResourceId = resource;
-        this.mGridData = objects;
     }
 
 
     public GridViewAdapter(Context context, int resource, ArrayList<GridItem> objects,boolean isBackground) {
         super(context, resource, objects);
         this.mContext = context; this.layoutResourceId = resource;
-        this.mGridData = objects;
         this.isBackground = isBackground;
+    }
+
+    @Override
+    public int getCount() {
+        if(isBackground){
+            if(mBackgroudData == null || mBackgroudData.size() == 0){
+                return 0;
+            }
+            return mBackgroudData.size();
+        }else{
+            if(urlList == null || urlList.size() == 0){
+                return 0;
+            }
+            return urlList.size();
+        }
     }
 
     public boolean isBackground(){
@@ -72,29 +86,36 @@ public class GridViewAdapter extends ArrayAdapter<GridItem> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        if(urlList != null && urlList.size() > 0){
-            holder.textView.setText(urlList.get(position).get("name").toString());
-            if(position < MainActivity.applicationNumber ){
-                holder.imageView.setBackground(mContext.getResources().getDrawable(icno[(int) urlList.get(position).get("id") -1 ]));
-            }else{
-                holder.imageView.setBackground(MainActivity.packageInfoList.get(position-MainActivity.applicationNumber).applicationInfo.loadIcon(MainActivity.pm));
-            }
-//            holder.imageView.setBackground(mContext.getResources().getDrawable(icno[(int) urlList.get(position).get("id") -1 ]));
-            if(MainActivity.isAdmin) {
-                if(position < MainActivity.applicationNumber) {
-                    if ((int) (urlList.get(position).get("show")) == 0) {
-                        holder.delete.setVisibility(View.GONE);
+        if(!isBackground) {
+            if (urlList != null && urlList.size() > 0) {
+                LogUtil.e("position" + position);
+                LogUtil.e("urlList.get(position).get(\"id\")" + urlList.get(position).get("id"));
+                LogUtil.e("position name" + urlList.get(position).get("name"));
+                holder.textView.setText(urlList.get(position).get("name").toString());
+                if (MainActivity.applicationNumber != -1 && position <= MainActivity.applicationNumber) {
+                    holder.textView.setText(urlList.get(position).get("name").toString());
+                    holder.imageView.setBackground(mContext.getResources().getDrawable(icno[(int) urlList.get(position).get("id") - 1]));
+                } else {
+                    if (MainActivity.packageInfoList != null && MainActivity.packageInfoList.size() > 0) {
+                        holder.imageView.setBackground(MainActivity.packageInfoList.get(position - MainActivity.applicationNumber - 1).applicationInfo.loadIcon(MainActivity.pm));
+                    }
+                }
+                if (MainActivity.isAdmin) {
+                    if (position <= MainActivity.applicationNumber) {
+                        if ((int) (urlList.get(position).get("show")) == 0) {
+                            holder.delete.setVisibility(View.GONE);
+                        } else {
+                            holder.delete.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         holder.delete.setVisibility(View.VISIBLE);
                     }
-                }else{
-                    holder.delete.setVisibility(View.VISIBLE);
+                } else {
+                    holder.delete.setVisibility(View.GONE);
                 }
-            }else{
-                holder.delete.setVisibility(View.GONE);
             }
-        }else {
-            GridItem item = mGridData.get(position);
+        }else{
+            GridItem item = mBackgroudData.get(position);
             holder.textView.setText(item.getTitle());
             holder.imageView.setBackground(item.getImage());
             holder.delete.setVisibility(View.GONE);

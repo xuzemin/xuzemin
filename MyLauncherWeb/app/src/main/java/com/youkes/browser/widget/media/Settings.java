@@ -46,7 +46,7 @@ public class Settings {
         String key = mAppContext.getString(R.string.pref_key_player);
         String value = mSharedPreferences.getString(key, "");
         try {
-            return Integer.valueOf(value).intValue();
+            return PV_PLAYER__IjkExoMediaPlayer;//PV_PLAYER__AndroidMediaPlayer;//Integer.valueOf(value).intValue();
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -100,5 +100,10 @@ public class Settings {
     public void setLastDirectory(String path) {
         String key = mAppContext.getString(R.string.pref_key_last_directory);
         mSharedPreferences.edit().putString(key, path).commit();
+    }
+
+    public void setEnableSurfaceView(boolean type) {
+        String key = mAppContext.getString(R.string.pref_key_enable_surface_view);
+        mSharedPreferences.edit().putBoolean(key, type).commit();
     }
 }

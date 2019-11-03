@@ -112,7 +112,7 @@ public class MainApp extends Application {
         registerActivityLifecycleCallbacks(new SimpleLifecyclecallbacl());
 
         mSettings = new Settings(this);
-
+        mSettings.setEnableSurfaceView(true);
         context = getApplicationContext();
         instance = this;
 

@@ -38,6 +38,7 @@ import android.widget.TableLayout;
 
 
 import com.youkes.browser.R;
+import com.youkes.browser.utils.LogUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -257,6 +258,13 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         openVideo();
         requestLayout();
         invalidate();
+    }
+
+    public IMediaPlayer getMediaPlayer(){
+        if(mMediaPlayer == null){
+            mMediaPlayer = createPlayer(mSettings.getPlayer());
+        }
+        return mMediaPlayer;
     }
 
     // REMOVED: addSubtitleSource
@@ -484,8 +492,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                         case IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
                             mVideoRotationDegree = arg2;
                             Log.d(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED: " + arg2);
-                            if (mRenderView != null)
-                                mRenderView.setVideoRotation(arg2);
                             break;
                         case IMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START:
                             Log.d(TAG, "MEDIA_INFO_AUDIO_RENDERING_START:");
@@ -532,9 +538,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                                 .setPositiveButton(R.string.VideoView_error_button,
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                            /* If we get here, there is no onError listener, so
-                                             * at least inform them that the video is over.
-                                             */
+                                                /* If we get here, there is no onError listener, so
+                                                 * at least inform them that the video is over.
+                                                 */
                                                 if (mOnCompletionListener != null) {
                                                     mOnCompletionListener.onCompletion(mMediaPlayer);
                                                 }
@@ -908,6 +914,13 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         mCurrentRender = mAllRenders.get(mCurrentRenderIndex);
         setRender(mCurrentRender);
         return mCurrentRender;
+    }
+
+    public IRenderView getRenderView(){
+        if(mRenderView == null){
+            initRenders();
+        }
+        return mRenderView;
     }
 
     public static String getRenderText(Context context, int render) {

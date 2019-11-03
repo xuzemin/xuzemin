@@ -117,6 +117,7 @@ import com.youkes.browser.open.WeixinShareApi;
 import com.youkes.browser.preference.PreferenceManager;
 import com.youkes.browser.preference.PreferenceUtils;
 import com.youkes.browser.site.SiteHotActivity;
+import com.youkes.browser.utils.Constant;
 import com.youkes.browser.utils.ImageSaveUtil;
 import com.youkes.browser.utils.LinkType;
 import com.youkes.browser.utils.LinkUtils;
@@ -1257,6 +1258,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 			if(wv==null){
 				return;
 			}
+			LogUtil.e("BookmarkItemClickListener onItemClick" + position);
 			if(position == 11 || position == 14){
 				wv.initializePreferences(BrowserActivity.this,1);
 			}else{
@@ -1586,6 +1588,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 
 
 	void onWebViewTouchUp(MotionEvent event){
+		Constant.CurrentNumber = 0;
 		hideSettingPanel();
 		//ToastUtil.showMessage("touch up:"+event.getX()+":"+event.getY());
 	}
@@ -3855,6 +3858,7 @@ public class BrowserActivity extends ThemableActivity implements BrowserControll
 
 	@Override
 	public void onClick(View v) {
+		Constant.CurrentNumber = 0;
 		if(v.getId()!=R.id.action_settings) {
 			hideSettingPanel();
 		}

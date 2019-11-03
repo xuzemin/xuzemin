@@ -1,5 +1,6 @@
 package com.youkes.browser.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,9 +17,12 @@ import android.webkit.CookieSyncManager;
 import com.youkes.browser.constant.Constants;
 import com.youkes.browser.preference.PreferenceManager;
 import com.youkes.browser.utils.Constant;
+import com.youkes.browser.utils.FileHandle;
 import com.youkes.browser.utils.RootCmd;
 
+import static com.youkes.browser.utils.Constant.EVENT_GETEVENT;
 import static com.youkes.browser.utils.Constant.EVENT_START_VIDEO;
+import static com.youkes.browser.utils.Constant.EVENT_TO_MAIN;
 import static com.youkes.browser.utils.Constant.isImagePlay;
 import static com.youkes.browser.utils.Constant.isVideoPlay;
 
@@ -27,6 +31,30 @@ public class BrowserMainActivity extends BrowserActivity {
 
 	CookieManager mCookieManager;
 	private static Thread thread = null;
+	@SuppressLint("HandlerLeak")
+	private Handler mBhandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what){
+				case EVENT_GETEVENT:
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							FileHandle.getFileHandle().readFile(Constant.EventPath);
+						}
+					}).start();
+					break;
+				case EVENT_TO_MAIN:
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							RootCmd.execRootCmdSilent("am start -n com.youkes.browser/.activity.MainActivity");
+						}
+					}).start();
+					break;
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,12 +151,17 @@ public class BrowserMainActivity extends BrowserActivity {
 						Constant.isResetPlay = false;
 					}
 					if(Constant.CurrentNumber >= Constant.OUTTIME){
-						isVideoPlay = true;
-						RootCmd.execRootCmdSilent("am start -n com.youkes.browser/.activity.MainActivity" );
-						Constant.debugLog("am start -n com.youkes.browser/.activity.MainActivity");
+						if (!Constant.isPlay(BrowserMainActivity.this)) {
+							isVideoPlay = true;
+							mBhandler.sendEmptyMessage(EVENT_TO_MAIN);
+							Constant.debugLog("am start -n com.youkes.browser/.activity.MainActivity");
+						}else{
+							Constant.CurrentNumber = 0;
+						}
 					}else{
 						Constant.CurrentNumber ++;
 					}
+					mBhandler.sendEmptyMessage(EVENT_GETEVENT);
 					Constant.debugLog("MyConstant.Constant"+Constant.CurrentNumber);
 				}
 			}

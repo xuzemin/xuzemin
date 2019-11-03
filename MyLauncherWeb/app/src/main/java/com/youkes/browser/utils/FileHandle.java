@@ -25,10 +25,10 @@ public class FileHandle {
             if(length != 0 ){
                 Constant.CurrentNumber = 0;
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.e("e"+e.toString());
+            RootCmd.execRootCmdSilent("chmod 777 "+ filename);
         }
     }
 }

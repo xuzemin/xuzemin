@@ -1,20 +1,25 @@
 package com.youkes.browser.callback;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import com.youkes.browser.activity.MainActivity;
 import com.youkes.browser.utils.Constant;
 import com.youkes.browser.utils.FileHandle;
+import com.youkes.browser.utils.LogUtil;
+import com.youkes.browser.utils.RootCmd;
+
+import static com.youkes.browser.utils.Constant.EVENT_GETEVENT;
+import static com.youkes.browser.utils.Constant.EVENT_TO_MAIN;
 
 public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCallbacks {
     private static Thread threadMain;
-    private static Thread threadKey1;
-    private static Thread threadKey2;
-    private static Thread threadKey3;
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -31,89 +36,70 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
         Constant.debugLog("onActivityResumed");
         Constant.isApplicationPause = false;
         threadMain = null;
-        threadKey1 = null;
-        threadKey2 = null;
-        threadKey3 = null;
-        Constant.debugLog("onActivityResumed"+threadMain+
-                threadKey1+threadKey2+threadKey3);
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mhandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case EVENT_GETEVENT:
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            FileHandle.getFileHandle().readFile(Constant.EventPath);
+                        }
+                    }).start();
+                    break;
+                case EVENT_TO_MAIN:
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RootCmd.execRootCmdSilent("am start -n com.youkes.browser/.activity.MainActivity");
+                        }
+                    }).start();
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onActivityPaused(final Activity activity) {
-        if(MainActivity.VideoNameList == null && MainActivity.ImageNameList == null
-                && MainActivity.VideoNameList.size() == 0 && MainActivity.ImageNameList.size() == 0){
-            return;
+        if(MainActivity.videoView != null && MainActivity.videoView.isPlaying()){
+            MainActivity.videoView.pause();
         }
-        Constant.CurrentNumber = 0;
-        Constant.isApplicationPause = true;
-        threadMain = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(Constant.isApplicationPause){
-                    Constant.debugLog("onActivityPaused Constant.CurrentNumber"+Constant.CurrentNumber);
-                    try {
-                        Thread.sleep(1000);
-                        if(Constant.CurrentNumber >= Constant.OUTTIME){
-                            ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
-                            activityManager.moveTaskToFront(activity.getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
-                            Constant.isApplicationPause = false;
-                            Constant.CurrentNumber = 0;
-                            Constant.isVideoPlay = true;
-                        }else{
-                            Constant.CurrentNumber ++;
+        if(MainActivity.VideoNameList != null && MainActivity.ImageNameList != null) {
+            Constant.CurrentNumber = 0;
+            Constant.isApplicationPause = true;
+            threadMain = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (Constant.isApplicationPause) {
+                        Constant.debugLog("onActivityPaused Constant.CurrentNumber" + Constant.CurrentNumber);
+                        try {
+                            Thread.sleep(1000);
+                            if (Constant.CurrentNumber >= Constant.OUTTIME) {
+                                if (!Constant.isPlay(activity)) {
+                                    mhandler.sendEmptyMessage(EVENT_TO_MAIN);
+                                    Constant.isApplicationPause = false;
+                                    Constant.CurrentNumber = 0;
+                                    Constant.isVideoPlay = true;
+                                }else{
+                                    Constant.CurrentNumber = 0;
+                                }
+                            } else {
+                                Constant.CurrentNumber++;
+                            }
+                            mhandler.sendEmptyMessage(EVENT_GETEVENT);
+                        } catch (InterruptedException e) {
+                            LogUtil.e("e"+e.toString());
+                            e.printStackTrace();
                         }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
-            }
-        });
-        threadKey1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(Constant.isApplicationPause){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Constant.debugLog("threadKey1");
-                    FileHandle.getFileHandle().readFile(Constant.EventPath);
-                }
-            }
-        });
-        threadKey2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(Constant.isApplicationPause){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Constant.debugLog("threadKey2");
-                    FileHandle.getFileHandle().readFile(Constant.EventPath1);
-                }
-            }
-        });
-        threadKey3 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(Constant.isApplicationPause){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Constant.debugLog("threadKey3");
-                    FileHandle.getFileHandle().readFile(Constant.EventPath2);
-                }
-            }
-        });
-        threadMain.start();
-        threadKey1.start();
-        threadKey2.start();
-        threadKey3.start();
+            });
+            threadMain.start();
+        }
 
     }
 
