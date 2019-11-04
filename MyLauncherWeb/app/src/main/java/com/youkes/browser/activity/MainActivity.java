@@ -85,6 +85,7 @@ import static com.youkes.browser.utils.Constant.Current_Image;
 import static com.youkes.browser.utils.Constant.Current_Video;
 import static com.youkes.browser.utils.Constant.EVENT_GETEVENT;
 import static com.youkes.browser.utils.Constant.EVENT_START_VIDEO;
+import static com.youkes.browser.utils.Constant.EVENT_TO_THREAD;
 import static com.youkes.browser.utils.Constant.SHOWTIME;
 import static com.youkes.browser.utils.Constant.isImagePlay;
 import static com.youkes.browser.utils.Constant.isVideoPlay;
@@ -104,7 +105,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static IjkVideoView videoView;
     private LinearLayout ll_video,ll_image;
     private RelativeLayout main_layout;
-    private static Thread thread = null;
     public  static List<PackageInfo> packageInfoList = null;
     private static int REQUEST_EXTERNAL_STRONGE = 1;
     private RelativeLayout shipin,news_layout,message_layout,contact,settings,play,content;
@@ -130,38 +130,70 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private static String uninstall_Name = null;
     public static int applicationNumber = 0;
     public static List<Map> urlList = new ArrayList<>();// 机器人
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-//                case 110:
-//                    Constant.debugLog(""+msg.arg1);
-//                    //拷贝过程中更新进度条
-//                    updateProgressDialog(msg.arg1);
-//                    //msg.arg1其实就是copyFile发过来的value值
-//                    if(msg.arg1==100) {
-//                        //拷贝完了就隐藏进度条
-//                        hideProgressDialog();
-//                        RefreshArray();
-//                    }
-//                    break;
                 case EVENT_START_VIDEO:
                     LogUtil.e("EVENT_START_VIDEO");
-                    if((VideoNameList!=null || VideoNameList.size() > 0)
-                            && (ImageList!=null || ImageList.size() > 0 ) ) {
+                    if ((VideoNameList != null || VideoNameList.size() > 0)
+                            && (ImageList != null || ImageList.size() > 0)) {
                         startPlay();
                     }
                     break;
                 case EVENT_GETEVENT:
                     LogUtil.e("EVENT_GETEVENT");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            FileHandle.getFileHandle().readFile(Constant.EventPath);
+                    FileHandle.readFile(Constant.EventPath);
+                    break;
+                case EVENT_TO_THREAD:
+                    if ((VideoNameList == null || VideoNameList.size() == 0)
+                            && (ImageNameList == null || ImageNameList.size() == 0)) {
+                        return;
+                    }
+                    if (videoView.isPlaying()) {
+                        videoView.pause();
+                        videoView.stopBackgroundPlay();
+                    }
+                    isVideoPlay = false;
+                    isImagePlay = false;
+                    handler.removeMessages(EVENT_START_VIDEO);
+                    ll_image.setVisibility(View.GONE);
+                    ll_video.setVisibility(View.GONE);
+                    main_layout.setVisibility(View.VISIBLE);
+                    ll_video.setVisibility(View.GONE);
+                    ll_image.setVisibility(View.VISIBLE);
+                    if (isRunning && !isVideoPlay && !isImagePlay) {
+                        Constant.debugLog("MyConstant.Constant 22222" + isVideoPlay + ";" + isImagePlay + ";" + isRunning);
+                        if (Constant.isResetPlay) {
+                            Constant.CurrentNumber = 0;
+                            Constant.isResetPlay = false;
                         }
-                    }).start();
+                        if (Constant.CurrentNumber >= Constant.OUTTIME) {
+                            if (!Constant.isPlay(MainActivity.this)) {
+                                Constant.CurrentNumber = 0;
+                                isVideoPlay = true;
+                                isImagePlay = true;
+                                handler.sendEmptyMessage(EVENT_START_VIDEO);
+                                return;
+                            } else {
+                                Constant.CurrentNumber = 0;
+                            }
+                        } else {
+                            if (Constant.isPlay(MainActivity.this)) {
+                                Constant.CurrentNumber = 0;
+                            }
+                            Constant.CurrentNumber++;
+                        }
+                        if(!FileHandle.isIsRun()){
+                            handler.sendEmptyMessage(EVENT_GETEVENT);
+                        }
+                        Constant.debugLog("MyConstant.Constant 22222" + Constant.CurrentNumber);
+                        handler.sendEmptyMessageDelayed(EVENT_TO_THREAD, 2000);
+                    }
                     break;
             }
+
         }
     } ;
 
@@ -263,7 +295,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         filter.addDataScheme("package");
         this.registerReceiver(installedReceiver, filter);
         if (!isImagePlay && !isVideoPlay ) {
-            startThread();
+            handler.sendEmptyMessage(EVENT_TO_THREAD);
+            handler.sendEmptyMessage(EVENT_GETEVENT);
         } else {
             handler.sendEmptyMessage(EVENT_START_VIDEO);
         }
@@ -276,10 +309,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         this.unregisterReceiver(installedReceiver);
         LogUtil.d("is onPause");
         isRunning = false;
-        if(thread != null){
-            thread.interrupt();
-            thread = null;
-        }
+        handler.removeMessages(EVENT_TO_THREAD);
+        FileHandle.stopFileHandle();
     }
 
 
@@ -308,6 +339,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             };
 
     public void startPlay() {
+        if(dialog !=null &&dialog.isShowing()){
+            dialog.dismiss();
+        }
         getVideoPath();
         getPhotoVideoPath();
         Constant.debugLog(" VideoNameList"+ VideoNameList.size());
@@ -357,6 +391,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         @Override
                         public void onPrepared(IMediaPlayer mp) {
                             videoView.start();
+                            videoView.stopBackgroundPlay();
                         }
                     });
                     Current_Video++;
@@ -374,6 +409,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(isImagePlay) {
             if(videoView.isPlaying()){
                 videoView.pause();
+                videoView.stopBackgroundPlay();
             }
             if(ImageList!=null && ImageList.size() > 0){
                 ll_video.setVisibility(View.GONE);
@@ -1056,7 +1092,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.ll_image:
             case R.id.ll_video:
                 getUrl(isAdmin);
-                startThread();
+                handler.sendEmptyMessage(EVENT_TO_THREAD);
+                handler.sendEmptyMessage(EVENT_GETEVENT);
                 break;
         }
     }
@@ -1411,54 +1448,4 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public void startThread(){
-        if((VideoNameList == null || VideoNameList.size() == 0)
-                && (ImageNameList == null || ImageNameList.size() == 0 )){
-            return;
-        }
-        if(videoView.isPlaying()){
-            videoView.pause();
-        }
-        isVideoPlay = false;
-        isImagePlay = false;
-        handler.removeMessages(EVENT_START_VIDEO);
-        ll_image.setVisibility(View.GONE);
-        ll_video.setVisibility(View.GONE);
-        main_layout.setVisibility(View.VISIBLE);
-        ll_video.setVisibility(View.GONE);
-        ll_image.setVisibility(View.VISIBLE);
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isRunning && !isVideoPlay && !isImagePlay) {
-                    Constant.debugLog("MyConstant.Constant 22222" + isVideoPlay+";"+isImagePlay+";"+isRunning);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (Constant.isResetPlay) {
-                        Constant.CurrentNumber = 0;
-                        Constant.isResetPlay = false;
-                    }
-                    if (Constant.CurrentNumber >= Constant.OUTTIME) {
-                        if (!Constant.isPlay(MainActivity.this)) {
-                            Constant.CurrentNumber = 0;
-                            isVideoPlay = true;
-                            isImagePlay = true;
-                            handler.sendEmptyMessage(EVENT_START_VIDEO);
-                        } else {
-                            Constant.CurrentNumber = 0;
-                        }
-                    } else {
-                        Constant.CurrentNumber++;
-                    }
-                    handler.sendEmptyMessage(EVENT_GETEVENT);
-                    Constant.debugLog("MyConstant.Constant 22222" + Constant.CurrentNumber);
-                }
-            }
-        });
-        thread.start();
-    }
 }

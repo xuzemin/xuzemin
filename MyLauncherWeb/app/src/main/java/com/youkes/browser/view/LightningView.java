@@ -73,6 +73,9 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 
+import static com.youkes.browser.constant.Constants.MOBILE_NORAL_AGENT;
+import static com.youkes.browser.constant.Constants.MOBILE_USER_AGENT;
+
 public class LightningView {
 
 	WebViewAction webViewAction=null;
@@ -316,10 +319,11 @@ public class LightningView {
 //				mSettings.setUserAgentString("ozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/32.0.0.142 Safari/537.1");
 //				mSettings.setUserAgentString("ozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1");
 //			mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36");
-			mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.91 Safari/537.36");
+//			mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.91 Safari/537.36");
 //				mSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 7.0; MI PAD 3 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/72.0.3626.105 Safari/537.36");
 //				mSettings.setUserAgentString("Mozilla/5.0 (Linux; Android 5.1.1; SAMSUNG-SM-N900A Build/tt) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36");
-
+//				mSettings.setUserAgentString("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1");
+				mSettings.setUserAgentString(MOBILE_NORAL_AGENT);
 				break;
 			case 1:
 				switch (mPreferences.getUserAgentChoice()) {

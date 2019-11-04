@@ -9,7 +9,7 @@ import android.util.Log;
  * Android运行linux命令
  */
 public final class RootCmd {
-    private static final String TAG = "RootCmd";
+    private static final String TAG = "Lightning";
     private static boolean mHaveRoot = false;
     /**
      *   判断机器Android是否已经root，即是否获取root权限

@@ -2,9 +2,7 @@ package com.youkes.browser.callback;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +18,6 @@ import static com.youkes.browser.utils.Constant.EVENT_TO_MAIN;
 
 public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCallbacks {
     private static Thread threadMain;
-
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
 
@@ -36,6 +33,12 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
         Constant.debugLog("onActivityResumed");
         Constant.isApplicationPause = false;
         threadMain = null;
+        if(MainActivity.videoView !=null && MainActivity.videoView.isPlaying()){
+            MainActivity.videoView.stopBackgroundPlay();
+            MainActivity.videoView.pause();
+            MainActivity.videoView.stopBackgroundPlay();
+        }
+        FileHandle.stopFileHandle();
     }
 
     @SuppressLint("HandlerLeak")
@@ -44,12 +47,7 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case EVENT_GETEVENT:
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            FileHandle.getFileHandle().readFile(Constant.EventPath);
-                        }
-                    }).start();
+                    FileHandle.readFile(Constant.EventPath);
                     break;
                 case EVENT_TO_MAIN:
                     new Thread(new Runnable() {
@@ -67,6 +65,7 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
     public void onActivityPaused(final Activity activity) {
         if(MainActivity.videoView != null && MainActivity.videoView.isPlaying()){
             MainActivity.videoView.pause();
+            MainActivity.videoView.stopBackgroundPlay();
         }
         if(MainActivity.VideoNameList != null && MainActivity.ImageNameList != null) {
             Constant.CurrentNumber = 0;
@@ -77,7 +76,7 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
                     while (Constant.isApplicationPause) {
                         Constant.debugLog("onActivityPaused Constant.CurrentNumber" + Constant.CurrentNumber);
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(2000);
                             if (Constant.CurrentNumber >= Constant.OUTTIME) {
                                 if (!Constant.isPlay(activity)) {
                                     mhandler.sendEmptyMessage(EVENT_TO_MAIN);
@@ -88,9 +87,14 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
                                     Constant.CurrentNumber = 0;
                                 }
                             } else {
+                                if (Constant.isPlay(activity)) {
+                                    Constant.CurrentNumber = 0;
+                                }
                                 Constant.CurrentNumber++;
                             }
-                            mhandler.sendEmptyMessage(EVENT_GETEVENT);
+                            if(!FileHandle.isIsRun()){
+                                mhandler.sendEmptyMessage(EVENT_GETEVENT);
+                            }
                         } catch (InterruptedException e) {
                             LogUtil.e("e"+e.toString());
                             e.printStackTrace();

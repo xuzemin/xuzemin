@@ -23,26 +23,20 @@ import com.youkes.browser.utils.RootCmd;
 import static com.youkes.browser.utils.Constant.EVENT_GETEVENT;
 import static com.youkes.browser.utils.Constant.EVENT_START_VIDEO;
 import static com.youkes.browser.utils.Constant.EVENT_TO_MAIN;
+import static com.youkes.browser.utils.Constant.EVENT_TO_THREAD;
 import static com.youkes.browser.utils.Constant.isImagePlay;
 import static com.youkes.browser.utils.Constant.isVideoPlay;
 
 @SuppressWarnings("deprecation")
 public class BrowserMainActivity extends BrowserActivity {
-
 	CookieManager mCookieManager;
-	private static Thread thread = null;
 	@SuppressLint("HandlerLeak")
 	private Handler mBhandler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what){
 				case EVENT_GETEVENT:
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							FileHandle.getFileHandle().readFile(Constant.EventPath);
-						}
-					}).start();
+					FileHandle.readFile(Constant.EventPath);
 					break;
 				case EVENT_TO_MAIN:
 					new Thread(new Runnable() {
@@ -51,6 +45,37 @@ public class BrowserMainActivity extends BrowserActivity {
 							RootCmd.execRootCmdSilent("am start -n com.youkes.browser/.activity.MainActivity");
 						}
 					}).start();
+					break;
+				case EVENT_TO_THREAD:
+					if(MainActivity.VideoNameList == null && MainActivity.ImageNameList == null
+							&& MainActivity.VideoNameList.size() == 0 && MainActivity.ImageNameList.size() == 0){
+						return;
+					}
+
+					if(Constant.isResetPlay){
+						Constant.CurrentNumber = 0;
+						Constant.isResetPlay = false;
+					}
+					if(Constant.CurrentNumber >= Constant.OUTTIME){
+						if (!Constant.isPlay(BrowserMainActivity.this)) {
+							isVideoPlay = true;
+							mBhandler.sendEmptyMessage(EVENT_TO_MAIN);
+							Constant.debugLog("am start -n com.youkes.browser/.activity.MainActivity");
+							return;
+						}else{
+							Constant.CurrentNumber = 0;
+						}
+					}else{
+						if(Constant.isPlay(BrowserMainActivity.this)){
+							Constant.CurrentNumber = 0;
+						}
+						Constant.CurrentNumber ++;
+					}
+					if(!FileHandle.isIsRun()){
+						mBhandler.sendEmptyMessage(EVENT_GETEVENT);
+					}
+					Constant.debugLog("MyConstant.Constant 111"+Constant.CurrentNumber);
+					mBhandler.sendEmptyMessageDelayed(EVENT_TO_THREAD,2000);
 					break;
 			}
 		}
@@ -95,7 +120,8 @@ public class BrowserMainActivity extends BrowserActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		startThread();
+		mBhandler.sendEmptyMessage(EVENT_TO_THREAD);
+		mBhandler.sendEmptyMessage(EVENT_GETEVENT);
 	}
 
 
@@ -105,10 +131,8 @@ public class BrowserMainActivity extends BrowserActivity {
 		if(!isFinished) {
 			saveOpenTabs();
 		}
-		if(thread != null){
-			thread.interrupt();
-			thread = null;
-		}
+		mBhandler.removeMessages(EVENT_TO_THREAD);
+		FileHandle.stopFileHandle();
 	}
 
 	@Override
@@ -128,44 +152,6 @@ public class BrowserMainActivity extends BrowserActivity {
 	public void closeActivity() {
 		closeDrawers();
 		this.finish();
-		//moveTaskToBack(true);
 	}
 
-	public void startThread(){
-		if(MainActivity.VideoNameList == null && MainActivity.ImageNameList == null
-				&& MainActivity.VideoNameList.size() == 0 && MainActivity.ImageNameList.size() == 0){
-			return;
-		}
-		thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (!isVideoPlay && !isImagePlay){
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-
-					if(Constant.isResetPlay){
-						Constant.CurrentNumber = 0;
-						Constant.isResetPlay = false;
-					}
-					if(Constant.CurrentNumber >= Constant.OUTTIME){
-						if (!Constant.isPlay(BrowserMainActivity.this)) {
-							isVideoPlay = true;
-							mBhandler.sendEmptyMessage(EVENT_TO_MAIN);
-							Constant.debugLog("am start -n com.youkes.browser/.activity.MainActivity");
-						}else{
-							Constant.CurrentNumber = 0;
-						}
-					}else{
-						Constant.CurrentNumber ++;
-					}
-					mBhandler.sendEmptyMessage(EVENT_GETEVENT);
-					Constant.debugLog("MyConstant.Constant"+Constant.CurrentNumber);
-				}
-			}
-		});
-		thread.start();
-	}
 }

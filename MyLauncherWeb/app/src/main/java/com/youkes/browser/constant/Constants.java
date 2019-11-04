@@ -12,7 +12,9 @@ public final class Constants {
 	}
 
 	public static final boolean FULL_VERSION = true;
-	
+//	public static final String MOBILE_NORAL_AGENT = "Mozilla/5.0 (Macintosh; )";
+	public static final String MOBILE_NORAL_AGENT ="Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.9) Gecko/20100824 Firefox/3.6.9";
+//	public static final String MOBILE_NORAL_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20100101 Firefox/13.0.1";
 	public static final String DESKTOP_USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36";
 //	public static final String MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; U; Android 4.4; en-us; Nexus 4 Build/JOP24G) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
 	public static final String MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; Android 5.1.1; rk3288 Build/LMY49F) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Safari/537.36";

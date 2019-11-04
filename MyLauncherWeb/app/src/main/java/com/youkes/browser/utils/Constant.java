@@ -1,13 +1,16 @@
 package com.youkes.browser.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import static android.content.Context.AUDIO_SERVICE;
+import static android.media.AudioManager.STREAM_MUSIC;
 
 public class Constant {
     public static final Boolean isDebug = true;
@@ -36,9 +39,11 @@ public class Constant {
         }
     }
 
+    @SuppressLint("NewApi")
     public static boolean isPlay(Activity context){
         AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
         LogUtil.e("isPlay"+ audioManager.isMusicActive());
+        LogUtil.e("isPlay"+ audioManager.getMode());
         return audioManager.isMusicActive();
     }
 
@@ -59,6 +64,7 @@ public class Constant {
     public static final int EVENT_START_VIDEO = 1;
     public static final int EVENT_GETEVENT = 2;
     public static final int EVENT_TO_MAIN = 3;
+    public static final int EVENT_TO_THREAD = 4;
     public static final int SHOWTIME = 3 * 1000;
     public static boolean isResetPlay = false;
     public static boolean isVideoPlay = true;

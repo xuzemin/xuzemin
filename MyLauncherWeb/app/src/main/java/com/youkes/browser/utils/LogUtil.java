@@ -69,7 +69,9 @@ public class LogUtil {
 	}
 
 	public static void e(String msg) {
-		e(TAG, msg);
+		if(Constant.isDebug){
+			e(TAG, msg);
+		}
 	}
 
 	private static void print(int mode, final String tag, String msg) {
