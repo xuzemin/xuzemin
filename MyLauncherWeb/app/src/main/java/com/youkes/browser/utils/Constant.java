@@ -60,7 +60,7 @@ public class Constant {
         return null;
     }
 
-    public static final int OUTTIME = 30;
+    public static final int OUTTIME = 10;//30;
     public static final int EVENT_START_VIDEO = 1;
     public static final int EVENT_GETEVENT = 2;
     public static final int EVENT_TO_MAIN = 3;
@@ -74,7 +74,7 @@ public class Constant {
     public static boolean isApplicationPause = false;
     public static final String VideoDir = "/sdcard/Video/";
     public static final String ImgDir = "/sdcard/Image/";
-    public static final String EventPath = "/dev/input/event4";
+    public static final String EventPath = "/dev/input/event0";
     public static final String EventPath1 = "/dev/input/event3";
     public static final String EventPath2 = "/dev/input/event4";
 }

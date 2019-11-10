@@ -20,6 +20,8 @@ import com.youkes.browser.utils.Constant;
 import com.youkes.browser.utils.FileHandle;
 import com.youkes.browser.utils.RootCmd;
 
+import static com.youkes.browser.activity.MainActivity.ImageNameList;
+import static com.youkes.browser.activity.MainActivity.VideoNameList;
 import static com.youkes.browser.utils.Constant.EVENT_GETEVENT;
 import static com.youkes.browser.utils.Constant.EVENT_START_VIDEO;
 import static com.youkes.browser.utils.Constant.EVENT_TO_MAIN;
@@ -47,35 +49,34 @@ public class BrowserMainActivity extends BrowserActivity {
 					}).start();
 					break;
 				case EVENT_TO_THREAD:
-					if(MainActivity.VideoNameList == null && MainActivity.ImageNameList == null
-							&& MainActivity.VideoNameList.size() == 0 && MainActivity.ImageNameList.size() == 0){
-						return;
-					}
+					if((VideoNameList != null && VideoNameList.size() >= 0)
+							||(ImageNameList == null && ImageNameList.size() >= 0) ) {
 
-					if(Constant.isResetPlay){
-						Constant.CurrentNumber = 0;
-						Constant.isResetPlay = false;
-					}
-					if(Constant.CurrentNumber >= Constant.OUTTIME){
-						if (!Constant.isPlay(BrowserMainActivity.this)) {
-							isVideoPlay = true;
-							mBhandler.sendEmptyMessage(EVENT_TO_MAIN);
-							Constant.debugLog("am start -n com.youkes.browser/.activity.MainActivity");
-							return;
-						}else{
+						if (Constant.isResetPlay) {
 							Constant.CurrentNumber = 0;
+							Constant.isResetPlay = false;
 						}
-					}else{
-						if(Constant.isPlay(BrowserMainActivity.this)){
-							Constant.CurrentNumber = 0;
+						if (Constant.CurrentNumber >= Constant.OUTTIME) {
+							if (!Constant.isPlay(BrowserMainActivity.this)) {
+								isVideoPlay = true;
+								mBhandler.sendEmptyMessage(EVENT_TO_MAIN);
+								Constant.debugLog("am start -n com.youkes.browser/.activity.MainActivity");
+								return;
+							} else {
+								Constant.CurrentNumber = 0;
+							}
+						} else {
+							if (Constant.isPlay(BrowserMainActivity.this)) {
+								Constant.CurrentNumber = 0;
+							}
+							Constant.CurrentNumber++;
 						}
-						Constant.CurrentNumber ++;
+						if (!FileHandle.isIsRun()) {
+							mBhandler.sendEmptyMessage(EVENT_GETEVENT);
+						}
+						Constant.debugLog("MyConstant.Constant 111" + Constant.CurrentNumber);
+						mBhandler.sendEmptyMessageDelayed(EVENT_TO_THREAD, 2000);
 					}
-					if(!FileHandle.isIsRun()){
-						mBhandler.sendEmptyMessage(EVENT_GETEVENT);
-					}
-					Constant.debugLog("MyConstant.Constant 111"+Constant.CurrentNumber);
-					mBhandler.sendEmptyMessageDelayed(EVENT_TO_THREAD,2000);
 					break;
 			}
 		}

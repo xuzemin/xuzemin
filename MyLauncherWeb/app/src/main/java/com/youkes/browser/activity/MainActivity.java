@@ -38,6 +38,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +61,7 @@ import com.youkes.browser.utils.RootCmd;
 import com.youkes.browser.utils.SaveBitmap;
 import com.youkes.browser.utils.ScreenUtil;
 import com.youkes.browser.utils.SharedPreferencesHelper;
+import com.youkes.browser.utils.SoftKeyboardUtil;
 import com.youkes.browser.utils.ToastUtil;
 import com.youkes.browser.view.BlurBuilder;
 import com.youkes.browser.view.LauncherVideoView;
@@ -137,8 +139,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             switch (msg.what) {
                 case EVENT_START_VIDEO:
                     LogUtil.e("EVENT_START_VIDEO");
-                    if ((VideoNameList != null || VideoNameList.size() > 0)
-                            && (ImageList != null || ImageList.size() > 0)) {
+                    if ((VideoNameList != null &&  VideoNameList.size() > 0)
+                            || (ImageList != null && ImageList.size() > 0)) {
                         startPlay();
                     }
                     break;
@@ -321,23 +323,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return super.onTouchEvent(event);
     }
 
-    IMediaPlayer.OnVideoSizeChangedListener mSizeChangedListener =
-            new IMediaPlayer.OnVideoSizeChangedListener() {
-                public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sarNum, int sarDen) {
-                    int mVideoWidth = mp.getVideoWidth();
-                    int mVideoHeight = mp.getVideoHeight();
-                    int mVideoSarNum = mp.getVideoSarNum();
-                    int mVideoSarDen = mp.getVideoSarDen();
-                    if (mVideoWidth != 0 && mVideoHeight != 0) {
-                        if (videoView.getRenderView() != null) {
-                            videoView.getRenderView().setVideoSize(mVideoWidth, mVideoHeight);
-                            videoView.getRenderView().setVideoSampleAspectRatio(mVideoSarNum, mVideoSarDen);
-                        }
-                        // REMOVED: getHolder().setFixedSize(mVideoWidth, mVideoHeight);
-                    }
-                }
-            };
-
     public void startPlay() {
         if(dialog !=null &&dialog.isShowing()){
             dialog.dismiss();
@@ -357,21 +342,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if (Current_Video < VideoNameList.size()) {
                     isImagePlay = false;
                     videoView.setVideoPath(VideoNameList.get(Current_Video));
-                    videoView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
-                        @SuppressLint("WrongConstant")
-                        @Override
-                        public boolean onInfo(IMediaPlayer mp, int what, int extra) {
-                            LogUtil.e("what "+ what);
-                            LogUtil.e("onInfo extra "+ extra);
-                            switch (what){
-                                case 10001:
-                                    videoRota = extra;
-                                    videoView.getMediaPlayer().setOnVideoSizeChangedListener(mSizeChangedListener);
-                                    break;
-                            }
-                            return false;
-                        }
-                    });
                     videoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(IMediaPlayer mp) {
@@ -1113,10 +1083,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 if (editText.getText().toString().trim().equals("")) {
                     Toast.makeText(getApplicationContext(), "password is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(editText.getText().toString().trim().equals(Constant.AdminPassword_bak)){
+                    if(editText.getText().toString().trim().equals(Constant.AdminPassword)){
                         Toast.makeText(getApplicationContext(), "Login Succes", Toast.LENGTH_SHORT).show();
                         getUrl(true);
                         dialog.dismiss();
+                        SoftKeyboardUtil.hideSoftKeyboard(MainActivity.this);
                     }else{
                         Toast.makeText(getApplicationContext(), "input password error", Toast.LENGTH_SHORT).show();
                     }
@@ -1129,6 +1100,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             public void onClick(View v) {
                 // 销毁当前Dialog
                 dialog.dismiss();
+                SoftKeyboardUtil.hideSoftKeyboard(MainActivity.this);
             }
         });
         // 显示Dialog
@@ -1141,9 +1113,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         intent=new Intent(this,BrowserMainActivity.class);
         intent.putExtra("intentUrl",new Gson().toJson(intentUrl));
         startActivity(intent);
-//        Uri uri = Uri.parse(url);
-//        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//        startActivity(intent);
         overridePendingTransition(R.anim.dialog_enter_anim, R.anim.dialog_exit_anim);
     }
 
@@ -1355,7 +1324,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (Environment.getExternalStorageState().
                 equals(Environment.MEDIA_MOUNTED)) {
             File[] files = path.listFiles();// 读取文件夹下文件
-            Log.e("传值","versionCode"+files.length);
             getApkName(files,context);
         }
         return null;
@@ -1371,8 +1339,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         ApplicationInfo applicationInfo = pi.applicationInfo;
                         try {
                             getVersionName(context);
-                            Log.e("传值","versionCode"+pi.versionCode);
-                            Log.e("传值","versionCode"+versionCode);
                             if(applicationInfo.packageName.equals(Constant.Package)
                                     && versionName !=null && versionCode != 0
                                     && !pi.versionName.equals(versionName)
@@ -1401,24 +1367,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void install(String filePath,Context context) {
-        Log.i("传值", "开始执行安装: " + filePath);
-        Log.w("传值", "正常进行安装");
         RootCmd.execRootCmdSilent("pm install -r "+ filePath);
-        Log.w("传值", "pm install -r "+ filePath);
     }
 
     private void unInstall(PackageInfo packageInfo) {
         uninstall_Name = packageInfo.applicationInfo.loadLabel(pm).toString();
-        Log.w("传值", "卸载");
         RootCmd.execRootCmdSilent("pm uninstall "+ packageInfo.applicationInfo.packageName);
-        Log.w("传值", "pm uninstall "+ packageInfo.applicationInfo.packageName);
     }
 
     public class BootReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.i("这是监听事件：", "监听");
             getUrl(isAdmin);
             if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
                 String packageName = Constant.getAppName(getApplicationContext(), intent.getData().getSchemeSpecificPart());

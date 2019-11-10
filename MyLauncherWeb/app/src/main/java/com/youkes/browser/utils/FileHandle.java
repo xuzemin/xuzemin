@@ -15,6 +15,13 @@ public class FileHandle {
     }
 
     public static void readFile(final String filename){
+        if(thread !=null && thread.isAlive()){
+            thread.interrupt();
+            thread = null;
+            if(isfile != null){
+                isfile = null;
+            }
+        }
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -22,17 +29,19 @@ public class FileHandle {
                 LogUtil.e("FileHandle");
                 while(isRunning) {
                     try {
+                        Thread.sleep(2000);
                         isfile = new FileInputStream(new File(filename));
                         int length = 0;
                         byte[] content = new byte[2048];
                         length = isfile.read(content, length, content.length - length);
                         if (length != 0) {
                             Constant.CurrentNumber = 0;
+                            Constant.isResetPlay = true;
                         }
                     } catch (Exception e) {
+                        isRunning = false;
                         e.printStackTrace();
                         LogUtil.e("e" + e.toString());
-                        RootCmd.execRootCmdSilent("chmod 777 " + filename);
                     }
                 }
                 if(isfile != null){

@@ -311,7 +311,7 @@
                         android:layout_gravity="center"
                         android:scrollbars="none"
                         android:gravity="center"
-                        android:numColumns="6" />
+                        android:numColumns="7" />
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_alignParentRight="true"

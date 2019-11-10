@@ -15,6 +15,7 @@ import com.youkes.browser.utils.RootCmd;
 
 import static com.youkes.browser.utils.Constant.EVENT_GETEVENT;
 import static com.youkes.browser.utils.Constant.EVENT_TO_MAIN;
+import static com.youkes.browser.utils.Constant.isResetPlay;
 
 public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCallbacks {
     private static Thread threadMain;
@@ -77,6 +78,10 @@ public class SimpleLifecyclecallbacl implements Application.ActivityLifecycleCal
                         Constant.debugLog("onActivityPaused Constant.CurrentNumber" + Constant.CurrentNumber);
                         try {
                             Thread.sleep(2000);
+                            if(isResetPlay){
+                                Constant.CurrentNumber = 0;
+                                isResetPlay = false;
+                            }
                             if (Constant.CurrentNumber >= Constant.OUTTIME) {
                                 if (!Constant.isPlay(activity)) {
                                     mhandler.sendEmptyMessage(EVENT_TO_MAIN);

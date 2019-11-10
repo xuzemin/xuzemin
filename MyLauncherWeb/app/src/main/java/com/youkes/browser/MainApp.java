@@ -23,7 +23,9 @@ import com.youkes.browser.database.BookmarkDatabase;
 import com.youkes.browser.database.HistoryDatabase;
 import com.youkes.browser.file.FileAccessor;
 import com.youkes.browser.preference.PreferenceUtils;
+import com.youkes.browser.utils.Constant;
 import com.youkes.browser.utils.DBHelper;
+import com.youkes.browser.utils.RootCmd;
 import com.youkes.browser.widget.media.Settings;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -115,6 +117,13 @@ public class MainApp extends Application {
         mSettings.setEnableSurfaceView(true);
         context = getApplicationContext();
         instance = this;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RootCmd.execRootCmdSilent("chmod 777 " + Constant.EventPath);
+            }
+        }).start();
 
         setChattingContactId();
         initImageLoader();
