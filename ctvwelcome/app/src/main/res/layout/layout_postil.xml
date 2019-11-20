@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/layout_pen_postil_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/selector_pen_property"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/layout_clear_pro_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:src="@drawable/selector_clear_signature"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/layout_save_pro_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="6dp"
+        android:src="@drawable/selector_save_pen" />
+
+    <ImageView
+        android:id="@+id/layout_eraser_iv"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:src="@drawable/selecter_eraser" />
+</LinearLayout>

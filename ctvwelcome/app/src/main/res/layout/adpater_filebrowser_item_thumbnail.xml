@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="92dp"
+    android:layout_height="92dp">
+
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="92dp"
+        android:layout_height="92dp">
+
+        <RelativeLayout
+            android:id="@+id/relative_file_type_bg"
+            android:background="@drawable/selector_bg_thumbnail"
+            android:layout_width="75dp"
+            android:layout_height="75dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/adp_fb_filename_thumbnail">
+
+                <ImageView
+                    android:id="@+id/adp_fb_image_thumbnail"
+                    android:layout_width="86.667dp"
+                    android:layout_height="55.333dp"
+                    android:src="@drawable/ic_fb_thumbnail_folder"
+                    android:scaleType="centerInside"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:textSize="13sp"
+                android:textColor="@color/add_module_time"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:id="@+id/adp_fb_filename_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:text="123"
+                android:singleLine="true"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/act_qrcode_cotainer_llt"
+        android:layout_width="wrap_content"
+        android:layout_height="92dp">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:id="@+id/act_code_pic_rlt"
+            android:background="@drawable/code_bg"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/act_code_pic_iv"
+                android:layout_width="61dp"
+                android:layout_height="61dp"
+                android:layout_margin="3dp"
+                android:src="@drawable/code" />
+
+            <TextView
+                android:textSize="14sp"
+                android:textColor="@color/Black"
+                android:layout_gravity="center"
+                android:id="@+id/act_code_pic_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/code_text"
+                android:layout_below="@+id/act_code_pic_iv"
+                android:layout_centerHorizontal="true" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

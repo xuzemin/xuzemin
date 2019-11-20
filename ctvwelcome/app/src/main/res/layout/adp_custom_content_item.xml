@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/adp_custom_content_container_rlt"
+    android:layout_width="@dimen/content_item_width"
+    android:layout_height="@dimen/content_item_height">
+
+    <TextView
+        android:id="@+id/adp_custom_content_icon_tv"
+        android:background="@drawable/index_item_custom_selector"
+        android:layout_width="@dimen/content_item_width"
+        android:layout_height="@dimen/custom_content_item_height"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/adp_custom_content_icon_iv"
+        android:layout_width="138dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="7dp"
+        android:scaleType="fitXY"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:id="@+id/adp_custom_content_name_tv"
+        android:layout_width="@dimen/content_item_width"
+        android:layout_height="19dp"
+        android:lines="1"
+        android:layout_below="@+id/adp_custom_content_icon_iv" />
+
+    <ImageView
+        android:id="@+id/adp_custom_content_delete_iv"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

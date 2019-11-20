@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!---->
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="font.css">
+    <!---->
+</head>
+
+<body>
+<!--style="font-size:50px"-->
+<div id="editor" contentEditable="true" style="face:song-ti; font-size:50px; color:#ffffff;">
+
+</div>
+<script type="text/javascript" src="rich_editor.js"></script>
+<script type="text/javascript">
+    function  getWidth(){
+        var div = document.getElementById('editor');
+       <!-- return div.offsetWidth;-->
+       return  div.scrollWidth;
+    }
+</script>
+</body>
+</html>
