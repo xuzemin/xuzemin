@@ -1,0 +1,4 @@
+#Mon Nov 25 10:43:39 CST 2019
+base.0=/Users/xuzemin/Desktop/VirtualKey/floatwindowlib/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex

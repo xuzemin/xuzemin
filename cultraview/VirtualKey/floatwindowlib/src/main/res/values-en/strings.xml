@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Virtual Key</string>
+
+    <string name="update_message">Please upgrade toV%1$s，%2$s</string>
+
+    <!-- 升级信息 -->
+    <!-- 测试URL-->
+    <!--<string name="check_apk_url">http://192.168.2.75:82/device/upgrade</string>-->
+    <!-- 正式URL-->
+    <string name="check_apk_url">http://www.bqldb.com:82/device/upgrade</string>
+    <string name="apk_file_name">Virtualkey.apk</string>
+    <string name="apk_name">virtualkey</string>
+
+    <!-- 动态权限管理 -->
+    <string name="permission_request">Permission requirements</string>
+    <string name="permission_check">Permission check</string>
+    <string name="rationale_ask_again">If you do not have the requested permissions, the application may not work properly. Open the application settings screen and modify the application permissions.</string>
+    <string name="rationale_battery">The application requires battery permissions.</string>
+    <string name="rationale_call">This application needs to call permissions.</string>
+    <string name="rationale_camera">This application needs to open the photographing authority.</string>
+    <string name="rationale_record_audio">The application requires recording permissions.</string>
+    <string name="rationale_sms">This application requires short message permissions.</string>
+    <string name="rationale_storage">This application needs to read and write the SD card permissions.</string>
+
+    <string name="setting">Setting</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="please_insert_dongle">Please insert the wireless network card </string>
+    <string name="device_do_not_support">The wireless card does not support wifi hotspots  </string>
+    <string name="minute">minute</string>
+    <string name="close">close</string>
+    <string name="screen_protect_time">Screen Saver Time</string>
+    <string name="no_signal_standby">No signal standby</string>
+</resources>

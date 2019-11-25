@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/VirtualKey.iml" filepath="$PROJECT_DIR$/.idea/VirtualKey.iml" />
+      <module fileurl="file://$PROJECT_DIR$/floatwindowlib/floatwindowlib.iml" filepath="$PROJECT_DIR$/floatwindowlib/floatwindowlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" filepath="$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" />
+    </modules>
+  </component>
+</project>

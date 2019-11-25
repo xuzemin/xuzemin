@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">虛擬按鍵</string>
+
+    <string name="update_message">請升級到V%1$s，%2$s</string>
+
+    <!-- 升级信息 -->
+    <!-- 测试URL-->
+    <!--<string name="check_apk_url">http://192.168.2.75:82/device/upgrade</string>-->
+    <!-- 正式URL-->
+    <string name="check_apk_url">http://www.bqldb.com:82/device/upgrade</string>
+    <string name="apk_file_name">Virtualkey.apk</string>
+    <string name="apk_name">virtualkey</string>
+
+    <!-- 动态权限管理 -->
+    <string name="permission_request">權限要求</string>
+    <string name="permission_check">權限檢查</string>
+    <string name="rationale_ask_again">如果沒有請求的權限，這個應用程序可能無法正常工作。打開應用程序設置屏幕修改應用權限。</string>
+    <string name="rationale_battery">這個應用需要電池忽略權限。</string>
+    <string name="rationale_call">這個應用程序需要撥打電話權限。</string>
+    <string name="rationale_camera">這個應用程序需要開啟拍照權限。</string>
+    <string name="rationale_record_audio">這個應用程序需要錄音權限。</string>
+    <string name="rationale_sms">這個應用程序需要短信權限。</string>
+    <string name="rationale_storage">這個應用需要讀寫SD卡權限。</string>
+
+    <string name="setting">設置</string>
+    <string name="cancel">取消</string>
+
+    <string name="please_insert_dongle">請插入無線網卡</string>
+    <string name="device_do_not_support">該無線網卡不支持wifi熱點</string>
+    <string name="minute">分鐘</string>
+    <string name="close">關</string>
+    <string name="screen_protect_time">屏保時間</string>
+    <string name="no_signal_standby">無信號待機</string>
+</resources>

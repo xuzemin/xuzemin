@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    android:layout_margin="0dp"
+    android:background="@color/black_light"
+    tools:context="com.protruly.floatwindowlib.activity.SettingActivity">
+    <RelativeLayout
+        android:id="@+id/rl_signal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@color/black_light_sub">
+        <TextView
+            android:id="@+id/signal_text"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_change_signal"/>
+
+        <com.protruly.floatwindowlib.ui.ChangeSignalLayout
+            android:id="@+id/changeSignalLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signal_text"/>
+    </RelativeLayout>
+
+    <com.protruly.floatwindowlib.ui.ShowSettingLayout
+        android:id="@+id/showSettingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_below="@id/rl_signal"/>
+
+</RelativeLayout>
