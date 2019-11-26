@@ -54,6 +54,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.protruly.floatwindowlib.ui.ThemometerLayout;
 import android.os.Message;
+
 /**
  * 后台服务
  */
@@ -127,7 +128,21 @@ public class FloatWindowService extends Service {
         mHandler = new UIHandler(this);
         threadPool = Executors.newScheduledThreadPool(3);
         initReceiver();
+//        Settings.Global.putInt(getContentResolver(),Settings.Global.DEVICE_PROVISIONED,1);
+    }
 
+    private void SystemInit() throws Settings.SettingNotFoundException {
+        if(Settings.Secure.getInt(getContentResolver(),"user_setup_complete") == 0){
+            Settings.Secure.putInt(getContentResolver(),"user_setup_complete",1);
+        }
+
+        if(Settings.Secure.getInt(getContentResolver(),"tv_user_setup_complete") == 0){
+            Settings.Secure.putInt(getContentResolver(),"tv_user_setup_complete",1);
+        }
+
+        if(Settings.Secure.getString(getContentResolver(),"default_input_method") == null){
+            Settings.Secure.putString(getContentResolver(),"tv_user_setup_complete","com.keanbin.pinyinime/.PinyinIME");
+        }
     }
 
     public class LocaleChangeReceiver extends BroadcastReceiver {
@@ -247,6 +262,11 @@ public class FloatWindowService extends Service {
         if (intent != null){
             // 初始化操作
             init(intent);
+            try {
+                SystemInit();
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
         return super.onStartCommand(intent, flags, startId);
