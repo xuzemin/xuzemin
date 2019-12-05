@@ -9,13 +9,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.IPowerManager;
+import android.os.Looper;
+import android.os.PowerManager;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 
+import com.cultraview.tv.CtvCommonManager;
 import com.cultraview.tv.CtvPictureManager;
 import com.protruly.floatwindowlib.activity.SettingNewActivity;
+
 import android.os.SystemProperties;
 import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
@@ -23,6 +31,7 @@ import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -53,7 +62,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.protruly.floatwindowlib.ui.ThemometerLayout;
+
 import android.os.Message;
+import android.widget.Toast;
 
 /**
  * 后台服务
@@ -94,6 +105,13 @@ public class FloatWindowService extends Service {
     public final static String KEY_TV_OS_CMD = "KEY_TV_OS_CMD"; // TVOS命令
 
     public final static String START_ACTION = "com.protruly.floatwindowlib.action.VIRTUAL_KEY"; // 启动虚拟按键
+    public final static String CLOSE_BACK = "com.protruly.floatwindowlib.action.VIRTUAL_KEY_CLOSE"; //关闭背光
+
+
+    public final static String SHUTDOWN_ALL = "com.protruly.floatwindowlib.action.SHUTDOWN_ALL"; //全部关机
+
+    public final static String SHUTDOWN_OPS = "com.protruly.floatwindowlib.action.SHUTDOWN_OPS"; //关闭背光
+
 
     public final static String START_TMP_ACTION = "com.ctv.FloatWindowService.START_TMP_ACTION"; // 查看整机温度
     public final static String START_COMMENT_ACTION = "com.ctv.FloatWindowService.START_COMMENT_ACTION"; // 启动批注
@@ -121,6 +139,8 @@ public class FloatWindowService extends Service {
     long endTime;
     private ScheduledExecutorService threadPool; // 线程池
     private static final Object LOCK = new Object();
+    private Thread closeSystemThread;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -128,43 +148,48 @@ public class FloatWindowService extends Service {
         mHandler = new UIHandler(this);
         threadPool = Executors.newScheduledThreadPool(3);
         initReceiver();
-//        Settings.Global.putInt(getContentResolver(),Settings.Global.DEVICE_PROVISIONED,1);
     }
 
     private void SystemInit() throws Settings.SettingNotFoundException {
-        if(Settings.Secure.getInt(getContentResolver(),"user_setup_complete") == 0){
-            Settings.Secure.putInt(getContentResolver(),"user_setup_complete",1);
+
+        Settings.Global.putInt(getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 1);
+
+        if (Settings.Secure.getInt(getContentResolver(), "user_setup_complete") == 0) {
+            Settings.Secure.putInt(getContentResolver(), "user_setup_complete", 1);
         }
 
-        if(Settings.Secure.getInt(getContentResolver(),"tv_user_setup_complete") == 0){
-            Settings.Secure.putInt(getContentResolver(),"tv_user_setup_complete",1);
+        if (Settings.Secure.getString(getContentResolver(), "tv_user_setup_complete") == null
+                || Settings.Secure.getInt(getContentResolver(), "tv_user_setup_complete") == 0) {
+            Settings.Secure.putInt(getContentResolver(), "tv_user_setup_complete", 1);
         }
 
-        if(Settings.Secure.getString(getContentResolver(),"default_input_method") == null){
-            Settings.Secure.putString(getContentResolver(),"tv_user_setup_complete","com.keanbin.pinyinime/.PinyinIME");
+        if (Settings.Secure.getString(getContentResolver(), "default_input_method") == null ||
+                Settings.Secure.getString(getContentResolver(), "default_input_method").equals("")
+        ) {
+            Settings.Secure.putString(getContentResolver(), "default_input_method", "com.keanbin.pinyinime/.PinyinIME");
         }
     }
 
     public class LocaleChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.v(TAG, "mReceiver  onReceive  intent.getAction(): "+intent.getAction());
+            Log.v(TAG, "mReceiver  onReceive  intent.getAction(): " + intent.getAction());
 
-            if(intent.getAction().equals(Intent.ACTION_LOCALE_CHANGED)) {
-                Log.e("LocaleChangeReceiver","Language change");
+            if (intent.getAction().equals(Intent.ACTION_LOCALE_CHANGED)) {
+                Log.e("LocaleChangeReceiver", "Language change");
             }
         }
     }
 
 
-    private void initReceiver(){
+    private void initReceiver() {
         // 批注时发送的通知广播  宝泽批注
-        switch (MstarConst.MARK_TYPE){
-            case MstarConst.MARK_TYPE_CTV:{ // CTV批注
+        switch (MstarConst.MARK_TYPE) {
+            case MstarConst.MARK_TYPE_CTV: { // CTV批注
                 ACTION_MARK_EXIT = MstarConst.ACTION_CTV_MARK_OPEN;
                 break;
             }
-            case MstarConst.MARK_TYPE_BOZEE:{ // 宝泽
+            case MstarConst.MARK_TYPE_BOZEE: { // 宝泽
                 ACTION_MARK_EXIT = MstarConst.ACTION_BOOZE_MARK_EXIT;
                 break;
             }
@@ -185,9 +210,9 @@ public class FloatWindowService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (ACTION_MARK_EXIT.equals(action) || ACTION_SHORTCAP_HIDE.equals(action)){ // 批注关闭 或者 截图APP关闭
+            if (ACTION_MARK_EXIT.equals(action) || ACTION_SHORTCAP_HIDE.equals(action)) { // 批注关闭 或者 截图APP关闭
                 Log.d(TAG, "批注或者截图关闭的广播!" + action);
-                new Thread(()->{
+                new Thread(() -> {
                     SystemClock.sleep(100);
                     closeCommentOrScreencap();
                 }).start();
@@ -198,22 +223,22 @@ public class FloatWindowService extends Service {
     /**
      * 批注或者截图关闭
      */
-    private void closeCommentOrScreencap(){
+    private void closeCommentOrScreencap() {
         Log.d(TAG, "批注或者截图关闭！");
         int isStart = Settings.System.getInt(getContentResolver(), "annotate.start", 0);
         boolean flag = false;
         // 判断截图是否运行
-        switch (isStart){
-            case 1:{ // 前面打开批注时
+        switch (isStart) {
+            case 1: { // 前面打开批注时
                 flag = AppUtils.isTopRunning(this, MstarConst.SCREENCAP_PACKAGE);
-                if (flag){
+                if (flag) {
                     Settings.System.putInt(getContentResolver(), "annotate.start", 2);
                 }
                 break;
             }
-            case 2:{ // 前面打开截图时
+            case 2: { // 前面打开截图时
                 flag = AppUtils.isServiceRunning(this, MstarConst.COMMENT_ENTER_SERVICE);
-                if (flag){
+                if (flag) {
                     Settings.System.putInt(getContentResolver(), "annotate.start", 1);
                 }
                 break;
@@ -238,16 +263,16 @@ public class FloatWindowService extends Service {
     /**
      * 检测是否开启悬浮助手
      */
-    private void checkEasyTouch(){
+    private void checkEasyTouch() {
         // 判断是否开启悬浮助手
         int easyTouchOpen = Settings.System.getInt(this.getContentResolver(),
                 "EASY_TOUCH_OPEN", 0);
         String lockStatus = SystemProperties.get("persist.sys.lockScreen", "off");
-        LogUtils.d("easyTouchOpen->%s, lockStatus->%s" ,easyTouchOpen, lockStatus);
+        LogUtils.d("easyTouchOpen->%s, lockStatus->%s", easyTouchOpen, lockStatus);
         // 悬浮助手开关开启，并且不在锁屏状态下时
         if (easyTouchOpen == 1
                 && !TextUtils.equals(lockStatus, "on")
-                ) { // 开启
+        ) { // 开启
             AppUtils.openOrCloseEasyTouch(this, true);
         }
     }
@@ -259,7 +284,7 @@ public class FloatWindowService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null){
+        if (intent != null) {
             // 初始化操作
             init(intent);
             try {
@@ -274,9 +299,10 @@ public class FloatWindowService extends Service {
 
     /**
      * 初始化操作
+     *
      * @param intent
      */
-    private void init(Intent intent){
+    private void init(Intent intent) {
         LogUtils.tag(TAG).d("onStartCommand init");
 
         // 初始化dialog
@@ -291,19 +317,19 @@ public class FloatWindowService extends Service {
         }
 
         // 首次启动时
-        if (isFirstFlag){
+        if (isFirstFlag) {
             isFirstFlag = false;
             FloatWindowManager.createMenuWindow(getApplicationContext()).setVisibility(View.VISIBLE);
             FloatWindowManager.createMenuWindowLeft(getApplicationContext()).setVisibility(View.VISIBLE);
             try {
                 Class clazz = Class.forName("android.service.notification.NotificationListenerService");
                 Method registerAsSystemService = clazz.getDeclaredMethod("registerAsSystemService", Context.class, ComponentName.class, int.class);
-                registerAsSystemService.invoke(mNotificationListener,this,new ComponentName(getPackageName(), getClass().getCanonicalName()),-1);
+                registerAsSystemService.invoke(mNotificationListener, this, new ComponentName(getPackageName(), getClass().getCanonicalName()), -1);
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.i("gyx","e.printStackTrace()="+e.getMessage());
+                Log.i("gyx", "e.printStackTrace()=" + e.getMessage());
             }
-            mHandler.postDelayed(()->{
+            mHandler.postDelayed(() -> {
                 // 判断是否开启光感
                 changeLightSenseStatus();
                 // 检测护眼
@@ -316,21 +342,20 @@ public class FloatWindowService extends Service {
     }
 
 
-
     NotificationListenerService mNotificationListener =
-            new NotificationListenerService(){
+            new NotificationListenerService() {
                 @Override
                 public void onNotificationPosted(StatusBarNotification sbn) {
                     super.onNotificationPosted(sbn);
-                    Log.i("gyx","onNotificationPosted");
+                    Log.i("gyx", "onNotificationPosted");
                     Bundle extras = sbn.getNotification().extras;
-                    if(extras!=null){
+                    if (extras != null) {
                         String notificationText = extras.getString(Notification.EXTRA_TEXT);
-                        if(notificationText!=null){
-                            FloatWindowManager.addSBN(FloatWindowService.this,sbn);
+                        if (notificationText != null) {
+                            FloatWindowManager.addSBN(FloatWindowService.this, sbn);
                         }
-                    }else{
-                        Log.i("gyx","sbn.getNotification().extras==null");
+                    } else {
+                        Log.i("gyx", "sbn.getNotification().extras==null");
                     }
 
                 }
@@ -338,65 +363,112 @@ public class FloatWindowService extends Service {
                 @Override
                 public void onNotificationRemoved(StatusBarNotification sbn) {
                     super.onNotificationRemoved(sbn);
-                    Log.i("gyx","onNotificationRemoved");
-                    FloatWindowManager.delSBN(FloatWindowService.this,sbn);
+                    Log.i("gyx", "onNotificationRemoved");
+                    FloatWindowManager.delSBN(FloatWindowService.this, sbn);
                 }
             };
-
 
 
     /**
      * 处理intent
      */
-    private void handleAction(Intent intent){
-        if (intent == null){
+    private void handleAction(Intent intent) {
+        if (intent == null) {
             return;
         }
 
         String action = intent.getAction();
-        if (TextUtils.isEmpty(action)){
+        if (TextUtils.isEmpty(action)) {
             return;
         }
 
         if (START_ACTION.equals(action)) { // 打开
             LogUtils.d("START_ACTION .....");
             String cmdStr = intent.getStringExtra(KEY_TV_OS_CMD);
-            if (!TextUtils.isEmpty(cmdStr)){
+            if (!TextUtils.isEmpty(cmdStr)) {
                 LogUtils.d("START_ACTION .....cmd->" + cmdStr);
                 CmdUtils.setTvosCommonCommand(cmdStr);
                 return;
-            }else{
+            } else {
                 CtvPictureManager.getInstance().enableBacklight();
             }
-        }
-        else if (CLOSE_ACTION.equals(action)) { // 关闭
+        } else if (CLOSE_ACTION.equals(action)) { // 关闭
             LogUtils.d("CLOSE_ACTION .....");
-            mHandler.postDelayed(()->{
+            mHandler.postDelayed(() -> {
                 stopSelf();
                 // android.os.Process.killProcess(android.os.Process.myPid());
             }, 100);
             return;
-        }
-        else if (LIGHT_SENSE_ACTION.equals(action)) { // 打开和关闭光感
+        } else if (CLOSE_BACK.equals(action)) {
+            CtvPictureManager.getInstance().disableBacklight();
+        } else if (SHUTDOWN_ALL.equals(action)) { //全部关机
+            isCloseALL = true;
+            LogUtils.d("qkmin ---SHUTDOWN_ALL .....");
+            int[] GetOPSDEVICESTATUS = CtvCommonManager.getInstance().setTvosCommonCommand("GetOPSDEVICESTATUS");
+            int[] GetOPSPOWERSTATUS = CtvCommonManager.getInstance().setTvosCommonCommand("GetOPSPOWERSTATUS");
+            Log.d("qkmin", "GetOPSDEVICESTATUS:" + GetOPSDEVICESTATUS[0]);
+            Log.d("qkmin", "GetOPSPOWERSTATUS:" + GetOPSPOWERSTATUS[0]);
+
+            if (GetOPSPOWERSTATUS[0] == 0 && closeSystemThread == null) {//0,表示有OPS设备接入；1，表示没有OPS设备接入。
+                LogUtils.d("qkmin ---have ops shutdown .....");
+                closeSystemThread = new Thread(closeSystemRunnable);
+                closeSystemThread.start();
+            } else {
+                LogUtils.d("qkmin ---android shutdown .....");
+                Thread thr = new Thread("ShutdownActivity") {
+                    @Override
+                    public void run() {
+                        IPowerManager pm = IPowerManager.Stub.asInterface(
+                                ServiceManager.getService(Context.POWER_SERVICE));
+                        try {
+
+                            pm.shutdown(false,
+                                    false ? PowerManager.SHUTDOWN_USER_REQUESTED : null,
+                                    false);
+
+                        } catch (RemoteException e) {
+                        }
+                    }
+                };
+                thr.start();
+            }
+
+        } else if (SHUTDOWN_OPS.equals(action)) { //OPS关机
+            LogUtils.d("qkmin ---SHUTDOWN_OPS .....");
+            isCloseALL = false;
+
+            int[] GetOPSDEVICESTATUS = CtvCommonManager.getInstance().setTvosCommonCommand("GetOPSDEVICESTATUS");
+            int[] GetOPSPOWERSTATUS = CtvCommonManager.getInstance().setTvosCommonCommand("GetOPSPOWERSTATUS");
+            //if(GetOPSDEVICESTATUS[0] == 1){//0,表示有OPS设备接入；1，表示没有OPS设备接入。
+            //     Toast.makeText(mContext,"找不到OPS设备", Toast.LENGTH_SHORT).show();
+            // }else{
+
+            if (GetOPSPOWERSTATUS[0] == 1) {//0,表示OPS开机；1，表示OPS关机。
+                Toast.makeText(this, R.string.close_ops, Toast.LENGTH_SHORT).show();
+            } else {
+//                Toast.makeText(this, R.string.ops_closing_msg, Toast.LENGTH_SHORT).show();
+                closeSystemThread = new Thread(closeSystemRunnable);
+                closeSystemThread.start();
+            }
+
+
+        } else if (LIGHT_SENSE_ACTION.equals(action)) { // 打开和关闭光感
             LogUtils.d("LIGHT_SENSE_ACTION .....");
             // 判断是否开启光感
-           changeLightSenseStatus();
+            changeLightSenseStatus();
             return;
-        }
-        else if (UPDATE_BLACK_LIGHT_ACTION.equals(action)) { // 更新背光值
+        } else if (UPDATE_BLACK_LIGHT_ACTION.equals(action)) { // 更新背光值
             LogUtils.d("UPDATE_BLACK_LIGHT_ACTION, Backlight->" + AppUtils.getBacklight());
             updateBlackLightSeekbar();
             return;
-        }
-        else if (SWIPE_BLACK_LIGHT_ACTION.equals(action)) { // 滑动背光进度条
+        } else if (SWIPE_BLACK_LIGHT_ACTION.equals(action)) { // 滑动背光进度条
             LogUtils.d("SWIPE_BLACK_LIGHT_ACTION...");
 //            closeEyeCareLightSense();
             return;
-        }
-        else if (START_COMMENT_ACTION.equals(action)) { // 启动批注
+        } else if (START_COMMENT_ACTION.equals(action)) { // 启动批注
             int isStart = Settings.System.getInt(getContentResolver(), "annotate.start", 0);
             LogUtils.d("START_COMMENT_ACTION  .....isStart->" + isStart);
-            if (isStart == 1){ // 批注显示时，关闭批注
+            if (isStart == 1) { // 批注显示时，关闭批注
                 LogUtils.d("START_COMMENT_ACTION 关闭批注.....");
                 AppUtils.closeComment(this.getApplicationContext());
             } else { // 批注不显示时，打开批注
@@ -404,14 +476,12 @@ public class FloatWindowService extends Service {
                 AppUtils.showComment(this.getApplicationContext());
             }
             return;
-        }
-        else if (START_TMP_ACTION.equals(action)) { // 整机温度
+        } else if (START_TMP_ACTION.equals(action)) { // 整机温度
             LogUtils.d("START_TMP_ACTION .....");
             //  整机温度
             showTemperature();
             return;
-        }
-        else if (START_EASY_TOUCH_ACTION.equals(action)) { // 开启悬浮按钮
+        } else if (START_EASY_TOUCH_ACTION.equals(action)) { // 开启悬浮按钮
             LogUtils.d("START_EASY_TOUCH_ACTION .....");
 //	        changeEasyTouch();
 
@@ -419,13 +489,12 @@ public class FloatWindowService extends Service {
             int easyTouchOpen = Settings.System.getInt(this.getContentResolver(),
                     "EASY_TOUCH_OPEN", 0);
             String lockStatus = SystemProperties.get("persist.sys.lockScreen", "off");
-            LogUtils.d("easyTouchOpen->%s, lockStatus->%s" ,easyTouchOpen, lockStatus);
+            LogUtils.d("easyTouchOpen->%s, lockStatus->%s", easyTouchOpen, lockStatus);
             if (easyTouchOpen == 1 && !TextUtils.equals(lockStatus, "on")) { // 开启
                 AppUtils.openOrCloseEasyTouch(this, true);
             }
             return;
-        }
-        else if (STOP_EASY_TOUCH_ACTION.equals(action)) { // 停止悬浮按钮
+        } else if (STOP_EASY_TOUCH_ACTION.equals(action)) { // 停止悬浮按钮
             LogUtils.d("STOP_EASY_TOUCH_ACTION .....");
             AppUtils.openOrCloseEasyTouch(this, false);
             return;
@@ -463,18 +532,20 @@ public class FloatWindowService extends Service {
 //            return;
 //        }
     }
+
     /**
      * 更新光感UI
+     *
      * @param blackLight
      */
-    private void updateBlackLightSeekbar(final int blackLight){
+    private void updateBlackLightSeekbar(final int blackLight) {
         if (blackLight <= 0) {
             return;
         }
 
         AppUtils.setBacklight(blackLight);
-        mHandler.post(() ->{
-            if (SettingNewActivity.mHandler != null){
+        mHandler.post(() -> {
+            if (SettingNewActivity.mHandler != null) {
                 SettingNewActivity.mHandler.sendEmptyMessage(SettingNewActivity.MSG_UPDATE_LIGHT); // 更新亮度进度条
             }
         });
@@ -483,17 +554,18 @@ public class FloatWindowService extends Service {
     /**
      * 更新背光进度条值
      */
-    private void updateBlackLightSeekbar(){
-        mHandler.post(() ->{
-            if (SettingsDialogLayout.mHandler != null){
+    private void updateBlackLightSeekbar() {
+        mHandler.post(() -> {
+            if (SettingsDialogLayout.mHandler != null) {
                 SettingsDialogLayout.mHandler.sendEmptyMessage(SettingsDialogLayout.MSG_UPDATE_LIGHT); // 更新亮度进度条
             }
         });
     }
+
     /**
      * 显示温度
      */
-    private void showTemperature(){
+    private void showTemperature() {
         float tmpValue = CmdUtils.getTmpValue();
 
         boolean isFirst = false;
@@ -504,36 +576,37 @@ public class FloatWindowService extends Service {
         }
 
         int visibility = thmometerWindow.getVisibility();
-        if (!isFirst && visibility == View.VISIBLE){ // 若当前是显示，则隐藏
+        if (!isFirst && visibility == View.VISIBLE) { // 若当前是显示，则隐藏
             thmometerWindow.setVisibility(View.INVISIBLE);
         } else { // 若当前是隐藏，则显示
             thmometerWindow.setVisibility(View.VISIBLE);
             // 更新进度
-            if (ThemometerLayout.mHandler != null){
+            if (ThemometerLayout.mHandler != null) {
                 Message message = ThemometerLayout.mHandler.obtainMessage(1, tmpValue);
                 ThemometerLayout.mHandler.sendMessage(message);
 
                 // 延迟消失
-                ThemometerLayout.mHandler.postDelayed(()->{
+                ThemometerLayout.mHandler.postDelayed(() -> {
                     ThemometerLayout thmometer = FloatWindowManager.getThmometerWindow();
-                    if (thmometer != null){
+                    if (thmometer != null) {
                         thmometer.setVisibility(View.INVISIBLE);
                     }
                 }, 3000);
             }
         }
     }
+
     /**
      * 改变接受光感
      */
-    private void changeLightSenseStatus(){
+    private void changeLightSenseStatus() {
         // 判断是否开启光感
         boolean isStartLightSense = Settings.System.getInt(FloatWindowService.this.getContentResolver(),
                 CommConsts.IS_LIGHTSENSE, 0) == 1;
 //        Log.d(TAG,"是否开启光感 isStartLightSense->" + isStartLightSense);
-        if (MyUtils.isSupportLightSense()){
+        if (MyUtils.isSupportLightSense()) {
             boolean isOpen;
-            if (isStartLightSense){ // 打开
+            if (isStartLightSense) { // 打开
                 startLightSense();
                 isOpen = true;
             } else { // 关闭
@@ -551,27 +624,29 @@ public class FloatWindowService extends Service {
     /**
      * 开启光感
      */
-    private void startLightSense(){
+    private void startLightSense() {
         stopLightSense();
-            lastLightSense = AppUtils.getBacklight();
-        future = threadPool.scheduleAtFixedRate(lightSenseRunnable,500,2000, TimeUnit.MILLISECONDS);
+        lastLightSense = AppUtils.getBacklight();
+        future = threadPool.scheduleAtFixedRate(lightSenseRunnable, 500, 2000, TimeUnit.MILLISECONDS);
     }
 
     /**
      * 停止光感
      */
-    private void stopLightSense(){
+    private void stopLightSense() {
         try {
-            if (future != null){
+            if (future != null) {
                 future.cancel(true);
                 future = null;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /**
      * 获得光感值
+     *
      * @return
      */
     private int getLightSense() {
@@ -592,7 +667,7 @@ public class FloatWindowService extends Service {
     Runnable lightSenseRunnable = new Runnable() {
         @Override
         public void run() {
-            if (startTime == 0){
+            if (startTime == 0) {
                 startTime = System.currentTimeMillis();
                 endTime = System.currentTimeMillis();
             }
@@ -640,8 +715,10 @@ public class FloatWindowService extends Service {
             }
         }
     };
+
     /**
      * 改变光感值
+     *
      * @param end
      */
     private void changeLightSense(final int end) {
@@ -653,7 +730,7 @@ public class FloatWindowService extends Service {
 
         if (Math.abs(dlen) > 10) {
             int maxTime = Math.abs(dlen) / 10;
-            if (maxTime > 5){ // 最大5次
+            if (maxTime > 5) { // 最大5次
                 maxTime = 5;
             }
 
@@ -661,7 +738,7 @@ public class FloatWindowService extends Service {
             for (int i = 0; i < maxTime; i++) {
                 start += step;
                 boolean flag = (dlen > 0) ? (start < end) : (start > end);
-                if (flag){
+                if (flag) {
                     updateBlackLightSeekbar(start);
                     SystemClock.sleep(200);
                 }
@@ -675,24 +752,23 @@ public class FloatWindowService extends Service {
     }
 
 
-
     /**
      * 检测背光值
      */
-    private void checkEyecare(){
-        if (AppUtils.isEyeCare(this)){
+    private void checkEyecare() {
+        if (AppUtils.isEyeCare(this)) {
             // 验证背光值
             int lastBlackLight = Settings.System.getInt(this.getContentResolver(),
                     "lastBlackLight", 50);
             int blackLight = AppUtils.getBacklight();
-            if (lastBlackLight > 50 && blackLight == 50){
+            if (lastBlackLight > 50 && blackLight == 50) {
                 AppUtils.setBacklight(lastBlackLight);
             }
         }
     }
 
-    private void showOrHide(boolean isHide){
-        int visible = isHide? View.GONE : View.VISIBLE;
+    private void showOrHide(boolean isHide) {
+        int visible = isHide ? View.GONE : View.VISIBLE;
 
         FloatWindowManager.createMenuWindow(getApplicationContext()).setVisibility(visible);
         FloatWindowManager.createMenuWindowLeft(getApplicationContext()).setVisibility(visible);
@@ -701,7 +777,7 @@ public class FloatWindowService extends Service {
     /**
      * 初始化对话框UI
      */
-    private void initDialogView(){
+    private void initDialogView() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.update_dialog_layout, null);
         mTitle = (TextView) dialogView.findViewById(R.id.title);
         mEditText = (EditText) dialogView.findViewById(R.id.message_edit);
@@ -736,8 +812,8 @@ public class FloatWindowService extends Service {
     /**
      * 释放资源
      */
-    private void releaseData(){
-        if (timer != null){
+    private void releaseData() {
+        if (timer != null) {
             timer.cancel();
             timer = null;
         }
@@ -746,13 +822,14 @@ public class FloatWindowService extends Service {
         FloatWindowManager.removeMenuWindowLeft(getApplicationContext());
         FloatWindowManager.removeThmometerWindow(getApplicationContext());
 
-        if (mHandler != null){
+        if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
         }
 
         unregisterReceiver(receiver);
     }
+
     public static final int KEY_CHANGE_LIGHT_SENSE = 1; // 切换光感
 
     /**
@@ -771,14 +848,14 @@ public class FloatWindowService extends Service {
             super.handleMessage(msg);
 
             FloatWindowService service = weakReference.get();
-            if (service == null){
+            if (service == null) {
                 return;
             }
 
-            switch (msg.what){
+            switch (msg.what) {
                 case KEY_CHANGE_LIGHT_SENSE: // 改变光感
-                    if (msg.obj instanceof Boolean){
-                        boolean isOpen = (boolean)msg.obj;
+                    if (msg.obj instanceof Boolean) {
+                        boolean isOpen = (boolean) msg.obj;
                         int lightSense = isOpen ? 1 : 0;
                         Settings.System.putInt(service.getContentResolver(), CommConsts.IS_LIGHTSENSE, lightSense);
                         service.changeLightSenseStatus();
@@ -794,7 +871,7 @@ public class FloatWindowService extends Service {
         @Override
         public void run() {
             // 当前没有浮框，直接创建浮框
-            if (!FloatWindowManager.isWindowShowing() ){
+            if (!FloatWindowManager.isWindowShowing()) {
                 mHandler.post(() -> {
                     // 创建左右两边的控制菜单
                     FloatWindowManager.createMenuWindowLeft(getApplicationContext());
@@ -804,4 +881,90 @@ public class FloatWindowService extends Service {
             }
         }
     }
+
+    boolean isCloseALL = false;
+
+    //Start WhiteBoard Patch
+    Runnable closeSystemRunnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Log.d("chen_powerdown", "start");
+                Log.d("chen_powerdown", "close ops");
+                int[] GetOPSDEVICESTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                        "GetOPSDEVICESTATUS");
+                int[] GetOPSPOWERSTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                        "GetOPSPOWERSTATUS");
+                Log.d("chen_powerdown", "GetOPSDEVICESTATUS:init:" + GetOPSDEVICESTATUS[0]);
+                Log.d("chen_powerdown", "GetOPSPOWERSTATUS:init:" + GetOPSPOWERSTATUS[0]);
+                CtvCommonManager.getInstance().setTvosCommonCommand("SetOPSPOWER");
+                GetOPSPOWERSTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                        "GetOPSPOWERSTATUS");
+                Log.d("chen_powerdown", "GetOPSPOWERSTATUS:first:" + GetOPSPOWERSTATUS[0]);
+                Thread.sleep(200);
+                CtvCommonManager.getInstance().setTvosCommonCommand("SetOPSPOWERON");
+                GetOPSPOWERSTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                        "GetOPSPOWERSTATUS");
+                Log.d("chen_powerdown", "GetOPSPOWERSTATUS:setover" + GetOPSPOWERSTATUS[0]);
+                Log.d("chen_powerdown", "ops:state");
+                Thread.sleep(2000);
+                GetOPSDEVICESTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                        "GetOPSDEVICESTATUS");
+                GetOPSPOWERSTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                        "GetOPSPOWERSTATUS");
+                Log.d("chen_powerdown", "GetOPSPOWERSTATUS:" + GetOPSPOWERSTATUS[0]);
+                int count = 0;
+
+                while (GetOPSPOWERSTATUS[0] == 0) {
+                    Log.d("chen_powerdown", "checkops state start ");
+                    Log.d("chen_powerdown", "checkops time count : " + count);
+                    Thread.sleep(1000);
+                    count++;
+                    if (count == 30) {
+                        break;
+                    }
+                    Log.d("chen_powerdown", "change ops state start");
+                    GetOPSDEVICESTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                            "GetOPSDEVICESTATUS");
+                    GetOPSPOWERSTATUS = CtvCommonManager.getInstance().setTvosCommonCommand(
+                            "GetOPSPOWERSTATUS");
+                    Log.d("chen_powerdown", "change ops state resutl:");
+                    Log.d("chen_powerdown", "GetOPSDEVICESTATUS:" + GetOPSDEVICESTATUS[0]);
+                    Log.d("chen_powerdown", "GetOPSPOWERSTATUS:" + GetOPSPOWERSTATUS[0]);
+                }
+                Log.d("chen_powerdown", "close ops sucess");
+
+                if (isCloseALL) {
+                    Log.d("chen_powerdown", "start to close Android");
+//                    Thread.sleep(2000);
+//                    Intent intent = new Intent("android.intent.action.ACTION_REQUEST_SHUTDOWN");
+//                    intent.putExtra("android.intent.extra.KEY_CONFIRM", false);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+                    //Android 关机
+                    closeSystemThread = null;
+                    IPowerManager pm = IPowerManager.Stub.asInterface(
+                            ServiceManager.getService(Context.POWER_SERVICE));
+                    try {
+                        pm.shutdown(false,
+                                false ? PowerManager.SHUTDOWN_USER_REQUESTED : null,
+                                false);
+                    } catch (RemoteException e) {
+                        Log.e("chen_powerdown", "RemoteException e");
+                    }
+                } else {
+                    closeSystemThread = null;
+                    Log.e("qkmin", "isCloseALL " + isCloseALL);
+                    Looper.prepare();
+                    Toast.makeText(getApplicationContext(), R.string.close_ops, Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            } catch (Exception e) {
+
+                Log.e("qkmin", "Exception e" + e);
+                e.printStackTrace();
+            }
+        }
+    };
+    //End WhiteBoard Patch
 }

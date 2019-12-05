@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- INPUT_SOURCE 名称-->
     <string-array name="input_source_name_list" tools:ignore="InconsistentArrays">
-        <item>DTV</item>
+        <item>VGA</item>
         <item>ATV</item>
         <item>AV1</item>
         <item>AV2</item>
@@ -34,7 +34,7 @@
         <item>HDMI3</item>
         <item>OPS</item>
         <!--        <item>INSIDE PC</item>-->
-        <item>VGA</item>
+        <item>DTV</item>
 
         <item>DVI</item>
         <item>DVI 2</item>
@@ -60,7 +60,7 @@
 <!--&lt;!&ndash;        <item>signal_prehdmi</item>&ndash;&gt;-->
 <!--    </string-array>-->
     <string-array name="input_source_str_list" tools:ignore="InconsistentArrays">
-        <item>signal_dtv</item>
+        <item>signal_vga</item>
         <item>signal_atv</item>
         <item>signal_av1</item>
         <item>signal_av2</item>
@@ -92,7 +92,7 @@
         <item>signal_hdmi3</item>
         <item>signal_ops</item>
         <!--        <item>INSIDE PC</item>-->
-        <item>signal_vga</item>
+        <item>signal_dtv</item>
 
         <item>signal_dvi</item>
         <item>signal_dvi 2</item>

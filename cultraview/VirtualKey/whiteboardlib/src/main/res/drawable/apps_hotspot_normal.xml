@@ -5,27 +5,27 @@
 	<!-- 获得焦点 -->
 	<item
 		android:state_focused="true"
-		android:drawable="@mipmap/apps_hotspot_focus"
+		android:drawable="@mipmap/apps_hotspot_focus__2_4"
 		>
 	</item>
 
 	<!-- 按下 -->
 	<item
 		android:state_pressed="true"
-		android:drawable="@mipmap/apps_hotspot_focus"
+		android:drawable="@mipmap/apps_hotspot_focus__2_4"
 		>
 	</item>
 
 	<!-- 按钮不可以 -->
 	<item
 		android:state_enabled="false"
-		android:drawable="@mipmap/apps_hotspot_default"
+		android:drawable="@mipmap/apps_hotspot_default_2_4"
 		>
 	</item>
 
 	<!-- 正常 -->
 	<item
-		android:drawable="@mipmap/apps_hotspot_default"
+		android:drawable="@mipmap/apps_hotspot_default_2_4"
 		>
 	</item>
 </selector>

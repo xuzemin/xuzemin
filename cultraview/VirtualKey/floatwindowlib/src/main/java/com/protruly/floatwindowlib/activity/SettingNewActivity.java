@@ -29,6 +29,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -50,6 +51,8 @@ import java.util.List;
 import java.util.Set;
 
 import android.support.v7.app.AppCompatActivity;
+
+import org.w3c.dom.Text;
 
 /**
  * 设置界面

@@ -30,6 +30,7 @@
 
     <string name="minute">minute</string>
     <string name="close">close</string>
+    <string name="close_ops">OPS 已经关闭</string>
     <string name="screen_protect_time">Screen Saver Time</string>
     <string name="no_signal_standby">No signal standby</string>
 

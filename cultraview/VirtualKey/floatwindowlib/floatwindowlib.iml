@@ -102,11 +102,11 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:runner:0.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-idling-resource:2.2.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:exposed-instrumentation-api-publish:0.5@aar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/xuzemin/Desktop/VirtualKey/floatwindowlib/libs/fr.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/xuzemin/sdk/platforms/android-21/data/layoutlib.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/xuzemin/Desktop/VirtualKey/whiteboardlib/libs/com.mstar.android_intermediates.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/xuzemin/Desktop/VirtualKey/whiteboardlib/libs/zxing.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:/Users/xuzemin/Desktop/VirtualKey/whiteboardlib/libs/com.cultraview.tv_intermediates.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:E.\xuzemin\cultraview\VirtualKey\floatwindowlib\libs\fr.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:D.\Android\sdk\platforms\android-21\data\layoutlib.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:E.\xuzemin\cultraview\VirtualKey\whiteboardlib\libs\com.cultraview.tv_intermediates.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:E.\xuzemin\cultraview\VirtualKey\whiteboardlib\libs\com.mstar.android_intermediates.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:E.\xuzemin\cultraview\VirtualKey\whiteboardlib\libs\zxing.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.4.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.picasso:picasso:2.4.0@jar" level="project" />
@@ -130,6 +130,5 @@
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui:24.2.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-compat:25.1.0@aar" level="project" />
     <orderEntry type="module" module-name="whiteboardlib" />
-    <orderEntry type="library" name="Gradle: android-android-28" level="project" />
   </component>
 </module>

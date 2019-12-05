@@ -3,7 +3,9 @@ package com.protruly.floatwindowlib.helper;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.SystemProperties;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.apkfuns.logutils.LogUtils;
 import com.protruly.floatwindowlib.R;
@@ -13,6 +15,7 @@ import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.IDHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -70,8 +73,20 @@ public class DBHelper {
 		int[] indexList = context.getResources().getIntArray(R.array.input_source_id_list);
 		String[] nameList = context.getResources().getStringArray(R.array.input_source_name_list);
 		String[] resIdList = context.getResources().getStringArray(R.array.input_source_res_list);
-
-		int[] sourceChannel = {0,23,24,25,26};
+		String sourcelist = SystemProperties.get("ro.build.source.list");
+//		Log.e("sourcelist","sourcelist = " + sourcelist);
+		int[] sourceChannel = new int[0];
+		if(sourcelist != null && !sourcelist.equals("")) {
+			String[] list = sourcelist.split(",");
+			sourceChannel = new int[list.length];
+			for (int m = 0;m < list.length;m++) {
+//				Log.e("sourcelist","sourcelist = " + list[m]);
+				sourceChannel[m] = Integer.parseInt(list[m]);
+			}
+//			Log.e("sourcelist","sourcelist = " + Arrays.toString(sourceChannel));
+		}
+//		sourceChannel = new int[]{0, 23, 24, 25, 26};
+//		Log.e("sourcelist","sourcelist = " + sourceChannel.toString());
 		// 获得数据
 		int len = resIdList.length;
 
@@ -79,6 +94,11 @@ public class DBHelper {
 //		int currSourceIndex = AppUtils.getCurrentSourceIndex(context);
 //		LogUtils.d("From currSourceIndex->%s", currSourceIndex);
 		// 从XML中获得默认信号源信息
+		if(sourceChannel.length <= 0){
+			Log.e("sourcelist","sourcelist =  reset" );
+			sourceChannel = new int[]{0, 23, 24, 25, 26};
+		}
+
 		for(int j = 0;j < sourceChannel.length;j++){
 			for(int k =0;k < len;k++){
 				if(sourceChannel[j] == indexList[k]){

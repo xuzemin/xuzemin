@@ -77,7 +77,8 @@
 
     <string name="apps_wire">有線</string>
     <string name="apps_wireless">無線</string>
-    <string name="apps_hotspot">熱點</string>
+    <string name="apps_hotspot">2.4G 熱點</string>
+    <string name="apps_hotspot_5">5G 熱點</string>
     <string name="apps_settings">設置</string>
     <string name="apps_screenshot">截屏</string>
     <string name="apps_timer">計時器</string>
@@ -86,4 +87,5 @@
     <string name="title_select_app">請選擇快捷應用</string>
     <string name="apps_usred">自定義</string>
     <string name="light_sense">自动光感</string>
+    <string name="apps_bluetooth">蓝牙</string>
 </resources>

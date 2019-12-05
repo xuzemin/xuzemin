@@ -31,4 +31,5 @@
     <string name="close">close</string>
     <string name="screen_protect_time">Screen Saver Time</string>
     <string name="no_signal_standby">No signal standby</string>
+    <string name="close_ops">OPS Closed</string>
 </resources>

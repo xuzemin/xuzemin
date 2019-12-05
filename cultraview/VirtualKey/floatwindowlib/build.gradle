@@ -108,20 +108,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
+    implementation 'com.android.support:design:24.2.1'
+    implementation 'com.android.support:appcompat-v7:24.2.1'
+    implementation 'com.android.support:support-v4:24.2.1'
 
 
-    compile project(':whiteboardlib')
+    implementation project(':whiteboardlib')
 
-    compile 'com.jakewharton:butterknife:8.5.1'
+    implementation 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    compile 'com.zhy:base-rvadapter:3.0.3'
-    compile 'com.zhy:base-adapter:3.0.3'
-    compile 'com.apkfuns.logutils:library:1.4.2.2'
+    implementation 'com.zhy:base-rvadapter:3.0.3'
+    implementation 'com.zhy:base-adapter:3.0.3'
+    implementation 'com.apkfuns.logutils:library:1.4.2.2'
 
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.zhy:okhttputils:2.6.2'
 }

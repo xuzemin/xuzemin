@@ -3,6 +3,8 @@
           package="com.protruly.floatwindowlib"
      android:sharedUserId="android.uid.system">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="com.mstar.android.permissionn.ACCESS_TV_DATA"/>
     <uses-permission android:name="android.permission.INJECT_EVENTS"/>
     <uses-permission android:name="android.permission.READ_FRAME_BUFFER"/>
@@ -30,7 +32,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"/>
-
+    <uses-permission android:name="android.permission.SHUTDOWN" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -45,7 +47,7 @@
             android:configChanges="orientation|screenSize"
             android:excludeFromRecents="true"
             android:theme="@style/SplashTheme">
-            <intent-filter>
+            <intent-filter android:priority="1">
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -113,6 +115,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.protruly.floatwindowlib.action.VIRTUAL_KEY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.protruly.floatwindowlib.action.VIRTUAL_KEY_CLOSE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>

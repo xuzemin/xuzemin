@@ -77,7 +77,8 @@
 
     <string name="apps_wire">Có dây</string>
     <string name="apps_wireless">Không dây</string>
-    <string name="apps_hotspot">Điểm nóng</string>
+    <string name="apps_hotspot">2.4G Điểm nóng</string>
+    <string name="apps_hotspot_5">5G Điểm nóng</string>
     <string name="apps_settings">Cài đặt</string>
     <string name="apps_screenshot">Chụp màn hình</string>
     <string name="apps_timer">Hẹn giờ</string>
@@ -88,5 +89,6 @@
     <string name="light_sense">Nhận thức ánh sáng tự động</string>
     <string name="energy_saving">Tiết kiệm năng lượng</string>
     <string name="magnifier">Kính lúp</string>
+    <string name="apps_bluetooth">Bluetooth</string>
     <string name="source_options">Nguồn tín hiệu</string>
 </resources>

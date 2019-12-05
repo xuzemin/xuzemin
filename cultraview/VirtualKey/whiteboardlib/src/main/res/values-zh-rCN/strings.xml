@@ -88,7 +88,8 @@
 
     <string name="apps_wire">有线</string>
     <string name="apps_wireless">无线</string>
-    <string name="apps_hotspot">热点</string>
+    <string name="apps_hotspot">2.4G 热点</string>
+    <string name="apps_hotspot_5">5G 热点</string>
     <string name="apps_settings">设置</string>
     <string name="apps_screenshot">截屏</string>
     <string name="apps_timer">计时器</string>
@@ -97,6 +98,7 @@
     <string name="title_select_app">请选择快捷应用</string>
     <string name="apps_usred">自定义</string>
     <string name="light_sense">自动光感</string>
+    <string name="apps_bluetooth">蓝牙</string>
     <string name="energy_saving">节能</string>
     <string name="magnifier">放大镜</string>
     <string name="source_options">信号源</string>

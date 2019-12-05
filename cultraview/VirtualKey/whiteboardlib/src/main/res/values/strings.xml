@@ -89,7 +89,8 @@
 
     <string name="apps_wire">Wire</string>
     <string name="apps_wireless">Wifi</string>
-    <string name="apps_hotspot">Hotspot</string>
+    <string name="apps_hotspot">2.4G Hotspot</string>
+    <string name="apps_hotspot_5">5G Hotspot</string>
     <string name="apps_settings">Settings</string>
     <string name="apps_screenshot">Screenshot</string>
     <string name="apps_timer">Timer</string>
@@ -98,6 +99,7 @@
     <string name="apps_usred">User Defined</string>
     <string name="title_select_app">Please Select App</string>
     <string name="light_sense">Light Sense</string>
+    <string name="apps_bluetooth">Bluetooth</string>
     <string name="source_options">Source Options</string>
     <string name="energy_saving">Energy Saving</string>
     <string name="magnifier">Magnifier</string>

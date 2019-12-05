@@ -3,7 +3,9 @@ package com.protruly.floatwindowlib.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -106,7 +108,8 @@ public class SettingsDialogLayout extends FrameLayout {
     ImageView wireImage; // 有线
     ImageView wifiImage;// 无线
     ImageView hostpotImage; // 热点
-
+    ImageView hostpotImage_5G; // 热点
+    ImageView bluetoothImage; // 热点
     ImageView eyecareImage;
 
     ImageView OPSImage; // OPS
@@ -120,15 +123,18 @@ public class SettingsDialogLayout extends FrameLayout {
     public static Handler mHandler;
 
     WifiManager mWifiManager;
+    BluetoothAdapter bluetoothAdapter;
     EthernetManager mEthernetManager;
     PppoeManager mPppoeManager;
 
     private SelectAppDialog dialogView;
     private RelativeLayout pupAdd;
+    private ConnectivityManager connectivityManager;
     ImageView deleteImage;
     Dialog selectDialog;
 
     private ImageView addMenu;
+    private OnStartTetheringCallback startTetheringCallback;
     private ApkInfoUtils apkInfoUtils;
     private TextView tvAdd;
     private LinearLayout energySaving;
@@ -162,7 +168,6 @@ public class SettingsDialogLayout extends FrameLayout {
     private NotificationAdapter notificationAdapter;
     private ArrayList<NotificationInfo> notificationList;
     private TextView mAllIgnore;
-
 
     /**
      * 更新AP状态
@@ -256,7 +261,7 @@ public class SettingsDialogLayout extends FrameLayout {
 
         // 有线网络
         mEthernetManager = (EthernetManager) getContext().getSystemService("ethernet");
-
+        connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         // P2P网络
 //        mPppoeManager = PppoeManager.getInstance(getContext());
 
@@ -389,6 +394,16 @@ public class SettingsDialogLayout extends FrameLayout {
         // WiFi网络
         hostpotImage = (ImageView) findViewById(R.id.hotspot_image);
 
+        bluetoothImage = findViewById(R.id.iv_bluetooth);
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        boolean isBluetoothOpen = bluetoothAdapter.isEnabled();
+        if (isBluetoothOpen){
+            bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_focus);
+        } else {
+            bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_default);
+        }
+
         lightSenseLL = (LinearLayout) findViewById(R.id.pup_light_sense);
         lightSenseImage = (ImageView) findViewById(R.id.iv_light_sense);
 
@@ -399,6 +414,8 @@ public class SettingsDialogLayout extends FrameLayout {
         View wifiLL = findViewById(R.id.pup_wifi);
         View hotspotLL = findViewById(R.id.pup_hotspot);
         View settingsLL = findViewById(R.id.pup_settings);
+        View hotspot5G = findViewById(R.id.pup_hotspot_5);
+        View bluetooth = findViewById(R.id.pup_bluetooth);
 
         View screenshotLL = findViewById(R.id.pup_screenshot);
 
@@ -448,6 +465,8 @@ public class SettingsDialogLayout extends FrameLayout {
         wireLL.setOnClickListener(mOnClickListener);
         wifiLL.setOnClickListener(mOnClickListener);
         hotspotLL.setOnClickListener(mOnClickListener);
+        hotspot5G.setOnClickListener(mOnClickListener);
+        bluetooth.setOnClickListener(mOnClickListener);
         settingsLL.setOnClickListener(mOnClickListener);
 
         OPSImage.setOnClickListener(mOnClickListener);
@@ -707,9 +726,10 @@ public class SettingsDialogLayout extends FrameLayout {
             }
         }
         if (isClick) {
-            if (setWifiApEnabled(isOpenHotspot)) {
+            setSoftapEnabled(mContext,isOpenHotspot);
+//            if (setWifiApEnabled(isOpenHotspot)) {
                 Log.i(TAG, "setOpenHotspot-setWifiApEnabled:" + isOpenHotspot);
-            }
+//            }
         }
 
         if (isOpenHotspot){
@@ -719,6 +739,48 @@ public class SettingsDialogLayout extends FrameLayout {
         }
 
         SPUtil.saveData(getContext(),CommConsts.IS_HOTSPOT_ON, isOpenHotspot);
+    }
+
+    /**
+     * ap 打开和关闭
+     *
+     * @param mContext
+     * @param enable
+     */
+    public void setSoftapEnabled(Context mContext, boolean enable) {
+        final ContentResolver cr = mContext.getContentResolver();
+        /**
+         * Disable Wifi if enabling tethering
+         */
+        int wifiState = mWifiManager.getWifiState();
+        if (enable && ((wifiState == WifiManager.WIFI_STATE_ENABLING) ||
+                (wifiState == WifiManager.WIFI_STATE_ENABLED))) {
+            mWifiManager.setWifiEnabled(false);
+            Settings.Global.putInt(cr, Settings.Global.WIFI_SAVED_STATE, 1);
+        }
+
+        startTetheringCallback = new OnStartTetheringCallback();
+
+        if (enable) {
+           connectivityManager.startTethering(ConnectivityManager.TETHERING_WIFI, true, startTetheringCallback,mHandler);
+        } else {
+            connectivityManager.stopTethering(ConnectivityManager.TETHERING_WIFI);
+        }
+
+        /**
+         *  If needed, restore Wifi on tether disable
+         */
+        if (!enable) {
+            int wifiSavedState = 0;
+            try {
+                wifiSavedState = Settings.Global.getInt(cr, Settings.Global.WIFI_SAVED_STATE);
+            } catch (Settings.SettingNotFoundException e) {
+            }
+            if (wifiSavedState == 1) {
+                mWifiManager.setWifiEnabled(true);
+                Settings.Global.putInt(cr, Settings.Global.WIFI_SAVED_STATE, 0);
+            }
+        }
     }
 
     private boolean hasReady(boolean isClick){
@@ -926,17 +988,17 @@ public class SettingsDialogLayout extends FrameLayout {
 //        }
 
         isWifiOn = !isWifiOn;
-        if (isWifiOn){ // 开启WiFi时，关闭WiFi和PPPoE,开启有线
+//        if (isWifiOn){ // 开启WiFi时，关闭WiFi和PPPoE,开启有线
 
 
 //            if (PPPOE_STA.CONNECTING == mPppoeManager.PppoeGetStatus()) { // 2.Close PPPoE
 //                mPppoeManager.PppoeHangUp();
 //            }
 //
-            if (mEthernetManager.isEnabled()) { // 3.Close Ethernet
-                mEthernetManager.setEnabled(false);
-            }
-        }
+//            if (mEthernetManager.isEnabled()) { // 3.Close Ethernet
+//                mEthernetManager.setEnabled(false);
+//            }
+//        }
 
         mWifiManager.setWifiEnabled(isWifiOn);
         if (isWifiOn){
@@ -974,6 +1036,23 @@ public class SettingsDialogLayout extends FrameLayout {
             case R.id.pup_hotspot: { // 热点
                 isOpenHotspot = !isOpenHotspot;
                 setOpenHotspot(true);
+                break;
+            }
+
+            case R.id.pup_hotspot_5: { // 热点
+//                isOpenHotspot = !isOpenHotspot;
+//                setOpenHotspot(true);
+                break;
+            }
+
+            case R.id.pup_bluetooth: { // 热点
+//                isOpenHotspot = !isOpenHotspot;
+//                setOpenHotspot(true);
+                if(bluetoothAdapter.isEnabled()){
+                    bluetoothAdapter.disable();
+                }else{
+                    bluetoothAdapter.enable();
+                }
                 break;
             }
 
@@ -1028,6 +1107,7 @@ public class SettingsDialogLayout extends FrameLayout {
                 });
                 // 切换光感
                 changeLightSense();
+
                 break;
             }
             case R.id.pup_energy_saving:{//自定义
@@ -1288,6 +1368,22 @@ public class SettingsDialogLayout extends FrameLayout {
 //        void onPPPoeChanged(String status);
 //
 //        void onEthernetAvailabilityChanged(boolean isAvailable);
+    }
+
+    private static final class OnStartTetheringCallback extends
+            ConnectivityManager.OnStartTetheringCallback {
+
+        OnStartTetheringCallback() {
+        }
+
+        @Override
+        public void onTetheringStarted() {
+        }
+
+        @Override
+        public void onTetheringFailed() {
+        }
+
     }
 
 }
