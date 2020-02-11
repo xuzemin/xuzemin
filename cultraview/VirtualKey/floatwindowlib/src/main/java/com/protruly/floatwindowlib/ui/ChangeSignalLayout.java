@@ -109,15 +109,36 @@ public class ChangeSignalLayout extends FrameLayout {
      * item事件监听
      */
     private AdapterView.OnItemClickListener mOnItemClickListener = (parent, view, position, id) -> {
-        if (position < inputSourceIntList.length){
-            int source = inputSourceIntList[position];
+        if(position == 0){
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            mContext.startActivity(intent);
+        }else {
+            if (position < inputSourceIntList.length) {
+                int source = inputSourceIntList[position-1];
+                Log.i("CommonCommandsourceInde", "source:" + source);
+                if (source > 0) { // 切换到其他信号源
+                    if (source == 23) {
+                        AppUtils.sendCommand("SetTIPORT0");
+                    } else if (source == 24) {
+                        AppUtils.sendCommand("SetTIPORT2");
+                        source = 23;
+                    } else if (source == 26) {
+                        AppUtils.sendCommand("SetTIPORT3");
+                        source = 23;
+                    } else if (source == 16) {
+                        AppUtils.sendCommand("SetVGA0");
+                        source = 0;
+                    } else if (source == 0) {
+                        AppUtils.sendCommand("SetVGA1");
+                    }
+                    AppUtils.changeSignal(mContext, source);
+                }
 
-            if (source >= 0 ){ // 切换到其他信号源
-                AppUtils.changeSignal(mContext, source);
+                // 发送SOURCE广播
+                AppUtils.noticeChangeSignal(getContext(), source);
             }
-
-            // 发送SOURCE广播
-            AppUtils.noticeChangeSignal(getContext(), source);
         }
 
         // 退出设置界面

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:padding="5dp"
-    android:background="@drawable/dialog_bg_shape">
+    android:background="@drawable/shape_all">
 
     <GridView
         android:id="@+id/signal_grid_view"

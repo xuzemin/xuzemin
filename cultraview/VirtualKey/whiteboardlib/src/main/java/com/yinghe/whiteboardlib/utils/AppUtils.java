@@ -28,6 +28,7 @@ import com.mstar.android.tv.TvCommonManager;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -223,12 +224,12 @@ public class AppUtils {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             intent.putExtra(MstarConst.KEY_START_TV_PLAYER_TASK_TAG, MstarConst.VALUE_START_TV_PLAYER_TASK_TAG);
             intent.putExtra(MstarConst.KEY_START_TV_PLAYER_INPUT_SRC, inputSource);
-
+            Log.i("CommonCommandsourceInde","changeSignal error->" +inputSource);
             try {
                 context.startActivity(intent);
             } catch (Exception e){
                 e.printStackTrace();
-                LogUtils.e("changeSignal error->" + e.getMessage());
+                LogUtils.e("CommonCommand","changeSignal error->" + e.getMessage());
             }
 
             try {
@@ -395,6 +396,24 @@ public class AppUtils {
         Log.d("AppUtils", "CTV_ETH_TYPE->" + ethType);
     }
 
+
+    /**
+     * 中间件命令
+     */
+    public static void sendCommand(String command){
+        Log.v("CommonCommandsourceInde","sendCommand:"+command);
+        TvCommonManager.getInstance().setTvosCommonCommand(command);
+    }
+
+    public static int[] getCommand(String command){
+
+        Log.v("CommonCommandsourceInde","getCommand:"+command);
+        int[] get = TvCommonManager.getInstance().setTvosCommonCommand(command);
+        Log.v("CommonCommandsourceInde","getCommand get:"+ Arrays.toString(get));
+        return get;
+    }
+
+
     /**
      * 发送SOURCE广播通知
      *
@@ -489,7 +508,7 @@ public class AppUtils {
         return CtvPictureManager.getInstance().getBacklight();
     }
     /**
-     * 获得背光
+     * 设置背光
      * @return
      */
     public static void setBacklight(int value){

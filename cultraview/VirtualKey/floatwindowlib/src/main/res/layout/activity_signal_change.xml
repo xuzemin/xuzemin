@@ -1,39 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_200"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/dialog_bg_shape"
-    android:padding="5dp">
+    android:layout_width="340px"
+    android:layout_height="680px"
+    android:layout_marginTop="200px"
+    android:layout_marginRight="80px"
+    android:background="@drawable/shape_all"
+    >
 
     <TextView
         android:id="@+id/title_dilog_text"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:text="@string/source_options"/>
     <View
         android:id="@+id/h_divider_1"
-        android:layout_width="match_parent"
+        android:layout_width="50px"
         android:layout_height="0.7dp"
         android:layout_below="@id/title_dilog_text"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_margin="5dp"
         android:background="@color/com_bg_gray"/>
 
     <GridView
+        android:layout_marginTop="30px"
         android:id="@+id/signal_grid_dilog_view"
         android:layout_below="@id/title_dilog_text"
-        android:layout_marginTop="@dimen/dp_10"
         android:visibility="visible"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="415px"
         android:padding="5dp"
+        android:scrollbars="none"
         android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
+        android:verticalSpacing="20px"
         android:listSelector="@drawable/selector_list_item_bg"
         android:numColumns="1" />
+
+    <LinearLayout
+        android:id="@+id/more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/signal_grid_dilog_view"
+        android:layout_marginTop="36px">
+        <View
+            android:layout_centerHorizontal="true"
+            android:layout_width="30px"
+            android:layout_gravity="center"
+            android:layout_height="50px"
+            android:layout_below="@id/signal_grid_dilog_view"
+            android:background="@mipmap/more"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

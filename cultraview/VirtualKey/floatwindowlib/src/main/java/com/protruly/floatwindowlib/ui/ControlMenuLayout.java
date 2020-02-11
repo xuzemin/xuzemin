@@ -79,6 +79,7 @@ public class ControlMenuLayout extends FrameLayout {
     public static Handler mHandler;
 
     private ACache mACache;
+    public static boolean isDown = false;
 
     private float xInScreen;// 记录当前手指位置在屏幕上的横坐标值
     private float yInScreen;// 记录当前手指位置在屏幕上的纵坐标值
@@ -139,9 +140,10 @@ public class ControlMenuLayout extends FrameLayout {
                 float y = event.getRawY();
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
+                        isDown = true;
+                        MyUtils.checkUSB(false);
                         lastY = y;
                         //获取当前按下的坐标
-
                         break;
                     case MotionEvent.ACTION_MOVE:
                         //获取移动后的坐标
@@ -153,6 +155,7 @@ public class ControlMenuLayout extends FrameLayout {
                     case MotionEvent.ACTION_UP:
                         Log.e("打印操作：", "抬起了");
                         FloatWindowManager.updateDy();
+                        isDown = false;
                         break;
                 }
                 return true;
@@ -246,6 +249,7 @@ public class ControlMenuLayout extends FrameLayout {
 			    menuLayout.startAnimation(animHide);
 		    }
 	    }
+        MyUtils.checkUSB(true);
     }
 
     /**
@@ -253,7 +257,6 @@ public class ControlMenuLayout extends FrameLayout {
      */
     public void unfoldMenu() {
         // 改变箭头按钮的状态
-        rlBtnArrow.setBackgroundResource(R.drawable.dialog_bg_shape);
         if (isRight) { // 右边
             btnArrow.setImageResource(R.drawable.btn_arrow_right_normal);
         } else { // 左边
@@ -285,11 +288,11 @@ public class ControlMenuLayout extends FrameLayout {
      * @param isHasBg
      */
     public void changeIndexBg(boolean isHasBg){
-        if (isHasBg){
-            rlBtnArrow.setBackgroundResource(R.drawable.dialog_bg_shape);
-        } else {
-            rlBtnArrow.setBackground(defaultBG);
-        }
+//        if (isHasBg){
+            rlBtnArrow.setBackgroundResource(R.drawable.shape_all);
+//        } else {
+//            rlBtnArrow.setBackground(defaultBG);
+//        }
     }
 
     /**
@@ -299,7 +302,7 @@ public class ControlMenuLayout extends FrameLayout {
         MyUtils.openSettingActivity(getContext(), isRight);
 
         shrinkMenu();
-        changeIndexBg(false);
+//        changeIndexBg(false);
     }
 
     /**
@@ -328,12 +331,15 @@ public class ControlMenuLayout extends FrameLayout {
         if (newSignalDialog == null){
             FloatWindowManager.createNewSignalDialog(getContext().getApplicationContext(), isRight);
         } else {
+            newSignalDialog.refreshData();
+            newSignalDialog.commonAdapter.notifyDataSetChanged();
             int visible = newSignalDialog.getVisibility();
             if (visible != View.VISIBLE){
                 visible = View.VISIBLE;
             } else {
                 visible = View.GONE;
             }
+
 
             FloatWindowManager.updateNewSignalDialog(getContext(), isRight);
             newSignalDialog.setRightShow(isRight);
@@ -352,7 +358,7 @@ public class ControlMenuLayout extends FrameLayout {
         }
 
         // 关闭设置界面
-        MyUtils.closeSettingActivity();
+//        MyUtils.closeSettingActivity();
     }
 
     /**
@@ -429,6 +435,7 @@ public class ControlMenuLayout extends FrameLayout {
      * 点击事件监听
      */
     private OnClickListener mOnClickListener = v -> {
+        MyUtils.checkUSB(false);
         int id = v.getId();
         // 除了回退键/左右箭头/主页键时，其他按键都不能快速点击两次
 	    if (!((id == R.id.btn_back)
@@ -496,6 +503,7 @@ public class ControlMenuLayout extends FrameLayout {
             case R.id.btn_signal: {// 显示信号源弹框
 //                showSignal();
                 showNewSignal();
+
 //                AppUtils.keyEventBySystem(KeyEvent.KEYCODE_TV_INPUT);
                 break;
             }

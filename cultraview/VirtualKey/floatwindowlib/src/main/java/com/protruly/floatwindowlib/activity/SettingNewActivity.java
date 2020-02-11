@@ -15,6 +15,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.graphics.FontListParser;
 import android.graphics.Point;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -35,10 +36,12 @@ import android.widget.TextView;
 
 import com.cultraview.tv.CtvPictureManager;
 import com.protruly.floatwindowlib.R;
+import com.protruly.floatwindowlib.control.ActivityCollector;
 import com.protruly.floatwindowlib.control.FloatWindowManager;
 import com.protruly.floatwindowlib.service.MyNotificationListenerService;
 import com.protruly.floatwindowlib.ui.ControlMenuLayout;
 import com.protruly.floatwindowlib.ui.SettingsDialogLayout;
+import com.protruly.floatwindowlib.utils.MyUtils;
 import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.DrawConsts;
 import com.yinghe.whiteboardlib.utils.SPUtil;
@@ -81,7 +84,6 @@ public class SettingNewActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
         layout = new SettingsDialogLayout(this);
         setContentView(layout);
-
         // 初始化
         init();
     }
@@ -99,8 +101,15 @@ public class SettingNewActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ){
-            layout.updateVoiceUI();
+//        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ){
+//            layout.updateVoiceUI();
+//        }
+        if(keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+            layout.updateVoiceUI(true);
+            return true;
+        }else if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+            layout.updateVoiceUI(false);
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -109,6 +118,7 @@ public class SettingNewActivity extends AppCompatActivity {
      * 初始化
      */
     private void init(){
+        MyUtils.checkUSB(false);
         // 初始化
         mHandler = new UIHandler(this);
 
@@ -144,6 +154,7 @@ public class SettingNewActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 		layout.autoDelayHide();
+        ActivityCollector.addActivity(this);
 	}
 
 	@Override
@@ -159,6 +170,7 @@ public class SettingNewActivity extends AppCompatActivity {
 
         // 打开PC触摸板
 //        MyUtils.openAndClosePCTouch(true);
+        MyUtils.checkUSB(true);
 
 	    layout.destroy();
 
@@ -167,6 +179,10 @@ public class SettingNewActivity extends AppCompatActivity {
 			mHandler.removeCallbacksAndMessages(null);
 			mHandler = null;
 		}
+
+        ActivityCollector.finishAll();
+
+
     }
 
     /**

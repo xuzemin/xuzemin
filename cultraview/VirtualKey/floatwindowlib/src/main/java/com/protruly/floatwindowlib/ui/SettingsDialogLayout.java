@@ -1,5 +1,6 @@
 package com.protruly.floatwindowlib.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Service;
@@ -19,12 +20,16 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+
+import com.cultraview.tv.CtvTvManager;
+import com.mstar.android.tv.TvCommonManager;
 import com.protruly.floatwindowlib.activity.SettingNewActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -72,6 +77,8 @@ import com.yinghe.whiteboardlib.utils.CommConst;
 import com.yinghe.whiteboardlib.utils.SPUtil;
 import com.yinghe.whiteboardlib.utils.ScreenUtils;
 import com.yinghe.whiteboardlib.utils.TimeUtils;
+
+import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -149,6 +156,7 @@ public class SettingsDialogLayout extends FrameLayout {
 
     protected boolean isOpenWifi = false, isDialog = false;
     boolean isOpenHotspot = false;
+    boolean isOpenHotspot5G = false;
 
     private Listener mListener = new Listener() {
         @Override
@@ -188,7 +196,7 @@ public class SettingsDialogLayout extends FrameLayout {
                 // 开启热点
                 if (!isOpenHotspot) {
                     isOpenHotspot = true;
-                    setOpenHotspot(false);
+                    setOpenHotspot(false,false);
                     Log.d(TAG, "CHANGE WIFI_AP_STATE_ENABLED:" + isOpenHotspot);
                 }
 
@@ -232,12 +240,15 @@ public class SettingsDialogLayout extends FrameLayout {
         reflashUI();
         initReceiver();
 
+
         Log.i(TAG, "----last-isOpenHotspot:" + isOpenHotspot);
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getActionMasked();
+
         if (action == MotionEvent.ACTION_OUTSIDE){
             this.setVisibility(View.GONE);
             if (isRightShow) {
@@ -245,6 +256,7 @@ public class SettingsDialogLayout extends FrameLayout {
             } else {
                 FloatWindowManager.getMenuWindowLeft().changeIndexBg(true);
             }
+
         }
         return super.onTouchEvent(event);
     }
@@ -252,12 +264,13 @@ public class SettingsDialogLayout extends FrameLayout {
     /**
      * 初始化UI
      */
+    @SuppressLint("SetTextI18n")
     private void initView() {
         mHandler = new UIHandler(this);
         apkInfoUtils = new ApkInfoUtils();
-        tvWeek = (TextView)findViewById(R.id.tv_week);
-        tvDay = (TextView)findViewById(R.id.tv_day);
-        tvTime = (TextView)findViewById(R.id.tv_time);
+        tvWeek = findViewById(R.id.tv_week);
+        tvDay = findViewById(R.id.tv_day);
+        tvTime = findViewById(R.id.tv_time);
 
         // 有线网络
         mEthernetManager = (EthernetManager) getContext().getSystemService("ethernet");
@@ -266,13 +279,13 @@ public class SettingsDialogLayout extends FrameLayout {
 //        mPppoeManager = PppoeManager.getInstance(getContext());
 
         //OPS HOME shuatdow
-        OPSImage=(ImageView) findViewById(R.id.btn_ops);
-        HomeImage=(ImageView) findViewById(R.id.btn_android);
-        ShutdownImage=(ImageView) findViewById(R.id.btn_shutdown);
+        OPSImage= findViewById(R.id.btn_ops);
+        HomeImage= findViewById(R.id.btn_android);
+        ShutdownImage= findViewById(R.id.btn_shutdown);
 
         //通知
-        mRecyclerView = (RecyclerView)findViewById(R.id.recycleview_notification);
-        mAllIgnore = (TextView)findViewById(R.id.all_ignore);
+        mRecyclerView = findViewById(R.id.recycleview_notification);
+        mAllIgnore = findViewById(R.id.all_ignore);
 
         notificationList = FloatWindowManager.getNotificationList();
         if(notificationList !=null){
@@ -288,111 +301,112 @@ public class SettingsDialogLayout extends FrameLayout {
             mRecyclerView.setAdapter(notificationAdapter);
         }
 
-        gv_apps = findViewById(R.id.gv_apps);
-        app_list = new ArrayList<>();
-        //获取数据
-        getData();
-        //新建适配器
-        String [] from ={"image","text"};
-        int [] to = {R.id.image,R.id.text};
-        sim_adapter = new SimpleAdapter(mContext, app_list, R.layout.app_item, from, to);
-        //配置适配器
-        gv_apps.setAdapter(sim_adapter);
-        gv_apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int textid = iconName[i];
-                switch (textid){
-                    case R.string.apps_wire: { // 网络
-//                    gotoNetUI(CommConsts.WIRE_CONNECT);
-                        clickWire();
-                        break;
-                    }
-                    case R.string.apps_wireless: { // WiFi
-                        clickWifi();
-                        break;
-                    }
-                    case R.string.apps_hotspot: { // 热点
-                        isOpenHotspot = !isOpenHotspot;
-                        setOpenHotspot(true);
-                        break;
-                    }
-
-                    case R.string.apps_settings: { // 设置
-                        String action = "com.cultraview.settings.CTVSETTINGS";
-                        AppUtils.gotoOtherApp(getContext(), action);
-                        break;
-                    }
-
-                    case R.string.apps_screenshot: { // 截屏
-                        Log.i(TAG, "screenshot start");
-                        AppUtils.showScreenshot(getContext().getApplicationContext());
-                        break;
-                    }
-                    case R.string.apps_timer: { // 计时器
-                        String mPackageName = "com.dazzle.timer";
-                        String mActivityName = "com.dazzle.timer.TimerActivity";
-                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
-                        break;
-                    }
-                    case R.string.apps_record: { // 录像
-                        String mPackageName = "com.dazzlewisdom.screenrec";
-                        String mActivityName = "com.dazzlewisdom.screenrec.ScreenRecActivity";
-                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
-                        break;
-                    }
-                    case R.string.apps_eyecare: { // 护眼
-                        setEyecareMode();
-                        break;
-                    }
-                    case R.string.apps_usred:{//自定义
-                        setUserAPPShow();
-                        break;
-                    }
-                    case R.id.btn_delete: { // 删除添加的快捷应用
-                        autoDelayHide();
-
-                        SPUtil.saveData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
-                        deleteImage.setVisibility(View.GONE);
-
-                        updateUseredIcon();
-                        break; // 不隐藏UI，还可以再操作
-                    }
-                    case R.string.light_sense: {
-                        // 允许背光进度条滑动
-                        mHandler.post(() ->{
-                            if (SettingNewActivity.mHandler != null){
-                                Message msg = SettingNewActivity.mHandler.obtainMessage(SettingNewActivity.MSG_UPDATE_LIGHT,
-                                        true);
-                                SettingNewActivity.mHandler.sendMessage(msg); // 更新亮度进度条
-                            }
-                        });
-                        // 切换光感
-                        changeLightSense();
-                        break;
-                    }
-                    case R.string.energy_saving:{//自定义
-                        CtvPictureManager.getInstance().disableBacklight();
-                        Settings.System.putInt(mContext.getContentResolver(), "isSeperateHear", 1);
-                        break;
-                    }
-                    case R.string.magnifier:{ //放大镜
-                        String mPackageName = "com.example.newmagnifier";
-                        String mActivityName = "com.example.newmagnifier.MainActivity";
-                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
-                        break;
-                    }
-                }
-            }
-        });
+//        gv_apps = findViewById(R.id.gv_apps);
+//        app_list = new ArrayList<>();
+//        //获取数据
+//        getData();
+//        //新建适配器
+//        String [] from ={"image","text"};
+//        int [] to = {R.id.image,R.id.text};
+//        sim_adapter = new SimpleAdapter(mContext, app_list, R.layout.app_item, from, to);
+//        //配置适配器
+//        gv_apps.setAdapter(sim_adapter);
+//        gv_apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                int textid = iconName[i];
+//                switch (textid){
+//                    case R.string.apps_wire: { // 网络
+////                    gotoNetUI(CommConsts.WIRE_CONNECT);
+//                        clickWire();
+//                        break;
+//                    }
+//                    case R.string.apps_wireless: { // WiFi
+//                        clickWifi();
+//                        break;
+//                    }
+//                    case R.string.apps_hotspot: { // 热点
+//                        isOpenHotspot = !isOpenHotspot;
+//                        setOpenHotspot(true);
+//                        break;
+//                    }
+//
+//                    case R.string.apps_settings: { // 设置
+//                        String action = "com.cultraview.settings.CTVSETTINGS";
+//                        AppUtils.gotoOtherApp(getContext(), action);
+//                        break;
+//                    }
+//
+//                    case R.string.apps_screenshot: { // 截屏
+//                        Log.i(TAG, "screenshot start");
+//                        AppUtils.showScreenshot(getContext().getApplicationContext());
+//                        break;
+//                    }
+//                    case R.string.apps_timer: { // 计时器
+//                        String mPackageName = "com.dazzle.timer";
+//                        String mActivityName = "com.dazzle.timer.TimerActivity";
+//                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
+//                        break;
+//                    }
+//                    case R.string.apps_record: { // 录像
+//                        String mPackageName = "com.dazzlewisdom.screenrec";
+//                        String mActivityName = "com.dazzlewisdom.screenrec.ScreenRecActivity";
+//                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
+//                        break;
+//                    }
+//                    case R.string.apps_eyecare: { // 护眼
+//                        setEyecareMode();
+//                        break;
+//                    }
+//                    case R.string.apps_usred:{//自定义
+//                        setUserAPPShow();
+//                        break;
+//                    }
+//                    case R.id.btn_delete: { // 删除添加的快捷应用
+//                        autoDelayHide();
+//
+//                        SPUtil.saveData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
+//                        deleteImage.setVisibility(View.GONE);
+//
+//                        updateUseredIcon();
+//                        break; // 不隐藏UI，还可以再操作
+//                    }
+//                    case R.string.light_sense: {
+//                        // 允许背光进度条滑动
+//                        mHandler.post(() ->{
+//                            if (SettingNewActivity.mHandler != null){
+//                                Message msg = SettingNewActivity.mHandler.obtainMessage(SettingNewActivity.MSG_UPDATE_LIGHT,
+//                                        true);
+//                                SettingNewActivity.mHandler.sendMessage(msg); // 更新亮度进度条
+//                            }
+//                        });
+//                        // 切换光感
+//                        changeLightSense();
+//                        break;
+//                    }
+//                    case R.string.energy_saving:{//自定义
+//                        CtvPictureManager.getInstance().disableBacklight();
+//                        Settings.System.putInt(mContext.getContentResolver(), "isSeperateHear", 1);
+//                        break;
+//                    }
+//                    case R.string.magnifier:{ //放大镜
+//                        String mPackageName = "com.example.newmagnifier";
+//                        String mActivityName = "com.example.newmagnifier.MainActivity";
+//                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
+//                        break;
+//                    }
+//                }
+//            }
+//        });
 
 
         // WiFi网络
-        wifiImage = (ImageView) findViewById(R.id.wifi_image);
+        wifiImage = findViewById(R.id.wifi_image);
         mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
 
         // WiFi网络
-        hostpotImage = (ImageView) findViewById(R.id.hotspot_image);
+        hostpotImage = findViewById(R.id.hotspot_image);
+        hostpotImage_5G = findViewById(R.id.hotspot_image_5);
 
         bluetoothImage = findViewById(R.id.iv_bluetooth);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -404,12 +418,12 @@ public class SettingsDialogLayout extends FrameLayout {
             bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_default);
         }
 
-        lightSenseLL = (LinearLayout) findViewById(R.id.pup_light_sense);
-        lightSenseImage = (ImageView) findViewById(R.id.iv_light_sense);
+        lightSenseLL = findViewById(R.id.pup_light_sense);
+        lightSenseImage = findViewById(R.id.iv_light_sense);
 
 
         //放大镜
-        magnifierLL = (LinearLayout) findViewById(R.id.pup_magnifier);
+        magnifierLL = findViewById(R.id.pup_magnifier);
         View wireLL = findViewById(R.id.pup_net);
         View wifiLL = findViewById(R.id.pup_wifi);
         View hotspotLL = findViewById(R.id.pup_hotspot);
@@ -423,27 +437,27 @@ public class SettingsDialogLayout extends FrameLayout {
         View recordLL = findViewById(R.id.pup_record);
 
         //节能
-        energySaving = (LinearLayout) findViewById(R.id.pup_energy_saving);
+        energySaving = findViewById(R.id.pup_energy_saving);
         // 护眼
         View eyecareLL = findViewById(R.id.pup_eyecare);
-        eyecareImage = (ImageView) findViewById(R.id.eyecare_iv);
+        eyecareImage = findViewById(R.id.eyecare_iv);
         int eyeCare = Settings.System.getInt(mContext.getContentResolver(), CommConsts.IS_EYECARE, 0);
         int resID = (eyeCare == 0) ? R.mipmap.apps_eye_care_default: R.mipmap.apps_eye_care_focus;
         eyecareImage.setImageResource(resID);
 
-        pupAdd = (RelativeLayout)findViewById(R.id.pup_add);
+        pupAdd = findViewById(R.id.pup_add);
         pupAdd.setOnLongClickListener(mOnLongClickListener);
 
-        tvAdd = (TextView)findViewById(R.id.tv_add);
-        addMenu = (ImageView)findViewById(R.id.add_menu);
-        deleteImage = (ImageView)findViewById(R.id.btn_delete);
+        tvAdd = findViewById(R.id.tv_add);
+        addMenu = findViewById(R.id.add_menu);
+        deleteImage = findViewById(R.id.btn_delete);
 
         // 声音和亮度
-        sound = (SeekBar) findViewById(R.id.pup_seekbar2);
-        light = (SeekBar) findViewById(R.id.pup_seekbar1);
+        sound = findViewById(R.id.pup_seekbar2);
+        light = findViewById(R.id.pup_seekbar1);
 
-        tv_sound = (TextView) findViewById(R.id.tv_sound);
-        tv_light = (TextView) findViewById(R.id.tv_light);
+        tv_sound = findViewById(R.id.tv_sound);
+        tv_light = findViewById(R.id.tv_light);
 
         audioManager = (AudioManager) mContext.getSystemService(Service.AUDIO_SERVICE);
         int maxSound = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);//获取系统音量最大值
@@ -453,11 +467,15 @@ public class SettingsDialogLayout extends FrameLayout {
         tv_sound.setText(""+currentVolume);
         try {
             mTvPictureManager = CtvPictureManager.getInstance();
-            light.setProgress(mTvPictureManager.getBacklight());
-            tv_light.setText(""+mTvPictureManager.getBacklight());
+//            light.setProgress(mTvPictureManager.getBacklight());
+            int progress = SystemProperties.getInt("persist.sys.backlight",80);
+            light.setProgress(progress);
+            tv_light.setText(""+progress);
+//            tv_light.setText(""+mTvPictureManager.getBacklight());
         } catch (Exception e){
             e.printStackTrace();
         }
+
         light.setMax(100);
 
 
@@ -493,7 +511,7 @@ public class SettingsDialogLayout extends FrameLayout {
         magnifierLL.setOnClickListener(mOnClickListener);
         lightSenseLL.setOnClickListener(mOnClickListener);
         energySaving.setOnClickListener(mOnClickListener);
-	    updateTime();
+        updateTime();
         // 开启定时器，每隔2秒刷新一次
         if (timer == null) {
             timer = new Timer();
@@ -528,8 +546,11 @@ public class SettingsDialogLayout extends FrameLayout {
      * 长按事件
      */
     private View.OnLongClickListener mOnLongClickListener = (view)->{
+        String packageName = (String)SPUtil.getData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
+        if(TextUtils.isEmpty(packageName)){
+            return true;
+        }
         autoDelayHide();
-
         if (deleteImage != null){
             deleteImage.setVisibility(View.VISIBLE);
         }
@@ -672,7 +693,7 @@ public class SettingsDialogLayout extends FrameLayout {
     public void reflashUI(){
         // 有线
         boolean isWireOpen = mEthernetManager.isEnabled();
-        wireImage = (ImageView) findViewById(R.id.wire_image);
+        wireImage = findViewById(R.id.wire_image);
         if (isWireOpen){
             wireImage.setImageResource(R.mipmap.apps_wire_focus);
         } else {
@@ -691,16 +712,19 @@ public class SettingsDialogLayout extends FrameLayout {
         Log.i(TAG, "isWifiEnabled:" + isWifiOpen);
 
         // Wifi热点
-        setOpenHotspot(false);
+        setOpenHotspot(false,false);
+
+        MyUtils.checkUSB(false);
     }
 
     /**
      * 设置Wifi热点
      * @param isClick
      */
-    void setOpenHotspot(boolean isClick) {
-        int apState = (Integer) SPUtil.getData(getContext(),CommConsts.WIFI_STATE, (Integer)11);
+    void setOpenHotspot(boolean isClick,boolean is5G) {
+        int apState = (Integer) SPUtil.getData(getContext(),CommConsts.WIFI_STATE, 11);
         Log.i(TAG, "setOpenHotspot-isOpenHotspot:" + isOpenHotspot);
+        String wifiapband = SystemProperties.get("Wifiapband");
         if (isOpenHotspot) {
             if (!hasReady(isClick)) {
                 Log.d(TAG, "wifiap have not ready.");
@@ -711,9 +735,20 @@ public class SettingsDialogLayout extends FrameLayout {
                     || apState == 13) {
                 isOpenHotspot = true;
                 if (isOpenHotspot){
-                    hostpotImage.setImageResource(R.mipmap.apps_hotspot_focus);
+                    if(wifiapband.equals("Apband5G")){
+                        hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
+                        hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_focus_5);
+                    }else if(wifiapband.equals("Apband2G")){
+                        hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
+                        hostpotImage.setImageResource(R.mipmap.apps_hotspot_focus__2_4);
+                    }else{
+                        hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
+                        hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
+                    }
                 } else {
-                    hostpotImage.setImageResource(R.mipmap.apps_hotspot_default);
+                    hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
+                    hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
+//                    hostpotImage.setImageResource(R.mipmap.apps_hotspot_default);
                 }
 
                 SPUtil.saveData(getContext(),CommConsts.IS_HOTSPOT_ON, isOpenHotspot);
@@ -726,16 +761,28 @@ public class SettingsDialogLayout extends FrameLayout {
             }
         }
         if (isClick) {
-            setSoftapEnabled(mContext,isOpenHotspot);
+            setSoftapEnabled(mContext,isOpenHotspot,is5G);
 //            if (setWifiApEnabled(isOpenHotspot)) {
-                Log.i(TAG, "setOpenHotspot-setWifiApEnabled:" + isOpenHotspot);
+            Log.i(TAG, "setOpenHotspot-setWifiApEnabled:" + isOpenHotspot);
 //            }
         }
 
         if (isOpenHotspot){
-            hostpotImage.setImageResource(R.mipmap.apps_hotspot_focus);
+            if (isOpenHotspot && !"".equals(wifiapband)){
+                if(wifiapband.equals("Apband5G")){
+                    hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
+                    hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_focus_5);
+                }else if(wifiapband.equals("Apband2G")){
+                    hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
+                    hostpotImage.setImageResource(R.mipmap.apps_hotspot_focus__2_4);
+                }else{
+                    hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
+                    hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
+                }
+            }
         } else {
-            hostpotImage.setImageResource(R.mipmap.apps_hotspot_default);
+            hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
+            hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
         }
 
         SPUtil.saveData(getContext(),CommConsts.IS_HOTSPOT_ON, isOpenHotspot);
@@ -747,7 +794,7 @@ public class SettingsDialogLayout extends FrameLayout {
      * @param mContext
      * @param enable
      */
-    public void setSoftapEnabled(Context mContext, boolean enable) {
+    public void setSoftapEnabled(Context mContext, boolean enable,boolean is5G) {
         final ContentResolver cr = mContext.getContentResolver();
         /**
          * Disable Wifi if enabling tethering
@@ -762,7 +809,13 @@ public class SettingsDialogLayout extends FrameLayout {
         startTetheringCallback = new OnStartTetheringCallback();
 
         if (enable) {
-           connectivityManager.startTethering(ConnectivityManager.TETHERING_WIFI, true, startTetheringCallback,mHandler);
+            connectivityManager.stopTethering(ConnectivityManager.TETHERING_WIFI);
+            if(is5G){
+                SystemProperties.set("Wifiapband", "Apband5G");
+            }else{
+                SystemProperties.set("Wifiapband","Apband2G");
+            }
+            connectivityManager.startTethering(ConnectivityManager.TETHERING_WIFI, true, startTetheringCallback,mHandler);
         } else {
             connectivityManager.stopTethering(ConnectivityManager.TETHERING_WIFI);
         }
@@ -810,6 +863,7 @@ public class SettingsDialogLayout extends FrameLayout {
         tvWeek.setText("" + timeInfo.getWeek());
         tvDay.setText("" + timeInfo.getDay());
         tvTime.setText("" + timeInfo.getTime());
+
     }
 
     @Override
@@ -845,26 +899,33 @@ public class SettingsDialogLayout extends FrameLayout {
             mHandler.removeMessages(KEY_RESET_BACK_LIGHT);
 
             // 保存背光值
-            int curBacklight = AppUtils.getBacklight();
+            int curBacklight = SystemProperties.getInt("persist.sys.backlight",80);//AppUtils.getBacklight();
             if (curBacklight > 50){
                 Settings.System.putInt(getContext().getContentResolver(), "lastBlackLight", curBacklight);
                 LogUtils.d("护眼模式 降低light setBacklight 50, curBacklight:" + curBacklight);
             }
-            int lightSense = Settings.System.getInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, 0);
-            if (lightSense == 1){
-                // 切换光感
-                Settings.System.putInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, 0);
-                if (!MyUtils.isSupportLightSense()){
-                    return;
-                }
 
-                lightSense = 0;
-                Settings.System.putInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, lightSense);
-
-                int ID =  R.mipmap.light_sense_default;
-                lightSenseImage.setImageResource(ID);
-                Log.d(TAG, "isLightSense->" + lightSense);
+            if(curBacklight > 50){
+                SystemProperties.set("persist.sys.backlight",""+50);
+                AppUtils.setBacklight(50);
+                light.setProgress(50);
             }
+//
+//            int lightSense = Settings.System.getInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, 0);
+//            if (lightSense == 1){
+//                // 切换光感
+//                Settings.System.putInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, 0);
+//                if (!MyUtils.isSupportLightSense()){
+//                    return;
+//                }
+//
+//                lightSense = 0;
+//                Settings.System.putInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, lightSense);
+//
+//                int ID =  R.mipmap.light_sense_default;
+//                lightSenseImage.setImageResource(ID);
+//                Log.d(TAG, "isLightSense->" + lightSense);
+//            }
         } else { // 关闭护眼时，恢复背光值
             mHandler.sendEmptyMessage(KEY_RESET_BACK_LIGHT);
         }
@@ -922,7 +983,11 @@ public class SettingsDialogLayout extends FrameLayout {
      * 自动延迟收缩
      */
     public void autoDelayHide(){
-        mHandler.removeCallbacks(shrinkRunnable);
+        if(mHandler !=null){
+            mHandler.removeCallbacks(shrinkRunnable);
+        }else{
+            mHandler = new UIHandler(this);
+        }
         mHandler.postDelayed(shrinkRunnable, 10000);
     }
 
@@ -930,6 +995,7 @@ public class SettingsDialogLayout extends FrameLayout {
      * 清除
      */
     public void destroy(){
+        MyUtils.checkUSB(true);
         if (mHandler != null){
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
@@ -937,6 +1003,7 @@ public class SettingsDialogLayout extends FrameLayout {
 
         mContext.unregisterReceiver(mReceiver);
         mContext.unregisterReceiver(mWifiListReceiver);
+
     }
 
     /**
@@ -945,6 +1012,17 @@ public class SettingsDialogLayout extends FrameLayout {
     public void updateVoiceUI(){
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);//获取当前音量
         sound.setProgress(currentVolume);//音量控制Bar的当前值设置为系统音量当前值
+        tv_sound.setText(""+currentVolume);
+    }
+
+    public void updateVoiceUI(boolean isADD){
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);//获取当前音量
+        if(isADD && currentVolume != audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)){
+            currentVolume++;
+        }else if(!isADD && currentVolume!=0){
+            currentVolume--;
+        }
+        sound.setProgress(currentVolume);
         tv_sound.setText(""+currentVolume);
     }
 
@@ -1020,7 +1098,15 @@ public class SettingsDialogLayout extends FrameLayout {
      * item事件监听
      */
     private View.OnClickListener mOnClickListener = (view) -> {
-        SettingsDialogLayout.this.setVisibility(View.GONE);
+//        SettingsDialogLayout.this.setVisibility(View.GONE);
+
+
+        // 在PC界面时，收起菜单
+        // 收缩菜单
+        ControlMenuLayout controlMenu = isRightShow ? FloatWindowManager.getMenuWindow() : FloatWindowManager.getMenuWindowLeft();
+        if ((controlMenu != null)) {
+            controlMenu.shrinkMenu();
+        }
 
         int id = view.getId();
         switch (id){
@@ -1034,18 +1120,35 @@ public class SettingsDialogLayout extends FrameLayout {
                 break;
             }
             case R.id.pup_hotspot: { // 热点
-                isOpenHotspot = !isOpenHotspot;
-                setOpenHotspot(true);
+                String wifiapband = SystemProperties.get("Wifiapband");
+                if(wifiapband.equals("Apband2G")){
+                    isOpenHotspot = false;
+                    setOpenHotspot(true,false);
+                }else{
+                    SystemProperties.set("Wifiapband", "Apband2G");
+                    isOpenHotspot = true;
+                    setOpenHotspot(true,false);
+                }
+
                 break;
             }
 
             case R.id.pup_hotspot_5: { // 热点
 //                isOpenHotspot = !isOpenHotspot;
 //                setOpenHotspot(true);
+                String wifiapband = SystemProperties.get("Wifiapband");
+                if(wifiapband.equals("Apband5G")){
+                    isOpenHotspot = false;
+                    setOpenHotspot(true,true);
+                }else{
+                    isOpenHotspot = true;
+                    SystemProperties.set("Wifiapband", "Apband5G");
+                    setOpenHotspot(true,true);
+                }
                 break;
             }
 
-            case R.id.pup_bluetooth: { // 热点
+            case R.id.pup_bluetooth: { // 蓝牙
 //                isOpenHotspot = !isOpenHotspot;
 //                setOpenHotspot(true);
                 if(bluetoothAdapter.isEnabled()){
@@ -1053,30 +1156,50 @@ public class SettingsDialogLayout extends FrameLayout {
                 }else{
                     bluetoothAdapter.enable();
                 }
+
                 break;
             }
 
             case R.id.pup_settings: { // 设置
-                    String action = "com.cultraview.settings.CTVSETTINGS";
+                String action = "com.cultraview.settings.CTVSETTINGS";
                 AppUtils.gotoOtherApp(getContext(), action);
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
 
             case R.id.pup_screenshot: { // 截屏
+                SettingsDialogLayout.this.setVisibility(View.GONE);
                 Log.i(TAG, "screenshot start");
                 AppUtils.showScreenshot(getContext().getApplicationContext());
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
             case R.id.pup_timer: { // 计时器
+                SettingsDialogLayout.this.setVisibility(View.GONE);
                 String mPackageName = "com.dazzle.timer";
                 String mActivityName = "com.dazzle.timer.TimerActivity";
                 AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
             case R.id.pup_record: { // 录像
+                SettingsDialogLayout.this.setVisibility(View.GONE);
                 String mPackageName = "com.dazzlewisdom.screenrec";
                 String mActivityName = "com.dazzlewisdom.screenrec.ScreenRecActivity";
                 AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
             case R.id.pup_eyecare: { // 护眼
@@ -1116,36 +1239,43 @@ public class SettingsDialogLayout extends FrameLayout {
                 break;
             }
             case R.id.pup_magnifier:{ //放大镜
+                SettingsDialogLayout.this.setVisibility(View.GONE);
                 String mPackageName = "com.example.newmagnifier";
                 String mActivityName = "com.example.newmagnifier.MainActivity";
                 AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
             case R.id.btn_ops: {//OPS
                 AppUtils.changeSignal(mContext, 26);
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
             case R.id.btn_android: { //主页
                 AppUtils.keyEventBySystem(KeyEvent.KEYCODE_HOME);
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
             case R.id.btn_shutdown: { //关机
                 AppUtils.keyEventBySystem(KeyEvent.KEYCODE_POWER);
+                //退出设置界面
+                if (mContext instanceof Activity) {
+                    ((Activity) mContext).finish();
+                }
                 break;
             }
 
         }
-        // 在PC界面时，收起菜单
-        // 收缩菜单
-        ControlMenuLayout controlMenu = isRightShow ? FloatWindowManager.getMenuWindow() : FloatWindowManager.getMenuWindowLeft();
-        if ((controlMenu != null)) {
-            controlMenu.shrinkMenu();
-        }
 
-        // 退出设置界面
-        if (mContext instanceof Activity) {
-            ((Activity) mContext).finish();
-        }
     };
 
     /**
@@ -1227,10 +1357,10 @@ public class SettingsDialogLayout extends FrameLayout {
     class SeekBarListen implements SeekBar.OnSeekBarChangeListener {
 
         @Override
-        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
             autoDelayHide();
 
-            int progress = seekBar.getProgress();
+//            int progress = seekBar.getProgress();
 //            LogUtils.d("声音设置值：" + progress);
 
             MyApplication.IsTouchSeting = true;
@@ -1256,15 +1386,18 @@ public class SettingsDialogLayout extends FrameLayout {
     class LightListen implements SeekBar.OnSeekBarChangeListener {
 
         @Override
-        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
             autoDelayHide();
 
-            int progress = seekBar.getProgress();
+//            int progress = seekBar.getProgress();
 //            LogUtils.d("亮度设置值：" + progress);
+
+//            int progress = SystemProperties.getInt("persist.sys.backlight",80);
 
             light.setProgress(progress);
             try {
                 Settings.System.putInt(mContext.getContentResolver(),"backlight",progress);
+                SystemProperties.set("persist.sys.backlight",""+progress);
                 mTvPictureManager.setBacklight(progress);
                 tv_light.setText(""+progress);
             } catch (Exception e){
@@ -1299,6 +1432,11 @@ public class SettingsDialogLayout extends FrameLayout {
                     SystemClock.sleep(500);
                 });
             }
+            if (bluetoothAdapter.isEnabled()){
+                bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_focus);
+            } else {
+                bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_default);
+            }
         }
     }
 
@@ -1312,21 +1450,23 @@ public class SettingsDialogLayout extends FrameLayout {
         int lastBlackLight = Settings.System.getInt(mContext.getContentResolver(),
                 "lastBlackLight", 50);
         if (lastBlackLight > 50){
+            SystemProperties.set("persist.sys.backlight",""+lastBlackLight);
             AppUtils.setBacklight(lastBlackLight);
             // 更新背光
             updateBlackLightSeekbar();
-            LogUtils.d("护眼模式 恢复light setBacklight lastBlackLight:" + lastBlackLight);
+            LogUtils.d("护眼式 恢复light setBacklight 模lastBlackLight:" + lastBlackLight);
         }
     }
 
     private void updateBlackLightSeekbar(){
-        light.setProgress(AppUtils.getBacklight());
+        light.setProgress(SystemProperties.getInt("persist.sys.backlight",80));
     }
 
     public static final int KEY_CHANGE_LIGHT_SENSE = 1; // 切换光感
     public static final int KEY_CHANGE_EYE_CARE = 2; // 切换护眼
     public static final int KEY_RESET_BACK_LIGHT = 4; // 恢复背光
     public static final int MSG_UPDATE_LIGHT = 5; // 更新背光进度条值
+    public static final int MSG_UPDATE_BLUETOOTH = 6; // 更新背光进度条值
 
     /**
      * UI异步处理
@@ -1346,7 +1486,6 @@ public class SettingsDialogLayout extends FrameLayout {
             if (dialogLayout == null) {
                 return;
             }
-
             switch (msg.what){
                 case KEY_RESET_BACK_LIGHT:{ // 恢复背光值
                     dialogLayout.resetBlackLight();
@@ -1356,6 +1495,15 @@ public class SettingsDialogLayout extends FrameLayout {
                     dialogLayout.updateBlackLightSeekbar();
                     break;
                 }
+//                case MSG_UPDATE_BLUETOOTH:{ // 更新背光进度条值
+//                    if (dialogLayout.bluetoothAdapter.isEnabled()){
+//                        dialogLayout.bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_focus);
+//                    } else {
+//                        dialogLayout.bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_default);
+//                    }
+//                    mHandler.sendEmptyMessageDelayed(SettingsDialogLayout.MSG_UPDATE_BLUETOOTH,1000);
+//                    break;
+//                }
                 default:
                     break;
             }

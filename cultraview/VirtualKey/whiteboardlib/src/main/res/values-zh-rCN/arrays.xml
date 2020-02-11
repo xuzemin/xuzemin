@@ -26,7 +26,7 @@
         <item>视频5</item>
         <item>视频6</item>
         <item>视频7</item>
-        <item>视频8</item>
+        <item>HDMI2</item>
         <item>视频 MAX</item>
 
         <item>SUPER VIDEO</item>
@@ -45,9 +45,9 @@
         <item>SCART MAX</item>
 
         <item>HDMI1</item>
-        <item>HDMI2</item>
-        <item>HDMI3</item>
-        <item>OPS</item>
+        <item>DP</item>
+        <item>前置HDMI</item>
+        <item>内置电脑</item>
         <!--        <item>INSIDE PC</item>-->
 <!--        <item>VGA</item>-->
         <item>数字电视</item>

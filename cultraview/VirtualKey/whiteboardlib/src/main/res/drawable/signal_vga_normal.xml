@@ -12,20 +12,20 @@
 	<!-- 按下 -->
 	<item
 		android:state_pressed="true"
-		android:drawable="@mipmap/signal_vga_focus"
+		android:drawable="@mipmap/list_menu_img_pc"
 		>
 	</item>
 
 	<!-- 按钮不可以 -->
 	<item
 		android:state_enabled="false"
-		android:drawable="@mipmap/signal_vga_default"
+		android:drawable="@mipmap/list_menu_img_pc"
 		>
 	</item>
 
 	<!-- 正常 -->
 	<item
-		android:drawable="@mipmap/signal_vga_default"
+		android:drawable="@mipmap/list_menu_img_pc"
 		>
 	</item>
 </selector>

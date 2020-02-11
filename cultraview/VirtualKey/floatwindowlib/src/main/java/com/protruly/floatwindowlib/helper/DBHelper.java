@@ -85,7 +85,7 @@ public class DBHelper {
 			}
 //			Log.e("sourcelist","sourcelist = " + Arrays.toString(sourceChannel));
 		}
-//		sourceChannel = new int[]{0, 23, 24, 25, 26};
+		sourceChannel = new int[]{1,28,23,9,26,25,24,2,16,0};
 //		Log.e("sourcelist","sourcelist = " + sourceChannel.toString());
 		// 获得数据
 		int len = resIdList.length;

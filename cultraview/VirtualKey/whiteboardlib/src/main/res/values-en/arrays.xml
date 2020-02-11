@@ -11,7 +11,7 @@
         <item>AV5</item>
         <item>AV6</item>
         <item>AV7</item>
-        <item>AV8</item>
+        <item>HDMI2</item>
         <item>AV MAX</item>
 
         <item>S-VIDEO</item>
@@ -30,8 +30,8 @@
         <item>SCART MAX</item>
 
         <item>HDMI1</item>
-        <item>HDMI2</item>
-        <item>HDMI3</item>
+        <item>DP</item>
+        <item>FRONT HDMI</item>
         <item>OPS</item>
         <!--        <item>INSIDE PC</item>-->
 <!--        <item>VGA</item>-->

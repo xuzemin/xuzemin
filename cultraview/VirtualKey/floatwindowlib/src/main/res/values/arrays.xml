@@ -11,7 +11,7 @@
         <item>AV5</item>
         <item>AV6</item>
         <item>AV7</item>
-        <item>AV8</item>
+        <item>HDMI2</item>
         <item>AV MAX</item>
 
         <item>S-VIDEO</item>
@@ -30,8 +30,8 @@
         <item>SCART MAX</item>
 
         <item>HDMI1</item>
-        <item>HDMI2</item>
-        <item>HDMI3</item>
+        <item>DP</item>
+        <item>FRONT HDMI</item>
         <item>OPS</item>
         <!--        <item>INSIDE PC</item>-->
 <!--        <item>VGA</item>-->
@@ -48,33 +48,33 @@
     <string-array name="input_source_str_list">
         <item>signal_vga</item>
         <item>signal_atv</item>
-        <item>signal_av1</item>
-        <item>signal_av2</item>
-        <item>signal_av3</item>
-        <item>signal_av4</item>
-        <item>signal_av5</item>
-        <item>signal_av6</item>
-        <item>signal_av7</item>
-        <item>signal_av8</item>
-        <item>signal_av max</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_hdmi2</item>
+        <item>signal_av</item>
 
         <item>signal_svideo</item>
-        <item>signal_svideo2</item>
-        <item>signal_svideo3</item>
-        <item>signal_svideo4</item>
-        <item>signal_svideo max</item>
+        <item>signal_svideo</item>
+        <item>signal_svideo</item>
+        <item>signal_svideo</item>
+        <item>signal_svideo</item>
 
         <item>signal_ypbrb</item>
-        <item>signal_ypbrb 2</item>
-        <item>signal_ypbrb 3</item>
-        <item>signal_ypbrb max</item>
+        <item>signal_ypbrb</item>
+        <item>signal_ypbrb</item>
+        <item>signal_ypbrb</item>
 
         <item>signal_scart</item>
         <item>signal_scart 2</item>
         <item>signal_scart max</item>
 
         <item>signal_hdmi</item>
-        <item>signal_hdmi2</item>
+        <item>signal_dp</item>
         <item>signal_hdmi3</item>
         <item>signal_ops</item>
         <!--        <item>INSIDE PC</item>-->
@@ -82,10 +82,10 @@
         <item>signal_dtv</item>
 
         <item>signal_dvi</item>
-        <item>signal_dvi 2</item>
-        <item>signal_dvi 3</item>
-        <item>signal_dvi 4</item>
-        <item>signal_dvi max</item>
+        <item>signal_dvi</item>
+        <item>signal_dvi</item>
+        <item>signal_dvi</item>
+        <item>signal_dvi</item>
         <!--        <item>PREHDMI</item>-->
     </string-array>
 

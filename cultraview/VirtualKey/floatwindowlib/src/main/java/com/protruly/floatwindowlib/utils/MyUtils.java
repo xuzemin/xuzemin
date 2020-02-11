@@ -3,7 +3,10 @@ package com.protruly.floatwindowlib.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.util.Log;
+import android.view.View;
 
 import com.apkfuns.logutils.LogUtils;
 import com.mstar.android.tv.TvCommonManager;
@@ -11,6 +14,10 @@ import com.mstar.android.tvapi.common.TvManager;
 import com.protruly.floatwindowlib.activity.HideActivity;
 import com.protruly.floatwindowlib.activity.SettingActivity;
 import com.protruly.floatwindowlib.activity.SettingNewActivity;
+import com.protruly.floatwindowlib.control.ActivityCollector;
+import com.protruly.floatwindowlib.control.FloatWindowManager;
+import com.protruly.floatwindowlib.ui.ControlMenuLayout;
+import com.yinghe.whiteboardlib.utils.AppUtils;
 
 /**
  * 帮助工具类
@@ -23,6 +30,8 @@ public class MyUtils {
      * 判断是否在PC界面
      * @return
      */
+    public static boolean isOpencheck = true;
+
     public static boolean IsPc(){
         try {
             if (TvCommonManager.getInstance().getCurrentTvInputSource()
@@ -67,6 +76,37 @@ public class MyUtils {
             intent.putExtra("isRight", isRight);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
+        }
+    }
+
+
+
+    public static void checkUSB(boolean isOpen){
+        Log.e("SUB","isOpen"+isOpen);
+        if(isOpencheck == isOpen){
+            return;
+        }
+        isOpencheck = isOpen;
+        if(isOpencheck){
+            int inputSource = TvCommonManager.getInstance().getCurrentTvInputSource();
+            Log.e("SUB","inputSource"+ inputSource);
+            if(inputSource == TvCommonManager.INPUT_SOURCE_HDMI3 ||
+                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI ||
+                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI2 ||
+                    inputSource == TvCommonManager.INPUT_SOURCE_VGA){
+                if(ActivityCollector.activities.size() == 0 && !ControlMenuLayout.isDown
+                        && (FloatWindowManager.getNewSignalDialog() ==null || FloatWindowManager.getNewSignalDialog().getVisibility() == View.GONE)
+                        && (FloatWindowManager.getSettingsDialog() == null || FloatWindowManager.getSettingsDialog().getVisibility() == View.GONE)
+                ) {
+                    SystemProperties.set("ctv.sendKeyCode", "on");
+                    AppUtils.sendCommand("SetUSBTOUCH_ON");
+                    Log.e("SUB", "SetUSBTOUCH_ON");
+                }
+            }
+        }else{
+                SystemProperties.set("ctv.sendKeyCode","off");
+                AppUtils.sendCommand("SetUSBTOUCH_OFF");
+                Log.e("SUB","SetUSBTOUCH_OFF");
         }
     }
 

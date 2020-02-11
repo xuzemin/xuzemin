@@ -78,6 +78,7 @@ public class HideActivity extends AppCompatActivity {
         lp.width = ScreenUtils.dip2px(this, 1);
         lp.height = ScreenUtils.dip2px(this, 1);
         lp.gravity = Gravity.CENTER;//对话框居中显示
+        win.setBackgroundDrawableResource(R.drawable.shape_all);
         win.setAttributes(lp);
     }
 

@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.apkfuns.logutils.LogUtils;
 import com.protruly.floatwindowlib.R;
 import com.protruly.floatwindowlib.constant.CommConsts;
+import com.protruly.floatwindowlib.control.ActivityCollector;
 import com.protruly.floatwindowlib.control.FloatWindowManager;
 import com.protruly.floatwindowlib.ui.ControlMenuLayout;
 import com.protruly.floatwindowlib.ui.SettingsDialogLayout;
@@ -146,6 +147,7 @@ public class FloatWindowService extends Service {
         super.onCreate();
         isFirstFlag = true;
         mHandler = new UIHandler(this);
+        mHandler.sendEmptyMessageDelayed(0,5000);
         threadPool = Executors.newScheduledThreadPool(3);
         initReceiver();
     }
@@ -336,8 +338,7 @@ public class FloatWindowService extends Service {
                 checkEyecare();
 
                 // 判断是否开启悬浮助手
-                checkEasyTouch();
-            }, 1000);
+                checkEasyTouch();            }, 1000);
         }
     }
 
@@ -542,7 +543,7 @@ public class FloatWindowService extends Service {
         if (blackLight <= 0) {
             return;
         }
-
+        SystemProperties.set("persist.sys.backlight",""+blackLight);
         AppUtils.setBacklight(blackLight);
         mHandler.post(() -> {
             if (SettingNewActivity.mHandler != null) {
@@ -762,6 +763,7 @@ public class FloatWindowService extends Service {
                     "lastBlackLight", 50);
             int blackLight = AppUtils.getBacklight();
             if (lastBlackLight > 50 && blackLight == 50) {
+                SystemProperties.set("persist.sys.backlight",""+blackLight);
                 AppUtils.setBacklight(lastBlackLight);
             }
         }
@@ -860,6 +862,12 @@ public class FloatWindowService extends Service {
                         Settings.System.putInt(service.getContentResolver(), CommConsts.IS_LIGHTSENSE, lightSense);
                         service.changeLightSenseStatus();
                     }
+                    break;
+                case 0:
+                    if(!MyUtils.isOpencheck){
+                        MyUtils.checkUSB(true);
+                    }
+                    this.sendEmptyMessageDelayed(0,3000);
                     break;
                 default:
                     break;

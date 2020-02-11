@@ -11,7 +11,7 @@
         <item>AV5</item>
         <item>AV6</item>
         <item>AV7</item>
-        <item>AV8</item>
+        <item>HDMI2</item>
         <item>AV MAX</item>
 
         <item>S-VIDEO</item>
@@ -30,8 +30,8 @@
         <item>SCART MAX</item>
 
         <item>HDMI1</item>
-        <item>HDMI2</item>
-        <item>HDMI3</item>
+        <item>DP</item>
+        <item>FRONT HDMI</item>
         <item>OPS</item>
         <!--        <item>INSIDE PC</item>-->
         <item>DTV</item>
@@ -69,7 +69,7 @@
         <item>signal_av5</item>
         <item>signal_av6</item>
         <item>signal_av7</item>
-        <item>signal_av8</item>
+        <item>signal_dp</item>
         <item>signal_av max</item>
 
         <item>signal_svideo</item>
@@ -214,7 +214,7 @@
         <item>signal_av_normal</item>
         <item>signal_av_normal</item>
         <item>signal_av_normal</item>
-        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
         <item>signal_av_normal</item>
 
         <item>signal_vga_normal</item>
@@ -223,7 +223,7 @@
         <item>signal_vga_normal</item>
         <item>signal_vga_normal</item>
 
-        <item>signal_ypbrb_normal</item>
+        <item>signal_vga_normal</item>
         <item>signal_ypbrb_normal</item>
         <item>signal_ypbrb_normal</item>
         <item>signal_ypbrb_normal</item>
@@ -234,7 +234,7 @@
         <item>signal_vga_normal</item>
 
         <item>signal_hdmi_normal</item>
-        <item>signal_hdmi2_normal</item>
+        <item>signal_dp_normal</item>
         <item>signal_hdmi3_normal</item>
         <item>signal_hdmi_normal</item>
         <!--        <item>INSIDE PC</item>-->

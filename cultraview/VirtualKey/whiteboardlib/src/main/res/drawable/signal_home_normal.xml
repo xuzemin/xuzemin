@@ -5,27 +5,27 @@
 	<!-- 获得焦点 -->
 	<item
 		android:state_focused="true"
-		android:drawable="@mipmap/signal_home_focus"
+		android:drawable="@mipmap/btn_home"
 		>
 	</item>
 
 	<!-- 按下 -->
 	<item
 		android:state_pressed="true"
-		android:drawable="@mipmap/signal_home_focus"
+		android:drawable="@mipmap/btn_home"
 		>
 	</item>
 
 	<!-- 按钮不可以 -->
 	<item
 		android:state_enabled="false"
-		android:drawable="@mipmap/signal_home_default"
+		android:drawable="@mipmap/btn_home"
 		>
 	</item>
 
 	<!-- 正常 -->
 	<item
-		android:drawable="@mipmap/signal_home_default"
+		android:drawable="@mipmap/btn_home"
 		>
 	</item>
 </selector>

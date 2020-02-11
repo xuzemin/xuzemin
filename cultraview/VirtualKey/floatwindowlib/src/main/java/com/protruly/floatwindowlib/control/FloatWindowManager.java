@@ -20,6 +20,7 @@ import com.protruly.floatwindowlib.ui.NewSignalDialogLayout;
 import com.protruly.floatwindowlib.ui.SettingsDialogLayout;
 import com.protruly.floatwindowlib.ui.SignalDialogLayout;
 import com.protruly.floatwindowlib.ui.ThemometerLayout;
+import com.protruly.floatwindowlib.utils.MyUtils;
 import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.DrawConsts;
 import com.yinghe.whiteboardlib.utils.SPUtil;
@@ -49,9 +50,9 @@ public class FloatWindowManager {
     private static ControlMenuLayout menuWindowLeft;
     private static LayoutParams menuParamsLeft;
 
-    // 绘制下载进度条的悬浮窗
     private static DownloadingLayout downloadWindow;
     private static LayoutParams downloadParams;
+    // 绘制下载进度条的悬浮窗
 
     // 绘制温度计的悬浮窗
     private static ThemometerLayout thmometerWindow;
@@ -237,6 +238,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeMenuWindowLeft(Context context) {
+        MyUtils.checkUSB(true);
         if (menuWindowLeft != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(menuWindowLeft);
@@ -312,6 +314,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeMenuWindow(Context context) {
+        MyUtils.checkUSB(true);
         if (menuWindow != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(menuWindow);
@@ -359,6 +362,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeThmometerWindow(Context context) {
+        MyUtils.checkUSB(true);
         if (thmometerWindow != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(thmometerWindow);
@@ -456,7 +460,7 @@ public class FloatWindowManager {
 
             newSignalParams.format = PixelFormat.RGBA_8888;
             newSignalParams.gravity = Gravity.LEFT | Gravity.TOP;
-            newSignalParams.width = ScreenUtils.dip2px(context, 170);
+            newSignalParams.width = 340;
             newSignalParams.height = WRAP_CONTENT;
         }
     }
@@ -515,6 +519,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeSignalDialog(Context context) {
+        MyUtils.checkUSB(true);
         if (signalDialog != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(signalDialog);
@@ -611,6 +616,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeSettingsDialog(Context context) {
+        MyUtils.checkUSB(true);
         if (settingsDialog != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(settingsDialog);
@@ -791,6 +797,5 @@ public class FloatWindowManager {
         keyList.clear();
         context.sendBroadcast(new Intent("com.ctv.UPDATE_NOTIFICATION"));
     }
-
 
 }
