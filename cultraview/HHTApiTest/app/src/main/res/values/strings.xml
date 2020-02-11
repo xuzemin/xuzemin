@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">鸿合中间件</string>
+    <string name="title_introduce">简介</string>
+    <string name="fragment_device_common_title">HHT-Common</string>
+    <string name="fragment_device_child_title">HHT-Device-INFO</string>
+
+    <string name="fragment_main_introduce">
+       \t\t\t HHTVersionControlManager 是版本控制管理类。
+         \n\t\t 一、Version: HHTMwApi V1.0.0
+         \n\t\t\t\t 1、初步定义鸿合中间件架构
+         \n\t\t\t\t 2、分10类 Audio、BoardInfo、Customer、Device、
+         \n\t\t\t\t\t  Network、Picture、Source、System、Time、Video
+         \n\t\t\t\t 3、API有重复，下一版继续整理
+         \n\t\t\t\t 4、Author：鸿合中间件标准化小组
+       \n\n\t\t 二、V1.0.2
+         \n\t\t\t\t 1、新细分Led、Touch、Lock类
+         \n\t\t\t\t 2、检查API字母大小写按规定命名
+         \n\t\t\t\t 3、鸿合缩写统一为HHT
+         \n\t\t\t\t 4、检查部分API返回值说明
+         \n\t\t\t\t 5、Author：鸿合中间件标准化小组
+        \n\n\t\t 三、V2.0.0
+         \n\t\t\t\t 1、重新调整API分类
+         \n\t\t\t\t 2、完善API说明
+         \n\t\t\t\t 3、Author：鸿合中间件标准化小组
+       \n\n\t\t  四、V2.0.2
+         \n\t\t\t\t 1、新增区域触控API
+         \n\t\t\t\t 2、Author：鸿合中间件标准化小组
+       \n\n\t\t  五、V2.0.3
+         \n\t\t\t\t 1、新增controlPcTouchRect
+         \n\t\t\t\t 2、新增setBrightnessValueForThirdPartyApp
+         \n\t\t\t\t 3、新增startScreenShot()
+         \n\t\t\t\t 4、调整声音模式 图像模式 枚举定义
+         \n\t\t\t\t 5、Author：鸿合中间件标准化小组
+    </string>
+
+    <string name="fragment_audio_introduce">\t HHTAudioManager是音频接口管理类，有三种模式:
+         \n\t\t\t 一、EnumSoundMode
+         \n\t\t\t 二、EnumSpdifMode
+         \n\t\t\t 三、EnumVolumeMode
+        \n\n 1.EnumSoundMode下有五种类别：
+         \n\t\t\t a、SOUND_MODE_MOVIE
+         \n\t\t\t b、SOUND_MODE_MUSIC
+         \n\t\t\t c、SOUND_MODE_SPORTS
+         \n\t\t\t d、SOUND_MODE_STANDARD
+         \n\t\t\t e、SOUND_MODE_USER 。
+	    \n\n 2.EnumSpdifMode模式下有五种类别：
+         \n\t\t\t a、SPDIF_TYPE_BYPASS
+         \n\t\t\t b、SPDIF_TYPE_NONPCM
+	     \n\t\t\t c、SPDIF_TYPE_OFF
+         \n\t\t\t d、SPDIF_TYPE_PCM
+         \n\t\t\t e、SPDIF_TYPE_TRANSCODE 。
+	    \n\n 3.EnumVolumeMode模式下有三种类别：
+         \n\t\t\t a、VOLIME_MUTE
+         \n\t\t\t b、VOLIME_NORMAL
+         \n\t\t\t c、VOLIME_SOURCE_MUTE</string>
+
+    <string name="fragment_boardinfo_introduce">\t\tHHTBoardInfoManager 是板卡终端信息的接口管理类。
+        匹配不同方案的接口（MSTAR，海思平台），比如：系统存储，系统可用存储，MAC，版本信息，系统版本，芯片型号，
+        触摸框型号，固件版本号，生产序列号，激活码，等
+    </string>
+    <string name="fragment_customer_introduce">\t\tHHTCustomerManager 是客户定制功能的接口管理。
+        我们要使代码更灵活的在不同客户中使用，定义不同客户的特殊功能接口，以便配置不同客户的需求。
+    </string>
+    <string name="fragment_device_introduce">\t\t它包含二个大类，分别是
+        HHTCommonManager和HHTDeviceManager。
+    </string>
+    <string name="fragment_common_introduce">\t\tHHTCommonManager 是自定义功能公共的接口管理类。
+        匹配不同方案的接口，此类主要设置公共常用的接口，比如： 睡眠模式，声音模式，信号检测，护眼，
+        无信号时操作，无输入事件时操作，睡眠模式，温度显示模式，自定义屏保，HDMI OUT 输出模式，等自定义公共接口。
+    </string>
+    <string name="fragment_device_child_introduce">\t\tHHTDeviceManager 是设备接口管理类。
+          比如：CMD接口向tvOS操作，文件拷贝，gpio设置， 温度获取， 背光获取， 息屏，等
+    </string>
+    <string name="fragment_led_introduce">\t\tHHTLedManager 是遥控灯接口管理类。
+              遥控灯闪烁,设置遥控灯模式
+    </string>
+    <string name="fragment_lock_introduce">\t\tHHTLockManager 是相关功能锁接口管理类。
+            通道锁、遥控锁、童锁、锁触摸、锁屏应用密码
+    </string>
+    <string name="fragment_network_introduce">\t\tHHTNetworkManager 是网络接口管理类。
+           比如：有线网络开关，网络唤醒
+    </string>
+    <string name="fragment_ops_introduce">\t\tHHTOpsManager 是OPS相关接口管理类。
+           比如：OPS开启状态，OPS插入状态，OPS电源控制，是否存在OPS，OPS电脑的各种状态，等
+    </string>
+    <string name="fragment_picture_introduce">\t\t\t\t HHTPictureManager 是图像接口管理类，比如：图像
+        \n\n\t\t\t\t 模式，色温选择。
+    </string>
+    <string name="fragment_source_introduce">\t\t HHTSourceManager 是信号源相关接口管理类。
+             匹配不同方案的接口（MSTAR，海思平台），此类都是进行信号源相关的设置，
+             比如：信号源修改名字，信号源切换，信号源获取，信号源设置，等
+    </string>
+    <string name="fragment_system_introduce">\t\tHHTSystemManager 是设备接口管理类。
+           比如：SystemProperties，系统升级，系统版控升级，应用升级，应用卸载，等
+    </string>
+    <string name="fragment_time_introduce">\t\tHHTTimeManager 是时间接口管理类。
+           比如：定时开关机，定时唤醒时间， 运行时间，等
+    </string>
+    <string name="fragment_touch_introduce">\t\tHHTTouchManager 是触控接口管理类。
+    </string>
+</resources>

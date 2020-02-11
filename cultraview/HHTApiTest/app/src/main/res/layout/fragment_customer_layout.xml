@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/audio_fragment_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="暂无内容"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_view_size_small" />
+</LinearLayout>
