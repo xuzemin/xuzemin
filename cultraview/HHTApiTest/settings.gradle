@@ -1,2 +1,2 @@
-include ':app', ':hhtapi', ':HHTService'
+include ':app'
 rootProject.name='HHTApiTest'

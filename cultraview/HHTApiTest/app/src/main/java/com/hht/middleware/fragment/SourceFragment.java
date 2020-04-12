@@ -3,10 +3,12 @@ package com.hht.middleware.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.hht.android.sdk.boardInfo.HHTConstant;
 import com.hht.android.sdk.source.HHTSourceManager;
 import com.hht.middleware.R;
 import com.hht.middleware.adapter.DetailsAdapter;
@@ -111,6 +113,10 @@ public class SourceFragment extends BaseFragment implements AdapterView.OnItemCl
 
         //  mList.add(new DetailsBean("disableFreeze()", "解冻屏"));
 
+        mList.add(new DetailsBean("getSourcePlugStateByKey()", "单通道获取状态 "));
+        mList.add(new DetailsBean("getInputSrcPlugStateMap()", "全通道状态获取 "));
+        mList.add(new DetailsBean("isCurrentSource()", "是否为当前信号源 "));
+
         return mList;
     }
 
@@ -118,6 +124,7 @@ public class SourceFragment extends BaseFragment implements AdapterView.OnItemCl
         List<ModeBean> mList = new ArrayList<>();
         mList.add(new ModeBean("DTV", HHTSourceManager.DTV));
         mList.add(new ModeBean("ATV", HHTSourceManager.ATV));
+        mList.add(new ModeBean("VGA", HHTConstant.VGA));
         mList.add(new ModeBean("VGA1", HHTSourceManager.VGA1));
         mList.add(new ModeBean("VGA2", HHTSourceManager.VGA2));
         mList.add(new ModeBean("VGA3", HHTSourceManager.VGA3));
@@ -171,6 +178,7 @@ public class SourceFragment extends BaseFragment implements AdapterView.OnItemCl
             case 1:
                 if (mHHTSourceManager != null) {
                     Map<String, String> mSourceVolume = mHHTSourceManager.getInputSrcMap();
+                    Log.e("HHTApiTest","mSourceVolume"+mSourceVolume.toString());
                     if (mSourceVolume != null && mSourceVolume.size() > 0) {
                         ToastUtils.showShortToast("getInputSrcMap的size==" + mSourceVolume.size());
                     }
@@ -289,17 +297,34 @@ public class SourceFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case 21:
 //                if (mHHTSourceManager != null) {
-//                    boolean mSource = mHHTSourceManager.enableFreeze();
-//                    ToastUtils.showShortToast("isTvWindow==" + mSource);
+//                    String mSourceInfo = mHHTSourceManager.getSourcePlugStateByKey("");
+//                    ToastUtils.showShortToast("isTvWindow==" + mSourceInfo);
 //                }
-                //   HHTSourceManager.getInstance().enableFreeze();
+
+                showDialog(getInputSrcCustomerNameByKeyDataList(), "getSourcePlugStateByKey", 3, position);
+
+                //   HHTSourceManager.getInstance().isTvWindow();
                 break;
             case 22:
+                if (mHHTSourceManager != null) {
+                    Map<String, String> mSourceInfo = mHHTSourceManager.getInputSrcPlugStateMap();
+                    ToastUtils.showShortToast("getSourceDetectionMode==" + mSourceInfo.toString());
+                }
 //                if (mHHTSourceManager != null) {
 //                    boolean mSource = mHHTSourceManager.();
 //                    ToastUtils.showShortToast("isTvWindow==" + mSource);
 //                }
                 //  HHTSourceManager.getInstance().disableFreeze();
+                break;
+            case 23:
+//                if (mHHTSourceManager != null) {
+//                    String mSourceInfo = mHHTSourceManager.getSourcePlugStateByKey("");
+//                    ToastUtils.showShortToast("isTvWindow==" + mSourceInfo);
+//                }
+
+                showDialog(getInputSrcCustomerNameByKeyDataList(), "isCurrentSource", 3, position);
+
+                //   HHTSourceManager.getInstance().isTvWindow();
                 break;
         }
 
@@ -387,6 +412,20 @@ public class SourceFragment extends BaseFragment implements AdapterView.OnItemCl
                             ToastUtils.showShortToast("setSourceDetectionMode==" + typeStr + "    设置是否成功==" + mSourceVolume);
                         }
                         //  HHTSourceManager.getInstance().setSourceDetectionMode(mListData.get(position).getTypeInt());
+                        break;
+                    case 21:
+                        if (mHHTSourceManager != null) {
+                            String typeStr = mListData.get(position).getModeName();
+                            String mSourceInfo = mHHTSourceManager.getSourcePlugStateByKey(typeStr);
+                            ToastUtils.showShortToast("getSourcePlugStateByKey==" + mSourceInfo);
+                        }
+                        break;
+                    case 23:
+                        if (mHHTSourceManager != null) {
+                            String typeStr = mListData.get(position).getModeName();
+                            boolean mSourceInfo = mHHTSourceManager.isCurrentSource(typeStr);
+                            ToastUtils.showShortToast("isCurrentSource==" + mSourceInfo);
+                        }
                         break;
                 }
             }

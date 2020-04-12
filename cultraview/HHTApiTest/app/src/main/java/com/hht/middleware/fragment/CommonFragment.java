@@ -3,11 +3,13 @@ package com.hht.middleware.fragment;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.hht.android.sdk.device.HHTCommonManager;
+import com.hht.android.sdk.device.HHTTvEventListener;
 import com.hht.middleware.R;
 import com.hht.middleware.adapter.DetailsAdapter;
 import com.hht.middleware.base.BaseFragment;
@@ -51,6 +53,7 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
         mDetailsAdapter = new DetailsAdapter(mActivity, getDataList());
         mListView.setAdapter(mDetailsAdapter);
         mListView.setOnItemClickListener(this);
+
 
     }
 
@@ -124,7 +127,46 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
         mListData.add(new DetailsBean("setHdmiTxMode()", "设置当前Hdmi输出分辨率模式"));
         mListData.add(new DetailsBean("getCurHdmiTxMode()", "获取当前Hdmi输出分辨率模式"));
 
+        mListData.add(new DetailsBean("StandbyMode()", "进入假待机"));
+        mListData.add(new DetailsBean("getStandbyMode()", "查询待机模式"));
+        mListData.add(new DetailsBean("setStandbyMode()", "设置待机模式"));
+        mListData.add(new DetailsBean("setOnTvEventLister()", "监听"));
+        mListData.add(new DetailsBean("setSourceAutoStart()", "自动唤醒开关"));
+        mListData.add(new DetailsBean("isSourceAutoStart()", "唤醒开关状态"));
+        mListData.add(new DetailsBean("getBlackBoard()", "黑板待机延时时间"));
+        mListData.add(new DetailsBean("setBlackBoard() = 5", "设置黑板待机延时时间"));
+        mListData.add(new DetailsBean("isBlackBoardEnable()", "黑板待机状态"));
+        mListData.add(new DetailsBean("setBlackBoardEnable()", "黑板待机开关"));
+        mListData.add(new DetailsBean("getScreenTemThreshold()", "获取屛温阈值"));
+        mListData.add(new DetailsBean("setScreenTmpThreshold()", "设置屛温阈值"));
+
         return mListData;
+    }
+
+
+    private List<ModeBean> getScreenTemThreshold() {
+        List<ModeBean> mList = new ArrayList<>();
+
+        mList.add(new ModeBean("50",
+                50));
+
+        mList.add(new ModeBean("60",
+                60));
+
+        return mList;
+    }
+
+
+    private List<ModeBean> getSourceAutoStart() {
+        List<ModeBean> mList = new ArrayList<>();
+
+        mList.add(new ModeBean("TRUE",
+                0));
+
+        mList.add(new ModeBean("FASLE ",
+                1));
+
+        return mList;
     }
 
     private List<ModeBean> getEyeProtectionMode() {
@@ -138,6 +180,8 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
 
         mList.add(new ModeBean("EYE_RGB",
                 HHTCommonManager.EnumEyeProtectionMode.EYE_RGB.ordinal()));
+        mList.add(new ModeBean("EYE_WRITE_PROTECT",
+                HHTCommonManager.EnumEyeProtectionMode.EYE_WRITE_PROTECT.ordinal()));
 
         return mList;
     }
@@ -154,20 +198,37 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
         return mList;
     }
 
+    private List<ModeBean> getStandbyByMode() {
+        List<ModeBean> mList = new ArrayList<>();
+
+        mList.add(new ModeBean("正常待机"
+                , 0));
+
+        mList.add(new ModeBean("假待机"
+                , 1));
+
+        mList.add(new ModeBean("黑板待机"
+                , 2));
+
+        return mList;
+    }
+
+
+
     private List<ModeBean> getHdmiTxMode() {
         List<ModeBean> mList = new ArrayList<>();
 
-        mList.add(new ModeBean("EnumHdmiOutMode.HDMITX_2k_30"
-                , HHTCommonManager.EnumHdmiOutMode.HDMITX_2k_30.ordinal()));
+        mList.add(new ModeBean("EnumHdmiOutMode.AUTO"
+                , HHTCommonManager.EnumHdmiOutMode.AUTO.ordinal()));
 
         mList.add(new ModeBean("EnumHdmiOutMode.HDMITX_2k_60"
                 , HHTCommonManager.EnumHdmiOutMode.HDMITX_2k_60.ordinal()));
 
-        mList.add(new ModeBean("EnumHdmiOutMode.HDMITX_4k_30"
-                , HHTCommonManager.EnumHdmiOutMode.HDMITX_4k_30.ordinal()));
-
         mList.add(new ModeBean("EnumHdmiOutMode.HDMITX_4k_60"
                 , HHTCommonManager.EnumHdmiOutMode.HDMITX_4k_60.ordinal()));
+
+        mList.add(new ModeBean("EnumHdmiOutMode.HDMITX_720p_60"
+                , HHTCommonManager.EnumHdmiOutMode.HDMITX_720p_60.ordinal()));
 
         return mList;
     }
@@ -176,7 +237,7 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                showDialog(getEyeProtectionMode(), "setEyeProtectionMode", 2, position);
+                showDialog(getEyeProtectionMode(), "setEyeProtectionMode", 4, position);
                 break;
             case 1:
                 if (mHHTCommonManager != null) {
@@ -338,36 +399,36 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
                 break;
             case 24:
                 if (mHHTCommonManager != null) {
-                    boolean commonInfo = mHHTCommonManager.setScreenSaverEnable(true);
-                    ToastUtils.showShortToast("setScreenSaverEnable是否成功==" + commonInfo);
+                    //boolean commonInfo = mHHTCommonManager.setScreenSaverEnable(true);
+                    //ToastUtils.showShortToast("setScreenSaverEnable是否成功==" + commonInfo);
                 }
                 // HHTCommonManager.getInstance().setScreenSaverEnable(true);
                 break;
             case 25:
                 if (mHHTCommonManager != null) {
-                    boolean commonInfo = mHHTCommonManager.getScreenSaverEnable();
-                    ToastUtils.showShortToast("getScreenSaverEnable==" + commonInfo);
+                    //boolean commonInfo = mHHTCommonManager.getScreenSaverEnable();
+                    //ToastUtils.showShortToast("getScreenSaverEnable==" + commonInfo);
                 }
                 // HHTCommonManager.getInstance().getScreenSaverEnable();
                 break;
             case 26:
                 if (mHHTCommonManager != null) {
-                    boolean commonInfo = mHHTCommonManager.setScreenSaverTime(1);
-                    ToastUtils.showShortToast("setScreenSaverTime是否成功==" + commonInfo);
+                    //boolean commonInfo = mHHTCommonManager.setScreenSaverTime(1);
+                    //ToastUtils.showShortToast("setScreenSaverTime是否成功==" + commonInfo);
                 }
                 // HHTCommonManager.getInstance().setScreenSaverTime(1);
                 break;
             case 27:
                 if (mHHTCommonManager != null) {
-                    int commonInfo = mHHTCommonManager.getScreenSaverTime();
-                    ToastUtils.showShortToast("getScreenSaverTime==" + commonInfo);
+                    //int commonInfo = mHHTCommonManager.getScreenSaverTime();
+                    //ToastUtils.showShortToast("getScreenSaverTime==" + commonInfo);
                 }
                 // HHTCommonManager.getInstance().getScreenSaverTime();
                 break;
             case 28:
                 if (mHHTCommonManager != null) {
-                    boolean commonInfo = mHHTCommonManager.startScreenSaver();
-                    ToastUtils.showShortToast("startScreenSaver是否成功==" + commonInfo);
+                    //boolean commonInfo = mHHTCommonManager.startScreenSaver();
+                    //ToastUtils.showShortToast("startScreenSaver是否成功==" + commonInfo);
                 }
                 // HHTCommonManager.getInstance().startScreenSaver();
                 break;
@@ -397,18 +458,105 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
                 }
                 // HHTCommonManager.getInstance().getCurHdmiTxMode();
                 break;
+            case 33:
+                if (mHHTCommonManager != null) {
+                    showDialog(getStandbyByMode(), "standbyByMode", 3, position);
+                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 34:
+                if (mHHTCommonManager != null) {
+                    int commonInfo = mHHTCommonManager.getStandbyMode();
+                    ToastUtils.showShortToast("getStandbyMode==" + commonInfo);
+                }
+                break;
+            case 35:
+                if (mHHTCommonManager != null) {
+                    showDialog(getStandbyByMode(), "setStandbyMode", 3, position);
+                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 36:
+                if (mHHTCommonManager != null) {
+                    mHHTCommonManager.registerHHTTvEventListener(hhtTvEventListener);
+//
+                    ToastUtils.showShortToast("setOnTvEventListener==");
+//                    showDialog(getStandbyByMode(), "setStandbyMode", 3, position);
+                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 37:
+                    showDialog(getSourceAutoStart(), "setAutoWakeupBySourceEnable", 2, position);
+                break;
+            case 38:
+                if (mHHTCommonManager != null) {
+                    boolean commonInfo = mHHTCommonManager.isAutoWakeupBySourceEnable();
+                    ToastUtils.showShortToast("isAutoWakeupBySourceEnable=="+commonInfo);
+//                    showDialog(getStandbyByMode(), "setStandbyMode", 3, position);
+                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 39:
+                if (mHHTCommonManager != null) {
+                    int commonTime = mHHTCommonManager.getBlackBoardTime();
+                    ToastUtils.showShortToast("getBlackBoardTime=="+commonTime);
+//                    showDialog(getStandbyByMode(), "setStandbyMode", 3, position);
+                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 40:
+//                if (mHHTCommonManager != null) {
+//                    mHHTCommonManager.setBlackBoardTime(5);
+//                    ToastUtils.showShortToast("setBlackBoardTime=="+5);
+////                    showDialog(getStandbyByMode(), "setStandbyMode", 3, position);
+//                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+
+                showDialog(getSourceAutoStart(), "setBlackBoardTime", 2, position);
+                break;
+            case 41:
+                if (mHHTCommonManager != null) {
+                    boolean commonTime = mHHTCommonManager.isBlackBoardEnabled();
+                    ToastUtils.showShortToast("isBlackBoardEnabled=="+commonTime);
+//                    showDialog(getStandbyByMode(), "setStandbyMode", 3, position);
+                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 42:
+                    showDialog(getSourceAutoStart(), "setBlackBoardEnable", 2, position);
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 43:
+                if (mHHTCommonManager != null) {
+                    int commonTime = mHHTCommonManager.getScreenTmpThreshold();
+                    ToastUtils.showShortToast("getScreenTmpThreshold=="+commonTime);
+//                    showDialog(getStandbyByMode(), "setStandbyMode", 3, position);
+                }
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
+            case 44:
+                showDialog(getScreenTemThreshold(), "setScreenTemp", 2, position);
+                // HHTCommonManager.getInstance().getCurHdmiTxMode();
+                break;
         }
 
 
     }
 
+    private HHTTvEventListener hhtTvEventListener = new HHTTvEventListener() {
+        @Override
+        public void onTvEvent(int i, int i1, int i2, Object o) {
+            Log.e("getevent","i = " + i);
+            Log.e("getevent","i1 = " + i1);
+            Log.e("getevent","i2 = " + i2);
+//            Log.e("getevent","Object = " + o.getClass());
+        }
+    };
+
     private void showDialog(final List<ModeBean> mListData, String title, int numColumns, final int positionType) {
         showMiddleDialog(mListData, title, numColumns, new OnMiddleDialogListener() {
             @Override
             public void onItemClick(int position) {
-//                ToastUtils.showShortToast(mListData.get(position).getModeName()
-//                        + "    typeStr==" + mListData.get(position).getTypeStr()
-//                        + "     typeInt==" + mListData.get(position).getTypeInt());
                 switch (positionType) {
                     case 0:
                         if (mHHTCommonManager != null) {
@@ -416,8 +564,6 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
                             boolean commonInfo = mHHTCommonManager.setEyeProtectionMode(typeInt);
                             ToastUtils.showShortToast("setEyeProtectionMode是否成功==" + commonInfo);
                         }
-//                        // HHTCommonManager.getInstance().setEyeProtectionMode(mListData
-//                        .get(position).getTypeInt());
                         break;
                     case 18:
                         if (mHHTCommonManager != null) {
@@ -425,8 +571,6 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
                             boolean commonInfo = mHHTCommonManager.setShowTempMode(typeInt);
                             ToastUtils.showShortToast("setShowTempMode是否成功==" + commonInfo);
                         }
-//                        // HHTCommonManager.getInstance().setShowTempMode(
-//                                mListData.get(position).getTypeInt());
                         break;
                     case 31:
                         if (mHHTCommonManager != null) {
@@ -434,8 +578,48 @@ public class CommonFragment extends BaseFragment implements AdapterView.OnItemCl
                             boolean commonInfo = mHHTCommonManager.setHdmiTxMode(typeInt);
                             ToastUtils.showShortToast("setHdmiTxMode是否成功==" + commonInfo);
                         }
-//                        // HHTCommonManager.getInstance().setHdmiTxMode(
-//                                mListData.get(position).getTypeInt());
+                        break;
+                    case 33:
+                        if (mHHTCommonManager != null) {
+                            int typeInt = mListData.get(position).getTypeInt();
+                            boolean commonInfo = mHHTCommonManager.standbyByMode(typeInt);
+                            ToastUtils.showShortToast("standbyByMode是否成功==" + commonInfo);
+                        }
+                        break;
+                    case 35:
+                        if (mHHTCommonManager != null) {
+                            int typeInt = mListData.get(position).getTypeInt();
+                            boolean commonInfo = mHHTCommonManager.setStandbyMode(typeInt);
+                            ToastUtils.showShortToast("setStandbyMode是否成功==" + commonInfo);
+                        }
+                        break;
+                    case 37:
+                        if (mHHTCommonManager != null) {
+                            int typeInt = mListData.get(position).getTypeInt();
+                            mHHTCommonManager.setAutoWakeupBySourceEnable(typeInt == 0);
+                            ToastUtils.showShortToast("setAutoWakeupBySourceEnable 设置为==" +( typeInt == 0));
+                        }
+                        break;
+                    case 42:
+                        if (mHHTCommonManager != null) {
+                            int typeInt = mListData.get(position).getTypeInt();
+                            mHHTCommonManager.setBlackBoardEnable(typeInt == 0);
+                            ToastUtils.showShortToast("setBlackBoardEnable 设置为==" +( typeInt == 0));
+                        }
+                        break;
+                    case 40:
+                        if (mHHTCommonManager != null) {
+                            int typeInt = mListData.get(position).getTypeInt();
+                            mHHTCommonManager.setBlackBoardTime(typeInt);
+                            ToastUtils.showShortToast("setBlackBoardTime 设置为==" +typeInt);
+                        }
+                        break;
+                    case 44:
+                        if (mHHTCommonManager != null) {
+                            int typeInt = mListData.get(position).getTypeInt();
+                            mHHTCommonManager.setScreenTmpThreshold(typeInt);
+                            ToastUtils.showShortToast("setScreenTmpThreshold 设置为==" +typeInt);
+                        }
                         break;
                 }
             }

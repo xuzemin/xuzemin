@@ -164,7 +164,7 @@ public class TimeFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (mHHTTimeManager != null) {
                     List<String> mList =new ArrayList<>();
                     mList.add("MON");
-                    TimeUtil timeUtil =new TimeUtil(mList,12,0);
+                    TimeUtil timeUtil =new TimeUtil(mList,16,15);
                     boolean mTimeInfo = mHHTTimeManager.setScheduleTimeForBoot(timeUtil);
                     ToastUtils.showShortToast("setScheduleTimeForBoot是否成功==" + mTimeInfo);
                 }
@@ -173,10 +173,12 @@ public class TimeFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (mHHTTimeManager != null) {
                     List<String> mList =new ArrayList<>();
                     mList.add("MON");
-                    TimeUtil timeUtil =new TimeUtil(mList,9,0);
+                    TimeUtil timeUtil =new TimeUtil(mList,16,10);
                     boolean mTimeInfo = mHHTTimeManager.setScheduleTimeForShutdown(timeUtil);
                     ToastUtils.showShortToast("setScheduleTimeForShutdown是否成功==" + mTimeInfo);
                 }
+
+
                 break;
             case 11:
                 if (mHHTTimeManager != null) {

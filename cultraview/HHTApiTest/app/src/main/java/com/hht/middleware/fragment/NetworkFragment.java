@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.hht.android.sdk.network.HHTNetworkManager;
+import com.hht.android.sdk.network.LinkConfig;
 import com.hht.middleware.R;
 import com.hht.middleware.adapter.DetailsAdapter;
 import com.hht.middleware.base.BaseFragment;
@@ -85,6 +86,8 @@ public class NetworkFragment extends BaseFragment implements AdapterView.OnItemC
 
         mList.add(new DetailsBean("getEthernetMacAddress()", "Get Ethernet Hardware Address"));
         mList.add(new DetailsBean("getEthernetIpAddress()", "Get Ethernet IP Address"));
+        mList.add(new DetailsBean("setNetworkconfig(MUSUAL)", "setNetworkconfig"));
+        mList.add(new DetailsBean("setNetworkconfig(AUTO)", "setNetworkconfig"));
 
         return mList;
     }
@@ -159,6 +162,30 @@ public class NetworkFragment extends BaseFragment implements AdapterView.OnItemC
                 if (mHHTNetworkManager != null) {
                     String mNetInfo = mHHTNetworkManager.getEthernetIpAddress();
                     ToastUtils.showShortToast("getEthernetIpAddress==" + mNetInfo);
+                }
+                // HHTNetworkManager.getInstance().getEthernetIpAddress();
+                break;
+            case 8:
+                if (mHHTNetworkManager != null) {
+                    LinkConfig config = new LinkConfig();
+                    config.isDhcp = false;
+                    config.ipAddress = "192.168.5.125";
+                    config.netmask = "255.255.255.0";
+                    config.gateway = "192.168.5.255";
+                    mHHTNetworkManager.setLinkConfig(config);
+                    ToastUtils.showShortToast("getEthernetIpAddress==MUSUAL");
+                }
+                // HHTNetworkManager.getInstance().getEthernetIpAddress();
+                break;
+            case 9:
+                if (mHHTNetworkManager != null) {
+                    LinkConfig config = new LinkConfig();
+                    config.isDhcp = true;
+//                    config.ipAddress = "192.168.0.206";
+//                    config.netmask = "255.255.255.0";
+//                    config.gateway = "";
+                    mHHTNetworkManager.setLinkConfig(config);
+                    ToastUtils.showShortToast("getEthernetIpAddress==AUTO");
                 }
                 // HHTNetworkManager.getInstance().getEthernetIpAddress();
                 break;

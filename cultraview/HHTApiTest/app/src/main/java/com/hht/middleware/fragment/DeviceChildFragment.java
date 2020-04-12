@@ -132,13 +132,24 @@ public class DeviceChildFragment extends BaseFragment implements AdapterView.OnI
         return mListData;
     }
 
+    private List<ModeBean> getBackLight() {
+        List<ModeBean> mListData = new ArrayList<>();
+        mListData.add(new ModeBean("true"
+                , 1));
+
+        mListData.add(new ModeBean("false"
+                , 2));
+
+        return mListData;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         switch (position) {
             case 0:
                 if (mHHTDeviceManager != null) {
-                    boolean mDeviceInfo = mHHTDeviceManager.writeCmdStrToTVOS(1, "test");
+                    boolean mDeviceInfo = mHHTDeviceManager.writeCmdStrToTVOS("test");
                     ToastUtils.showShortToast("writeCmdStrToTVOS是否成功==" + mDeviceInfo);
                 }
                 // HHTDeviceManager.getInstance().writeCmdStrToTVOS(1, "");
@@ -165,13 +176,12 @@ public class DeviceChildFragment extends BaseFragment implements AdapterView.OnI
                 // HHTDeviceManager.getInstance().getLightSensorValue();
                 break;
             case 4:
-                if (mHHTDeviceManager != null) {
-                    boolean mDeviceInfo = mHHTDeviceManager.setBacklightOff(true);
-                    ToastUtils.showShortToast("setBacklightOff是否成功==" + mDeviceInfo);
-                }
+                showDialog(getBackLight(), "setBacklightOff", 2,position);
+
                 // HHTDeviceManager.getInstance().setBacklightOff(true);
                 break;
             case 5:
+
                 if (mHHTDeviceManager != null) {
                     boolean mDeviceInfo = mHHTDeviceManager.isBacklightOff();
                     ToastUtils.showShortToast("isBacklightOff==" + mDeviceInfo);
@@ -207,7 +217,7 @@ public class DeviceChildFragment extends BaseFragment implements AdapterView.OnI
                 // HHTDeviceManager.getInstance().getBrightnessValueForThirdPartyApp();
                 break;
             case 10:
-                showDialog(getBrightnessModeDataList(), "setBrightnessMode", 2);
+                showDialog(getBrightnessModeDataList(), "setBrightnessMode", 2,position);
                 break;
             case 11:
                 if (mHHTDeviceManager != null) {
@@ -228,17 +238,28 @@ public class DeviceChildFragment extends BaseFragment implements AdapterView.OnI
         }
     }
 
-    private void showDialog(final List<ModeBean> mListData, String title, int numColumns) {
+    private void showDialog(final List<ModeBean> mListData, String title, int numColumns,final int positionType) {
         showMiddleDialog(mListData, title, numColumns, new OnMiddleDialogListener() {
             @Override
             public void onItemClick(int position) {
 //                ToastUtils.showShortToast(mListData.get(position).getModeName()
 //                        + "    typeStr==" + mListData.get(position).getTypeStr()
 //                        + "     typeInt==" + mListData.get(position).getTypeInt());
-                if(mHHTDeviceManager!=null) {
-                    String typeStr = mListData.get(position).getTypeStr();
-                    boolean mDeviceInfo=mHHTDeviceManager.setBrightnessMode(typeStr);
-                    ToastUtils.showShortToast("setBrightnessMode是否成功=="+mDeviceInfo);
+                switch (positionType){
+                    case 4:
+                        if(mHHTDeviceManager!=null) {
+                            int typeStr = mListData.get(position).getTypeInt();
+                            boolean mDeviceInfo=mHHTDeviceManager.setBacklightOff(typeStr==0);
+                            ToastUtils.showShortToast("setBacklightOff=="+mDeviceInfo);
+                        }
+                        break;
+                    case 10:
+                        if(mHHTDeviceManager!=null) {
+                            String typeStr = mListData.get(position).getTypeStr();
+                            boolean mDeviceInfo=mHHTDeviceManager.setBrightnessMode(typeStr);
+                            ToastUtils.showShortToast("setBrightnessMode是否成功=="+mDeviceInfo);
+                        }
+                        break;
                 }
 
                 // HHTDeviceManager.getInstance().setBrightnessMode(mListData.get(position).getTypeStr());

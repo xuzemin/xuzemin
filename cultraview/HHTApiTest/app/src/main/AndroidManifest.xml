@@ -24,6 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <uses-library android:name="com.cultraview.tv" />
         <uses-library android:name="com.mstar.android" />
         <uses-library android:name="com.hht.android.sdk" />
         <activity android:name=".MainActivity">

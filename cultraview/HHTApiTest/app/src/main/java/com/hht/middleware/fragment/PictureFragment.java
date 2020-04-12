@@ -100,6 +100,9 @@ public class PictureFragment extends BaseFragment implements AdapterView.OnItemC
 
         mList.add(new DetailsBean("unFreezeImage()", "To un-freeze image"));
         mList.add(new DetailsBean("isImageFreezed()", "To get freeze-image setting status"));
+        mList.add(new DetailsBean("setbacklight()", "背光设置30"));
+        mList.add(new DetailsBean("getbacklight()", "背光获取"));
+
         return mList;
     }
 
@@ -288,6 +291,20 @@ public class PictureFragment extends BaseFragment implements AdapterView.OnItemC
                 if (mHHTPictureManager != null) {
                     boolean mPictureVolume = mHHTPictureManager.isImageFreezed();
                     ToastUtils.showShortToast("isImageFreezed是否成功==" + mPictureVolume);
+                }
+                //  HHTPictureManager.getInstance().isImageFreezed();
+                break;
+            case 20:
+                if (mHHTPictureManager != null) {
+                    boolean mPictureVolume = mHHTPictureManager.setBackLight(30);
+                    ToastUtils.showShortToast("mHHTPictureManager==" + 30);
+                }
+                //  HHTPictureManager.getInstance().unFreezeImage();
+                break;
+            case 21:
+                if (mHHTPictureManager != null) {
+                    int mPictureVolume = mHHTPictureManager.getBackLight();
+                    ToastUtils.showShortToast("mHHTPictureManager==" + mPictureVolume);
                 }
                 //  HHTPictureManager.getInstance().isImageFreezed();
                 break;
