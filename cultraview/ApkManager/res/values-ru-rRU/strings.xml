@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 俄文 翻译 -->
+
+    <string name="app_name">Менеджер приложений</string>
+    <string name="action_settings">Настройки</string>
+    <string name="exit">Выход</string>
+    <string name="uninstall_sys">Система </string>
+    <string name="uninstall_user">Пользователь </string>
+    <string name="install_usb">Внешний </string>
+    <string name="uninstall_user_apk">Удаление приложений пользователя</string>
+    <string name="exit_title">Подтверждение выхода</string>
+    <string name="yes">Подтверждение</string>
+    <string name="no">Отмена </string>
+
+    <!-- 代码中 -->
+    <!-- Activity -->
+    <string name="MainActivity_sys_no_apks">В памяти системы не найден apk файл для установки</string>
+    <string name="UninstallActivity_uninstall_user_apks">Удаление приложения пользователя</string>
+    <string name="UninstallActivity_uninstall_sys_apks">Удаление системных приложений</string>
+    <string name="InstallActivity_install_sys_apks">Установка apk файлов из памяти ТВ</string>
+    <string name="InstallActivity_install_usb_apks">Установка apk файлов из внешней памяти</string>
+    <!-- Pages -->
+    <string name="UninstallUserPageLayout_installed">Установлено</string>
+    <string name="UninstallUserPageLayout_sys_apks">Системное приложение</string>
+    <string name="UninstallUserPageLayout_user_apks">Прилож. пользователя</string>
+    <string name="InstallSysPageLayout_uninstall">Не установлено</string>
+    <string name="InstallSysPageLayout_can_updata">Обновляемое</string>
+
+    <!-- layout -->
+    <string name="apks_reading">Чтение файла приложения .... </string>
+    <string name="dialog_title">Информация о приложении</string>
+    <string name="dialog_apks_name">Имя приложения: </string>
+    <string name="dialog_apks_state">Статус приложения:</string>
+    <string name="dialog_apks_size">Размер приложения:</string>
+    <string name="dialog_apks_vision_name">Название версии:</string>
+    <string name="dialog_apks_vision_code">Номер версии: </string>
+    <string name="dialog_file_path">Путь к файлу: </string>
+    <string name="dialog_apks_icon">Значок приложения:</string>
+    <string name="dialog_file_pakege_name">Имя пакета: </string>
+    <string name="dialog_install">Установка </string>
+    <string name="dialog_uninstall">Удаление</string>
+    <string name="nousb_warn">Советы: </string>
+    <string name="not_find_apk_file">Не найден файл для установки!</string>
+    <string name="not_find_userapk">Не установлены пользовательские приложения</string>
+    <string name="usb_unname">Съемные накопители</string>
+    <string name="is_sys_app">Нет разрешения на удаление!</string>
+    <!-- 追加 -->
+    <string name="exception_files_1">Файл приложения</string>
+    <string name="exception_files_2">Аномальная</string>
+    <string name="MainActivity_exitBy2Click">Нажмите повторно для выхода из программы</string>
+    <string name="install_sys">Память ТВ </string>
+    <string name="install_sys_apk">Установка apk файла из памяти ТВ</string>
+    <string name="nousb_content">Не найдено соответствующее внешнее устройство хранения, проверьте подключение USB устройства!</string>
+    <string name="uninstall">Удаление</string>
+    <string name="install">Установка</string>
+    <string name="clean">Очистка</string>
+
+    <!-- appactivity追加 -->
+    <string name="appstarting">Ускорение очисткой</string>
+    <string name="cleancache">Очистить кэш</string>
+    <string name="cache_select_all">Выбрать всё</string>
+    <string name="cache_select_none">Отменить выбор</string>
+    <string name="cache_select_cleaner">Cache Cleaner</string>
+    <string name="cache_cleaner_ok">Cache cleared</string>
+    <string name="clean_bg_process">cleanup daemon</string>
+    <string name="unit"></string>
+    <string name="release_memory">release memory</string>
+    <string name="cache_select_none_tip">Выбор не может быть пустым</string>
+
+</resources>

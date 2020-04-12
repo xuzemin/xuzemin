@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 塞尔维亚 -->
+<resources>
+
+    <string name="app_name">Application Manager</string>
+    <string name="action_settings">Settings</string>
+    <string name="uninstall_sys">System</string>
+    <string name="install_usb">външвн</string>
+    <string name="uninstall_user_apk">Деинсталирање апликација корисника</string>
+    <string name="exit_title">Излаз</string>
+    <string name="yes">Потврдити</string>
+    <string name="no">Отказати</string>
+    <string name="MainActivity_sys_no_apks">Фајл се не може наћи</string>
+    <string name="UninstallActivity_uninstall_user_apks">Деинсталирање апликација корисника</string>
+    <string name="UninstallActivity_uninstall_sys_apks">Деинсталирање системних апликација</string>
+    <string name="InstallActivity_install_sys_apks">Инсталирање унутрашњих апк фајлове</string>
+    <string name="InstallActivity_install_usb_apks">Инсталирање спољних апк фајлове</string>
+    <string name="UninstallUserPageLayout_installed">Успешно инсталирано</string>
+    <string name="UninstallUserPageLayout_sys_apks">Системна апликација</string>
+    <string name="UninstallUserPageLayout_user_apks">Корисничка апликација</string>
+    <string name="InstallSysPageLayout_uninstall">Није инсталирано</string>
+    <string name="InstallSysPageLayout_can_updata">Ажурирано</string>
+    <string name="apks_reading">Отварање прилог</string>
+    <string name="dialog_title">Детаљи примене</string>
+    <string name="dialog_apks_name">Апликација Име</string>
+    <string name="dialog_apks_state">Статус примене</string>
+    <string name="dialog_apks_size">Величина администрација</string>
+    <string name="dialog_apks_vision_name">Име верзија</string>
+    <string name="dialog_apks_vision_code">Број верзије</string>
+    <string name="dialog_file_path">Пут фајла</string>
+    <string name="dialog_apks_icon">Иконе апликације</string>
+    <string name="dialog_file_pakege_name">Назив пакета</string>
+    <string name="dialog_install">Инсталација</string>
+    <string name="dialog_uninstall">Деинсталирање</string>
+    <string name="nousb_warn">Савет</string>
+    <string name="not_find_apk_file">Апликација не може да пронађи инсталациони фајл</string>
+    <string name="not_find_userapk">Нисте инсталирали корисничке апликације</string>
+    <string name="usb_unname">Спољни уређаји за складиштење фајлова</string>
+    <string name="is_sys_app">Нема дозволи да инсталирате</string>
+    <string name="exception_files_1">Апликација</string>
+    <string name="exception_files_2">Ненормалан</string>
+    <string name="MainActivity_exitBy2Click">Притисните поново да изађете из програма</string>
+    <string name="install_sys">Интерни</string>
+    <string name="install_sys_apk">Инсталирање унутрашњег апликацију</string>
+    <string name="nousb_content">Не налази спољни уређај за складиштење података, проверите УСБ уређај</string>
+    <string name="uninstall">Деинсталирати</string>
+    <string name="install">Инсталирати</string>
+    <string name="exit">Излаз</string>
+
+</resources>

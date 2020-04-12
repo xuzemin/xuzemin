@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+
+    <string name="app_name">Gestor de aplicaciones </string>
+    <string name="action_settings">Ajustes</string>
+    <string name="uninstall_sys">Sistema</string>
+    <string name="uninstall_user">Usuario</string>
+    <string name="install_usb">Externo</string>
+    <string name="uninstall_user_apk">La desinstalación de la aplicación del usuario</string>
+    <string name="exit_title">Determinar para salir</string>
+    <string name="yes">Confirmar</string>
+    <string name="no">Cancelar</string>
+    <string name="MainActivity_sys_no_apks">En la memoria del sistema no puede encontrar el archivo apk instalar</string>
+    <string name="UninstallActivity_uninstall_user_apks">La desinstalación de la aplicación del usuario</string>
+    <string name="UninstallActivity_uninstall_sys_apks">Desinstalar aplicaciones del sistema</string>
+    <string name="InstallActivity_install_sys_apks">Instalación en archivos APK</string>
+    <string name="InstallActivity_install_usb_apks">La instalación del archivo APK externa</string>
+    <string name="UninstallUserPageLayout_installed">Se ha instalado</string>
+    <string name="UninstallUserPageLayout_sys_apks">Aplicación del sistema</string>
+    <string name="UninstallUserPageLayout_user_apks">Aplicación de Usuario</string>
+    <string name="InstallSysPageLayout_uninstall">No instalada</string>
+    <string name="InstallSysPageLayout_can_updata">Actualizable</string>
+    <string name="apks_reading">Lectura de archivos de aplicaciones .... </string>
+    <string name="dialog_title">Apk Detalles de Aplicación</string>
+    <string name="dialog_apks_name">Nombre de la aplicación:</string>
+    <string name="dialog_apks_state">Estado de la solicitud:</string>
+    <string name="dialog_apks_size">Tamaño de aplicaciones:</string>
+    <string name="dialog_apks_vision_name">Versión Nombre:</string>
+    <string name="dialog_apks_vision_code">Número de versión:</string>
+    <string name="dialog_file_path">Ruta del archivo:</string>
+    <string name="dialog_apks_icon">Iconos de aplicaciones:</string>
+    <string name="dialog_file_pakege_name">Nombre del paquete:</string>
+    <string name="dialog_install">Instalación</string>
+    <string name="dialog_uninstall">Desinstalar</string>
+    <string name="nousb_warn">Consejos:</string>
+    <string name="not_find_apk_file">Apk no puede encontrar el archivo para instalar!</string>
+    <string name="not_find_userapk">Usted no instalación de cualquier aplicación de usuario</string>
+    <string name="usb_unname">Dispositivos de almacenamiento extraíbles</string>
+    <string name="is_sys_app">No tiene permiso para desinstalar!</string>
+    <string name="exception_files_1">Archivo APK</string>
+    <string name="exception_files_2">Anormal</string>
+    <string name="MainActivity_exitBy2Click">Pulse de nuevo para salir del programa</string>
+    <string name="install_sys">Interna</string>
+    <string name="install_sys_apk">Instalación del archivo Apk Interna</string>
+    <string name="nousb_content">¿No ha encontrado el dispositivo de almacenamiento externo correspondiente, compruebe el dispositivo USB está conectado!</string>
+    <string name="uninstall">Desinstalar</string>
+    <string name="install">Instale</string>
+    <string name="exit">Salida</string>
+
+</resources>

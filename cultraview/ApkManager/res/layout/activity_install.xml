@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/root_view"
+    >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="71dp"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/ll_install_sys_select"
+            android:layout_width="wrap_content"
+            android:layout_height="76dp"
+            android:background="@drawable/ll_select_bg"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="7.5dp"
+            android:paddingRight="19dp" >
+
+            <ImageView
+                android:id="@+id/iv_install_top_sys"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/uninstall_title_system_focus"
+                android:contentDescription="@string/img"
+                android:focusable="false"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/tv_install_top_sys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7.5dp"
+                android:layout_marginTop="30dp"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/install_sys"
+                android:textColor="#ffffff"
+                android:textSize="27sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_install_usb_select"
+            android:layout_width="wrap_content"
+            android:layout_height="76dp"
+            android:background="@drawable/ll_select_bg"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:paddingLeft="10dip"
+            android:paddingRight="25dip" >
+
+            <ImageView
+                android:id="@+id/iv_install_top_usb"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/install_title_usb"
+                android:contentDescription="@string/img"
+                android:focusable="false"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/tv_install_top_usb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7.5dp"
+                android:layout_marginTop="30dp"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/install_usb"
+                android:textColor="#50ffffff"
+                android:textSize="27sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="71dp"
+        android:contentDescription="@string/img"
+        android:focusable="false"
+        android:src="@drawable/all_top_line" />
+
+    <com.cv.apk.manager.view.VerticalViewPager
+        android:id="@+id/install_apk_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="72dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <LinearLayout
+        android:id="@+id/install_viewGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="19dp"
+        android:focusable="false"
+        android:orientation="vertical" />
+
+</FrameLayout>

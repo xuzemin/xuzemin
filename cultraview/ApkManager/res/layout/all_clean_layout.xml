@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <GridView
+        android:id="@+id/gv_all_clean"
+        android:layout_width="751dp"
+        android:layout_height="350dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:horizontalSpacing="-7.5dp"
+        android:listSelector="@drawable/gridview_bg"
+        android:numColumns="4"
+        android:scaleType="fitXY"
+        android:scrollbars="none"
+        android:verticalSpacing="-7.5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="328dp"
+        android:orientation="horizontal"
+        android:visibility="invisible" >
+
+        <ImageView
+            android:id="@+id/clean_refimg_1"
+            android:layout_width="145dp"
+            android:layout_height="134dp"
+            android:layout_marginLeft="53dp"
+            android:clickable="false"
+            android:contentDescription="@string/img"
+            android:focusable="false"
+            android:src="#00ffffff"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/clean_refimg_2"
+            android:layout_width="145dp"
+            android:layout_height="134dp"
+            android:layout_marginLeft="38dp"
+            android:clickable="false"
+            android:contentDescription="@string/img"
+            android:focusable="false"
+            android:src="#00ffffff"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/clean_refimg_3"
+            android:layout_width="145dp"
+            android:layout_height="134dp"
+            android:layout_marginLeft="38dp"
+            android:clickable="false"
+            android:contentDescription="@string/img"
+            android:focusable="false"
+            android:src="#00ffffff"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/clean_refimg_4"
+            android:layout_width="145dp"
+            android:layout_height="134dp"
+            android:layout_marginLeft="38dp"
+            android:clickable="false"
+            android:contentDescription="@string/img"
+            android:focusable="false"
+            android:src="#00ffffff"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</FrameLayout>
