@@ -42,6 +42,9 @@
         android:supportsRtl="true"
         android:excludeFromRecents="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <uses-library android:name="com.mstar.android"/>
+        <uses-library android:name="com.cultraview.tv"/>
+        <uses-library android:name="com.hht.android.sdk"/>
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"

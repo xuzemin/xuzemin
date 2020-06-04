@@ -2,6 +2,7 @@ package com.protruly.floatwindowlib.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
@@ -31,6 +32,16 @@ public class MyUtils {
      * @return
      */
     public static boolean isOpencheck = true;
+    private static Handler handler = new Handler();
+    private static Runnable runnable = () -> {
+        try {
+            TvManager.getInstance().setGpioDeviceStatus(0x67,false);
+            Thread.sleep(50);
+            TvManager.getInstance().setGpioDeviceStatus(0x67,true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    };
 
     public static boolean IsPc(){
         try {
@@ -82,32 +93,36 @@ public class MyUtils {
 
 
     public static void checkUSB(boolean isOpen){
-        Log.e("SUB","isOpen"+isOpen);
-        if(isOpencheck == isOpen){
-            return;
-        }
-        isOpencheck = isOpen;
-        if(isOpencheck){
-            int inputSource = TvCommonManager.getInstance().getCurrentTvInputSource();
-            Log.e("SUB","inputSource"+ inputSource);
-            if(inputSource == TvCommonManager.INPUT_SOURCE_HDMI3 ||
-                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI ||
-                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI2 ||
-                    inputSource == TvCommonManager.INPUT_SOURCE_VGA){
-                if(ActivityCollector.activities.size() == 0 && !ControlMenuLayout.isDown
-                        && (FloatWindowManager.getNewSignalDialog() ==null || FloatWindowManager.getNewSignalDialog().getVisibility() == View.GONE)
-                        && (FloatWindowManager.getSettingsDialog() == null || FloatWindowManager.getSettingsDialog().getVisibility() == View.GONE)
-                ) {
-                    SystemProperties.set("ctv.sendKeyCode", "on");
-                    AppUtils.sendCommand("SetUSBTOUCH_ON");
-                    Log.e("SUB", "SetUSBTOUCH_ON");
-                }
-            }
-        }else{
-                SystemProperties.set("ctv.sendKeyCode","off");
-                AppUtils.sendCommand("SetUSBTOUCH_OFF");
-                Log.e("SUB","SetUSBTOUCH_OFF");
-        }
+//        Log.e("SUB","isOpen"+isOpen);
+//        if(isOpencheck == isOpen){
+//            return;
+//        }
+//        isOpencheck = isOpen;
+//        if(isOpencheck){
+//            int inputSource = TvCommonManager.getInstance().getCurrentTvInputSource();
+//            Log.e("SUB","inputSource"+ inputSource);
+//            if(inputSource == TvCommonManager.INPUT_SOURCE_HDMI3 ||
+//                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI ||
+//                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI2 ||
+//                    inputSource == TvCommonManager.INPUT_SOURCE_VGA){
+//                if(ActivityCollector.activities.size() == 0 && !ControlMenuLayout.isDown
+//                        && (FloatWindowManager.getNewSignalDialog() ==null || FloatWindowManager.getNewSignalDialog().getVisibility() == View.GONE)
+//                        && (FloatWindowManager.getSettingsDialog() == null || FloatWindowManager.getSettingsDialog().getVisibility() == View.GONE)
+//                ) {
+//                    SystemProperties.set("ctv.sendKeyCode", "on");
+//                    AppUtils.sendCommand("SetUSBTOUCH_ON");
+//                    Log.e("SUB", "SetUSBTOUCH_ON");
+//                }
+//            }
+//        }else{
+//                SystemProperties.set("ctv.sendKeyCode","off");
+//                AppUtils.sendCommand("SetUSBTOUCH_OFF");
+//                Log.e("SUB","SetUSBTOUCH_OFF");
+//        }
+    }
+
+    public static void resetIO(){
+        handler.postDelayed(runnable,1000);
     }
 
     /**

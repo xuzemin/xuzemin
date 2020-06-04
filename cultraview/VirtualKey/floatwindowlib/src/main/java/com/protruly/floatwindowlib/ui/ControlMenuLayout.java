@@ -8,12 +8,10 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,9 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.apkfuns.logutils.LogUtils;
-import com.protruly.floatwindowlib.activity.PictureChangeActivity;
 import com.protruly.floatwindowlib.control.ActivityCollector;
 import com.protruly.floatwindowlib.control.FloatWindowManager;
 import com.protruly.floatwindowlib.utils.MyUtils;
@@ -33,10 +29,8 @@ import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.BitmapUtils;
 import com.yinghe.whiteboardlib.utils.CommConst;
 import com.yinghe.whiteboardlib.utils.DrawConsts;
-import com.yinghe.whiteboardlib.utils.ScreenUtils;
 import com.yinghe.whiteboardlib.utils.TimeUtils;
 import com.yinghe.whiteboardlib.utils.ViewUtils;
-
 import java.io.File;
 import java.lang.ref.WeakReference;
 
@@ -62,7 +56,6 @@ public class ControlMenuLayout extends FrameLayout {
 
     View rlBtnArrow;// 箭头按钮的父布局
     ImageView btnArrow;// 箭头按钮:控制菜单显示和隐藏
-//    ImageView btnArrowShrink;// 箭头按钮隐藏
 
     View btnBack;// 返回
     View btnHome;// 回到主页
@@ -332,14 +325,12 @@ public class ControlMenuLayout extends FrameLayout {
             FloatWindowManager.createNewSignalDialog(getContext().getApplicationContext(), isRight);
         } else {
             newSignalDialog.refreshData();
-            newSignalDialog.commonAdapter.notifyDataSetChanged();
             int visible = newSignalDialog.getVisibility();
             if (visible != View.VISIBLE){
                 visible = View.VISIBLE;
             } else {
                 visible = View.GONE;
             }
-
 
             FloatWindowManager.updateNewSignalDialog(getContext(), isRight);
             newSignalDialog.setRightShow(isRight);

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	>
+	<!--&lt;!&ndash; 获得焦点 &ndash;&gt;-->
+	<!--<item-->
+		<!--android:state_focused="true"-->
+		<!--android:drawable="@mipmap/signal_hdmi_focus"-->
+		<!--&gt;-->
+	<!--</item>-->
+
+	<!-- 按下 -->
+	<item
+		android:state_pressed="true"
+		android:drawable="@mipmap/list_menu_img_hdmi"
+		>
+	</item>
+
+	<!-- 按钮不可以 -->
+	<item
+		android:state_enabled="false"
+		android:drawable="@mipmap/list_menu_img_hdmi"
+		>
+	</item>
+
+	<!-- 正常 -->
+	<item
+		android:drawable="@mipmap/list_menu_img_hdmi"
+		>
+	</item>
+</selector>

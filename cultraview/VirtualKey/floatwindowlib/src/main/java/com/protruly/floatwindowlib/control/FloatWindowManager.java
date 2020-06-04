@@ -409,6 +409,7 @@ public class FloatWindowManager {
             initNewSignalParams(context, screenWidth, screenHeight, isRight);
             windowManager.addView(newSignalDialog, newSignalParams);
         } else {
+            newSignalDialog.refreshData();
             initNewSignalParams(context, screenWidth, screenHeight, isRight);
             windowManager.updateViewLayout(newSignalDialog, newSignalParams);
         }
@@ -496,7 +497,6 @@ public class FloatWindowManager {
         if (newSignalDialog == null || newSignalParams == null){
             return;
         }
-
         // 更新位置
         WindowManager windowManager = getWindowManager(context);
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
@@ -506,7 +506,6 @@ public class FloatWindowManager {
         } else {
             newSignalParams.x = ScreenUtils.dip2px(context, 57);
         }
-
         // 初始化布局参数
         newSignalParams.y =  menuParams.y-10;
         windowManager.updateViewLayout(newSignalDialog, newSignalParams);
@@ -763,7 +762,7 @@ public class FloatWindowManager {
             keyList.add(sbn.getKey());
         }
 
-        context.sendBroadcast(new Intent("com.ctv.UPDATE_NOTIFICATION"));
+        //context.sendBroadcast(new Intent("com.ctv.UPDATE_NOTIFICATION"));
     }
 
     public static void delSBN(Context context, StatusBarNotification sbn) {

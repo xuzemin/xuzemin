@@ -29,6 +29,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.cultraview.tv.CtvTvManager;
+import com.hht.android.sdk.source.HHTSourceManager;
 import com.mstar.android.tv.TvCommonManager;
 import com.protruly.floatwindowlib.activity.SettingNewActivity;
 import android.util.Log;
@@ -39,9 +40,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -50,14 +48,9 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.apkfuns.logutils.LogUtils;
 import com.cultraview.tv.CtvPictureManager;
-//import com.mstar.android.pppoe.PPPOE_STA;
-//import com.mstar.android.pppoe.PppoeManager;;
-import com.mstar.android.tv.TvFactoryManager;
-//import com.mstar.android.wifi.MWifiManager;
 import com.protruly.floatwindowlib.MyApplication;
 import com.protruly.floatwindowlib.R;
 import com.protruly.floatwindowlib.adapter.NotificationAdapter;
@@ -78,12 +71,9 @@ import com.yinghe.whiteboardlib.utils.SPUtil;
 import com.yinghe.whiteboardlib.utils.ScreenUtils;
 import com.yinghe.whiteboardlib.utils.TimeUtils;
 
-import org.w3c.dom.Text;
-
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -301,105 +291,6 @@ public class SettingsDialogLayout extends FrameLayout {
             mRecyclerView.setAdapter(notificationAdapter);
         }
 
-//        gv_apps = findViewById(R.id.gv_apps);
-//        app_list = new ArrayList<>();
-//        //获取数据
-//        getData();
-//        //新建适配器
-//        String [] from ={"image","text"};
-//        int [] to = {R.id.image,R.id.text};
-//        sim_adapter = new SimpleAdapter(mContext, app_list, R.layout.app_item, from, to);
-//        //配置适配器
-//        gv_apps.setAdapter(sim_adapter);
-//        gv_apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                int textid = iconName[i];
-//                switch (textid){
-//                    case R.string.apps_wire: { // 网络
-////                    gotoNetUI(CommConsts.WIRE_CONNECT);
-//                        clickWire();
-//                        break;
-//                    }
-//                    case R.string.apps_wireless: { // WiFi
-//                        clickWifi();
-//                        break;
-//                    }
-//                    case R.string.apps_hotspot: { // 热点
-//                        isOpenHotspot = !isOpenHotspot;
-//                        setOpenHotspot(true);
-//                        break;
-//                    }
-//
-//                    case R.string.apps_settings: { // 设置
-//                        String action = "com.cultraview.settings.CTVSETTINGS";
-//                        AppUtils.gotoOtherApp(getContext(), action);
-//                        break;
-//                    }
-//
-//                    case R.string.apps_screenshot: { // 截屏
-//                        Log.i(TAG, "screenshot start");
-//                        AppUtils.showScreenshot(getContext().getApplicationContext());
-//                        break;
-//                    }
-//                    case R.string.apps_timer: { // 计时器
-//                        String mPackageName = "com.dazzle.timer";
-//                        String mActivityName = "com.dazzle.timer.TimerActivity";
-//                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
-//                        break;
-//                    }
-//                    case R.string.apps_record: { // 录像
-//                        String mPackageName = "com.dazzlewisdom.screenrec";
-//                        String mActivityName = "com.dazzlewisdom.screenrec.ScreenRecActivity";
-//                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
-//                        break;
-//                    }
-//                    case R.string.apps_eyecare: { // 护眼
-//                        setEyecareMode();
-//                        break;
-//                    }
-//                    case R.string.apps_usred:{//自定义
-//                        setUserAPPShow();
-//                        break;
-//                    }
-//                    case R.id.btn_delete: { // 删除添加的快捷应用
-//                        autoDelayHide();
-//
-//                        SPUtil.saveData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
-//                        deleteImage.setVisibility(View.GONE);
-//
-//                        updateUseredIcon();
-//                        break; // 不隐藏UI，还可以再操作
-//                    }
-//                    case R.string.light_sense: {
-//                        // 允许背光进度条滑动
-//                        mHandler.post(() ->{
-//                            if (SettingNewActivity.mHandler != null){
-//                                Message msg = SettingNewActivity.mHandler.obtainMessage(SettingNewActivity.MSG_UPDATE_LIGHT,
-//                                        true);
-//                                SettingNewActivity.mHandler.sendMessage(msg); // 更新亮度进度条
-//                            }
-//                        });
-//                        // 切换光感
-//                        changeLightSense();
-//                        break;
-//                    }
-//                    case R.string.energy_saving:{//自定义
-//                        CtvPictureManager.getInstance().disableBacklight();
-//                        Settings.System.putInt(mContext.getContentResolver(), "isSeperateHear", 1);
-//                        break;
-//                    }
-//                    case R.string.magnifier:{ //放大镜
-//                        String mPackageName = "com.example.newmagnifier";
-//                        String mActivityName = "com.example.newmagnifier.MainActivity";
-//                        AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
-//                        break;
-//                    }
-//                }
-//            }
-//        });
-
-
         // WiFi网络
         wifiImage = findViewById(R.id.wifi_image);
         mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
@@ -430,9 +321,7 @@ public class SettingsDialogLayout extends FrameLayout {
         View settingsLL = findViewById(R.id.pup_settings);
         View hotspot5G = findViewById(R.id.pup_hotspot_5);
         View bluetooth = findViewById(R.id.pup_bluetooth);
-
         View screenshotLL = findViewById(R.id.pup_screenshot);
-
         View timerLL = findViewById(R.id.pup_timer);
         View recordLL = findViewById(R.id.pup_record);
 
@@ -467,17 +356,14 @@ public class SettingsDialogLayout extends FrameLayout {
         tv_sound.setText(""+currentVolume);
         try {
             mTvPictureManager = CtvPictureManager.getInstance();
-//            light.setProgress(mTvPictureManager.getBacklight());
-            int progress = SystemProperties.getInt("persist.sys.backlight",80);
+            int progress = SystemProperties.getInt("persist.sys.backlight",50);
             light.setProgress(progress);
             tv_light.setText(""+progress);
-//            tv_light.setText(""+mTvPictureManager.getBacklight());
         } catch (Exception e){
             e.printStackTrace();
         }
 
         light.setMax(100);
-
 
         // 设置监听
         wireLL.setOnClickListener(mOnClickListener);
@@ -651,6 +537,11 @@ public class SettingsDialogLayout extends FrameLayout {
 
         mContext.registerReceiver(mWifiListReceiver, new IntentFilter(
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+    }
+
+    public void removeReceiver(){
+        mContext.unregisterReceiver(mReceiver);
+        mContext.unregisterReceiver(mWifiListReceiver);
     }
 
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -1112,39 +1003,46 @@ public class SettingsDialogLayout extends FrameLayout {
         switch (id){
             case R.id.pup_net: { // 网络
 //                    gotoNetUI(CommConsts.WIRE_CONNECT);
-                clickWire();
+//                clickWire();
+                HHTSourceManager.getInstance().isCurrentSource("OPS");
                 break;
             }
             case R.id.pup_wifi: { // WiFi
-                clickWifi();
+//                clickWifi();
+                HHTSourceManager.getInstance().isCurrentSource("HDMI1");
+
                 break;
             }
             case R.id.pup_hotspot: { // 热点
-                String wifiapband = SystemProperties.get("Wifiapband");
-                if(wifiapband.equals("Apband2G")){
-                    isOpenHotspot = false;
-                    setOpenHotspot(true,false);
-                }else{
-                    SystemProperties.set("Wifiapband", "Apband2G");
-                    isOpenHotspot = true;
-                    setOpenHotspot(true,false);
-                }
+//                String wifiapband = SystemProperties.get("Wifiapband");
+//                if(wifiapband.equals("Apband2G")){
+//                    isOpenHotspot = false;
+//                    setOpenHotspot(true,false);
+//                }else{
+//                    SystemProperties.set("Wifiapband", "Apband2G");
+//                    isOpenHotspot = true;
+//                    setOpenHotspot(true,false);
+//                }
+                Log.e("HHTSourceManager",""+HHTSourceManager.getInstance().isCurrentSource("VGA"));
 
+                HHTSourceManager.getInstance().isCurrentSource("VGA");
                 break;
             }
 
             case R.id.pup_hotspot_5: { // 热点
 //                isOpenHotspot = !isOpenHotspot;
 //                setOpenHotspot(true);
-                String wifiapband = SystemProperties.get("Wifiapband");
-                if(wifiapband.equals("Apband5G")){
-                    isOpenHotspot = false;
-                    setOpenHotspot(true,true);
-                }else{
-                    isOpenHotspot = true;
-                    SystemProperties.set("Wifiapband", "Apband5G");
-                    setOpenHotspot(true,true);
-                }
+//                String wifiapband = SystemProperties.get("Wifiapband");
+//                if(wifiapband.equals("Apband5G")){
+//                    isOpenHotspot = false;
+//                    setOpenHotspot(true,true);
+//                }else{
+//                    isOpenHotspot = true;
+//                    SystemProperties.set("Wifiapband", "Apband5G");
+//                    setOpenHotspot(true,true);
+//                }
+                Log.e("HHTSourceManager",""+HHTSourceManager.getInstance().isCurrentSource("VGA"));
+
                 break;
             }
 
@@ -1233,7 +1131,7 @@ public class SettingsDialogLayout extends FrameLayout {
 
                 break;
             }
-            case R.id.pup_energy_saving:{//自定义
+            case R.id.pup_energy_saving:{//节能
                 CtvPictureManager.getInstance().disableBacklight();
                 Settings.System.putInt(mContext.getContentResolver(), "isSeperateHear", 1);
                 break;

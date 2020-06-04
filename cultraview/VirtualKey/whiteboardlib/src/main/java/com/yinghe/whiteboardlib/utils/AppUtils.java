@@ -224,25 +224,12 @@ public class AppUtils {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             intent.putExtra(MstarConst.KEY_START_TV_PLAYER_TASK_TAG, MstarConst.VALUE_START_TV_PLAYER_TASK_TAG);
             intent.putExtra(MstarConst.KEY_START_TV_PLAYER_INPUT_SRC, inputSource);
-            Log.i("CommonCommandsourceInde","changeSignal error->" +inputSource);
+            Log.i("CommonCommandsourceInde","changeSignal->" +inputSource);
             try {
                 context.startActivity(intent);
             } catch (Exception e){
                 e.printStackTrace();
                 LogUtils.e("CommonCommand","changeSignal error->" + e.getMessage());
-            }
-
-            try {
-                Intent targetIntent;
-
-                targetIntent = new Intent("mstar.tvsetting.ui.intent.action.RootActivity");
-                targetIntent.putExtra("task_tag", "input_source_changed");
-                /* DO NOT remove on_change_source extra!, it will cause mantis:1088498. */
-                targetIntent.putExtra("no_change_source", true);
-                if (targetIntent != null)
-                    context.startActivity(targetIntent);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }).start();
     }

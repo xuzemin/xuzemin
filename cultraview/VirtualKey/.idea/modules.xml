@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/VirtualKey.iml" filepath="$PROJECT_DIR$/VirtualKey.iml" />
-      <module fileurl="file://$PROJECT_DIR$/floatwindowlib/floatwindowlib.iml" filepath="$PROJECT_DIR$/floatwindowlib/floatwindowlib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" filepath="$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VirtualKey.iml" filepath="$PROJECT_DIR$/VirtualKey.iml" group="VirtualKey" />
+      <module fileurl="file://$PROJECT_DIR$/floatwindowlib/floatwindowlib.iml" filepath="$PROJECT_DIR$/floatwindowlib/floatwindowlib.iml" group="VirtualKey/floatwindowlib" />
+      <module fileurl="file://$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" filepath="$PROJECT_DIR$/whiteboardlib/whiteboardlib.iml" group="VirtualKey/whiteboardlib" />
     </modules>
   </component>
 </project>

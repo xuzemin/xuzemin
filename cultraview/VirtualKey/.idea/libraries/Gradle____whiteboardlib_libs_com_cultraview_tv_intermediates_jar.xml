@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./whiteboardlib/libs/com.cultraview.tv_intermediates.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/whiteboardlib/libs/com.cultraview.tv_intermediates.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

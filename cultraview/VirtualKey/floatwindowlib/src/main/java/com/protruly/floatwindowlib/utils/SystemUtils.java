@@ -2,8 +2,10 @@ package com.protruly.floatwindowlib.utils;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.apkfuns.logutils.LogUtils;
 import com.cultraview.tv.CtvCommonManager;
 import com.cultraview.tv.common.exception.CtvCommonException;
 import com.mstar.android.tvapi.common.TvManager;
@@ -16,6 +18,10 @@ import java.util.Locale;
  */
 public class SystemUtils {
     public static final String TAG = SystemUtils.class.getSimpleName();
+
+    public static String AUTO_FAC_MODE = "5";
+    public static String FACTORY_MODE = "1";
+    public static String BURINGMODE_MODE = "1";
 
     /**
      * 获得工厂模式
@@ -78,5 +84,29 @@ public class SystemUtils {
         Configuration config = context.getResources().getConfiguration();
         context.getResources().updateConfiguration(config
                 , context.getResources().getDisplayMetrics());
+    }
+
+    /**
+     * 判断是否为自动化测试或者老化
+     * @return
+     */
+    public static boolean isAutoTestOrBurning(){
+        try {
+            String factoryMode = TvManager.getInstance().getEnvironment("factory_mode");
+            if (TextUtils.equals(factoryMode, "1")){
+                String autoFacMode = TvManager.getInstance().getEnvironment("AutoFacMode");
+                if (TextUtils.equals(autoFacMode, "5")){
+                    return true;
+                }
+
+                String burningMode = TvManager.getInstance().getEnvironment("factory_burningmode");
+                return TextUtils.equals(burningMode, "1");
+            }
+
+            return false;
+        } catch (TvCommonException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: ./floatwindowlib/libs/fr.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/floatwindowlib/libs/fr.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

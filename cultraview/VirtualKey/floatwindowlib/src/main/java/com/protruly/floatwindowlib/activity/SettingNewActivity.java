@@ -1,36 +1,17 @@
 package com.protruly.floatwindowlib.activity;
 
-import android.app.ActivityManager;
-import android.app.AppOpsManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.pm.ServiceInfo;
-import android.graphics.FontListParser;
 import android.graphics.Point;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
-import android.provider.Settings;
-import android.service.notification.NotificationListenerService;
-import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -38,7 +19,6 @@ import com.cultraview.tv.CtvPictureManager;
 import com.protruly.floatwindowlib.R;
 import com.protruly.floatwindowlib.control.ActivityCollector;
 import com.protruly.floatwindowlib.control.FloatWindowManager;
-import com.protruly.floatwindowlib.service.MyNotificationListenerService;
 import com.protruly.floatwindowlib.ui.ControlMenuLayout;
 import com.protruly.floatwindowlib.ui.SettingsDialogLayout;
 import com.protruly.floatwindowlib.utils.MyUtils;
@@ -46,16 +26,8 @@ import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.DrawConsts;
 import com.yinghe.whiteboardlib.utils.SPUtil;
 import com.yinghe.whiteboardlib.utils.ScreenUtils;
+
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import android.support.v7.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 
 /**
  * 设置界面

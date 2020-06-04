@@ -22,6 +22,7 @@ import android.os.SystemClock;
 
 import com.cultraview.tv.CtvCommonManager;
 import com.cultraview.tv.CtvPictureManager;
+import com.mstar.android.tv.TvCommonManager;
 import com.protruly.floatwindowlib.activity.SettingNewActivity;
 
 import android.os.SystemProperties;
@@ -48,6 +49,7 @@ import com.protruly.floatwindowlib.control.FloatWindowManager;
 import com.protruly.floatwindowlib.ui.ControlMenuLayout;
 import com.protruly.floatwindowlib.ui.SettingsDialogLayout;
 import com.protruly.floatwindowlib.utils.MyUtils;
+import com.protruly.floatwindowlib.utils.SystemUtils;
 import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.CmdUtils;
 import com.yinghe.whiteboardlib.utils.MstarConst;
@@ -104,7 +106,8 @@ public class FloatWindowService extends Service {
 
     public static final String FINISH_ACTION = "com.ctv.launcher.FINISH";
     public final static String KEY_TV_OS_CMD = "KEY_TV_OS_CMD"; // TVOS命令
-
+    public final static String KEY_INPUTSOURCE_SWITCH = "KEY_INPUTSOURCE_SWITCH";
+    public final static String KEY_PORT_SWITCH = "KEY_PORT_SWITCH";
     public final static String START_ACTION = "com.protruly.floatwindowlib.action.VIRTUAL_KEY"; // 启动虚拟按键
     public final static String CLOSE_BACK = "com.protruly.floatwindowlib.action.VIRTUAL_KEY_CLOSE"; //关闭背光
 
@@ -145,6 +148,12 @@ public class FloatWindowService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (SystemUtils.isAutoTestOrBurning()) {
+            LogUtils.d("onCreate 工厂老化或者自动化测试.....");
+            return;
+        }
+
         isFirstFlag = true;
         mHandler = new UIHandler(this);
         mHandler.sendEmptyMessageDelayed(0,5000);
@@ -287,6 +296,11 @@ public class FloatWindowService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
+            if (SystemUtils.isAutoTestOrBurning()) {
+                LogUtils.d("onStartCommand 工厂老化或者自动化测试.....");
+                return super.onStartCommand(intent, flags, startId);
+            }
+
             // 初始化操作
             init(intent);
             try {
@@ -389,9 +403,28 @@ public class FloatWindowService extends Service {
             if (!TextUtils.isEmpty(cmdStr)) {
                 LogUtils.d("START_ACTION .....cmd->" + cmdStr);
                 CmdUtils.setTvosCommonCommand(cmdStr);
-                return;
             } else {
-                CtvPictureManager.getInstance().enableBacklight();
+                int inputSourceID = intent.getIntExtra(KEY_INPUTSOURCE_SWITCH,40);
+//                CtvPictureManager.getInstance().enableBacklight();
+                LogUtils.d("START_ACTION ....."+inputSourceID);
+                if (inputSourceID != 40) {
+                    if(inputSourceID == 0 ){
+                        TvCommonManager.getInstance().setTvosCommonCommand("SetVGA0");
+                        TvCommonManager.getInstance().setInputSource(0);
+                    }else if(inputSourceID > 0 && inputSourceID < 34){
+                        TvCommonManager.getInstance().setInputSource(inputSourceID);
+                    }
+                }else{
+                    int port = intent.getIntExtra(KEY_PORT_SWITCH,0);
+                    LogUtils.d("START_ACTION ....."+port);
+                    if(port == 2){
+                        TvCommonManager.getInstance().setTvosCommonCommand("SetTIPORT2");
+                    }else{
+                        TvCommonManager.getInstance().setTvosCommonCommand("SetTIPORT0");
+                    }
+                    TvCommonManager.getInstance().setInputSource(23);
+                }
+
             }
         } else if (CLOSE_ACTION.equals(action)) { // 关闭
             LogUtils.d("CLOSE_ACTION .....");

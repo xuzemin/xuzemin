@@ -1,0 +1,462 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:2:1-35:12
+MERGED from [com.android.support:design:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\design-24.2.1.aar\392961a3b89a419f18728c68ffe99c33\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\appcompat-v7-24.2.1.aar\d0d2f6d61c47d9482a73f8d1af5e43b2\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-v4:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-v4-24.2.1.aar\0b341df92d53c2f9e4c2355c4bb98a34\AndroidManifest.xml:17:1-27:12
+MERGED from [com.jakewharton:butterknife:8.5.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\butterknife-8.5.1.aar\60b7c0b1f3f6c16d0709e6325c2fbdb4\AndroidManifest.xml:2:1-7:12
+MERGED from [com.zhy:base-rvadapter:3.0.3] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\base-rvadapter-3.0.3.aar\57915461f8b03854175b17ae7da80612\AndroidManifest.xml:2:1-12:12
+MERGED from [com.zhy:base-adapter:3.0.3] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\base-adapter-3.0.3.aar\a0110927c4db8864ddbae2bec8c1dcd7\AndroidManifest.xml:2:1-11:12
+MERGED from [com.apkfuns.logutils:library:1.4.2.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\library-1.4.2.2.aar\4857e59ececcafd86890141c4063c9fe\AndroidManifest.xml:2:1-14:12
+MERGED from [com.zhy:okhttputils:2.6.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\okhttputils-2.6.2.aar\4a9c74a764e353406a0497fd7eee1244\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:recyclerview-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-24.2.1.aar\a85873c5547221e792d3ffd8f87006a5\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-24.2.1.aar\85903f81c7397b072b0479be92542e9a\AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:support-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-24.2.1.aar\e557de62324a74a305c77016ddafbc01\AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:support-fragment:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-fragment-24.2.1.aar\38473d34f42ad2bd6f7f1e6f0a8ef5f0\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-media-compat:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-media-compat-24.2.1.aar\d08a203ebccc472845a892c4fa5500c2\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-utils:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-utils-24.2.1.aar\702b2ba44815c9cc4378cb3798be34b8\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-core-ui:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-ui-24.2.1.aar\062207e6bf805f874672bae533abf6d1\AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-compat-25.1.0.aar\dafe15f1127e45fcceefa053036580cf\AndroidManifest.xml:17:1-27:12
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+	package
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:3:11-48
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+	android:sharedUserId
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:4:6-47
+	android:versionName
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:1-163:12
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.BLUETOOTH
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:6:5-68
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:6:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:7:5-74
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:7:22-71
+uses-permission#com.mstar.android.permissionn.ACCESS_TV_DATA
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:8:5-83
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:8:22-81
+uses-permission#android.permission.INJECT_EVENTS
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:9:5-71
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:9:22-69
+uses-permission#android.permission.READ_FRAME_BUFFER
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:10:5-75
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:10:22-73
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:11:5-77
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:11:5-78
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:11:5-78
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:11:22-75
+uses-permission#android.permission.GET_TASKS
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:12:5-67
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:12:22-65
+uses-permission#android.permission.CAMERA
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:13:5-64
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:13:22-62
+uses-feature#android.hardware.camera
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:15:5-59
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:15:19-57
+uses-feature#android.hardware.camera.autofocus
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:16:5-69
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:16:19-67
+uses-permission#android.permission.WAKE_LOCK
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:18:5-67
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:18:22-65
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:19:5-80
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:19:22-78
+uses-permission#android.permission.KILL_BACKGROUND_PROCESSES
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:21:5-84
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:21:22-81
+uses-permission#android.permission.CHANGE_CONFIGURATION
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:22:5-79
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:22:22-76
+uses-permission#android.permission.READ_CONTACTS
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:23:5-72
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:23:22-69
+uses-permission#android.permission.WRITE_CONTACTS
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:24:5-73
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:24:22-70
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:25:5-79
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:15:5-79
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:15:5-79
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:25:22-76
+uses-permission#android.permission.ACCESS_WIMAX_STATE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:26:5-77
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:26:22-74
+uses-permission#android.permission.CHANGE_WIMAX_STATE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:27:5-77
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:27:22-74
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:28:5-76
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:28:22-73
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:29:5-76
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:29:22-73
+uses-permission#android.permission.INTERNET
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:30:5-67
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:14:5-67
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:14:5-67
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:30:22-64
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:31:5-73
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:31:22-70
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:32:5-81
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:19:5-81
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:19:5-81
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:32:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:33:5-80
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:18:5-80
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:18:5-80
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:33:22-77
+uses-permission#android.permission.BIND_NOTIFICATION_LISTENER_SERVICE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:34:5-92
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:34:22-90
+uses-permission#android.permission.SHUTDOWN
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:35:5-67
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:35:22-64
+application
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:36:5-162:19
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:21:5-33:19
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:21:5-33:19
+MERGED from [com.android.support:design:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\design-24.2.1.aar\392961a3b89a419f18728c68ffe99c33\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\design-24.2.1.aar\392961a3b89a419f18728c68ffe99c33\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\appcompat-v7-24.2.1.aar\d0d2f6d61c47d9482a73f8d1af5e43b2\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\appcompat-v7-24.2.1.aar\d0d2f6d61c47d9482a73f8d1af5e43b2\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-v4-24.2.1.aar\0b341df92d53c2f9e4c2355c4bb98a34\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-v4-24.2.1.aar\0b341df92d53c2f9e4c2355c4bb98a34\AndroidManifest.xml:25:5-20
+MERGED from [com.apkfuns.logutils:library:1.4.2.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\library-1.4.2.2.aar\4857e59ececcafd86890141c4063c9fe\AndroidManifest.xml:11:5-12:19
+MERGED from [com.apkfuns.logutils:library:1.4.2.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\library-1.4.2.2.aar\4857e59ececcafd86890141c4063c9fe\AndroidManifest.xml:11:5-12:19
+MERGED from [com.android.support:animated-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-24.2.1.aar\85903f81c7397b072b0479be92542e9a\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:animated-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-24.2.1.aar\85903f81c7397b072b0479be92542e9a\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-24.2.1.aar\e557de62324a74a305c77016ddafbc01\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-24.2.1.aar\e557de62324a74a305c77016ddafbc01\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-fragment:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-fragment-24.2.1.aar\38473d34f42ad2bd6f7f1e6f0a8ef5f0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-fragment-24.2.1.aar\38473d34f42ad2bd6f7f1e6f0a8ef5f0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-media-compat-24.2.1.aar\d08a203ebccc472845a892c4fa5500c2\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-media-compat-24.2.1.aar\d08a203ebccc472845a892c4fa5500c2\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-utils-24.2.1.aar\702b2ba44815c9cc4378cb3798be34b8\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-utils-24.2.1.aar\702b2ba44815c9cc4378cb3798be34b8\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-ui-24.2.1.aar\062207e6bf805f874672bae533abf6d1\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-ui-24.2.1.aar\062207e6bf805f874672bae533abf6d1\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-compat-25.1.0.aar\dafe15f1127e45fcceefa053036580cf\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-compat-25.1.0.aar\dafe15f1127e45fcceefa053036580cf\AndroidManifest.xml:25:5-20
+	android:supportsRtl
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:42:9-35
+	android:label
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:41:9-41
+	android:excludeFromRecents
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:43:9-42
+	android:hardwareAccelerated
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:39:9-43
+	android:icon
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:40:9-37
+	android:allowBackup
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:38:9-35
+	android:theme
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:44:9-52
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:37:9-38
+uses-library#com.mstar.android
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:45:9-57
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:45:23-55
+uses-library#com.cultraview.tv
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:46:9-57
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:46:23-55
+uses-library#com.hht.android.sdk
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:47:9-59
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:47:23-57
+activity#com.protruly.floatwindowlib.activity.MainActivity
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:48:9-57:20
+	android:excludeFromRecents
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:51:13-46
+	android:configChanges
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:50:13-59
+	android:theme
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:52:13-47
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:49:13-50
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:53:13-56:29
+	android:priority
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:53:28-48
+action#android.intent.action.MAIN
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:54:17-68
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:54:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:55:17-76
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:55:27-74
+activity#com.protruly.floatwindowlib.activity.SettingNewActivity
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:59:9-67:20
+	android:excludeFromRecents
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:61:13-46
+	android:configChanges
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:60:13-59
+	android:theme
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:62:13-55
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:59:19-62
+intent-filter#action:name:com.protruly.floatwindowlib.action.SETTING+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:63:13-66:29
+action#com.protruly.floatwindowlib.action.SETTING
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:64:17-84
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:64:25-82
+category#android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:65:17-75
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:65:27-73
+activity#com.protruly.floatwindowlib.activity.SettingActivity
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:69:9-77:20
+	android:excludeFromRecents
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:71:19-52
+	android:configChanges
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:70:19-65
+	android:theme
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:72:19-61
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:69:19-59
+intent-filter#action:name:com.protruly.floatwindowlib.action.SETTING_RIGHT+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:73:13-76:29
+action#com.protruly.floatwindowlib.action.SETTING_RIGHT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:74:17-90
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:74:25-88
+activity#com.protruly.floatwindowlib.activity.PictureChangeActivity
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:79:9-94:20
+	android:launchMode
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:81:13-48
+	android:theme
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:82:13-50
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:80:13-59
+intent-filter#action:name:com.protruly.floatwindowlib.activity.intent.action.PictureChangeActivity+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:83:13-86:29
+action#com.protruly.floatwindowlib.activity.intent.action.PictureChangeActivity
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:84:17-115
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:84:25-112
+intent-filter#action:name:com.mstar.android.intent.action.KEYCODE_VOLUME_DOWN+action:name:com.mstar.android.intent.action.KEYCODE_VOLUME_UP+action:name:com.mstar.android.intent.action.TV_INPUT_BUTTON+action:name:com.mstar.tv.service.COMMON_EVENT_SIGNAL_STATUS_UPDATE+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:87:13-93:29
+action#com.mstar.android.intent.action.TV_INPUT_BUTTON
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:88:17-90
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:88:25-87
+action#com.mstar.android.intent.action.KEYCODE_VOLUME_UP
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:89:17-92
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:89:25-89
+action#com.mstar.android.intent.action.KEYCODE_VOLUME_DOWN
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:90:17-94
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:90:25-91
+action#com.mstar.tv.service.COMMON_EVENT_SIGNAL_STATUS_UPDATE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:91:17-97
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:91:25-94
+activity-alias#com.protruly.floatwindowlib.SettingActivityLeft
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:96:9-105:26
+	android:excludeFromRecents
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:99:19-52
+	android:targetActivity
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:97:25-75
+	android:configChanges
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:98:19-65
+	android:theme
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:100:19-60
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:96:25-59
+intent-filter#action:name:com.protruly.floatwindowlib.action.SETTING_LEFT+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:101:13-104:29
+action#com.protruly.floatwindowlib.action.SETTING_LEFT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:102:17-89
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:102:25-87
+activity#com.protruly.floatwindowlib.activity.HideActivity
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:107:9-115:20
+	android:excludeFromRecents
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:109:19-52
+	android:configChanges
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:108:19-65
+	android:theme
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:110:19-56
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:107:19-56
+intent-filter#action:name:com.protruly.floatwindowlib.action.HIDE_DIALOG+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:111:13-114:29
+action#com.protruly.floatwindowlib.action.HIDE_DIALOG
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:112:17-88
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:112:25-86
+service#com.protruly.floatwindowlib.service.FloatWindowService
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:117:9-129:19
+	android:enabled
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:119:13-35
+	android:exported
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:120:13-36
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:118:13-55
+intent-filter#action:name:com.protruly.floatwindowlib.action.VIRTUAL_KEY+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:121:13-124:29
+action#com.protruly.floatwindowlib.action.VIRTUAL_KEY
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:122:17-88
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:122:25-86
+intent-filter#action:name:com.protruly.floatwindowlib.action.VIRTUAL_KEY_CLOSE+category:name:android.intent.category.DEFAULT
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:125:13-128:29
+action#com.protruly.floatwindowlib.action.VIRTUAL_KEY_CLOSE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:126:17-94
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:126:25-92
+service#com.protruly.floatwindowlib.service.UpdateAPKService
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:131:9-60
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:131:18-58
+service#com.protruly.floatwindowlib.service.MyNotificationListenerService
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:132:9-139:19
+	android:label
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:133:13-50
+	android:permission
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:135:13-87
+	android:persistent
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:134:13-38
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:132:18-71
+intent-filter#action:name:android.service.notification.NotificationListenerService
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:136:13-138:29
+action#android.service.notification.NotificationListenerService
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:137:17-99
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:137:25-96
+receiver#com.protruly.floatwindowlib.broadcast.BootReceiver
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:142:9-150:20
+	android:enabled
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:144:13-35
+	android:exported
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:145:13-36
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:143:13-51
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+category:name:android.intent.category.LAUNCHER
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:146:13-149:29
+	android:priority
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:146:28-57
+action#android.intent.action.BOOT_COMPLETED
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:147:17-78
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:147:25-76
+receiver#com.protruly.floatwindowlib.broadcast.ShowHideReceiver
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:152:9-161:20
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:153:13-55
+intent-filter#action:name:android.intent.action.LOCALE_CHANGED+action:name:com.ctv.launcher.HIDE+action:name:com.ctv.launcher.SHOW+category:name:android.intent.category.DEFAULT+category:name:android.intent.category.LAUNCHER
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:154:13-160:29
+action#com.ctv.launcher.SHOW
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:155:17-63
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:155:25-61
+action#com.ctv.launcher.HIDE
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:156:17-63
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:156:25-61
+action#android.intent.action.LOCALE_CHANGED
+ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:157:17-78
+	android:name
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml:157:25-76
+uses-sdk
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [:whiteboardlib] D:\xuzemin\cultraview\VirtualKey\whiteboardlib\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\design-24.2.1.aar\392961a3b89a419f18728c68ffe99c33\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\design-24.2.1.aar\392961a3b89a419f18728c68ffe99c33\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\appcompat-v7-24.2.1.aar\d0d2f6d61c47d9482a73f8d1af5e43b2\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\appcompat-v7-24.2.1.aar\d0d2f6d61c47d9482a73f8d1af5e43b2\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-v4-24.2.1.aar\0b341df92d53c2f9e4c2355c4bb98a34\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-v4-24.2.1.aar\0b341df92d53c2f9e4c2355c4bb98a34\AndroidManifest.xml:21:5-23:54
+MERGED from [com.jakewharton:butterknife:8.5.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\butterknife-8.5.1.aar\60b7c0b1f3f6c16d0709e6325c2fbdb4\AndroidManifest.xml:5:5-43
+MERGED from [com.jakewharton:butterknife:8.5.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\butterknife-8.5.1.aar\60b7c0b1f3f6c16d0709e6325c2fbdb4\AndroidManifest.xml:5:5-43
+MERGED from [com.zhy:base-rvadapter:3.0.3] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\base-rvadapter-3.0.3.aar\57915461f8b03854175b17ae7da80612\AndroidManifest.xml:8:5-10:41
+MERGED from [com.zhy:base-rvadapter:3.0.3] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\base-rvadapter-3.0.3.aar\57915461f8b03854175b17ae7da80612\AndroidManifest.xml:8:5-10:41
+MERGED from [com.zhy:base-adapter:3.0.3] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\base-adapter-3.0.3.aar\a0110927c4db8864ddbae2bec8c1dcd7\AndroidManifest.xml:7:5-9:41
+MERGED from [com.zhy:base-adapter:3.0.3] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\base-adapter-3.0.3.aar\a0110927c4db8864ddbae2bec8c1dcd7\AndroidManifest.xml:7:5-9:41
+MERGED from [com.apkfuns.logutils:library:1.4.2.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\library-1.4.2.2.aar\4857e59ececcafd86890141c4063c9fe\AndroidManifest.xml:7:5-9:41
+MERGED from [com.apkfuns.logutils:library:1.4.2.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\library-1.4.2.2.aar\4857e59ececcafd86890141c4063c9fe\AndroidManifest.xml:7:5-9:41
+MERGED from [com.zhy:okhttputils:2.6.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\okhttputils-2.6.2.aar\4a9c74a764e353406a0497fd7eee1244\AndroidManifest.xml:7:5-9:41
+MERGED from [com.zhy:okhttputils:2.6.2] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\okhttputils-2.6.2.aar\4a9c74a764e353406a0497fd7eee1244\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:recyclerview-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-24.2.1.aar\a85873c5547221e792d3ffd8f87006a5\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-24.2.1.aar\a85873c5547221e792d3ffd8f87006a5\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:animated-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-24.2.1.aar\85903f81c7397b072b0479be92542e9a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-24.2.1.aar\85903f81c7397b072b0479be92542e9a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-24.2.1.aar\e557de62324a74a305c77016ddafbc01\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-vector-drawable:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-24.2.1.aar\e557de62324a74a305c77016ddafbc01\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-fragment:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-fragment-24.2.1.aar\38473d34f42ad2bd6f7f1e6f0a8ef5f0\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-fragment-24.2.1.aar\38473d34f42ad2bd6f7f1e6f0a8ef5f0\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-media-compat-24.2.1.aar\d08a203ebccc472845a892c4fa5500c2\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-media-compat-24.2.1.aar\d08a203ebccc472845a892c4fa5500c2\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-utils-24.2.1.aar\702b2ba44815c9cc4378cb3798be34b8\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-utils-24.2.1.aar\702b2ba44815c9cc4378cb3798be34b8\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-ui-24.2.1.aar\062207e6bf805f874672bae533abf6d1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-core-ui-24.2.1.aar\062207e6bf805f874672bae533abf6d1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-compat-25.1.0.aar\dafe15f1127e45fcceefa053036580cf\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.1.0] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\support-compat-25.1.0.aar\dafe15f1127e45fcceefa053036580cf\AndroidManifest.xml:21:5-23:58
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:24.2.1] C:\Users\hurry\.gradle\caches\transforms-1\files-1.1\appcompat-v7-24.2.1.aar\d0d2f6d61c47d9482a73f8d1af5e43b2\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+		ADDED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml
+		INJECTED from D:\xuzemin\cultraview\VirtualKey\floatwindowlib\src\main\AndroidManifest.xml

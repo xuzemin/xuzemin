@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <integer-array name="input_source_id_list">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+
+
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>28</item>
+
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+    </integer-array>
+    <integer-array name="input_source_int_list">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+
+
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>28</item>
+
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+    </integer-array>
+    <string-array name="input_source_name_list" ns1:ignore="InconsistentArrays">
+        <item>VGA</item>
+        <item>ATV</item>
+        <item>AV1</item>
+        <item>AV2</item>
+        <item>AV3</item>
+        <item>AV4</item>
+        <item>AV5</item>
+        <item>AV6</item>
+        <item>AV7</item>
+        <item>HDMI2</item>
+        <item>AV MAX</item>
+
+        <item>S-VIDEO</item>
+        <item>S-VIDEO 2</item>
+        <item>S-VIDEO 3</item>
+        <item>S-VIDEO 4</item>
+        <item>S-VIDEO MAX</item>
+
+        <item>YPBRB</item>
+        <item>YPBRB 2</item>
+        <item>YPBRB 3</item>
+        <item>YPBRB MAX</item>
+
+        <item>SCART </item>
+        <item>SCART 2</item>
+        <item>SCART MAX</item>
+
+        <item>HDMI3</item>
+        <item>DP</item>
+        <item>HDMI</item>
+        <item>OPS</item>
+        <!--        <item>INSIDE PC</item>-->
+        <item>DTV</item>
+
+        <item>DVI</item>
+        <item>DVI 2</item>
+        <item>DVI 3</item>
+        <item>DVI 4</item>
+        <item>DVI MAX</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+    <string-array name="input_source_res_list">
+        <item>signal_vga_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av2_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_av_normal</item>
+
+        <item>signal_vga_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_vga_normal</item>
+
+        <item>signal_vga_normal</item>
+        <item>signal_ypbrb_normal</item>
+        <item>signal_ypbrb_normal</item>
+        <item>signal_ypbrb_normal</item>
+
+        <item>signal_dtv_normal</item>
+<!--        <item>signal_vga_normal</item>-->
+        <item>signal_vga_normal</item>
+        <item>signal_vga_normal</item>
+
+        <item>signal_hdmi_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_hdmi3_normal</item>
+        <item>signal_hdmi_normal</item>
+        <!--        <item>INSIDE PC</item>-->
+        <item>signal_vga_normal</item>
+
+        <item>signal_dp_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_dp_normal</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+    <string-array name="input_source_str_list" ns1:ignore="InconsistentArrays">
+        <item>signal_vga</item>
+        <item>signal_atv</item>
+        <item>signal_av1</item>
+        <item>signal_av2</item>
+        <item>signal_av3</item>
+        <item>signal_av4</item>
+        <item>signal_av5</item>
+        <item>signal_av6</item>
+        <item>signal_av7</item>
+        <item>signal_dp</item>
+        <item>signal_av max</item>
+
+        <item>signal_svideo</item>
+        <item>signal_svideo2</item>
+        <item>signal_svideo3</item>
+        <item>signal_svideo4</item>
+        <item>signal_svideo max</item>
+
+        <item>signal_ypbrb</item>
+        <item>signal_ypbrb 2</item>
+        <item>signal_ypbrb 3</item>
+        <item>signal_ypbrb max</item>
+
+        <item>signal_scart</item>
+        <item>signal_scart 2</item>
+        <item>signal_scart max</item>
+
+        <item>signal_hdmi</item>
+        <item>signal_hdmi2</item>
+        <item>signal_hdmi3</item>
+        <item>signal_ops</item>
+        <!--        <item>INSIDE PC</item>-->
+        <item>signal_dtv</item>
+
+        <item>signal_dvi</item>
+        <item>signal_dvi 2</item>
+        <item>signal_dvi 3</item>
+        <item>signal_dvi 4</item>
+        <item>signal_dvi max</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+    <string-array name="week_info">
+        <item>SUNDAY</item>
+        <item>MONDAY</item>
+        <item>TUESDAY</item>
+        <item>WEDNESDAY</item>
+        <item>THURSDAY</item>
+        <item>FRIDAY</item>
+        <item>SATURDAY</item>
+    </string-array>
+    <color name="black">#000000</color>
+    <color name="black_light">#4a4f51</color>
+    <color name="black_light_sub">#5b6064</color>
+    <color name="black_seventy_f">#A9A9A9</color>
+    <color name="blue">#33cccc</color>
+    <color name="bottom_bg_color">#2d000000</color>
+    <color name="btn_click_bg">#1b1c39</color>
+    <color name="btn_default_color">#707070</color>
+    <color name="btn_menu_click_bg">#62b5f5</color>
+    <color name="btn_selected_color">#2297ce</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="com_bg_gray">#aaaaaaaa</color>
+    <color name="content_color">#9a9a9a</color>
+    <color name="dialog_bg_color">#403c3c3c</color>
+    <color name="gray">#eeeeee</color>
+    <color name="half_text_color">#64ffffff</color>
+    <color name="icon_bg_color">#403c3c3c</color>
+    <color name="main_color">#c8000000</color>
+    <color name="seekbar_progress_color">#2297ce</color>
+    <color name="seekbar_track_color">#ffffff</color>
+    <color name="text_bg_color">#ccffffff</color>
+    <color name="text_default_color">#707070</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_black">#C8000000</color>
+    <color name="white">#ffffff</color>
+    <color name="white_light_transparent">#32faffff</color>
+    <color name="white_transparent">#e5e5e5</color>
+    <declare-styleable name="FlikerProgressBar"><attr format="dimension" name="textSize"/><attr format="color" name="loadingColor"/><attr format="color" name="stopColor"/><attr format="dimension" name="radius"/><attr format="dimension" name="borderWidth"/></declare-styleable>
+    <declare-styleable name="SlideButton"><attr format="color|reference" name="sBackgroundColorOff"/><attr format="color|reference" name="sBackgroundColorOn"/><attr format="color|reference" name="sButtonColor"/><attr format="dimension|reference" name="sMargin"/></declare-styleable>
+    <dimen name="bg_radius">5dip</dimen>
+    <dimen name="bottom_marin">0dp</dimen>
+    <dimen name="btn_stroke_padding">5dp</dimen>
+    <dimen name="control_btn_padding">2dp</dimen>
+    <dimen name="control_draw_padding">3dp</dimen>
+    <dimen name="control_layout_padding">15dp</dimen>
+    <dimen name="folder_cover_size">72dp</dimen>
+    <dimen name="grid_width">100dp</dimen>
+    <dimen name="menu_btn_margin_bottom">60dp</dimen>
+    <dimen name="pages_float_top">2dp</dimen>
+    <dimen name="right_margin">0dp</dimen>
+    <dimen name="right_menu_container_height">800dp</dimen>
+    <dimen name="right_menu_container_width">35dp</dimen>
+    <dimen name="right_menu_height">150dp</dimen>
+    <dimen name="sketch_gv_padding">15dp</dimen>
+    <dimen name="space_size">2dp</dimen>
+    <string name="action_button_string">%1$s(%2$d/%3$d)</string>
+    <string name="action_done">Done</string>
+    <string name="all_ignore">Ignore All</string>
+    <string name="app_name">VirtualKey</string>
+    <string name="app_switch">App Switch</string>
+    <string name="apps_bluetooth">Bluetooth</string>
+    <string name="apps_eyecare">Eye Care</string>
+    <string name="apps_hotspot">2.4G Hotspot</string>
+    <string name="apps_hotspot_5">5G Hotspot</string>
+    <string name="apps_record">Record</string>
+    <string name="apps_screenshot">Screenshot</string>
+    <string name="apps_settings">Settings</string>
+    <string name="apps_timer">Timer</string>
+    <string name="apps_usred">User Defined</string>
+    <string name="apps_wire">Wire</string>
+    <string name="apps_wireless">Wifi</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="close_whiteboard_tip">The sketchpad mode has been closed</string>
+    <string name="comment">Comment</string>
+    <string name="day">2018/06/15</string>
+    <string name="dialog_ask_clear_all_title">Do you clear the annotation content?</string>
+    <string name="dialog_ask_save_all_title">Please enter the file name</string>
+    <string name="dialog_save_cancel">Cancel</string>
+    <string name="dialog_save_sure">Sure</string>
+    <string name="doc_encrypt_text">Password:%1$s</string>
+    <string name="encrypt_tip">Would you like to be safer? Clicking encrypt</string>
+    <string name="energy_saving">Energy Saving</string>
+    <string name="error_image_not_exist">Image error</string>
+    <string name="error_no_permission">Has no permission</string>
+    <string name="folder_all">All the pictures</string>
+    <string name="folder_first">Background material</string>
+    <string name="home">Home</string>
+    <string name="hour_second">09:47</string>
+    <string name="light_sense">Light Sense</string>
+    <string name="magnifier">Magnifier</string>
+    <string name="menu">Menu</string>
+    <string name="menu_create_error_tip">Failure to generate QR code!</string>
+    <string name="menu_create_scan_error_tip">Generation of two-dimensional code failure</string>
+    <string name="menu_scan_share_tip">Scavenging two dimensional code, view conference records</string>
+    <string name="menu_upload_error_tip">Upload file failed!</string>
+    <string name="msg_amount_limit">Select images amount is limit</string>
+    <string name="msg_no_camera">No system camera found</string>
+    <string name="notice">Notice</string>
+    <string name="open_whiteboard_tip">The sketchpad mode has been opened</string>
+    <string name="osd_menu">TV Menu</string>
+    <string name="permission_dialog_cancel">CANCEL</string>
+    <string name="permission_dialog_ok">OK</string>
+    <string name="permission_dialog_title">Permission Deny</string>
+    <string name="permission_rationale_write_storage">Storage write permission is needed to save the image.</string>
+    <string name="photo_unit">Shot</string>
+    <string name="saving_tip_save_sketch">Save the content of the annotation</string>
+    <string name="saving_tip_saving">Saving…</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="setting">Settings</string>
+    <string name="short_signal">Shortcut Signal</string>
+    <string name="shortcut">Screenshot</string>
+    <string name="sketch_count_alert">The drawing board has reached the maximum number</string>
+    <string name="sketch_pad">Sketch Pad</string>
+    <string name="source_options">Source Options</string>
+    <string name="tip_add_content">You have not added the annotation content yet.</string>
+    <string name="tip_being_annotate">You are in the annotation mode.</string>
+    <string name="tip_create_failed">Failure to generate pictures.</string>
+    <string name="tip_is_empty_sketch">You haven\'t added an annotation yet.</string>
+    <string name="tip_password_not_empty">The password cannot be empty.</string>
+    <string name="tip_save_failed">Save annotation failed!</string>
+    <string name="tip_save_file_not_null">File name can not be empty!</string>
+    <string name="tip_save_successfully">Save path:%1$s</string>
+    <string name="tip_screenshot_failed">Screenshot failure.</string>
+    <string name="tip_set_password">Please set the password.</string>
+    <string name="title_change_signal">Chang Signal</string>
+    <string name="title_eye_care">Eye Care</string>
+    <string name="title_more_app">More Applications</string>
+    <string name="title_select_app">Please Select App</string>
+    <string name="title_tmp_show">Temperature</string>
+    <string name="update">Update</string>
+    <string name="update_tip_last_app">Upgrade the Virtual Key APP</string>
+    <string name="usered_defined">User Defined</string>
+    <string name="week">Thur</string>
+    <string name="whiteboard">Whiteboard</string>
+    <style name="Widget.SeekBar.Normal" parent="@android:style/Widget.SeekBar">
+        <item name="android:maxHeight">8.0dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:progressDrawable">@drawable/seekbar_horizontal</item>
+        <item name="android:minHeight">8.0dip</item>
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
+        <item name="android:thumbOffset">0dip</item>
+    </style>
+    <style name="btn_menu_image">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:background">@drawable/btn_menu_click_bg</item>-->
+    </style>
+    <style name="control_btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">@dimen/control_btn_padding</item>
+        <!--<item name="android:background">@drawable/btn_menu_click_bg</item>-->
+    </style>
+    <style name="control_btn.action">
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="control_btn.space">
+        <item name="android:clickable">false</item>
+    </style>
+    <style name="dialogActivity">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="divider_h">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/text_default_color</item>
+    </style>
+    <style name="menu_control_btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">@dimen/control_btn_padding</item>
+        <!--<item name="android:background">@drawable/btn_menu_click_bg</item>-->
+    </style>
+    <style name="mypopwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@anim/pophide_anim</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+    <style name="popup_stroke_text_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="stroke_color_btn">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+    </style>
+    <style name="stroke_control_btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">@dimen/control_btn_padding</item>
+        <!--<item name="android:background">@drawable/btn_menu_click_bg</item>-->
+    </style>
+    <style name="stroke_type_btn">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">0</item>
+    </style>
+    <style name="tools_btn_image">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+</resources>

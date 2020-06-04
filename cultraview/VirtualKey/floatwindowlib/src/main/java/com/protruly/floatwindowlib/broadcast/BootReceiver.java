@@ -3,6 +3,7 @@ package com.protruly.floatwindowlib.broadcast;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.apkfuns.logutils.LogUtils;
@@ -20,22 +21,15 @@ import com.protruly.floatwindowlib.utils.SystemUtils;
 public class BootReceiver extends BroadcastReceiver {
     public static final String FIRST_START_KEY = "FIRST_START";
 
-    public static String AUTOFACMODE_BURNING = "4";
-    public static String FACTORY_MODE_FACTEST = "1";
-    public static String BURINGMODE_MODE_FACTEST = "1";
-
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         LogUtils.d("开机自动启动.....");
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(action)){ // 开机广播
-            // 判断是否为工厂老化测试
-
-            String burningMode = SystemUtils.getBurningMode();
-            LogUtils.d("SystemUtils burningMode->%s", burningMode);
-            if (burningMode.equals(BURINGMODE_MODE_FACTEST)) {
-                LogUtils.d("工厂老化测试.....");
+            // 判断是否为工厂老化测试 自动化测试
+            if (SystemUtils.isAutoTestOrBurning()) {
+                LogUtils.d("工厂老化或者自动化测试.....");
                 return;
             }
 
