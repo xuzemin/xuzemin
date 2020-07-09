@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="date_format_values" translatable="false">
+        <item>月 - 日 - 年</item>
+        <item>日 - 月 - 年</item>
+        <item>年 - 月 - 日</item>
+    </string-array>
+    <string-array name="repeat_values" translatable="false">
+        <item>@string/tv_close</item>
+        <item>@string/tv_repeat</item>
+    </string-array>
+    <string msgid="4600421777120114993" name="abc_action_bar_home_description">"瀏覽首頁"</string>
+    <string msgid="1594238315039666878" name="abc_action_bar_up_description">"向上瀏覽"</string>
+    <string msgid="3588849162933574182" name="abc_action_menu_overflow_description">"更多選項"</string>
+    <string msgid="4076576682505996667" name="abc_action_mode_done">"完成"</string>
+    <string msgid="7468859129482906941" name="abc_activity_chooser_view_see_all">"查看全部"</string>
+    <string msgid="2031811694353399454" name="abc_activitychooserview_choose_application">"選擇應用程式"</string>
+    <string msgid="121134116657445385" name="abc_capital_off">"關閉"</string>
+    <string msgid="3405795526292276155" name="abc_capital_on">"開啟"</string>
+    <string msgid="1302280443949172191" name="abc_menu_alt_shortcut_label">"Alt +"</string>
+    <string msgid="1324831542140195728" name="abc_menu_ctrl_shortcut_label">"Ctrl +"</string>
+    <string msgid="8362206064229013510" name="abc_menu_delete_shortcut_label">"Delete 鍵"</string>
+    <string msgid="8341180395196749340" name="abc_menu_enter_shortcut_label">"Enter 鍵"</string>
+    <string msgid="4792426091847145555" name="abc_menu_function_shortcut_label">"Fn +"</string>
+    <string msgid="7643535737296831317" name="abc_menu_meta_shortcut_label">"Meta +"</string>
+    <string msgid="8126296154200614004" name="abc_menu_shift_shortcut_label">"Shift +"</string>
+    <string msgid="2378550843553983978" name="abc_menu_space_shortcut_label">"空格鍵"</string>
+    <string msgid="9002602288060866689" name="abc_menu_sym_shortcut_label">"Sym +"</string>
+    <string msgid="1351762916121158029" name="abc_prepend_shortcut_label">"Menu +"</string>
+    <string msgid="7723749260725869598" name="abc_search_hint">"搜尋…"</string>
+    <string msgid="3691816814315814921" name="abc_searchview_description_clear">"清除查詢"</string>
+    <string msgid="2550479030709304392" name="abc_searchview_description_query">"搜尋查詢"</string>
+    <string msgid="8264924765203268293" name="abc_searchview_description_search">"搜尋"</string>
+    <string msgid="8928215447528550784" name="abc_searchview_description_submit">"提交查詢"</string>
+    <string msgid="893419373245838918" name="abc_searchview_description_voice">"語音搜尋"</string>
+    <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"選擇分享對象"</string>
+    <string msgid="3300176832234831527" name="abc_shareactionprovider_share_with_application">"與「<ns1:g id="APPLICATION_NAME">%s</ns1:g>」分享"</string>
+    <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"收合"</string>
+    <string name="about_tv">关于设备</string>
+    <string name="app_name">Settings</string>
+    <string name="back">返回</string>
+    <string name="header_about">关于设备</string>
+    <string name="header_device">设备</string>
+    <string name="header_general">一般</string>
+    <string name="header_input_language">語言與輸入法</string>
+    <string name="header_network">网络</string>
+    <string name="header_security">安安全與隱私</string>
+    <string name="header_time_date">时间和日期</string>
+    <string name="inpupt_list">輸入法列表</string>
+    <string name="inpupt_setting">輸入法設置</string>
+    <string name="item_24_hour_format">24小时制</string>
+    <string name="item_about">关于</string>
+    <string name="item_alone_backlight">节能息屏</string>
+    <string name="item_app_permissions">應用權限</string>
+    <string name="item_automatic">自动获得</string>
+    <string name="item_bluetooth">蓝牙</string>
+    <string name="item_boot_options">开机选项</string>
+    <string name="item_bootup_time">开机时间</string>
+    <string name="item_camera_permissions">攝像頭權限</string>
+    <string name="item_child_lock">童锁</string>
+    <string name="item_device_name">设备名称</string>
+    <string name="item_floating_button">悬浮球</string>
+    <string name="item_four_distribution">四分屏</string>
+    <string name="item_headphone_insertion_test">耳机插入检测</string>
+    <string name="item_hotspot">热点</string>
+    <string name="item_input_method">輸入法設置</string>
+    <string name="item_keyboard">輸入法</string>
+    <string name="item_language">語言</string>
+    <string name="item_light">亮度</string>
+    <string name="item_not_appstore">安装非APP Store应用</string>
+    <string name="item_off">定时关机</string>
+    <string name="item_on">定时开机</string>
+    <string name="item_permissions">權限</string>
+    <string name="item_pppoe">PPPoE</string>
+    <string name="item_public_usb">USB共享</string>
+    <string name="item_repeat">重复性</string>
+    <string name="item_shutdown_time">关机时间</string>
+    <string name="item_system_restore_factory">恢复出厂</string>
+    <string name="item_theme_background">主题背景</string>
+    <string name="item_theme_style">主题风格</string>
+    <string name="item_time_format">时间格式</string>
+    <string name="item_timezone">时区</string>
+    <string name="item_touch_sound">按键提示音</string>
+    <string name="item_triple_bonding">三键合一</string>
+    <string name="item_udisk_permissions">U盤權限</string>
+    <string name="item_unknown_store">未知來源</string>
+    <string name="item_upgrade">系统升级</string>
+    <string name="item_usb_lock">U盘锁</string>
+    <string name="item_volume">声音</string>
+    <string name="item_wifi">Wifi</string>
+    <string name="item_wire">有线</string>
+    <string name="keyboard_setting">輸入法</string>
+    <string name="language_keyboard_setting">語言與輸入法設置</string>
+    <string name="language_setting">語言設置</string>
+    <string name="not_found_input">找不到该輸入法</string>
+    <string name="result_cancel">取消</string>
+    <string name="result_ok">确定</string>
+    <string name="result_save">确定保存当前设置?</string>
+    <string name="result_tip">提示</string>
+    <string name="right_background">渐变</string>
+    <string name="right_boot_options">内置电脑</string>
+    <string name="right_device_name">Smart TV</string>
+    <string name="right_language">中文</string>
+    <string name="right_theme_style">教育</string>
+    <string name="right_time_format">2019-08-29</string>
+    <string name="right_timezone">北京</string>
+    <string name="screen_hot_spot">投屏热点</string>
+    <string msgid="146198913615257606" name="search_menu_title">"搜尋"</string>
+    <string name="setting">設置</string>
+    <string msgid="7988687684186075107" name="status_bar_notification_info_overflow">"999+"</string>
+    <string name="status_off">关</string>
+    <string name="status_on">开</string>
+    <string name="title_auto_bootup">定时开机</string>
+    <string name="title_auto_shutdown">定时关机</string>
+    <string name="title_date_format">日期格式</string>
+    <string name="title_timezone">时区</string>
+    <string name="tv_close">关闭</string>
+    <string name="tv_repeat">重复</string>
+    <string name="tv_save">保存</string>
+</resources>

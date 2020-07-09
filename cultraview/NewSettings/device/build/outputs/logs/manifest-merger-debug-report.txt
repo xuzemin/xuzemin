@@ -1,0 +1,333 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+	package
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:3:5-40
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+	android:sharedUserId
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:4:5-46
+	android:versionName
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:1-92:12
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.SET_WALLPAPER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:6:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:6:22-69
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:7:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:7:22-75
+uses-permission#android.permission.READ_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:8:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:8:22-69
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:9:5-81
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:9:22-78
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:10:5-73
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:10:22-70
+uses-permission#android.permission.WRITE_SECURE_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:11:22-77
+uses-permission#android.permission.DEVICE_POWER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:12:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:12:22-68
+uses-permission#android.permission.CHANGE_CONFIGURATION
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:13:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:13:22-76
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:14:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:14:22-81
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:15:5-66
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:15:22-63
+uses-permission#android.permission.BLUETOOTH
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:16:5-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:16:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:17:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:17:22-71
+uses-permission#android.permission.NFC
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:18:5-62
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:18:22-59
+uses-permission#android.permission.HARDWARE_TEST
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:19:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:19:22-69
+uses-permission#android.permission.CALL_PHONE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:20:5-69
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:20:22-66
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:21:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:21:22-77
+uses-permission#android.permission.MASTER_CLEAR
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:22:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:22:22-68
+uses-permission#android.permission.USE_CREDENTIALS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:23:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:23:22-71
+uses-permission#com.google.android.googleapps.permission.GOOGLE_AUTH
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:24:5-92
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:24:22-89
+uses-permission#android.permission.ACCESS_DOWNLOAD_MANAGER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:25:5-82
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:25:22-79
+uses-permission#android.permission.READ_CONTACTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:26:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:26:22-69
+uses-permission#android.permission.WRITE_CONTACTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:27:5-73
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:27:22-70
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:28:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:28:22-76
+uses-permission#android.permission.ACCESS_WIMAX_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:29:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:29:22-74
+uses-permission#android.permission.CHANGE_WIMAX_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:30:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:30:22-74
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:31:5-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:31:22-73
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:32:5-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:32:22-73
+uses-permission#android.permission.INTERNET
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:33:5-67
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:33:22-64
+uses-permission#android.permission.CLEAR_APP_USER_DATA
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:34:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:34:22-75
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:35:5-75
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:35:22-72
+uses-permission#android.permission.MODIFY_PHONE_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:36:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:36:22-74
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:37:5-81
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:37:22-78
+uses-permission#android.permission.WRITE_APN_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:38:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:38:22-74
+uses-permission#android.permission.ACCESS_CHECKIN_PROPERTIES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:39:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:39:22-81
+uses-permission#android.permission.READ_USER_DICTIONARY
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:40:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:40:22-76
+uses-permission#android.permission.WRITE_USER_DICTIONARY
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:41:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:41:22-77
+uses-permission#android.permission.FORCE_STOP_PACKAGES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:42:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:42:22-75
+uses-permission#android.permission.PACKAGE_USAGE_STATS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:43:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:43:22-75
+uses-permission#android.permission.BATTERY_STATS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:44:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:44:22-69
+uses-permission#com.android.launcher.permission.READ_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:45:5-85
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:45:22-82
+uses-permission#com.android.launcher.permission.WRITE_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:46:5-86
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:46:22-83
+uses-permission#android.permission.MOVE_PACKAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:47:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:47:22-68
+uses-permission#android.permission.BACKUP
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:49:5-65
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:49:22-62
+uses-permission#android.permission.READ_SYNC_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:50:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:50:22-74
+uses-permission#android.permission.WRITE_SYNC_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:51:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:51:22-75
+uses-permission#android.permission.READ_SYNC_STATS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:52:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:52:22-71
+uses-permission#android.permission.STATUS_BAR
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:55:5-69
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:55:22-66
+uses-permission#android.permission.MANAGE_USB
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:56:5-69
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:56:22-66
+uses-permission#android.permission.SET_POINTER_SPEED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:57:5-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:57:22-73
+uses-permission#com.android.voicemail.permission.ADD_VOICEMAIL
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:58:5-86
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:58:22-83
+uses-permission#android.permission.SET_ORIENTATION
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:59:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:59:22-71
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:60:5-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:60:22-65
+uses-permission#android.permission.GET_PACKAGE_SIZE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:61:5-75
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:61:22-72
+uses-permission#android.permission.GET_TASKS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:62:5-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:62:22-65
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:63:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:63:22-77
+uses-permission#android.permission.RESTART_PACKAGES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:64:5-75
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:64:22-72
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:65:5-81
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:65:22-78
+uses-permission#com.mstar.android.permissionn.ACCESS_TV_DATA
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:66:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:66:22-81
+uses-permission#android.permission.READ_MEDIA_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:67:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:67:22-74
+uses-permission#android.permission.WRITE_MEDIA_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:68:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:68:22-75
+uses-permission#android.permission.KILL_BACKGROUND_PROCESSES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:69:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:69:22-81
+uses-permission#android.permission.MANAGE_ACCOUNTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:70:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:70:22-71
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:71:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:71:22-68
+uses-permission#android.permission.AUTHENTICATE_ACCOUNTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:72:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:72:22-77
+application
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:74:5-90:19
+	android:supportsRtl
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:81:9-35
+	android:label
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:78:9-41
+	android:excludeFromRecents
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:76:9-42
+	android:testOnly
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:82:9-33
+	android:roundIcon
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:80:9-54
+	android:persistent
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:79:9-34
+	android:icon
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:77:9-43
+	android:allowBackup
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:75:9-35
+	android:theme
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:83:9-52
+activity#com.ctv.settings.rescommon.BaseActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:84:9-86:80
+	android:theme
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:86:13-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:85:13-67
+activity#com.ctv.settings.device.DeviceNameActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:87:9-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:87:19-76
+activity#com.ctv.settings.device.ThemeBgActvity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:88:9-75
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:88:19-72
+activity#com.ctv.settings.device.ThemeStyleActvity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:89:9-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml:89:19-75
+uses-sdk
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/device/src/main/AndroidManifest.xml

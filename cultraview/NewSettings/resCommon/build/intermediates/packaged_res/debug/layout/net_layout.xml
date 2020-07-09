@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_network"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/module_height_item_x5"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    android:padding="0dp">
+
+    <TextView
+        style="@style/first_title"
+        android:text="@string/header_network" />
+
+    <LinearLayout
+        style="@style/ll_list"
+        android:layout_weight="6"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_wire"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView"
+                android:text="@string/item_wire" />
+
+            <TextView
+                android:id="@+id/tv_wire"
+                style="@style/item_textView_right"
+                android:text="@string/status_on" />
+
+            <ImageView
+                android:id="@+id/img_wire"
+                style="@style/more_image_style" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_wifi"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView"
+                android:text="@string/item_wifi" />
+
+            <TextView
+                android:id="@+id/tv_wifi"
+                style="@style/item_textView_right"
+                android:text="@string/status_on" />
+
+            <ImageView
+                android:id="@+id/img_wifi"
+                style="@style/more_image_style"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_pppoe"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView"
+                android:text="@string/item_pppoe" />
+
+            <TextView
+                android:id="@+id/tv_pppoe"
+                style="@style/item_textView_right"
+                android:text="@string/status_on" />
+
+            <ImageView
+                android:id="@+id/img_pppoe"
+                style="@style/more_image_style"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_screen_hot"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView"
+                android:text="@string/screen_hot_spot" />
+
+            <TextView
+                android:id="@+id/tv_screen_hot"
+                style="@style/item_textView_right"
+                android:text="@string/status_off" />
+
+            <ImageView
+                android:id="@+id/img_screen_hot"
+                style="@style/more_image_style" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_host_wifi"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView"
+                android:text="@string/item_hotspot" />
+
+            <TextView
+                android:id="@+id/tv_host_wifi"
+                style="@style/item_textView_right"
+                android:text="@string/status_off" />
+
+            <ImageView
+                android:id="@+id/img_host_wifi"
+                style="@style/more_image_style" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_bluetooth"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView"
+                android:text="@string/item_bluetooth" />
+
+            <TextView
+                android:id="@+id/tv_bluetooth"
+                style="@style/item_textView_right"
+                android:text="@string/status_on" />
+
+            <ImageView
+                android:id="@+id/img_bluetooth"
+                style="@style/more_image_style" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

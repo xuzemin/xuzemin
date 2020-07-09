@@ -1,0 +1,99 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+	package
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:2:9-43
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:1-32:12
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.BLUETOOTH
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:4:5-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:4:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:5:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:5:22-71
+uses-permission#android.permission.BLUETOOTH_PRIVILEGED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:6:22-76
+application
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:8:5-31:19
+activity#com.ctv.settings.network.activity.NetWorkActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:10:9-29:20
+	android:excludeFromRecents
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:11:19-52
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:13:19-50
+	android:hardwareAccelerated
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:12:19-53
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:10:19-83
+intent-filter#action:name:android.net.wifi.PICK_WIFI_NETWORK+action:name:android.settings.ETHERNET_SETTINGS+action:name:android.settings.WIFI_IP_SETTINGS+action:name:android.settings.WIFI_SETTINGS+action:name:android.settings.WIRELESS_SETTINGS+action:name:com.cultraview.settings.net.NETWORK_SETTINGS+category:name:android.intent.category.DEFAULT
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:15:13-24:29
+	android:priority
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:15:28-48
+action#android.settings.WIFI_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:16:17-73
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:16:25-70
+action#android.net.wifi.PICK_WIFI_NETWORK
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:17:17-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:17:25-74
+action#android.settings.WIRELESS_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:18:17-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:18:25-74
+action#android.settings.ETHERNET_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:19:17-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:19:25-74
+action#android.settings.WIFI_IP_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:20:17-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:20:25-73
+action#com.cultraview.settings.net.NETWORK_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:21:17-87
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:21:25-84
+category#android.intent.category.DEFAULT
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:23:17-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:23:27-73
+meta-data#com.android.settings.PRIMARY_PROFILE_CONTROLLED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:26:13-28:44
+	android:value
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:28:21-41
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:27:21-83
+uses-sdk
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml

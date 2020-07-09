@@ -1,0 +1,239 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.ctv.settings.language"
+4    android:sharedUserId="android.uid.system"
+5    android:versionCode="1"
+6    android:versionName="1.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="23"
+9-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml
+10        android:targetSdkVersion="28" />
+10-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml
+11
+12    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+12-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:6:5-78
+12-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:6:22-75
+13    <uses-permission android:name="android.permission.READ_SETTINGS" />
+13-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:7:5-72
+13-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:7:22-69
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:8:5-81
+14-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:8:22-78
+15    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+15-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:9:5-73
+15-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:9:22-70
+16    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+16-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:10:5-80
+16-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:10:22-77
+17    <uses-permission android:name="android.permission.DEVICE_POWER" />
+17-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:11:5-71
+17-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:11:22-68
+18    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+18-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:12:5-79
+18-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:12:22-76
+19    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+19-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:13:5-84
+19-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:13:22-81
+20    <uses-permission android:name="android.permission.VIBRATE" />
+20-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:14:5-66
+20-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:14:22-63
+21    <uses-permission android:name="android.permission.BLUETOOTH" />
+21-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:15:5-68
+21-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:15:22-65
+22    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+22-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:16:5-74
+22-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:16:22-71
+23    <uses-permission android:name="android.permission.NFC" />
+23-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:17:5-62
+23-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:17:22-59
+24    <uses-permission android:name="android.permission.HARDWARE_TEST" />
+24-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:18:5-72
+24-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:18:22-69
+25    <uses-permission android:name="android.permission.CALL_PHONE" />
+25-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:19:5-69
+25-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:19:22-66
+26    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+26-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:20:5-80
+26-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:20:22-77
+27    <uses-permission android:name="android.permission.MASTER_CLEAR" />
+27-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:21:5-71
+27-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:21:22-68
+28    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+28-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:22:5-74
+28-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:22:22-71
+29    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
+29-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:23:5-92
+29-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:23:22-89
+30    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+30-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:24:5-82
+30-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:24:22-79
+31    <uses-permission android:name="android.permission.READ_CONTACTS" />
+31-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:25:5-72
+31-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:25:22-69
+32    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+32-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:26:5-73
+32-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:26:22-70
+33    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+33-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:27:5-79
+33-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:27:22-76
+34    <uses-permission android:name="android.permission.ACCESS_WIMAX_STATE" />
+34-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:28:5-77
+34-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:28:22-74
+35    <uses-permission android:name="android.permission.CHANGE_WIMAX_STATE" />
+35-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:29:5-77
+35-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:29:22-74
+36    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+36-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:30:5-76
+36-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:30:22-73
+37    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+37-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:31:5-76
+37-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:31:22-73
+38    <uses-permission android:name="android.permission.INTERNET" />
+38-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:32:5-67
+38-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:32:22-64
+39    <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
+39-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:33:5-78
+39-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:33:22-75
+40    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+40-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:34:5-75
+40-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:34:22-72
+41    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+41-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:35:5-77
+41-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:35:22-74
+42    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+42-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:36:5-81
+42-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:36:22-78
+43    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+43-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:37:5-77
+43-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:37:22-74
+44    <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES" />
+44-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:38:5-84
+44-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:38:22-81
+45    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+45-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:39:5-79
+45-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:39:22-76
+46    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
+46-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:40:5-80
+46-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:40:22-77
+47    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
+47-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:41:5-78
+47-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:41:22-75
+48    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+48-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:42:5-78
+48-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:42:22-75
+49    <uses-permission android:name="android.permission.BATTERY_STATS" />
+49-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:43:5-72
+49-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:43:22-69
+50    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+50-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:44:5-85
+50-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:44:22-82
+51    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
+51-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:45:5-86
+51-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:45:22-83
+52    <uses-permission android:name="android.permission.MOVE_PACKAGE" />
+52-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:46:5-71
+52-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:46:22-68
+53    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+53-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:22:5-74
+53-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:22:22-71
+54    <uses-permission android:name="android.permission.BACKUP" />
+54-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:48:5-65
+54-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:48:22-62
+55    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+55-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:49:5-77
+55-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:49:22-74
+56    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+56-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:50:5-78
+56-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:50:22-75
+57    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+57-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:51:5-74
+57-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:51:22-71
+58    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+58-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:49:5-77
+58-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:49:22-74
+59    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+59-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:50:5-78
+59-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:50:22-75
+60    <uses-permission android:name="android.permission.STATUS_BAR" />
+60-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:54:5-69
+60-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:54:22-66
+61    <uses-permission android:name="android.permission.MANAGE_USB" />
+61-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:55:5-69
+61-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:55:22-66
+62    <uses-permission android:name="android.permission.SET_POINTER_SPEED" />
+62-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:56:5-76
+62-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:56:22-73
+63    <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
+63-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:57:5-86
+63-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:57:22-83
+64    <uses-permission android:name="android.permission.SET_ORIENTATION" />
+64-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:58:5-74
+64-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:58:22-71
+65    <uses-permission android:name="android.permission.WAKE_LOCK" />
+65-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:59:5-68
+65-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:59:22-65
+66    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+66-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:60:5-75
+66-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:60:22-72
+67    <uses-permission android:name="android.permission.GET_TASKS" />
+67-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:61:5-68
+67-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:61:22-65
+68    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+68-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:62:5-80
+68-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:62:22-77
+69    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+69-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:63:5-75
+69-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:63:22-72
+70    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- DB Operation change to ContentProvider start -->
+70-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:64:5-81
+70-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:64:22-78
+71    <uses-permission android:name="com.mstar.android.permissionn.ACCESS_TV_DATA" /> <!-- DB Operation change to ContentProvider end -->
+71-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:65:5-84
+71-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:65:22-81
+72    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" />
+72-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:66:5-77
+72-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:66:22-74
+73    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
+73-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:67:5-78
+73-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:67:22-75
+74    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" /> <!-- google account permission -->
+74-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:68:5-84
+74-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:68:22-81
+75    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+75-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:69:5-74
+75-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:69:22-71
+76    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+76-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:70:5-71
+76-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:70:22-68
+77    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+77-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:71:5-80
+77-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:71:22-77
+78
+79    <application
+79-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:73:5-84:19
+80        android:allowBackup="true"
+80-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:74:9-35
+81        android:excludeFromRecents="true"
+81-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:75:9-42
+82        android:icon="@mipmap/ic_launcher"
+82-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:76:9-43
+83        android:label="@string/app_name"
+83-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:77:9-41
+84        android:persistent="true"
+84-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:78:9-34
+85        android:roundIcon="@mipmap/ic_launcher_round"
+85-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:79:9-54
+86        android:supportsRtl="true"
+86-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:80:9-35
+87        android:theme="@style/AppTheme.NoActionBar" >
+87-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:81:9-52
+88        <activity android:name="com.ctv.settings.language.activity.LanguageSelectActivity" />
+88-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:82:9-68
+88-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:82:19-66
+89        <activity android:name="com.ctv.settings.language.activity.InputMethodActivity" />
+89-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:83:9-66
+89-->/Users/xuzemin/xuzemin/cultraview/NewSettings/language/src/main/AndroidManifest.xml:83:19-63
+90    </application>
+91
+92</manifest>

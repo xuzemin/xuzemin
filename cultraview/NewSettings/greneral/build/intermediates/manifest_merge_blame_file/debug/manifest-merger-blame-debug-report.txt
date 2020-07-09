@@ -1,0 +1,33 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.ctv.settings.greneral"
+4    android:sharedUserId="android.uid.system"
+5    android:versionCode="1"
+6    android:versionName="1.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="23"
+9-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml
+10        android:targetSdkVersion="28" />
+10-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml
+11
+12    <application
+12-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:4:5-12:67
+13        android:allowBackup="true"
+13-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:5:9-35
+14        android:excludeFromRecents="true"
+14-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:11:9-42
+15        android:icon="@mipmap/ic_launcher"
+15-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:7:9-43
+16        android:label="@string/app_name"
+16-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:8:9-41
+17        android:persistent="true"
+17-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:6:9-34
+18        android:roundIcon="@mipmap/ic_launcher_round"
+18-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:9:9-54
+19        android:supportsRtl="true"
+19-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:10:9-35
+20        android:theme="@style/AppTheme.NoActionBar" />
+20-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/src/main/AndroidManifest.xml:12:9-52
+21
+22</manifest>

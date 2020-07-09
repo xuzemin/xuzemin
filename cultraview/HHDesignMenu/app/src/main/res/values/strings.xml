@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">HHFactory</string>
+    <string name="fac_reset_ok">恢复工厂设置OK</string>
+    <string name="str_burn_ng">Not Burn</string>
+    <string name="str_burn_error">Corrupted</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="str_volume_nonlinear_osd0">Vol_OSD_0</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="str_volume_nonlinear_osd1">Vol_OSD_1</string>
+
+
+    <string name="str_volume_nonlinear_osd2">Vol_OSD_2</string>
+    <string name="str_volume_nonlinear_osd3">Vol_OSD_3</string>
+    <string name="str_volume_nonlinear_osd4">Vol_OSD_4</string>
+    <string name="str_volume_nonlinear_osd5">Vol_OSD_5</string>
+    <string name="str_volume_nonlinear_osd6">Vol_OSD_6</string>
+    <string name="str_volume_nonlinear_osd7">Vol_OSD_7</string>
+    <string name="str_volume_nonlinear_osd8">Vol_OSD_8</string>
+    <string name="str_volume_nonlinear_osd9">Vol_OSD_9</string>
+    <string name="str_volume_nonlinear_osd10">Vol_OSD_10</string>
+    <string name="str_volume_nonlinear_osd20">Vol_OSD_20</string>
+    <string name="str_volume_nonlinear_osd30">Vol_OSD_30</string>
+    <string name="str_volume_nonlinear_osd40">Vol_OSD_40</string>
+    <string name="str_volume_nonlinear_osd50">Vol_OSD_50</string>
+    <string name="str_volume_nonlinear_osd60">Vol_OSD_60</string>
+    <string name="str_volume_nonlinear_osd70">Vol_OSD_70</string>
+    <string name="str_volume_nonlinear_osd80">Vol_OSD_80</string>
+    <string name="str_volume_nonlinear_osd90">Vol_OSD_90</string>
+    <string name="str_volume_nonlinear_osd100">Vol_OSD_100</string>
+    <string name="str_burn_ok">已烧录</string>
+    <string name="sdcard_lable">Sdcard</string>
+    <string name="mobile_stoarge_device">移动存储设备</string>
+    <string name="str_factory_adc_autoadjust_timing_mode_err">timing mode select error</string>
+    <string name="str_factory_adc_autoadjust_failed">failure  </string>
+    <string name="str_factory_adc_autoadjust_ok">success</string>
+    <string name="str_factory_adc_autoadjust_val">Please Wait!</string>
+    <string name="no_update_bin">No File:MstarUpgrade.bin</string>
+    <string-array name="str_array_source">
+        <item>VGA</item>
+        <item>ATV</item>
+        <item>AV</item>
+        <item>AV2</item>
+        <item>AV3</item>
+        <item>AV4</item>
+        <item>AV5</item>
+        <item>AV6</item>
+        <item>AV7</item>
+        <item>AV8</item>
+        <item>AVMAX</item>
+        <item>SV1</item>
+        <item>SV2</item>
+        <item>SV3</item>
+        <item>SV4</item>
+        <item>SVMAX</item>
+        <item>YPbPr</item>
+        <item>YPbPr2</item>
+        <item>YPbPr3</item>
+        <item>YPbPrMAX</item>
+        <item>SCART1</item>
+        <item>SCART2</item>
+        <item>SCARTMAX</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>HDMI3</item>
+        <item>HDMI4</item>
+        <item>HDMIMAX</item>
+        <item>DTV</item>
+        <item>DVI1</item>
+        <item>DVI2</item>
+        <item>DVI3</item>
+        <item>DVI4</item>
+        <item>DVIMAX</item>
+        <item>STORAGE</item>
+    </string-array>
+    <string-array name="str_arr_sound_mode_vals">
+        <item>standard</item>
+        <item>music</item>
+        <item>Movie</item>
+        <item>sports</item>
+        <item>user</item>
+    </string-array>
+
+</resources>

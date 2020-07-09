@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/picture_curve_type_detail_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:viewBindingIgnore="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_vertical">
+
+            <Button
+                android:layout_marginLeft="@dimen/dp_47"
+                android:id="@+id/picture_curve_type_brightness"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_29"
+                android:background="@color/colorUnFocus"
+                android:text="Brightness"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/picture_curve_type_contrast"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_29"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:background="@color/colorUnFocus"
+                android:text="Contrast"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/picture_curve_type_saturation"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_29"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:background="@color/colorUnFocus"
+                android:text="Saturation"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/picture_curve_type_hue"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_29"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:background="@color/colorUnFocus"
+                android:text="Hue"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/picture_curve_type_sharpness"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_29"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:background="@color/colorUnFocus"
+                android:text="Sharpness"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_picture_curve_type_osd0"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="OSD_0" />
+            <SeekBar
+                android:id="@+id/picture_curve_type_osd0"
+                style="@style/adc_seekbar"
+                android:max="255" />
+
+            <TextView
+
+                android:id="@+id/picture_curve_type_osd0_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_picture_curve_type_osd25"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="OSD_25" />
+
+            <SeekBar
+                android:id="@+id/picture_curve_type_osd25"
+                style="@style/adc_seekbar"
+                android:max="255" />
+
+            <TextView
+
+
+                android:id="@+id/picture_curve_type_osd25_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_picture_curve_type_osd50"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="OSD_50" />
+
+            <SeekBar
+                android:id="@+id/picture_curve_type_osd50"
+                style="@style/adc_seekbar"
+                android:max="255" />
+
+            <TextView
+
+                android:id="@+id/picture_curve_type_osd50_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_picture_curve_type_osd75"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="OSD_75" />
+
+            <SeekBar
+                android:id="@+id/picture_curve_type_osd75"
+                style="@style/adc_seekbar"
+                android:max="255" />
+
+            <TextView
+                android:id="@+id/picture_curve_type_osd75_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_picture_curve_type_osd100"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="OSD_100" />
+
+            <SeekBar
+                android:id="@+id/picture_curve_type_osd100"
+                android:max="255"
+                style="@style/adc_seekbar" />
+
+            <TextView
+
+                android:id="@+id/picture_curve_type_osd100_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</LinearLayout>

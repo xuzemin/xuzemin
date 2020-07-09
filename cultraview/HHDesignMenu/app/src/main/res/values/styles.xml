@@ -1,0 +1,82 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Theme.AppStartLoadTranslucent" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowBackground">@color/colorUnFocus</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="item_detail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="vol_osd_item_detail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:layout_marginLeft">@dimen/dp_40</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginRight">@dimen/dp_40</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+
+    <style name="item_layout">
+        <item name="android:layout_width">@dimen/dp_200</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="wb_item_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@android:color/background_light</item>
+    </style>
+
+
+    <style name="item_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@android:color/background_light</item>
+    </style>
+
+    <style name="adc_seekbar">
+        <item name="android:layout_width">@dimen/dp_290</item>
+        <item name="android:layout_height">@dimen/dp_35</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:focusable">true</item>
+        <item name="android:progressDrawable">@drawable/seekbar_define_color_style</item>
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
+        <item name="android:max">16382</item>
+        <item name="android:paddingRight">@dimen/dp_10</item>
+        <item name="android:maxHeight">@dimen/dp_5</item>
+        <item name="android:minHeight">@dimen/dp_5</item>
+
+    </style>
+
+
+    <style name="vol_osd_item_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@android:color/background_light</item>
+    </style>
+</resources>

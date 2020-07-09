@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/general_debug_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
+
+    <RelativeLayout
+        android:id="@+id/rl_uart_enable"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_uart_enable"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+            android:src="@mipmap/switch_nor" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Uart Enable" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_rs232_command"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_rs232_command"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+
+            android:focusable="false"
+            android:gravity="center"
+            android:src="@mipmap/switch_nor" />
+
+        <TextView
+            style="@style/item_title"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="RS232 Command" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_watch_dog"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_watch_dog"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+            android:gravity="center"
+            android:src="@mipmap/switch_nor" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Watch Dog" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_ttys0"
+        style="@style/item_detail"
+        android:visibility="gone"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_ttys0"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+            android:gravity="center"
+            android:src="@mipmap/switch_nor"
+            android:text="0x31" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="ttyS0" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_aging_mode"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Aging Mode" />
+
+        <TextView
+            android:id="@+id/general_debug_aging_mode"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:gravity="center"
+            android:focusable="false"
+            android:text="Please Click!"
+            android:textColor="#ff71ff8b"
+            android:textSize="@dimen/sp_13" />
+    </RelativeLayout>
+
+
+</LinearLayout>

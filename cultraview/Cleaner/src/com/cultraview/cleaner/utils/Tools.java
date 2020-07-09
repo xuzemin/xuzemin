@@ -1,0 +1,177 @@
+
+package com.cultraview.cleaner.utils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.lang.Character.UnicodeBlock;
+import java.text.DecimalFormat;
+
+import android.annotation.SuppressLint;
+import android.os.Environment;
+
+
+/**
+ * @author Write Macro.Song(songhong@cultraview.com)
+ * @since 2.0.0 Tools.
+ */
+public class Tools {
+
+    private static final String TAG = ".Tools ";
+
+    public static boolean isShuldFiled(String pkgename) {
+        if (pkgename.equals("com.mstar.tv.tvplayer.ui")) {
+            return true;
+        } else if (pkgename.equals("com.android.wididemo")) {
+            return true;
+        } else if (pkgename.equals("com.assem.launcher")) {
+            return true;
+        } else if (pkgename.equals("com.android.contacts")) {
+            return true;
+        } else if (pkgename.equals("com.android.videoeditor")) {
+            return true;
+        } else if (pkgename.equals("com.android.email")) {
+            return true;
+        } else if (pkgename.equals("net.myvst.v2")) {
+            return true;
+        } else if (pkgename.equals("com.android.settings")) {
+            return true;
+        } else if (pkgename.equals("com.mstar.tvsetting.hotkey")) {
+            return true;
+        } else if (pkgename.equals("com.android.providers.downloads.ui")) {
+            return true;
+        } else if (pkgename.equals("com.cv.apk_manager")) {
+            return true;
+        } else if (pkgename.equals("com.protruly.floatwindowlib")) { // 左右工具栏
+            return true;
+        } else if (pkgename.equals("com.ctv.screencomment")) { // 批注
+            return true;
+        } else if (pkgename.equals("com.ctv.easytouch")) { // easyTouch
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isNeedClean(String pkgename) {
+        if (pkgename.equals("com.android.defcontainer")) {
+            return true;// 应用程序访问权限
+        } else if (pkgename.equals("com.android.keychain")) {
+            return true;// 密钥链
+        } else if (pkgename.equals("com.android.externalstorage")) {
+            return true;// 外部存储设备
+        } else if (pkgename.equals("com.android.providers.userdictionary")) {
+            return true;// User Dictionary
+        } else if (pkgename.equals("com.svox.pico")) {
+            return true;// TTS 语音识别系统
+        } else if (pkgename.equals("com.protruly.floatwindowlib")) { // 左右工具栏
+            return true;
+        } else if (pkgename.equals("com.ctv.screencomment")) { // 批注
+            return true;
+        } else if (pkgename.equals("com.ctv.easytouch")) { // easyTouch
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * @return String SD card path ("": sd card not present)
+     */
+    public static String getSDPath() {
+        String sdDir = "";
+        boolean sdCardExist = Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED); // To determine whether a
+                                                       // sd card
+        if (sdCardExist) {
+            // Get the root of sd
+            sdDir = Environment.getExternalStorageDirectory().toString();
+        }
+        return sdDir;
+    }
+
+    /**
+     * @param fileS fileS
+     * @return fileSizeString File size converted file size
+     */
+    public static String formetFileSize(long fileS) {
+        // Convert the file size
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        if (fileS < 1024) {
+            fileSizeString = df.format((double) fileS) + "B";
+        } else if (fileS < 1048576) {
+            fileSizeString = df.format((double) fileS / 1024) + "K";
+        } else if (fileS < 1073741824) {
+            fileSizeString = df.format((double) fileS / 1048576) + "M";
+        } else {
+            fileSizeString = df.format((double) fileS / 1073741824) + "G";
+        }
+        return fileSizeString;
+    }
+
+    /**
+     * Get File Size
+     * 
+     * @param file :File To determine the size of the file
+     * @return fileSize :long File Size
+     * @throws Exception Files to abnormal
+     */
+    @SuppressWarnings("resource")
+    public static long getFileSizes(File file) throws Exception {
+        long fileSize = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            fis = new FileInputStream(file);
+            fileSize = fis.available();
+        } else {
+            file.createNewFile();
+            System.out.println("File does not exist");
+        }
+        return fileSize;
+    }
+
+    /**
+     * Get the device name
+     * 
+     * @param mountPoint usb Device Path
+     * @return usb The device name
+     */
+    public static String getVolumeLabel(String mountPoint) {
+        String label = "usb";
+        // try {
+        // if (TextUtils.isEmpty(mService.getVolumeLabel(mountPoint))) {
+        // // tmp = "\\u79fb\\u52a8\\u5b58\\u50a8\\u8bbe\\u5907\\u";
+        // Context context = ContextUtil.getInstance();
+        // // The default name is:#Mobile storage devices
+        // label = "#" + context.getResources().getString(R.string.usb_unname);
+        // } else {
+        // utf8ToUnicode(mService.getVolumeLabel(mountPoint).toString());
+        // label = mService.getVolumeLabel(mountPoint).toString();
+        // }
+        // } catch (RemoteException e) {
+        // Log.e(TAG, "--getVolumeLabel---Failed to get volume label", e);
+        // return null;
+        // }
+        return label;
+    }
+
+    @SuppressLint("DefaultLocale")
+    private static String utf8ToUnicode(String inStr) {
+        char[] myBuffer = inStr.toCharArray();
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < inStr.length(); i++) {
+            UnicodeBlock ub = UnicodeBlock.of(myBuffer[i]);
+            if (ub == UnicodeBlock.BASIC_LATIN) {
+                String unicode = "\\u" + myBuffer[i];
+                sb.append(unicode);
+            } else {
+                short s = (short) myBuffer[i];
+                String hexS = Integer.toHexString(s);
+                String unicode = "\\u" + hexS;
+                sb.append(unicode.toLowerCase());
+            }
+        }
+        return sb.toString();
+    }
+
+}

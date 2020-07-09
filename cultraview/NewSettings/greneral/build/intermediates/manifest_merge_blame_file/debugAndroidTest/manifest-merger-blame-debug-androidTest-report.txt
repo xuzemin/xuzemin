@@ -1,0 +1,57 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.ctv.settings.greneral.test" >
+4
+5    <uses-sdk
+5-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:5:5-74
+6        android:minSdkVersion="23"
+6-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:5:15-41
+7        android:targetSdkVersion="28" />
+7-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:5:42-71
+8
+9    <instrumentation
+9-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:11:5-15:80
+10        android:name="android.support.test.runner.AndroidJUnitRunner"
+10-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:11:22-83
+11        android:functionalTest="false"
+11-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:14:22-52
+12        android:handleProfiling="false"
+12-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:13:22-53
+13        android:label="Tests for com.ctv.settings.greneral.test"
+13-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:15:22-78
+14        android:targetPackage="com.ctv.settings.greneral.test" />
+14-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:12:22-76
+15
+16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+16-->[com.apkfuns.log2file:log2file:1.3.0] /Users/xuzemin/.gradle/caches/transforms-2/files-2.1/e6ed45d001f0a6f73392dbdaf46d395e/log2file-1.3.0/AndroidManifest.xml:11:5-81
+16-->[com.apkfuns.log2file:log2file:1.3.0] /Users/xuzemin/.gradle/caches/transforms-2/files-2.1/e6ed45d001f0a6f73392dbdaf46d395e/log2file-1.3.0/AndroidManifest.xml:11:22-78
+17    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+18
+19    <application
+19-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:7:5-9:19
+20        android:allowBackup="true"
+20-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:9-35
+21        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+21-->[com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:22:18-91
+22        android:debuggable="true"
+22-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:7:18-43
+23        android:excludeFromRecents="true"
+23-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:9-42
+24        android:icon="@mipmap/ic_launcher"
+24-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:9-43
+25        android:label="@string/app_name"
+25-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:9-41
+26        android:persistent="true"
+26-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-34
+27        android:roundIcon="@mipmap/ic_launcher_round"
+27-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:9-54
+28        android:supportsRtl="true"
+28-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:9-35
+29        android:theme="@style/AppTheme.NoActionBar" >
+29-->[__tested_artifact__::greneral] /Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:9-52
+30        <uses-library android:name="android.test.runner" />
+30-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:8:9-60
+30-->/Users/xuzemin/xuzemin/cultraview/NewSettings/greneral/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger6771638852494367948.xml:8:23-57
+31    </application>
+32
+33</manifest>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 阿尔巴尼亚语 -->
+<resources>
+
+    <string name="app_name">Cleaner</string>
+    <string name="action_settings">Settings</string>
+    <string name="uninstall_sys">System</string>
+    <string name="uninstall_user">User</string>
+    <string name="install_usb">външвн</string>
+    <string name="uninstall_user_apk">Çinstalim i aplikacionit të përdoruesit</string>
+    <string name="exit_title">Dalje</string>
+    <string name="yes">Konfirmoj</string>
+    <string name="no">Anuloj</string>
+    <string name="MainActivity_sys_no_apks">Fajlli nuk mund të gjendet</string>
+    <string name="UninstallActivity_uninstall_user_apks">Çinstalim i aplikacionit të përdoruesit</string>
+    <string name="UninstallActivity_uninstall_sys_apks">Çinstalim i aplikacionit</string>
+    <string name="InstallActivity_install_sys_apks">Instalim i fajllave të brendshme APK</string>
+    <string name="InstallActivity_install_usb_apks">Instalim i fajllave të jashtme APK</string>
+    <string name="UninstallUserPageLayout_installed">Të instaluara me sukses</string>
+    <string name="UninstallUserPageLayout_sys_apks">Aplikacioni</string>
+    <string name="UninstallUserPageLayout_user_apks">Aplikacioni i përdoruesit</string>
+    <string name="InstallSysPageLayout_uninstall">Nuk është instaluar</string>
+    <string name="InstallSysPageLayout_can_updata">I përditësueshëm</string>
+    <string name="apks_reading">Hapje e aplikacionit</string>
+    <string name="dialog_title">Detaje të aplikacionit</string>
+    <string name="dialog_apks_name">Emri i aplikacionit</string>
+    <string name="dialog_apks_state">Statusi i aplikacionit</string>
+    <string name="dialog_apks_size">Përmasat e aplikacionit</string>
+    <string name="dialog_apks_vision_name">Emri dhe versioni</string>
+    <string name="dialog_apks_vision_code">Numri i versioneve</string>
+    <string name="dialog_file_path">Vendndodhja e fajllit</string>
+    <string name="dialog_apks_icon">Ikona të aplikimit</string>
+    <string name="dialog_file_pakege_name">Emri i paketës</string>
+    <string name="dialog_install">Instalim</string>
+    <string name="dialog_uninstall">Çinstalim</string>
+    <string name="nousb_warn">Këshilla</string>
+    <string name="not_find_apk_file">Aplikacioni nuk mund të gjejë fajllin e instalimit</string>
+    <string name="not_find_userapk">Nuk ka përdorues</string>
+    <string name="usb_unname">Pajisje të jashtme për ruajtjen e fajllave</string>
+    <string name="is_sys_app">Nuk lejohet instalimi</string>
+    <string name="exception_files_1">Aplikacion</string>
+    <string name="exception_files_2">Abnormal</string>
+    <string name="MainActivity_exitBy2Click">Shtypni përsëri për të dalë nga programi</string>
+    <string name="install_sys">I brendshëm</string>
+    <string name="install_sys_apk">Instalim i aplikacionit të brendshëm</string>
+    <string name="nousb_content">Nuk gjen pajisje të jashtme për ruajtjen e të dhënave, kontrolloni pajisjen USB</string>
+    <string name="uninstall">Çinstaloni</string>
+    <string name="install">Instaloni</string>
+    <string name="exit">Dalje</string>
+
+</resources>

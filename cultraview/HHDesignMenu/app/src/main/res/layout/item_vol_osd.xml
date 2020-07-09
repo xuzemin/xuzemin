@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item"
+    style="@style/item_detail">
+
+    <TextView
+        android:id="@+id/item_sound_vol_osd_title"
+        style="@style/item_title"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="LineOut PreScale" />
+
+    <SeekBar
+        android:descendantFocusability="beforeDescendants"
+        android:id="@+id/item_sound_vol_osd"
+        style="@style/adc_seekbar"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/item_sound_vol_osd_text"
+        style="@style/item_title"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="wrap_content"
+        android:text="0x31" />
+
+</LinearLayout>
+

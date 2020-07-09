@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/general_configuration_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_enable_str"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_enable_str"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+            android:gravity="center"
+            android:src="@mipmap/switch_nor" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Enable STR  " />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_wake_on_lan"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_wake_on_lan"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+            android:gravity="center"
+            android:src="@mipmap/switch_nor"
+            android:text="0x31" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Wake On Lan  " />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_dual_port"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_dual_port"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+            android:gravity="center"
+            android:src="@mipmap/switch_nor" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Dual Port  " />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_mirror_enable"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_mirror_enable"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+
+            android:gravity="center"
+            android:src="@mipmap/switch_nor" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Mirror Enable  " />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_front_function"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_front_function"
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:focusable="false"
+            android:gravity="center"
+            android:src="@mipmap/switch_nor" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Front function button" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_touch_type_left"
+        style="@style/item_detail"
+
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_touch_type_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/text_general_config_touch_type"
+            android:focusable="false"
+            android:src="@mipmap/ic_left" />
+
+        <ImageView
+            android:id="@+id/img_general_config_touch_type_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:src="@mipmap/ic_right" />
+
+        <TextView
+            android:id="@+id/text_general_config_touch_type"
+            style="@style/item_title"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="@dimen/dp_m_2"
+            android:layout_toLeftOf="@id/img_general_config_touch_type_right"
+            android:gravity="center"
+            android:text="1" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Touch Type  " />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_touch_pattern_left"
+        style="@style/item_detail"
+        android:background="@drawable/select"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/img_touch_pattern_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_toLeftOf="@id/text_general_config_pattern"
+            android:focusable="false"
+            android:src="@mipmap/ic_left" />
+
+        <ImageView
+            android:id="@+id/img_general_config_pattern_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+
+            android:focusable="false"
+            android:src="@mipmap/ic_right" />
+
+        <TextView
+            android:id="@+id/text_general_config_pattern"
+            style="@style/item_title"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="@dimen/dp_m_2"
+
+            android:layout_marginRight="120dp"
+            android:layout_toLeftOf="@id/img_general_config_pattern_right"
+            android:gravity="center"
+            android:text="white" />
+
+        <TextView
+            style="@style/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:gravity="left"
+            android:text="Test Pattern  " />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sound_mode_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorUnFocus"
+    tools:viewBindingIgnore="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/sound_mode_standard"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_29"
+                android:background="@color/colorUnFocus"
+                android:text="Standard"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/sound_mode_music"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_29"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:background="@color/colorUnFocus"
+                android:text="Music"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/sound_mode_sports"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_29"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:background="@color/colorUnFocus"
+                android:text="Sports"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12" />
+
+            <Button
+                android:id="@+id/sound_mode_user"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_29"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:background="@color/colorUnFocus"
+                android:text="User"
+                android:textColor="#ffffffff"
+                android:textSize="@dimen/sp_12"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/item_detail"
+            android:id="@+id/ll_sound_mode_bass"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Bass" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_bass"
+                style="@style/adc_seekbar"
+                android:max="100"
+                />
+
+            <TextView
+                android:id="@+id/sound_mode_bass_text"
+                style="@style/item_title"
+
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout style="@style/item_detail"
+            android:id="@+id/ll_sound_mode_treble"
+            >
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                android:id="@+id/picture_adc_ggain"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Treble" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_treble"
+                style="@style/adc_seekbar"
+                android:max="100" />
+
+            <TextView
+
+                android:id="@+id/sound_mode_treble_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout style="@style/item_detail"
+            android:id="@+id/ll_sound_mode_eq1"
+            >
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                android:id="@+id/picture_adc_bgain"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="EQ1" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq1"
+                android:max="100"
+                style="@style/adc_seekbar"
+                />
+
+            <TextView
+
+                android:id="@+id/sound_mode_eq1_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout style="@style/item_detail"
+            android:id="@+id/ll_sound_mode_eq2"
+            >
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                android:id="@+id/picture_adc_r_offSet"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="EQ2" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq2"
+                android:max="100"
+                style="@style/adc_seekbar" />
+
+            <TextView
+
+                android:id="@+id/sound_mode_eq2_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout style="@style/item_detail"
+            android:id="@+id/ll_sound_mode_eq3"
+            >
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                android:id="@+id/picture_adc_g_offSet"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="EQ3" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq3"
+                android:max="100"
+                style="@style/adc_seekbar" />
+
+            <TextView
+
+                android:id="@+id/sound_mode_eq3_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/item_detail"
+            android:id="@+id/ll_sound_mode_eq4"
+            >
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="EQ4" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq4"
+                style="@style/adc_seekbar"
+                android:max="100" />
+
+            <TextView
+                android:id="@+id/sound_mode_eq4_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout style="@style/item_detail"
+            android:id="@+id/ll_sound_mode_eq5"
+            >
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_20"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="EQ5" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq5"
+                style="@style/adc_seekbar"
+                android:max="100" />
+            <TextView
+
+                android:id="@+id/sound_mode_eq5_text"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="wrap_content"
+                android:text="50" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

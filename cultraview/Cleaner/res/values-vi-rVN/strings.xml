@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sạch hơn</string>
+    <string name="action_settings">Chuẩn bị</string>
+    <string name="uninstall_sys">Comment</string>
+    <string name="uninstall_user">người dùng</string>
+    <string name="install_usb">Mở kho ngoài</string>
+    <string name="uninstall_user_apk">Bỏ ứng dụng người dùng</string>
+    <string name="exit_title">Lối ra cố định</string>
+    <string name="yes">Chọn</string>
+    <string name="no">hủy</string>
+
+    <!-- 代码中 -->
+    <!-- Activity -->
+    <string name="MainActivity_sys_no_apks">Không tìm thấy tập tin APK cài đặt trong bộ nhớ hệ thống</string>
+    <string name="UninstallActivity_uninstall_user_apks">Bỏ ứng dụng người dùng</string>
+    <string name="UninstallActivity_uninstall_sys_apks">Ứng dụng hệ thống tải xong</string>
+    <string name="InstallActivity_install_sys_apks">Cài tập tin APK cục bộ</string>
+    <string name="InstallActivity_install_usb_apks">Cài tập tin APK bên ngoài</string>
+    <!-- Pages -->
+    <string name="UninstallUserPageLayout_installed">đã cài đặt</string>
+    <string name="UninstallUserPageLayout_sys_apks">Ứng dụng hệ thống</string>
+    <string name="UninstallUserPageLayout_user_apks">Ứng dụng người dùng</string>
+    <string name="InstallSysPageLayout_uninstall">Chưa cài đặt</string>
+    <string name="InstallSysPageLayout_can_updata">Description</string>
+
+    <!-- layout -->
+    <string name="apks_reading">Đọc tập tin ứng dụng....</string>
+    <string name="dialog_title">Đơn vị</string>
+    <string name="dialog_apks_name">Tên ứng dụng: </string>
+    <string name="dialog_apks_state">trạng thái ứng dụng: </string>
+    <string name="dialog_apks_size">Cỡ ứng dụng: </string>
+    <string name="dialog_apks_vision_name">Số phiên bản: </string>
+    <string name="dialog_apks_vision_code">Số phiên bản： </string>
+    <string name="dialog_file_path">Đường dẫn tệp: </string>
+    <string name="dialog_apks_icon">Biểu tượng ứng dụng: </string>
+    <string name="dialog_file_pakege_name">Tên gói tệp:</string>
+    <string name="dialog_install">Cài đặt</string>
+    <string name="dialog_uninstall">Gỡ cài đặt</string>
+    <string name="nousb_warn">Mẹo:</string>
+    <string name="not_find_apk_file">Không tìm thấy tệp Apk có thể cài đặt !</string>
+    <string name="not_find_userapk">Bạn chưa cài đặt bất kỳ ứng dụng người dùng nào</string>
+    <string name="usb_unname">Thiết bị lưu trữ di động</string>
+    <string name="is_sys_app">Ứng dụng này là một ứng dụng hệ thống, bạn không có quyền gỡ cài đặt!</string>
+
+    <!-- 追加 -->
+    <string name="exception_files_1">Hồ sơ</string>
+    <string name="exception_files_2">Bất thường</string>
+    <string name="MainActivity_exitBy2Click">Nhấn lần nữa để thoát khỏi chương trình</string>
+    <string name="install_sys">Bộ nhớ trong</string>
+    <string name="install_sys_apk">Cài đặt tập tin Apk nội bộ</string>
+    <string name="nousb_content">Không tìm thấy thiết bị lưu trữ ngoài tương ứng, vui lòng kiểm tra xem thiết bị USB đã được cắm chưa !</string>
+    <string name="uninstall">Gỡ cài đặt</string>
+    <string name="install">Cài đặt</string>
+    <string name="clean">Xóa</string>
+
+    <!-- appactivity追加 -->
+    <string name="appstarting">Tăng tốc dọn dẹp</string>
+    <string name="cleancache">Xóa bộ nhớ cache</string>
+    <string name="cache_select_cache_app">Vui lòng chọn một ứng dụng để xóa bộ nhớ cache</string>
+    <string name="cache_select_all">Chọn tất cả</string>
+    <string name="cache_select_none">Không được chọn</string>
+    <string name="cache_select_cleaner">Xóa</string>
+    <string name="cache_cleaner_ok">Bộ nhớ cache được dọn sạch!</string>
+    <string name="clean_bg_process">Làm sạch các quá trình nền</string>
+    <string name="unit">Một</string>
+    <string name="release_memory">Bộ nhớ trống</string>
+    <string name="cache_select_none_tip">Lựa chọn không thể để trống</string>
+    <string name="app_stop">Tăng tốc một nút</string>
+    <string name="no_clear">Quá trình được chọn không có gì để làm sạch..</string>
+
+</resources>

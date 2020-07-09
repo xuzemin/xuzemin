@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFFFFF</color> <!-- 白色 -->
+    <color name="half_white">#7FFFFFFF</color> <!-- 半透明 白色 -->
+    <color name="unclick_white">#33FFFFFF</color>
+    <color name="half_black">#7F000000</color>
+    <color name="four_black">#66000000</color>
+    <color name="edit_select">#1597E2</color>
+    <color name="gray_dark">#A9A9A9</color> <!-- 暗灰色 -->
+    <color name="gray">#4CFFFFFF</color>
+    <!-- UI 3 -->
+    <color name="icon_color_1">#B227A6FF</color>
+    <color name="icon_color_un">#2389D0</color>
+    <color name="black">#000000</color>
+    <color name="black_six">#99000000</color>
+    <color name="black_seventy_f">#A9A9A9</color>  <!-- // #BF000000 -->
+    <color name="white_seven">#B2FFFFFF</color>
+    <color name="transparent">#0000</color>
+    <color name="state_off">#B98700</color>
+    <color name="state_on">#09B900</color>
+    <!-- night bg color -->
+    <color name="nig_bg_color">#388DCB</color>
+    <color name="nig_icon_bg_color">#26A6FF</color>
+    <color name="nig_icon_color">#B227A6FF</color>
+    <!-- page bg color -->
+    <color name="icon_color_5">#B2FE3971</color>
+    
+    <color name="main_color">#66000000</color>
+    <color name="icon_bg_color">#403c3c3c</color>
+    
+    <color name="button_bg_color">#2297ce</color>
+</resources>

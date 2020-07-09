@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>     
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="@dimen/dp_5" />
+            <solid android:color="@color/seekbar_color" />
+        </shape>
+    </item>
+
+
+
+    <item android:id="@android:id/secondaryProgress">
+
+        <clip>
+            <shape>
+                <corners android:radius="@dimen/dp_5" />
+                <solid android:color="@color/seekbar_progress_color" />
+            </shape>
+        </clip>
+
+
+<!--        <scale android:scaleWidth="100%">-->
+<!--            <selector>-->
+<!--                <item android:state_enabled="false">-->
+<!--                    <color android:color="@android:color/transparent"/>-->
+<!--                </item>-->
+<!--                <item android:drawable="@drawable/track_bg"/>-->
+<!--            </selector>-->
+<!--        </scale>-->
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="@dimen/dp_5" />
+                <solid android:color="@color/seekbar_progress_color" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

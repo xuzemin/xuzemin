@@ -1,0 +1,71 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.ctv.settings.network"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+8-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.BLUETOOTH" />
+11-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:4:5-68
+11-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:4:22-65
+12    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+12-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:5:5-74
+12-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:5:22-71
+13    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+13-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:6:5-79
+13-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:6:22-76
+14
+15    <application>
+15-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:8:5-31:19
+16        <activity
+16-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:10:9-29:20
+17            android:name="com.ctv.settings.network.activity.NetWorkActivity"
+17-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:10:19-83
+18            android:excludeFromRecents="true"
+18-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:11:19-52
+19            android:hardwareAccelerated="true"
+19-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:12:19-53
+20            android:launchMode="singleTask" >
+20-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:13:19-50
+21            <intent-filter android:priority="1" >
+21-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:15:13-24:29
+21-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:15:28-48
+22                <action android:name="android.settings.WIFI_SETTINGS" />
+22-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:16:17-73
+22-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:16:25-70
+23                <action android:name="android.net.wifi.PICK_WIFI_NETWORK" />
+23-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:17:17-77
+23-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:17:25-74
+24                <action android:name="android.settings.WIRELESS_SETTINGS" />
+24-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:18:17-77
+24-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:18:25-74
+25                <action android:name="android.settings.ETHERNET_SETTINGS" />
+25-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:19:17-77
+25-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:19:25-74
+26                <action android:name="android.settings.WIFI_IP_SETTINGS" />
+26-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:20:17-76
+26-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:20:25-73
+27                <action android:name="com.cultraview.settings.net.NETWORK_SETTINGS" />
+27-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:21:17-87
+27-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:21:25-84
+28
+29                <category android:name="android.intent.category.DEFAULT" />
+29-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:23:17-76
+29-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:23:27-73
+30            </intent-filter>
+31
+32            <meta-data
+32-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:26:13-28:44
+33                android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"
+33-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:27:21-83
+34                android:value="true" />
+34-->/Users/xuzemin/xuzemin/cultraview/NewSettings/network/src/main/AndroidManifest.xml:28:21-41
+35        </activity>
+36    </application>
+37
+38</manifest>

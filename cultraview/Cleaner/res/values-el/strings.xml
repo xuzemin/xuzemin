@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cleaner</string>
+    <string name="action_settings">Settings</string>
+    <string name="uninstall_sys">System</string>
+    <string name="install_usb">външвн</string>
+    <string name="uninstall_user_apk">Απεγκατάσταση της εφαρμογής χρήστη</string>
+    <string name="exit_title">Έξοδος</string>
+    <string name="yes">Επιβεβαιώνω</string>
+    <string name="no">Ακύρωση</string>
+    <string name="MainActivity_sys_no_apks">Το αρχείο δεν μπορεί να βρεθεί</string>
+    <string name="UninstallActivity_uninstall_user_apks">Απεγκατάσταση της εφαρμογής χρήστη</string>
+    <string name="UninstallActivity_uninstall_sys_apks">Απεγκατάσταση της εφαρμογής</string>
+    <string name="InstallActivity_install_sys_apks">Εγκατάσταση εσωτερικών ΑΡΚ αρχείων</string>
+    <string name="InstallActivity_install_usb_apks">Εγκατάσταση εξωτερικών ΑΡΚ αρχείων</string>
+    <string name="UninstallUserPageLayout_installed">Εγκαταστάθηκαν επιτυχώς</string>
+    <string name="UninstallUserPageLayout_sys_apks">Εφαρμογή</string>
+    <string name="UninstallUserPageLayout_user_apks">Εφαρμογή χρήστη</string>
+    <string name="InstallSysPageLayout_uninstall">Δεν εγκαταστάθηκε</string>
+    <string name="InstallSysPageLayout_can_updata">Ανανεωμένο</string>
+    <string name="apks_reading">Άνοιγμα της εφαρμογής</string>
+    <string name="dialog_title">Στοιχεία της εφαρμογής</string>
+    <string name="dialog_apks_name">Όνομα της εφαρμογής</string>
+    <string name="dialog_apks_state">Κατάσταση της εφαρμογής</string>
+    <string name="dialog_apks_size">Μέγεθος της εφαρμογής</string>
+    <string name="dialog_apks_vision_name">Όνομα έκδοσης</string>
+    <string name="dialog_apks_vision_code">Αριθμός εκδόσεων</string>
+    <string name="dialog_file_path">Τόπος του αρχείου</string>
+    <string name="dialog_apks_icon">Εικόνες της εφαρμογής</string>
+    <string name="dialog_file_pakege_name">Όνομα πακέτου</string>
+    <string name="dialog_install">Εγκατάσταση</string>
+    <string name="dialog_uninstall">Απεγκατάσταση</string>
+    <string name="nousb_warn">Συμβουλές</string>
+    <string name="not_find_apk_file">Η εφαρμογή δεν μπορεί να βρεθεί αρχείο προς εγκατάσταση</string>
+    <string name="not_find_userapk">Δεν υπάρχει χρήστη</string>
+    <string name="usb_unname">Εξωτερικές συσκευές για διαφύλαξη αρχείων</string>
+    <string name="is_sys_app">Δεν υπάρχει άδεια εγκατάστασης</string>
+    <string name="exception_files_1">Εφαρμογή</string>
+    <string name="exception_files_2">Ανώμαλος</string>
+    <string name="MainActivity_exitBy2Click">Πατήστε πάλι για έξοδο από το πρόγραμμα</string>
+    <string name="install_sys">Εσωτερικός</string>
+    <string name="install_sys_apk">Εγκατάσταση της εσωτερικής εφαρμογής</string>
+    <string name="nousb_content">Δεν βρίσκει εξωτερική συσκευή αποθήκευσης δεδομένων, ελέγξτε τη συσκευή USB</string>
+    <string name="uninstall">Απεγκατάσταση</string>
+    <string name="install">Εγκατάσταση</string>
+    <string name="exit">Έξοδος</string>
+
+</resources>

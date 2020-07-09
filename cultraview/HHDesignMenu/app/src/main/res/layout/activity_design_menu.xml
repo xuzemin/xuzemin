@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/ff_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorUnFocus">
+
+        <mstar.factorymenu.ui.view.CustomTitleListView
+            android:id="@+id/list_title"
+            style="@style/item_layout"
+            android:layout_height="wrap_content"
+            android:background="@color/colorUnFocus"
+            android:divider="#00000000"
+            android:listSelector="#00000000"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ff_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorUnFocus">
+
+        <mstar.factorymenu.ui.view.CustomListView
+            android:id="@+id/list_sub_title"
+            style="@style/item_layout"
+            android:layout_height="wrap_content"
+            android:background="@color/colorUnFocus"
+            android:divider="#00000000"
+            android:listSelector="#00000000"
+            android:scrollbars="none" />
+    </LinearLayout>
+    <View
+        android:layout_width="@dimen/dp_1"
+        android:background="@color/border_color"
+        android:layout_height="match_parent"/>
+    <FrameLayout
+        android:id="@+id/fr_layout"
+        android:layout_width="441.5dp"
+        android:background="@color/colorUnFocus"
+        android:layout_height="match_parent"></FrameLayout>
+</LinearLayout>

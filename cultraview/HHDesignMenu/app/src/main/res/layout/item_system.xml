@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/item_detail">
+
+    <TextView
+        android:layout_marginLeft="@dimen/dp_25"
+        android:id="@+id/item_title"
+        style="@style/item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:text="RS232 Command" />
+
+    <TextView
+        android:layout_marginLeft="@dimen/dp_25"
+        android:id="@+id/item_subtitle"
+        style="@style/item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_title"
+        android:textColor="@color/colorFocus"
+        android:text="@string/no_update_bin"
+        android:textSize="@dimen/sp_8"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:id="@+id/item_value_text"
+        style="@style/item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_25"
+        android:gravity="center"
+        android:text="0x31" />
+
+</RelativeLayout>
+

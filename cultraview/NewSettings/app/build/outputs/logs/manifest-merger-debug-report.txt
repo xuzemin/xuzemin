@@ -1,0 +1,717 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+MERGED from [:resCommon] /Users/xuzemin/xuzemin/cultraview/NewSettings/resCommon/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:design:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ee6fb8e66367e34fe8c81c33f7c65284/design-28.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/8516ac599c0f39cda6e75249f41fc5c3/appcompat-v7-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-v4:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ce2f6058b582880ec3c9aa6ee9f900c8/support-v4-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/725ae61e2a19839e936c344aee4af1f3/recyclerview-v7-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/008c8b69eef145b955d4d9e9784aa5e4/constraint-layout-1.1.3/AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/3c27dadfce69d007b1983e27578a7716/BaseRecyclerViewAdapterHelper-2.9.47/AndroidManifest.xml:2:1-11:12
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b4fcf06f6b9f779f6c9a7ea99dbf10be/glide-4.9.0/AndroidManifest.xml:2:1-12:12
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/617b01740c113f7e30a40704763698d9/support-fragment-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/848337694e969f557867fc4c71ee4df1/animated-vector-drawable-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/de983ce595cc890b2d4203f95c95cbc2/support-core-ui-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/931dc0732495a48676338e3096e222d8/support-core-utils-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/1606b3689a512e702c708aeff54dc275/support-vector-drawable-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/27df1f4f4d89b5d3f90bafe68e1a11d9/support-media-compat-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/85eaf1ef5877d77ea4378ac6d21977d0/transition-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/53a136253a346194954ba8d49e55508c/loader-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0053af6d543e80f2eca2dfa34c8f8cd4/viewpager-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/54d979b97cccdbacfd20983c6e6fa172/coordinatorlayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/694c26a5b2f5f971c67e70ae0fee62cd/drawerlayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/6686ec5f2e2ab44ae21c1eb445c99a3b/slidingpanelayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/25f9131f098f8a4ac4a98754913f6b72/customview-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/a7f0b0af0b8bf1f81bd2e824811a5547/swiperefreshlayout-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/58f91a9ca0994ae02be35d76a8d8620d/asynclayoutinflater-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ec51a15ecdd6ac6bc414bac2bbd5ef52/versionedparcelable-28.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/f2e189d9c9c6a4d1eca5e283d6c960d7/cursoradapter-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d280ec5d1eac08885b834bf6ffaad6a0/cardview-v7-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0acf24f2ff597dcffaf8b2af7821f8ec/gifdecoder-4.9.0/AndroidManifest.xml:2:1-11:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/f8071bc478da969c504fd95a5be6aaf8/runtime-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/aeb7294d6d68d8c7eedcd7bf25b6a920/documentfile-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ade294bed9caf3f29b70e263efe27c86/localbroadcastmanager-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b550f02102518269b5ae49ce098d1bbd/print-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ecf2828b954b598dde19702f30d5ac54/viewmodel-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/a0712c74e2562104cfa1829d4f9a06a2/interpolator-28.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/780607b29fa9b8b916b13db491ef41f2/livedata-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/178d52fd0f4d875d0c412c649f532470/livedata-core-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d8ef00b68490a45f49fd0664d6982489/runtime-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:multidex:1.0.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d52cf6bac22760f7f5725c68b4a07b3e/multidex-1.0.1/AndroidManifest.xml:16:1-19:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+	package
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:4:11-37
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+	android:sharedUserId
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:5:11-52
+	android:versionName
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:1-235:12
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.SET_WALLPAPER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:6:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:6:22-69
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:7:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:7:22-75
+uses-permission#android.permission.READ_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:8:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:8:22-69
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:9:5-81
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:9:22-78
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:10:5-73
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:10:22-70
+uses-permission#android.permission.WRITE_SECURE_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:11:22-77
+uses-permission#android.permission.DEVICE_POWER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:12:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:12:22-68
+uses-permission#android.permission.CHANGE_CONFIGURATION
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:13:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:13:22-76
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:14:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:14:22-81
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:15:5-66
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:15:22-63
+uses-permission#android.permission.BLUETOOTH
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:16:5-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:16:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:17:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:17:22-71
+uses-permission#android.permission.NFC
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:18:5-62
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:18:22-59
+uses-permission#android.permission.HARDWARE_TEST
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:19:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:19:22-69
+uses-permission#android.permission.CALL_PHONE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:20:5-69
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:20:22-66
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:21:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:21:22-77
+uses-permission#android.permission.MASTER_CLEAR
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:22:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:22:22-68
+uses-permission#android.permission.USE_CREDENTIALS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:23:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:23:22-71
+uses-permission#com.google.android.googleapps.permission.GOOGLE_AUTH
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:24:5-92
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:24:22-89
+uses-permission#android.permission.ACCESS_DOWNLOAD_MANAGER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:25:5-82
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:25:22-79
+uses-permission#android.permission.READ_CONTACTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:26:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:26:22-69
+uses-permission#android.permission.WRITE_CONTACTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:27:5-73
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:27:22-70
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:28:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:28:22-76
+uses-permission#android.permission.ACCESS_WIMAX_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:29:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:29:22-74
+uses-permission#android.permission.CHANGE_WIMAX_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:30:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:30:22-74
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:31:5-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:31:22-73
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:32:5-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:32:22-73
+uses-permission#android.permission.INTERNET
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:33:5-67
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:33:22-64
+uses-permission#android.permission.CLEAR_APP_USER_DATA
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:34:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:34:22-75
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:35:5-75
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:35:22-72
+uses-permission#android.permission.MODIFY_PHONE_STATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:36:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:36:22-74
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:37:5-81
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:37:22-78
+uses-permission#android.permission.WRITE_APN_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:38:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:38:22-74
+uses-permission#android.permission.ACCESS_CHECKIN_PROPERTIES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:39:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:39:22-81
+uses-permission#android.permission.READ_USER_DICTIONARY
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:40:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:40:22-76
+uses-permission#android.permission.WRITE_USER_DICTIONARY
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:41:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:41:22-77
+uses-permission#android.permission.FORCE_STOP_PACKAGES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:42:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:42:22-75
+uses-permission#android.permission.PACKAGE_USAGE_STATS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:43:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:43:22-75
+uses-permission#android.permission.BATTERY_STATS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:44:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:44:22-69
+uses-permission#com.android.launcher.permission.READ_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:45:5-85
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:45:22-82
+uses-permission#com.android.launcher.permission.WRITE_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:46:5-86
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:46:22-83
+uses-permission#android.permission.MOVE_PACKAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:47:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:47:22-68
+uses-permission#android.permission.BACKUP
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:49:5-65
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:49:22-62
+uses-permission#android.permission.READ_SYNC_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:50:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:50:22-74
+uses-permission#android.permission.WRITE_SYNC_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:51:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:51:22-75
+uses-permission#android.permission.READ_SYNC_STATS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:52:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:52:22-71
+uses-permission#android.permission.STATUS_BAR
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:55:5-69
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:55:22-66
+uses-permission#android.permission.MANAGE_USB
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:56:5-69
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:56:22-66
+uses-permission#android.permission.SET_POINTER_SPEED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:57:5-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:57:22-73
+uses-permission#com.android.voicemail.permission.ADD_VOICEMAIL
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:58:5-86
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:58:22-83
+uses-permission#android.permission.SET_ORIENTATION
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:59:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:59:22-71
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:60:5-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:60:22-65
+uses-permission#android.permission.GET_PACKAGE_SIZE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:61:5-75
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:61:22-72
+uses-permission#android.permission.GET_TASKS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:62:5-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:62:22-65
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:63:5-64:23
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:63:22-77
+uses-permission#android.permission.RESTART_PACKAGES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:65:5-75
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:65:22-72
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:66:5-81
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:66:22-78
+uses-permission#com.mstar.android.permissionn.ACCESS_TV_DATA
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:68:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:68:22-81
+uses-permission#android.permission.READ_MEDIA_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:70:5-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:70:22-74
+uses-permission#android.permission.WRITE_MEDIA_STORAGE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:71:5-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:71:22-75
+uses-permission#android.permission.KILL_BACKGROUND_PROCESSES
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:72:5-84
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:72:22-81
+uses-permission#android.permission.MANAGE_ACCOUNTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:74:5-74
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:74:22-71
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:75:5-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:75:22-68
+uses-permission#android.permission.AUTHENTICATE_ACCOUNTS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:76:5-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:76:22-77
+uses-permission#android.Manifest.permission.TETHER_PRIVILEGED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:77:5-85
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:77:22-82
+uses-permission#android.permission.SET_TIME_ZONE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:80:5-72
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:80:22-69
+uses-permission#android.permission.BLUETOOTH_PRIVILEGED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:82:5-79
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:82:22-76
+application
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:84:5-233:19
+MERGED from [com.android.support:design:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ee6fb8e66367e34fe8c81c33f7c65284/design-28.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ee6fb8e66367e34fe8c81c33f7c65284/design-28.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/008c8b69eef145b955d4d9e9784aa5e4/constraint-layout-1.1.3/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/008c8b69eef145b955d4d9e9784aa5e4/constraint-layout-1.1.3/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b4fcf06f6b9f779f6c9a7ea99dbf10be/glide-4.9.0/AndroidManifest.xml:10:5-20
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b4fcf06f6b9f779f6c9a7ea99dbf10be/glide-4.9.0/AndroidManifest.xml:10:5-20
+MERGED from [com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ec51a15ecdd6ac6bc414bac2bbd5ef52/versionedparcelable-28.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ec51a15ecdd6ac6bc414bac2bbd5ef52/versionedparcelable-28.0.0/AndroidManifest.xml:22:5-23:19
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0acf24f2ff597dcffaf8b2af7821f8ec/gifdecoder-4.9.0/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0acf24f2ff597dcffaf8b2af7821f8ec/gifdecoder-4.9.0/AndroidManifest.xml:9:5-20
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:91:13-39
+	android:label
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:89:13-45
+	android:excludeFromRecents
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:92:13-46
+	android:roundIcon
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:90:13-58
+	android:persistent
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:87:13-38
+	android:icon
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:88:13-47
+	android:allowBackup
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:86:13-39
+	android:theme
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:93:13-56
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:85:13-34
+uses-library#com.mstar.android
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:94:9-57
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:94:23-55
+activity#com.ctv.settings.MainActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:95:9-110:20
+	android:label
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:99:19-51
+	android:excludeFromRecents
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:97:19-52
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:98:19-49
+	android:theme
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:96:19-62
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:95:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:100:13-103:29
+action#android.intent.action.MAIN
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:101:17-68
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:101:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:102:17-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:102:27-74
+intent-filter#action:name:android.settings.CTVSETTINGS+action:name:com.cultraview.settings.CTVSETTINGS+category:name:android.intent.category.DEFAULT
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:104:13-109:29
+action#android.settings.CTVSETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:105:17-71
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:105:25-68
+action#com.cultraview.settings.CTVSETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:106:17-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:106:25-75
+category#android.intent.category.DEFAULT
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:108:17-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:108:27-73
+activity#com.ctv.settings.language.activity.LanguageSelectActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:113:9-114:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:114:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:113:19-91
+activity#com.ctv.settings.language.activity.InputMethodActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:115:9-116:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:116:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:115:19-88
+activity#com.ctv.settings.device.DeviceNameActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:119:9-120:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:120:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:119:19-76
+activity#com.ctv.settings.device.ThemeBgActvity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:121:9-122:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:122:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:121:19-72
+activity#com.ctv.settings.device.ThemeStyleActvity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:123:9-124:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:124:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:123:19-75
+activity#com.ctv.settings.about.activity.SystemupdateItemActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:127:9-134:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:128:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:127:19-90
+intent-filter#action:name:com.cultraview.settings.update.SYSTEM_UPDATE+category:name:android.intent.category.DEFAULT
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:129:13-133:29
+action#com.cultraview.settings.update.SYSTEM_UPDATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:130:17-86
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:130:25-84
+activity#com.ctv.settings.about.activity.LocalUpdateActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:135:9-144:20
+	android:clearTaskOnLaunch
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:137:13-45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:138:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:136:13-79
+intent-filter#action:name:com.cultraview.settings.update.LOCAL_UPDATE+category:name:android.intent.category.DEFAULT
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:139:13-143:29
+action#com.cultraview.settings.update.LOCAL_UPDATE
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:140:17-85
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:140:25-83
+activity#com.ctv.settings.about.activity.SystemUpdateActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:145:9-147:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:146:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:145:19-86
+activity#com.ctv.settings.about.activity.AboutActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:148:9-150:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:149:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:148:19-79
+activity#com.ctv.settings.about.activity.RestoreFactoryActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:151:9-153:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:152:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:151:19-88
+activity#com.ctv.settings.about.activity.BootOptionsActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:154:9-155:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:155:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:154:19-85
+activity#com.ctv.settings.general.ShareUsbActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:157:9-158:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:158:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:157:19-75
+activity#com.ctv.settings.security.activity.PermissionsActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:161:9-162:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:162:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:161:19-88
+activity#com.ctv.settings.security.activity.USBLockActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:163:9-165:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:164:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:163:19-84
+activity#com.ctv.settings.security.activity.LockScreenActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:166:9-168:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:167:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:166:19-87
+service#com.ctv.settings.security.activity.USBLockService
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:169:9-173:19
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:169:18-82
+intent-filter#action:name:com.cultraview.settings.action.usblock
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:170:13-172:29
+action#com.cultraview.settings.action.usblock
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:171:17-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:171:25-78
+receiver#com.ctv.settings.security.receiver.USBStateRec
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:174:9-184:20
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:174:19-80
+intent-filter#action:name:android.intent.action.MEDIA_MOUNTED+action:name:android.intent.action.MEDIA_UNMOUNTED+data:scheme:file
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:175:13-180:29
+	android:priority
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:175:28-50
+action#android.intent.action.MEDIA_MOUNTED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:176:17-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:176:25-75
+action#android.intent.action.MEDIA_UNMOUNTED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:178:17-80
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:178:25-77
+data
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:179:17-47
+	android:scheme
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:179:23-44
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:181:13-183:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:182:17-78
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:182:25-76
+activity#com.ctv.settings.security.activity.PermissionDetailActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:185:9-186:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:186:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:185:19-93
+activity#com.ctv.settings.timeanddate.activity.TimeZoneActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:189:9-190:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:190:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:189:19-88
+activity#com.ctv.settings.timeanddate.activity.DateFormatActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:191:9-193:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:192:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:191:19-90
+activity#com.ctv.settings.timeanddate.activity.AutoShutdownActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:194:9-196:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:195:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:194:19-92
+activity#com.ctv.settings.timeanddate.activity.AutoBootupActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:197:9-199:20
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:198:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:197:19-90
+activity#com.ctv.settings.timeanddate.activity.DateAndTimeSettingActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:200:9-201:45
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:201:13-43
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:200:19-98
+activity#com.ctv.settings.network.activity.NetWorkActivity
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:213:9-232:20
+	android:excludeFromRecents
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:214:13-46
+	android:launchMode
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:216:13-44
+	android:hardwareAccelerated
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:215:13-47
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:213:19-83
+intent-filter#action:name:android.net.wifi.PICK_WIFI_NETWORK+action:name:android.settings.ETHERNET_SETTINGS+action:name:android.settings.WIFI_IP_SETTINGS+action:name:android.settings.WIFI_SETTINGS+action:name:android.settings.WIRELESS_SETTINGS+action:name:com.cultraview.settings.net.NETWORK_SETTINGS+category:name:android.intent.category.DEFAULT
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:218:13-227:29
+	android:priority
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:218:28-48
+action#android.settings.WIFI_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:219:17-73
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:219:25-70
+action#android.net.wifi.PICK_WIFI_NETWORK
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:220:17-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:220:25-74
+action#android.settings.WIRELESS_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:221:17-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:221:25-74
+action#android.settings.ETHERNET_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:222:17-77
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:222:25-74
+action#android.settings.WIFI_IP_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:223:17-76
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:223:25-73
+action#com.cultraview.settings.net.NETWORK_SETTINGS
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:224:17-87
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:224:25-84
+meta-data#com.android.settings.PRIMARY_PROFILE_CONTROLLED
+ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:229:13-231:40
+	android:value
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:231:17-37
+	android:name
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml:230:17-79
+uses-sdk
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+MERGED from [:resCommon] /Users/xuzemin/xuzemin/cultraview/NewSettings/resCommon/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:resCommon] /Users/xuzemin/xuzemin/cultraview/NewSettings/resCommon/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ee6fb8e66367e34fe8c81c33f7c65284/design-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ee6fb8e66367e34fe8c81c33f7c65284/design-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/8516ac599c0f39cda6e75249f41fc5c3/appcompat-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/8516ac599c0f39cda6e75249f41fc5c3/appcompat-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ce2f6058b582880ec3c9aa6ee9f900c8/support-v4-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ce2f6058b582880ec3c9aa6ee9f900c8/support-v4-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/725ae61e2a19839e936c344aee4af1f3/recyclerview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/725ae61e2a19839e936c344aee4af1f3/recyclerview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/008c8b69eef145b955d4d9e9784aa5e4/constraint-layout-1.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/008c8b69eef145b955d4d9e9784aa5e4/constraint-layout-1.1.3/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/3c27dadfce69d007b1983e27578a7716/BaseRecyclerViewAdapterHelper-2.9.47/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/3c27dadfce69d007b1983e27578a7716/BaseRecyclerViewAdapterHelper-2.9.47/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b4fcf06f6b9f779f6c9a7ea99dbf10be/glide-4.9.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b4fcf06f6b9f779f6c9a7ea99dbf10be/glide-4.9.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/617b01740c113f7e30a40704763698d9/support-fragment-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/617b01740c113f7e30a40704763698d9/support-fragment-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/848337694e969f557867fc4c71ee4df1/animated-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/848337694e969f557867fc4c71ee4df1/animated-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/de983ce595cc890b2d4203f95c95cbc2/support-core-ui-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/de983ce595cc890b2d4203f95c95cbc2/support-core-ui-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/931dc0732495a48676338e3096e222d8/support-core-utils-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/931dc0732495a48676338e3096e222d8/support-core-utils-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/1606b3689a512e702c708aeff54dc275/support-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/1606b3689a512e702c708aeff54dc275/support-vector-drawable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/27df1f4f4d89b5d3f90bafe68e1a11d9/support-media-compat-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/27df1f4f4d89b5d3f90bafe68e1a11d9/support-media-compat-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/85eaf1ef5877d77ea4378ac6d21977d0/transition-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/85eaf1ef5877d77ea4378ac6d21977d0/transition-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/53a136253a346194954ba8d49e55508c/loader-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/53a136253a346194954ba8d49e55508c/loader-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0053af6d543e80f2eca2dfa34c8f8cd4/viewpager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0053af6d543e80f2eca2dfa34c8f8cd4/viewpager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/54d979b97cccdbacfd20983c6e6fa172/coordinatorlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/54d979b97cccdbacfd20983c6e6fa172/coordinatorlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/694c26a5b2f5f971c67e70ae0fee62cd/drawerlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/694c26a5b2f5f971c67e70ae0fee62cd/drawerlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/6686ec5f2e2ab44ae21c1eb445c99a3b/slidingpanelayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/6686ec5f2e2ab44ae21c1eb445c99a3b/slidingpanelayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/25f9131f098f8a4ac4a98754913f6b72/customview-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/25f9131f098f8a4ac4a98754913f6b72/customview-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/a7f0b0af0b8bf1f81bd2e824811a5547/swiperefreshlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/a7f0b0af0b8bf1f81bd2e824811a5547/swiperefreshlayout-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/58f91a9ca0994ae02be35d76a8d8620d/asynclayoutinflater-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/58f91a9ca0994ae02be35d76a8d8620d/asynclayoutinflater-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ec51a15ecdd6ac6bc414bac2bbd5ef52/versionedparcelable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ec51a15ecdd6ac6bc414bac2bbd5ef52/versionedparcelable-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/f2e189d9c9c6a4d1eca5e283d6c960d7/cursoradapter-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/f2e189d9c9c6a4d1eca5e283d6c960d7/cursoradapter-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d280ec5d1eac08885b834bf6ffaad6a0/cardview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d280ec5d1eac08885b834bf6ffaad6a0/cardview-v7-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0acf24f2ff597dcffaf8b2af7821f8ec/gifdecoder-4.9.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.9.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/0acf24f2ff597dcffaf8b2af7821f8ec/gifdecoder-4.9.0/AndroidManifest.xml:5:5-7:41
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/f8071bc478da969c504fd95a5be6aaf8/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/f8071bc478da969c504fd95a5be6aaf8/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/aeb7294d6d68d8c7eedcd7bf25b6a920/documentfile-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/aeb7294d6d68d8c7eedcd7bf25b6a920/documentfile-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ade294bed9caf3f29b70e263efe27c86/localbroadcastmanager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ade294bed9caf3f29b70e263efe27c86/localbroadcastmanager-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b550f02102518269b5ae49ce098d1bbd/print-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/b550f02102518269b5ae49ce098d1bbd/print-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ecf2828b954b598dde19702f30d5ac54/viewmodel-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/ecf2828b954b598dde19702f30d5ac54/viewmodel-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/a0712c74e2562104cfa1829d4f9a06a2/interpolator-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/a0712c74e2562104cfa1829d4f9a06a2/interpolator-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/780607b29fa9b8b916b13db491ef41f2/livedata-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/780607b29fa9b8b916b13db491ef41f2/livedata-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/178d52fd0f4d875d0c412c649f532470/livedata-core-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/178d52fd0f4d875d0c412c649f532470/livedata-core-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d8ef00b68490a45f49fd0664d6982489/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d8ef00b68490a45f49fd0664d6982489/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:multidex:1.0.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d52cf6bac22760f7f5725c68b4a07b3e/multidex-1.0.1/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:multidex:1.0.1] /Users/xuzemin/.gradle/caches/caches/transforms-2/files-2.1/d52cf6bac22760f7f5725c68b4a07b3e/multidex-1.0.1/AndroidManifest.xml:18:5-42
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+		ADDED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/xuzemin/cultraview/NewSettings/app/src/main/AndroidManifest.xml

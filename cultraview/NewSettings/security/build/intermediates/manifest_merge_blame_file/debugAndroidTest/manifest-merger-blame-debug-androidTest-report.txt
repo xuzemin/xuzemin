@@ -1,0 +1,314 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.ctv.settings.security.test" >
+4
+5    <uses-sdk
+5-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:5:5-74
+6        android:minSdkVersion="23"
+6-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:5:15-41
+7        android:targetSdkVersion="28" />
+7-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:5:42-71
+8
+9    <instrumentation
+9-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:11:5-15:80
+10        android:name="android.support.test.runner.AndroidJUnitRunner"
+10-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:11:22-83
+11        android:functionalTest="false"
+11-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:14:22-52
+12        android:handleProfiling="false"
+12-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:13:22-53
+13        android:label="Tests for com.ctv.settings.security.test"
+13-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:15:22-78
+14        android:targetPackage="com.ctv.settings.security.test" />
+14-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:12:22-76
+15
+16    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+16-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-78
+16-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:22-75
+17    <uses-permission android:name="android.permission.READ_SETTINGS" />
+17-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-72
+17-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:22-69
+18    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+18-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:5-81
+18-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:22-78
+19    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+19-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:5-73
+19-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:22-70
+20    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+20-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-80
+20-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:22-77
+21    <uses-permission android:name="android.permission.DEVICE_POWER" />
+21-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:5-71
+21-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:22-68
+22    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+22-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:5-79
+22-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:22-76
+23    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+23-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:5-84
+23-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:22-81
+24    <uses-permission android:name="android.permission.VIBRATE" />
+24-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:5-66
+24-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:22-63
+25    <uses-permission android:name="android.permission.BLUETOOTH" />
+25-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:5-68
+25-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:22-65
+26    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+26-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:5-74
+26-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:22-71
+27    <uses-permission android:name="android.permission.NFC" />
+27-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:5-62
+27-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:22-59
+28    <uses-permission android:name="android.permission.HARDWARE_TEST" />
+28-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:5-72
+28-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:22-69
+29    <uses-permission android:name="android.permission.CALL_PHONE" />
+29-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:5-69
+29-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:22-66
+30    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+30-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:5-80
+30-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:22-77
+31    <uses-permission android:name="android.permission.MASTER_CLEAR" />
+31-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:5-71
+31-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:22-68
+32    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+32-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:5-74
+32-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:22-71
+33    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
+33-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:5-92
+33-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:22-89
+34    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+34-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:5-82
+34-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:30:22-79
+35    <uses-permission android:name="android.permission.READ_CONTACTS" />
+35-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:31:5-72
+35-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:31:22-69
+36    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+36-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:32:5-73
+36-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:32:22-70
+37    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+37-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:33:5-79
+37-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:33:22-76
+38    <uses-permission android:name="android.permission.ACCESS_WIMAX_STATE" />
+38-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:34:5-77
+38-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:34:22-74
+39    <uses-permission android:name="android.permission.CHANGE_WIMAX_STATE" />
+39-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:35:5-77
+39-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:35:22-74
+40    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+40-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:36:5-76
+40-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:36:22-73
+41    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+41-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:37:5-76
+41-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:37:22-73
+42    <uses-permission android:name="android.permission.INTERNET" />
+42-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:38:5-67
+42-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:38:22-64
+43    <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" />
+43-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:5-78
+43-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:22-75
+44    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+44-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:5-75
+44-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:22-72
+45    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+45-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:5-77
+45-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:22-74
+46    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+46-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:42:5-81
+46-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:42:22-78
+47    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+47-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:43:5-77
+47-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:43:22-74
+48    <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES" />
+48-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:44:5-84
+48-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:44:22-81
+49    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+49-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:45:5-79
+49-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:45:22-76
+50    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
+50-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:46:5-80
+50-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:46:22-77
+51    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
+51-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:47:5-78
+51-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:47:22-75
+52    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
+52-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:48:5-78
+52-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:48:22-75
+53    <uses-permission android:name="android.permission.BATTERY_STATS" />
+53-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:49:5-72
+53-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:49:22-69
+54    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+54-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:50:5-85
+54-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:50:22-82
+55    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
+55-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:51:5-86
+55-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:51:22-83
+56    <uses-permission android:name="android.permission.MOVE_PACKAGE" />
+56-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:52:5-71
+56-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:52:22-68
+57    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+57-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:5-74
+57-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:28:22-71
+58    <uses-permission android:name="android.permission.BACKUP" />
+58-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:54:5-65
+58-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:54:22-62
+59    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+59-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:55:5-77
+59-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:55:22-74
+60    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+60-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:56:5-78
+60-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:56:22-75
+61    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+61-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:57:5-74
+61-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:57:22-71
+62    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+62-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:55:5-77
+62-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:55:22-74
+63    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+63-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:56:5-78
+63-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:56:22-75
+64    <uses-permission android:name="android.permission.STATUS_BAR" />
+64-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:60:5-69
+64-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:60:22-66
+65    <uses-permission android:name="android.permission.MANAGE_USB" />
+65-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:61:5-69
+65-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:61:22-66
+66    <uses-permission android:name="android.permission.SET_POINTER_SPEED" />
+66-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:62:5-76
+66-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:62:22-73
+67    <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL" />
+67-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:63:5-86
+67-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:63:22-83
+68    <uses-permission android:name="android.permission.SET_ORIENTATION" />
+68-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:64:5-74
+68-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:64:22-71
+69    <uses-permission android:name="android.permission.WAKE_LOCK" />
+69-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:65:5-68
+69-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:65:22-65
+70    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+70-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:66:5-75
+70-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:66:22-72
+71    <uses-permission android:name="android.permission.GET_TASKS" />
+71-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:67:5-68
+71-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:67:22-65
+72    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+72-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:68:5-80
+72-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:68:22-77
+73    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+73-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:69:5-75
+73-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:69:22-72
+74    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- DB Operation change to ContentProvider start -->
+74-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:70:5-81
+74-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:70:22-78
+75    <uses-permission android:name="com.mstar.android.permissionn.ACCESS_TV_DATA" /> <!-- DB Operation change to ContentProvider end -->
+75-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:71:5-84
+75-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:71:22-81
+76    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" />
+76-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:72:5-77
+76-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:72:22-74
+77    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
+77-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:73:5-78
+77-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:73:22-75
+78    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" /> <!-- google account permission -->
+78-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:74:5-84
+78-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:74:22-81
+79    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+79-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:75:5-74
+79-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:75:22-71
+80    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+80-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:76:5-71
+80-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:76:22-68
+81    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+81-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:77:5-80
+81-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:77:22-77
+82
+83    <application
+83-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:7:5-9:19
+84        android:allowBackup="true"
+84-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:80:9-35
+85        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+85-->[com.android.support:support-compat:28.0.0] /Users/xuzemin/.gradle/caches/transforms-2/files-2.1/ccf94a4f227dfa4f17156620e28a8b98/support-compat-28.0.0/AndroidManifest.xml:22:18-91
+86        android:debuggable="true"
+86-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:7:18-43
+87        android:excludeFromRecents="true"
+87-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:81:9-42
+88        android:icon="@mipmap/ic_launcher"
+88-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:82:9-43
+89        android:label="@string/app_name"
+89-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:83:9-41
+90        android:persistent="true"
+90-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:84:9-34
+91        android:roundIcon="@mipmap/ic_launcher_round"
+91-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:85:9-54
+92        android:supportsRtl="true"
+92-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:86:9-35
+93        android:theme="@style/AppTheme.NoActionBar" >
+93-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:87:9-52
+94        <uses-library android:name="android.test.runner" />
+94-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:8:9-60
+94-->/Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger3129235992764038366.xml:8:23-57
+95
+96        <activity android:name="com.ctv.settings.security.activity.PermissionsActivity" />
+96-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:88:9-91
+96-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:88:19-88
+97        <activity
+97-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:89:9-93:20
+98            android:name="com.ctv.settings.security.activity.USBLockActivity"
+98-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:90:13-78
+99            android:excludeFromRecents="true"
+99-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:91:13-46
+100            android:launchMode="singleTask" >
+100-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:92:13-44
+101        </activity>
+102        <activity
+102-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:94:9-98:20
+103            android:name="com.ctv.settings.security.activity.LockScreenActivity"
+103-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:95:13-81
+104            android:excludeFromRecents="true"
+104-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:96:13-46
+105            android:launchMode="singleTask" >
+105-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:97:13-44
+106        </activity>
+107
+108        <service android:name="com.ctv.settings.security.activity.USBLockService" >
+108-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:100:9-104:19
+108-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:100:18-82
+109            <intent-filter>
+109-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:101:13-103:29
+110                <action android:name="com.cultraview.settings.action.usblock" />
+110-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:102:17-81
+110-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:102:25-78
+111            </intent-filter>
+112        </service>
+113
+114        <receiver android:name="com.ctv.settings.security.receiver.USBStateRec" >
+114-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:106:9-117:20
+114-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:106:19-80
+115            <intent-filter android:priority="999" >
+115-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:107:13-113:29
+115-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:107:28-50
+116                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+116-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:108:17-78
+116-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:108:25-75
+117                <!-- <action android:name="android.intent.action.MEDIA_EJECT" /> -->
+118                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+118-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:110:17-80
+118-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:110:25-77
+119
+120                <data android:scheme="file" />
+120-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:112:17-47
+120-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:112:23-44
+121            </intent-filter>
+122            <intent-filter>
+122-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:114:13-116:29
+123                <action android:name="android.intent.action.BOOT_COMPLETED" />
+123-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:115:17-79
+123-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:115:25-76
+124            </intent-filter>
+125        </receiver>
+126
+127        <activity android:name="com.ctv.settings.security.activity.PermissionDetailActivity" />
+127-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:119:9-96
+127-->[__tested_artifact__::security] /Users/xuzemin/xuzemin/cultraview/NewSettings/security/build/intermediates/library_manifest/debug/AndroidManifest.xml:119:19-93
+128    </application>
+129
+130</manifest>

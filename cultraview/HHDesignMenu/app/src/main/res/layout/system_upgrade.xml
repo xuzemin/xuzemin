@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/system_upgrade_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:viewBindingIgnore="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/item_detail"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <TextView
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Upgrade Main" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_bass"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:max="100"
+                android:paddingLeft="@dimen/dp_10"
+
+                android:paddingRight="@dimen/dp_10"
+                android:progressDrawable="@drawable/seekbar_define_color_style"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <TextView
+                android:id="@+id/sound_mode_bass_text"
+                style="@style/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout style="@style/item_detail">
+
+            <TextView
+                android:id="@+id/picture_adc_ggain"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="G Gain" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_treble"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+
+                android:focusable="true"
+                android:max="100"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:progressDrawable="@drawable/seekbar_define_color_style"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <TextView
+                android:id="@+id/sound_mode_treble_text"
+                style="@style/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout style="@style/item_detail">
+
+            <TextView
+                android:id="@+id/picture_adc_bgain"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="B Gain" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq1"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:max="100"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:progressDrawable="@drawable/seekbar_define_color_style"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <TextView
+                android:id="@+id/sound_mode_eq1_text"
+                style="@style/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout style="@style/item_detail">
+
+            <TextView
+                android:id="@+id/picture_adc_r_offSet"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="R OffSet" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq2"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:max="100"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:progressDrawable="@drawable/seekbar_define_color_style"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <TextView
+                android:id="@+id/sound_mode_eq2_text"
+                style="@style/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout style="@style/item_detail">
+
+            <TextView
+                android:id="@+id/picture_adc_g_offSet"
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="G OffSet" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq3"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:max="100"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:progressDrawable="@drawable/seekbar_define_color_style"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <TextView
+                android:id="@+id/picture_wb_goffset_text"
+                style="@style/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+        <LinearLayout style="@style/item_detail">
+
+            <TextView
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="B OffSet" />
+
+            <SeekBar
+                android:id="@+id/sound_mode_eq4"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:max="100"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:progressDrawable="@drawable/seekbar_define_color_style"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <TextView
+                android:id="@+id/sound_mode_eq4_text"
+                style="@style/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout style="@style/item_detail">
+
+            <TextView
+                style="@style/item_title"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="wrap_content"
+                android:text="B OffSet" />
+
+            <SeekBar
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:max="100"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:progressDrawable="@drawable/seekbar_define_color_style"
+                android:thumb="@drawable/seekbar_thumb" />
+
+            <TextView
+                style="@style/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+</LinearLayout>
