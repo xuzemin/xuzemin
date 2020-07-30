@@ -26,6 +26,7 @@ import com.cultraview.tv.utils.CtvCommonUtils;
 import com.hht.android.sdk.boardInfo.HHTBoardInfoManager;
 import com.hht.android.sdk.device.HHTCommonManager;
 import com.mstar.android.tvapi.common.TvManager;
+import com.mstar.android.tvapi.common.exception.TvCommonException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -83,8 +84,6 @@ public class SystemViewHodler implements View.OnFocusChangeListener, View.OnClic
     final static int COUNTS = 5;// 点击次数
     final static long DURATION = 2000;// 规定有效时间
     long[] mHits = new long[COUNTS];
-
-
     @SuppressLint("HandlerLeak")
     protected final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -172,11 +171,15 @@ public class SystemViewHodler implements View.OnFocusChangeListener, View.OnClic
         soundVolOsdBean.setValue(val_touch_panel_firmware);
         list.add(soundVolOsdBean);
 
+        val_touch_driver_firmware = getTouchDriverVersion();
         soundVolOsdBean = new SystemBean();
         soundVolOsdBean.setTitle("Touch Panel Driver Version");
         soundVolOsdBean.setValue(val_touch_driver_firmware);
-        list.add(soundVolOsdBean);
+        if (!val_touch_driver_firmware.equals("V1.0")) {
+            list.add(soundVolOsdBean);
+        }
 
+        val_type_c = getTypeC();
         soundVolOsdBean = new SystemBean();
         soundVolOsdBean.setTitle("Type-C FirmWare Version");
         soundVolOsdBean.setValue(val_type_c);
@@ -217,6 +220,54 @@ public class SystemViewHodler implements View.OnFocusChangeListener, View.OnClic
         soundVolOsdBean.setValue(val_shipping);
         list.add(soundVolOsdBean);
         systemAdapter.setData(list);
+    }
+
+    private String getTypeC() {
+        StringBuffer stringBuffer = new StringBuffer();
+        try {
+            short[] getTypeCVersions = TvManager.getInstance().setTvosCommonCommand("GetTypeCVersion");
+            LogUtils.d("getTypeC length---->" + getTypeCVersions.length);
+            if (getTypeCVersions != null) {
+                for (int i = 0; i < getTypeCVersions.length; i++) {
+                    LogUtils.d("getTypeC--re->val:" + getTypeCVersions[i]);
+                    //String val = Tools.hex2Str(Integer.toHexString(getTypeCVersions[i]));
+                    //LogUtils.d("getTypeC--->val:" + val);
+                    stringBuffer.append(getTypeCVersions[i] + ".");
+                }
+            }
+        } catch (TvCommonException e) {
+            e.printStackTrace();
+            LogUtils.e("getTypeC error---->" + e);
+        }
+        String tm = "V" + stringBuffer.toString().trim();
+        String substring = tm.substring(0, tm.length() - 1);
+        return substring;
+    }
+
+    private String getTouchDriverVersion() {
+        StringBuffer stringBuffer = new StringBuffer();
+        try {
+            short[] oGetTouchDevVers = CtvTvManager.getInstance().setTvosCommonCommand("oGetTouchDDriveVer");
+            LogUtils.d("getTouchDriverVersion size-->：" + oGetTouchDevVers.length);
+            if (oGetTouchDevVers == null || oGetTouchDevVers.length == 0) {
+                LogUtils.d("getTouchDriverVersion null return V1.0-->：");
+                return "V1.0";
+            }
+            for (int i = 0; i < oGetTouchDevVers.length; i++) {
+                LogUtils.d("getTouchDriverVersion i-->：" + i + "val:" + oGetTouchDevVers[i]);
+                String val = Tools.hex2Str(Integer.toHexString(oGetTouchDevVers[i]));
+                LogUtils.d("val_touch_panel_firmware--->val:" + val);
+                stringBuffer.append(val);
+            }
+            LogUtils.d("getTouchDriverVersion stringBuffer：" + stringBuffer.toString());
+            return stringBuffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtils.e("getTouchDriverVersion--->" + e);
+        }
+
+
+        return "V1.0";
     }
 
     private String getPanelTypeName() {
@@ -265,8 +316,8 @@ public class SystemViewHodler implements View.OnFocusChangeListener, View.OnClic
         if (!TextUtils.isEmpty(SystemProperties.get("persist.product.model"))) {
             try {
                 String panelModel = CtvTvManager.getInstance().getEnvironment("panelModel");
-                if (!TextUtils.isEmpty(panelModel)){
-                    return SystemProperties.get("persist.product.model")+"_"+panelModel;
+                if (!TextUtils.isEmpty(panelModel)) {
+                    return SystemProperties.get("persist.product.model") + "_" + panelModel;
                 }
             } catch (CtvCommonException e) {
                 e.printStackTrace();
@@ -916,8 +967,12 @@ public class SystemViewHodler implements View.OnFocusChangeListener, View.OnClic
 
             case 1:
                 break;
+            case 13:
             case 14:
-                resetSystem();
+                SystemBean systemBean = (SystemBean) list.get(position);
+                if (systemBean.getTitle().equals("Shipping INIT")) {
+                    resetSystem();
+                }
                 break;
         }
     }
@@ -1169,5 +1224,9 @@ public class SystemViewHodler implements View.OnFocusChangeListener, View.OnClic
         if (systemAdapter != null) {
             systemAdapter.changeSelected(-1);
         }
+    }
+
+    public void onHiddenChanged() {
+        initData();
     }
 }

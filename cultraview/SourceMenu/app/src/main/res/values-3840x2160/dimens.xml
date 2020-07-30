@@ -1,0 +1,24 @@
+<resources>
+	<dimen name="dp_10">10px</dimen>
+	<dimen name="dp_12">12px</dimen>
+	<dimen name="dp_30">30px</dimen>
+	<dimen name="dp_35">35px</dimen>
+	<dimen name="dp_50">50px</dimen>
+
+	<dimen name="dp_160">160px</dimen>
+	<dimen name="dp_170">170px</dimen>
+
+	<dimen name="dp_200">200px</dimen>
+	<dimen name="dp_210">210px</dimen>
+	<dimen name="dp_350">350px</dimen>
+
+	<dimen name="dp_700">700px</dimen>
+	<dimen name="dp_900">900px</dimen>
+	<dimen name="dp_1600">1600px</dimen>
+	<dimen name="dp_1800">1800px</dimen>
+
+	<dimen name="dp_2000">2000px</dimen>
+
+
+	<dimen name="sp_48">48sp</dimen>
+</resources>

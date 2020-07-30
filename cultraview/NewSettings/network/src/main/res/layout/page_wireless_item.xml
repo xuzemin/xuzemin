@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/ll_main_content_width_size"
+    android:layout_height="@dimen/common_item_height"
+    android:layout_gravity="center_horizontal"
+    android:layout_centerVertical="true">
+
+    <TextView
+        style="@style/item_textView"
+        android:id="@+id/wifi_name_tv"
+        android:gravity="left|center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/fab_network_margin"
+        android:text="@string/ip_address"
+        android:textColor="@color/white"
+        android:textSize="@dimen/content_sp"
+        />
+
+    <TextView
+        style="@style/item_textView_right"
+        android:id="@+id/wifi_connecting_tv"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="72dp"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/content_sp"
+        android:textColor="@color/white"
+        />
+    <!-- android:textColor="@drawable/item_text_color" -->
+
+    <ImageView
+        android:id="@+id/wifi_state_iv"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginEnd="@dimen/marginEnd"
+        android:textColor="@color/white"
+        />
+
+</FrameLayout>

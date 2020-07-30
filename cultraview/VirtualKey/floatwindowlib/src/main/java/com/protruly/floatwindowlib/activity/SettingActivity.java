@@ -1,5 +1,6 @@
 package com.protruly.floatwindowlib.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ import java.lang.ref.WeakReference;
  * @author wang
  * @time on 2017/7/20.
  */
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends Activity {
     private boolean isRight = true;
     public static Handler mHandler;
 

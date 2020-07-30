@@ -23,4 +23,12 @@
     <dimen name="right_menu_height">150dp</dimen>
 
     <dimen name="bg_radius">5dip</dimen>
+
+    <dimen name="touch_width">25dp</dimen>
+
+    <dimen name="dp_19">19dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+
+
+    <dimen name="dp_30">30dp</dimen>
 </resources>

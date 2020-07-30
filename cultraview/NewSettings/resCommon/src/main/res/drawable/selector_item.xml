@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--选中时的图片-->
+    <item android:drawable="@drawable/transparency_bg_select" android:state_focused="true"/>
+    <item android:drawable="@drawable/transparency_bg_select" android:state_activated="true"/>
+    <item android:drawable="@drawable/transparency_bg_select" android:state_pressed="true" tools:ignore="ResourceCycle" />
+    <item android:drawable="@drawable/transparency_bg_select" android:state_selected="true" tools:ignore="ResourceCycle" />
+    <!--默认图片-->
+    <item android:drawable="@drawable/transparency_bg" tools:ignore="ResourceCycle" />
+</selector>

@@ -399,32 +399,47 @@ public class FloatWindowService extends Service {
 
         if (START_ACTION.equals(action)) { // 打开
             LogUtils.d("START_ACTION .....");
+            // KEY_TV_OS_CMD
             String cmdStr = intent.getStringExtra(KEY_TV_OS_CMD);
             if (!TextUtils.isEmpty(cmdStr)) {
                 LogUtils.d("START_ACTION .....cmd->" + cmdStr);
                 CmdUtils.setTvosCommonCommand(cmdStr);
-            } else {
-                int inputSourceID = intent.getIntExtra(KEY_INPUTSOURCE_SWITCH,40);
+                return;
+            }
+
+            // KEY_INPUTSOURCE_SWITCH
+            int inputSourceID = intent.getIntExtra(KEY_INPUTSOURCE_SWITCH,40);
 //                CtvPictureManager.getInstance().enableBacklight();
-                LogUtils.d("START_ACTION ....."+inputSourceID);
-                if (inputSourceID != 40) {
-                    if(inputSourceID == 0 ){
-                        TvCommonManager.getInstance().setTvosCommonCommand("SetVGA0");
-                        TvCommonManager.getInstance().setInputSource(0);
-                    }else if(inputSourceID > 0 && inputSourceID < 34){
-                        TvCommonManager.getInstance().setInputSource(inputSourceID);
-                    }
-                }else{
-                    int port = intent.getIntExtra(KEY_PORT_SWITCH,0);
-                    LogUtils.d("START_ACTION ....."+port);
-                    if(port == 2){
-                        TvCommonManager.getInstance().setTvosCommonCommand("SetTIPORT2");
-                    }else{
-                        TvCommonManager.getInstance().setTvosCommonCommand("SetTIPORT0");
-                    }
-                    TvCommonManager.getInstance().setInputSource(23);
+            LogUtils.d("inputSourceID ....."+inputSourceID);
+            if (MyUtils.getBoard().equals("CV8386H_AH")){
+                if (inputSourceID > 0 && inputSourceID < 34) {
+                    AppUtils.changeSignal(getApplicationContext(), inputSourceID);
                 }
 
+                return;
+            } else { // MH
+                if (inputSourceID != 40) {
+                    if (inputSourceID == 16) {
+                        TvCommonManager.getInstance().setTvosCommonCommand("SetVGA1");
+                    } else if (inputSourceID == 0) {
+                        TvCommonManager.getInstance().setTvosCommonCommand("SetVGA0");
+                    }
+
+                    if (inputSourceID > 0 && inputSourceID < 34) {
+                        AppUtils.changeSignal(getApplicationContext(), inputSourceID);
+                    }
+                    return;
+                }
+
+                // KEY_PORT_SWITCH
+                int port = intent.getIntExtra(KEY_PORT_SWITCH,-1);
+                LogUtils.d("KEY_PORT_SWITCH port....." + port);
+                if(port == 0 || port == 2 || port == 3){
+                    TvCommonManager.getInstance().setTvosCommonCommand("SetTIPORT" + port);
+                    TvCommonManager.getInstance().setInputSource(23);
+                    AppUtils.changeSignal(getApplicationContext(), 23);
+                    return;
+                }
             }
         } else if (CLOSE_ACTION.equals(action)) { // 关闭
             LogUtils.d("CLOSE_ACTION .....");

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="2000px"
+    android:layout_height="900px"
+    android:background="@drawable/shape_all"
+    android:orientation="vertical">
+
+    <!--    <com.ctv.sourcemenu.RectView-->
+    <!--        android:layout_width="100px"-->
+    <!--        android:layout_height="100px"/>-->
+    <TextView
+        android:id="@+id/main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="信号源"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/bg_rc" />
+
+    <GridView
+        android:id="@+id/mGridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="6"
+        android:verticalSpacing="5dp" />
+</LinearLayout>

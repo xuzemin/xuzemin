@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="680dip"
+             android:layout_height="408dip"
+             android:layout_gravity="center"
+             android:orientation="vertical"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/top_margin"
+            android:text="@string/local_update"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_sp" />
+
+    <FrameLayout
+            android:layout_width="728dip"
+            android:layout_height="353dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dip"
+            android:background="@drawable/local_bg1" >
+
+        <ListView
+                android:id="@+id/local_update_sele_lv"
+                android:layout_width="264dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dip"
+                android:divider="@mipmap/list_divider_local"
+                android:listSelector="@mipmap/select_item_local_bg" />
+    </FrameLayout>
+
+    <Button
+            android:id="@+id/local_update_sele_btn"
+            android:layout_width="72dip"
+            android:layout_height="34.7dip"
+            android:textAllCaps="false"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dip"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:text="@string/cancle"
+            android:textColor="@color/item_text_color"
+            android:textSize="@dimen/btn_sp"
+            android:visibility="gone" />
+
+</FrameLayout>

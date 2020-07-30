@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">language</string>
+
+    <!--    <string name="status_on">ON</string>-->
+    <!--    <string name="status_off">OFF</string>-->
+
+    <!--    &lt;!&ndash; item input and language &ndash;&gt;-->
+    <!--    <string name="header_input_language">Language And Input Method</string>-->
+    <!--    <string name="item_language">Language</string>-->
+    <!--    <string name="right_language">English</string>-->
+    <!--    <string name="item_keyboard">Keyboard</string>-->
+    <!--    <string name="item_input_method">Input Method Settings</string>-->
+</resources>

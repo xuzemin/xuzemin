@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">VirtualKey</string>
+
+    <string name="folder_all">All the pictures</string>
+    <string name="folder_first">Background material</string>
+    <string name="sketch_count_alert">The drawing board has reached the maximum number</string>
+
+    <string name="msg_no_camera">No system camera found</string>
+    <string name="msg_amount_limit">Select images amount is limit</string>
+    <string name="action_done">Done</string>
+    <string name="action_button_string">%1$s(%2$d/%3$d)</string>
+    <string name="photo_unit">Shot</string>
+    <string name="error_image_not_exist">Image error</string>
+    <string name="error_no_permission">Has no permission</string>
+    <string name="permission_dialog_title">Permission Deny</string>
+    <string name="permission_dialog_ok">OK</string>
+    <string name="permission_dialog_cancel">CANCEL</string>
+    <string name="permission_rationale_write_storage">Storage write permission is needed to save the image.</string>
+
+    <string name="update_tip_last_app">Upgrade the Virtual Key APP</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="sure">Sure</string>
+    <string name="update">Update</string>
+
+    <string name="saving_tip_save_sketch">Save the content of the annotation</string>
+    <string name="open_whiteboard_tip">The sketchpad mode has been opened</string>
+    <string name="close_whiteboard_tip">The sketchpad mode has been closed</string>
+
+    <string name="saving_tip_saving">Saving&#8230;</string>
+
+    <string name="encrypt_tip">Would you like to be safer? Clicking encrypt</string>
+
+    <string name="menu_scan_share_tip">Scavenging two dimensional code, view conference records</string>
+    <string name="menu_create_scan_error_tip">Generation of two-dimensional code failure</string>
+    <string name="doc_encrypt_text">Password:%1$s</string>
+
+    <string name="dialog_save_sure">Sure</string>
+    <string name="dialog_save_cancel">Cancel</string>
+
+    <string name="dialog_ask_clear_all_title">Do you clear the annotation content?</string>
+
+    <string name="dialog_ask_save_all_title">Please enter the file name</string>
+
+    <string name="menu_create_error_tip">Failure to generate QR code!</string>
+    <string name="menu_upload_error_tip">Upload file failed!</string>
+
+    <string name="tip_is_empty_sketch">You haven\'t added an annotation yet.</string>
+
+    <string name="tip_save_successfully">Save path:%1$s</string>
+    <string name="tip_screenshot_failed">Screenshot failure.</string>
+
+    <string name="tip_save_file_not_null">File name can not be empty!</string>
+
+    <string name="title_more_app">More Applications</string>
+    <string name="title_tmp_show">Temperature</string>
+    <string name="title_eye_care">Eye Care</string>
+    <string name="title_light_sense">Light Sense</string>
+    <string name="setting">Settings</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="sketch_pad">Sketch Pad</string>
+
+    <string name="title_change_signal">Chang Signal</string>
+
+    <string name="tip_password_not_empty">The password cannot be empty.</string>
+    <string name="tip_set_password">Please set the password.</string>
+    <string name="tip_add_content">You have not added the annotation content yet.</string>
+    <string name="tip_create_failed">Failure to generate pictures.</string>
+    <string name="tip_save_failed">Save annotation failed!</string>
+
+    <string name="tip_being_annotate">You are in the annotation mode.</string>
+
+    <string name="title_mute">Mute</string>
+    <string name="title_check_sys">Detection</string>
+    <string name="title_more_settings">Settings</string>
+
+    <string name="title_tip_user_defined">Custom signal source</string>
+
+    <string name="voice_bass">Bass</string>
+    <string name="voice_treble">Treble</string>
+    <string name="voice_balance">Balance</string>
+
+    <string name="display_brightness">Brightness</string>
+    <string name="display_contrast">Contrast</string>
+    <string name="display_hue">Hue</string>
+    <string name="display_sharpness">Sharpness</string>
+
+    <string name="tip_max_text">Characters should not exceed %1$s</string>
+
+
+    <string name="back">Back</string>
+    <string name="home">Home</string>
+    <string name="app_switch">App Switch</string>
+    <string name="menu">Menu</string>
+    <string name="whiteboard">Whiteboard</string>
+    <string name="comment">Comment</string>
+    <string name="shortcut">Screenshot</string>
+    <string name="usered_defined">User Defined</string>
+    <string name="short_signal">Shortcut Signal</string>
+    <string name="input_signal">Input Source</string>
+    <string name="osd_menu">TV Menu</string>
+    <string name="close_half_screen">&#8531; Screen</string>
+    <string name="screen_drop_down">Drop Down</string>
+    <string name="screen_restore">Restore</string>
+    <!--<string name="close_half_screen">&#8531; Screen</string>
+    <string name="screen_drop_down">Drop Down</string>
+    <string name="screen_restore">Restore</string>-->
+
+    <string name="title_select_source">Please Select Source</string>
+    <string name="tip_user_defined_source">User Defined Source</string>
+
+    <string name="volume_sub">Volume Sub</string>
+    <string name="volume_plus">Volume Plus</string>
+    <string name="backlight_sub">Backlight Sub</string>
+    <string name="backlight_plus">Backlight Plus</string>
+    <string name="backlight">Backlight</string>
+
+
+    <string name="str_pic_autotune">AUTO ADJUST</string>
+    <string name="str_auto_changesource">Signal jump</string>
+    <string name="str_pic_zoommode">Zoom Mode</string>
+    <string name="str_pic_noise_reduction">Noise reduction mode</string>
+    <string name="str_pic_vga">VGA adjustment</string>
+
+
+    <string name="str_pic_clock">Clock</string>
+    <string name="str_pic_phase">Phase</string>
+    <string name="str_pic_horizontal_pos">H Position</string>
+    <string name="str_pic_vertical_pos">V Position</string>
+
+</resources>

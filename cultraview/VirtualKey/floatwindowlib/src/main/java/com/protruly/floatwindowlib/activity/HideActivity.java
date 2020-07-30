@@ -1,5 +1,6 @@
 package com.protruly.floatwindowlib.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +25,7 @@ import java.lang.ref.WeakReference;
  * @author wang
  * @time on 2017/7/20.
  */
-public class HideActivity extends AppCompatActivity {
+public class HideActivity extends Activity {
     private boolean isRight = true;
     public static Handler mHandler;
 

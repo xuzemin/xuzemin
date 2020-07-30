@@ -114,6 +114,7 @@ public class AppUtils {
      */
     public static boolean isActivityRunning(Context mContext, String activityClassName){
         ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        assert activityManager != null;
         List<ActivityManager.RunningTaskInfo> info = activityManager.getRunningTasks(1);
         if(info != null && info.size() > 0){
             ComponentName component = info.get(0).topActivity;
@@ -135,6 +136,7 @@ public class AppUtils {
      */
     public static boolean isTopRunning(Context mContext, String packageName){
         ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        assert activityManager != null;
         List<ActivityManager.RunningTaskInfo> info = activityManager.getRunningTasks(1);
         if(info != null && info.size() > 0){
             String curPackageName = info.get(0).topActivity.getPackageName();
@@ -157,13 +159,14 @@ public class AppUtils {
         boolean isRunning = false;
         ActivityManager activityManager = (ActivityManager)
                 mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        assert activityManager != null;
         List<ActivityManager.RunningServiceInfo> serviceList
                 = activityManager.getRunningServices(30);
         if (!(serviceList.size()>0)) {
             return false;
         }
         for (int i=0; i<serviceList.size(); i++) {
-            if (serviceList.get(i).service.getClassName().equals(className) == true) {
+            if (serviceList.get(i).service.getClassName().equals(className)) {
                 isRunning = true;
                 break;
             }
@@ -234,46 +237,6 @@ public class AppUtils {
         }).start();
     }
 
-//    public static void changeSignal(Context context, int sourceIndex){
-//        // 发送SOURCE广播
-//        if (sourceIndex == 25){ // OPS时
-//            Intent intent = new Intent("android.intent.action.OPS_BOOT");
-//            context.sendBroadcast(intent);
-//        }
-//
-//        new Thread(()->{
-//            // 交换VGA和DTV
-//            int inputSource;
-//            switch (sourceIndex) {
-//                case 0: { // DTV
-//                    inputSource = TvCommonManager.INPUT_SOURCE_DTV;
-//                    break;
-//                }
-//                case 28: { // VGA
-//                    inputSource = TvCommonManager.INPUT_SOURCE_VGA;
-//                    break;
-//                }
-//                default:
-//                    inputSource = sourceIndex;
-//                    break;
-//            }
-//
-//            SystemClock.sleep(1000);
-//            Intent intent = new Intent();
-//            intent.setAction("com.cultraview.ctvmenu.ui.intent.action.ProgressActivity");
-//            intent.putExtra("task_tag", "input_source_changed");
-//            intent.putExtra("inputSource", inputSource);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-//                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//            try {
-//                context.startActivity(intent);
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }).start();
-//
-//    }
-
     /**
      * 检测APP是否与硬件匹配
      */
@@ -301,6 +264,7 @@ public class AppUtils {
      */
     public static boolean isHome(Context context) {
         ActivityManager mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        assert mActivityManager != null;
         List<ActivityManager.RunningTaskInfo> rti = mActivityManager.getRunningTasks(1);
         return getHomes(context).contains(rti.get(0).topActivity.getPackageName());
     }

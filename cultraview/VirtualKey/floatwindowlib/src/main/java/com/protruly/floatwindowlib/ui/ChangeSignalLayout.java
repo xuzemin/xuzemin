@@ -18,6 +18,7 @@ import com.protruly.floatwindowlib.activity.SettingActivity;
 import com.protruly.floatwindowlib.activity.SettingNewActivity;
 import com.protruly.floatwindowlib.control.FloatWindowManager;
 import com.protruly.floatwindowlib.entity.SignalInfo;
+import com.protruly.floatwindowlib.utils.MyUtils;
 import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.CmdUtils;
 import com.yinghe.whiteboardlib.utils.IDHelper;
@@ -68,7 +69,12 @@ public class ChangeSignalLayout extends FrameLayout {
         // 获得数据
         List<SignalInfo> dataList = new ArrayList<>();
         String[] inputSourceStrList = getResources().getStringArray(R.array.input_source_str_list);
-        String[] inputSourceNameList = getResources().getStringArray(R.array.input_source_name_list);
+        String[] inputSourceNameList ;
+        if(MyUtils.getBoard().equals("CV8386H_MH")){
+            inputSourceNameList = getResources().getStringArray(R.array.input_source_name_list_mh);
+        }else{
+            inputSourceNameList = getResources().getStringArray(R.array.input_source_name_list_ah);
+        }
         int len = inputSourceStrList.length;
 
         SignalInfo signalInfo = null;

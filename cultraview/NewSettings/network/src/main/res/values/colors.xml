@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="half_white">#7FFFFFFF</color> <!-- 半透明 白色 -->
+    <color name="unclick_white">#33FFFFFF</color>
+    <color name="half_black">#7F000000</color>
+    <color name="four_black">#66000000</color>
+    <color name="edit_select">#1597E2</color>
+    <color name="gray_dark">#A9A9A9</color> <!-- 暗灰色 -->
+    <color name="gray">#4CFFFFFF</color>
+    <color name="black_seventy_f">#A9A9A9</color>
+    <!-- UI 3 -->
+    <color name="icon_color_1">#B227A6FF</color>
+    <color name="icon_color_un">#2389D0</color>
+    <color name="black_six">#99000000</color>
+    <color name="white_seven">#B2FFFFFF</color>
+    <color name="state_off">#B98700</color>
+    <color name="state_on">#09B900</color>
+    <color name="state_check">#515151</color>
+    <!-- night bg color -->
+    <color name="nig_bg_color">#388DCB</color>
+    <color name="nig_icon_bg_color">#26A6FF</color>
+    <color name="nig_icon_color">#B227A6FF</color>
+    <!-- page bg color -->
+    <color name="icon_color_5">#B2FE3971</color>
+
+    <color name="main_color">#66000000</color>
+    <color name="icon_bg_color">#403c3c3c</color>
+
+    <color name="button_bg_color">#2297ce</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+
+    <color name="divider_color">#bfbfbf</color>
+    <!--<color name="divider_color">#bfbfbf</color>-->
+    <color name="com_bg_gray">#aaaaaaaa</color>
+
+    <color name="colorLeft">#f9f9f9</color>
+
+    <color name="black">#000000</color>
+    <color name="light_grey">#D3D3D3</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="little_white">#F7F7F7</color>
+    <color name="grey">#666666</color>
+    <color name="dark_grey">#555555</color>
+    <color name="dark_gray">#a9a9a9</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="click_focus">#ff087aed</color>
+
+    <color name="btn_focus">#62b5f5</color>
+</resources>

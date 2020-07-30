@@ -2,4 +2,10 @@
     <string name="app_name">easyTouch</string>
 
     <string name="title_select_app">Please Select App</string>
+    <string name="back">back</string>
+    <string name="annotation">annotation</string>
+    <string name="favorites">favorites</string>
+    <string name="multitasking">app switch</string>
+    <string name="setting">setting</string>
+    <string name="home">home</string>
 </resources>

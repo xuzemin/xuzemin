@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+
+    android:padding="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <include layout="@layout/top_back_layout" />
+
+    <LinearLayout
+
+        android:layout_width="553.3dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_item_height"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/liltte_title"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:gravity="center"
+            android:text="@string/restore_tips_2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dp_200"
+            android:layout_gravity="center_horizontal"
+
+            android:background="@mipmap/ic_home_title_application7"
+            android:contentDescription="@string/img" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="50dip"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/restore_cancel"
+                android:layout_width="72dip"
+                android:layout_height="34.7dip"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:text="@android:string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/item_text_color"
+                android:textSize="@dimen/btn_sp" />
+
+            <Button
+                android:id="@+id/restore_ok"
+                android:layout_width="72dip"
+                android:layout_height="34.7dip"
+                android:layout_marginLeft="161dip"
+                android:background="@drawable/selector_btn_bg"
+                android:text="@android:string/ok"
+                android:textAllCaps="false"
+                android:textColor="@color/item_text_color"
+                android:textSize="@dimen/btn_sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/top_margin"
+            android:text="@string/system_restore_factory"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_sp"
+            android:visibility="gone" />
+
+
+    </FrameLayout>
+
+</LinearLayout>

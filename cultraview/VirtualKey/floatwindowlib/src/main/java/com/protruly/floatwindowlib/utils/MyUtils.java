@@ -32,16 +32,6 @@ public class MyUtils {
      * @return
      */
     public static boolean isOpencheck = true;
-    private static Handler handler = new Handler();
-    private static Runnable runnable = () -> {
-        try {
-            TvManager.getInstance().setGpioDeviceStatus(0x67,false);
-            Thread.sleep(50);
-            TvManager.getInstance().setGpioDeviceStatus(0x67,true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    };
 
     public static boolean IsPc(){
         try {
@@ -122,7 +112,16 @@ public class MyUtils {
     }
 
     public static void resetIO(){
-        handler.postDelayed(runnable,1000);
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                TvManager.getInstance().setGpioDeviceStatus(0x67,false);
+                Thread.sleep(50);
+                TvManager.getInstance().setGpioDeviceStatus(0x67,true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     /**
@@ -175,6 +174,15 @@ public class MyUtils {
      */
     public static boolean isSupportLightSense(){
         return SystemProperties.get("service.light.sense.enable", "0").equals("1");
+    }
+
+    /**
+     * 获取版型
+     * @return
+     */
+    public static String getBoard(){
+        Log.e("Virtur",SystemProperties.get("ro.product.board", "CV8386H_AH"));
+        return SystemProperties.get("ro.product.board", "CV8386H_AH");
     }
 
 }

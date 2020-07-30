@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="page_bg">#3B94DD</color>
+    <color name="content_bg">#fff</color>
+    <color name="button_presed">#EEB422</color>
+    <color name="button_focued">#4F94CD</color>
+    <color name="button">#3B94DD</color>
+
+</resources>

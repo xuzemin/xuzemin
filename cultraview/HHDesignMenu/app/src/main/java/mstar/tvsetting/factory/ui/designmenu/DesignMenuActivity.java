@@ -127,7 +127,7 @@ public class DesignMenuActivity extends FragmentActivity implements AdapterView.
         setSelect();
         finishSettingAndMenu();
         HHTTouchManager.getInstance().controlPcTouchRect("mstar.factorymenu.ui.hh","hht_win_factory",
-                new Rect(0,0,1685,1080),false);
+                new Rect(0,0,1920,1080),false);
     }
 
 
@@ -443,7 +443,7 @@ public class DesignMenuActivity extends FragmentActivity implements AdapterView.
     protected void onStop() {
         super.onStop();
         HHTTouchManager.getInstance().controlPcTouchRect("mstar.factorymenu.ui.hh","hht_win_factory",
-                new Rect(0,0,1685,1080),true);
+                new Rect(0,0,1920,1080),true);
         finish();
     }
 }

@@ -1,6 +1,7 @@
 package mstar.factorymenu.ui.fragments.system;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -87,6 +88,9 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
     private int panelUpgradeFileSize = 0;
     private String panelUpgradeFilePath = "";
     private String panelUpgradeFileName = "";
+    private int typeCUpgradeFileSize = 0;
+    private String typeUpgradeFileName = "";
+    private String typeCUpgradeFilePath = "";
     private String uPath = "";
     private String unZipPath = "/HHT/";
     private final BroadcastReceiver storageChangeReceiver = new BroadcastReceiver() {
@@ -107,6 +111,7 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
     };
     private File updateSignedFile;
     private ProgressDialog dialog;
+
 
 
     public SystemUpgradeFragment() {
@@ -170,6 +175,7 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
         hasStorageDevice();
         scanUpdateFile();
         listView.setVisibility(View.VISIBLE);
+
 
     }
 
@@ -333,6 +339,32 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
                 }
 
                 break;
+
+            case 6:
+                if (Tools.CheckUsbIsExist()) {
+                    if (isTypcCUpgradeFileExists()) {
+                        if (typeCUpgradeFileSize <= 1) {
+                            if (dialog == null) {
+                                dialog = new ProgressDialog(getActivity());
+                                dialog.setMessage("Type-C 升级中，请勿操作！请勿断电！请勿拔插盘！");
+                                dialog.setCancelable(false);
+                                dialog.show();
+                            } else {
+                                dialog.show();
+                            }
+                            USBUpgradeThread.UpgradeTypeC(handler, typeCUpgradeFilePath);
+
+                        } else {
+                            Toast.makeText(getActivity(), "U盘中有多个升级文件", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "未检测到升级文件", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "未检测到U盘", Toast.LENGTH_SHORT).show();
+                }
+                break;
             case 8: //mac
                 USBUpgradeThread.UpgradeMAC(handler);
                 break;
@@ -368,6 +400,12 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
                 Toast.makeText(getActivity(), "烧录成功", Toast.LENGTH_SHORT).show();
             } else if (msg.what == USBUpgradeThread.UPGRATE_PANELOVER) {
                 setEnv();
+            } else if (msg.what == USBUpgradeThread.UPGRATE_TYPEC_FAILED) {
+                Toast.makeText(getActivity(), "Type-c升级失败", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            } else if (msg.what == USBUpgradeThread.UPGRATE_TYPEC_SUCCESS) {
+                Toast.makeText(getActivity(), "Type-c升级成功", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             } else {
                 Toast.makeText(getActivity(), "烧录失败", Toast.LENGTH_SHORT).show();
             }
@@ -522,7 +560,7 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
         for (int sdx = 0; sdx < files.length; sdx++) {
             String name = files[sdx].getName();
             LogUtils.d("Upgrade name:" + name);
-            if (Tools.getFormatName(name)){
+            if (Tools.getFormatName(name)) {
                 panelUpgradeFilePath = files[sdx].getPath();
                 panelUpgradeFileName = files[sdx].getName();
                 if (!files[sdx].isHidden()) {
@@ -539,6 +577,41 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
 
         return false;
     }
+
+
+    /**
+     * 判断升级文件是否存在
+     *
+     * @return
+     */
+    public boolean isTypcCUpgradeFileExists() {
+        typeCUpgradeFileSize = 0;
+        typeUpgradeFileName = "";
+        typeCUpgradeFilePath = "";
+        String filepath = USBUpgradeThread.FindTypeCFolderOnUSB();
+        LogUtils.d("isTypcCUpgradeFileExists filepath:" + filepath);
+        File[] files = new File(filepath).listFiles();
+        for (int sdx = 0; sdx < files.length; sdx++) {
+            String name = files[sdx].getName();
+            LogUtils.d("Upgrade name:" + name);
+            if (Tools.getTypeCFormatName(name)) {
+                typeCUpgradeFilePath = files[sdx].getPath();
+                typeUpgradeFileName = files[sdx].getName();
+                if (!files[sdx].isHidden()) {
+                    ++typeCUpgradeFileSize;
+                }
+                LogUtils.d("Upgrade find zip path is" + typeCUpgradeFilePath + "name is :" + typeUpgradeFileName);
+
+            }
+
+        }
+        if (typeCUpgradeFileSize > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     /**
      * 更新版控文件后设置环境变量

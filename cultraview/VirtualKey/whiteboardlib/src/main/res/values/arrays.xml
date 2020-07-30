@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- INPUT_SOURCE 名称-->
-    <string-array name="input_source_name_list" tools:ignore="InconsistentArrays">
+    <string-array name="input_source_name_list_mh" tools:ignore="InconsistentArrays">
         <item>VGA</item>
         <item>ATV</item>
         <item>AV1</item>
@@ -30,8 +30,51 @@
         <item>SCART MAX</item>
 
         <item>HDMI3</item>
-        <item>DP</item>
+        <item>TYPE-C</item>
         <item>HDMI</item>
+        <item>OPS</item>
+        <!--        <item>INSIDE PC</item>-->
+        <item>DTV</item>
+
+        <item>DVI</item>
+        <item>DVI 2</item>
+        <item>DVI 3</item>
+        <item>DVI 4</item>
+        <item>DVI MAX</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+
+    <string-array name="input_source_name_list_ah" tools:ignore="InconsistentArrays">
+        <item>VGA</item>
+        <item>ATV</item>
+        <item>AV1</item>
+        <item>AV2</item>
+        <item>AV3</item>
+        <item>AV4</item>
+        <item>AV5</item>
+        <item>AV6</item>
+        <item>AV7</item>
+        <item>HDMI2</item>
+        <item>AV MAX</item>
+
+        <item>S-VIDEO</item>
+        <item>S-VIDEO 2</item>
+        <item>S-VIDEO 3</item>
+        <item>S-VIDEO 4</item>
+        <item>S-VIDEO MAX</item>
+
+        <item>YPBRB</item>
+        <item>YPBRB 2</item>
+        <item>YPBRB 3</item>
+        <item>YPBRB MAX</item>
+
+        <item>SCART </item>
+        <item>SCART 2</item>
+        <item>SCART MAX</item>
+
+        <item>HDMI</item>
+        <item>HDMI2</item>
+        <item>HDMI3</item>
         <item>OPS</item>
         <!--        <item>INSIDE PC</item>-->
         <item>DTV</item>

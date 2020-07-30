@@ -55,6 +55,7 @@ dependencies {
     implementation "com.android.support:design:${versions.support}"
     implementation "com.android.support:recyclerview-v7:${versions.support}"
     implementation "com.android.support.constraint:constraint-layout:${versions.constraint}"
+    implementation project(path: ':hhtapi')
     //    implementation "com.android.support:multidex:${versions.multidex}"
     implementation files('libs/hhtapi.jar')
     implementation files('libs/tvapi.jar')

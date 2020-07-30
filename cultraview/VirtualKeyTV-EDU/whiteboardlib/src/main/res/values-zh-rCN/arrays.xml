@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <integer-array name="input_source_id_list_hlc">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>16</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>28</item>
+        <item>29</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_zx">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>16</item>
+        <item>23</item>
+        <item>30</item>
+        <item>28</item>
+        <item>29</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_jpe">
+        <item>2</item>
+        <item>3</item>
+        <item>16</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>29</item>
+        <item>28</item>>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_jpe_l">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>23</item>
+        <item>24</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_jpe_kn">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>16</item>
+        <item>23</item>
+        <item>24</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_edu_l">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_cm">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+    <!-- INPUT_SOURCE 名称  HDMI3名称改为HDMI2-->
+    <string-array name="input_source_name_list">
+        <item>数字电视</item>
+        <item>HDMI</item>
+        <item>前置HDMI</item>
+        <item>HDMI2</item>
+        <item>内置电脑</item>
+        <item>前置VGA</item>
+        <item>电脑</item>
+        <item>DP</item>
+        <item>主页</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_hlc">
+        <item>数字电视</item>
+        <item>模拟电视</item>
+        <item>视频1</item>
+        <item>视频2</item>
+        <item>分量</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>内置电脑</item>
+        <item>电脑</item>
+        <item>DP</item>
+        <item>主页</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_jpe">
+        <item>视频1</item>
+        <item>视频2</item>
+        <item>分量</item>
+        <item>侧置HDMI</item>
+        <item>前置HDMI</item>
+        <item>DP</item>
+        <item>OPS</item>
+        <item>VGA</item>
+        <item>主页</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_jpe_l">
+        <item>数字电视</item>
+        <item>模拟电视</item>
+        <item>视频1</item>
+        <item>视频2</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>VGA</item>
+        <item>主页</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_jpe_kn">
+        <item>数字电视</item>
+        <item>模拟电视</item>
+        <item>视频1</item>
+        <item>分量</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>VGA</item>
+        <item>主页</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_edu_l">
+        <item>数字电视</item>
+        <item>模拟电视</item>
+        <item>视频1</item>
+        <item>视频2</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>HDMI3</item>
+        <item>VGA</item>
+        <item>主页</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_zx">
+        <item>数字电视</item>
+        <item>模拟电视</item>
+        <item>视频1</item>
+        <item>视频2</item>
+        <item>分量</item>
+        <item>HDMI</item>
+        <item>前置HDMI</item>
+        <item>电脑</item>
+        <item>DP</item>
+        <item>主页</item>
+    </string-array>
+    <string-array name="input_source_name_list_cm">
+        <item>数字电视</item>
+        <item>模拟电视</item>
+        <item>视频1</item>
+        <item>视频2</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>OPS</item>
+        <item>电脑</item>
+        <item>主页</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_hlc">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_zx">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+
+    <string-array name="input_source_res_list_jpe">
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_jpe_l">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_jpe_kn">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_edu_l">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_cm">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+    <!-- Voice mode-->
+    <string-array name="voice_mode_list">
+        <item>标准</item>
+        <item>用户</item>
+        <item>音乐</item>
+        <item>影院</item>
+    </string-array>
+
+    <!-- Display mode-->
+    <string-array name="display_mode_list">
+        <item>标准</item>
+        <item>用户</item>
+        <item>柔和</item>
+        <item>艳丽</item>
+    </string-array>
+
+    <!-- Tab -->
+    <string-array name="tab_title_list">
+        <item>显示设置</item>
+        <item>声音设置</item>
+        <item>选项</item>
+        <!--<item>更多功能</item>-->
+    </string-array>
+
+
+    <string-array name="str_arr_sign_step">
+        <item>关</item>
+        <item>开</item>
+    </string-array>
+
+    <string-array name="str_arr_scale">
+        <item>16:9</item>
+        <item>4:３</item>
+    </string-array>
+
+
+    <string-array name="str_arr_img_mpeg_noisereduction_vals">
+        <item>关</item>
+        <item>弱</item>
+        <item>中</item>
+        <item>强</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">硬件检测</string>
+    <string name="device_touch">触摸框</string>
+    <string name="device_pcModule">PC模块</string>
+    <string name="device_lightsense">光感系统</string>
+    <string name="isPC">PC模块正常</string>
+    <string name="unPC">PC模块异常</string>
+    <string name="istouch">触摸框正常</string>
+    <string name="untouch">触摸框异常</string>
+    <string name="isLightSense">光感系统正常</string>
+    <string name="un_support_LightSense">不支持光感硬件</string>
+    <string name="unLightSense">光感系统异常</string>
+    <string name="closeSense">光感开关关闭</string>
+    <string name="button">重新检测</string>
+    <string name="button_exit">退出</string>
+    <string name="tip">扫描二维码联系客服</string>
+
+</resources>

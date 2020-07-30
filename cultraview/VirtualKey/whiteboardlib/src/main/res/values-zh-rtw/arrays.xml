@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- INPUT_SOURCE 名称-->
-<!--    <string-array name="input_source_name_list">-->
-<!--        <item>VGA</item>-->
-<!--        <item>模擬電視</item>-->
-<!--        <item>視頻1</item>-->
-<!--        <item>視頻2</item>-->
-<!--        <item>分量</item>-->
-<!--        <item>HDMI1</item>-->
-<!--        <item>HDMI2</item>-->
-<!--        <item>HDMI3</item>-->
-<!--        <item>OPS</item>-->
-<!--        <item>數字電視</item>-->
-<!--&lt;!&ndash;        <item>DP</item>&ndash;&gt;-->
-<!--&lt;!&ndash;        <item>前置HDMI</item>&ndash;&gt;-->
-<!--    </string-array>-->
+    <!--    <string-array name="input_source_name_list">-->
+    <!--        <item>VGA</item>-->
+    <!--        <item>模擬電視</item>-->
+    <!--        <item>視頻1</item>-->
+    <!--        <item>視頻2</item>-->
+    <!--        <item>分量</item>-->
+    <!--        <item>HDMI1</item>-->
+    <!--        <item>HDMI2</item>-->
+    <!--        <item>HDMI3</item>-->
+    <!--        <item>OPS</item>-->
+    <!--        <item>數字電視</item>-->
+    <!--&lt;!&ndash;        <item>DP</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <item>前置HDMI</item>&ndash;&gt;-->
+    <!--    </string-array>-->
 
-    <string-array name="input_source_name_list" tools:ignore="InconsistentArrays">
-<!--        <item>數字電視</item>-->
+    <string-array name="input_source_name_list_mh" tools:ignore="InconsistentArrays">
+        <!--        <item>數字電視</item>-->
         <item>VGA</item>
         <item>模擬電視</item>
         <item>視頻1</item>
@@ -46,8 +46,52 @@
         <item>SCART MAX</item>
 
         <item>HDMI3</item>
-        <item>DP</item>
+        <item>TYPE-C</item>
         <item>HDMI</item>
+        <item>內置電腦</item>
+        <!--        <item>INSIDE PC</item>-->
+        <item>數字電視</item>
+
+        <item>DVI</item>
+        <item>DVI 2</item>
+        <item>DVI 3</item>
+        <item>DVI 4</item>
+        <item>DVI MAX</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+
+    <string-array name="input_source_name_list_ah" tools:ignore="InconsistentArrays">
+        <!--        <item>數字電視</item>-->
+        <item>電腦</item>
+        <item>模擬電視</item>
+        <item>視頻1</item>
+        <item>視頻2</item>
+        <item>視頻3</item>
+        <item>視頻4</item>
+        <item>視頻5</item>
+        <item>視頻6</item>
+        <item>視頻7</item>
+        <item>HDMI2</item>
+        <item>視頻 MAX</item>
+
+        <item>SUPER VIDEO</item>
+        <item>SUPER VIDEO 2</item>
+        <item>SUPER VIDEO 3</item>
+        <item>SUPER VIDEO 4</item>
+        <item>SUPER VIDEO MAX</item>
+
+        <item>分量</item>
+        <item>分量 2</item>
+        <item>分量 3</item>
+        <item>分量 MAX</item>
+
+        <item>SCART </item>
+        <item>SCART 2</item>
+        <item>SCART MAX</item>
+
+        <item>高清</item>
+        <item>高清2</item>
+        <item>高清3</item>
         <item>內置電腦</item>
         <!--        <item>INSIDE PC</item>-->
         <item>數字電視</item>
@@ -62,38 +106,38 @@
 
 
     <!-- INPUT_SOURCE image RES_ID-->
-<!--    <string-array name="input_source_str_list">-->
+    <!--    <string-array name="input_source_str_list">-->
 
-<!--       <item>signal_dtv</item>-->
-<!--        <item>signal_atv</item>-->
-<!--        <item>signal_av1</item>-->
-<!--        <item>signal_av2</item>-->
-<!--        <item>signal_ypbpr</item>-->
-<!--        <item>signal_hdmi1</item>-->
-<!--        <item>signal_hdmi2</item>-->
-<!--        <item>signal_hdmi3</item>-->
-<!--        <item>signal_ops</item>-->
-<!--&lt;!&ndash;        <item>signal_inside_pc</item>&ndash;&gt;-->
-<!--        <item>signal_vga</item>-->
-<!--&lt;!&ndash;        <item>signal_dp</item>&ndash;&gt;-->
-<!--        <item>signal_prehdmi</item>-->
-<!--    </string-array>-->
+    <!--       <item>signal_dtv</item>-->
+    <!--        <item>signal_atv</item>-->
+    <!--        <item>signal_av1</item>-->
+    <!--        <item>signal_av2</item>-->
+    <!--        <item>signal_ypbpr</item>-->
+    <!--        <item>signal_hdmi1</item>-->
+    <!--        <item>signal_hdmi2</item>-->
+    <!--        <item>signal_hdmi3</item>-->
+    <!--        <item>signal_ops</item>-->
+    <!--&lt;!&ndash;        <item>signal_inside_pc</item>&ndash;&gt;-->
+    <!--        <item>signal_vga</item>-->
+    <!--&lt;!&ndash;        <item>signal_dp</item>&ndash;&gt;-->
+    <!--        <item>signal_prehdmi</item>-->
+    <!--    </string-array>-->
 
-<!--    &lt;!&ndash; INPUT_SOURCE 值:与input_source_str_list一一对应. &ndash;&gt;-->
-<!--    <integer-array name="input_source_int_list">-->
-<!--       <item>28</item>-->
-<!--        <item>1</item>-->
-<!--        <item>2</item>-->
-<!--        <item>3</item>-->
-<!--        <item>16</item>-->
-<!--        <item>23</item>-->
-<!--        <item>24</item>-->
-<!--        <item>25</item>-->
-<!--        <item>26</item>-->
-<!--        <item>0</item>-->
-<!--&lt;!&ndash;        <item>29</item>&ndash;&gt;-->
-<!--        <item>30</item>-->
-<!--    </integer-array>-->
+    <!--    &lt;!&ndash; INPUT_SOURCE 值:与input_source_str_list一一对应. &ndash;&gt;-->
+    <!--    <integer-array name="input_source_int_list">-->
+    <!--       <item>28</item>-->
+    <!--        <item>1</item>-->
+    <!--        <item>2</item>-->
+    <!--        <item>3</item>-->
+    <!--        <item>16</item>-->
+    <!--        <item>23</item>-->
+    <!--        <item>24</item>-->
+    <!--        <item>25</item>-->
+    <!--        <item>26</item>-->
+    <!--        <item>0</item>-->
+    <!--&lt;!&ndash;        <item>29</item>&ndash;&gt;-->
+    <!--        <item>30</item>-->
+    <!--    </integer-array>-->
 
 
 

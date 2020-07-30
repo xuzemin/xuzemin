@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CTV Add  file, provide the volume of style to use -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="5dip" />
+
+            <gradient
+                android:angle="270"
+                android:centerColor="#4DFFFFFF"
+                android:centerY="0.5"
+                android:endColor="#4DFFFFFF"
+                android:startColor="#4DFFFFFF" />
+        </shape>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="5dip" />
+
+                <gradient
+                    android:angle="270"
+                    android:centerColor="#4DFFFFFF"
+                    android:centerY="0"
+                    android:endColor="#4DFFFFFF"
+                    android:startColor="#4DFFFFFF" />
+            </shape>
+        </clip>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="5dip" />
+
+                <gradient
+                    android:angle="270"
+                    android:centerColor="#FFFFFFFF"
+                    android:centerY="0"
+                    android:endColor="#FFFFFFFF"
+                    android:startColor="#FFFFFFFF" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="0dp"
+
+    android:gravity="center"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <include layout="@layout/top_back_layout" />
+
+    <FrameLayout
+        android:id="@+id/local_update_layout"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/common_item_height"
+
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/local_update"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_sp"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:layout_width="@dimen/dip_553"
+            android:layout_height="@dimen/dip_264"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dip_40"
+            android:background="@drawable/shape_local_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="@dimen/dip_23"
+                android:gravity="left"
+                android:lineSpacingExtra="@dimen/dip_10"
+                android:paddingLeft="@dimen/dip_44"
+                android:paddingRight="@dimen/dip_44"
+                android:text="@string/check_directry"
+                android:textColor="@color/half_white"
+                android:textSize="@dimen/sp_14" />
+
+            <ScrollView
+                android:id="@+id/local_update_scroll"
+                android:layout_width="@dimen/dip_517"
+                android:layout_height="@dimen/dip_141"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="68dip"
+                android:background="@drawable/shape_local_bg1"
+                android:focusable="false">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dip_8">
+
+                    <TextView
+                        android:id="@+id/current_version_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/dip_14"
+                        android:layout_marginTop="@dimen/dip_15"
+                        android:gravity="left"
+                        android:textColor="@color/half_white"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/check_device_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/dip_14"
+                        android:layout_marginTop="@dimen/dip_15"
+                        android:gravity="left"
+                        android:textColor="@color/half_white"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/check_version_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/dip_14"
+                        android:layout_marginTop="@dimen/dip_15"
+                        android:gravity="left"
+                        android:textColor="@color/half_white"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/check_more_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="@dimen/dip_14"
+                        android:layout_marginTop="@dimen/dip_10"
+                        android:gravity="left"
+                        android:lineSpacingExtra="@dimen/dip_15"
+                        android:textColor="@color/half_white"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/check_result_tv"
+                android:layout_width="@dimen/dip_517"
+                android:layout_height="@dimen/dip_29"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="@dimen/dip_12"
+                android:gravity="center"
+                android:text="@string/check_file_failure"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/percent_progress_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="@dimen/dip_35"
+                android:gravity="center"
+                android:textColor="@color/half_white"
+                android:textSize="@dimen/sp_24"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/percent_progress_ll"
+                android:layout_width="@dimen/dip_517"
+                android:layout_height="@dimen/dip_14"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="@dimen/dip_19"
+
+                android:visibility="invisible">
+
+                <include layout="@layout/progress" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="@dimen/dip_305"
+            android:layout_height="@dimen/dip_34"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="180dip"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/local_update_ok"
+                android:layout_width="@dimen/dip_72"
+                android:layout_height="@dimen/dip_34"
+                android:layout_gravity="left"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:text="@string/update"
+                android:textAllCaps="false"
+                android:textColor="@color/item_text_color"
+                android:textSize="@dimen/btn_sp" />
+
+            <Button
+                android:id="@+id/local_update_cancel2"
+                android:layout_width="@dimen/dip_72"
+                android:layout_height="@dimen/dip_34"
+                android:layout_gravity="center"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:text="@string/cancle"
+                android:textAllCaps="false"
+                android:textColor="@color/item_text_color"
+                android:textSize="@dimen/btn_sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/local_update_cancel"
+                android:layout_width="@dimen/dip_72"
+                android:layout_height="@dimen/dip_34"
+                android:layout_gravity="right"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:text="@string/cancle"
+                android:textAllCaps="false"
+                android:textColor="@color/item_text_color"
+                android:textSize="@dimen/btn_sp" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

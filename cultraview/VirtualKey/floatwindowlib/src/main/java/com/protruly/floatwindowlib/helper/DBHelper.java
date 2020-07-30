@@ -11,6 +11,7 @@ import com.apkfuns.logutils.LogUtils;
 import com.protruly.floatwindowlib.R;
 import com.protruly.floatwindowlib.entity.NewSignalInfo;
 import com.protruly.floatwindowlib.entity.SignalInfo;
+import com.protruly.floatwindowlib.utils.MyUtils;
 import com.yinghe.whiteboardlib.utils.AppUtils;
 import com.yinghe.whiteboardlib.utils.IDHelper;
 
@@ -71,28 +72,27 @@ public class DBHelper {
 	public static Map<String, NewSignalInfo> getSourceMap(Context context){
 		// 获得信号源参数值
 		int[] indexList = context.getResources().getIntArray(R.array.input_source_id_list);
-		String[] nameList = context.getResources().getStringArray(R.array.input_source_name_list);
+		String[] nameList ;
+		if(MyUtils.getBoard().equals("CV8386H_MH")){
+			nameList = context.getResources().getStringArray(R.array.input_source_name_list_mh);
+		}else{
+			nameList = context.getResources().getStringArray(R.array.input_source_name_list_ah);
+		}
 		String[] resIdList = context.getResources().getStringArray(R.array.input_source_res_list);
 		String sourcelist = SystemProperties.get("ro.build.source.list");
-//		Log.e("sourcelist","sourcelist = " + sourcelist);
+		Log.e("sourcelist","sourcelist = " + sourcelist);
 		int[] sourceChannel = new int[0];
 		if(sourcelist != null && !sourcelist.equals("")) {
 			String[] list = sourcelist.split(",");
 			sourceChannel = new int[list.length];
 			for (int m = 0;m < list.length;m++) {
-//				Log.e("sourcelist","sourcelist = " + list[m]);
 				sourceChannel[m] = Integer.parseInt(list[m]);
 			}
-//			Log.e("sourcelist","sourcelist = " + Arrays.toString(sourceChannel));
 		}
-		sourceChannel = new int[]{1,28,23,9,26,25,24,2,16,0};
-//		Log.e("sourcelist","sourcelist = " + sourceChannel.toString());
+		Log.e("sourcelist","sourcelist = " + sourceChannel.toString());
 		// 获得数据
 		int len = resIdList.length;
-
 		Map<String, NewSignalInfo> sourceMap = new HashMap<>();
-//		int currSourceIndex = AppUtils.getCurrentSourceIndex(context);
-//		LogUtils.d("From currSourceIndex->%s", currSourceIndex);
 		// 从XML中获得默认信号源信息
 		if(sourceChannel.length <= 0){
 			Log.e("sourcelist","sourcelist =  reset" );
@@ -104,7 +104,6 @@ public class DBHelper {
 				if(sourceChannel[j] == indexList[k]){
 					String resIdStr = resIdList[k] ;
 					int resId = IDHelper.getDrawable(context, resIdStr);
-
 					int sourceIdIndex = indexList[k];
 					NewSignalInfo signalInfo = new NewSignalInfo(sourceIdIndex, resId, nameList[k]);
 					signalInfo.setXmlIndex(j);
@@ -114,29 +113,6 @@ public class DBHelper {
 				}
 			}
 		}
-
-//		for (int i = 5; i < len; i++){
-//			// 获得资源ID
-//			String resIdStr = resIdList[i] ;
-//			int resId = IDHelper.getDrawable(context, resIdStr);
-//
-//			int sourceIdIndex = indexList[i];
-//			NewSignalInfo signalInfo = new NewSignalInfo(sourceIdIndex, resId, nameList[i]);
-//			signalInfo.setXmlIndex(i);
-////			if (currSourceIndex == sourceIdIndex){
-////				signalInfo.setSelected(true);
-////				LogUtils.d("From setSelected currSourceIndex->%s", currSourceIndex);
-////				// 获得选中图片
-////				resIdStr = resIdStr.replace("_normal", "_focus");
-////				resId = IDHelper.getMipmap(context, resIdStr);
-////				signalInfo.setImageId(resId);
-////			} else {
-//				signalInfo.setSelected(false);
-////			}
-//
-//			sourceMap.put(sourceIdIndex + "", signalInfo);
-//			LogUtils.d("From signalInfo %s", signalInfo.toString());
-//		}
 
 		String uriString = "content://com.cultraview.ctvmenu/sourcename/query";
 		Uri uri = Uri.parse(uriString);

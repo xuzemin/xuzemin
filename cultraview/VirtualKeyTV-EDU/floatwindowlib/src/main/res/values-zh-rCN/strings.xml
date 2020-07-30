@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">虚拟按键</string>
+
+    <string name="update_message">请升级到V%1$s，%2$s</string>
+
+    <!-- 升级信息 -->
+    <!-- 测试URL-->
+    <!--<string name="check_apk_url">http://192.168.2.75:82/device/upgrade</string>-->
+    <!-- 正式URL-->
+    <string name="check_apk_url">http://www.bqldb.com:82/device/upgrade</string>
+    <string name="apk_file_name">Virtualkey.apk</string>
+    <string name="apk_name">virtualkey</string>
+
+    <!-- 动态权限管理 -->
+    <string name="permission_request">权限要求</string>
+    <string name="permission_check">权限检查</string>
+    <string name="rationale_ask_again">如果没有请求的权限，这个应用程序可能无法正常工作。打开应用程序设置屏幕修改应用程序权限。</string>
+    <string name="rationale_battery">这个应用程序需要电池忽略设置。</string>
+    <string name="rationale_call">这个应用程序需要拨打电话权限。</string>
+    <string name="rationale_camera">这个应用程序需要开启拍照权限。</string>
+    <string name="rationale_record_audio">这个应用程序需要录音权限。</string>
+    <string name="rationale_sms">这个应用程序需要短信权限。</string>
+    <string name="rationale_storage">这个应用程序需要读写SD卡权限。</string>
+
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
+    <string name="str_pic_autotune">自动调整</string>
+    <string name="str_auto_changesource">信号跳转</string>
+</resources>

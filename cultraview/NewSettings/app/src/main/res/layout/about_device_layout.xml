@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    android:padding="0dp"
+    android:layout_weight="5">
+
+    <TextView
+        style="@style/item_title_new"
+        android:text="@string/header_about" />
+
+<!--    <LinearLayout
+        style="@style/ll_list"
+        android:layout_weight="4"
+        android:orientation="vertical">-->
+
+        <RelativeLayout
+            android:id="@+id/rl_boot_options"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_boot_options" />
+
+            <TextView
+                android:id="@+id/tv_boot_options"
+                style="@style/item_textView_right_new"
+                android:text="@string/right_boot_options" />
+
+            <ImageView
+                style="@style/more_image_style_new"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_update_system"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_upgrade" />
+
+            <ImageView
+                style="@style/more_image_style_new"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_system_restore_factory"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_system_restore_factory" />
+
+            <ImageView style="@style/more_image_style_new" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_about_tv"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_about" />
+
+            <TextView
+                android:id="@+id/tv_item_about"
+                style="@style/item_textView_right_new"
+                android:text="@string/right_device_name"
+                android:visibility="gone" />
+
+            <ImageView style="@style/more_image_style_new" />
+
+        </RelativeLayout>
+    </LinearLayout>
+<!--</LinearLayout>-->

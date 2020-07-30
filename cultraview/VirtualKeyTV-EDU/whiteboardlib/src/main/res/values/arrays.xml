@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- INPUT_SOURCE 名称  HDMI3名称改为HDMI2-->
+    <string-array name="input_source_name_list">
+        <item>DTV</item>
+        <item>HDMI1</item>
+        <item>Prev HDMI</item>
+        <item>HDMI2</item>
+        <item>OPS</item>
+        <item>Prev VGA</item>
+        <item>VGA</item>
+        <item>DP</item>
+        <item>HOME</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_hlc">
+        <item>DTV</item>
+        <item>ATV</item>
+        <item>AV</item>
+        <item>AV2</item>
+        <item>YPBPR</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>OPS</item>
+        <item>VGA</item>
+        <item>DP</item>
+        <item>HOME</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_zx">
+        <item>DTV</item>
+        <item>ATV</item>
+        <item>AV</item>
+        <item>AV2</item>
+        <item>YPBPR</item>
+        <item>HDMI</item>
+        <item>Prev HDMI</item>
+        <item>VGA</item>
+        <item>DP</item>
+        <item>HOME</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_jpe">
+        <item>AV1</item>
+        <item>AV2</item>
+        <item>YPBPR</item>
+        <item>Side HDMI</item>
+        <item>Pre HDMI</item>
+        <item>OPS</item>
+        <item>DP</item>
+        <item>VGA</item>
+        <item>HOME</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_jpe_l">
+        <item>DTV</item>
+        <item>ATV</item>
+        <item>AV1</item>
+        <item>AV2</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>VGA</item>
+        <item>HOME</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_jpe_kn">
+        <item>DTV</item>
+        <item>ATV</item>
+        <item>AV</item>
+        <item>YPBPR</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>VGA</item>
+        <item>HOME</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_edu_l">
+        <item>DTV</item>
+        <item>ATV</item>
+        <item>AV1</item>
+        <item>AV2</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>HDMI3</item>
+        <item>VGA</item>
+        <item>HOME</item>
+    </string-array>
+
+    <string-array name="input_source_name_list_cm">
+        <item>DTV</item>
+        <item>ATV</item>
+        <item>AV</item>
+        <item>AV2</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>OPS</item>
+        <item>VGA</item>
+        <item>HOME</item>
+    </string-array>
+
+    <!-- INPUT_SOURCE image RES_ID-->
+    <string-array name="input_source_res_list">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_hlc">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_zx">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_jpe">
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_dp_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_jpe_l">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_jpe_kn">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_ypbpr_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_edu_l">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <string-array name="input_source_res_list_cm">
+        <item>signal_dtv_normal</item>
+        <item>signal_atv_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_av_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_hdmi_normal</item>
+        <item>signal_vga_normal</item>
+        <item>signal_home_normal</item>
+    </string-array>
+
+    <!-- INPUT_SOURCE 值:与input_source_str_list一一对应. -->
+    <integer-array name="input_source_id_list">
+        <item>0</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_hlc">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>16</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>28</item>
+        <item>29</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_zx">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>16</item>
+        <item>23</item>
+        <item>30</item>
+        <item>28</item>
+        <item>29</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_jpe">
+        <item>2</item>
+        <item>3</item>
+        <item>16</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>29</item>
+        <item>28</item>>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_jpe_l">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>23</item>
+        <item>24</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_jpe_kn">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>16</item>
+        <item>23</item>
+        <item>24</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+
+    <integer-array name="input_source_id_list_edu_l">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list_cm">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>28</item>
+        <item>34</item>
+    </integer-array>
+
+    <!-- Voice mode-->
+    <string-array name="voice_mode_list">
+        <item>Standard</item>
+        <item>User</item>
+        <item>Music</item>
+        <item>Cinema</item>
+    </string-array>
+
+    <!-- Display mode-->
+    <string-array name="display_mode_list">
+        <item>Standard</item>
+        <item>User</item>
+        <item>Soft</item>
+        <item>Vivid</item>
+        <item>PC</item>
+    </string-array>
+
+    <!-- Tab -->
+    <string-array name="tab_title_list">
+        <item>Signal</item>
+        <item>Voice</item>
+        <item>Option</item>
+        <!--<item>Features</item>-->
+    </string-array>
+
+
+    <string-array name="str_arr_sign_step">
+        <item>off</item>
+        <item>on</item>
+    </string-array>
+
+    <string-array name="str_arr_scale">
+        <item>16:9</item>
+        <item>4:３</item>
+    </string-array>
+
+    <string-array name="str_arr_img_mpeg_noisereduction_vals">
+        <item>Off</item>
+        <item>Weak</item>
+        <item>Middle</item>
+        <item>Strong</item>
+    </string-array>
+</resources>

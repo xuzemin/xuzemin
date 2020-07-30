@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * Created by TangentLu on 2015/8/19.
@@ -39,7 +40,7 @@ public class BitmapUtils {
         BitmapFactory.decodeFile(filePath, options);
         //再用屏幕一半高宽、缩小后的高宽对比，取小值进行缩放
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        int reqWidth = wm.getDefaultDisplay().getWidth();
+        int reqWidth = Objects.requireNonNull(wm).getDefaultDisplay().getWidth();
         int reqHeight = wm.getDefaultDisplay().getWidth();
         int scaleWidth = (int) (options.outWidth * sampleScale);
         int scaleHeight = (int) (options.outHeight * sampleScale);

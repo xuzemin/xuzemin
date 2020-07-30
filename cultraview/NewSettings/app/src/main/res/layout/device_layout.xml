@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_device"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    android:layout_weight="6"
+    android:padding="0dp">
+
+    <TextView
+        style="@style/item_title_new"
+        android:text="@string/header_device" />
+
+<!--    <LinearLayout
+        style="@style/ll_list"
+        android:layout_weight="5"
+        android:orientation="vertical">-->
+
+        <RelativeLayout
+            android:id="@+id/rl_setting_light_item"
+            style="@style/rl_item"
+            android:focusable="false">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_light" />
+
+            <LinearLayout
+                android:id="@+id/rl_setting_light"
+                android:layout_width="@dimen/dp_500"
+                android:layout_height="@dimen/dp_40"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:src="@mipmap/seting_light1" />
+
+                <TextView
+                    android:id="@+id/light_num"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="100"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14" />
+
+                <SeekBar
+                    android:id="@+id/pup_seekbar1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:progressDrawable="@drawable/seekbar_define_color_style"
+                    android:thumb="@drawable/seekbar_thumb" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:src="@mipmap/seting_light2" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/rl_item"
+            android:focusable="false">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_volume" />
+
+            <LinearLayout
+                android:id="@+id/rl_setting_volume"
+                android:layout_width="@dimen/dp_500"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_25"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:src="@mipmap/seting_sound1" />
+
+                <TextView
+                    android:id="@+id/volume_num"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="100"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14" />
+
+                <SeekBar
+                    android:id="@+id/pup_seekbar_volume"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_weight="1"
+                    android:focusable="true"
+
+                    android:progressDrawable="@drawable/seekbar_define_color_style"
+                    android:thumb="@drawable/seekbar_thumb" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:src="@mipmap/seting_sound2" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_setting_theme"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_theme_background" />
+
+            <TextView
+                android:id="@+id/tv_theme_bg"
+                style="@style/item_textView_right_new"
+                android:text="@string/right_background" />
+
+            <ImageView style="@style/more_image_style" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_setting_theme_sytle"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_theme_style" />
+
+            <TextView
+                android:id="@+id/tv_theme_style"
+                style="@style/item_textView_right_new"
+                android:text="@string/right_theme_style" />
+
+            <ImageView style="@style/more_image_style_new" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_setting_device_name"
+            style="@style/rl_item">
+
+            <TextView
+                style="@style/item_textView_new"
+                android:text="@string/item_device_name" />
+
+            <TextView
+                android:id="@+id/tv_device_name"
+                style="@style/item_textView_right_new"
+                android:text="@string/right_device_name" />
+
+            <ImageView style="@style/more_image_style_new" />
+        </RelativeLayout>
+    </LinearLayout>
+<!--</LinearLayout>-->

@@ -396,6 +396,8 @@ public class TouchButtonLayout extends FrameLayout {
         switch (id){
             case R.id.btn_usered: {// 自定义
                 selectDialog.show();
+                dialogView.updateData();
+
                 break;
             }
         }

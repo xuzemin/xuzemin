@@ -48,8 +48,14 @@ public class USBUpgradeThread {
 
     public static int UPGRATE_START = 6;
 
+    public static int UPGRATE_TYPEC_FAILED = 10;
+
+    public static int UPGRATE_TYPEC_SUCCESS = 11;
+
+
     public static int UPGRATE_END_SUCCESS_WIFI_MAC = 7;
     public static String UpgradeFilePath = "/UpgradePanel/";
+    public static String UpgradeTypeCFile = "/typec/";
 
 
     public enum EnumUpgradeStatus {
@@ -564,6 +570,36 @@ public class USBUpgradeThread {
         return filepath;
     }
 
+
+    public static String FindTypeCFolderOnUSB() {
+        String filepath = "";
+        File usbroot = new File("/mnt/usb/");
+        File targetfile;
+        if (usbroot != null && usbroot.exists()) {
+            File[] usbitems = usbroot.listFiles();
+            for (int sdx = 0; sdx < usbitems.length; sdx++) {
+                if (usbitems[sdx].isDirectory()) {
+                    targetfile = new File(usbitems[sdx].getPath() + UpgradeTypeCFile);
+                    if (!targetfile.exists() || !targetfile.isDirectory()) {
+                        if (targetfile.mkdir()) {
+                            filepath = targetfile.getPath();
+                            LogUtils.d("filepath1 == " + filepath);
+                        } else {
+                            LogUtils.e("create export file fall!!");
+                        }
+                        break;
+                    } else {
+                        filepath = targetfile.getPath();
+                        break;
+                    }
+                }
+            }
+        }
+        LogUtils.d("filepath2 == " + filepath);
+        return filepath;
+    }
+
+
     public static int UpgradePanelConfigs2(String CTV_USB_EU) {
         int ret = 0;
         String[] temp = null;
@@ -866,5 +902,38 @@ public class USBUpgradeThread {
                 deleteDirWihtFile(file);
         }
         dir.delete();
+    }
+
+    /**
+     * Type c升级
+     *
+     * @param path 路径
+     */
+    public static void UpgradeTypeC(final Handler handler, final String path) {
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtils.d("UpgradeTypeC path :" + path);
+                        try {
+                            short[] shorts = TvManager.getInstance().setTvosCommonCommand("Upgrade_typc_fw#" + path);
+                            if (handler != null) {
+                                if (shorts[0] == 0) {
+                                    //失败
+                                    handler.sendEmptyMessage(UPGRATE_TYPEC_FAILED);
+                                } else {
+                                    //成功
+                                    handler.sendEmptyMessage(UPGRATE_TYPEC_SUCCESS);
+                                }
+                            }
+                            LogUtils.d("shorts :" + shorts[0]);
+                        } catch (TvCommonException e) {
+                            e.printStackTrace();
+                            LogUtils.e("UpgradeTypeC error :" + e);
+                        }
+                    }
+                }
+        ).start();
+
     }
 }

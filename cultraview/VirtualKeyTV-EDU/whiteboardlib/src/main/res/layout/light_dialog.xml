@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/volume_dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="140px"
+    android:background="@drawable/shape_left_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_volume_icon"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_volume_normal"
+            android:gravity="center"
+            android:src="@mipmap/img_light" />
+
+
+        <SeekBar
+            android:id="@+id/skb_volume_value"
+            android:layout_width="800px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:max="100"
+            android:maxHeight="20px"
+            android:minHeight="20px"
+            android:progress="30"
+            android:progressDrawable="@drawable/seekbar_define_color_style"
+            android:splitTrack="false"
+            android:thumb="@drawable/shape_seekbar_circle" />
+
+        <TextView
+            android:id="@+id/tv_volume_value"
+            android:layout_width="120px"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+</FrameLayout>

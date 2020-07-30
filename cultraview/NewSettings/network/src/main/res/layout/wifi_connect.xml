@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="473.3dip"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg_shape"
+        android:orientation="vertical" >
+
+    <TextView
+            android:id="@+id/wifi_cn_ssid_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="26.7dip"
+            android:text="@string/wifi_net_ssid"
+            android:textColor="@color/black"
+            android:textSize="@dimen/content_sp" />
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="12dp"
+            android:fadeScrollbars="false"
+            android:listSelector="@drawable/selector_item"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbarThumbVertical="@drawable/scrollbar" >
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+            <FrameLayout
+                    android:layout_width="437.3dip"
+                    android:layout_height="29.3dip"
+                    android:layout_gravity="center_horizontal" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="22dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/wifi_secure"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/content_sp" />
+
+                <TextView
+                        android:id="@+id/wifi_cn_secure_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="22dip"
+                        android:background="@mipmap/wifi_cn_secure_bg"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/content_sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                    android:id="@+id/wifi_cn_pwd_fl"
+                    android:layout_width="437.3dip"
+                    android:layout_height="29.3dip"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dip" >
+
+                <TextView
+                        android:id="@+id/wifi_cn_pwd_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="22dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/password"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/content_sp" />
+
+                <EditText
+                        android:id="@+id/wifi_cn_pwd_edt"
+                        android:layout_width="253.3dp"
+                        android:layout_height="29.3dp"
+                        android:layout_gravity="center_vertical|right"
+                        android:layout_marginRight="22dip"
+                        android:background="@drawable/selector_btn_bg"
+                        android:gravity="center"
+                        android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                        android:inputType="textUri"
+                        android:paddingLeft="21dip"
+                        android:paddingRight="21dip"
+                        android:singleLine="true"
+                        android:textColor="@drawable/item_text_color"
+                        android:textColorHighlight="@color/edit_select"
+                        android:textSize="@dimen/content_sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                    android:id="@+id/wifi_cn_show_pwd_fl"
+                    android:layout_width="437.3dip"
+                    android:layout_height="29.3dip"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5.3dip"
+                    android:background="@drawable/selector_item"
+                    android:focusable="true" >
+
+                <TextView
+                        android:id="@+id/wifi_cn_show_pwd_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="22dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/show_password"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/content_sp" />
+
+                <ImageView
+                        android:id="@+id/wifi_cn_show_pwd_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="22dip"
+                        android:background="@mipmap/off"
+                        android:focusable="false" />
+            </FrameLayout>
+
+            <FrameLayout
+                    android:id="@+id/wifi_edit_auto_ip_layout"
+                    android:layout_width="437.3dip"
+                    android:layout_height="29.3dip"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5.3dip"
+                    android:background="@drawable/selector_item"
+                    android:focusable="true" >
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="22dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/auto_ip"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/content_sp" />
+
+                <ImageView
+                        android:id="@+id/wifi_edit_auto_ip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="22dip"
+                        android:background="@mipmap/off"
+                        android:focusable="false" />
+            </FrameLayout>
+
+            <LinearLayout
+                    android:id="@+id/wifi_ip_config_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                <RelativeLayout
+                        android:id="@+id/wifi_connect_ip_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5.3dip"
+                        android:focusable="false" >
+
+                    <TextView
+                            android:id="@+id/wifi_connect_ip_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:focusable="false"
+                            android:paddingLeft="40dip"
+                            android:text="@string/ip_address"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/content_sp" />
+
+                    <EditText
+                            android:id="@+id/wifi_connect_ip_ed"
+                            android:layout_width="166.7dip"
+                            android:layout_height="29.3dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="40dp"
+                            android:background="@drawable/selector_btn_bg"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHighlight="@color/edit_select"
+                            android:textSize="@dimen/content_sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/wifi_connect_netmask_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:focusable="false" >
+
+                    <TextView
+                            android:id="@+id/wifi_connect_ip_netmask_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:focusable="false"
+                            android:paddingLeft="40dip"
+                            android:text="@string/subnet_mask"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/content_sp" />
+
+                    <EditText
+                            android:id="@+id/wifi_connect_netmask_ed"
+                            android:layout_width="166.7dip"
+                            android:layout_height="29.3dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="40dp"
+                            android:background="@drawable/selector_btn_bg"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                            android:singleLine="true"
+                            android:textColorHighlight="@color/edit_select"
+                            android:textSize="@dimen/content_sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/wifi_connect_geteway_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:focusable="false" >
+
+                    <TextView
+                            android:id="@+id/wifi_connect_gateway_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:focusable="false"
+                            android:paddingLeft="40dip"
+                            android:text="@string/default_geteway"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/content_sp" />
+
+                    <EditText
+                            android:id="@+id/wifi_connect_gateway_ed"
+                            android:layout_width="166.7dip"
+                            android:layout_height="29.3dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="40dp"
+                            android:background="@drawable/selector_btn_bg"
+                            android:focusable="true"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                            android:singleLine="true"
+                            android:textColorHighlight="@color/edit_select"
+                            android:textSize="@dimen/content_sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/wifi_connect_dns1_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:focusable="false" >
+
+                    <TextView
+                            android:id="@+id/wifi_connect_dns1_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:focusable="false"
+                            android:paddingLeft="40dip"
+                            android:text="@string/first_dns"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/content_sp" />
+
+                    <EditText
+                            android:id="@+id/wifi_connect_dns1_ed"
+                            android:layout_width="166.7dip"
+                            android:layout_height="29.3dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="40dp"
+                            android:background="@drawable/selector_btn_bg"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHighlight="@color/edit_select"
+                            android:textSize="@dimen/content_sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/wifi_connect_dns2_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:focusable="false" >
+
+                    <TextView
+                            android:id="@+id/wifi_connect_dns2_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:focusable="false"
+                            android:paddingLeft="40dip"
+                            android:text="@string/second_dns"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/content_sp" />
+
+                    <EditText
+                            android:id="@+id/wifi_connect_dns2_ed"
+                            android:layout_width="166.7dip"
+                            android:layout_height="29.3dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="40dp"
+                            android:background="@drawable/selector_btn_bg"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                            android:singleLine="true"
+                            android:textColorHighlight="@color/edit_select"
+                            android:textSize="@dimen/content_sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                    android:layout_width="300dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal" >
+
+                <Button
+                        android:id="@+id/wifi_cn_save_btn"
+                        android:layout_width="100dip"
+                        android:layout_height="29.3dip"
+                        android:background="@drawable/selector_btn_bg"
+                        android:text="@string/connect"
+                        android:textAllCaps="false"
+                        android:textColor="@drawable/item_text_color_dialog"
+                        android:textSize="@dimen/content_sp" />
+
+                <Button
+                        android:id="@+id/wifi_cn_forget_btn"
+                        android:layout_width="100dip"
+                        android:layout_height="29.3dip"
+                        android:background="@drawable/selector_btn_bg"
+                        android:textColor="@drawable/item_text_color_dialog"
+                        android:gravity="center"
+                        android:text="@string/forget"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/content_sp" />
+
+                <Button
+                        android:id="@+id/wifi_cn_cancle_btn"
+                        android:layout_width="100dip"
+                        android:layout_height="29.3dip"
+                        android:textAllCaps="false"
+                        android:layout_gravity="right"
+                        android:background="@drawable/selector_btn_bg"
+                        android:gravity="center"
+                        android:text="@android:string/cancel"
+                        android:textColor="@drawable/item_text_color_dialog"
+                        android:textSize="@dimen/content_sp" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import mstar.factorymenu.ui.R;
 import mstar.factorymenu.ui.holder.SystemViewHodler;
+import mstar.factorymenu.ui.utils.LogUtils;
 import mstar.tvsetting.factory.desk.FactoryDeskImpl;
 import mstar.tvsetting.factory.desk.IFactoryDesk;
 
@@ -107,6 +108,18 @@ public class SystemInformationFragment extends Fragment implements SeekBar.OnSee
         switch (view.getId()) {
 
         }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (this != null && !hidden) {
+            LogUtils.d("onHiddenChanged");
+            if (systemViewHodler!=null){
+                systemViewHodler.onHiddenChanged();
+            }
+        }
+
     }
 
     @Override

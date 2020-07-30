@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HardWare</string>
+    <string name="device_touch">Touch Frame</string>
+    <string name="device_pcModule">PC Module</string>
+    <string name="device_lightsense">LightSense System</string>
+    <string name="isPC">PC module normal</string>
+    <string name="unPC">PC module exception</string>
+    <string name="istouch">Touch box normal</string>
+    <string name="untouch">Touch box exception</string>
+    <string name="isLightSense">LightSense normal</string>
+    <string name="unLightSense">LightSense exception</string>
+    <string name="un_support_LightSense">LightSense not supported</string>
+    <string name="closeSense">LightSense closed</string>
+    <string name="button">Again</string>
+    <string name="button_exit">Exit</string>
+    <string name="tip">Scan to connect us</string>
+
+</resources>

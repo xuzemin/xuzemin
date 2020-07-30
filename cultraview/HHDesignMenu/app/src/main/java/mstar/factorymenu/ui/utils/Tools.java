@@ -165,10 +165,12 @@ public class Tools {
         if (s.length >= 2) {
             if (!s[s.length - 1].equalsIgnoreCase("zip"))
                 return false;
+        }else{
+            return false;
         }
         String substring = fileName.substring(0, fileName.lastIndexOf("."));
         String[] listName = substring.split("_");
-        LogUtils.d("listName length:"+listName.length);
+        LogUtils.d("listName length:" + listName.length);
         if (listName.length <= 2 || listName.length > 3) {
             LogUtils.e("file length no matching");
             return false;
@@ -176,6 +178,22 @@ public class Tools {
 
         if (!listName[0].equals("PanelFiles")) {
             return false;
+        }
+
+        return true;
+    }
+
+
+    public static boolean getTypeCFormatName(String fileName) {
+        //先判断是否是zip
+        fileName = fileName.trim();
+        String s[] = fileName.split("\\.");
+        if (s.length >= 2) {
+            if (!s[s.length - 1].equalsIgnoreCase("bin"))
+                return false;
+        }
+        if (fileName.contains("CN8386MH_rts5450_128K_with_timeinfo_sign_crc")) {
+            return true;
         }
 
         return true;

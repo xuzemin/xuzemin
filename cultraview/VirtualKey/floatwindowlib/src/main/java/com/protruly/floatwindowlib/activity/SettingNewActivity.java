@@ -1,11 +1,11 @@
 package com.protruly.floatwindowlib.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -35,7 +35,7 @@ import java.lang.ref.WeakReference;
  * @author wang
  * @time on 2017/7/20.
  */
-public class SettingNewActivity extends AppCompatActivity {
+public class SettingNewActivity extends Activity {
     private boolean isRight = true;
     public static Handler mHandler;
 
