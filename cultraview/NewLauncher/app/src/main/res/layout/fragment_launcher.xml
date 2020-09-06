@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_board_temperature" />
+    <ImageView
+        android:id="@+id/network_state_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/ivmargin_top"
+        android:layout_marginEnd="@dimen/ivmargin_top"
+        android:background="@mipmap/net_no"
+        android:contentDescription="@string/app_name" />
+    <TextView
+        android:id="@+id/textview_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/launcher_texttime_margintop"
+        android:text="14:25"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textsize_ssssbig" />
+
+    <TextView
+        android:id="@+id/textview_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/launcher_textdate_margintop"
+        android:text="2018年9月27日   星期四"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textsize_sssnormal" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/launcher_functionbar_margintop"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/button_whiteboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <View
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:background="@mipmap/bt_whiteboard_focus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="白板"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_document"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/launcher_functionbutton_marginleft"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <View
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:background="@mipmap/bt_media_icon_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="文档"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_sharescreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/launcher_functionbutton_marginleft"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <View
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:background="@mipmap/bt_video_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="无线投屏"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/launcher_functionbutton_marginleft"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <View
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:background="@mipmap/other_pic_foucs" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="更多"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

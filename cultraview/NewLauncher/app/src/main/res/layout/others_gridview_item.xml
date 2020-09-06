@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/others_layout_item_main_width"
+    android:layout_height="@dimen/others_layout_item_main_height"
+    android:gravity="center"
+    android:background="@drawable/item_bt_color"
+    android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/others_item_iv"
+            android:layout_width="@dimen/others_layout_item_width"
+            android:layout_height="@dimen/others_layout_item_width"
+            android:layout_marginTop="@dimen/grid_iv_margin" />
+        <TextView
+            android:id="@+id/others_item_tv"
+            android:layout_width="@dimen/others_layout_item_main_width"
+            android:layout_height="@dimen/others_item_height"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Application Manager"
+            android:lines="1"
+            android:textSize="@dimen/gv_item_text_size"
+            android:textColor="@color/white"
+            />
+</LinearLayout>

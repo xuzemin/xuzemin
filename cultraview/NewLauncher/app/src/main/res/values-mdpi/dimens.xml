@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="launcher_functionbar_margintop">420dp</dimen>
+    <dimen name="launcher_functionbutton_marginleft">90dp</dimen>
+    <dimen name="launcher_functionbutton_pagepadding">20dp</dimen>
+    <dimen name="launcher_functionbutton_radius">6dp</dimen>
+    <dimen name="launcher_functionbutton_size">180dp</dimen>
+    <dimen name="launcher_textdate_margintop">292dp</dimen>
+    <dimen name="launcher_texttime_margintop">104dp</dimen>
+    <dimen name="launcher_texttime_paddingtopbottom">-30dp</dimen>
+    <dimen name="launhcerappgride_viewpager_item_iconsize">45dp</dimen>
+    <dimen name="launhcerappgride_viewpager_item_padding">24dp</dimen>
+    <dimen name="launhcerappgride_viewpager_item_text_margintop">8dp</dimen>
+    <dimen name="launhcerappgride_viewpager_paddingleftright">54dp</dimen>
+    <dimen name="launhcerappgride_viewpager_paddingtopbottom">54dp</dimen>
+    <dimen name="launhcerappgride_viewpager_pageno_icon_marginleft">14dp</dimen>
+    <dimen name="launhcerappgride_viewpager_pageno_icon_size">22dp</dimen>
+    <dimen name="launhcerappgride_viewpager_pageno_layout_marginbottom">60dp</dimen>
+    <dimen name="textsize_big">36sp</dimen>
+    <dimen name="textsize_mbig">45sp</dimen>
+    <dimen name="textsize_normal">24sp</dimen>
+    <dimen name="textsize_sbig">54sp</dimen>
+    <dimen name="textsize_small">21sp</dimen>
+    <dimen name="textsize_snormal">27sp</dimen>
+    <dimen name="textsize_ssbig">72sp</dimen>
+    <dimen name="textsize_ssnormal">30sp</dimen>
+    <dimen name="textsize_sssbig">96sp</dimen>
+    <dimen name="textsize_sssnormal">33sp</dimen>
+    <dimen name="textsize_ssssbig">150sp</dimen>
+    <dimen name="textsize_xbig">40sp</dimen>
+    <dimen name="textsize_xnormal">21sp</dimen>
+    <dimen name="textsize_xsmall">18sp</dimen>
+    <dimen name="textsize_xxsmall">15sp</dimen>
+    <dimen name="textsize_xxxsmall">12sp</dimen>
+</resources>

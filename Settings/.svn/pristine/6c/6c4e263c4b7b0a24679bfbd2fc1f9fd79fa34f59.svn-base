@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="half_white">#B2FFFFFF</color> <!-- 半透明 白色 -->
-    <color name="dialog_button_color">#FFEC8B</color>
-</resources>

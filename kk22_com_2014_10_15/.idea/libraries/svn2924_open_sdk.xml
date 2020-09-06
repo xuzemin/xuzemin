@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="svn2924_open_sdk">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libs/svn2924_open_sdk.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

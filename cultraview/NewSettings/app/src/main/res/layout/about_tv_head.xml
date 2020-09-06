@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/about_tv_fl_head"
+             android:layout_width="600dp"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+             android:orientation="vertical"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" >
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="49dip"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="@dimen/item_left_margin"
+            android:gravity="center"
+            android:text="@string/device_name2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+
+    <TextView
+            android:id="@+id/about_tv_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/language_setting"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/item_right_margin"
+            android:background="@mipmap/item_rigth_focus"
+            android:contentDescription="@string/img"
+            android:focusable="false" />
+
+</FrameLayout>
