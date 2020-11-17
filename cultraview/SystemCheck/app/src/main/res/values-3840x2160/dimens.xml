@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="surfaceParams_x">794px</dimen>
+    <dimen name="surfaceParams_y">283px</dimen>
+    <!-- <dimen name="surfaceParams_y">215dp</dimen> -->
+    <dimen name="surfaceParams_bg_x">794px</dimen>
+    <dimen name="surfaceParams_bg_y">283px</dimen>
+    <dimen name="surfaceParams_bg_width">714px</dimen>
+    <dimen name="surfaceParams_bg_height">387px</dimen>
+    <dimen name="surfaceParams_bg_x_s">770px</dimen>
+    <dimen name="surfaceParams_bg_y_s">260px</dimen>
+    <dimen name="surfaceParams_bg_width_s">760px</dimen>
+    <dimen name="surfaceParams_bg_height_s">430px</dimen>
+    <dimen name="surfaceParams_width">714px</dimen>
+    <dimen name="surfaceParams_upwin_height">192px</dimen>
+    <dimen name="surfaceParams_height">387px</dimen>
+    <dimen name="tool_bar_height">35dp</dimen>
+    <dimen name="all_app_height">220dp</dimen>
+    <dimen name="all_app_width_vertical">700dp</dimen>
+    <dimen name="all_app_height_vertical">200dp</dimen>
+    <dimen name="surfacewin_width">356px</dimen>
+    <dimen name="surfacewin_height">192px</dimen>
+    <dimen name="learlayout_y">231px</dimen>
+    <dimen name="bn_width">270px</dimen>
+    <dimen name="bn_height">233px</dimen>
+    <dimen name="surfaceParams_x1">750dp</dimen>
+    <dimen name="surfaceParams_y1">341dp</dimen>
+    <dimen name="bn1_x">0dp</dimen>
+    <dimen name="bn1_y">0dp</dimen>
+    <dimen name="bn2_x">0dp</dimen>
+    <dimen name="bn2_y">0dp</dimen>
+    <dimen name="bn3_x">0dp</dimen>
+    <dimen name="bn3_y">0dp</dimen>
+    <dimen name="bn4_x">0dp</dimen>
+    <dimen name="bn4_y">0dp</dimen>
+
+
+
+    <dimen name="channel_width">120dp</dimen>
+    <dimen name="channel_heigh">52dp</dimen>
+    <dimen name="grid_maboom">20dp</dimen>
+    <dimen name="grid_columnWidth">200dp</dimen>
+    <dimen name="grid_verticalSpacing">20dp</dimen>
+
+
+
+
+    <dimen name="channel1_text_x">794px</dimen>
+    <dimen name="channel1_text_y">283px</dimen>
+    <dimen name="channel2_text_x">1153px</dimen>
+    <dimen name="channel2_text_y">283px</dimen>
+    <dimen name="channel3_text_x">794px</dimen>
+    <dimen name="channel3_text_y">477px</dimen>
+    <dimen name="channel4_text_x">1152px</dimen>
+    <dimen name="channel4_text_y">477px</dimen>
+    <dimen name="timetitle_original_top">315px</dimen>
+    <dimen name="mainbutton_original_top">477px</dimen>
+    <dimen name="mainbutton_item_distance">100px</dimen>
+    <dimen name="date_top">27px</dimen>
+    <dimen name="time_text_size">72px</dimen>
+    <dimen name="time_state_tv">40px</dimen>
+    <dimen name="date_text_size">22px</dimen>
+    <dimen name="center_button_top">50px</dimen>
+    <dimen name="indicator_top">-170px</dimen>
+    <dimen name="center_button_layout_height">383px</dimen>
+    <dimen name="viewpager_item_width">580px</dimen>
+    <dimen name="viewpager_item_height">327px</dimen>
+    <dimen name="viewpager_photo_width">257px</dimen>
+    <dimen name="viewpager_photo_height">208px</dimen>
+    <dimen name="viewpage_scroll_distance">774px</dimen>
+    <dimen name="viewpager_item_width_modify">1126px</dimen>
+    <dimen name="viewpager_item_height_modify">634px</dimen>
+    <dimen name="viewpager_item_width_modify_second">527px</dimen>
+    <dimen name="viewpager_item_height_modify_second">297px</dimen>
+    <dimen name="viewpager_photo_width_second">233px</dimen>
+    <dimen name="viewpager_photo_height_second">189px</dimen>
+    <dimen name="viewpager_photo_width_orgin">311px</dimen>
+    <dimen name="viewpager_photo_height_orgin">252px</dimen>
+    <dimen name="others_layout_item_circle_raidus">165px</dimen>
+    <dimen name="others_layout_item_main_width">205px</dimen>
+    <dimen name="others_layout_item_main_height">246px</dimen>
+    <dimen name="others_gridview_item_horizontalspacing">30px</dimen>
+    <dimen name="main_layout_item_width">110px</dimen>
+    <dimen name="others_layout_item_width">110px</dimen>
+    <dimen name="others_layout_item_height">330px</dimen>
+    <dimen name="others_gridview_width">1455px</dimen>
+    <dimen name="scource_text_size">18px</dimen>
+    <dimen name="scource_text_size_final">36px</dimen>
+    <dimen name="item_text_size">26px</dimen>
+    <dimen name="other_title_top">64px</dimen>
+    <dimen name="other_title_time_top">30px</dimen>
+    <dimen name="other_title_time_size">68px</dimen>
+    <dimen name="other_title_date_size">15px</dimen>
+    <dimen name="other_gridview_top">100px</dimen>
+    <dimen name="source_title_text_min_height">49px</dimen>
+    <dimen name="source_title_text_min_width">131px</dimen>
+    <dimen name="source_title_text_max_height">97px</dimen>
+    <dimen name="source_title_text_max_width">263px</dimen>
+    <dimen name="left_button_x">327px</dimen>
+    <dimen name="left_button_y">300px</dimen>
+    <dimen name="left_button_width">256px</dimen>
+    <dimen name="left_button_height">232px</dimen>
+    <dimen name="left_layout_width">256px</dimen>
+    <dimen name="left_layout_height">468px</dimen>
+    <dimen name="right_button_x">1337px</dimen>
+    <dimen name="right_button_y">300px</dimen>
+    <dimen name="right_button_width">256px</dimen>
+    <dimen name="right_button_height">232px</dimen>
+    <dimen name="right_layout_width">256px</dimen>
+    <dimen name="right_layout_height">468px</dimen>
+    <dimen name="time_layout_x">95px</dimen>
+    <dimen name="time_layout_y">96px</dimen>
+    <dimen name="weather_layout_x">95px</dimen>
+    <dimen name="weather_layout_y">280px</dimen>
+    <dimen name="icon_layout_width">55px</dimen>
+    <dimen name="icon_layout_right">120px</dimen>
+    <dimen name="seekbar_width">280px</dimen>
+
+
+
+
+
+    <dimen name="l_heght">40dp</dimen>
+    <dimen name="text_heght">30dp</dimen>
+    <dimen name="text_size">20dp</dimen>
+    <dimen name="l_minheight">20dp</dimen>
+    <dimen name="margin_left">80dp</dimen>
+    
+    <dimen name="Progress_height">10dp</dimen>
+    <dimen name="progress_mar">50dp</dimen>
+        <dimen name="lll_height">22.5dp</dimen>
+    <dimen name="la_top">17.25dp</dimen>
+    <dimen name="text_wh">15dp</dimen>
+    <dimen name="image_left_txt">100dp</dimen>
+    <dimen name="txt_detect_size">10sp</dimen>
+    <dimen name="touchframe_height">22.5dp</dimen>
+    <dimen name="circle_layout_height">90dp</dimen>
+    <dimen name="alreayuse_txt_size">8sp</dimen>
+    <dimen name="circle_width">80.25dp</dimen>
+    <dimen name="circle_height">80.25dp</dimen>
+    <dimen name="optimize_txt_size">9sp</dimen>
+</resources>

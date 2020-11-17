@@ -1,0 +1,50 @@
+
+
+<resources>
+    <string name="app_name">系统检测</string>
+    <string name="hd">硬件检测</string>
+    <string name="sd">系统检测</string>
+    <string name="detec">正在检测...</string>
+    <string name="test">检测完成</string>
+    <string name="sm">系统内存</string>
+    <string name="sto">系统存储</string>
+    <string name="mas">内存和存储</string>
+    <string name="led">光控系统</string>
+    <string name="sc">屏温</string>
+    <string name="light">光感系统</string>
+    <string name="waiting_detection">待检测</string>
+    <string name="stop">正在检测..</string>
+    <string name="temperature_degree">lx</string>
+    <string name="led_degree">LX</string>
+    <string name="touch_frame">触摸系统</string>
+    <string name="pc">内置电脑</string>
+    <string name="pc_detail">未检测到内置电脑</string>
+    <string name="led_detail">未检测到光控系统</string>
+    <string name="again_detection">重新检测</string>
+    <string name="detecting">正在检测...</string>
+    <string name="fail_tm">未检测到屏温</string>
+    <string name="succ_tm">屏温</string>
+    <string name="uncertain">不确定</string>
+    <string name="alreadyuse">已用</string>
+    <string name="mb">MB</string>
+    <string name="gb">GB</string>
+    <string name="caunse">可用</string>
+    <string name="optimized_success">优化成功!</string>
+    <string name="clean">清理</string>
+    <string name="kb">KB</string>
+    <string name="already_clean_all">已清理到最优状态</string>
+    <string name="abnormal_no_detect_ops">未检测到内置电脑</string>
+    <string name="normal_txt">正常</string>
+    <string name="error_txt">异常</string>
+    <string name="device_lightsense">光感系统</string>
+    <string name="isPC">PC模块正常</string>
+    <string name="unPC">PC模块异常</string>
+    <string name="opsin">PC模块已接入,但未开机</string>
+    <string name="led_item">光控值 </string>
+    <string name="istouch">触摸框正常</string>
+    <string name="untouch">触摸框异常</string>
+    <string name="isLightSense">正常, 光控值</string>
+    <string name="un_support_LightSense">光感硬件异常</string>
+    <string name="unLightSense">光感系统未开启</string>
+    <string name="closeSense">光感开关关闭</string>
+</resources>
