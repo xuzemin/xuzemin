@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="NumberProgressBar">
+        <!-- 文字大小 -->
+        <attr name="progress_text_size" format="dimension"/>
+        <!-- 文字颜色 -->
+        <attr name="progress_text_color" format="color"/>
+        <!-- reached的高度 -->
+        <attr name="progress_reached_bar_height" format="dimension"/>
+        <!-- reached的颜色 -->
+        <attr name="progress_reached_color" format="color"/>
+        <!-- unReached的高度 -->
+        <attr name="progress_unreached_bar_height" format="dimension"/>
+        <!-- unReached的颜色 -->
+        <attr name="progress_unreached_color" format="color"/>
+        <!-- 当前进度 -->
+        <attr name="progress_current" format="integer"/>
+        <!-- 总进度 -->
+        <attr name="progress_max" format="integer"/>
+        <attr name="progress_text_offset" format="float"/>
+        <attr name="progress_text_visibility" format="integer"/>
+    </declare-styleable>
+
+</resources>

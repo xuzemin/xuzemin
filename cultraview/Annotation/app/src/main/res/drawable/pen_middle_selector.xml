@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@mipmap/pen_pressed_tran" />
+    <item android:drawable="@mipmap/pen_pressed_tran" android:state_activated="true" />
+    <item android:drawable="@mipmap/pen_normal" />
+</selector>

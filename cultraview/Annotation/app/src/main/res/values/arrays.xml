@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="background_colors">
+        <item>@color/bgcolor1</item>
+        <item>@color/bgcolor2</item>
+        <item>@color/bgcolor3</item>
+        <item>@color/bgcolor4</item>
+        <item>@color/bgcolor5</item>
+        <item>@color/bgcolor6</item>
+        <item>@color/bgcolor7</item>
+        <item>@color/bgcolor8</item>
+        <item>@color/bgcolor9</item>
+    </array>
+
+    <array name="bg_colors">
+        <item>@color/bgcolor1</item>
+        <item>@color/bgcolor2</item>
+        <item>@color/bgcolor3</item>
+        <item>@color/bgcolor4</item>
+        <item>@color/bgcolor5</item>
+    </array>
+
+    <array name="pen_colors">
+        <item>@color/color1</item>
+        <item>@color/color2</item>
+        <item>@color/color3</item>
+        <item>@color/color4</item>
+        <item>@color/color5</item>
+        <item>@color/color6</item>
+        <item>@color/color7</item>
+        <item>@color/color8</item>
+        <item>@color/color9</item>
+        <item>@color/color10</item>
+        <item>@color/color11</item>
+    </array>
+</resources>
