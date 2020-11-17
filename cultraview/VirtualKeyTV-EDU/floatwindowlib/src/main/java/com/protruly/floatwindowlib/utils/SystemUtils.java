@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.cultraview.tv.CtvAudioManager;
 import com.cultraview.tv.CtvCommonManager;
 import com.cultraview.tv.CtvDatabaseManager;
 import com.cultraview.tv.CtvPictureManager;
@@ -149,7 +150,26 @@ public class SystemUtils {
         }
         CtvPictureManager.getInstance().setNoiseReduction(imgNoiseMode);
     }
-
+    /*
+     * setSpdifMode (The function of the method)
+     */
+    public static void setSpdifMode(int pos) {
+        int spdifMode = CtvAudioManager.SPDIF_TYPE_OFF;
+        switch (pos) {
+            case 0:
+                spdifMode = CtvAudioManager.SPDIF_TYPE_PCM;
+                break;
+            case 1:
+                spdifMode = CtvAudioManager.SPDIF_TYPE_NONPCM;
+                break;
+            case 2:
+                spdifMode = CtvAudioManager.SPDIF_TYPE_OFF;
+                break;
+            default:
+                break;
+        }
+        CtvAudioManager.getInstance().setAudioSpdifOutMode(spdifMode);
+    }
     /**
      * 获取比例模式
      *

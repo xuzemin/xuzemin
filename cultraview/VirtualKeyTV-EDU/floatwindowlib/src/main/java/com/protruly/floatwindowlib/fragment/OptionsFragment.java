@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.cultraview.tv.CtvAudioManager;
 import com.cultraview.tv.CtvCommonManager;
 import com.cultraview.tv.CtvDatabaseManager;
 import com.cultraview.tv.CtvPictureManager;
@@ -37,7 +38,7 @@ import org.w3c.dom.Text;
 
 public class OptionsFragment extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
     private final String TAG = OptionsFragment.class.getSimpleName();
-    private TextView text_scale_mode, text_noise_reduction_mode, text_vga_mode;
+    private TextView text_scale_mode, text_noise_reduction_mode, text_vga_mode, text_szyp;
     private TextView text_sign_step;
     private ListView listView;
     private String[] img_noise_string;
@@ -52,6 +53,8 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
     private SeekBar seekbar_vertical;
     private int iClock, iPhase, iHorivontal, iVertical;
     private TextView txt_clock_val, txt_phase_val, txt_horizontal_val, txt_vertical_val;
+    private int sound_mode_select;
+    private String[] str_sound_spdif;
 
     @Nullable
     @Override
@@ -70,11 +73,12 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
         listView.setVisibility(View.VISIBLE);
         text_sign_step.setTextColor(getResources().getColor(R.color.white));
         int currentInputSource = CtvCommonManager.getInstance().getCurrentTvInputSource();
+
         if ((currentInputSource == CtvCommonManager.INPUT_SOURCE_VGA)
                 && CtvCommonManager.getInstance().isSignalStable(currentInputSource)) {
             text_vga_mode.setVisibility(View.VISIBLE);
         } else {
-            text_vga_mode.setVisibility(View.INVISIBLE);
+            text_vga_mode.setVisibility(View.GONE);
         }
 
 
@@ -92,6 +96,12 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
         seekbar_vertical.setProgress(iVertical);
         txt_vertical_val.setText(iVertical + "");
 
+        // SPDIF
+        str_sound_spdif = getResources().getStringArray(
+                R.array.str_arr_sound_spdifoutput_vals);
+        sound_mode_select = getSpdifMode();
+
+
         seekbar_clock.setOnSeekBarChangeListener(this);
         seekbar_phase.setOnSeekBarChangeListener(this);
         seekbar_horizontal.setOnSeekBarChangeListener(this);
@@ -107,6 +117,8 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
         text_scale_mode = (TextView) view.findViewById(R.id.text_scale_mode);
         text_noise_reduction_mode = (TextView) view.findViewById(R.id.text_noise_reduction_mode);
         text_vga_mode = (TextView) view.findViewById(R.id.text_vga_mode);
+        text_szyp = (TextView) view.findViewById(R.id.text_szyp);
+
 
         ll_vga = (LinearLayout) view.findViewById(R.id.ll_vga);
         listView = (ListView) view.findViewById(R.id.lv_all_list);
@@ -126,6 +138,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
         text_scale_mode.setOnClickListener(this);
         text_noise_reduction_mode.setOnClickListener(this);
         text_vga_mode.setOnClickListener(this);
+        text_szyp.setOnClickListener(this);
         text_sign_step.setOnClickListener(this);
         btn_pic_pc_image.setOnClickListener(this);
 
@@ -143,6 +156,9 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
                     SystemUtils.setZoomMode(position);
                 } else if (flag == 2) {
                     SystemUtils.setImgNoiseMode(position);
+                }else if (flag ==3) {
+                    SystemUtils.setSpdifMode(position);
+                    sound_mode_select=position;
                 }
                 adapter.setSelectImage(position);
                 adapter.notifyDataSetChanged();
@@ -196,6 +212,14 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
                 ll_vga.setVisibility(View.VISIBLE);
                 text_vga_mode.setTextColor(getResources().getColor(R.color.white));
                 break;
+            case R.id.text_szyp:
+                hideView();
+                flag = 3;
+                listView.setVisibility(View.VISIBLE);
+                sound_mode_select = getSpdifMode();
+                updateList(str_sound_spdif, sound_mode_select);
+                text_szyp.setTextColor(getResources().getColor(R.color.white));
+                break;
             case R.id.btn_pic_pc_image:
                 if (CtvCommonManager.getInstance().isSignalStable(
                         CtvCommonManager.getInstance().getCurrentTvInputSource())) {
@@ -226,6 +250,7 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
         text_scale_mode.setTextColor(getResources().getColor(R.color.com_bg_gray));
         text_noise_reduction_mode.setTextColor(getResources().getColor(R.color.com_bg_gray));
         text_vga_mode.setTextColor(getResources().getColor(R.color.com_bg_gray));
+        text_szyp.setTextColor(getResources().getColor(R.color.com_bg_gray));
     }
 
 
@@ -270,4 +295,21 @@ public class OptionsFragment extends Fragment implements View.OnClickListener, S
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
+    public int getSpdifMode() {
+        int pos = 1;
+        switch (CtvAudioManager.getInstance().getAudioSpdifOutMode()) {
+            case CtvAudioManager.SPDIF_TYPE_PCM:
+                pos = 0;
+                break;
+            case CtvAudioManager.SPDIF_TYPE_NONPCM:
+                pos = 1;
+                break;
+            case CtvAudioManager.SPDIF_TYPE_OFF:
+                pos = 2;
+                break;
+        }
+        return pos;
+    }
+
 }

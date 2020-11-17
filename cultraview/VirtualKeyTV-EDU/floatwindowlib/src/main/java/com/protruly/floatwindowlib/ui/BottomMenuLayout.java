@@ -364,7 +364,7 @@ public class BottomMenuLayout extends FrameLayout implements View.OnLongClickLis
                     //CmdUtils.changeUSBTouch(getContext(), false); // 关闭USB触控
                 }
                 //	rlOSDMenu.setVisibility(visible);
-                rlCloseHalfScreen.setVisibility(visible);
+                //rlCloseHalfScreen.setVisibility(visible);
             }
 
 
@@ -622,7 +622,7 @@ public class BottomMenuLayout extends FrameLayout implements View.OnLongClickLis
                     AppUtils.setBacklight(lightNum);
                 }
                 backlightLayout.refreshBacklight(lightNum);
-                backlightLayout.setVisibility(View.VISIBLE);
+                backlightLayout.setPostVisibility();
                 if (BacklightLayout.mDataHandler != null) {
                     BacklightLayout.mDataHandler.sendEmptyMessageDelayed(2, 200);
                 }
@@ -639,9 +639,9 @@ public class BottomMenuLayout extends FrameLayout implements View.OnLongClickLis
                 } else {
                     AppUtils.setBacklight(lightNum);
                 }
-                backlightLayout.refreshBacklight(lightNum);
-                backlightLayout.setVisibility(View.VISIBLE);
 
+                backlightLayout.refreshBacklight(lightNum);
+                backlightLayout.setPostVisibility();
                 if (BacklightLayout.mDataHandler != null) {
                     BacklightLayout.mDataHandler.sendEmptyMessageDelayed(2, 200);
                 }
@@ -663,13 +663,13 @@ public class BottomMenuLayout extends FrameLayout implements View.OnLongClickLis
         }
 
 
-        if (id == R.id.rl_btn_volume_sub || id == R.id.rl_btn_volume_plus ||
-                id == R.id.rl_btn_backlight_plus || id == R.id.rl_btn_backlight_sub) {
-            // 延时5秒
-            Log.d(TAG, "sendEmptyMessageDelayed BOTTOM_MENU_HIDE_DELAY");
-            FloatWindowService.mDataHandler.sendEmptyMessage(MENU_ACTION_HIDE_REMOVE);
-            FloatWindowService.mDataHandler.sendEmptyMessageDelayed(BOTTOM_MENU_HIDE_DELAY, FloatWindowService.hideTime);
-        } else {
+//        if (id == R.id.rl_btn_volume_sub || id == R.id.rl_btn_volume_plus ||
+//                id == R.id.rl_btn_backlight_plus || id == R.id.rl_btn_backlight_sub) {
+//            // 延时5秒
+//            Log.d(TAG, "sendEmptyMessageDelayed BOTTOM_MENU_HIDE_DELAY");
+//            FloatWindowService.mDataHandler.sendEmptyMessage(MENU_ACTION_HIDE_REMOVE);
+//            FloatWindowService.mDataHandler.sendEmptyMessageDelayed(BOTTOM_MENU_HIDE_DELAY, FloatWindowService.hideTime);
+//        } else {
             // 在4s以内，直接收缩 声音 亮度不隐藏
             if ((checkInShowPeriod() <= 2)) {
                 hideMenuStart = showMenuStart = 0;
@@ -678,7 +678,7 @@ public class BottomMenuLayout extends FrameLayout implements View.OnLongClickLis
                             FloatWindowService.BOTTOM_MENU_HIDE_IMMEDIATE);
                 }
             }
-        }
+//        }
 
     };
 

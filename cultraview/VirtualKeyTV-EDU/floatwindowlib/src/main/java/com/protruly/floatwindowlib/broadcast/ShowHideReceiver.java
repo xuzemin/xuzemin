@@ -3,11 +3,16 @@ package com.protruly.floatwindowlib.broadcast;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
+import android.os.SystemProperties;
+import android.provider.Settings;
+import android.text.TextUtils;
 
 import com.apkfuns.logutils.LogUtils;
 import com.protruly.floatwindowlib.control.FloatWindowManager;
 import com.protruly.floatwindowlib.helper.DBHelper;
 import com.protruly.floatwindowlib.service.FloatWindowService;
+import com.yinghe.whiteboardlib.utils.AppUtils;
 
 /**
  * Desc:显示和隐藏的广播
@@ -39,7 +44,7 @@ public class ShowHideReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
-        if (HIDE_ACTION.equals(action)){ // 隐藏界面
+        if (HIDE_ACTION.equals(action)) { // 隐藏界面
             LogUtils.d("隐藏界面的广播.....");
 
             // 开机自启动时，升级时间间隔设置为2s
@@ -53,7 +58,7 @@ public class ShowHideReceiver extends BroadcastReceiver {
 //            tempIntent.setAction("com.ctv.FloatWindowService.SHOW_ACTION");
 //            context.startService(tempIntent);
 //        }
-        else if (CLOSE_ACTION.equals(action)){ // 关闭广播
+        else if (CLOSE_ACTION.equals(action)) { // 关闭广播
             LogUtils.d("关闭的广播.....");
 
             // 关闭批注
@@ -63,28 +68,24 @@ public class ShowHideReceiver extends BroadcastReceiver {
             Intent tempIntent = new Intent(context, FloatWindowService.class);
             tempIntent.setAction("com.ctv.FloatWindowService.CLOSE_ACTION");
             context.startService(tempIntent);
-        }
-        else if (LIGHT_SENSE_ACTION.equals(action)){ // 更新光感的广播
+        } else if (LIGHT_SENSE_ACTION.equals(action)) { // 更新光感的广播
             LogUtils.d("更新光感的广播.....");
             Intent tempIntent = new Intent(context, FloatWindowService.class);
             tempIntent.setAction("com.ctv.FloatWindowService.LIGHT_SENSE_ACTION");
             context.startService(tempIntent);
-        }
-        else if (LOCK_ACTION.equals(action)){ // 锁住界面的广播
+        } else if (LOCK_ACTION.equals(action)) { // 锁住界面的广播
             LogUtils.d("锁住界面的广播.....隐藏移动按钮");
             Intent tempIntent = new Intent(context, FloatWindowService.class);
             tempIntent.putExtra(IS_LOCK, 1);
             tempIntent.setAction(FloatWindowService.STOP_EASY_TOUCH_ACTION);
             context.startService(tempIntent);
-        }
-        else if (UNLOCK_ACTION.equals(action)){ // 解锁界面的广播
+        } else if (UNLOCK_ACTION.equals(action)) { // 解锁界面的广播
             LogUtils.d("解锁界面的广播.....显示移动按钮");
             Intent tempIntent = new Intent(context, FloatWindowService.class);
             tempIntent.putExtra(IS_LOCK, 0);
             tempIntent.setAction(FloatWindowService.START_EASY_TOUCH_ACTION);
             context.startService(tempIntent);
-        }
-        else if (SWIPE_ACTION.equals(action)){ // 侧滑SWIPE的广播
+        } else if (SWIPE_ACTION.equals(action)) { // 侧滑SWIPE的广播
             LogUtils.d("SWIPE_ACTION的广播.....");
 
             int swipe = intent.getIntExtra("SWIPE_TYPE", -1);
@@ -92,17 +93,35 @@ public class ShowHideReceiver extends BroadcastReceiver {
             tempIntent.putExtra(SWIPE_TYPE, swipe);
             tempIntent.setAction("com.ctv.FloatWindowService.SWIPE_ACTION");
             context.startService(tempIntent);
-        }
-        else if (RESET_LIGHT_ACTION.equals(action)){ // 恢复背光的广播
+        } else if (RESET_LIGHT_ACTION.equals(action)) { // 恢复背光的广播
             LogUtils.d("恢复背光的广播.....");
             Intent tempIntent = new Intent(context, FloatWindowService.class);
             tempIntent.setAction(FloatWindowService.UPDATE_BLACK_LIGHT_ACTION);
             context.startService(tempIntent);
-        }
-        else if (Intent.ACTION_LOCALE_CHANGED.equals(action)){ // 恢复背光的广播
-	        LogUtils.d("切换语言 Language change");
+        } else if (Intent.ACTION_LOCALE_CHANGED.equals(action)) { // 恢复背光的广播
+            LogUtils.d("切换语言 Language change");
             //DBHelper.refreshSignalInfo(context.getApplicationContext());
-	        FloatWindowManager.removeBottomMenuLayout(context.getApplicationContext());
+            FloatWindowManager.removeBottomMenuLayout(context.getApplicationContext());
+//            new Thread(() -> {
+//                AppUtils.openOrCloseEasyTouch(context, false);
+//                SystemClock.sleep(1000);
+//                checkEasyTouch(context.getApplicationContext());
+//            }).start();
+        }
+    }
+
+    /**
+     * 检测是否开启悬浮助手
+     */
+    private void checkEasyTouch(Context context) {
+        // 判断是否开启悬浮助手
+        int easyTouchOpen = Settings.System.getInt(context.getContentResolver(),
+                "EASY_TOUCH_OPEN", 0);
+        String lockStatus = SystemProperties.get("persist.sys.lockScreen", "off");
+        LogUtils.d("easyTouchOpen->%s, lockStatus->%s", easyTouchOpen, lockStatus);
+        // 悬浮助手开关开启，并且不在锁屏状态下时
+        if (easyTouchOpen == 1 && !TextUtils.equals(lockStatus, "on")) { // 开启
+            AppUtils.openOrCloseEasyTouch(context, true);
         }
     }
 }

@@ -153,16 +153,16 @@ public class CmdUtils {
 	 */
 	public static void changeUSBTouch(Context context, boolean isOpen){
 		try {
-			if(isOpen){
-				if(isTopActivity(context,"com.mstar.tv.tvplayer.ui.RootActivity")&&!isServiceRunning(context,"com.ctv.annotation.AnnotationService")){
-					TvCommonManager.getInstance().setTvosCommonCommand(
-							"SetUSBTOUCH_ON");
-				}
-			}else{
-				TvCommonManager.getInstance().setTvosCommonCommand(
-						"SetUSBTOUCH_OFF");
-			}
-			//TvCommonManager.getInstance().setUsbTouch(context, isOpen);
+//			if(isOpen){
+//				if(isTopActivity(context,"com.mstar.tv.tvplayer.ui.RootActivity")&&!isServiceRunning(context,"com.ctv.annotation.AnnotationService")){
+//					TvCommonManager.getInstance().setTvosCommonCommand(
+//							"SetUSBTOUCH_ON");
+//				}
+//			}else{
+//				TvCommonManager.getInstance().setTvosCommonCommand(
+//						"SetUSBTOUCH_OFF");
+//			}
+			TvCommonManager.getInstance().setUsbTouch(context, isOpen);
 			// isOpen true:表示打开usb touch；false关闭
 		} catch (Exception e){
 			e.printStackTrace();

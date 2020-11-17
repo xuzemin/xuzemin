@@ -337,4 +337,12 @@
         <item>Middle</item>
         <item>Strong</item>
     </string-array>
+
+
+    <string-array name="str_arr_sound_spdifoutput_vals">
+        <item>PCM</item>
+        <item>RAW</item>
+        <item>Off</item>
+    </string-array>
+
 </resources>

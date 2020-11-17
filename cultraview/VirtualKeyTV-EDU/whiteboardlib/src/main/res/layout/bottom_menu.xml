@@ -239,15 +239,16 @@
 
         <RelativeLayout
             android:id="@+id/rl_btn_half_screen"
-            style="@style/bottom_menu_control_btn"
-            android:visibility="visible">
+            style="@style/bottom_menu_control_btn">
 
             <ImageView
                 android:id="@+id/btn_half_screen"
                 style="@style/bottom_btn_menu_image"
+                android:layout_marginTop="@dimen/dp_8"
                 android:src="@mipmap/screen_small" />
 
             <TextView
+                android:layout_marginTop="@dimen/dp_2"
                 android:id="@+id/txt_half_screen"
                 style="@style/btn_menu_text_marquee"
                 android:layout_below="@id/btn_half_screen"
