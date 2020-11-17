@@ -1,0 +1,260 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include
+        layout="@layout/top_back_pppoe_layout"
+        />
+
+    <FrameLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_marginTop="@dimen/ll_main_margin_top"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <TextView
+            style="@style/item_textView"
+            android:layout_width="230dp"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:text="@string/pppoe_connect_format"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp"
+            />
+
+        <TextView
+            android:id="@+id/pppoe_connect_state_tv"
+            android:layout_width="170dp"
+            android:layout_height="@dimen/edit_hei"
+            android:gravity="center|right"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp"
+            android:text="@string/wire_connect"
+            />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top" >
+
+        <TextView
+            style="@style/item_textView"
+            android:id="@+id/pppoe_username_tv"
+            android:layout_width="170dip"
+            android:lines="1"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:textSize="@dimen/content_sp"
+            android:text="@string/username"
+            android:textColor="@drawable/item_text_color"
+            />
+
+        <EditText
+            android:id="@+id/pppoe_username_edt"
+            android:layout_width="@dimen/edit_wid"
+            android:layout_height="@dimen/edit_hei"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:layout_gravity="right|center_vertical"
+            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+            android:inputType="text"
+            android:nextFocusRight="@+id/pppoe_pwd_edt"
+            android:paddingStart="@dimen/padding_left"
+            android:paddingEnd="@dimen/padding_right"
+            android:singleLine="true"
+            android:textColor="@drawable/item_text_color"
+            android:textColorHighlight="@color/edit_select"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/content_sp"
+            tools:ignore="RtlHardcoded" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top" >
+
+        <TextView
+            style="@style/item_textView"
+            android:id="@+id/pppoe_pwd_tv"
+            android:layout_width="170dp"
+            android:lines="1"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:text="@string/password"
+            android:textColor="@drawable/item_text_color"
+            android:textSize="@dimen/content_sp" />
+
+        <EditText
+            android:id="@id/pppoe_pwd_edt"
+            android:layout_width="@dimen/edit_wid"
+            android:layout_height="@dimen/edit_hei"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:layout_gravity="right|center_vertical"
+            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+            android:inputType="text"
+            android:paddingStart="@dimen/padding_left"
+            android:paddingEnd="@dimen/padding_right"
+            android:singleLine="true"
+            android:textColor="@drawable/item_text_color"
+            android:textColorHighlight="@color/edit_select"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/content_sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/pppoe_show_pwd_fl"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@drawable/selector_item"
+        android:focusable="true" >
+
+        <TextView
+            style="@style/item_textView"
+            android:id="@+id/pppoe_show_pwd_tv"
+            android:text="@string/show_password"
+            android:textSize="@dimen/content_sp"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:textColor="@drawable/item_text_color"
+            />
+
+        <ImageView
+            style="@style/switch_image_style_new"
+            android:id="@+id/pppoe_show_pwd_iv"
+            android:layout_gravity="right|center_vertical"
+            android:focusable="false" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/pppoe_auto_dialer_fl"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top"
+        android:background="@drawable/selector_item"
+        android:focusable="true"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/pppoe_auto_dialer_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:gravity="left|center_vertical"
+            android:text="@string/auto_dialer"
+            android:textColor="@drawable/item_text_color"
+            android:textSize="@dimen/content_sp" />
+
+        <ImageView
+            android:id="@+id/pppoe_auto_dialer_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="15dip"
+            android:background="@mipmap/off"
+            android:focusable="false" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top" >
+
+        <TextView
+            android:id="@+id/pppoe_net_state_btn"
+            android:layout_width="150dp"
+            android:layout_height="@dimen/edit_hei"
+            android:layout_gravity="right"
+            android:focusable="false"
+            android:text="@string/connect_break"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/content_sp" />
+
+        <TextView
+            style="@style/item_textView"
+            android:layout_width="140dp"
+            android:lines="1"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:text="@string/net_state"
+            android:textColor="@drawable/item_text_color"
+            android:textSize="@dimen/content_sp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/pppoe_dialer_hangup"
+                android:layout_width="200dp"
+                android:layout_height="@dimen/edit_hei"
+                android:background="@drawable/selector_btn_bg"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:layout_centerInParent="true"
+                android:text="@string/dialer_hangup"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="@dimen/content_sp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/pppoe_dialer_ok"
+                android:layout_width="200dp"
+                android:layout_height="@dimen/edit_hei"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:text="@string/dialer_ok"
+                android:textColor="@drawable/item_text_color"
+                android:textSize="@dimen/content_sp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/pppoe_warn"
+            android:textSize="@dimen/content_sp"
+            android:textColor="@color/white"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edit_hei"/>
+        <TextView
+            android:text="@string/pppoe_warn_text"
+            android:textSize="@dimen/content_sp"
+            android:layout_marginTop="@dimen/margin_top"
+            android:textColor="@color/white"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="@dimen/fab_network_second"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/edit_hei"/>
+    </LinearLayout>
+</LinearLayout>

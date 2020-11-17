@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/rl_item"
+    android:layout_width="@dimen/ll_main_content_width_size"
+    android:layout_height="wrap_content"
+    android:focusable="false"
+    android:clickable="false"
+    android:focusableInTouchMode="false"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/tv_item_eye_plus"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textSize="@dimen/content_sp" />
+
+    <TextView
+        android:id="@+id/tv_item_eye_plus_description"
+        android:layout_width="@dimen/dp_600"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textSize="@dimen/content_text_description" />
+
+    <ImageView
+        android:id="@+id/eye_plus_item_ivs"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginLeft="@dimen/dp_55"
+        android:layout_marginRight="@dimen/item_right_margin" />
+
+</LinearLayout>

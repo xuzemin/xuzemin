@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:orientation="vertical"
+    android:padding="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <include layout="@layout/top_back_layout" />
+
+    <ListView
+        android:id="@+id/system_update_lv"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/dip_300"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_item_height"
+        android:divider="@drawable/list_divider"
+        android:scrollbars="none" />
+    <!--    <ListView-->
+    <!--    android:layout_gravity="center_horizontal"-->
+    <!--    android:paddingLeft="12dip"-->
+    <!--    android:paddingRight="12dip"-->
+    <!--    android:layout_marginTop="@dimen/common_item_height"-->
+    <!--    android:id="@+id/system_update_lv"-->
+    <!--    android:layout_width="@dimen/ll_main_content_width_size"-->
+    <!--    android:layout_height="match_parent"-->
+
+    <!--    android:divider="@null"-->
+    <!--    android:fadeScrollbars="false"-->
+    <!--    android:listSelector="@drawable/select_item_bg"-->
+
+    <!--    android:scrollbars="none" />-->
+    <!--android:listSelector="@drawable/select_item_bg"-->
+    <LinearLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:layout_width="@dimen/ll_main_content_width_size"
+            android:layout_height="@dimen/dp_1"
+
+
+            android:background="@drawable/list_divider"
+            android:contentDescription="@string/img" />
+
+
+    </LinearLayout>
+
+
+    <FrameLayout
+
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dip_60"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:text="@string/system_update"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|left"
+            android:layout_marginLeft="@dimen/item_left_margin"
+            android:layout_marginTop="60dp"
+            android:text="@string/update_mode"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp"
+            android:visibility="gone" />
+
+
+    </FrameLayout>
+
+
+</LinearLayout>

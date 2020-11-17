@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="item_width">200dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="bg_radius">10dp</dimen>
+
+    <dimen name="marginLeft">10dp</dimen>
+    <dimen name="marginRight">10dp</dimen>
+    <dimen name="marginStart">10dp</dimen>
+    <dimen name="marginEnd">10dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+
+    <!--  主布局尺寸 -->
+    <!--    <dimen name="ll_main_size">850dp</dimen>-->
+    <dimen name="ll_main_width_size">1000dp</dimen>
+    <dimen name="ll_main_content_width_size">1000dp</dimen>
+    <dimen name="ll_main_margin_top">30dp</dimen>
+    <dimen name="ll_main_margin_bottom">30dp</dimen>
+
+    <!-- 模块的高度:根据item的个数确定，每个item高度为40dp, 其中模块的title的高当做一个item的高来计算 -->
+    <dimen name="module_height_item_x2">120dp</dimen>
+    <dimen name="module_height_item_x3">160dp</dimen>
+    <dimen name="module_height_item_x4">200dp</dimen>
+    <dimen name="module_height_item_x5">240dp</dimen>
+    <dimen name="module_height_item_x6">280dp</dimen>
+    <dimen name="module_height_item_x7">320dp</dimen>
+    <dimen name="module_height_item_x8">400dp</dimen>
+
+    <!-- 模块 titletextView的尺寸 -->
+    <dimen name="item_title_text_width">150dp</dimen>
+    <dimen name="item_title_text_textSize">12sp</dimen>
+
+    <!-- 模块 item左边textView的尺寸 -->
+    <dimen name="item_textView_width">150dp</dimen>
+    <dimen name="item_textView_margin_left">40dp</dimen>
+    <dimen name="item_textView_textSize">20sp</dimen>
+
+    <!-- 模块 item右边边textView的尺寸 -->
+    <dimen name="item_textViewRight_width">150dp</dimen>
+    <dimen name="item_textViewRight_margin_right">70dp</dimen>
+    <dimen name="item_textViewRight_textSize">20sp</dimen>
+
+    <!-- 模块 item右边更多按钮的尺寸 -->
+    <dimen name="item_more_image_width">30dp</dimen>
+    <dimen name="item_more_image_height">30dp</dimen>
+
+    <!-- 模块 item右边开关按钮的尺寸 -->
+    <dimen name="item_switch_image_width">58.5dp</dimen>
+    <dimen name="item_switch_image_height">30dp</dimen>
+
+    <!-- 分割线 -->
+    <dimen name="divider_line_height">0.5dp</dimen>
+
+    <integer name="scale_time">200</integer>
+    <!--    item高度-->
+    <dimen name="common_item_height">40dp</dimen>
+
+    <!-- greneral -->
+    <dimen name="greneral_top_margin">26dip</dimen>
+    <dimen name="greneral_title_sp">25sp</dimen>
+    <dimen name="greneral_item_height">49dip</dimen>
+    <dimen name="greneral_item_left_margin">36.7dip</dimen>
+    <dimen name="greneral_item_right_margin">36.7dip</dimen>
+    <dimen name="greneral_item_iv_margin">32.7dip</dimen>
+    <dimen name="greneral_content_sp">19sp</dimen>
+    <dimen name="greneral_btn_sp">17sp</dimen>
+    <dimen name="greneral_list_width">620dip</dimen>
+
+
+    <!--    device-->
+    <integer name="start_animation_time">200</integer>
+    <integer name="back_animation_time">200</integer>
+    <integer name="bounce_time">200</integer>
+    <integer name="row_time">200</integer>
+
+    <dimen name="device_memory_usage_button_width">16dip</dimen>
+    <dimen name="action_bar_switch_padding">16dip</dimen>
+    <!-- new 3 anim -->
+    <dimen name="row1_from">166.7dip</dimen>
+    <dimen name="row1_to">333.4dip</dimen>
+    <dimen name="row2_from">166.7dip</dimen>
+    <dimen name="row2_to">0dip</dimen>
+    <dimen name="row3_from">333.4dip</dimen>
+    <dimen name="row3_to">166.7dip</dimen>
+    <!-- new 3 dimen -->
+    <dimen name="app_bg_radius">45.3dip</dimen>
+    <!-- <dimen name="app_bg_radius">5dip</dimen> -->
+    <dimen name="top_margin">26dip</dimen>
+    <dimen name="item_height">49dip</dimen>
+    <dimen name="list_width">620dip</dimen>
+    <dimen name="item_left_margin">36.7dip</dimen>
+    <dimen name="item_right_margin">36.7dip</dimen>
+    <dimen name="item_iv_margin">32.7dip</dimen>
+    <!-- sp -->
+    <dimen name="title_sp">25sp</dimen>
+    <dimen name="content_sp">19sp</dimen>
+    <dimen name="btn_sp">17sp</dimen>
+    <dimen name="dp_500">500dp</dimen>
+    <dimen name="dip_72">72dip</dimen>
+    <dimen name="dip_22">22dip</dimen>
+    <dimen name="dip_210">210dip</dimen>
+    <dimen name="dip_34">34.7dip</dimen>
+    <dimen name="dp_150">150dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dip_29">29dip</dimen>
+    <dimen name="dp_55">55dp</dimen>
+    <dimen name="dip_402">402dip</dimen>
+
+
+    <!-- language -->
+    <dimen name="lang_top_margin">26dip</dimen>
+    <dimen name="lang_title_sp">25sp</dimen>
+
+    <dimen name="lang_list_width">620dip</dimen>
+
+    <dimen name="lang_item_left_margin">36.7dip</dimen>
+    <dimen name="lang_item_right_margin">36.7dip</dimen>
+    <dimen name="lang_item_iv_margin">32.7dip</dimen>
+
+    <dimen name="lang_content_sp">19sp</dimen>
+
+    <dimen name="lang_item_height">49dip</dimen>
+
+    <!-- security -->
+    <dimen name="se_item_height">60dip</dimen>
+    <dimen name="se_content_sp">19sp</dimen>
+    <dimen name="se_top_margin">26dip</dimen>
+    <dimen name="se_title_sp">25sp</dimen>
+    <dimen name="dip_300">300dip</dimen>
+    <dimen name="dip_60">60dip</dimen>
+    <dimen name="img_margin_top">47.33dip</dimen>
+    <dimen name="img_delta">74.66dip</dimen>
+    <dimen name="content_text_description">14sp</dimen>
+
+    <dimen name="fragment_width">850dp</dimen>
+    <dimen name="fragment_heigth">40dp</dimen>
+
+    <dimen name="network_item_width">800dp</dimen>
+
+    <dimen name="edit_wid">400dp</dimen>
+    <dimen name="edit_hei">40dp</dimen>
+
+    <dimen name="text_wid">150dp</dimen>
+    <dimen name="text_hei">40dp</dimen>
+    <dimen name="toback_top">30dp</dimen>
+
+    <dimen name="fragment_top">30dp</dimen>
+
+    <dimen name="margin_left">30dp</dimen>
+    <dimen name="margin_right">50dp</dimen>
+
+    <dimen name="fab_network_margin">25dp</dimen>
+    <dimen name="fab_network_second">50dp</dimen>
+
+    <dimen name="padding_left">20dp</dimen>
+    <dimen name="padding_right">20dp</dimen>
+
+    <dimen name="margin_top">0dp</dimen>
+    <dimen name="dp_600">600dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="dp_35">35dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_850">850dp</dimen>
+
+
+    <dimen name="dip_7">7dip</dimen>
+    <dimen name="dip_12">12dip</dimen>
+
+    <dimen name="dip_264">264dip</dimen>
+    <dimen name="dip_40">40dip</dimen>
+    <dimen name="dip_23">23dip</dimen>
+    <dimen name="dip_20">20dip</dimen>
+    <dimen name="dip_10">10dip</dimen>
+    <dimen name="dip_44">44dip</dimen>
+    <dimen name="dip_68">68dip</dimen>
+    <dimen name="dip_8">8dip</dimen>
+    <dimen name="dip_14">14dip</dimen>
+    <dimen name="dip_15">15dip</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="dip_35">35dip</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="dip_19">19dip</dimen>
+    <dimen name="dip_305">305dip</dimen>
+    <dimen name="dip_180">180dip</dimen>
+    <dimen name="dip_553">553.3dip</dimen>
+    <dimen name="dip_517">517.3dip</dimen>
+    <dimen name="dip_141">141.3dip</dimen>
+
+    <dimen name="dp_42">42dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_260">260dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_220">220dp</dimen>
+
+    <dimen name="sp_30">30sp</dimen>
+    <dimen name="dp_105">105dp</dimen>
+    <dimen name="dp_145">145dp</dimen>
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dip_33">33dip</dimen>
+    <dimen name="dp_95">95dp</dimen>
+    <dimen name="dip_3">3dip</dimen>
+    <dimen name="dp_750">750dp</dimen>
+
+    <dimen name="dp_400">400dp</dimen>
+    <dimen name="dp_250">250dp</dimen>
+    <dimen name="dp_180">180dp</dimen>
+    <dimen name="dp_288">288dp</dimen>
+    <dimen name="dp_162">162dp</dimen>
+</resources>
