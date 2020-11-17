@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: tv.danmaku.ijk.media:ijkplayer-java:0.5.1@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a5a75cb68493aa55fe315fa19e01e377/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a5a75cb68493aa55fe315fa19e01e377/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tv.danmaku.ijk.media/ijkplayer-java/0.5.1/15a11a075419b7509218a927d1cac48fd887057e/ijkplayer-java-0.5.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
