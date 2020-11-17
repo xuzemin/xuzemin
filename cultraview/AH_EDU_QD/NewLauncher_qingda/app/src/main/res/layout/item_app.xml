@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:layout_width="match_parent" android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/button_item"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.ctv.ctvlauncher.view.AnimRelativeLayout
+            android:id="@+id/anim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="@dimen/launhcerappgride_viewpager_item_framework"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="@dimen/launhcerappgride_viewpager_item_framework">
+                    <ImageView
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/imageview_appicon"
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/launhcerappgride_viewpager_item_iconsize"
+                        android:layout_height="@dimen/launhcerappgride_viewpager_item_iconsize"/>
+                    <ImageView
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/imageview_appicon_delete"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="@dimen/launhcerappgride_viewpager_item_text_margintop"
+                        android:layout_marginTop="@dimen/launhcerappgride_viewpager_item_text_margintop"
+                        android:background="@mipmap/item_delet"
+                        android:layout_width="@dimen/textsize_ssnormal"
+                        android:layout_height="@dimen/textsize_ssnormal"/>
+                </RelativeLayout>
+                <TextView
+                    android:textSize="@dimen/textsize_normal"
+                    android:textColor="@color/bm_t"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/textview_appname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/launhcerappgride_viewpager_item_text_margintop"/>
+            </LinearLayout>
+        </com.ctv.ctvlauncher.view.AnimRelativeLayout>
+    </FrameLayout>
+</FrameLayout>

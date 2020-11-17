@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wiedu">智慧教育</string>
+    <string name="app_name">CTVLauncher</string>
+    <string name="more_app">more app</string>
+    <string name="home">主页</string>
+    <string name="more">更多</string>
+    <string name="whiteboard">白板</string>
+    <string name="whiteboard_edu">教育白板</string>
+    <string name="browser">浏览器</string>
+    <string name="ops">内置电脑</string>
+    <string name="file">文档</string>
+    <string name="setting">设置</string>
+    <string name="video_phone">视频会议</string>
+    <string name="screen">无线投屏</string>
+    <string name="datetime">2018/9/27  周四</string>
+    <string name="moreapps">更多应用</string>
+    <string name="apm"> </string>
+    <string name="am"> 上午 </string>
+    <string name="pm"> 下午 </string>
+    <string name="camera">相机</string>
+    <string name="delete_system">系统应用无法被卸载</string>
+    <string-array name="str_arr_week">
+        <item>周末</item>
+        <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+    </string-array>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="message_uninstall">请确认是否卸载应用</string>
+    <string name="qqemail">QQ邮箱</string>
+</resources>

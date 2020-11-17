@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_size">2dp</dimen>
+    <dimen name="folder_cover_size">72dp</dimen>
+    <dimen name="grid_width">100dp</dimen>
+    <dimen name="bottom_marin">0dp</dimen>
+    <dimen name="right_margin">0dp</dimen>
+    <dimen name="control_btn_padding">2dp</dimen>
+    <dimen name="control_draw_padding">3dp</dimen>
+    <dimen name="control_layout_padding">15dp</dimen>
+    <dimen name="sketch_gv_padding">15dp</dimen>
+
+    <dimen name="btn_stroke_padding">5dp</dimen>
+
+    <dimen name="menu_btn_margin_bottom">60dp</dimen>
+
+    <!--<dimen name="right_menu_container_width">45dp</dimen>-->
+    <dimen name="right_menu_container_width">35dp</dimen>
+    <dimen name="right_menu_container_height">800dp</dimen>
+
+    <dimen name="pages_float_top">2dp</dimen>
+
+    <dimen name="right_menu_height">150dp</dimen>
+
+    <dimen name="bg_radius">5dip</dimen>
+
+    <dimen name="touch_width">25dp</dimen>
+
+    <dimen name="dp_19">19dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+
+
+    <dimen name="dp_30">30dp</dimen>
+</resources>

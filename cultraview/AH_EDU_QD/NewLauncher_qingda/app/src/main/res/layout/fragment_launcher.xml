@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:id="@+id/network_state_iv"
+        android:layout_width="@dimen/net_work"
+        android:layout_height="@dimen/net_work"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/ivmargin_top"
+        android:layout_marginEnd="@dimen/ivmargin_top"
+        android:background="@mipmap/net_no"
+        android:contentDescription="@string/app_name" />
+
+    <LinearLayout
+        android:id="@+id/date_apm"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/launcher_texttime_margintop"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/apm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+
+            android:text="@string/apm"
+            android:layout_marginRight="20dp"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textsize_ssssbig"/>
+
+        <TextView
+            android:id="@+id/textview_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14:25"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textsize_ssssbig" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textview_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/launcher_textdate_margintop"
+        android:text="@string/datetime"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textsize_sssnormal" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/launcher_functionbar_margintop"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/button_browser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/br_im"
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                 android:background="@mipmap/bt_brower_normal"
+                />
+
+            <TextView
+                android:id="@+id/br_tv"
+                android:layout_marginTop="20px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/browser"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/button_whiteboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/launcher_button_selector"
+            android:layout_marginLeft="@dimen/launcher_functionbutton_marginleft"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/bw_im"
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:background="@drawable/bt_whiteboard_focus"
+                 />
+
+            <TextView
+                android:id="@+id/bw_tv"
+                android:layout_marginTop="20px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/whiteboard_edu"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_document"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/launcher_functionbutton_marginleft"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <ImageView
+                android:gravity="center"
+                android:id="@+id/bd_im"
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:background="@mipmap/bt_media_icon_normal"
+                 />
+
+            <TextView
+                android:id="@+id/bd_tv"
+                android:layout_marginTop="20px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/file"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_sharescreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/launcher_functionbutton_marginleft"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <ImageView
+                android:id="@+id/bs_im"
+
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/ops_2" />
+
+            <TextView
+                android:id="@+id/bs_tv"
+                android:layout_marginTop="20px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/ops"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/launcher_functionbutton_marginleft"
+            android:background="@drawable/launcher_button_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/launcher_functionbutton_pagepadding">
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/bm_im"
+                android:layout_width="@dimen/launcher_functionbutton_size"
+                android:layout_height="@dimen/launcher_functionbutton_size"
+                android:background="@mipmap/bt_settings_icon_normal"
+                 />
+
+            <TextView
+                android:id="@+id/bm_tv"
+                android:layout_marginTop="20px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/setting"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/textsize_snormal" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="@dimen/rl_boom_w"
+        android:layout_height="@dimen/rl_boom_h"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/rl_martop"
+        android:background="@drawable/bottom_bg"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/bottom_iv"
+                android:layout_width="@dimen/rl_im_w"
+                android:layout_height="@dimen/rl_im_h"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bottom_more_select" />
+
+            <TextView
+                android:id="@+id/bottom_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/rl_te_mar"
+                android:text="@string/more"
+                android:textColor="@drawable/bottom_textcolor"
+                android:textSize="@dimen/rl_te_size" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>

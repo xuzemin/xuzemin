@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="timetitle_original_top">315px</dimen>
+    <dimen name="mainbutton_original_top">477px</dimen>
+
+    <dimen name="date_top">27px</dimen>
+
+
+    <dimen name="net_work">35px</dimen>
+
+    <dimen name="indicator_top">-170px</dimen>
+
+
+    <dimen name="center_button_layout_height">383px</dimen>
+    <dimen name="viewpager_item_width">580px</dimen>
+    <dimen name="viewpager_item_height">327px</dimen>
+    <dimen name="viewpager_photo_width">257px</dimen>
+    <dimen name="viewpager_photo_height">208px</dimen>
+    <dimen name="viewpage_scroll_distance">774px</dimen>
+
+    <dimen name="viewpager_item_width_modify">1126px</dimen>
+    <dimen name="viewpager_item_height_modify">634px</dimen>
+    <dimen name="viewpager_item_width_modify_second">527px</dimen>
+    <dimen name="viewpager_item_height_modify_second">297px</dimen>
+    <dimen name="viewpager_photo_width_second">233px</dimen>
+    <dimen name="viewpager_photo_height_second">189px</dimen>
+
+    <dimen name="viewpager_photo_width_orgin">311px</dimen>
+    <dimen name="viewpager_photo_height_orgin">252px</dimen>
+
+    <dimen name="others_layout_item_circle_raidus">165px</dimen>
+
+    <dimen name="others_gridview_item_horizontalspacing">30px</dimen>
+
+    <dimen name="others_item_width">100dp</dimen>
+
+
+
+    <dimen name="others_layout_item_height">330px</dimen>
+
+    <dimen name="scource_text_size">18px</dimen>
+    <dimen name="scource_text_size_final">36px</dimen>
+
+    <dimen name="other_title_top">64px</dimen>
+    <dimen name="other_title_time_top">30px</dimen>
+    <dimen name="other_title_time_size">68px</dimen>
+    <dimen name="other_title_date_size">15px</dimen>
+
+    <dimen name="source_title_text_min_height">49px</dimen>
+    <dimen name="source_title_text_min_width">131px</dimen>
+    <dimen name="source_title_text_max_height">97px</dimen>
+    <dimen name="source_title_text_max_width">263px</dimen>
+              <!--    2k-->
+    <dimen name="ivmargin_top">10dp</dimen>
+    <dimen name="mtvmagrin_top">50dp</dimen>
+    <dimen name="rlmargin_top">10px</dimen>
+    <dimen name="time_text_size">149px</dimen>
+    <dimen name="date_text_size">39px</dimen>
+    <dimen name="tvmargin_left">12px</dimen>
+    <dimen name="center_button_top">80px</dimen>
+    <dimen name="linearlayout_hw">215px</dimen>
+    <dimen name="right_layout_height">234px</dimen>
+    <dimen name="llmargin_top">10dp</dimen>
+    <dimen name="llmargin_bottom">10dp</dimen>
+    <dimen name="image_top">15dp</dimen>
+    <dimen name="main_layout_item_width">160px</dimen>
+    <dimen name="mlvmargin_top">8px</dimen>
+
+    <dimen name="mainbutton_item_distance">93px</dimen>
+
+    <dimen name="others_layout_item_main_width">240px</dimen>
+    <dimen name="others_layout_item_main_height">246px</dimen>
+    <dimen name="others_layout_item_width">80px</dimen>
+    <dimen name="grid_iv_margin">20dp</dimen>
+    <dimen name="others_item_height">30dp</dimen>
+    <dimen name="gv_item_text_size">26px</dimen>
+
+
+    <dimen name="others_gridview_width">1455px</dimen>
+    <dimen name="other_gridview_top">140px</dimen>
+    <dimen name="gv_columnWidth">100px</dimen>
+    <dimen name="verticalSpacing">10dp</dimen>
+            <!-- 主题2   -->
+    <dimen name="iv_margin">10dp</dimen>
+    <dimen name="image2_top">30px</dimen>
+    <dimen name="ll_margintop">5px</dimen>
+    <dimen name="ll_marginright">77px</dimen>
+    <dimen name="tv_size">20sp</dimen>
+    <dimen name="tv_lisstle_size">15sp</dimen>
+    <dimen name="ll_lisstle_margintop">15px</dimen>
+    <dimen name="ab_iv_width">740px</dimen>
+    <dimen name="ab_iv_height">415px</dimen>
+
+    <dimen name="display_bg_x_s">587px</dimen>
+    <dimen name="display_bg_y_s">198px</dimen>
+    <dimen name="surfaceParams_bg_width_s">764px</dimen>
+    <dimen name="surfaceParams_bg_height_s">438px</dimen>
+    <dimen name="surfaceParams_bg_x_s">577px</dimen>
+    <dimen name="surfaceParams_bg_y_s">187px</dimen>
+    <dimen name="surfaceParams_width">710px</dimen>
+    <dimen name="surfaceParams_height">386px</dimen>
+    <dimen name="surfaceParams_x">603px</dimen>
+    <dimen name="surfaceParams_y">213px</dimen>
+    <dimen name="surfacewin_height">192px</dimen>
+    <dimen name="bn1_x">0dp</dimen>
+    <dimen name="bn1_y">0dp</dimen>
+    <dimen name="bn2_x">0dp</dimen>
+    <dimen name="bn2_y">0dp</dimen>
+    <dimen name="bn3_x">0dp</dimen>
+    <dimen name="bn3_y">0dp</dimen>
+    <dimen name="bn4_x">0dp</dimen>
+    <dimen name="bn4_y">0dp</dimen>
+    <dimen name="view_width">2px</dimen>
+    <dimen name="surfacewin_width">354px</dimen>
+    <dimen name="layout_y">194px</dimen>
+    <dimen name="surfaceParams_upwin_height">192px</dimen>
+    <dimen name="channel_width">60dp</dimen>
+    <dimen name="channel_heigh">26dp</dimen>
+    <dimen name="channel1_text_x">603px</dimen>
+    <dimen name="channel1_text_y">213px</dimen>
+    <dimen name="pt">5pt</dimen>
+    <dimen name="channel2_text_x">959px</dimen>
+    <dimen name="channel2_text_y">213px</dimen>
+    <dimen name="channel3_text_x">603px</dimen>
+    <dimen name="channel3_text_y">407px</dimen>
+    <dimen name="channel4_text_x">959px</dimen>
+    <dimen name="channel4_text_y">407px</dimen>
+    <dimen name="ll_layouty">700px</dimen>
+    <dimen name="thmeme2_others_layout_item_main_width">190px</dimen>
+    <dimen name="thmeme2_others_layout_item_main_height">200px</dimen>
+    <dimen name="theme2_margin">30px</dimen>
+    <dimen name="layout_margin_left">100px</dimen>
+    <dimen name="im_margn">122px</dimen>
+    <dimen name="item_text_size">26px</dimen>
+    <dimen name="lltop">15px</dimen>
+
+
+    //
+    <dimen name="viewpage_marleft">25dp</dimen>
+    <dimen name="viewpage_h">300dp</dimen>
+    <dimen name="viewpage_martop">15dp</dimen>
+
+
+    <dimen name="rl_martop">950px</dimen>
+    <dimen name="rl_boom_w">160px</dimen>
+    <dimen name="rl_boom_h">50px</dimen>
+    <dimen name="rl_im_w">20px</dimen>
+    <dimen name="rl_im_h">20px</dimen>
+    <dimen name="rl_te_size">20px</dimen>
+    <dimen name="rl_te_mar">20px</dimen>
+
+
+    <dimen name="gd_v_martop">120dp</dimen>
+    <dimen name="gd_v_h">1dp</dimen>
+    <dimen name="gd_v_w">1300px</dimen>
+    <dimen name="ll_view_matop">100dp</dimen>
+    <dimen name="ll_view_mbootm">60dp</dimen>
+    <dimen name="gd_tv_size">30dp</dimen>
+    <dimen name="gd_tv_matop">100px</dimen>
+    <dimen name="launhcerappgride_viewpager_height">300dp</dimen>
+    <dimen name="launcherappgride_ctv_viewpager_width">670dp</dimen>
+    <dimen name="launcher_functionbutton_radius">3dp</dimen>
+
+
+
+    <dimen name="dia_iv">50dp</dimen>
+    <dimen name="dia_tv">100px</dimen>
+    <dimen name="dia_ma_top">20dp</dimen>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="videoWindowType_x">603</integer>
+    <integer name="videoWindowType_y">213</integer>
+    <integer name="vWindowType_width">354</integer>
+    <integer name="vWindowType_height">192</integer>
+    <integer name="videoWindowType_second_x">989</integer>
+    <integer name="videoWindowType_second_y">213</integer>
+    <integer name="videoWindowType_third_x">603</integer>
+    <integer name="videoWindowType_third_y">407</integer>
+    <integer name="videoWindowType_fourth_x">959</integer>
+    <integer name="videoWindowType_fourth_y">407</integer>
+
+    <integer name="videoWindowType_width">710</integer>
+    <integer name="videoWindowType_height">386</integer>
+
+    <integer name="dia_w">800</integer>
+    <integer name="dia_h">420</integer>
+    <integer name="dia_x">0</integer>
+    <integer name="dia_y">-295</integer>
+</resources>
