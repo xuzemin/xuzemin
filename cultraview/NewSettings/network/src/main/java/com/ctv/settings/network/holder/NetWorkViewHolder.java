@@ -249,7 +249,7 @@ public class NetWorkViewHolder extends BaseViewHolder implements View.OnClickLis
         }
 
         //热点开关判断
-        String wifiapband = android.os.SystemProperties.get("Wifiapband");
+        String wifiapband = android.os.SystemProperties.get(HOST_BAND_TYPE);
         updateUI(tv_host_spot, mActivity.getString(R.string.status_off));
         updateUI(tv_screen_hot, mActivity.getString(R.string.status_off));
         L.d("wifiapband" + wifiapband);

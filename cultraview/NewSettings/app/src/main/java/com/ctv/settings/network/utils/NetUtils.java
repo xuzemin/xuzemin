@@ -71,7 +71,7 @@ public class NetUtils {
 
     public static final String SCREEN_HOST_BAND = "Apband5G";
 
-    public static final String HOST_BAND_TYPE = "Wifiapband";
+    public static final String HOST_BAND_TYPE = "persist.ctv.ap.band";
 
     // WifiHotspot
     public static final int SECURE_TYPE_OPEN = 0;
@@ -225,10 +225,8 @@ public class NetUtils {
         if (mWifiManager == null)
             return;
         Method forget = mWifiManager.getClass().getDeclaredMethod("forget", int.class, Class.forName("android.net.wifi.WifiManager$ActionListener"));
-        if (forget != null) {
-            forget.setAccessible(true);
-            forget.invoke(mWifiManager, number, null);
-        }
+        forget.setAccessible(true);
+        forget.invoke(mWifiManager, number, null);
     }
 
 //    static Object reflectInstance(String className, Class[] argTypes,

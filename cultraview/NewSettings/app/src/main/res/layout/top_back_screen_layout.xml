@@ -31,6 +31,5 @@
             android:layout_marginLeft="@dimen/fab_margin"
             android:gravity="center_vertical|left"
             android:text="@string/hot_spot_type_two"
-            android:textSize="@dimen/content_text_description"
             android:textColor="@color/white" />
 </LinearLayout>

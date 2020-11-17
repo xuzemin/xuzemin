@@ -60,13 +60,13 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
 
     private final NetWorkActivity activity;
 
-    public static WirelessAdapter wirelessAdapter = null;
+    public WirelessAdapter wirelessAdapter = null;
 
     private FrameLayout wireless_switch_fl = null;
 
     private ImageView wireless_switch_iv = null;
 
-    public WifiManager wifiManager;
+    private WifiManager wifiManager;
 
     private final Context ctvContext;
 
@@ -106,15 +106,16 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case NetUtils.OPEN_WIFI:
-                    Log.i(TAG, "wifiHandler setAndCheckWifiData");
-                    openWifi();
+//                    Log.i(TAG, "wifiHandler setAndCheckWifiData");
+//                    openWifi();
+                    wifiManager.setWifiEnabled(true);
                     break;
                 case NetUtils.START_SCAN_WIFI:
                     wifiManager.startScan();
                     break;
                 case NetUtils.REFRESH_SIGNAL_WIFI:
                     refreshWifiSignal();
-                    wifiHandler.sendEmptyMessageDelayed(NetUtils.REFRESH_SIGNAL_WIFI,3000);
+                    wifiHandler.sendEmptyMessageDelayed(NetUtils.REFRESH_SIGNAL_WIFI,1000);
                     break;
                 case NetUtils.CHECKOUT_TIME_WIFI:
                     if (wirelessAdapter.getmConnectState() == 2 && !mWasAssociating) {
@@ -186,9 +187,9 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
                         try {
                             WifiConfigHelper.forgetConfiguration(context,
                                     mConnectingWifiConfiguration);
-                            if(WirelessViewHolder.wirelessAdapter !=null){
-                                WirelessViewHolder.wirelessAdapter.setmSsid("");
-                                WirelessViewHolder.wirelessAdapter.setConnectState(0);
+                            if(wirelessAdapter !=null){
+                                wirelessAdapter.setmSsid("");
+                                wirelessAdapter.setConnectState(0);
                             }
                         } catch (Exception e) {
                             L.d(e.toString());
@@ -380,6 +381,8 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
             wirelessAdapter.updateTheTop(wifiManager.getConnectionInfo().getSSID());
             wirelessAdapter.setConnectState(1);
             wifi_lv.setSelection(0);
+        }else{
+            wirelessAdapter.setConnectState(0);
         }
     }
 
@@ -419,9 +422,10 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
         } else {
             if (isClick) {
                 isOpen_top = false;
+                wifiHandler.removeMessages(NetUtils.OPEN_WIFI);
                 wifiManager.setWifiEnabled(false);
                 mConnectingWifiConfiguration = null;
-                scanResults.clear();
+//                scanResults.clear();
                 wirelessAdapter.setmSsid("");
                 wirelessAdapter.setConnectState(0);
                 wirelessAdapter.setScanResults(scanResults);
@@ -436,11 +440,11 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
     }
 
     private void openWifi() {
-        wifiManager.setWifiEnabled(true);
         wireless_switch_iv.setBackgroundResource(R.mipmap.on);
         wifi_pb.setVisibility(View.VISIBLE);
         wireless_switch_iv.setClickable(false);
         isWifiOpenning = true;
+        wifiHandler.sendEmptyMessageDelayed(NetUtils.OPEN_WIFI,1000);
     }
 
     private void wifiIsOpened() {
@@ -452,6 +456,7 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
     }
 
     private void refreshWifiSignal() {
+
         List<ScanResult> scanRst = mListener.getAvailableNetworks();
         if (scanRst != null) {
             // Log.i(TAG, "--refreshWifiSignal--scanRst.size:" +
@@ -486,6 +491,7 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
     }
 
     private void initWifiData(boolean isInit) {
+        scanResults.clear();
         if (isOpenWifi) {
             wireless_switch_iv.setBackgroundResource(R.mipmap.on);
             setWirelessStatus(true);
@@ -498,7 +504,7 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
             }
             if (scanRst != null) {
                 Log.i(TAG, "==scanRst.size:" + scanRst.size());
-                scanResults.clear();
+//                scanResults.clear();
                 for (ScanResult result : scanRst) {
                     String ssid = result.SSID;
                     Log.i("WirelessAdapter1", "00SSID:-" + ssid + "-");
@@ -526,7 +532,7 @@ public class WirelessViewHolder implements OnFocusChangeListener, OnClickListene
             Log.i("WirelessAdapter", "=======scanResults:" + scanResults);
             wirelessAdapter.setScanResults(scanResults);
             wirelessAdapter.updateTheTop(wifiManager.getConnectionInfo().getSSID());
-            wirelessAdapter.setConnectState(1);
+//            wirelessAdapter.setConnectState(1);
             wirelessAdapter.notifyDataSetChanged();
         } else {
             wireless_switch_iv.setBackgroundResource(R.mipmap.off);

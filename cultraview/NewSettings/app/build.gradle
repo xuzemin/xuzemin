@@ -7,7 +7,7 @@ android {
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
         versionCode versions.versionCode
-        versionName "V" + buildVersionName()
+        versionName "V" + versions.versionName
         applicationId appIds.app
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -104,11 +104,6 @@ def getDate() {
     def formattedDate = date.format('yyyyMMddHHmmss')
     return formattedDate
 }
-
-def buildVersionName() {
-    return "1.0"
-}
-
 
 dependencies {
     compileOnly files('libs/fr.jar') // framework.jar

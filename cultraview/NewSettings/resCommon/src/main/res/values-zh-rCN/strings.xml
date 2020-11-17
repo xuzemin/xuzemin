@@ -410,7 +410,7 @@
     <!--</string-array>-->
     <string name="restore_factory_system_reboot">系统正在重新启动...</string>
     <string-array name="share_usb_mode">
-        <item>跟随共享</item>
+        <item>共享</item>
         <item>仅Android</item>
         <item>仅内置电脑</item>
     </string-array>

@@ -195,20 +195,23 @@ public class GreneralUtils {
 
     /**
      * U盘文件检测
-     * */
-    public  void checkFile(boolean flag, boolean flag1) {
+     */
+    public void checkFile(boolean flag, boolean flag1) {
         if (!flag) {
             SystemProperties.set("persist.sys.usbLock", "off");
-            SystemProperties.set("persist.sys.touch_enable",  "1");
+            SystemProperties.set("persist.sys.touch_enable", "1");
         } else {
             File usb = new File("/mnt/usb");
-            final File[] files = usb.listFiles();
-            getFileName(files);
+            File[] files = usb.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                getFileName(files[i].listFiles());
+            }
+
             if (mCheckFileRet) {
-                SystemProperties.set("persist.sys.touch_enable",  "1");
+                SystemProperties.set("persist.sys.touch_enable", "1");
                 SystemProperties.set("persist.sys.usbLock", "off");
             } else {
-                SystemProperties.set("persist.sys.touch_enable",  "0");
+                SystemProperties.set("persist.sys.touch_enable", "0");
                 SystemProperties.set("persist.sys.usbLock", "on");
             }
             mCheckFileRet = false;
@@ -227,7 +230,7 @@ public class GreneralUtils {
         }
         for (File file : files) {
             if (file.isDirectory()) {
-                getFileName(file.listFiles());
+                continue;
             } else {
                 String fileName = file.getName();
                 String filePath = file.getPath().toString();

@@ -58,6 +58,8 @@ public class LockScreenActivity extends BaseActivity {
 
     private String mSecStr;
 
+    private final String Admin_Sec = "666888";
+
     private String mSetPassWord;
     private ImageView back_btn;
     private TextView back_title;
@@ -229,6 +231,10 @@ public class LockScreenActivity extends BaseActivity {
                 mSecStr = et_sec_pwd.getText().toString();
                 Log.d(TAG, "zhu..firstStr:" + mFirstStr + "..secStr:" + mSecStr);
                 if (mFirstStr.equals(mSecStr) && mFirstStr.length() == 6) {
+                    if(mFirstStr.equals(Admin_Sec)){
+                        Toast.makeText(LockScreenActivity.this, getResources().getString(R.string.greneral_password_tip_admin), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     // save password...
                     setTargetContextPSW(mSecStr);
                     //mPWPreferences.edit().putString(PWKEY, mSecStr).commit();

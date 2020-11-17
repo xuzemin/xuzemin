@@ -30,7 +30,7 @@
             <include
                 layout="@layout/device_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/module_height_item_x5"
+                android:layout_height="@dimen/module_height_item_x4"
                 android:layout_margin="0dp"
                 android:padding="0dp" />
 
@@ -50,7 +50,7 @@
             <include
                 layout="@layout/general_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/module_height_item_x6"
+                android:layout_height="@dimen/module_height_item_x7"
                 android:layout_margin="0dp"
                 android:padding="0dp" />
 

@@ -18,6 +18,7 @@ import com.ctv.settings.about.activity.RestoreFactoryActivity;
 import com.cultraview.tv.CtvCommonManager;
 import com.cultraview.tv.CtvTvManager;
 import com.cultraview.tv.common.exception.CtvCommonException;
+import com.hht.android.sdk.ops.HHTOpsManager;
 import com.mstar.android.tvapi.common.TvManager;
 import com.mstar.android.tvapi.common.exception.TvCommonException;
 
@@ -68,22 +69,42 @@ public class RestoreFactoryActivityViewHolder implements View.OnClickListener {
             }
             Toast.makeText(context, R.string.restore_factory_system_reboot,
                     Toast.LENGTH_LONG).show();
-//            if ("OPEN".equals(SystemPropertiesUtils.get(context, "hotel.config"))) {
-//                // 酒店模式数据,此处不做恢复
-//                resetHotelDB();
-//            }
-//            if ("Y".equals(SystemPropertiesUtils.get(context, "persist.sys.password"))) {
-//                // 开机计数数据,此处不做恢复
-//                resetPassword();
-//            }
-            Log.d(TAG,"restore_ok");
-            resetPassword();
-            resetStart();
+            Thread closeSystemThread = new Thread(closeSystemRunnable);
+            closeSystemThread.start();
+
+
         } else if (id == R.id.restore_cancel) {
             activity.finish();
         }
 
     }
+
+    //Start WhiteBoard Patch
+    Runnable closeSystemRunnable = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if (HHTOpsManager.getInstance().isOpsOk()) {
+                    HHTOpsManager.getInstance().setOpsPowerTurnOff();
+                    int count = 0;
+                    while (HHTOpsManager.getInstance().isOpsOk()) {
+
+                        Thread.sleep(1000);
+                        count++;
+                        if (count == 30) {
+                            break;
+                        }
+                    }
+                    ;
+                }
+                resetPassword();
+                resetStart();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+            }
+        }
+    };
 
     private void resetStart() {
 

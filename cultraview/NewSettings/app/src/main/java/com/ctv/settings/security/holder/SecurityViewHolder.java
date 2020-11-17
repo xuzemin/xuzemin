@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.ctv.settings.R;
 import com.ctv.settings.base.BaseViewHolder;
 import com.ctv.settings.security.activity.PermissionsActivity;
+import com.ctv.settings.security.permission.AppRestrictionsActivity;
 import com.ctv.settings.security.utils.GreneralUtils;
 import com.ctv.settings.utils.L;
 import com.ctv.settings.utils.Tools;
@@ -32,7 +33,7 @@ public class SecurityViewHolder extends BaseViewHolder implements View.OnClickLi
     private View itemUdiskPermissions; // 安全模块根界面
 
     private ImageView imAppPermissions; // app权限
-    private ImageView imUnknownStore; // 位置来源开关
+//    private ImageView imUnknownStore; // 位置来源开关
     private ImageView imUdiskPermissions; // U盘权限
     private ImageView imCameraPermissions; // 摄像头权限
 
@@ -71,7 +72,7 @@ public class SecurityViewHolder extends BaseViewHolder implements View.OnClickLi
         itemUdiskPermissions = activity.findViewById(R.id.item_udisk_permissions);
 
         imAppPermissions = (ImageView) activity.findViewById(R.id.im_item_app_permissions);
-        imUnknownStore = (ImageView) activity.findViewById(R.id.im_item_unknown_store);
+//        imUnknownStore = (ImageView) activity.findViewById(R.id.im_item_unknown_store);
         imUdiskPermissions = (ImageView) activity.findViewById(R.id.im_item_udisk_permissions);
         imCameraPermissions = (ImageView) activity.findViewById(R.id.im_item_camera_permissions);
 
@@ -89,7 +90,7 @@ public class SecurityViewHolder extends BaseViewHolder implements View.OnClickLi
         Log.d(TAG, "initData");
         isUnknownStore = Tools.isNonMarketAppsAllowed(activity);
         int resId = isUnknownStore ? R.mipmap.on : R.mipmap.off;
-        imUnknownStore.setBackgroundResource(resId);
+//        imUnknownStore.setBackgroundResource(resId);
 
         isCameraPermissions = true;
         resId = isCameraPermissions ? R.mipmap.on : R.mipmap.off;
@@ -184,12 +185,13 @@ public class SecurityViewHolder extends BaseViewHolder implements View.OnClickLi
         if (id == R.id.item_app_permissions) {
             mActivity.startActivity(new Intent(mActivity, PermissionsActivity.class));
         } else if (id == R.id.item_unknown_store){
-            isUnknownStore = Tools.isNonMarketAppsAllowed(mActivity);
-            isUnknownStore = !isUnknownStore;
-            Tools.setNonMarketAppsAllowed(mActivity, isUnknownStore);
-
-            int resId = isUnknownStore ? R.mipmap.on : R.mipmap.off;
-            imUnknownStore.setBackgroundResource(resId);
+//            isUnknownStore = Tools.isNonMarketAppsAllowed(mActivity);
+//            isUnknownStore = !isUnknownStore;
+//            Tools.setNonMarketAppsAllowed(mActivity, isUnknownStore);
+//
+//            int resId = isUnknownStore ? R.mipmap.on : R.mipmap.off;
+//            imUnknownStore.setBackgroundResource(resId);
+            mActivity.startActivity(new Intent(mActivity, AppRestrictionsActivity.class));
             L.d(TAG, "mOnClickListener view.id->%s isUnknownStore:%s", id, isUnknownStore);
         } else if (id == R.id.item_camera_permissions){
             isCameraPermissions = !isCameraPermissions;

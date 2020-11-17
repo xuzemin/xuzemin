@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemProperties;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -68,6 +69,8 @@ public class AboutViewHolder {
     private static View dialog_show_background;
 
     public static TextView about_tv_tv;
+    public static String clientName;
+    private final static boolean IS_AH_EDU_QD = TextUtils.equals(SystemProperties.get("ro.build.display.id", ""), "CN8386_AH_EDU_QD");
     public static Handler aboutTvHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -156,7 +159,11 @@ public class AboutViewHolder {
         String clientNameTmp = SystemProperties.get( "ro.build.display.id", "EDU");// DFQ
 
         String[] strArr = clientNameTmp.split("_");
-        String clientName = strArr[strArr.length-1];
+        if(IS_AH_EDU_QD){
+            clientName = "智慧黑板";
+        }else{
+            clientName = strArr[strArr.length-1];
+        }
         L.i("qkmin---->clientName"+clientName);
 
         // 获得数据

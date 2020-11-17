@@ -211,14 +211,16 @@
     <string name="item_four_distribution">Four Distribution</string>
     <string name="item_triple_bonding">Triple Bonding</string>
     <string name="item_public_usb">USB Share</string>
+    <string name="item_hdmi">HDMI OUT</string>
     <string name="item_alone_backlight">Audio Alone</string>
     <string name="item_headphone_insertion_test">Headphone insertion test</string>
     <string name="item_five_touch">Five finger screen</string>
+    <string name="item_five_touch_qd">Three finger screen</string>
     <string name="greneral_lock_screen_setting">Lock screen settings</string>
     <string name="greneral_lock_screen_switch">Lock screen switch</string>
     <string name="greneral_set_password">Set password</string>
     <string name="greneral_enter_the_old_password">Please enter the old password:</string>
-    <string name="greneral_please_input_passwords">Please input a password:</string>
+    <string name="greneral_please_input_passwords">Please enter a six digit password:</string>
     <string name="greneral_img">img</string>
     <string name="greneral_open_usb_lock_tip_one">Do you want to unlock the U disk lock?</string>
     <string name="greneral_open_usb_lock_tip_two">Please make sure there is no unlock U disk around you. If not, please don\'t turn on this function!</string>
@@ -238,6 +240,7 @@
     <string name="greneral_password_tip_seven">The old password is wrong. Please re-enter the password.</string>
     <string name="greneral_password_tip_eight">Password must not be less than 6 bits</string>
     <string name="greneral_password_tip_nine">The new password is the same as the original one. Please re-enter it.</string>
+    <string name="greneral_password_tip_admin">The administrator password cannot be set</string>
     <string name="greneral_password_tip_ten">Password Reset Successfully</string>
     <string name="greneral_lock_screen_tip">Please set the unlock password</string>
     <string name="greneral_lock_open_tip">The U disk lock has been opened. Please insert the U disk to unlock it.</string>
@@ -398,7 +401,14 @@
 <!--        <item>Electric eye</item>-->
         <item>The eyecare +</item>
         <item>Bright eye</item>
-        <item>Writing eye</item>
+<!--        <item>Writing eye</item>-->
+    </string-array>
+    <string-array name="eye_plus_mode_Light">
+        <item>Close</item>
+        <item>Electric eye</item>
+        <item>The eyecare +</item>
+        <item>Bright eye</item>
+<!--        <item>Writing eye</item>-->
     </string-array>
     <string-array name="eye_plus_description">
         <item></item>
@@ -407,7 +417,12 @@
         <item>Reduce damage to vision by adjusting display brightness</item>
         <item>White board writing state, through the brightness adjustment, reduce the damage to vision</item>
     </string-array>
-
+    <string-array name="eye_plus_description_Light">
+        <item></item>
+        <item>Adjust display brightness according to ambient light to reduce visual damage</item>
+        <item>By lowering the color temperature, reduce the damage to vision</item>
+        <item>Reduce damage to vision by adjusting display brightness</item>
+    </string-array>
     <string-array name="starting_up_option_vals">
         <item>Smart UI</item>
         <item>ATV</item>
@@ -425,12 +440,20 @@
     <string-array name="starting_up_ah_option_vals">
         <item>Smart UI</item>
         <item>OPS</item>
+        <item>FRONT HDMI</item>
         <item>HDMI1</item>
         <item>HDMI2</item>
-        <item>HDMI3</item>
         <item>VGA</item>
     </string-array>
 
+    <string-array name="starting_up_ah_cx_option_vals">
+        <item>Smart UI</item>
+        <item>OPS</item>
+        <!--<item>HDMI1</item>-->
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>VGA</item>
+    </string-array>
 
 
     <string name="open_usb_upgrade_tip">Do you want to upgrade the system?</string>
@@ -467,4 +490,23 @@
     <string name="gpu_infor_538">MaliT720MP2*2core</string>
 
     <string name="back">Back</string>
+    <string name="text_repeat">Repeat</string>
+    <string name="text_sunday_short">Sun</string>
+    <string name="text_monday_short">Mon</string>
+    <string name="text_tuesday_short">Tue</string>
+    <string name="text_wednesday_short">Wed</string>
+    <string name="text_thursday_short">Thu</string>
+    <string name="text_friday_short">Fri</string>
+    <string name="text_saturday_short">Sat</string>
+    <string name="proxy_easytouch_opening">The levitation is opening</string>
+    <string name="proxy_easytouch_closing">The levitation is closing</string>
+    <string name="text_shutdown">Shutdown</string>
+    <string name="text_monday">Monday</string>
+    <string name="text_tuesday">Tuesday</string>
+    <string name="text_wednesday">Wednesday</string>
+    <string name="text_thursday">Thursday</string>
+    <string name="text_friday">Friday</string>
+    <string name="text_saturday">Saturday</string>
+    <string name="text_sunday">Sunday</string>
+    <string name="please_set_repeatability">Please set repeatability</string>
 </resources>

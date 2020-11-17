@@ -448,4 +448,9 @@ public class Tools {
             }
         }.start();
     }
+
+    public static boolean isDoubleWifi() {
+        String wifi = SystemProperties.get("persist.ctv.double.wifi","off");
+        return wifi.equals("on");
+    }
 }

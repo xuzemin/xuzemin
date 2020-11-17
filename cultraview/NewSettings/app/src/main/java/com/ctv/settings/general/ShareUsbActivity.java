@@ -12,6 +12,11 @@ import com.ctv.settings.R;
 import com.ctv.settings.base.BaseActivity;
 import com.ctv.settings.utils.CommonConsts;
 import com.ctv.settings.utils.L;
+import com.mstar.android.tv.TvCommonManager;
+import com.mstar.android.tvapi.common.TvManager;
+import com.mstar.android.tvapi.common.exception.TvCommonException;
+
+import static com.ctv.settings.utils.DataTool.isAHBoard;
 
 public class ShareUsbActivity extends BaseActivity implements View.OnClickListener {
     private View viewById;
@@ -47,10 +52,23 @@ public class ShareUsbActivity extends BaseActivity implements View.OnClickListen
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String value = i+"";
                 SystemProperties.set("persist.sys.share_usb_mode",value);
-
-                L.e("share_usb_mode"+SystemProperties.get("persist.sys.share_usb_mode","0"));
-
                 setResult(CommonConsts.REQUEST_SHARE_USB_OPTIONS);
+                if(isAHBoard()) {
+                    try {
+                        switch (i) {
+                            case 0:
+                            case 1:
+                                TvManager.getInstance().setTvosCommonCommand("ConfigTca9539#10#0");
+                                break;
+                            case 2:
+                                TvManager.getInstance().setTvosCommonCommand("ConfigTca9539#10#1");
+                                break;
+                        }
+                    } catch (TvCommonException e) {
+                        e.printStackTrace();
+                        L.e("e" + e.toString());
+                    }
+                }
                 finish();
             }
         });

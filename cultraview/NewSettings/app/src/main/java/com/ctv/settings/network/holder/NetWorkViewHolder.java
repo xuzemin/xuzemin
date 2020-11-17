@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.ctv.settings.utils.L;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
+
+import static com.ctv.settings.network.utils.NetUtils.HOST_BAND_TYPE;
 
 
 /**
@@ -190,7 +193,6 @@ public class NetWorkViewHolder extends BaseViewHolder implements View.OnClickLis
         mAyncTask.execute();
     }
 
-
     String getDevice(BluetoothAdapter _bluetoothAdapter) {
         Class<BluetoothAdapter> bluetoothAdapterClass = BluetoothAdapter.class;//得到BluetoothAdapter的Class对象
         try {//得到蓝牙状态的方法
@@ -201,19 +203,14 @@ public class NetWorkViewHolder extends BaseViewHolder implements View.OnClickLis
             if (state == BluetoothAdapter.STATE_CONNECTED) {
                 Set<BluetoothDevice> devices = _bluetoothAdapter.getBondedDevices();
                 for (BluetoothDevice device : devices) {
-
                     Method isConnectedMethod = BluetoothDevice.class.getDeclaredMethod("isConnected", (Class[]) null);
                     method.setAccessible(true);
                     boolean isConnected = (boolean) isConnectedMethod.invoke(device, (Object[]) null);
-
                     if (isConnected) {
                         return device.getName();
                     }
-
                 }
-
             }
-
         } catch (
                 Exception e) {
             e.printStackTrace();
@@ -250,7 +247,7 @@ public class NetWorkViewHolder extends BaseViewHolder implements View.OnClickLis
         }
 
         //热点开关判断
-        String wifiapband = android.os.SystemProperties.get("Wifiapband");
+        String wifiapband = android.os.SystemProperties.get(HOST_BAND_TYPE);
         int hotpotRes = NetUtils.isHotspot5G()? R.string.hot_spot_type_two : R.string.hot_spot_type_one;
         String hotpotName = mActivity.getString(hotpotRes);
         updateUI(tv_host_spot, hotpotName + " " + mActivity.getString(R.string.status_off));
@@ -318,12 +315,14 @@ public class NetWorkViewHolder extends BaseViewHolder implements View.OnClickLis
     }
 
     public static String getWIFIName(Context context) {
+        ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo.State wifi = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        int wifiState = wifiMgr.getWifiState();
-        L.d("wifiState" + wifiState);
-        WifiInfo info = wifiMgr.getConnectionInfo();
-        String wifiId = info != null ? info.getSSID().replace("\"", "") : null;
-        L.d("wifiId" + wifiId);
+        String wifiId = null;
+        if(wifi == NetworkInfo.State.CONNECTED) {
+            WifiInfo info = wifiMgr.getConnectionInfo();
+            wifiId = info != null ? info.getSSID().replace("\"", "") : null;
+        }
         return wifiId;
     }
 }

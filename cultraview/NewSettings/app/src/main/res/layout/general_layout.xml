@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="0dp"
-    android:orientation="vertical"
     android:layout_weight="8"
+    android:orientation="vertical"
     android:padding="0dp"
 
     >
@@ -16,10 +16,10 @@
         style="@style/item_title_new"
         android:text="@string/header_general" />
 
-<!--    <LinearLayout
-        style="@style/ll_list"
-        android:layout_weight="5"
-        android:orientation="vertical">-->
+    <!--    <LinearLayout
+            style="@style/ll_list"
+            android:layout_weight="5"
+            android:orientation="vertical">-->
 
     <RelativeLayout
         android:id="@+id/item_eye_plus"
@@ -32,140 +32,164 @@
         <ImageView
             android:id="@+id/item_eye_plus_iv"
             style="@style/switch_image_style_new"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_eye_plus_iv"
             style="@style/item_textView_right_new"
             android:text="@string/right_boot_options" />
+
         <ImageView
             style="@style/more_image_style_new"
             android:visibility="visible" />
     </RelativeLayout>
 
-        <RelativeLayout
-            style="@style/rl_item"
-            android:visibility="gone">
+    <RelativeLayout
+        style="@style/rl_item"
+        android:visibility="gone">
 
-            <TextView
-                style="@style/item_textView_new"
-                android:text="@string/item_not_appstore" />
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_not_appstore" />
 
-            <ImageView
-                style="@style/switch_image_style_new"
-                android:visibility="visible" />
-        </RelativeLayout>
+        <ImageView
+            style="@style/switch_image_style_new"
+            android:visibility="visible" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/item_hint_sound"
-            style="@style/rl_item">
+    <RelativeLayout
+        android:id="@+id/item_hint_sound"
+        style="@style/rl_item">
 
-            <TextView
-                style="@style/item_textView_new"
-                android:text="@string/item_touch_sound" />
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_touch_sound" />
 
-            <ImageView
-                android:id="@+id/item_hint_sound_iv"
-                style="@style/switch_image_style_new"
-                android:visibility="visible" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/item_hint_sound_iv"
+            style="@style/switch_image_style_new"
+            android:visibility="visible" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/item_easy_touch"
-            style="@style/rl_item">
+    <RelativeLayout
+        android:id="@+id/item_easy_touch"
+        style="@style/rl_item">
 
-            <TextView
-                style="@style/item_textView_new"
-                android:text="@string/item_floating_button" />
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_floating_button" />
 
-            <ImageView
-                android:id="@+id/item_easy_touch_iv"
-                style="@style/switch_image_style_new" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/item_easy_touch_iv"
+            style="@style/switch_image_style_new" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/item_four_screen"
-            style="@style/rl_item"
-            android:visibility="gone">
+    <RelativeLayout
+        android:id="@+id/item_four_screen"
+        style="@style/rl_item"
+        android:visibility="gone">
 
-            <TextView
-                android:id="@+id/greneral_item_fourscreen_tv"
-                style="@style/item_textView_new"
-                android:text="@string/item_four_distribution" />
+        <TextView
+            android:id="@+id/greneral_item_fourscreen_tv"
+            style="@style/item_textView_new"
+            android:text="@string/item_four_distribution" />
 
-            <ImageView
-                android:id="@+id/item_four_screen_iv"
-                style="@style/switch_image_style_new" />
+        <ImageView
+            android:id="@+id/item_four_screen_iv"
+            style="@style/switch_image_style_new" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/triple_bond_one"
-            style="@style/rl_item"
-            android:visibility="gone">
+    <RelativeLayout
+        android:id="@+id/triple_bond_one"
+        style="@style/rl_item"
+        android:visibility="gone">
 
-            <TextView
-                style="@style/item_textView_new"
-                android:text="@string/item_triple_bonding" />
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_triple_bonding" />
 
-            <ImageView
-                android:id="@+id/triple_bond_one_iv"
-                style="@style/switch_image_style_new" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/triple_bond_one_iv"
+            style="@style/switch_image_style_new" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/alone_backlight"
-            style="@style/rl_item">
+    <RelativeLayout
+        android:id="@+id/alone_backlight"
+        style="@style/rl_item">
 
-            <TextView
-                style="@style/item_textView"
-                android:text="@string/item_alone_backlight" />
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_alone_backlight" />
 
-            <ImageView
-                android:id="@+id/alone_backlight_iv"
-                style="@style/switch_image_style" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/alone_backlight_iv"
+            style="@style/switch_image_style" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/headphone_insertion_test"
-            style="@style/rl_item"
-            android:visibility="gone">
+    <RelativeLayout
+        android:id="@+id/headphone_insertion_test"
+        style="@style/rl_item"
+        android:visibility="gone">
 
-            <TextView
-                style="@style/item_textView"
-                android:text="@string/item_headphone_insertion_test" />
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_headphone_insertion_test" />
 
-            <ImageView
-                android:id="@+id/headphone_insertion_test_iv"
-                style="@style/switch_image_style" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/headphone_insertion_test_iv"
+            style="@style/switch_image_style" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/five_touch_mode"
-            style="@style/rl_item">
+    <RelativeLayout
+        android:id="@+id/five_touch_mode"
+        style="@style/rl_item">
 
-            <TextView
-                style="@style/item_textView_new"
-                android:text="@string/item_five_touch" />
+        <TextView
+            android:id="@+id/five_touch_mode_tv"
+            style="@style/item_textView_new"
+            android:text="@string/item_five_touch" />
 
-            <ImageView
-                android:id="@+id/five_touch_mode_iv"
-                style="@style/switch_image_style_new" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/five_touch_mode_iv"
+            style="@style/switch_image_style_new" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/public_usb"
-            style="@style/rl_item">
+    <RelativeLayout
+        android:id="@+id/public_usb"
+        style="@style/rl_item">
 
-            <TextView
-                style="@style/item_textView"
-                android:text="@string/item_public_usb" />
-            <TextView
-                android:id="@+id/tv_share_usb"
-                style="@style/item_textView_right_new"
-                android:text="@string/right_boot_options" />
-            <ImageView
-                style="@style/more_image_style_new"
-                android:visibility="visible" />
-        </RelativeLayout>
-    </LinearLayout>
-<!--</LinearLayout>-->
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_public_usb" />
+
+        <TextView
+            android:id="@+id/tv_share_usb"
+            style="@style/item_textView_right_new"
+            android:text="@string/right_boot_options" />
+
+        <ImageView
+            style="@style/more_image_style_new"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_hdmiout"
+        style="@style/rl_item">
+
+        <TextView
+            style="@style/item_textView_new"
+            android:text="@string/item_hdmi" />
+
+        <TextView
+            android:id="@+id/tv_hdmiout"
+            style="@style/item_textView_right_new"
+            android:text="@string/right_boot_options" />
+
+        <ImageView
+            style="@style/more_image_style_new"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+
+</LinearLayout><!--</LinearLayout>-->

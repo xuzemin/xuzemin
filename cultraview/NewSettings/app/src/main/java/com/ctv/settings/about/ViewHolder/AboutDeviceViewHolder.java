@@ -3,6 +3,7 @@ package com.ctv.settings.about.ViewHolder;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.SystemProperties;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -32,7 +33,9 @@ public class AboutDeviceViewHolder extends BaseViewHolder implements View.OnClic
     private int boot_option;
     public TextView bootoptionitem;
     private static final String[] ah_boot_vals = {"ANDROID", "OPS", "HDMI1", "HDMI2", "HDMI3", "VGA"};
+    private static final String[] ah_cx_boot_vals = {"ANDROID", "OPS", "HDMI3" ,"HDMI2", "VGA"}; //"HDMI1",去掉前置hdmi，hdmi3名称改为hdmi1
     private static final String[] mh_boot_vals = {"ANDROID", "ATV", "DTV", "HDMI1", "HDMI2", "OPS", "HDMI3", "DP", "AV1", "YPBPR", "VGA"};
+    public final static boolean IS_AH_CX = TextUtils.equals(SystemProperties.get("ro.build.display.id", ""), "CN8386_AH_CX");
     private boolean ahBoard;
 
     public AboutDeviceViewHolder(Activity activity) {
@@ -84,8 +87,15 @@ public class AboutDeviceViewHolder extends BaseViewHolder implements View.OnClic
         ahBoard = DataTool.isAHBoard();
 
         if (ahBoard) {
+            if (IS_AH_CX){
+                Log.d("keww","IS_AH_CX = "+IS_AH_CX);
+                options_vals = activity.getResources().getStringArray(R.array.starting_up_ah_cx_option_vals);
+                setSelectAH_CX();
+            }else{
+                Log.d("keww","ahBoard = "+ahBoard);
             options_vals = activity.getResources().getStringArray(R.array.starting_up_ah_option_vals);
             setSelectAH();
+            }
         } else {
             options_vals = activity.getResources().getStringArray(R.array.starting_up_option_vals);
             setSelectMH();
@@ -141,6 +151,40 @@ public class AboutDeviceViewHolder extends BaseViewHolder implements View.OnClic
         Log.d(TAG, "mInputSource  AH:" + boot_option);
     }
 
+    /**
+     * AH_CX 选中index
+     */
+    private void setSelectAH_CX() {
+        String bootInputsource = SystemProperties.get("persist.sys.boot.source", "ANDROID").trim();
+        Log.d(TAG, "bootInputsource:" + bootInputsource);
+        if (options_vals != null) {
+            boot_option = Arrays.binarySearch(ah_cx_boot_vals, bootInputsource);
+        }
+        Log.d("keww","bootInputsource = "+bootInputsource);
+        if (boot_option < 0) {
+            switch (bootInputsource) {
+                case "ANDROID":
+                    boot_option = 0;
+                    break;
+                case "OPS":
+                    boot_option = 1;
+                    break;
+                //case "HDMI1":
+                //    boot_option = 2;
+                //    break;
+                case "HDMI3":
+                    boot_option = 2;
+                    break;
+                case "HDMI2":
+                    boot_option = 3;
+                    break;
+                case "VGA":
+                    boot_option = 4;
+                    break;
+            }
+        }
+        Log.d(TAG, "mInputSource  AH_CX:" + boot_option);
+    }
     /**
      * AH 选中index
      */

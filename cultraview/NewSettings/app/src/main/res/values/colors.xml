@@ -38,4 +38,7 @@
     <color name="gray">#ff888888</color>
 
     <color name="half_black">#7F000000</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_1890FF">#1890FF</color>
+    <color name="color_selectable_item">#e7e7e7</color>
 </resources>

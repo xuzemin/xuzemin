@@ -45,7 +45,7 @@
 
             <ImageView
                 android:id="@+id/im_item_unknown_store"
-                style="@style/switch_image_style_new"
+                style="@style/more_image_style_new"
                 android:visibility="visible" />
         </RelativeLayout>
 

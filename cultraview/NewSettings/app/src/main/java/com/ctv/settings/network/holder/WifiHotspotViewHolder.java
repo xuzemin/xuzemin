@@ -17,7 +17,6 @@ import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemProperties;
 import android.provider.Settings;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -39,6 +38,7 @@ import com.ctv.settings.network.Listener.ConnectivityListener;
 import com.ctv.settings.network.activity.NetWorkActivity;
 import com.ctv.settings.network.utils.InitDataInfo;
 import com.ctv.settings.network.utils.NetUtils;
+import com.ctv.settings.network.utils.Tools;
 
 
 /**
@@ -52,7 +52,7 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
     private static final String TAG = "WifiHotspotViewHolder";
 
     private static final int[] SECURE_TYPE = {
-            R.string.wifi_security_open, R.string.wifi_security_wpa2
+            R.string.wifi_security_open, R.string.wifi_security_wpa2,R.string.wifi_security_wpa
     };
 
     private final Context ctvContext;
@@ -70,7 +70,6 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
     private EditText hotspot_ssid_edt;
 
     private EditText hotspot_pwd_edt;
-
 
     private ImageView hotspot_open_iv;
 
@@ -127,7 +126,6 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
 
     private EthernetManager mEthernetManager;
 
-
     private WifiManager mWifiManager;
 
     private ConnectivityManager mCm;
@@ -136,8 +134,7 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
     //安全性
     public static final int OPEN_INDEX = 0;
     public static final int WPA2_INDEX = 1;
-
-
+    public static final int WPA_INDEX = 2;
     public static boolean IS_AP_5G = false;// 热点:默认2.4G
 
     @SuppressLint("HandlerLeak")
@@ -149,7 +146,6 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
             hotspot_open_iv.setBackgroundResource(R.mipmap.on);
             hotspot_ll.setVisibility(View.VISIBLE);
             hotspot_save_btn.setVisibility(View.VISIBLE);
-
             hotspot_type_fl.setVisibility(View.GONE);
             ShowSaveStatusDialog();
         }
@@ -161,12 +157,9 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
         this.ctvContext = ctvContext.getApplicationContext();
         this.mListener = conListener;
         activity = (NetWorkActivity) ctvContext;
-
         initWifiManager();
-
         initView();
         initData();
-
         Log.i(TAG, "----last-isOpenHotspot:" + isOpenHotspot);
     }
 
@@ -275,13 +268,35 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 if (hotspot_secure_iv.hasFocus()) {
-                    switchSecure(false);
+                    if(secureType == NetUtils.SECURE_TYPE_OPEN){
+                        secureType = NetUtils.SECURE_TYPE_WPA;
+                    }else{
+                        secureType = secureType -1;
+                    }
+                    switchSecure(secureType);
+                    return true;
+                }else if (hotspot_type_fl.hasFocus()) {
+                    IS_AP_5G = !IS_AP_5G;
+                    NetUtils.setHotspotType(IS_AP_5G);
+                    IS_AP_5G = NetUtils.isHotspot5G();
+                    updateHotpotTypeUI();
                     return true;
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
                 if (hotspot_secure_iv.hasFocus()) {
-                    switchSecure(true);
+                    if(secureType == NetUtils.SECURE_TYPE_WPA){
+                        secureType = NetUtils.SECURE_TYPE_OPEN;
+                    }else{
+                        secureType = secureType +1;
+                    }
+                    switchSecure(secureType);
+                    return true;
+                }else if (hotspot_type_fl.hasFocus()) {
+                    IS_AP_5G = !IS_AP_5G;
+                    NetUtils.setHotspotType(IS_AP_5G);
+                    IS_AP_5G = NetUtils.isHotspot5G();
+                    updateHotpotTypeUI();
                     return true;
                 }
                 break;
@@ -321,7 +336,12 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
             isOpenHotspot = !isOpenHotspot;
             setOpenHotspot(true);
         } else if (i == R.id.hotspot_secure_iv) {
-            switchSecure(true);
+            if(secureType == NetUtils.SECURE_TYPE_WPA){
+                secureType = NetUtils.SECURE_TYPE_OPEN;
+            }else{
+                secureType = secureType +1;
+            }
+            switchSecure(secureType);
         } else if (i == R.id.hotspot_type_iv) {
             // 切换热点类型
             IS_AP_5G = !IS_AP_5G;
@@ -373,12 +393,12 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
         ShowSaveStatusDialog();
     }
 
-    private void switchSecure(boolean isIncrease) {
-        if (isIncrease) {
-            secureType = (secureType + 1) % 2;
-        } else {
-            secureType = (secureType + 2 - 1) % 2;
-        }
+    private void switchSecure(int secureType) {
+//        if (isIncrease) {
+//            secureType = (secureType + 1) % 2;
+//        } else {
+//            secureType = (secureType + 2 - 1) % 2;
+//        }
         Log.d(TAG, "mSecureType, " + secureType);
         switch (secureType) {
             case NetUtils.SECURE_TYPE_WPA2:
@@ -386,6 +406,9 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
                 break;
             case NetUtils.SECURE_TYPE_OPEN:
                 hotspot_secure_sele_tv.setText(SECURE_TYPE[0]);
+                break;
+            case NetUtils.SECURE_TYPE_WPA:
+                hotspot_secure_sele_tv.setText(SECURE_TYPE[2]);
                 break;
             default:
                 break;
@@ -440,7 +463,6 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
 
     @SuppressLint("SetTextI18n")
     public void refreshWifiApUi(boolean isInit, InitDataInfo data) {
-
         mStartTetheringCallback = new OnStartTetheringCallback();
 
         WifiConfiguration config = null;
@@ -579,7 +601,7 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
                 if (mDialog != null) {
                     mDialog.cancel();
                 }
-                showToast(R.string.wifiap_config_success);
+//                showToast(R.string.wifiap_config_success);
                 if (!isOpenHotspot) {
                     isOpenHotspot = true;
                     setOpenHotspot(false);
@@ -644,17 +666,18 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
         /**
          * Disable Wifi if enabling tethering
          */
-        int wifiState = mWifiManager.getWifiState();
-        if (enable && ((wifiState == WifiManager.WIFI_STATE_ENABLING) ||
-                (wifiState == WifiManager.WIFI_STATE_ENABLED))) {
-            mWifiManager.setWifiEnabled(false);
-            Settings.Global.putInt(cr, Settings.Global.WIFI_SAVED_STATE, 1);
+        if(!Tools.isDoubleWifi()) {
+            int wifiState = mWifiManager.getWifiState();
+            if (enable && ((wifiState == WifiManager.WIFI_STATE_ENABLING) ||
+                    (wifiState == WifiManager.WIFI_STATE_ENABLED))) {
+                mWifiManager.setWifiEnabled(false);
+                Settings.Global.putInt(cr, Settings.Global.WIFI_SAVED_STATE, 1);
+            }
         }
 
         if (enable) {
             // 设置热点类型
             NetUtils.setHotspotType(IS_AP_5G);
-
             mCm.startTethering(ConnectivityManager.TETHERING_WIFI, true, mStartTetheringCallback, wifiHotHandler);
         } else {
             mCm.stopTethering(ConnectivityManager.TETHERING_WIFI);
@@ -663,16 +686,18 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
         /**
          *  If needed, restore Wifi on tether disable
          */
-        if (!enable) {
-            int wifiSavedState = 0;
-            try {
-                wifiSavedState = Settings.Global.getInt(cr, Settings.Global.WIFI_SAVED_STATE);
-            } catch (Settings.SettingNotFoundException e) {
-                ;
-            }
-            if (wifiSavedState == 1) {
-                mWifiManager.setWifiEnabled(true);
-                Settings.Global.putInt(cr, Settings.Global.WIFI_SAVED_STATE, 0);
+        if(!Tools.isDoubleWifi()) {
+            if (!enable) {
+                int wifiSavedState = 0;
+                try {
+                    wifiSavedState = Settings.Global.getInt(cr, Settings.Global.WIFI_SAVED_STATE);
+                } catch (Settings.SettingNotFoundException ignored) {
+                    ;
+                }
+                if (wifiSavedState == 1) {
+                    mWifiManager.setWifiEnabled(true);
+                    Settings.Global.putInt(cr, Settings.Global.WIFI_SAVED_STATE, 0);
+                }
             }
         }
     }
@@ -714,7 +739,7 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
             return null;
         }
         config.SSID = ssid;
-
+        String passwd = null;
         switch (mSecurityTypeIndex) {
             case OPEN_INDEX:
                 config.allowedKeyManagement.set(KeyMgmt.NONE);
@@ -723,7 +748,7 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
             case WPA2_INDEX:
                 config.allowedKeyManagement.set(KeyMgmt.WPA2_PSK);
                 config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
-                String passwd = hotspot_pwd_edt.getText().toString().trim();
+                passwd = hotspot_pwd_edt.getText().toString().trim();
                 if (secureType != NetUtils.SECURE_TYPE_OPEN
                         && (TextUtils.isEmpty(passwd) || passwd.length() < 8)) {
                     hotspot_pwd_edt.setText("");
@@ -734,7 +759,21 @@ public class WifiHotspotViewHolder implements OnFocusChangeListener, OnClickList
                     String password = passwd;
                     config.preSharedKey = password;
                 }
-
+                return config;
+            case WPA_INDEX:
+                config.allowedKeyManagement.set(KeyMgmt.WPA_PSK);
+                config.allowedAuthAlgorithms.set(AuthAlgorithm.OPEN);
+                passwd = hotspot_pwd_edt.getText().toString().trim();
+                if (secureType != NetUtils.SECURE_TYPE_OPEN
+                        && (TextUtils.isEmpty(passwd) || passwd.length() < 8)) {
+                    hotspot_pwd_edt.setText("");
+                    hotspot_pwd_edt.requestFocus();
+                    showToast(R.string.wifiap_pwd_notice);
+                    return null;
+                } else {
+                    String password = passwd;
+                    config.preSharedKey = password;
+                }
                 return config;
         }
         return null;

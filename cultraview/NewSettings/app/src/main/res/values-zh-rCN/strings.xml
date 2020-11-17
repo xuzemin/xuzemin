@@ -21,6 +21,17 @@
     <string name="item_hotspot">热点</string>
     <string name="item_bluetooth">蓝牙</string>
 
+    <!-- Bluetooth settings.  Message when a device is disconnected -->
+    <string name="bluetooth_disconnected">已断开</string>
+    <!-- Bluetooth settings.  Message when disconnecting from a device -->
+    <string name="bluetooth_disconnecting">断开连接</string>
+    <!-- Bluetooth settings.  Message when connecting to a device -->
+    <string name="bluetooth_connecting">连接中</string>
+    <!-- Bluetooth settings.  Message when connected to a device. [CHAR LIMIT=40] -->
+    <string name="bluetooth_connected">已连接</string>
+    <!--Bluetooth settings screen, summary text under individual Bluetooth devices when pairing -->
+    <string name="bluetooth_pairing">匹配中</string>
+
     <string name="status_on">开</string>
     <string name="status_off">关</string>
 
@@ -201,22 +212,24 @@
     <string name="item_four_distribution">四分屏</string>
     <string name="item_triple_bonding">三键合一</string>
     <string name="item_public_usb">USB共享</string>
+    <string name="item_hdmi">HDMI输出</string>
     <string name="item_alone_backlight">单独听</string>
     <string name="item_headphone_insertion_test">耳机插入检测</string>
     <string name="item_five_touch">五指息屏</string>
+    <string name="item_five_touch_qd">三指息屏</string>
     <string name="greneral_lock_screen_setting">锁屏设置</string>
     <string name="greneral_lock_screen_switch">锁屏开关</string>
     <string name="greneral_set_password">设置密码</string>
     <string name="greneral_enter_the_old_password">请输入旧密码:</string>
-    <string name="greneral_please_input_passwords">请输入密码:</string>
+    <string name="greneral_please_input_passwords">请输入六位数字密码:</string>
     <string name="greneral_img">img</string>
     <string name="greneral_open_usb_lock_tip_one">是否要打开U盘锁?</string>
     <string name="greneral_open_usb_lock_tip_two">请确认身边有没有解锁U盘，若没有请不要开启此功能!</string>
     <string name="greneral_open_install_app">请输入密码开启此功能</string>
     <string name="greneral_open_install_app_password_tip">请输入至少6位的密码</string>
     <string name="greneral_app_install_password_tip_title">第一次使用时请设置密码!</string>
-    <string name="greneral_input_password">请输入密码:</string>
-    <string name="greneral_input_password_again">请再次输入密码:</string>
+    <string name="greneral_input_password">请输入六位数字密码:</string>
+    <string name="greneral_input_password_again">请再次输入六位数字密码:</string>
     <string name="greneral_input_old_password">请输入旧密码:</string>
     <string name="greneral_reset_password">重置密码</string>
     <string name="greneral_password_tip_one">密码不能为空</string>
@@ -228,11 +241,12 @@
     <string name="greneral_password_tip_seven">旧密码错误，请重新输入密码</string>
     <string name="greneral_password_tip_eight">密码不能少于6位</string>
     <string name="greneral_password_tip_nine">新密码与原密码一致，请重新输入</string>
+    <string name="greneral_password_tip_admin">管理员密码不可设置</string>
     <string name="greneral_password_tip_ten">密码重置成功</string>
     <string name="greneral_lock_screen_tip">请设置解锁密码</string>
     <string name="greneral_lock_open_tip">U盘锁已打开，请插入U盘解锁</string>
     <string name="greneral_lock_close_tip">U盘锁已关闭</string>
-    <string name="greneral_please_input_passwords_again">请再次输入密码:</string>
+    <string name="greneral_please_input_passwords_again">请再次输入六位数字密码:</string>
     <string name="item_lock_screen">锁屏</string>
     <string name="greneral_save">保存</string>
     <string name="greneral_usb_lock_title">U盘锁设置</string>
@@ -412,7 +426,7 @@
     <!--</string-array>-->
     <string name="restore_factory_system_reboot">系统正在重新启动...</string>
     <string-array name="share_usb_mode">
-        <item>跟随共享</item>
+        <item>共享</item>
         <item>仅Android</item>
         <item>仅内置电脑</item>
     </string-array>
@@ -421,14 +435,27 @@
 <!--        <item>光控护眼</item>-->
         <item>护眼+</item>
         <item>亮度护眼</item>
-        <item>书写护眼</item>
+<!--        <item>书写护眼</item>-->
+    </string-array>
+    <string-array name="eye_plus_mode_Light">
+        <item>关闭</item>
+        <item>光控护眼</item>
+        <item>护眼+</item>
+        <item>亮度护眼</item>
+        <!--        <item>书写护眼</item>-->
     </string-array>
     <string-array name="eye_plus_description">
         <item></item>
-<!--        <item>根据环境光调节显示亮度，减少对视力伤害</item>-->
+        <!--        <item>根据环境光调节显示亮度，减少对视力伤害</item>-->
         <item>通过降低色温，减少对视力的伤害</item>
         <item>通过调节显示亮度，减少对视力的伤害</item>
         <item>白板书写状态，通过亮度调节，减少对视力的伤害</item>
+    </string-array>
+    <string-array name="eye_plus_description_Light">
+        <item></item>
+        <item>根据环境光调节显示亮度，减少对视力伤害</item>
+        <item>通过降低色温，减少对视力的伤害</item>
+        <item>通过调节显示亮度，减少对视力的伤害</item>
     </string-array>
     <string-array name="starting_up_option_vals">
         <item>智能界面</item>
@@ -450,12 +477,39 @@
     <string-array name="starting_up_ah_option_vals">
         <item>智能界面</item>
         <item>内置电脑</item>
-        <item>HDMI1</item>
-        <item>HDMI2</item>
-        <item>HDMI3</item>
-        <item>VGA</item>
+        <item>前置HDMI</item>
+        <item>高清1</item>
+        <item>高清2</item>
+        <item>电脑</item>
     </string-array>
-
+    <!--    AH_CX  -->
+    <string-array name="starting_up_ah_cx_option_vals">
+        <item>智能界面</item>
+        <item>内置电脑</item>
+        <!--<item>HDMI1</item>-->
+        <item>高清1</item>
+        <item>高清2</item>
+        <item>电脑</item>
+    </string-array>
     <string name="back">返回</string>
+    <string name="text_repeat">重复</string>
+    <string name="text_sunday_short">日</string>
+    <string name="text_monday_short">一</string>
+    <string name="text_tuesday_short">二</string>
+    <string name="text_wednesday_short">三</string>
+    <string name="text_thursday_short">四</string>
+    <string name="text_friday_short">五</string>
+    <string name="text_saturday_short">六</string>
+    <string name="proxy_easytouch_opening">悬浮球正在开启</string>
+    <string name="proxy_easytouch_closing">悬浮球正在关闭</string>
+    <string name="text_shutdown">关机</string>
+    <string name="text_monday">周一</string>
+    <string name="text_tuesday">周二</string>
+    <string name="text_wednesday">周三</string>
+    <string name="text_thursday">周四</string>
+    <string name="text_friday">周五</string>
+    <string name="text_saturday">周六</string>
+    <string name="text_sunday">周日</string>
+    <string name="please_set_repeatability">请设置重复性</string>
 </resources>
 

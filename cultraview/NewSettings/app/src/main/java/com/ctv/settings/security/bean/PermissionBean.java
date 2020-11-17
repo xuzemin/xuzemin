@@ -29,7 +29,9 @@ public class PermissionBean {
     public void setChecked(boolean checked) {
         Checked = checked;
     }
+    public PermissionBean(){
 
+    }
     public PermissionBean(String name,String groupName, boolean Enabled, boolean Checked) {
         this.name = name;
         this.groupName = groupName;

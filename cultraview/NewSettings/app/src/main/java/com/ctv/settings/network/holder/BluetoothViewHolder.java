@@ -108,6 +108,8 @@ public class BluetoothViewHolder extends BaseViewHolder implements OnFocusChange
 
 	private final static int BLUETOOTH_SERVER = 2;  //蓝牙连接
 
+	private final static int BLUETOOTH_OPEN = 3;  //蓝牙连接
+
 	private int currentState = 0;
 
 	private boolean isConnecting = false;
@@ -479,7 +481,16 @@ public class BluetoothViewHolder extends BaseViewHolder implements OnFocusChange
 						BTUUID = new UUID(111, 1111);
 					}
 					break;
-				case 3:
+				case BLUETOOTH_OPEN:
+					mBluetoothAdapter.enable();
+					mBluetoothAdapter.setName("Android BT");
+					try {
+						mBluetoothAdapter.getClass().getMethod("setScanMode",int.class).invoke(mBluetoothAdapter,BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+						mBluetoothAdapter.getClass().getMethod("setScanMode",int.class,int.class).invoke(mBluetoothAdapter,BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,30*1000);
+					} catch (Exception e) {
+						L.d("setScanMode"+e.toString());
+						e.printStackTrace();
+					}
 					break;
 				default:
 					break;
@@ -1083,32 +1094,19 @@ public class BluetoothViewHolder extends BaseViewHolder implements OnFocusChange
 		int id = v.getId();
 		if (isFastClick()){
 			if (id == R.id.bluetooth_switch_fl) {
-				if (mBluetoothAdapter.isEnabled() && isOpenBluetooth) {
+				if (isOpenBluetooth) {
 					mBluetoothAdapter.disable();
 					isOpenBluetooth = false;
 					ll_on_all.setVisibility(View.GONE);
-				} else if (!mBluetoothAdapter.isEnabled() && !isOpenBluetooth) {
-					mBluetoothAdapter.enable();
+					bluetoothHandler.removeMessages(BLUETOOTH_OPEN);
+				} else {
+//					mBluetoothAdapter.enable();
+					bluetoothHandler.sendEmptyMessageDelayed(BLUETOOTH_OPEN,1000);
 					isOpenBluetooth = true;
 					ll_on_all.setVisibility(View.VISIBLE);
 					bluetooth_pb.setVisibility(View.VISIBLE);
 					ll_bluetooth_lv.setVisibility(View.GONE);
 					ll_pair_lv.setVisibility(View.GONE);
-
-					L.d("setScanMode = "+mBluetoothAdapter.getName());
-					mBluetoothAdapter.setName("Android BT");
-					L.d("setScanMode = "+mBluetoothAdapter.getName());
-
-					L.d("setScanMode = "+mBluetoothAdapter.getScanMode());
-
-					try {
-						mBluetoothAdapter.getClass().getMethod("setScanMode",int.class).invoke(mBluetoothAdapter,BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE);
-						mBluetoothAdapter.getClass().getMethod("setScanMode",int.class,int.class).invoke(mBluetoothAdapter,BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE,30*1000);
-					} catch (Exception e) {
-						L.d("setScanMode"+e.toString());
-						e.printStackTrace();
-					}
-					L.d("setScanMode = "+mBluetoothAdapter.getScanMode());
 
 //					Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
 //					discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);

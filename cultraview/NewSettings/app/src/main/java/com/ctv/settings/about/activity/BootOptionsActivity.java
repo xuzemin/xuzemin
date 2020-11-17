@@ -6,6 +6,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,8 +34,10 @@ public class BootOptionsActivity extends BaseActivity implements View.OnClickLis
     private final String TAG = BootOptionsActivity.class.getSimpleName();
     private String[] options_vals;
     private String[] ah_boot_vals = {"ANDROID", "OPS", "HDMI1", "HDMI2", "HDMI3", "VGA"};
+    private String[] ah_cx_boot_vals = {"ANDROID", "OPS", "HDMI3" ,"HDMI2", "VGA"}; //"HDMI1",去掉前置hdmi，hdmi3名称改为hdmi1
     private String[] mh_boot_vals = {"ANDROID", "ATV", "DTV", "HDMI1", "HDMI2", "OPS", "HDMI3", "DP", "AV1", "YPBPR", "VGA"};
     private boolean ahBoard;
+    public final static boolean IS_AH_CX = TextUtils.equals(SystemProperties.get("ro.build.display.id", ""), "CN8386_AH_CX");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,8 +53,15 @@ public class BootOptionsActivity extends BaseActivity implements View.OnClickLis
         viewById.setOnClickListener(this);
         ahBoard = DataTool.isAHBoard();
         if (ahBoard) {
-            options_vals = getResources().getStringArray(R.array.starting_up_ah_option_vals);
-            setSelectAH();
+            if (IS_AH_CX){
+                Log.d("keww1","IS_AH_CX = "+IS_AH_CX);
+                options_vals = getResources().getStringArray(R.array.starting_up_ah_cx_option_vals);
+                setSelectAH_CX();
+            }else{
+                Log.d("keww1","ahBoard 1= "+ahBoard);
+                options_vals = getResources().getStringArray(R.array.starting_up_ah_option_vals);
+                setSelectAH();
+            }
         } else {
             options_vals = getResources().getStringArray(R.array.starting_up_option_vals);
             setSelectMH();
@@ -64,8 +74,13 @@ public class BootOptionsActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (ahBoard) {
-                    Log.d(TAG, "onItemClick:" + ah_boot_vals[i]);
-                    SystemProperties.set("persist.sys.boot.source", ah_boot_vals[i]);
+                    if(IS_AH_CX){
+                        Log.d(TAG, "AH_CX_onItemClick:" + ah_cx_boot_vals[i]);
+                        SystemProperties.set("persist.sys.boot.source", ah_cx_boot_vals[i]);
+                    }else{
+                        Log.d(TAG, "onItemClick:" + ah_boot_vals[i]);
+                        SystemProperties.set("persist.sys.boot.source", ah_boot_vals[i]);
+                    }
                 } else {
                     SystemProperties.set("persist.sys.boot.source", mh_boot_vals[i]);
                 }
@@ -102,6 +117,36 @@ public class BootOptionsActivity extends BaseActivity implements View.OnClickLis
                     break;
                 case "VGA":
                     boot_option = 5;
+                    break;
+            }
+        }
+        Log.d(TAG, "mInputSource  AH:" + boot_option);
+    }
+    /**
+     * AH_CX 选中index
+     */
+    private void setSelectAH_CX() {
+        String bootInputsource = SystemProperties.get("persist.sys.boot.source", "ANDROID");
+        if (options_vals != null) {
+            boot_option = Arrays.binarySearch(ah_cx_boot_vals, bootInputsource);
+        }
+        Log.d("keww","bootInputsource = "+bootInputsource);
+        if (boot_option < 0) {
+            switch (bootInputsource) {
+                case "ANDROID":
+                    boot_option = 0;
+                    break;
+                case "OPS":
+                    boot_option = 1;
+                    break;
+                case "HDMI2":
+                    boot_option = 3;
+                    break;
+                case "HDMI3":
+                    boot_option =2;
+                    break;
+                case "VGA":
+                    boot_option = 4;
                     break;
             }
         }

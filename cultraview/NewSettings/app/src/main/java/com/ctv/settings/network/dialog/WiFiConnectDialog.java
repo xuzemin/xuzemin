@@ -56,6 +56,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @SuppressLint("NewApi")
@@ -88,7 +89,7 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
 
     private int mSecureType = NetUtils.SECURE_OPEN;
 
-    private static WirelessViewHolder wirelessViewHolder;
+    private WirelessViewHolder wirelessViewHolder;
 
     private static WifiManager wifiManager;
 
@@ -137,7 +138,7 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
         this.mListener = conListener;
         this.mScanResult = scanResult;
         this.wirelessViewHolder = wirelessViewHolder;
-        wifiManager = (WifiManager) ctvContext.getSystemService(Context.WIFI_SERVICE);
+        wifiManager = (WifiManager) ctvContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         setWindowStyle();
     }
 
@@ -169,6 +170,7 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
         isErrorTips = false;
         mHandler.removeCallbacksAndMessages(null);
         textWatcher = null;
+        wirelessViewHolder.wirelessAdapter.notifyDataSetChanged();
     }
 
     private void setWindowStyle() {
@@ -293,8 +295,18 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
         }
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         mHasConfiged = false;
-        if (selectSsid.equals(wifiInfo.getSSID().replace("\"", ""))
-                && !selectSsid.equals(wirelessViewHolder.forgetingSsid)) {
+
+        boolean isHasCode = false;
+        List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
+        if(configuredNetworks !=null && configuredNetworks.size() > 0){
+            for(WifiConfiguration wc : configuredNetworks) {
+                if (selectSsid.equals(wc.SSID.replace("\"", ""))) {
+                    isHasCode = true;
+                }
+            }
+        }
+
+        if (selectSsid.equals(wifiInfo.getSSID().replace("\"", "")) && isHasCode) {
             mHasConfiged = true;
             wifi_cn_forget_btn.setVisibility(View.VISIBLE);
             wifi_cn_save_btn.setVisibility(View.GONE);
@@ -302,10 +314,10 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
             wifi_cn_show_pwd_fl.setVisibility(View.GONE);
         } else {
             wifi_cn_forget_btn.setVisibility(View.GONE);
-            wifi_cn_save_btn.setVisibility(View.VISIBLE);
             if (mSecureType == NetUtils.SECURE_OPEN) {
                 wifi_cn_pwd_fl.setVisibility(View.GONE);
                 wifi_cn_show_pwd_fl.setVisibility(View.GONE);
+                wifi_cn_save_btn.setVisibility(View.VISIBLE);
             } else {
                 wifi_cn_pwd_fl.setVisibility(View.VISIBLE);
                 wifi_cn_show_pwd_fl.setVisibility(View.VISIBLE);
@@ -324,7 +336,8 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
         Log.i(TAG, "-------mHasConfiged:" + mHasConfiged);
     }
 
-    public void showWifiDevInfo() {
+    @SuppressLint("DefaultLocale")
+    private void showWifiDevInfo() {
         String ipString = "";
         String netMask = "";
         String gateWay = "";
@@ -336,6 +349,7 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
                 && wifiInfo.getNetworkId() != NetUtils.INVALID_NETWORK_ID) {
             linkProperties = mListener.getWifiLinkProperties();
         }
+        assert wifiInfo != null;
         int ip = wifiInfo.getIpAddress();
         ipString = String.format("%d.%d.%d.%d", (ip & 0xff), (ip >> 8 & 0xff), (ip >> 16 & 0xff),
                 (ip >> 24 & 0xff));
@@ -352,20 +366,16 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
                 }
             }
         }
-        if (wifi_ips != null) {
-            for (int i = 0; i < wifi_ips.length; i++) {
-                wifi_masks[i] = wifi_ips[i].equals(wifi_gateways[i]) ? "255" : "0";
-            }
+        for (int i = 0; i < wifi_ips.length; i++) {
+            wifi_masks[i] = wifi_ips[i].equals(wifi_gateways[i]) ? "255" : "0";
         }
-        StringBuffer address = new StringBuffer();
-        address.append(wifi_masks[0]);
-        address.append(".");
-        address.append(wifi_masks[1]);
-        address.append(".");
-        address.append(wifi_masks[2]);
-        address.append(".");
-        address.append(wifi_masks[3]);
-        netMask = address.toString();
+        netMask = wifi_masks[0] +
+                "." +
+                wifi_masks[1] +
+                "." +
+                wifi_masks[2] +
+                "." +
+                wifi_masks[3];
         if (linkProperties != null) {
         Iterator<InetAddress> dnsIterator = linkProperties.getDnsServers().iterator();
         if (dnsIterator.hasNext()) {
@@ -427,16 +437,30 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
         } else if (i == R.id.wifi_cn_forget_btn) {
             Log.i(TAG, "------------- forget ");
             wirelessViewHolder.isDialog = false;
-            WifiConfiguration config = null;
             try {
-                config = WifiConfigHelper.getConfigurationForNetwork(ctvContext,
-                        mScanResult);
-                WifiConfigHelper.forgetConfiguration(ctvContext, config);
-                if(WirelessViewHolder.wirelessAdapter !=null){
-                    WirelessViewHolder.wirelessAdapter.setmSsid("");
-                    WirelessViewHolder.wirelessAdapter.setConnectState(0);
+                List<WifiConfiguration> configuredNetworks = wifiManager.getConfiguredNetworks();
+                if(configuredNetworks !=null && configuredNetworks.size() > 0){
+                    for(WifiConfiguration wc : configuredNetworks){
+                        Log.i(TAG, "------------- forget "+wc.SSID);
+                        Log.i(TAG, "------------- forget "+mScanResult.SSID);
+                        if(mScanResult.SSID.equals(wc.SSID.replace("\"", ""))){
+                            wifiManager.disable(wc.networkId, new WifiManager.ActionListener() {
+                                @Override
+                                public void onSuccess() {
+                                    wifiManager.forget(wc.networkId,mForgetListener);
+                                    Log.i(TAG, "------------- disable onSuccess");
+                                }
+
+                                @Override
+                                public void onFailure(int i) {
+                                    Log.i(TAG, "------------- disable onFailure");
+                                }
+                            });
+                        }
+                    }
+                }else{
+                    Log.i(TAG, "------------- forget null");
                 }
-//                wirelessAdapter.setScanResults(scanResults);
             } catch (Exception e) {
                 L.d(e.toString());
             }
@@ -642,32 +666,32 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
         }
     }
 
-//    private final WifiManager.ActionListener mForgetListener = new ActionListener() {
-//
-//        @Override
-//        public void onSuccess() {
-//            Log.d(TAG, "forget success");
-//            mHandler.sendEmptyMessage(2);
-//        }
-//
-//        @Override
-//        public void onFailure(int reason) {
-//            showToast(R.string.wifi_failed_forget_message);
-//        }
-//    };
-//
-//    private final WifiManager.ActionListener mSaveListener = new WifiManager.ActionListener() {
-//
-//        @Override
-//        public void onSuccess() {
-//            mHandler.sendEmptyMessage(1);
-//        }
-//
-//        @Override
-//        public void onFailure(int reason) {
-//            showToast(R.string.wifi_failed_save_message);
-//        }
-//    };
+    private WifiManager.ActionListener mForgetListener = new WifiManager.ActionListener() {
+
+        @Override
+        public void onSuccess() {
+            Log.d(TAG, "forget success");
+            mHandler.sendEmptyMessage(2);
+        }
+
+        @Override
+        public void onFailure(int reason) {
+            showToast(R.string.wifi_failed_forget_message);
+        }
+    };
+
+    private final WifiManager.ActionListener mSaveListener = new WifiManager.ActionListener() {
+
+        @Override
+        public void onSuccess() {
+            mHandler.sendEmptyMessage(1);
+        }
+
+        @Override
+        public void onFailure(int reason) {
+            showToast(R.string.wifi_failed_save_message);
+        }
+    };
 
     private void showToast(int id) {
         if (id <= 0) {
@@ -823,10 +847,7 @@ public class WiFiConnectDialog extends Dialog implements OnFocusChangeListener, 
                     }
                     mArpMap = Tools.createArpMap();
                     isErrorTips = true;
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (IOException | InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }

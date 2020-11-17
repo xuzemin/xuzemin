@@ -35,6 +35,7 @@ public interface CommonConsts {
     public static final int BOOTOPTION_ITEM1=6;
     public static final int REQUEST_SHARE_USB_OPTIONS=7;
     public static final int REQUEST_EYE_PLUS_OPTIONS = 8;
+    public static final int REQUEST_HDMI_OUT_OPTIONS=9;
     public static final String[] DATE_FORMAT_STRINGS = {
             "MM-dd-yyyy", "dd-MM-yyyy", "yyyy-MM-dd"
     };

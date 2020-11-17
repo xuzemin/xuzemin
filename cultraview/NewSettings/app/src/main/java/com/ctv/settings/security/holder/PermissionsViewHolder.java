@@ -183,6 +183,7 @@ public class PermissionsViewHolder implements IBaseViewHolder {
                         || app.packageName.equals("com.android.camera2")
                         || app.packageName.equals("com.cultraview.settings")
                         || app.packageName.equals("com.ctv.easytouch")
+                        || app.packageName.equals("com.android.tv.settings")
                         || app.packageName.equals("com.bozee.meetingmark")) {
                     continue;
                 }

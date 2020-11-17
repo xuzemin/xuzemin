@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -24,17 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnClickListener {
-
-    private TimePicker mTimePicker;
+    private final String TAG = "AutoShutdownViewHolder";
     private View mRlAutoShutdown;
     private ImageView mIvAutoShutdown;
     private Time mDateTime;
-    private Button mBtnSave;
-    private ImageView mIvLeft;
-    private ImageView mIvRight;
-    String[] REPEAT_VALUES;
-    private TextView mTvRepeat;
-    private int shutdown_repeat;
     private ShutdownSaveDialog saveDialog;
     private View btnBack;
     private TextView mTvBackTitle;
@@ -47,7 +42,10 @@ public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnCli
     private boolean isOffTimerEnable;
     private View mRlAutoShutdownTime;
     private TextView mTvAutoShutdownTime;
-    private View mRlRepeat;
+    private TextView planTitle;
+    private LinearLayout item_plan;
+    private TimeUtil offTime;
+
 
     public AutoShutdownViewHolder(Activity activity) {
         super(activity);
@@ -55,59 +53,38 @@ public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnCli
 
     @Override
     public void initUI(Activity activity) {
-        mTimePicker = (TimePicker) mActivity.findViewById(R.id.timepicker);
         mRlAutoShutdown = mActivity.findViewById(R.id.rl_auto_shutdown);
         mIvAutoShutdown = (ImageView) mActivity.findViewById(R.id.iv_auto_shutdown);
-        mBtnSave = (Button) mActivity.findViewById(R.id.btn_save);
-        mIvLeft = (ImageView) mActivity.findViewById(R.id.iv_left);
-        mIvRight = (ImageView) mActivity.findViewById(R.id.iv_right);
-        mTvRepeat = (TextView) mActivity.findViewById(R.id.tv_repeat);
         saveDialog = new ShutdownSaveDialog(mActivity, this);
         mTvBackTitle = (TextView) mActivity.findViewById(R.id.back_title);
         btnBack = mActivity.findViewById(R.id.back_btn);
         mRlAutoShutdownTime = mActivity.findViewById(R.id.rl_auto_shutdown_time);
         mTvAutoShutdownTime = (TextView) mActivity.findViewById(R.id.tv_auto_shutdown_time);
+        planTitle = mActivity.findViewById(R.id.tv_title);
 
-        mRlRepeat = mActivity.findViewById(R.id.rl_repeat);
+
+        item_plan = mActivity.findViewById(R.id.ll_plan_item);
+
     }
 
     @Override
     public void initData(Activity activity) {
         //定时关机开关状态
-//        isOffTimerEnable = TvTimerManager.getInstance().isOffTimerEnable();
         isOffTimerEnable = HHTTimeManager.getInstance().isScheduleTimeShutdownEnable();
-        if (isOffTimerEnable) {
-            mIvAutoShutdown.setImageResource(R.mipmap.on);
-        } else {
-            mIvAutoShutdown.setImageResource(R.mipmap.off);
-        }
-
         //关机时间状态
         mDateTime = TvTimerManager.getInstance().getCurrentTvTime();
-
-        // HHTApi test start
-        TimeUtil offTime = HHTTimeManager.getInstance().getScheduleTimeForShutdown();
+        offTime = HHTTimeManager.getInstance().getScheduleTimeForShutdown();
         mDateTime.minute = offTime.min;
         mDateTime.hour = offTime.hour;
-        // HHTApi test start
-
-//        mDateTime = TvTimerManager.getInstance().getTvOffTimer();
-//        mDateTime.hour = Settings.System.getInt(mActivity.getContentResolver(), "shutdown_hour", 8);
-//        mDateTime.minute = Settings.System.getInt(mActivity.getContentResolver(), "shutdown_minute", 8);
-
-        if (mDateTime.hour == 0 && mDateTime.minute == 0){
-            mDateTime.hour = 8;
-            mDateTime.minute = 8;
+        if (isOffTimerEnable) {
+            mIvAutoShutdown.setImageResource(R.mipmap.on);
+            planTitle.setText(getPlanTitle(isOffTimerEnable, offTime));
+            item_plan.setVisibility(View.VISIBLE);
+        } else {
+            mIvAutoShutdown.setImageResource(R.mipmap.off);
+            planTitle.setText(getPlanTitle(isOffTimerEnable, offTime));
+            item_plan.setVisibility(View.GONE);
         }
-
-        mTimePicker.setIs24HourView(true);
-        mTimePicker.setHour(mDateTime.hour);
-        mTimePicker.setMinute(mDateTime.minute);
-
-        //重复性，默认关闭
-        REPEAT_VALUES = mActivity.getResources().getStringArray(R.array.repeat_values);
-        shutdown_repeat = Settings.System.getInt(mActivity.getContentResolver(), "shutdown_repeat", 0);
-        mTvRepeat.setText(REPEAT_VALUES[shutdown_repeat]);
         mTvBackTitle.setText(mActivity.getResources().getString(R.string.title_auto_shutdown));
 
         if (mDateTime.minute < 10 && mDateTime.hour < 10) {
@@ -125,31 +102,29 @@ public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnCli
     public void refreshUI(View view) {
         int id = view.getId();
         if (id == R.id.iv_auto_shutdown) {
-            if (isOffTimerEnable) {
-                mIvAutoShutdown.setImageResource(R.mipmap.on);
-            } else {
-                mIvAutoShutdown.setImageResource(R.mipmap.off);
-            }
+            refreshPlan();
         }
     }
 
+    private void refreshPlan() {
+        TimeUtil offTime = HHTTimeManager.getInstance().getScheduleTimeForShutdown();
+        mDateTime.minute = offTime.min;
+        mDateTime.hour = offTime.hour;
+        if (isOffTimerEnable) {
+            mIvAutoShutdown.setImageResource(R.mipmap.on);
+            planTitle.setText(getPlanTitle(isOffTimerEnable, offTime));
+            item_plan.setVisibility(View.VISIBLE);
+        } else {
+            mIvAutoShutdown.setImageResource(R.mipmap.off);
+            planTitle.setText(getPlanTitle(isOffTimerEnable, offTime));
+            item_plan.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void initListener() {
-        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                int hour = timePicker.getHour();
-                int minute = timePicker.getMinute();
-                mDateTime.minute = minute;
-                mDateTime.hour = hour;
-            }
-        });
 
         mRlAutoShutdown.setOnClickListener(this);
-        mBtnSave.setOnClickListener(this);
-        mIvLeft.setOnClickListener(this);
-        mIvRight.setOnClickListener(this);
         mRlAutoShutdownTime.setOnClickListener(this);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,40 +139,43 @@ public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnCli
         int id = view.getId();
         if (id == R.id.rl_auto_shutdown) {
             isOffTimerEnable = !isOffTimerEnable;
+            if (isOffTimerEmpty()) {
+                TimeUtil offTime = new TimeUtil();
+                offTime.min = mDateTime.minute;
+                offTime.hour = mDateTime.hour;
+                List<String> mList = new ArrayList<>();
+                mList.add(TimeUtil.EnumWeek.MON.toString());
+                mList.add(TimeUtil.EnumWeek.TUE.toString());
+                mList.add(TimeUtil.EnumWeek.WED.toString());
+                mList.add(TimeUtil.EnumWeek.THU.toString());
+                mList.add(TimeUtil.EnumWeek.FRI.toString());
+                offTime.week = mList;
+                Log.d("TimeUtil", "NewSettings offTime:" + offTime);
+                HHTTimeManager.getInstance().setScheduleTimeForShutdown(offTime);
+            }
             refreshUI(mActivity.findViewById(R.id.iv_auto_shutdown));
-//            if (isOffTimerEnable) {
-//                Settings.System.putInt(mActivity.getContentResolver(), "auto_shutdown", 1);
-//            } else {
-//                Settings.System.putInt(mActivity.getContentResolver(), "auto_shutdown", 0);
-//            }
-
             mHandler.removeCallbacks(runnable);
-            mHandler.postDelayed(runnable,500);
+            mHandler.postDelayed(runnable, 500);
         } else if (id == R.id.btn_save) {
             saveDialog.show();
-        } else if (id == R.id.iv_left) {
-            if (shutdown_repeat == 0) {
-                mTvRepeat.setText(REPEAT_VALUES[1]);
-                shutdown_repeat = 1;
-                Settings.System.putInt(mActivity.getContentResolver(), "shutdown_repeat", shutdown_repeat);
-            } else {
-                mTvRepeat.setText(REPEAT_VALUES[0]);
-                shutdown_repeat = 0;
-                Settings.System.putInt(mActivity.getContentResolver(), "shutdown_repeat", shutdown_repeat);
-            }
-        } else if (id == R.id.iv_right) {
-            if (shutdown_repeat == 0) {
-                mTvRepeat.setText(REPEAT_VALUES[1]);
-                shutdown_repeat = 1;
-                Settings.System.putInt(mActivity.getContentResolver(), "shutdown_repeat", shutdown_repeat);
-            } else {
-                mTvRepeat.setText(REPEAT_VALUES[0]);
-                shutdown_repeat = 0;
-                Settings.System.putInt(mActivity.getContentResolver(), "shutdown_repeat", shutdown_repeat);
-            }
+            saveDialog.setPlan(HHTTimeManager.getInstance().getScheduleTimeForShutdown());
         } else if (id == R.id.rl_auto_shutdown_time) {
             saveDialog.show();
+            saveDialog.setPlan(HHTTimeManager.getInstance().getScheduleTimeForShutdown());
         }
+    }
+
+    /**
+     * 定时关机时间设置是否为空
+     * @return
+     */
+    private boolean isOffTimerEmpty() {
+        TimeUtil scheduleTimeForShutdown = HHTTimeManager.getInstance().getScheduleTimeForShutdown();
+        if (scheduleTimeForShutdown.hour == 0 && scheduleTimeForShutdown.min == 0) {
+            Log.d(TAG, "isOffTimerEmpty true");
+            return true;
+        }
+        return false;
     }
 
     Runnable runnable = new Runnable() {
@@ -206,10 +184,7 @@ public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnCli
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-//                    TvTimerManager.getInstance().setOffTimerEnable(isOffTimerEnable);
-                    // HHTApi test start
                     HHTTimeManager.getInstance().setScheduleTimeShutdownEnable(isOffTimerEnable);
-                    // HHTApi test start
                 }
             }).start();
         }
@@ -220,38 +195,8 @@ public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnCli
     }
 
     public void save(TimePicker timePicker) {
-        int hour = timePicker.getHour();
-        int minute = timePicker.getMinute();
-        mDateTime.minute = minute;
-        mDateTime.hour = hour;
-//        Settings.System.putInt(mActivity.getContentResolver(), "shutdown_hour", mDateTime.hour);
-//        Settings.System.putInt(mActivity.getContentResolver(), "shutdown_minute", mDateTime.minute);
-
-        // HHTApi test start
-        TimeUtil offTime = new TimeUtil();
-        offTime.min = minute;
-        offTime.hour = hour;
-        List<String> mList =new ArrayList<>();
-//        mList.add(TimeUtil.EnumWeek.SUN.toString());
-        mList.add(TimeUtil.EnumWeek.MON.toString());
-        mList.add(TimeUtil.EnumWeek.TUE.toString());
-        mList.add(TimeUtil.EnumWeek.WED.toString());
-        mList.add(TimeUtil.EnumWeek.THU.toString());
-        mList.add(TimeUtil.EnumWeek.FRI.toString());
-//        mList.add(TimeUtil.EnumWeek.SAT.toString());
-        offTime.week = mList;
-        Log.d("TimeUtil", "NewSettings offTime:" + offTime);
-        HHTTimeManager.getInstance().setScheduleTimeForShutdown(offTime);
-        // HHTApi test start
-
-//        Time DateTime = TvTimerManager.getInstance().getCurrentTvTime();
-//        DateTime.hour = mDateTime.hour;
-//        DateTime.minute = mDateTime.minute;
-//        TvTimerManager.getInstance().setTvOffTimer(DateTime);
-//
-//        mHandler.removeCallbacks(runnable);
-//        mHandler.postDelayed(runnable, 500);
-
+        mDateTime.minute = timePicker.getMinute();
+        mDateTime.hour = timePicker.getHour();
         saveDialog.dismiss();
         if (mDateTime.minute < 10 && mDateTime.hour < 10) {
             mTvAutoShutdownTime.setText("0" + mDateTime.hour + " : 0" + mDateTime.minute);
@@ -262,21 +207,74 @@ public class AutoShutdownViewHolder extends BaseViewHolder implements View.OnCli
         } else {
             mTvAutoShutdownTime.setText(mDateTime.hour + " : " + mDateTime.minute);
         }
+        refreshPlan();
     }
 
     public void onKeydown(int keyCode) {
-        if(mRlRepeat.hasFocus()){
-            if(keyCode== KeyEvent.KEYCODE_DPAD_LEFT||keyCode== KeyEvent.KEYCODE_DPAD_RIGHT){
-                if (shutdown_repeat == 0) {
-                    mTvRepeat.setText(REPEAT_VALUES[1]);
-                    shutdown_repeat = 1;
-                    Settings.System.putInt(mActivity.getContentResolver(), "shutdown_repeat", shutdown_repeat);
-                } else {
-                    mTvRepeat.setText(REPEAT_VALUES[0]);
-                    shutdown_repeat = 0;
-                    Settings.System.putInt(mActivity.getContentResolver(), "shutdown_repeat", shutdown_repeat);
-                }
-            }
+
+    }
+
+    /**
+     * 获取定时关机计划
+     *
+     * @param isOnTimerEnable
+     * @param timeUtil
+     * @return
+     */
+    private String getPlanTitle(boolean isOnTimerEnable, TimeUtil timeUtil) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String str = "　";
+        stringBuilder.append(mActivity.getString(R.string.text_shutdown));
+        stringBuilder.append(str);
+        if (mDateTime.minute < 10 && mDateTime.hour < 10) {
+            stringBuilder.append("0" + mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.minute < 10) {
+            stringBuilder.append(mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.hour < 10) {
+            stringBuilder.append("0" + mDateTime.hour + " : " + mDateTime.minute);
+        } else {
+            stringBuilder.append(mDateTime.hour + " : " + mDateTime.minute);
         }
+        stringBuilder.append(str);
+        stringBuilder.append(getRepeatString(timeUtil.week));
+        Log.d(TAG, "getPlanTitle:" + stringBuilder.toString());
+        return stringBuilder.toString();
+    }
+
+    private String getRepeatString(List<String> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("(");
+        String str = "、";
+        if (list.contains(TimeUtil.EnumWeek.MON.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_monday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.TUE.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_tuesday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.WED.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_wednesday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.THU.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_thursday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.FRI.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_friday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.SAT.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_saturday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.SUN.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_sunday));
+            stringBuilder.append(str);
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.append(")");
+        return stringBuilder.toString();
     }
 }

@@ -692,7 +692,9 @@ public class Tools {
                     .replace(",", ".");
         }
         Log.d(TAG, "totalSize : " + totalSize);
-        if (totalSize >= (8 * 1024 * 1024 * 1024l)) {
+        if (totalSize >= (20 * 1024 * 1024 * 1024l)) {
+            return availableBlocksOfString + " / 32GB";
+        }else if (totalSize >= (8 * 1024 * 1024 * 1024l)) {
 //            availableBlocksOfString = getRomAvailableSize(ctvContext);
             return availableBlocksOfString + " / 16GB";
         } else if (totalSize >= (4 * 1024 * 1024 * 1024l)) {

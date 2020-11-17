@@ -275,7 +275,7 @@ public class GreneralUtils {
     public boolean getEasyTouchStatus(){
         int easyTouchOpen = Settings.System.getInt(mContext.getContentResolver(),
                 "EASY_TOUCH_OPEN", 1);
-        return easyTouchOpen == 1?true:false;
+        return easyTouchOpen == 1;
     }
 
     /**
@@ -293,9 +293,9 @@ public class GreneralUtils {
             case 2:
                 index = EYE_RGB.ordinal();
                 break;
-            case 3:
-                index = EYE_WRITE_PROTECT.ordinal();
-                break;
+//            case 3:
+//                index = EYE_WRITE_PROTECT.ordinal();
+//                break;
             default:
                 break;
         }
@@ -323,11 +323,53 @@ public class GreneralUtils {
             case 2:
                 eyeMode = 2;
                 break;
+            default:
+                break;
+        }
+        Log.e("eyeMode","eyeMode"+eyeMode);
+        return eyeMode;
+    }
+    /**
+     * 设置带光感
+     * */
+    public void setEyePlusStatus_Light(int index){
+        GreneralViewHolder.eyePlusStatus = index;
+        switch (index){
+            case 0:
+                index = EYE_OFF.ordinal();
+                break;
+            case 1:
+                index = EYE_DIMMING.ordinal();
+                break;
+            case 2:
+                index = EYE_PLUS.ordinal();
+                break;
             case 3:
+                index = EYE_RGB.ordinal();
+                break;
+//            case 3:
+//                index = EYE_WRITE_PROTECT.ordinal();
+//                break;
+            default:
+                break;
+        }
+        Log.e("eyeMode","index"+index);
+        HHTCommonManager.getInstance().setEyeProtectionMode(index);
+    }
+    public int getEyePlusIndex_Light(){
+        int eyeMode = HHTCommonManager.getInstance().getEyeProtectionMode();
+        switch (eyeMode){
+//            case 0:
+//                eyeMode = 1;
+//                break;
+            case 1:
                 eyeMode = 1;
                 break;
-            case 4:
+            case 2:
                 eyeMode = 3;
+                break;
+            case 3:
+                eyeMode = 2;
                 break;
             default:
                 break;

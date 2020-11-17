@@ -208,7 +208,7 @@ public class ScreenHotSponViewHolder implements OnFocusChangeListener, OnClickLi
      */
     private void initData() throws Exception {
         isOpenHotspot = NetUtils.isWifiApEnabled(mListener.getWifiManager());// mListener.getWifiManager().isWifiApEnabled();
-        String wifiapband = SystemProperties.get("Wifiapband");
+        String wifiapband = SystemProperties.get(HOST_BAND_TYPE);
         Log.d(TAG, "wifiap isOpenHotspot = " + isOpenHotspot + " ----- wifiapband : " + wifiapband);
         if (isOpenHotspot && ("".equals(wifiapband) || wifiapband == null || wifiapband.equals("Apband2G"))) {
             isOpenHotspot = false;
@@ -560,7 +560,7 @@ public class ScreenHotSponViewHolder implements OnFocusChangeListener, OnClickLi
                 break;
             case NetUtils.WIFI_AP_STATE_ENABLED:
                 Log.d(TAG, "WIFI_AP_STATE_ENABLED   ---------- 1111  isOpenHotspot ： " + isOpenHotspot);
-                String wifiapband = SystemProperties.get("Wifiapband");
+                String wifiapband = SystemProperties.get(HOST_BAND_TYPE);
                 if (!isOpenHotspot && ("".equals(wifiapband) || wifiapband == null || wifiapband.equals("Apband2G"))) {
                     setOpenHotspot(false);
                     refreshWifiApUi(false, null);
@@ -635,7 +635,7 @@ public class ScreenHotSponViewHolder implements OnFocusChangeListener, OnClickLi
 
         if (enable) {
             // TODO: 2019-12-05 qkmin
-            SystemProperties.set("Wifiapband", "Apband5G");
+            SystemProperties.set(HOST_BAND_TYPE, SCREEN_HOST_BAND);
             mCm.startTethering(ConnectivityManager.TETHERING_WIFI, true, mStartTetheringCallback, wifiHotHandler);
         } else {
             mCm.stopTethering(ConnectivityManager.TETHERING_WIFI);

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ctv.settings.R;
+import com.ctv.settings.utils.DataTool;
 
 
 public class EyePlusApdater extends BaseAdapter {
@@ -22,7 +23,11 @@ public class EyePlusApdater extends BaseAdapter {
         ctvContext = context;
         this.eye_plus_strings = date_format_strings;
         this.select = select;
-        eye_plus_description = context.getResources().getStringArray(R.array.eye_plus_description);
+        if (DataTool.IS_AH_EDU_QD) {
+            eye_plus_description = context.getResources().getStringArray(R.array.eye_plus_description_Light);
+        }else {
+            eye_plus_description = context.getResources().getStringArray(R.array.eye_plus_description);
+        }
     }
     public void setSelect(int select) {
         this.select = select;

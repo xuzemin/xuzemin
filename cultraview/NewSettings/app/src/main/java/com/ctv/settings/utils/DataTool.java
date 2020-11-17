@@ -3,6 +3,7 @@ package com.ctv.settings.utils;
 
 import android.content.Context;
 import android.os.SystemProperties;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.cultraview.tv.CtvCommonManager;
@@ -20,6 +21,8 @@ import java.util.StringTokenizer;
  * @since 1.0.0 628/638 DataTool.
  */
 public class DataTool {
+
+    public final static boolean IS_AH_EDU_QD = TextUtils.equals(SystemProperties.get("ro.build.display.id", ""), "CN8386_AH_EDU_QD");
 
     /**
      * @Title: isEnable3D

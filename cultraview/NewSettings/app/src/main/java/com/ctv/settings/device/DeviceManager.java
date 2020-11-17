@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -25,10 +26,8 @@ public class DeviceManager {
      * @return
      */
     public static int getScreenBrightness(Context context) {
-
-        // TODO: 2019-10-23 8386  
-        CtvPictureManager mTvPictureManager = CtvPictureManager.getInstance();
-        return mTvPictureManager.getBacklight();
+        int brightness = Integer.parseInt(SystemProperties.get("persist.sys.backlight", "100"));
+        return brightness;
     }
 
     /**
@@ -37,20 +36,13 @@ public class DeviceManager {
      * @param brightness
      */
     public static void setBrightness(Context mContext, int brightness) {
-
-
-        // TODO: 2019-10-23 8385 
-        
-        CtvPictureManager mTvPictureManager = CtvPictureManager.getInstance();
         try {
-            Settings.System.putInt(mContext.getContentResolver(), "backlight", brightness);
-            //SystemProperties.set("persist.sys.backlight",""+progress);
-            mTvPictureManager.setBacklight(brightness);
+            SystemProperties.set("persist.sys.backlight", "" + brightness);
+            CtvPictureManager.getInstance().setBacklight(brightness);
         } catch (Exception e) {
             L.e("qkmin------设置亮度出现问题");
             Toast.makeText(mContext,"qkmin------设置亮度出现问题"+e,Toast.LENGTH_SHORT).show();
         }
-        updatePicModeSetting(mContext, brightness);
 
     }
 

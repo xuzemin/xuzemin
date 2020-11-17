@@ -59,9 +59,12 @@
                     android:layout_height="@dimen/dp_35"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp_5"
+                    android:minHeight="@dimen/dip_10"
+                    android:maxHeight="@dimen/dip_10"
                     android:layout_marginRight="@dimen/dp_5"
                     android:layout_weight="1"
                     android:focusable="true"
+                    android:splitTrack="false"
                     android:progressDrawable="@drawable/seekbar_define_color_style"
                     android:thumb="@drawable/seekbar_thumb" />
 
@@ -114,10 +117,12 @@
                     android:layout_height="@dimen/dp_35"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp_5"
+                    android:minHeight="@dimen/dip_10"
+                    android:maxHeight="@dimen/dip_10"
                     android:layout_marginRight="@dimen/dp_5"
                     android:layout_weight="1"
                     android:focusable="true"
-
+                    android:splitTrack="false"
                     android:progressDrawable="@drawable/seekbar_define_color_style"
                     android:thumb="@drawable/seekbar_thumb" />
 
@@ -148,7 +153,8 @@
 
         <RelativeLayout
             android:id="@+id/rl_setting_theme_sytle"
-            style="@style/rl_item">
+            style="@style/rl_item"
+            android:visibility="gone">
 
             <TextView
                 style="@style/item_textView_new"

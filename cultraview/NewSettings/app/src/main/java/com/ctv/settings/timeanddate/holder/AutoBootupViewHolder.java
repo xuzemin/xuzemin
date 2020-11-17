@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -24,16 +25,10 @@ import java.util.List;
 
 public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClickListener {
 
-    private TimePicker mTimePicker;
     private View mRlAutoBootup;
-    private int auto_bootup;
     private ImageView mIvAutoBootup;
     private Time mDateTime;
-    private Button mBtnSave;
-    private ImageView mIvLeft;
-    private ImageView mIvRight;
     String[] REPEAT_VALUES;
-    private TextView mTvRepeat;
     private int bootup_repeat;
     private BootupSaveDialog saveDialog;
     private boolean isOnTimerEnable;
@@ -48,6 +43,9 @@ public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClick
     private View mRlAutoBootupTime;
     private TextView mTvAutoBootupTime;
     private View mRlRepeat;
+    private TextView planTitle;
+    private LinearLayout item_plan;
+    private String TAG = "AutoBootupViewHolder";
 
     public AutoBootupViewHolder(Activity activity) {
         super(activity);
@@ -55,68 +53,31 @@ public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClick
 
     @Override
     public void initUI(Activity activity) {
-        mTimePicker = (TimePicker) mActivity.findViewById(R.id.timepicker);
         mRlAutoBootup = mActivity.findViewById(R.id.rl_auto_bootup);
         mIvAutoBootup = (ImageView) mActivity.findViewById(R.id.iv_auto_bootup);
-        mBtnSave = (Button) mActivity.findViewById(R.id.btn_save);
-        mIvLeft = (ImageView) mActivity.findViewById(R.id.iv_left);
-        mIvRight = (ImageView) mActivity.findViewById(R.id.iv_right);
-        mTvRepeat = (TextView) mActivity.findViewById(R.id.tv_repeat);
         saveDialog = new BootupSaveDialog(mActivity, this);
         mTvBackTitle = (TextView) mActivity.findViewById(R.id.back_title);
         btnBack = mActivity.findViewById(R.id.back_btn);
-
         mRlAutoBootupTime = mActivity.findViewById(R.id.rl_auto_bootup_time);
-        mTvAutoBootupTime = (TextView)mActivity.findViewById(R.id.tv_auto_bootup_time);
-
-        mRlRepeat = mActivity.findViewById(R.id.rl_repeat);
+        mTvAutoBootupTime = (TextView) mActivity.findViewById(R.id.tv_auto_bootup_time);
+        planTitle = mActivity.findViewById(R.id.tv_title);
+        item_plan = mActivity.findViewById(R.id.ll_plan_item);
     }
 
     @Override
     public void initData(Activity activity) {
-        //定时关机开关状态
-//        isOnTimerEnable = TvTimerManager.getInstance().isOnTimerEnable();
-        isOnTimerEnable = HHTTimeManager.getInstance().isScheduleTimeBootEnable();
-        if (isOnTimerEnable) {
-            mIvAutoBootup.setImageResource(R.mipmap.on);
-        } else {
-            mIvAutoBootup.setImageResource(R.mipmap.off);
-        }
-
-        //开机时间状态
         mDateTime = new Time();
-
-        // HHTApi test start
-        TimeUtil onTime = HHTTimeManager.getInstance().getScheduleTimeForBoot();
-        mDateTime.minute = onTime.min;
-        mDateTime.hour = onTime.hour;
-        // HHTApi test start
-
-//        mDateTime = TvTimerManager.getInstance().getTvOnTimer();
-//        mDateTime.hour = Settings.System.getInt(mActivity.getContentResolver(), "bootup_hour", 8);
-//        mDateTime.minute = Settings.System.getInt(mActivity.getContentResolver(), "bootup_minute", 8);
-        if (mDateTime.hour == 0 && mDateTime.minute == 0){
-            mDateTime.hour = 8;
-            mDateTime.minute = 8;
-        }
-
-        mTimePicker.setIs24HourView(true);
-        mTimePicker.setHour(mDateTime.hour);
-        mTimePicker.setMinute(mDateTime.minute);
-
-        //重复性，默认关闭
-        REPEAT_VALUES = mActivity.getResources().getStringArray(R.array.repeat_values);
-        bootup_repeat = Settings.System.getInt(mActivity.getContentResolver(), "bootup_repeat", 0);
-        mTvRepeat.setText(REPEAT_VALUES[bootup_repeat]);
+        isOnTimerEnable= HHTTimeManager.getInstance().isScheduleTimeBootEnable();
+        refreshPlan();
         mTvBackTitle.setText(mActivity.getResources().getString(R.string.title_auto_bootup));
-        if(mDateTime.minute<10&&mDateTime.hour<10){
-            mTvAutoBootupTime.setText("0"+mDateTime.hour+" : 0"+mDateTime.minute);
-        }else if(mDateTime.minute<10){
-            mTvAutoBootupTime.setText(mDateTime.hour+" : 0"+mDateTime.minute);
-        }else if(mDateTime.hour<10){
-            mTvAutoBootupTime.setText("0"+mDateTime.hour+" : "+mDateTime.minute);
-        }else{
-            mTvAutoBootupTime.setText(mDateTime.hour+" : "+mDateTime.minute);
+        if (mDateTime.minute < 10 && mDateTime.hour < 10) {
+            mTvAutoBootupTime.setText("0" + mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.minute < 10) {
+            mTvAutoBootupTime.setText(mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.hour < 10) {
+            mTvAutoBootupTime.setText("0" + mDateTime.hour + " : " + mDateTime.minute);
+        } else {
+            mTvAutoBootupTime.setText(mDateTime.hour + " : " + mDateTime.minute);
         }
     }
 
@@ -124,31 +85,15 @@ public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClick
     public void refreshUI(View view) {
         int id = view.getId();
         if (id == R.id.iv_auto_bootup) {
-            if (isOnTimerEnable) {
-                mIvAutoBootup.setImageResource(R.mipmap.on);
-            } else {
-                mIvAutoBootup.setImageResource(R.mipmap.off);
-            }
+            refreshPlan();
         }
     }
 
 
     @Override
     public void initListener() {
-        mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                int hour = timePicker.getHour();
-                int minute = timePicker.getMinute();
-                mDateTime.minute = minute;
-                mDateTime.hour = hour;
-            }
-        });
 
         mRlAutoBootup.setOnClickListener(this);
-        mBtnSave.setOnClickListener(this);
-        mIvLeft.setOnClickListener(this);
-        mIvRight.setOnClickListener(this);
         mRlAutoBootupTime.setOnClickListener(this);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +103,18 @@ public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClick
             }
         });
     }
-
+    /**
+     * 定时关机时间设置是否为空
+     * @return
+     */
+    private boolean isOnTimerEmpty() {
+        TimeUtil scheduleTimeForShutdown = HHTTimeManager.getInstance().getScheduleTimeForBoot();
+        if (scheduleTimeForShutdown.week.size()==0) {
+            Log.d(TAG, "isOffTimerEmpty true");
+            return true;
+        }
+        return false;
+    }
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -166,33 +122,35 @@ public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClick
         //保存按钮
         if (id == R.id.rl_auto_bootup) {
             isOnTimerEnable = !isOnTimerEnable;
-            refreshUI(mActivity.findViewById(R.id.iv_auto_bootup));
-            if (isOnTimerEnable) {
-                Log.i("gyx", "isOnTimerEnable=" + isOnTimerEnable);
-                Settings.System.putInt(mActivity.getContentResolver(), "auto_bootup", 1);
-            } else {
-                Settings.System.putInt(mActivity.getContentResolver(), "auto_bootup", 0);
+            if (isOnTimerEmpty()){
+                TimeUtil onTime = new TimeUtil();
+                onTime.min = mDateTime.minute;
+                onTime.hour = mDateTime.hour;
+                List<String> mList = new ArrayList<>();
+                mList.add(TimeUtil.EnumWeek.MON.toString());
+                mList.add(TimeUtil.EnumWeek.TUE.toString());
+                mList.add(TimeUtil.EnumWeek.WED.toString());
+                mList.add(TimeUtil.EnumWeek.THU.toString());
+                mList.add(TimeUtil.EnumWeek.FRI.toString());
+                onTime.week = mList;
+                Log.d("TimeUtil", "NewSettings onTime:" + onTime);
+                HHTTimeManager.getInstance().setScheduleTimeForBoot(onTime);
             }
 
+
+            refreshUI(mActivity.findViewById(R.id.iv_auto_bootup));
             mHandler.removeCallbacks(runnable);
-            mHandler.postDelayed(runnable,500);
+            mHandler.postDelayed(runnable, 500);
         } else if (id == R.id.btn_save) {
             saveDialog.show();
-        } else if (id == R.id.iv_left||id == R.id.iv_right) {
-            if (bootup_repeat == 0) {
-                mTvRepeat.setText(REPEAT_VALUES[1]);
-                bootup_repeat = 1;
-                Settings.System.putInt(mActivity.getContentResolver(), "bootup_repeat", bootup_repeat);
-            } else {
-                mTvRepeat.setText(REPEAT_VALUES[0]);
-                bootup_repeat = 0;
-                Settings.System.putInt(mActivity.getContentResolver(), "bootup_repeat", bootup_repeat);
-            }
+            saveDialog.setPlan(HHTTimeManager.getInstance().getScheduleTimeForBoot());
         } else if (id == R.id.rl_auto_bootup_time) {
             saveDialog.show();
+            saveDialog.setPlan(HHTTimeManager.getInstance().getScheduleTimeForBoot());
         }
     }
-    Runnable runnable=new Runnable() {
+
+    Runnable runnable = new Runnable() {
         @Override
         public void run() {
             new Thread(new Runnable() {
@@ -217,62 +175,104 @@ public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClick
         mDateTime.minute = minute;
         mDateTime.hour = hour;
 
-//        Settings.System.putInt(mActivity.getContentResolver(), "bootup_hour", mDateTime.hour);
-//        Settings.System.putInt(mActivity.getContentResolver(), "bootup_minute", mDateTime.minute);
-
-
-        // HHTApi test start
-        TimeUtil onTime = new TimeUtil();
-        onTime.min = minute;
-        onTime.hour = hour;
-        List<String> mList =new ArrayList<>();
-//        mList.add(TimeUtil.EnumWeek.SUN.toString());
-        mList.add(TimeUtil.EnumWeek.MON.toString());
-        mList.add(TimeUtil.EnumWeek.TUE.toString());
-        mList.add(TimeUtil.EnumWeek.WED.toString());
-        mList.add(TimeUtil.EnumWeek.THU.toString());
-        mList.add(TimeUtil.EnumWeek.FRI.toString());
-//        mList.add(TimeUtil.EnumWeek.SAT.toString());
-        onTime.week = mList;
-        Log.d("TimeUtil", "NewSettings onTime:" + onTime);
-        HHTTimeManager.getInstance().setScheduleTimeForBoot(onTime);
-        // HHTApi test start
-
-//        Time DateTime = TvTimerManager.getInstance().getCurrentTvTime();
-//        DateTime.hour = mDateTime.hour;
-//        DateTime.minute = mDateTime.minute;
-//        TvTimerManager.getInstance().setTvOnTimer(DateTime);
-//        mHandler.removeCallbacks(runnable);
-//        mHandler.postDelayed(runnable,500);
 
         saveDialog.dismiss();
-        if(mDateTime.minute<10&&mDateTime.hour<10){
-            mTvAutoBootupTime.setText("0"+mDateTime.hour+" : 0"+mDateTime.minute);
-        }else if(mDateTime.minute<10){
-            mTvAutoBootupTime.setText(mDateTime.hour+" : 0"+mDateTime.minute);
-        }else if(mDateTime.hour<10){
-            mTvAutoBootupTime.setText("0"+mDateTime.hour+" : "+mDateTime.minute);
-        }else{
-            mTvAutoBootupTime.setText(mDateTime.hour+" : "+mDateTime.minute);
+        if (mDateTime.minute < 10 && mDateTime.hour < 10) {
+            mTvAutoBootupTime.setText("0" + mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.minute < 10) {
+            mTvAutoBootupTime.setText(mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.hour < 10) {
+            mTvAutoBootupTime.setText("0" + mDateTime.hour + " : " + mDateTime.minute);
+        } else {
+            mTvAutoBootupTime.setText(mDateTime.hour + " : " + mDateTime.minute);
         }
-
+        refreshPlan();
     }
 
-    public void onKeyDown(int keycode){
-        if(mRlRepeat.hasFocus()){
-            if(keycode== KeyEvent.KEYCODE_DPAD_LEFT||keycode== KeyEvent.KEYCODE_DPAD_RIGHT){
-                if (bootup_repeat == 0) {
-                    mTvRepeat.setText(REPEAT_VALUES[1]);
-                    bootup_repeat = 1;
-                    Settings.System.putInt(mActivity.getContentResolver(), "bootup_repeat", bootup_repeat);
-                } else {
-                    mTvRepeat.setText(REPEAT_VALUES[0]);
-                    bootup_repeat = 0;
-                    Settings.System.putInt(mActivity.getContentResolver(), "bootup_repeat", bootup_repeat);
-                }
-            }
-        }
-
+    public void onKeyDown(int keycode) {
     }
 
+    private void refreshPlan() {
+        TimeUtil onTime = HHTTimeManager.getInstance().getScheduleTimeForBoot();
+        mDateTime.minute = onTime.min;
+        mDateTime.hour = onTime.hour;
+        if (isOnTimerEnable) {
+            mIvAutoBootup.setImageResource(R.mipmap.on);
+            planTitle.setText(getPlanTitle(onTime));
+            item_plan.setVisibility(View.VISIBLE);
+        } else {
+            mIvAutoBootup.setImageResource(R.mipmap.off);
+            planTitle.setText(getPlanTitle(onTime));
+            item_plan.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 获取定时开机计划
+     *
+     * @param timeUtil
+     * @return
+     */
+    private String getPlanTitle(TimeUtil timeUtil) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String str = "　";
+        stringBuilder.append(mActivity.getString(R.string.text_shutdown));
+        stringBuilder.append(str);
+        if (mDateTime.minute < 10 && mDateTime.hour < 10) {
+            stringBuilder.append("0" + mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.minute < 10) {
+            stringBuilder.append(mDateTime.hour + " : 0" + mDateTime.minute);
+        } else if (mDateTime.hour < 10) {
+            stringBuilder.append("0" + mDateTime.hour + " : " + mDateTime.minute);
+        } else {
+            stringBuilder.append(mDateTime.hour + " : " + mDateTime.minute);
+        }
+        stringBuilder.append(str);
+        stringBuilder.append(getRepeatString(timeUtil.week));
+        Log.d(TAG, "getPlanTitle:" + stringBuilder.toString());
+        return stringBuilder.toString();
+    }
+
+    /**
+     * list转String
+     *
+     * @param list
+     * @return
+     */
+    private String getRepeatString(List<String> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("(");
+        String str = "、";
+        if (list.contains(TimeUtil.EnumWeek.MON.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_monday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.TUE.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_tuesday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.WED.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_wednesday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.THU.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_thursday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.FRI.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_friday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.SAT.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_saturday));
+            stringBuilder.append(str);
+        }
+        if (list.contains(TimeUtil.EnumWeek.SUN.toString())) {
+            stringBuilder.append(mActivity.getString(R.string.text_sunday));
+            stringBuilder.append(str);
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
 }
