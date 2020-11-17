@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.cultraview.tv.CtvFactoryManager;
 import com.cultraview.tv.CtvTvManager;
 import com.cultraview.tv.common.exception.CtvCommonException;
+import com.mstar.android.tv.TvCommonManager;
 import com.mstar.android.tvapi.common.TvManager;
 import com.mstar.android.tvapi.common.exception.TvCommonException;
 
@@ -52,11 +53,15 @@ public class USBUpgradeThread {
 
     public static int UPGRATE_TYPEC_SUCCESS = 11;
 
+    public static int UPGRATE_HDMI_OUT_FAILED = 12;
+
+    public static int UPGRATE_HDMI_OUT_SUCCESS = 13;
 
     public static int UPGRATE_END_SUCCESS_WIFI_MAC = 7;
     public static String UpgradeFilePath = "/UpgradePanel/";
     public static String UpgradeTypeCFile = "/typec/";
 
+    private static final String TVOS_INTERFACE_CMD_LED_BREATH_ON = "LedBreathOn";
 
     public enum EnumUpgradeStatus {
         // status fail
@@ -916,9 +921,9 @@ public class USBUpgradeThread {
                     public void run() {
                         LogUtils.d("UpgradeTypeC path :" + path);
                         try {
-                            short[] shorts = TvManager.getInstance().setTvosCommonCommand("Upgrade_typc_fw#" + path);
+                            boolean isSuccess = TvManager.getInstance().setTvosInterfaceCommand("Upgrade_typc_fw#" + path);
                             if (handler != null) {
-                                if (shorts[0] == 0) {
+                                if (!isSuccess) {
                                     //失败
                                     handler.sendEmptyMessage(UPGRATE_TYPEC_FAILED);
                                 } else {
@@ -926,10 +931,43 @@ public class USBUpgradeThread {
                                     handler.sendEmptyMessage(UPGRATE_TYPEC_SUCCESS);
                                 }
                             }
-                            LogUtils.d("shorts :" + shorts[0]);
+                            LogUtils.d("shorts :" + isSuccess);
                         } catch (TvCommonException e) {
                             e.printStackTrace();
                             LogUtils.e("UpgradeTypeC error :" + e);
+                        }
+                    }
+                }
+        ).start();
+
+    }
+
+
+    /**
+     * hdmi out升级
+     *
+     * @param path 路径
+     */
+    public static void UpgradeHdmiOut(final Handler handler, final String path) {
+        TvCommonManager.getInstance().setTvosCommonCommand(TVOS_INTERFACE_CMD_LED_BREATH_ON);
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        LogUtils.d("UpgradeHdmiOut path :" + path);
+                        try {
+                            boolean isSuccess = TvManager.getInstance().setTvosInterfaceCommand("NovaTekUpgrade#" + path);
+                            if (handler != null) {
+                                if (isSuccess) {
+                                    handler.sendEmptyMessage(UPGRATE_HDMI_OUT_SUCCESS);
+                                } else {
+                                    handler.sendEmptyMessage(UPGRATE_HDMI_OUT_FAILED);
+                                }
+                            }
+                            LogUtils.d("shorts :" + isSuccess);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            LogUtils.e("UpgradeHdmiOut error :" + e);
                         }
                     }
                 }

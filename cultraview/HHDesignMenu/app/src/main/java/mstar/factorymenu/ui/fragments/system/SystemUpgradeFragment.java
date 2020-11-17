@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ import com.cultraview.tv.CtvCommonManager;
 import com.cultraview.tv.CtvTvManager;
 import com.cultraview.tv.common.exception.CtvCommonException;
 import com.mstar.android.storage.MStorageManager;
+import com.mstar.android.tv.TvCommonManager;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -91,8 +94,15 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
     private int typeCUpgradeFileSize = 0;
     private String typeUpgradeFileName = "";
     private String typeCUpgradeFilePath = "";
+
+    private String hdmiOutUpgradeFilePath = "";
+    private final String hdmiOutName = "hdmiout_h.bin";
+    private final String typeCName = "typec_h.bin";
+
+
     private String uPath = "";
     private String unZipPath = "/HHT/";
+    private static final String TVOS_INTERFACE_CMD_LED_BREATH_OFF = "LedBreathOff";
     private final BroadcastReceiver storageChangeReceiver = new BroadcastReceiver() {
         @SuppressLint("LongLogTag")
         @Override
@@ -343,20 +353,42 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
             case 6:
                 if (Tools.CheckUsbIsExist()) {
                     if (isTypcCUpgradeFileExists()) {
-                        if (typeCUpgradeFileSize <= 1) {
-                            if (dialog == null) {
-                                dialog = new ProgressDialog(getActivity());
-                                dialog.setMessage("Type-C 升级中，请勿操作！请勿断电！请勿拔插盘！");
-                                dialog.setCancelable(false);
-                                dialog.show();
-                            } else {
-                                dialog.show();
-                            }
-                            USBUpgradeThread.UpgradeTypeC(handler, typeCUpgradeFilePath);
-
+                        if (dialog == null) {
+                            dialog = new ProgressDialog(getActivity());
+                            dialog.setMessage("Type-C 升级中，请勿操作！请勿断电！请勿拔插盘！");
+                            dialog.setCancelable(false);
+                            dialog.show();
                         } else {
-                            Toast.makeText(getActivity(), "U盘中有多个升级文件", Toast.LENGTH_SHORT).show();
+                            dialog.setMessage("Type-C 升级中，请勿操作！请勿断电！请勿拔插盘！");
+                            dialog.show();
                         }
+                        USBUpgradeThread.UpgradeTypeC(handler, typeCUpgradeFilePath);
+                        setDialogOnKeyListener();
+
+                    } else {
+                        Toast.makeText(getActivity(), "未检测到升级文件", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "未检测到U盘", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case 7:
+                if (Tools.CheckUsbIsExist()) {
+                    if (isHdmiOutCUpgradeFileExists()) {
+                        if (dialog == null) {
+                            dialog = new ProgressDialog(getActivity());
+                            dialog.setMessage("Hdmi Out 升级中，请勿操作！请勿断电！请勿拔插盘！");
+                            dialog.setCancelable(false);
+                            dialog.show();
+                        } else {
+                            dialog.setMessage("Hdmi Out 升级中，请勿操作！请勿断电！请勿拔插盘！");
+                            dialog.show();
+                        }
+                        USBUpgradeThread.UpgradeHdmiOut(handler, hdmiOutUpgradeFilePath);
+                        setDialogOnKeyListener();
+
                     } else {
                         Toast.makeText(getActivity(), "未检测到升级文件", Toast.LENGTH_SHORT).show();
                     }
@@ -377,7 +409,15 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
                 break;
         }
     }
-
+    private void setDialogOnKeyListener(){
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                LogUtils.d("dialog onKey return true ");
+                return true;
+            }
+        });
+    }
     protected Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -406,6 +446,15 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
             } else if (msg.what == USBUpgradeThread.UPGRATE_TYPEC_SUCCESS) {
                 Toast.makeText(getActivity(), "Type-c升级成功", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+            } else if (msg.what == USBUpgradeThread.UPGRATE_HDMI_OUT_FAILED) {
+                Toast.makeText(getActivity(), "Hdmi-out升级失败", Toast.LENGTH_SHORT).show();
+                TvCommonManager.getInstance().setTvosCommonCommand(TVOS_INTERFACE_CMD_LED_BREATH_OFF);
+                dialog.dismiss();
+            } else if (msg.what == USBUpgradeThread.UPGRATE_HDMI_OUT_SUCCESS) {
+                Toast.makeText(getActivity(), "Hdmi-out升级成功", Toast.LENGTH_SHORT).show();
+                TvCommonManager.getInstance().setTvosCommonCommand(TVOS_INTERFACE_CMD_LED_BREATH_OFF);
+                dialog.dismiss();
+                CtvCommonManager.getInstance().rebootSystem("reboot");
             } else {
                 Toast.makeText(getActivity(), "烧录失败", Toast.LENGTH_SHORT).show();
             }
@@ -588,27 +637,43 @@ public class SystemUpgradeFragment extends Fragment implements SeekBar.OnSeekBar
         typeCUpgradeFileSize = 0;
         typeUpgradeFileName = "";
         typeCUpgradeFilePath = "";
-        String filepath = USBUpgradeThread.FindTypeCFolderOnUSB();
+        String filepath = USBUpgradeThread.FindUSB();
         LogUtils.d("isTypcCUpgradeFileExists filepath:" + filepath);
         File[] files = new File(filepath).listFiles();
         for (int sdx = 0; sdx < files.length; sdx++) {
             String name = files[sdx].getName();
             LogUtils.d("Upgrade name:" + name);
-            if (Tools.getTypeCFormatName(name)) {
+            if (name.equals(typeCName)) {
                 typeCUpgradeFilePath = files[sdx].getPath();
                 typeUpgradeFileName = files[sdx].getName();
                 if (!files[sdx].isHidden()) {
-                    ++typeCUpgradeFileSize;
+                    return true;
                 }
                 LogUtils.d("Upgrade find zip path is" + typeCUpgradeFilePath + "name is :" + typeUpgradeFileName);
 
             }
-
         }
-        if (typeCUpgradeFileSize > 0) {
-            return true;
-        }
+        return false;
+    }
 
+    /**
+     * 判断升级文件是否存在
+     *
+     * @return
+     */
+    public boolean isHdmiOutCUpgradeFileExists() {
+        hdmiOutUpgradeFilePath = "";
+        String filepath = USBUpgradeThread.FindUSB();
+        LogUtils.d("isTypcCUpgradeFileExists filepath:" + filepath);
+        File[] files = new File(filepath).listFiles();
+        for (int sdx = 0; sdx < files.length; sdx++) {
+            String name = files[sdx].getName();
+            LogUtils.d("Upgrade name:" + name);
+            if (name.equals(hdmiOutName)) {
+                hdmiOutUpgradeFilePath = files[sdx].getPath();
+                return true;
+            }
+        }
         return false;
     }
 
