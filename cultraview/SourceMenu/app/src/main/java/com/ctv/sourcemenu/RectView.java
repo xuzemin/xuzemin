@@ -61,12 +61,13 @@ public class RectView extends View {
 //       mPaint.setColor(Color.BLACK);
 //        this.mPaint.setColor(getResources().getColor(R.color.bg_load));
         float strokeWidth = this.mPaint.getStrokeWidth()/ 2.0f;
-        float f = (float) width;
+     //   float f = (float) width;
      //   Log.d("hhh", "onDraw: f  = "+f+"strokeWidth ="+strokeWidth);
 //        canvas.drawCircle(f, f, 120, this.mPaint);
         this.mPaint.setColor(getResources().getColor(R.color.bg_load));
+
         float f2 = ((float) (width * 2)) - strokeWidth;
-        canvas.drawArc(new RectF(strokeWidth, strokeWidth, f2, f2), -90.0f, (float) ((getProgress() * TvLanguage.PAPIAMENTO) / 100), false, this.mPaint);
+        canvas.drawArc(new RectF(strokeWidth, strokeWidth, f2, f2), -90.0f, (float) ((getProgress() * TvLanguage.PAPIAMENTO) / 50), false, this.mPaint);
 
     }
     public void reDraw() {

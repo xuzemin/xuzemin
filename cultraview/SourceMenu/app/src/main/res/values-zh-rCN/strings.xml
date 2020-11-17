@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">信号源</string>
+    <string name="source_list">信号源</string>
+
+
+    <string name="ops">内置电脑</string>
+
+    <string name="hdmi1">前置HDMI</string>
+    <string name="hdmi2">高清2</string>
+    <string name="hdmi3">高清3</string>
+
+
+
+
+
+    <string name="FRONT_HDMI">前置高清</string>
+
+    <string name="ANDROID">安卓</string>
+    <string name="HDMI">高清</string>
+    <string name="HDMI1">高清1</string>
+    <string name="HDMI2">高清2</string>
+    <string name="HDMI3">高清3</string>
+    <string name="AH_HDMI3">高清1</string>
+
+    <string name="YPBPR">分量</string>
+    <string name="TYPEC">全功能通道</string>
+    <string name="VGA">电脑</string>
+    <string name="ATV">模拟电视</string>
+    <string name="DTV">数字电视</string>
+    <string name="OPS">内置电脑</string>
+    <string name="DP">DP</string>
+    <string name="AV">视频</string>
+
+</resources>

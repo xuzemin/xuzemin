@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_1800"
+    android:layout_height="@dimen/dp_900"
+    android:background="@drawable/shape_all"
+    android:orientation="vertical">
+
+    <!--    <com.ctv.sourcemenu.RectView-->
+    <!--        android:layout_width="100px"-->
+    <!--        android:layout_height="100px"/>-->
+    <TextView
+        android:id="@+id/main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="@string/source_list"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/bg_rc" />
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_1600"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+        <GridView
+            android:id="@+id/mGridview"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:gravity="center_horizontal"
+            android:padding="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:numColumns="6"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="0dp"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

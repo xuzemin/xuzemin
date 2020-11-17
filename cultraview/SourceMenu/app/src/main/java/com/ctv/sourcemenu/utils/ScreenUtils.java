@@ -3,12 +3,15 @@ package com.ctv.sourcemenu.utils;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
+import android.os.SystemProperties;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import com.ctv.sourcemenu.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -20,7 +23,7 @@ import java.lang.reflect.Method;
  */
 public class ScreenUtils {
     private static int statusBarHeight = 0;// 状态栏的高度
-
+    private static String produce  = getProduce();
     /**
      * 获取屏幕原始尺寸高度，包括虚拟功能键高度
      *
@@ -163,5 +166,28 @@ public class ScreenUtils {
         float sw = 160.0F * smPixels / densityDpi;
 
         return (int) (sw + 0.5f);
+    }
+
+    public static boolean Is_AHboard(){
+
+        return  produce.contains("CN8386_AH");
+    }
+    public static boolean Is_MHboard(){
+
+        return   produce.contains("CN8386_MH");
+    }
+    public static boolean Is_LHboard( ){
+
+        return   produce.contains("CN8386_LH");
+        //return true;
+    }
+    public static boolean Is_BHboard(){
+        return   produce.contains("CN8386_BH");
+    }
+    private static String getProduce() {
+        String s = SystemProperties.get("ro.product.board", "CN8386_AH");
+        Log.d("hongcc", "getProduce: SystemProperties board ="+s);
+        //System. get("ro.product.board",""）;
+        return s;
     }
 }

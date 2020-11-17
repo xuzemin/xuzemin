@@ -1,4 +1,33 @@
 <resources>
+
     <string name="app_name">SourceMenu</string>
-    <string name="source_list">信号源</string>
+    <string name="source_list">SourceMenu</string>
+
+    <string name="ops">OPS</string>
+
+    <string name="hdmi1">PRONT_HDMI</string>
+    <string name="hdmi2">HDMI2</string>
+    <string name="hdmi3">HDMI3</string>
+
+
+
+
+    <string name="FRONT_HDMI">FRONT_HDMI</string>
+
+
+    <string name="ANDROID">ANDROID</string>
+    <string name="HDMI">HDMI</string>
+    <string name="HDMI1">HDMI1</string>
+    <string name="HDMI2">HDMI2</string>
+    <string name="HDMI3">HDMI3</string>
+    <string name="AH_HDMI3">HDMI1</string>
+
+    <string name="YPBPR">YPBPR</string>
+    <string name="TYPEC">TYPEC</string>
+    <string name="VGA">VGA</string>
+    <string name="ATV">ATV</string>
+    <string name="DTV">DTV</string>
+    <string name="OPS">OPS</string>
+    <string name="DP">DP</string>
+    <string name="AV">AV</string>
 </resources>

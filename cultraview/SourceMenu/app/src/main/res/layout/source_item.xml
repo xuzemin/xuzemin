@@ -10,6 +10,7 @@
     <com.ctv.sourcemenu.RectView
         android:id="@+id/rect"
         android:layout_centerHorizontal="true"
+
         android:layout_marginTop="30px"
         android:layout_width="200px"
         android:layout_height="200px"/>

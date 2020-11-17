@@ -1,6 +1,6 @@
 package com.ctv.sourcemenu;
 
-import android.animation.Animator;
+
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.Log;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,14 +22,15 @@ public class SourceGridAdapter extends ArrayAdapter<SourceBean> {
     private int resourceid;
     int i= 0;
     private RectView mrectView;
-    private int index = -1;
-    private int sourceid;
-    private ValueAnimator valueAnimator_first;
 
-    public SourceGridAdapter(@NonNull Context context, int resource, @NonNull List<SourceBean> objects) {
-        super(context, resource, objects);
+    private String update_name;
+
+
+    private List<SourceBean> sourceBeans = new ArrayList<>();
+    public SourceGridAdapter(@NonNull Context context, int resource, @NonNull List<SourceBean> sources) {
+        super(context, resource, sources);
         resourceid =resource;
-
+        sourceBeans =sources;
     }
 
     @NonNull
@@ -37,70 +38,66 @@ public class SourceGridAdapter extends ArrayAdapter<SourceBean> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = null;
         ViewHolder viewHolder;
-        SourceBean item = getItem(position);
+     //   SourceBean item = getItem(position);
+        SourceBean item = sourceBeans.get(position);
+        String text ="11";
         if (convertView == null){
             viewHolder = new ViewHolder();
+
             view= LayoutInflater.from(getContext()).inflate(resourceid, parent, false);
+            viewHolder.ahitem = view.findViewById(R.id.ahitem);
             viewHolder.rectView = view.findViewById(R.id.rect);
-            mrectView=viewHolder.rectView;
+            // mrectView=viewHolder.rectView;
             viewHolder.mImage= view.findViewById(R.id.mImage);
             viewHolder.mText= view.findViewById(R.id.mText);
+
             view.setTag(viewHolder);
         }else {
             view = convertView;
-
             viewHolder = (ViewHolder) view.getTag();
         }
             viewHolder.mText.setText(item.getText());
             viewHolder.mImage.setImageResource(item.getIamgeid());
-            viewHolder.setposition(item.getPosition());
-//        if (position==0){
-//            viewHolder.mText.setSelected(true);
-//        }
-        if (position == index){
-            //startanim_first(viewHolder.rectView);
-            viewHolder.mText.setSelected(true);
-            Log.d("hhc", "getView:   true--------position ="+position);
+            viewHolder.idname = item.getId_name();
+            text =  item.getId_name();
+            L.debug("hongcc", "getView: idname ="+text +"   position ="+position+  "  sources.size ="+sourceBeans.size());
+            L.debug("hongcc", "getView: update_name ="+update_name );
+//            if (position == index){
+//                viewHolder.mText.setSelected(true);
+//            }else {
+//                viewHolder.mText.setSelected(false);
+//            }
+        if (text.equals(update_name)){
 
-        }else {
-            Log.d("hhc", "getView: false-------position ="+position);
-            viewHolder.mText.setSelected(false);
-            viewHolder.rectView.setProgress(0);
-            viewHolder.rectView.reDraw();
-            viewHolder.rectView.clearAnimation();
-
-           // stopAnimation();
-        }
-        if ((position+1) == sourceid){
+            viewHolder.mText.setFocusable(true);
+       //     boolean dd =  viewHolder.mText.requestFocus();
+     //       Log.d("hongcc", "update   getView:   update_name ="+update_name +"   dd ="+dd);
             viewHolder.rectView.setProgress(100);
             viewHolder.mText.setSelected(true);
-            viewHolder.rectView.reDraw();
+        }else {
+            viewHolder.mText.setFocusable(false);
+            viewHolder.mText.setSelected(false);
+            viewHolder.rectView.setProgress(0);
+          viewHolder.rectView.reDraw();
+          viewHolder.rectView.clearAnimation();
         }
+
         return view;
 
-
     }
+
+
     class ViewHolder{
+            View ahitem;
             ImageView mImage;
             TextView mText;
             RectView rectView;
-            int position;
-            public void setposition(int i){
-                position = i;
-            }
-
-    }
-    public void setCurrentPosition(int index){
-        Log.d("hhc", "setCurrentPosition:  index ="+index);
-        this.index =index;
-        notifyDataSetChanged();
+            String idname;
     }
 
-    public int getCurrentPosition(){
-        return index;
-    }
-    public void setCurrentSourceid(int sourceid){
-        this.sourceid=sourceid;
+
+    public void setCurrentSourceid(String update_name){
+        this.update_name=update_name;
         notifyDataSetChanged();
     }
 

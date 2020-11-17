@@ -4,12 +4,13 @@
 	<dimen name="dp_30">30px</dimen>
 	<dimen name="dp_35">35px</dimen>
 	<dimen name="dp_50">50px</dimen>
-
+	<dimen name="dp_140">140px</dimen>
 	<dimen name="dp_160">160px</dimen>
 	<dimen name="dp_170">170px</dimen>
 
 	<dimen name="dp_200">200px</dimen>
 	<dimen name="dp_210">210px</dimen>
+	<dimen name="dp_280">280px</dimen>
 	<dimen name="dp_350">350px</dimen>
 
 	<dimen name="dp_700">700px</dimen>

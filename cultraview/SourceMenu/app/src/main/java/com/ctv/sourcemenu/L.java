@@ -11,7 +11,7 @@ import com.hht.android.sdk.boardInfo.HHTConstant;
  * 
  */
 public class L {
-	public static boolean isDebug = true;// 是否需要打印bug，
+	public static boolean isDebug = false;// 是否需要打印bug，
 	private static final String TAG = "SourceMenu";
 
 	// 下面四个是默认tag的函数
@@ -43,7 +43,10 @@ public class L {
 		if (isDebug)
 			Log.v(TAG, msg);
 	}
-
+	public static void debug(String ii, String msg) {
+		if (isDebug)
+			Log.i(ii, msg);
+	}
 	// 下面是传入类名打印log
 	public static void i(Class<?> _class, String msg) {
 		if (isDebug)
