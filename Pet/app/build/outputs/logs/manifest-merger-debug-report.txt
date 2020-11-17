@@ -1,0 +1,190 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:2:1-87:12
+	package
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:3:11-35
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:5:22-64
+application
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:7:5-85:19
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/xuzemin/.android/build-cache/2e029a3a89b90edb962bd73ecd6fcb8e76d6ade2/output/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:design:25.3.1] /Users/xuzemin/.android/build-cache/cec45cf54f9ec7165c64f0c5fd7b0c9952f9b803/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] /Users/xuzemin/.android/build-cache/55498b29791a2f59e2c98e23aea35ee7bf5b00ad/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] /Users/xuzemin/.android/build-cache/cb63cbae78f537a235681a7ee4318dcb60e91fd2/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] /Users/xuzemin/.android/build-cache/6847621f800e12290dc247bc6da3c2b50c831cd3/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] /Users/xuzemin/.android/build-cache/b88e0a33a4075a7d076fdc98b6ee7fbf39a0da12/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:25.3.1] /Users/xuzemin/.android/build-cache/686912828784c2cc3b68f69fd53004a0d2846bdc/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] /Users/xuzemin/.android/build-cache/0c3c7f78b1cc4aea3a337348d6fab309a1d2db8e/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] /Users/xuzemin/.android/build-cache/5710712640766a9f005a12609085e1370f7cc4a3/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] /Users/xuzemin/.android/build-cache/d8e43f9ce876929a2c793e7ab481962dafe65af8/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] /Users/xuzemin/.android/build-cache/be65965a86d170fb58042f208681268826ffc94d/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] /Users/xuzemin/.android/build-cache/6a9f34cb8f5a2648d8ad36a471fcd0f78bb97346/output/AndroidManifest.xml:29:5-20
+	android:label
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:11:9-41
+	android:supportsRtl
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:13:9-35
+	android:roundIcon
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:12:9-54
+	android:allowBackup
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:9:9-35
+	android:icon
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:10:9-43
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:14:9-40
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:8:9-38
+activity#com.yianke.pet.view.activity.SplashActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:17:9-26:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:19:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:20:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:18:13-57
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:21:13-25:29
+action#android.intent.action.MAIN
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:22:17-68
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:22:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:24:17-76
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:24:27-74
+meta-data#design_width
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:29:9-31:35
+	android:value
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:31:13-33
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:30:13-40
+meta-data#design_height
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:32:9-34:35
+	android:value
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:34:13-33
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:33:13-41
+activity#com.yianke.pet.view.activity.LeaderActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:37:9-41:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:39:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:40:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:38:13-57
+activity#com.yianke.pet.view.activity.RegisterActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:43:9-47:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:45:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:46:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:44:13-59
+activity#com.yianke.pet.view.activity.AgreeDetialActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:49:9-53:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:51:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:52:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:50:13-62
+activity#com.yianke.pet.view.activity.VerificationCodeActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:55:9-59:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:57:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:58:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:56:13-67
+activity#com.yianke.pet.view.activity.PetMsgActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:61:9-65:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:63:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:64:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:62:13-57
+activity#com.yianke.pet.view.activity.LoginActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:67:9-71:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:69:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:70:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:68:13-56
+activity#com.yianke.pet.view.activity.MainActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:73:9-78:20
+	android:process
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:75:13-39
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:76:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:77:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:74:13-55
+activity#com.yianke.pet.view.activity.MissActivity
+ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:80:9-84:20
+	android:screenOrientation
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:82:13-49
+	android:theme
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:83:13-69
+	android:name
+		ADDED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml:81:13-55
+uses-sdk
+INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/xuzemin/.android/build-cache/2e029a3a89b90edb962bd73ecd6fcb8e76d6ade2/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fresco:0.12.0] /Users/xuzemin/.android/build-cache/bf3f6474f1fd79b85b601f0c90478db5459a43e5/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:0.12.0] /Users/xuzemin/.android/build-cache/a266a0b93472c9c08177d82d0fa95bbb97ecb2cf/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:0.12.0] /Users/xuzemin/.android/build-cache/246d4862036aee1837b4c07331196e3e206e69b9/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:0.12.0] /Users/xuzemin/.android/build-cache/5868d941c6d9a2b57a8ec8129a080ff347e083b9/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fbcore:0.12.0] /Users/xuzemin/.android/build-cache/a2ae7f9c5dca961d29e79723c6e462eed94bb0a0/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.jakewharton:butterknife:8.4.0] /Users/xuzemin/.android/build-cache/74765b986201c38ddd8abbd1118f9ac999f39e42/output/AndroidManifest.xml:5:5-43
+MERGED from [com.zhy:autolayout:1.4.5] /Users/xuzemin/.android/build-cache/f9fc9602779620c95b8c67be30def85bb6807317/output/AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:design:25.3.1] /Users/xuzemin/.android/build-cache/cec45cf54f9ec7165c64f0c5fd7b0c9952f9b803/output/AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.3.1] /Users/xuzemin/.android/build-cache/55498b29791a2f59e2c98e23aea35ee7bf5b00ad/output/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] /Users/xuzemin/.android/build-cache/cb63cbae78f537a235681a7ee4318dcb60e91fd2/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] /Users/xuzemin/.android/build-cache/6847621f800e12290dc247bc6da3c2b50c831cd3/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] /Users/xuzemin/.android/build-cache/bd1212987250d7590dfb5c60087a6aa0b5583bdc/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.3.1] /Users/xuzemin/.android/build-cache/b88e0a33a4075a7d076fdc98b6ee7fbf39a0da12/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.3.1] /Users/xuzemin/.android/build-cache/686912828784c2cc3b68f69fd53004a0d2846bdc/output/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] /Users/xuzemin/.android/build-cache/0c3c7f78b1cc4aea3a337348d6fab309a1d2db8e/output/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] /Users/xuzemin/.android/build-cache/5710712640766a9f005a12609085e1370f7cc4a3/output/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.1] /Users/xuzemin/.android/build-cache/d8e43f9ce876929a2c793e7ab481962dafe65af8/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.1] /Users/xuzemin/.android/build-cache/be65965a86d170fb58042f208681268826ffc94d/output/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.3.1] /Users/xuzemin/.android/build-cache/6a9f34cb8f5a2648d8ad36a471fcd0f78bb97346/output/AndroidManifest.xml:21:5-23:58
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.3.1] /Users/xuzemin/.android/build-cache/cec45cf54f9ec7165c64f0c5fd7b0c9952f9b803/output/AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/xuzemin/Downloads/[Android源码]仿线上电商项目有宠商城安卓程序/app/src/main/AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:25.3.1] /Users/xuzemin/.android/build-cache/cec45cf54f9ec7165c64f0c5fd7b0c9952f9b803/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] /Users/xuzemin/.android/build-cache/55498b29791a2f59e2c98e23aea35ee7bf5b00ad/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] /Users/xuzemin/.android/build-cache/cb63cbae78f537a235681a7ee4318dcb60e91fd2/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] /Users/xuzemin/.android/build-cache/6847621f800e12290dc247bc6da3c2b50c831cd3/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] /Users/xuzemin/.android/build-cache/bd1212987250d7590dfb5c60087a6aa0b5583bdc/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] /Users/xuzemin/.android/build-cache/b88e0a33a4075a7d076fdc98b6ee7fbf39a0da12/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] /Users/xuzemin/.android/build-cache/686912828784c2cc3b68f69fd53004a0d2846bdc/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] /Users/xuzemin/.android/build-cache/0c3c7f78b1cc4aea3a337348d6fab309a1d2db8e/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] /Users/xuzemin/.android/build-cache/5710712640766a9f005a12609085e1370f7cc4a3/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] /Users/xuzemin/.android/build-cache/d8e43f9ce876929a2c793e7ab481962dafe65af8/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] /Users/xuzemin/.android/build-cache/be65965a86d170fb58042f208681268826ffc94d/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] /Users/xuzemin/.android/build-cache/6a9f34cb8f5a2648d8ad36a471fcd0f78bb97346/output/AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:design:25.3.1] /Users/xuzemin/.android/build-cache/cec45cf54f9ec7165c64f0c5fd7b0c9952f9b803/output/AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:design:25.3.1] /Users/xuzemin/.android/build-cache/cec45cf54f9ec7165c64f0c5fd7b0c9952f9b803/output/AndroidManifest.xml:26:9-47
