@@ -12,27 +12,27 @@ LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 
 
 LOCAL_PREBUILT_JNI_LIBS:= \
-  lib/armeabi/libBaiduSpeechSDK.so \
-  lib/armeabi/libbd_easr_s1_merge_normal_20151216.dat.so \
-  lib/armeabi/libbdEASRAndroid.so \
-  lib/armeabi/libbdSpilWakeup.so \
   lib/armeabi/libbspatch.so \
-  lib/armeabi/libcutils.so \
+  lib/armeabi/libclnt_uvc.so \
   lib/armeabi/libDoGpio.so \
   lib/armeabi/libGpio.so \
-  lib/armeabi/libion.so \
-  lib/armeabi/liblog.so \
+  lib/armeabi/libjpeg-turbo1500.so \
   lib/armeabi/libmaizheSDKlib.so \
   lib/armeabi/libmysher_h264.so \
+  lib/armeabi/libMysherFirmware.so \
   lib/armeabi/libmysherxmpp.so \
+  lib/armeabi/libmz_camera.so \
+  lib/armeabi/libMzAudioJni.so \
   lib/armeabi/libnativeegl.so \
-  lib/armeabi/librk_on2.so \
   lib/armeabi/libScreenCapturerJni.so \
   lib/armeabi/libSndCtl.so \
   lib/armeabi/libturbojpeg.so \
   lib/armeabi/libturnuclient.so \
+  lib/armeabi/libusb100.so \
   lib/armeabi/libUsbDisplay-sdk.so \
-  lib/armeabi/libvad.dnn.so \
-  lib/armeabi/libvpu.so \
-  lib/armeabi/libwebrtc_unity_plugin.so
+  lib/armeabi/libuvc.so \
+  lib/armeabi/libUVCCamera.so \
+  lib/armeabi/libwebrtc_unity_plugin.so \
+  lib/armeabi/libwz265.so \
+  lib/armeabi/libwzdecoder.so
 include $(BUILD_PREBUILT)
