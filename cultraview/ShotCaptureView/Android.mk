@@ -2,6 +2,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_PACKAGE_NAME := ShotCaptureView
 LOCAL_CERTIFICATE := platform
+LOCAL_DEX_PREOPT := false
 #LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
 LOCAL_SRC_FILES := \
