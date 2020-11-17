@@ -8,8 +8,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.ctv.easytouch.Constants;
+import com.ctv.easytouch.R;
 import com.ctv.easytouch.been.AppInfo;
-import com.mstar.android.tv.TvCommonManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,10 +38,13 @@ public class ApkInfoUtils {
             "com.protruly.floatwindowlib.virtualkey",
             "com.mstar.tv.tvplayer.ui",
             "com.ctv.sourcemenu",
+            "mstar.factorymenu.ui.hh",
+            "com.ctv.settings",
+            "com.ctv.annotation",
     };
 
     public List<AppInfo> scanInstallApp(Context context) {
-        Log.d("TAG","scanInstallApp");
+        Log.d("TAG", "scanInstallApp");
         List<String> ignoreList = java.util.Arrays.asList(ignoreApps);
 
         List<AppInfo> appInfos = new ArrayList<>();
@@ -67,13 +70,13 @@ public class ApkInfoUtils {
                 }
                 if (!TextUtils.isEmpty(userPackageName)) {
                     if (userPackageName.contains(app.packageName)) {
-                        Log.d("TAG","scanInstallApp  packageName"+app.packageName);
+                        Log.d("TAG", "scanInstallApp  packageName" + app.packageName);
                         continue;
                     }
                 }
 
 
-                appInfos.add(getAppInfo(app, pm));
+                appInfos.add(getAppInfo(context, app, pm));
             }
         }
         return appInfos;
@@ -88,17 +91,23 @@ public class ApkInfoUtils {
                 new ApplicationInfo.DisplayNameComparator(pm));// 字典排序
         for (ApplicationInfo app : listAppcations) {
             if (packageName.equals(app.packageName)) {
-                appInfo = getAppInfo(app, pm);
+                appInfo = getAppInfo(context, app, pm);
                 break;
             }
         }
         return appInfo;
     }
 
-    private AppInfo getAppInfo(ApplicationInfo app, PackageManager pm) {
+    private AppInfo getAppInfo(Context context, ApplicationInfo app, PackageManager pm) {
         AppInfo appInfo = new AppInfo();
-        appInfo.setAppName(pm.getApplicationLabel(app).toString());//应用名称
-        appInfo.setAppIcon(app.loadIcon(pm));//应用icon
+        if (app.packageName.equals("com.mysher.mtalk")) {
+            appInfo.setAppName(context.getString(R.string.metting));//应用名称
+            appInfo.setAppIcon(context.getResources().getDrawable(R.mipmap.metting));//应用icon
+        } else {
+            appInfo.setAppName(pm.getApplicationLabel(app).toString());//应用名称
+            appInfo.setAppIcon(app.loadIcon(pm));//应用icon
+        }
+
         appInfo.setPackName(app.packageName);//应用包名，用来卸载
         return appInfo;
     }

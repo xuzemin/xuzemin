@@ -683,27 +683,26 @@ public class AppUtils {
      * @param isOpen
      */
     public static void changeUSBTouch(Context context, boolean isOpen) {
-        // TODO: 2019-10-28 8386
         try {
-            Class<?> bookClass = Class.forName("android.os.SystemProperties");//完整类名
-            Object book = bookClass.newInstance();//获得实例
-            Method getAuthor = bookClass.getDeclaredMethod("set", String.class, String.class);//获得私有方法
-            getAuthor.setAccessible(true);//调用方法前，设置访问标志
+//            Class<?> bookClass = Class.forName("android.os.SystemProperties");//完整类名
+//            Object book = bookClass.newInstance();//获得实例
+//            Method getAuthor = bookClass.getDeclaredMethod("set", String.class, String.class);//获得私有方法
+//            getAuthor.setAccessible(true);//调用方法前，设置访问标志
 
-
-            Log.d("qkmin", "setUSB isOpen" );
-            if (isOpen) {
-                getAuthor.invoke(book, "ctv.sendKeyCode", "on");//使用方法
-                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_ON");
-                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_ON");
-                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_ON");
-            } else {
-                getAuthor.invoke(book, "ctv.sendKeyCode", "off");//使用方法
-                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
-                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
-                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
-            }
-//            TvCommonManager.getInstance().setUsbTouch(context, isOpen);
+//
+//            Log.d("qkmin", "setUSB isOpen" );
+//            if (isOpen) {
+//                getAuthor.invoke(book, "ctv.sendKeyCode", "on");//使用方法
+//                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_ON");
+//                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_ON");
+//                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_ON");
+//            } else {
+//                getAuthor.invoke(book, "ctv.sendKeyCode", "off");//使用方法
+//                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
+//                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
+//                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
+//            }
+            TvCommonManager.getInstance().setUsbTouch(context, isOpen);
         } catch (Exception e) {
             Log.e("qkmin", "setUSB error:" + e);
             e.printStackTrace();

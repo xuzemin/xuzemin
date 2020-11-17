@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_view"
     android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
+    android:background="@drawable/btn_menu_show_shape"
     android:minWidth="100px"
     android:minHeight="100px"
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:layout_margin="0dp"
-    android:background="@drawable/btn_menu_show_shape">
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/easy_touch"
@@ -17,10 +17,11 @@
         android:layout_centerInParent="true"
         android:background="@mipmap/btn_center" />
 
-    <include android:id="@+id/touch_menu"
-            layout="@layout/btn_menu"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-        android:visibility="gone"/>
+    <include
+        android:id="@+id/touch_menu"
+        layout="@layout/btn_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </RelativeLayout>

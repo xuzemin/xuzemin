@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -130,6 +131,7 @@ public class FloatWindowService extends Service {
         super.onDestroy();
         // 释放资源
         releaseData();
+        Settings.System.putInt(getApplicationContext().getContentResolver(), "EASY_TOUCH_OPEN_ENABLE",0);
     }
 
     /**
@@ -153,7 +155,11 @@ public class FloatWindowService extends Service {
         @Override
         public void run() {
             // 当前没有浮框，直接创建浮框
+            int enable = Settings.System.getInt(getApplicationContext().getContentResolver(), "EASY_TOUCH_OPEN_ENABLE",0);
             if (!FloatWindowManager.isWindowShowing()) {
+                if(enable == 0){
+                    Settings.System.putInt(getApplicationContext().getContentResolver(), "EASY_TOUCH_OPEN_ENABLE",1);
+                }
                 Log.d(TAG, "FloatWindowManager.isWindowShowing()  .....");
                 if (mHandler != null) {
                     Log.d(TAG, "FloatWindowManager.isWindowShowing()  mHandler!=NULL....");
