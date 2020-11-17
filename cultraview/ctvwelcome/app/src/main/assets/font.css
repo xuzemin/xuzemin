@@ -1,0 +1,28 @@
+@font-face {
+      font-family:arial;
+      src:url('fonts/arial.TTF');
+}
+@font-face {
+      font-family:kai_ti;
+      src:url('fonts/kai_ti.TTF')format('truetype');
+}
+@font-face{
+    font-family:fang_song;
+    src.url('fonts/fang_song.TTF')format('truetype');
+}
+@font-face{
+    font-family:georgia;
+    src.url('fonts/georgia.TTF')format('truetype');
+}
+@font-face{
+    font-family:time_new_roman;
+    src.url('fonts/time_new_roman.TTF')format('truetype');
+}
+@font-face{
+    font-family:song_ti;
+    src.url('fonts/song_ti.TTC');
+}
+@font-face{
+    font-family:hei_ti;
+    src.url('fonts/hei_ti.TTF')format('truetype');
+}

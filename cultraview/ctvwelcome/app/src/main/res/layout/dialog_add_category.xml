@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/add_category_dialog_bg"
+    android:layout_width="203dp"
+    android:layout_height="107dp">
+
+    <TextView
+        android:textSize="14sp"
+        android:textColor="@color/about_text_color"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="@string/custom_theme" />
+
+    <ImageView
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/add_category_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:textSize="13sp"
+            android:textColor="@color/about_text_color"
+            android:gravity="center"
+            android:id="@+id/txt_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginLeft="12dp"
+            android:text="@string/theme" />
+
+        <EditText
+            android:textSize="13sp"
+            android:textColor="@color/about_text_color"
+            android:gravity="center_vertical"
+            android:id="@+id/et_input_theme"
+            android:background="@drawable/category_edit_bg"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txt_theme" />
+
+        <TextView
+            android:textSize="13sp"
+            android:textColor="@color/selector_custom_theme_confirm"
+            android:gravity="center"
+            android:id="@+id/txt_cancel_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/cancel"
+            android:layout_below="@+id/et_input_theme"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:textSize="13sp"
+            android:textColor="@color/selector_custom_theme_confirm"
+            android:id="@+id/txt_confirm_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/confirm"
+            android:layout_toLeftOf="@+id/txt_cancel_theme"
+            android:layout_below="@+id/et_input_theme"
+            android:layout_marginEnd="15dp" />
+    </RelativeLayout>
+</LinearLayout>

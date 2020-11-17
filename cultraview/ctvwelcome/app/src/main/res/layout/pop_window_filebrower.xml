@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="500dp"
+    android:layout_height="389dp">
+
+    <TextView
+        android:textSize="14sp"
+        android:textColor="@color/add_module_black"
+        android:gravity="center"
+        android:id="@+id/pop_fb_title"
+        android:background="@drawable/fb_top"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="@string/custom_theme" />
+
+    <RelativeLayout
+        android:id="@+id/pop_fb_filePathCon"
+        android:background="@drawable/filepath_bg"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@+id/pop_fb_title">
+
+        <ImageView
+            android:id="@+id/pop_fb_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/filepath_back"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:textSize="13sp"
+            android:textColor="@android:color/white"
+            android:id="@+id/pop_fb_filePath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/pop_fb_back" />
+
+        <TextView
+            android:id="@+id/txt_sort_type"
+            android:background="@drawable/sort_type_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pop_fb_leftCon"
+        android:background="@drawable/fb_left"
+        android:layout_width="102dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/pop_fb_filePathCon">
+
+        <ListView
+            android:id="@+id/pop_fb_tab"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:choiceMode="singleChoice" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/pop_fb_filePathCon"
+        android:layout_toEndOf="@+id/pop_fb_leftCon">
+
+        <FrameLayout
+            android:id="@+id/frame_file_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pop_fb_recyclerView"
+                android:background="@android:color/white"
+                android:padding="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pop_list_recyclerView"
+                android:background="@android:color/white"
+                android:padding="3dp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:background="@drawable/fb_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="25dp">
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="@color/add_module_time"
+                android:id="@+id/pop_fb_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017/12/07 下午3:50"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="17dp" />
+
+            <Button
+                android:textSize="13sp"
+                android:textColor="@color/selector_add_module_confirm"
+                android:id="@+id/pop_fb_confirm"
+                android:background="@drawable/selector_add_module_confirm"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:text="@string/confirm"
+                android:layout_toStartOf="@+id/pop_fb_cancel" />
+
+            <Button
+                android:textSize="13sp"
+                android:textColor="@color/selector_add_module_confirm"
+                android:id="@+id/pop_fb_cancel"
+                android:background="@drawable/selector_add_module_confirm"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:text="@string/cancel"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
