@@ -200,7 +200,7 @@ public class FloatWindowManager {
 
             // 所有其它程序是可点击的，悬浮窗不获取焦点
             menuParamsLeft.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL
-                    | LayoutParams.FLAG_NOT_FOCUSABLE;
+                    | LayoutParams.FLAG_NOT_FOCUSABLE |LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
             menuParamsLeft.format = PixelFormat.RGBA_8888;
             menuParamsLeft.gravity = Gravity.LEFT | Gravity.TOP;
             menuParamsLeft.width = ControlMenuLayout.viewWidth;
@@ -238,7 +238,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeMenuWindowLeft(Context context) {
-        MyUtils.checkUSB(true);
+        MyUtils.checkUSB(context,true);
         if (menuWindowLeft != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(menuWindowLeft);
@@ -296,7 +296,7 @@ public class FloatWindowManager {
 
             // 所有其它程序是可点击的，悬浮窗不获取焦点
             menuParams.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL
-                    | LayoutParams.FLAG_NOT_FOCUSABLE;
+                    | LayoutParams.FLAG_NOT_FOCUSABLE | LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
             menuParams.format = PixelFormat.RGBA_8888;
             menuParams.gravity = Gravity.LEFT | Gravity.TOP;
             menuParams.width = ControlMenuLayout.viewWidth;
@@ -314,7 +314,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeMenuWindow(Context context) {
-        MyUtils.checkUSB(true);
+        MyUtils.checkUSB(context,true);
         if (menuWindow != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(menuWindow);
@@ -362,7 +362,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeThmometerWindow(Context context) {
-        MyUtils.checkUSB(true);
+        MyUtils.checkUSB(context,true);
         if (thmometerWindow != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(thmometerWindow);
@@ -518,7 +518,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeSignalDialog(Context context) {
-        MyUtils.checkUSB(true);
+        MyUtils.checkUSB(context,true);
         if (signalDialog != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(signalDialog);
@@ -615,7 +615,7 @@ public class FloatWindowManager {
      *            必须为应用程序的Context.
      */
     public static void removeSettingsDialog(Context context) {
-        MyUtils.checkUSB(true);
+        MyUtils.checkUSB(context,true);
         if (settingsDialog != null) {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(settingsDialog);

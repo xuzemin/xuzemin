@@ -4,7 +4,7 @@
     <string name="folder_all">所有圖片</string>
     <string name="folder_first">背景素材</string>
     <string name="sketch_count_alert">畫板已達最大數量</string>
-
+    <string name="string_please_unlock">請解鎖</string>
     <string name="msg_no_camera">No system camera found</string>
     <string name="msg_amount_limit">Select images amount is limit</string>
     <string name="action_done">Done</string>
@@ -82,7 +82,7 @@
     <string name="apps_settings">設置</string>
     <string name="apps_screenshot">截屏</string>
     <string name="apps_timer">計時器</string>
-    <string name="apps_record">錄像</string>
+    <string name="apps_record">錄屏</string>
     <string name="apps_eyecare">護眼</string>
     <string name="title_select_app">請選擇快捷應用</string>
     <string name="apps_usred">自定義</string>

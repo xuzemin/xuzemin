@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.protruly.floatwindowlib.R;
 import com.protruly.floatwindowlib.been.AppInfo;
 
 import java.util.ArrayList;
@@ -34,7 +35,14 @@ public class ApkInfoUtils {
 			"com.example.cutcapture",
 			"com.ctv.screencomment",
 			"com.bozee.andisplay.configer",
-			"com.example.newmagnifier"
+			"com.example.newmagnifier",
+			"com.mstar.tv.tvplayer.ui",
+			"com.ctv.sourcemenu",
+			"mstar.factorymenu.ui.hh",
+			"com.ctv.annotation",
+			"com.ctv.ctvlauncher",
+			"com.android.tv.settings",
+			"com.mstar.netplayer",
 	};
 
 	public List<AppInfo> scanInstallApp(Context context) {
@@ -58,7 +66,7 @@ public class ApkInfoUtils {
 				if(ignoreList.contains(app.packageName)){
 					continue;
 				}
-				appInfos.add(getAppInfo(app, pm));
+				appInfos.add(getAppInfo(context,app, pm));
 			}
 		}
 		return appInfos;
@@ -73,17 +81,22 @@ public class ApkInfoUtils {
 				new ApplicationInfo.DisplayNameComparator(pm));// 字典排序
 		for (ApplicationInfo app : listAppcations) {
 			if(packageName.equals(app.packageName)){
-				appInfo = getAppInfo(app, pm);
+				appInfo = getAppInfo(context,app, pm);
 				break;
 			}
 		}
 		return appInfo;
 	}
 
-	private AppInfo getAppInfo(ApplicationInfo app, PackageManager pm) {
+	private AppInfo getAppInfo(Context  context,ApplicationInfo app, PackageManager pm) {
 		AppInfo appInfo = new AppInfo();
-		appInfo.setAppName(pm.getApplicationLabel(app).toString());//应用名称
-		appInfo.setAppIcon(app.loadIcon(pm));//应用icon
+		if (app.packageName.equals("com.mysher.mtalk")) {
+			appInfo.setAppName(context.getString(R.string.metting));//应用名称
+			appInfo.setAppIcon(context.getResources().getDrawable(R.mipmap.metting));//应用icon
+		} else {
+			appInfo.setAppName(pm.getApplicationLabel(app).toString());//应用名称
+			appInfo.setAppIcon(app.loadIcon(pm));//应用icon
+		}
 		appInfo.setPackName(app.packageName);//应用包名，用来卸载
 		return appInfo;
 	}

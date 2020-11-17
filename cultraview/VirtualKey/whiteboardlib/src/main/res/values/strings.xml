@@ -4,7 +4,7 @@
     <string name="folder_all">All the pictures</string>
     <string name="folder_first">Background material</string>
     <string name="sketch_count_alert">The drawing board has reached the maximum number</string>
-
+    <string name="string_please_unlock">Please unlock</string>
     <string name="msg_no_camera">No system camera found</string>
     <string name="msg_amount_limit">Select images amount is limit</string>
     <string name="action_done">Done</string>
@@ -83,7 +83,9 @@
     <string name="week">Thur</string>
     <string name="day">2018/06/15</string>
     <string name="hour_second">09:47</string>
-
+    <string name="apm"> </string>
+    <string name="am"> am </string>
+    <string name="pm"> pm </string>
     <string name="notice">Notice</string>
     <string name="all_ignore">Ignore All</string>
 

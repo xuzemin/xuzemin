@@ -33,5 +33,10 @@
     <string name="close_ops">OPS 已经关闭</string>
     <string name="screen_protect_time">Screen Saver Time</string>
     <string name="no_signal_standby">No signal standby</string>
+    <string name="metting">视频会议</string>
+    <string name="apps_eyecare_close">护眼关闭</string>
+    <string name="apps_eyecare_open">护眼+</string>
+    <string name="apps_eyecare_light">亮度护眼</string>
+    <string name="apps_eyecare_Electric">光控护眼</string>
 
 </resources>

@@ -90,7 +90,6 @@ public class SettingNewActivity extends Activity {
      * 初始化
      */
     private void init(){
-        MyUtils.checkUSB(false);
         // 初始化
         mHandler = new UIHandler(this);
 
@@ -142,7 +141,6 @@ public class SettingNewActivity extends Activity {
 
         // 打开PC触摸板
 //        MyUtils.openAndClosePCTouch(true);
-        MyUtils.checkUSB(true);
 
 	    layout.destroy();
 

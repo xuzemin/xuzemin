@@ -32,4 +32,9 @@
     <string name="screen_protect_time">Screen Saver Time</string>
     <string name="no_signal_standby">No signal standby</string>
     <string name="close_ops">OPS Closed</string>
+    <string name="metting">NetMeeting</string>
+    <string name="apps_eyecare_close">EYE CLOSE</string>
+    <string name="apps_eyecare_open">EYE+</string>
+    <string name="apps_eyecare_light">LIGHT EYE</string>
+    <string name="apps_eyecare_Electric">ELECTRIC EYE</string>
 </resources>

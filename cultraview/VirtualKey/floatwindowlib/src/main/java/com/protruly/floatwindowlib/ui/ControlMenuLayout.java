@@ -2,6 +2,7 @@ package com.protruly.floatwindowlib.ui;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
@@ -125,35 +126,8 @@ public class ControlMenuLayout extends FrameLayout {
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         // 箭头按钮
         rlBtnArrow = findViewById(R.id.rl_btn_arrow);
-        this.setOnTouchListener(new View.OnTouchListener(){
-            int paramY;
-            float  lastY;
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                float y = event.getRawY();
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        isDown = true;
-                        MyUtils.checkUSB(false);
-                        lastY = y;
-                        //获取当前按下的坐标
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        //获取移动后的坐标
-                        int dy = (int) (y - lastY);
-                        Log.i("gyx","dy="+dy);
-                        FloatWindowManager.updateMenuLeftParams(mContext,dy);
-                        FloatWindowManager.updateMenuParams(mContext,dy);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        Log.e("打印操作：", "抬起了");
-                        FloatWindowManager.updateDy();
-                        isDown = false;
-                        break;
-                }
-                return true;
-            }
-        });
+        this.setOnTouchListener(onTouchListener);
+
 //        rlBtnArrow.setBackground(defaultBG);
         btnArrow = (ImageView) findViewById(R.id.btn_arrow);
         if (isRight) { // 右边的控制菜单
@@ -193,10 +167,8 @@ public class ControlMenuLayout extends FrameLayout {
 
         animHide = AnimationUtils.loadAnimation(getContext(), outAnimResId);
         animHide.setAnimationListener(hideAnimationListener);
-
+        btnArrow.setOnTouchListener(onTouchListener);
     }
-
-
 
 
     /**
@@ -236,13 +208,12 @@ public class ControlMenuLayout extends FrameLayout {
             btnArrow.setImageResource(R.drawable.btn_arrow_right_normal);
         }
 
-	    if (!isShrink){ // 若是展开时，则收缩
-		    isShrink = true;
-		    if (menuLayout.getVisibility() == View.VISIBLE){
-			    menuLayout.startAnimation(animHide);
-		    }
-	    }
-        MyUtils.checkUSB(true);
+        if (!isShrink) { // 若是展开时，则收缩
+            isShrink = true;
+            if (menuLayout.getVisibility() == View.VISIBLE) {
+                menuLayout.startAnimation(animHide);
+            }
+        }
     }
 
     /**
@@ -422,11 +393,78 @@ public class ControlMenuLayout extends FrameLayout {
         shrinkMenu();
     };
 
+    private OnTouchListener onTouchListener = new OnTouchListener() {
+        int paramY;
+        float lastY;
+        private static final int MIN_DISTANCE = 15;
+        float initialX;
+        float initialY;
+        int lastAction;
+        long downTime = 0;
+        float downY = 0;
+        boolean move = false;
+
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            if(("on".equals(SystemProperties.get("persist.sys.lockScreen")))) {
+                return true;
+            }
+            float y = event.getRawY();
+            Log.d(TAG, "onTouch---->" + event.getAction());
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    mHandler.removeCallbacks(shrinkRunnable);
+                    isDown = true;
+                    MyUtils.checkUSB(mContext,false);
+                    lastY = y;
+                    lastAction = MotionEvent.ACTION_DOWN;
+                    downTime = System.currentTimeMillis();
+                    downY = event.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    int dy = (int) (y - lastY);
+                    float moveY = event.getY() - downY;
+                    if (Math.abs(moveY) > MIN_DISTANCE) {
+                        move = true;
+                    }
+                    if (move) {
+                        Log.d(TAG, "moveY: is  move" );
+                        FloatWindowManager.updateMenuLeftParams(mContext, dy);
+                        FloatWindowManager.updateMenuParams(mContext, dy);
+                    }
+
+                    //获取移动后的坐标
+                    break;
+                case MotionEvent.ACTION_UP:
+                    long l = System.currentTimeMillis() - downTime;
+                    Log.i(TAG, "time:" + l);
+                    if (l < 300) {
+                        changeMenuView();
+                        mHandler.postDelayed(shrinkRunnable, 5000);
+                    }
+                    FloatWindowManager.updateDy();
+                    isDown = false;
+                    move = false;
+                    MyUtils.checkUSB(mContext,true);
+                    break;
+                case MotionEvent.ACTION_OUTSIDE:
+                    shrinkMenu();
+                    break;
+                default:
+                    return false;
+            }
+            return true;
+        }
+    };
+
     /**
      * 点击事件监听
      */
     private OnClickListener mOnClickListener = v -> {
-        MyUtils.checkUSB(false);
+        if(("on".equals(SystemProperties.get("persist.sys.lockScreen")))) {
+            return;
+        }
+        MyUtils.checkUSB(mContext,false);
         int id = v.getId();
         // 除了回退键/左右箭头/主页键时，其他按键都不能快速点击两次
 	    if (!((id == R.id.btn_back)
@@ -444,9 +482,7 @@ public class ControlMenuLayout extends FrameLayout {
 
         switch (id) {
             case R.id.btn_arrow: {// 收缩菜单
-                if(!("on".equals(SystemProperties.get("persist.sys.lockScreen")))) {
                     changeMenuView();
-                }
                 break;
             }
             case R.id.btn_whiteboard: {// 白板显示和隐藏
@@ -493,8 +529,11 @@ public class ControlMenuLayout extends FrameLayout {
             }
             case R.id.btn_signal: {// 显示信号源弹框
 //                showSignal();
-                showNewSignal();
-
+//                showNewSignal();
+                Intent intent = new Intent();
+                intent.setAction("com.mstar.android.intent.action.TV_INPUT_BUTTON");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
 //                AppUtils.keyEventBySystem(KeyEvent.KEYCODE_TV_INPUT);
                 break;
             }
@@ -502,7 +541,7 @@ public class ControlMenuLayout extends FrameLayout {
                 break;
             }
         }
-
+        MyUtils.checkUSB(mContext,true);
         mHandler.postDelayed(shrinkRunnable, 5000);
     };
 

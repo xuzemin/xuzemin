@@ -29,7 +29,11 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.cultraview.tv.CtvTvManager;
+import com.hht.android.sdk.device.HHTCommonManager;
+import com.hht.android.sdk.ops.HHTOpsManager;
 import com.hht.android.sdk.source.HHTSourceManager;
+import java.util.Calendar;
+import android.text.format.DateFormat;
 import com.mstar.android.tv.TvCommonManager;
 import com.protruly.floatwindowlib.activity.SettingNewActivity;
 import android.util.Log;
@@ -80,6 +84,15 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.hht.android.sdk.device.HHTCommonManager.EnumEyeProtectionMode.EYE_OFF;
+import static com.hht.android.sdk.device.HHTCommonManager.EnumEyeProtectionMode.EYE_PLUS;
+import static com.hht.android.sdk.device.HHTCommonManager.EnumEyeProtectionMode.EYE_RGB;
+import static com.hht.android.sdk.device.HHTCommonManager.EnumEyeProtectionMode.EYE_DIMMING;
+
+import static com.protruly.floatwindowlib.utils.SystemUtils.AP_BAND_2G;
+import static com.protruly.floatwindowlib.utils.SystemUtils.AP_BAND_5G;
+import static com.protruly.floatwindowlib.utils.SystemUtils.HOST_BAND_TYPE;
+
 /**
  * Desc:设置弹框
  *
@@ -89,7 +102,7 @@ import java.util.TimerTask;
 public class SettingsDialogLayout extends FrameLayout {
     private static final String TAG = SettingsDialogLayout.class.getSimpleName();
     private Context mContext;
-
+    public final static boolean IS_AH_EDU_QD = TextUtils.equals(SystemProperties.get("ro.build.display.id", ""), "CN8386_AH_EDU_QD");
     // 宽和高
     public static int viewWidth;
     public static int viewHeight;
@@ -101,6 +114,8 @@ public class SettingsDialogLayout extends FrameLayout {
     TextView tvWeek;
     TextView tvDay;
     TextView tvTime;
+    private String date;
+    private TextView textviweapm;
 
     ImageView wireImage; // 有线
     ImageView wifiImage;// 无线
@@ -138,16 +153,16 @@ public class SettingsDialogLayout extends FrameLayout {
     private List<Map<String, Object>> app_list;
     private SimpleAdapter sim_adapter;
     // 图片封装为一个数组
-    private int[] icon = { R.drawable.apps_wire_normal, R.drawable.apps_wireless_normal, R.drawable.apps_hotspot_normal,
+    private int[] icon = {R.drawable.apps_wire_normal, R.drawable.apps_wireless_normal, R.drawable.apps_hotspot_normal,
             R.drawable.apps_settings_normal, R.drawable.apps_screenshot_normal, R.drawable.apps_timer_normal,
             R.drawable.apps_record_normal, R.drawable.apps_magnifier_normal, R.mipmap.light_sense_default,
-            R.drawable.apps_eye_care_normal, R.mipmap.energy_saving_default, R.drawable.apps_add_normal };
+            R.drawable.apps_eye_care_normal, R.mipmap.energy_saving_default, R.drawable.apps_add_normal};
     private int[] iconName = null;
 
     protected boolean isOpenWifi = false, isDialog = false;
     boolean isOpenHotspot = false;
     boolean isOpenHotspot5G = false;
-
+    private int eyeFlag = 0;
     private Listener mListener = new Listener() {
         @Override
         public void onConnectivityChange(Intent intent) {
@@ -161,21 +176,23 @@ public class SettingsDialogLayout extends FrameLayout {
     private TextView tv_light;
     private LinearLayout lightSenseLL;
     private ImageView lightSenseImage;
-    private LinearLayout  magnifierLL;
+    private LinearLayout magnifierLL;
     private RecyclerView mRecyclerView;
     private NotificationAdapter notificationAdapter;
     private ArrayList<NotificationInfo> notificationList;
     private TextView mAllIgnore;
+    private TextView tv_eye;
 
     /**
      * 更新AP状态
+     *
      * @param intent
      */
-    private void upApStateChange(Intent intent){
+    private void upApStateChange(Intent intent) {
         int state = intent.getIntExtra("wifi_state",
                 14);
 
-        SPUtil.saveData(getContext(),CommConsts.WIFI_STATE, state);
+        SPUtil.saveData(getContext(), CommConsts.WIFI_STATE, state);
         switch (state) {
             default:
             case 12:
@@ -186,11 +203,11 @@ public class SettingsDialogLayout extends FrameLayout {
                 // 开启热点
                 if (!isOpenHotspot) {
                     isOpenHotspot = true;
-                    setOpenHotspot(false,false);
+                    setOpenHotspot(false, false);
                     Log.d(TAG, "CHANGE WIFI_AP_STATE_ENABLED:" + isOpenHotspot);
                 }
 
-                SPUtil.saveData(getContext(),CommConsts.IS_HOTSPOT_ON, isOpenHotspot);
+                SPUtil.saveData(getContext(), CommConsts.IS_HOTSPOT_ON, isOpenHotspot);
                 break;
             case 10:
                 Log.d(TAG, "WIFI_AP_STATE_DISABLING");
@@ -200,7 +217,7 @@ public class SettingsDialogLayout extends FrameLayout {
                 if (isOpenHotspot) {
                     isOpenHotspot = false;
                     Log.i(TAG, "CHANGE WIFI_AP_STATE_DISABLED:" + isOpenHotspot);
-                    SPUtil.saveData(getContext(),CommConsts.IS_HOTSPOT_ON, isOpenHotspot);
+                    SPUtil.saveData(getContext(), CommConsts.IS_HOTSPOT_ON, isOpenHotspot);
                 }
                 break;
         }
@@ -222,7 +239,7 @@ public class SettingsDialogLayout extends FrameLayout {
         init();
     }
 
-    private void init(){
+    private void init() {
         LayoutInflater.from(mContext).inflate(R.layout.dialog_setting, this);
         initView();
 
@@ -239,7 +256,7 @@ public class SettingsDialogLayout extends FrameLayout {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getActionMasked();
 
-        if (action == MotionEvent.ACTION_OUTSIDE){
+        if (action == MotionEvent.ACTION_OUTSIDE) {
             this.setVisibility(View.GONE);
             if (isRightShow) {
                 FloatWindowManager.getMenuWindow().changeIndexBg(true);
@@ -261,6 +278,7 @@ public class SettingsDialogLayout extends FrameLayout {
         tvWeek = findViewById(R.id.tv_week);
         tvDay = findViewById(R.id.tv_day);
         tvTime = findViewById(R.id.tv_time);
+        textviweapm = findViewById(R.id.apm);
 
         // 有线网络
         mEthernetManager = (EthernetManager) getContext().getSystemService("ethernet");
@@ -269,17 +287,17 @@ public class SettingsDialogLayout extends FrameLayout {
 //        mPppoeManager = PppoeManager.getInstance(getContext());
 
         //OPS HOME shuatdow
-        OPSImage= findViewById(R.id.btn_ops);
-        HomeImage= findViewById(R.id.btn_android);
-        ShutdownImage= findViewById(R.id.btn_shutdown);
+        OPSImage = findViewById(R.id.btn_ops);
+        HomeImage = findViewById(R.id.btn_android);
+        ShutdownImage = findViewById(R.id.btn_shutdown);
 
         //通知
         mRecyclerView = findViewById(R.id.recycleview_notification);
         mAllIgnore = findViewById(R.id.all_ignore);
 
         notificationList = FloatWindowManager.getNotificationList();
-        if(notificationList !=null){
-            Log.i("gyx","init recycleview");
+        if (notificationList != null) {
+            Log.i("gyx", "init recycleview");
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -303,7 +321,7 @@ public class SettingsDialogLayout extends FrameLayout {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         boolean isBluetoothOpen = bluetoothAdapter.isEnabled();
-        if (isBluetoothOpen){
+        if (isBluetoothOpen) {
             bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_focus);
         } else {
             bluetoothImage.setImageResource(R.mipmap.apps_bluetooth_default);
@@ -329,10 +347,33 @@ public class SettingsDialogLayout extends FrameLayout {
         energySaving = findViewById(R.id.pup_energy_saving);
         // 护眼
         View eyecareLL = findViewById(R.id.pup_eyecare);
+        tv_eye = findViewById(R.id.tv_eye);
         eyecareImage = findViewById(R.id.eyecare_iv);
-        int eyeCare = Settings.System.getInt(mContext.getContentResolver(), CommConsts.IS_EYECARE, 0);
-        int resID = (eyeCare == 0) ? R.mipmap.apps_eye_care_default: R.mipmap.apps_eye_care_focus;
+        if(IS_AH_EDU_QD){
+            eyeFlag = getEyePlusIndex_Light();
+            int resID = (eyeFlag == 0) ? R.mipmap.apps_eye_care_default : R.mipmap.apps_eye_care_focus;
+            if (eyeFlag ==0){
+            tv_eye.setText(mContext.getString(R.string.apps_eyecare_close));
+            }else if (eyeFlag == 1) {
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_Electric));
+            }else if (eyeFlag == 2) {
+            tv_eye.setText(mContext.getString(R.string.apps_eyecare_open));
+        }else {
+            tv_eye.setText(mContext.getString(R.string.apps_eyecare_light));
+        }
+            eyecareImage.setImageResource(resID);
+        }else{
+            eyeFlag = getEyePlusIndex();
+            int resID = (eyeFlag == 0) ? R.mipmap.apps_eye_care_default : R.mipmap.apps_eye_care_focus;
+            if (eyeFlag ==0){
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_close));
+            }else if (eyeFlag == 1) {
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_open));
+            }else {
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_light));
+            }
         eyecareImage.setImageResource(resID);
+        }
 
         pupAdd = findViewById(R.id.pup_add);
         pupAdd.setOnLongClickListener(mOnLongClickListener);
@@ -353,13 +394,13 @@ public class SettingsDialogLayout extends FrameLayout {
         sound.setMax(maxSound);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);//获取当前音量
         sound.setProgress(currentVolume);//音量控制Bar的当前值设置为系统音量当前值
-        tv_sound.setText(""+currentVolume);
+        tv_sound.setText("" + currentVolume);
         try {
             mTvPictureManager = CtvPictureManager.getInstance();
-            int progress = SystemProperties.getInt("persist.sys.backlight",50);
+            int progress = SystemProperties.getInt("persist.sys.backlight", 50);
             light.setProgress(progress);
-            tv_light.setText(""+progress);
-        } catch (Exception e){
+            tv_light.setText("" + progress);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -407,20 +448,21 @@ public class SettingsDialogLayout extends FrameLayout {
         initSelectDialog();
         updateUseredIcon();
     }
+
     /**
      * 初始化光感UI
      */
-    private void initLightSenseUI(){
+    private void initLightSenseUI() {
         boolean isClick = false;
         float alpha = 0.4F;
         boolean isLightSenseEnable = MyUtils.isSupportLightSense();
         int resID = R.mipmap.light_sense_default;
-        if (isLightSenseEnable){
+        if (isLightSenseEnable) {
             isClick = true;
             alpha = 1F;
 
             int lightSense = Settings.System.getInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, 0);
-            resID = (lightSense == 0) ? R.mipmap.light_sense_default: R.mipmap.light_sense_focus;
+            resID = (lightSense == 0) ? R.mipmap.light_sense_default : R.mipmap.light_sense_focus;
         }
         lightSenseImage.setImageResource(resID);
         lightSenseLL.setClickable(isClick);
@@ -431,26 +473,26 @@ public class SettingsDialogLayout extends FrameLayout {
     /**
      * 长按事件
      */
-    private View.OnLongClickListener mOnLongClickListener = (view)->{
-        String packageName = (String)SPUtil.getData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
-        if(TextUtils.isEmpty(packageName)){
+    private View.OnLongClickListener mOnLongClickListener = (view) -> {
+        String packageName = (String) SPUtil.getData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
+        if (TextUtils.isEmpty(packageName)) {
             return true;
         }
         autoDelayHide();
-        if (deleteImage != null){
+        if (deleteImage != null) {
             deleteImage.setVisibility(View.VISIBLE);
         }
 
         return true;
     };
 
-    public List<Map<String, Object>> getData(){
+    public List<Map<String, Object>> getData() {
         //cion和iconName的长度是相同的，这里任选其一都可以
         iconName = new int[]{R.string.apps_wire, R.string.apps_wireless, R.string.apps_hotspot,
                 R.string.apps_settings, R.string.apps_screenshot, R.string.apps_timer,
                 R.string.apps_record, R.string.magnifier, R.string.light_sense,
                 R.string.apps_eyecare, R.string.energy_saving, R.string.apps_usred};
-        for(int i=0;i<icon.length;i++){
+        for (int i = 0; i < icon.length; i++) {
             Map<String, Object> map = new HashMap<>();
             map.put("image", icon[i]);
             map.put("text", mContext.getString(iconName[i]));
@@ -463,12 +505,12 @@ public class SettingsDialogLayout extends FrameLayout {
     /**
      * 更新图标
      */
-    private void updateUseredIcon(){
-        String packageName = (String)SPUtil.getData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
-        if (!TextUtils.isEmpty(packageName)){
+    private void updateUseredIcon() {
+        String packageName = (String) SPUtil.getData(getContext(), CommConst.USERED_PACKAGE_NAME, "");
+        if (!TextUtils.isEmpty(packageName)) {
             Log.d(TAG, "updateUseredIcon start");
             AppInfo appInfo = apkInfoUtils.scanInstallApp(getContext(), packageName);
-            if (appInfo != null){
+            if (appInfo != null) {
                 Log.d(TAG, "updateUseredIcon change icon");
                 addMenu.setImageDrawable(appInfo.getAppIcon());
                 tvAdd.setText(appInfo.getAppName());
@@ -501,18 +543,21 @@ public class SettingsDialogLayout extends FrameLayout {
         dialogWindow.setAttributes(lp);
         dialogView.setCallBack(mCallback);
     }
+
     SelectAppDialog.Callback mCallback = (appInfo) -> {
-        if (selectDialog.isShowing()){
+        if (selectDialog.isShowing()) {
+            updateUseredIcon();
             selectDialog.dismiss();
         }
 
         if (appInfo != null) {
             SPUtil.saveData(getContext(), CommConst.USERED_PACKAGE_NAME, appInfo.getPackName());
+            updateUseredIcon();
         }
     };
 
 
-    private void initReceiver(){
+    private void initReceiver() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
         getContext().registerReceiver(mWifiReceiver, filter);
@@ -539,7 +584,7 @@ public class SettingsDialogLayout extends FrameLayout {
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
     }
 
-    public void removeReceiver(){
+    public void removeReceiver() {
         mContext.unregisterReceiver(mReceiver);
         mContext.unregisterReceiver(mWifiListReceiver);
     }
@@ -548,10 +593,10 @@ public class SettingsDialogLayout extends FrameLayout {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(action.equals("com.ctv.UPDATE_NOTIFICATION")){
-                notificationList=FloatWindowManager.getNotificationList();
+            if (action.equals("com.ctv.UPDATE_NOTIFICATION")) {
+                notificationList = FloatWindowManager.getNotificationList();
                 notificationAdapter.notifyDataSetChanged();
-            }else{
+            } else {
                 mListener.onConnectivityChange(intent);
             }
 
@@ -581,41 +626,42 @@ public class SettingsDialogLayout extends FrameLayout {
         }
     };
 
-    public void reflashUI(){
+    public void reflashUI() {
         // 有线
         boolean isWireOpen = mEthernetManager.isEnabled();
         wireImage = findViewById(R.id.wire_image);
-        if (isWireOpen){
+        if (isWireOpen) {
             wireImage.setImageResource(R.mipmap.apps_wire_focus);
         } else {
             wireImage.setImageResource(R.mipmap.apps_wire_default);
         }
-        SPUtil.saveData(getContext(),CommConsts.IS_WIRE_ON, isWireOpen);
+        SPUtil.saveData(getContext(), CommConsts.IS_WIRE_ON, isWireOpen);
 
         // WiFi
         boolean isWifiOpen = mWifiManager.isWifiEnabled();
-        if (isWifiOpen){
+        if (isWifiOpen) {
             wifiImage.setImageResource(R.mipmap.apps_wireless_focus);
         } else {
             wifiImage.setImageResource(R.mipmap.apps_wireless_default);
         }
-        SPUtil.saveData(getContext(),CommConsts.IS_WIFI_ON ,isWifiOpen);
+        SPUtil.saveData(getContext(), CommConsts.IS_WIFI_ON, isWifiOpen);
         Log.i(TAG, "isWifiEnabled:" + isWifiOpen);
 
         // Wifi热点
-        setOpenHotspot(false,false);
+        setOpenHotspot(false, false);
 
-        MyUtils.checkUSB(false);
+        MyUtils.checkUSB(getContext().getApplicationContext(),false);
     }
 
     /**
      * 设置Wifi热点
+     *
      * @param isClick
      */
-    void setOpenHotspot(boolean isClick,boolean is5G) {
-        int apState = (Integer) SPUtil.getData(getContext(),CommConsts.WIFI_STATE, 11);
+    void setOpenHotspot(boolean isClick, boolean is5G) {
+        int apState = (Integer) SPUtil.getData(getContext(), CommConsts.WIFI_STATE, 11);
         Log.i(TAG, "setOpenHotspot-isOpenHotspot:" + isOpenHotspot);
-        String wifiapband = SystemProperties.get("Wifiapband");
+        String wifiapband = SystemProperties.get(HOST_BAND_TYPE);
         if (isOpenHotspot) {
             if (!hasReady(isClick)) {
                 Log.d(TAG, "wifiap have not ready.");
@@ -626,10 +672,10 @@ public class SettingsDialogLayout extends FrameLayout {
                     || apState == 13) {
                 isOpenHotspot = true;
                 if (isOpenHotspot){
-                    if(wifiapband.equals("Apband5G")){
+                    if(wifiapband.equals(AP_BAND_5G)){
                         hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
                         hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_focus_5);
-                    }else if(wifiapband.equals("Apband2G")){
+                    }else if(wifiapband.equals(AP_BAND_2G)){
                         hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
                         hostpotImage.setImageResource(R.mipmap.apps_hotspot_focus__2_4);
                     }else{
@@ -660,10 +706,10 @@ public class SettingsDialogLayout extends FrameLayout {
 
         if (isOpenHotspot){
             if (isOpenHotspot && !"".equals(wifiapband)){
-                if(wifiapband.equals("Apband5G")){
+                if(wifiapband.equals(AP_BAND_5G)){
                     hostpotImage.setImageResource(R.mipmap.apps_hotspot_default_2_4);
                     hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_focus_5);
-                }else if(wifiapband.equals("Apband2G")){
+                }else if(wifiapband.equals(AP_BAND_2G)){
                     hostpotImage_5G.setImageResource(R.mipmap.apps_hotspot_default_5);
                     hostpotImage.setImageResource(R.mipmap.apps_hotspot_focus__2_4);
                 }else{
@@ -702,9 +748,9 @@ public class SettingsDialogLayout extends FrameLayout {
         if (enable) {
             connectivityManager.stopTethering(ConnectivityManager.TETHERING_WIFI);
             if(is5G){
-                SystemProperties.set("Wifiapband", "Apband5G");
+                SystemProperties.set(HOST_BAND_TYPE, AP_BAND_5G);
             }else{
-                SystemProperties.set("Wifiapband","Apband2G");
+                SystemProperties.set(HOST_BAND_TYPE,AP_BAND_2G);
             }
             connectivityManager.startTethering(ConnectivityManager.TETHERING_WIFI, true, startTetheringCallback,mHandler);
         } else {
@@ -753,8 +799,51 @@ public class SettingsDialogLayout extends FrameLayout {
         TimeInfo timeInfo = TimeUtils.getTimeInfo(getContext());
         tvWeek.setText("" + timeInfo.getWeek());
         tvDay.setText("" + timeInfo.getDay());
-        tvTime.setText("" + timeInfo.getTime());
+        String flag = Settings.System.getString(getContext().getContentResolver(),Settings.System.TIME_12_24);
+        Log.d(TAG, "updateShowTime:   flag  = "+flag);
+        int dateFormatIndex = TimeUtils.getDateFormat();
+        Calendar now = Calendar.getInstance();
+        date = android.text.format.DateFormat.format(TimeUtils.DATE_FORMAT_STRINGS[dateFormatIndex], now).toString();
 
+        String time = DateFormat.getTimeFormat(getContext()).format(Calendar.getInstance().getTime());
+        StringBuilder str_time = new StringBuilder();
+        if(flag == null){
+            flag = "24";
+        }
+        Log.d(TAG, "updateShowTime:   flag  = "+flag);
+        if(flag.equals("12")) {
+            String appm  = "";
+            String s_hour="";
+            String s_min = "";
+            int hours = now.get(Calendar.HOUR);
+            if (hours <10 || hours >0){
+                s_hour = String.format("%02d", hours);
+            }
+            int min = now.get(Calendar.MINUTE);
+            if (min <10 || min>=0){
+                s_min = String.format("%02d", min);
+            }
+            int apm = now.get(Calendar.AM_PM);
+            if (apm == 0) {
+                appm = getContext().getResources().getString(R.string.am);
+            } else if (apm == 1) {
+                appm = getContext().getResources().getString(R.string.pm);
+            } else {
+                appm = "";
+            }
+            StringBuilder stringBuilder2 = new StringBuilder();
+            stringBuilder2.append(appm);
+            textviweapm.setVisibility(View.VISIBLE);
+            textviweapm.setText(stringBuilder2);
+            str_time.append(s_hour);
+            str_time.append(":");
+            str_time.append(s_min);
+            Log.d(TAG, "updateShowTime:appm =  "+appm);
+        }else{
+            textviweapm.setVisibility(View.GONE);
+            str_time.append(time);
+        }
+        tvTime.setText(str_time.toString());
     }
 
     @Override
@@ -776,8 +865,8 @@ public class SettingsDialogLayout extends FrameLayout {
         int eyeCare = Settings.System.getInt(mContext.getContentResolver(), CommConsts.IS_EYECARE, 0);
         final int eyeCareTmp = (eyeCare == 0) ? 1 : 0;
 
-        int resID = (eyeCareTmp == 0) ? R.mipmap.apps_eye_care_default: R.mipmap.apps_eye_care_focus;
-        eyecareImage.setImageResource(resID);
+        eyeFlag = (eyeCareTmp == 0) ? R.mipmap.apps_eye_care_default: R.mipmap.apps_eye_care_focus;
+        eyecareImage.setImageResource(eyeFlag);
 
         // 改变状态
         mHandler.postDelayed(()->{
@@ -821,6 +910,117 @@ public class SettingsDialogLayout extends FrameLayout {
             mHandler.sendEmptyMessage(KEY_RESET_BACK_LIGHT);
         }
     }
+
+    /**
+     * 设置带光控
+     */
+    public void setEyePlusStatus_Light(int index) {
+        switch (index) {
+            case 0:
+                index = EYE_OFF.ordinal();
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_close));
+                eyecareImage.setImageResource(R.mipmap.apps_eye_care_default);
+                break;
+            case 1:
+                index = EYE_DIMMING.ordinal();
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_Electric));
+                eyecareImage.setImageResource(R.mipmap.apps_eye_care_focus);
+                break;
+            case 2:
+                index = EYE_PLUS.ordinal();
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_open));
+                eyecareImage.setImageResource(R.mipmap.apps_eye_care_focus);
+                break;
+            case 3:
+                index = EYE_RGB.ordinal();
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_light));
+                eyecareImage.setImageResource(R.mipmap.apps_eye_care_focus);
+                break;
+            default:
+                break;
+        }
+        Log.e("eyeMode", "index" + index);
+        HHTCommonManager.getInstance().setEyeProtectionMode(index);
+    }
+
+    public int getEyePlusIndex_Light() {
+        int eyeMode = HHTCommonManager.getInstance().getEyeProtectionMode();
+        switch (eyeMode) {
+            case 0:
+                eyeMode = 0;
+                break;
+            case 1:
+                eyeMode = 1;
+                break;
+            case 2:
+                eyeMode = 3;
+                break;
+            case 3:
+                eyeMode = 2;
+                break;
+//            case 4:
+//                eyeMode = 3;
+//                break;
+            default:
+                break;
+        }
+        Log.e("eyeMode", "eyeMode" + eyeMode);
+        return eyeMode;
+    }
+
+
+    /**
+     * 设置护眼+
+     */
+    public void setEyePlusStatus(int index) {
+        switch (index) {
+            case 0:
+                index = EYE_OFF.ordinal();
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_close));
+                eyecareImage.setImageResource(R.mipmap.apps_eye_care_default);
+                break;
+            case 1:
+                index = EYE_PLUS.ordinal();
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_open));
+                eyecareImage.setImageResource(R.mipmap.apps_eye_care_focus);
+                break;
+            case 2:
+                index = EYE_RGB.ordinal();
+                tv_eye.setText(mContext.getString(R.string.apps_eyecare_light));
+                eyecareImage.setImageResource(R.mipmap.apps_eye_care_focus);
+                break;
+            default:
+                break;
+        }
+        Log.e("eyeMode", "index" + index);
+        HHTCommonManager.getInstance().setEyeProtectionMode(index);
+    }
+
+    public int getEyePlusIndex() {
+        int eyeMode = HHTCommonManager.getInstance().getEyeProtectionMode();
+        switch (eyeMode) {
+//            case 0:
+//                eyeMode = 1;
+//                break;
+//            case 1:
+//                eyeMode = 1;
+//                break;
+            case 2:
+                eyeMode = 2;
+                break;
+            case 3:
+                eyeMode = 1;
+                break;
+//            case 4:
+//                eyeMode = 3;
+//                break;
+            default:
+                break;
+        }
+        Log.e("eyeMode", "eyeMode" + eyeMode);
+        return eyeMode;
+    }
+
 
     // wifi热点开关
 
@@ -886,7 +1086,7 @@ public class SettingsDialogLayout extends FrameLayout {
      * 清除
      */
     public void destroy(){
-        MyUtils.checkUSB(true);
+        MyUtils.checkUSB(getContext().getApplicationContext(),true);
         if (mHandler != null){
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
@@ -1003,45 +1203,45 @@ public class SettingsDialogLayout extends FrameLayout {
         switch (id){
             case R.id.pup_net: { // 网络
 //                    gotoNetUI(CommConsts.WIRE_CONNECT);
-//                clickWire();
-                HHTSourceManager.getInstance().isCurrentSource("OPS");
+                clickWire();
+//                HHTSourceManager.getInstance().isCurrentSource("OPS");
                 break;
             }
             case R.id.pup_wifi: { // WiFi
-//                clickWifi();
-                HHTSourceManager.getInstance().isCurrentSource("HDMI1");
+                clickWifi();
+//                HHTSourceManager.getInstance().isCurrentSource("HDMI1");
 
                 break;
             }
             case R.id.pup_hotspot: { // 热点
-//                String wifiapband = SystemProperties.get("Wifiapband");
-//                if(wifiapband.equals("Apband2G")){
-//                    isOpenHotspot = false;
-//                    setOpenHotspot(true,false);
-//                }else{
-//                    SystemProperties.set("Wifiapband", "Apband2G");
-//                    isOpenHotspot = true;
-//                    setOpenHotspot(true,false);
-//                }
+                String wifiapband = SystemProperties.get(HOST_BAND_TYPE);
+                if(wifiapband.equals(AP_BAND_2G)){
+                    isOpenHotspot = false;
+                    setOpenHotspot(true,false);
+                }else{
+                    SystemProperties.set(HOST_BAND_TYPE, AP_BAND_2G);
+                    isOpenHotspot = true;
+                    setOpenHotspot(true,false);
+                }
                 Log.e("HHTSourceManager",""+HHTSourceManager.getInstance().isCurrentSource("VGA"));
 
-                HHTSourceManager.getInstance().isCurrentSource("VGA");
+//                HHTSourceManager.getInstance().isCurrentSource("VGA");
                 break;
             }
 
             case R.id.pup_hotspot_5: { // 热点
 //                isOpenHotspot = !isOpenHotspot;
 //                setOpenHotspot(true);
-//                String wifiapband = SystemProperties.get("Wifiapband");
-//                if(wifiapband.equals("Apband5G")){
-//                    isOpenHotspot = false;
-//                    setOpenHotspot(true,true);
-//                }else{
-//                    isOpenHotspot = true;
-//                    SystemProperties.set("Wifiapband", "Apband5G");
-//                    setOpenHotspot(true,true);
-//                }
-                Log.e("HHTSourceManager",""+HHTSourceManager.getInstance().isCurrentSource("VGA"));
+                String wifiapband = SystemProperties.get(HOST_BAND_TYPE);
+                if(wifiapband.equals(AP_BAND_5G)){
+                    isOpenHotspot = false;
+                    setOpenHotspot(true,true);
+                }else{
+                    isOpenHotspot = true;
+                    SystemProperties.set(HOST_BAND_TYPE, AP_BAND_5G);
+                    setOpenHotspot(true,true);
+                }
+//                Log.e("HHTSourceManager",""+HHTSourceManager.getInstance().isCurrentSource("VGA"));
 
                 break;
             }
@@ -1101,10 +1301,20 @@ public class SettingsDialogLayout extends FrameLayout {
                 break;
             }
             case R.id.pup_eyecare: { // 护眼
-                setEyecareMode();
+                //setEyecareMode();
+                if(IS_AH_EDU_QD){
+                ++eyeFlag;
+                    if (eyeFlag == 4) eyeFlag = 0;
+                    setEyePlusStatus_Light(eyeFlag);
+                    break;
+                }else {
+                    ++eyeFlag;
+                if (eyeFlag == 3) eyeFlag = 0;
+                setEyePlusStatus(eyeFlag);
                 break;
+                }
             }
-            case R.id.pup_add:{//自定义
+            case R.id.pup_add: {//自定义
                 setUserAPPShow();
                 break;
             }
@@ -1148,7 +1358,12 @@ public class SettingsDialogLayout extends FrameLayout {
                 break;
             }
             case R.id.btn_ops: {//OPS
-                AppUtils.changeSignal(mContext, 26);
+//                AppUtils.changeSignal(mContext, 26);
+                HHTOpsManager hhtOpsManager = HHTOpsManager.getInstance();
+                if(!hhtOpsManager.isOpsOk()){
+                    hhtOpsManager.setOpsPowerTurnOn();
+                }
+                HHTSourceManager.getInstance().startSourcebyKey("OPS");
                 //退出设置界面
                 if (mContext instanceof Activity) {
                     ((Activity) mContext).finish();
@@ -1179,7 +1394,7 @@ public class SettingsDialogLayout extends FrameLayout {
     /**
      * 改变光感
      */
-    private void changeLightSense(){
+    private void changeLightSense() {
         // 切换光感
         int lightSense = Settings.System.getInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, 0);
         boolean isOpen = (lightSense == 0);
@@ -1187,12 +1402,12 @@ public class SettingsDialogLayout extends FrameLayout {
 
         // 自动光感开启时,关闭护眼模式
         lightSense = Settings.System.getInt(getContext().getContentResolver(), CommConsts.IS_LIGHTSENSE, 0);
-        if (lightSense == 1){ // 自动光感时,关闭护眼模式
+        if (lightSense == 1) { // 自动光感时,关闭护眼模式
             int eyeCare = Settings.System.getInt(getContext().getContentResolver(), CommConsts.IS_EYECARE, 0);
-            if (eyeCare == 1){ // 当在护眼时， 关闭护眼
+            if (eyeCare == 1) { // 当在护眼时， 关闭护眼
                 Settings.System.putInt(getContext().getContentResolver(), CommConsts.IS_EYECARE, 0);
-                setEyecareMode();
-
+                //setEyecareMode();
+                setEyePlusStatus(0);
                 // 恢复背光值
                 resetBlackLight();
             }

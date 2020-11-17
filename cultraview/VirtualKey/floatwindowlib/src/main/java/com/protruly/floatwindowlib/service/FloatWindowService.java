@@ -913,7 +913,7 @@ public class FloatWindowService extends Service {
                     break;
                 case 0:
                     if(!MyUtils.isOpencheck){
-                        MyUtils.checkUSB(true);
+                       // MyUtils.checkUSB(this,true);
                     }
                     this.sendEmptyMessageDelayed(0,3000);
                     break;

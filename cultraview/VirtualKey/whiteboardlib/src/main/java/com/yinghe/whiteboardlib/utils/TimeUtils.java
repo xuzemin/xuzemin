@@ -1,7 +1,7 @@
 package com.yinghe.whiteboardlib.utils;
 
 import android.content.Context;
-
+import android.os.SystemProperties;
 import com.yinghe.whiteboardlib.R;
 import com.yinghe.whiteboardlib.bean.TimeInfo;
 
@@ -16,6 +16,9 @@ import java.util.Locale;
  * Created by Nereo on 2015/4/8.
  */
 public class TimeUtils {
+    public static final String[] DATE_FORMAT_STRINGS = {
+            "MM-dd-yyyy", "dd-MM-yyyy", "yyyy-MM-dd"
+    };
     public final static String DATE_PATTERN_DEFAULT = "yyyy-MM-dd";
     public final static String DATE_PATTERN_FILE_NAME = "yyyy-MM-dd_HHmmss";
     public final static String DATE_PATTERN_MMDD = "MMdd";
@@ -48,7 +51,9 @@ public class TimeUtils {
         }
         return "1970-01-01";
     }
-
+    public static int getDateFormat() {
+        return Integer.parseInt(SystemProperties.get("persist.sys.dateformat", "2"));
+    }
     /**
      * 获得时间字符串
      * @return

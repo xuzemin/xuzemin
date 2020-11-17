@@ -83,7 +83,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.mstar.android.intent.action.TV_INPUT_BUTTON" />
                 <action android:name="com.mstar.android.intent.action.KEYCODE_VOLUME_UP" />
                 <action android:name="com.mstar.android.intent.action.KEYCODE_VOLUME_DOWN" />
                 <action android:name="com.mstar.tv.service.COMMON_EVENT_SIGNAL_STATUS_UPDATE" />

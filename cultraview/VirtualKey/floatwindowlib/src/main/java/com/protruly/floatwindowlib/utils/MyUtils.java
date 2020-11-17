@@ -82,33 +82,8 @@ public class MyUtils {
 
 
 
-    public static void checkUSB(boolean isOpen){
-//        Log.e("SUB","isOpen"+isOpen);
-//        if(isOpencheck == isOpen){
-//            return;
-//        }
-//        isOpencheck = isOpen;
-//        if(isOpencheck){
-//            int inputSource = TvCommonManager.getInstance().getCurrentTvInputSource();
-//            Log.e("SUB","inputSource"+ inputSource);
-//            if(inputSource == TvCommonManager.INPUT_SOURCE_HDMI3 ||
-//                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI ||
-//                    inputSource == TvCommonManager.INPUT_SOURCE_HDMI2 ||
-//                    inputSource == TvCommonManager.INPUT_SOURCE_VGA){
-//                if(ActivityCollector.activities.size() == 0 && !ControlMenuLayout.isDown
-//                        && (FloatWindowManager.getNewSignalDialog() ==null || FloatWindowManager.getNewSignalDialog().getVisibility() == View.GONE)
-//                        && (FloatWindowManager.getSettingsDialog() == null || FloatWindowManager.getSettingsDialog().getVisibility() == View.GONE)
-//                ) {
-//                    SystemProperties.set("ctv.sendKeyCode", "on");
-//                    AppUtils.sendCommand("SetUSBTOUCH_ON");
-//                    Log.e("SUB", "SetUSBTOUCH_ON");
-//                }
-//            }
-//        }else{
-//                SystemProperties.set("ctv.sendKeyCode","off");
-//                AppUtils.sendCommand("SetUSBTOUCH_OFF");
-//                Log.e("SUB","SetUSBTOUCH_OFF");
-//        }
+    public static void checkUSB(Context context,boolean isOpen){
+        TvCommonManager.getInstance().setUsbTouch(context, isOpen);
     }
 
     public static void resetIO(){

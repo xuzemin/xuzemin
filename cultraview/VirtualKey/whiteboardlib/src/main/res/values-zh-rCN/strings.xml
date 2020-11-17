@@ -4,6 +4,7 @@
     <string name="folder_all">所有图片</string>
     <string name="folder_first">背景素材</string>
     <string name="sketch_count_alert">画板已达最大数量</string>
+    <string name="string_please_unlock">请解锁</string>
 
     <string name="msg_no_camera">No system camera found</string>
     <string name="msg_amount_limit">Select images amount is limit</string>
@@ -82,7 +83,9 @@
     <string name="week">星期五</string>
     <string name="day">2018/06/15</string>
     <string name="hour_second">09:47</string>
-
+    <string name="apm"> </string>
+    <string name="am"> 上午 </string>
+    <string name="pm"> 下午 </string>
     <string name="notice">通知</string>
     <string name="all_ignore">全部忽略</string>
 
@@ -93,7 +96,7 @@
     <string name="apps_settings">设置</string>
     <string name="apps_screenshot">截屏</string>
     <string name="apps_timer">计时器</string>
-    <string name="apps_record">录像</string>
+    <string name="apps_record">录屏</string>
     <string name="apps_eyecare">护眼</string>
     <string name="title_select_app">请选择快捷应用</string>
     <string name="apps_usred">自定义</string>

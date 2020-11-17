@@ -22,6 +22,9 @@ public class SystemUtils {
     public static String AUTO_FAC_MODE = "5";
     public static String FACTORY_MODE = "1";
     public static String BURINGMODE_MODE = "1";
+    public static final String AP_BAND_2G = "Apband2G";
+    public static final String AP_BAND_5G = "Apband5G";
+    public static final String HOST_BAND_TYPE = "persist.ctv.ap.band";
 
     /**
      * 获得工厂模式

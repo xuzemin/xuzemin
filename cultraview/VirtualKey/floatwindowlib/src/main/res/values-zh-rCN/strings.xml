@@ -31,4 +31,9 @@
     <string name="close">关</string>
     <string name="screen_protect_time">屏保时间</string>
     <string name="no_signal_standby">无信号待机</string>
+    <string name="metting">视频会议</string>
+    <string name="apps_eyecare_close">护眼关闭</string>
+    <string name="apps_eyecare_open">护眼+</string>
+    <string name="apps_eyecare_light">亮度护眼</string>
+    <string name="apps_eyecare_Electric">光控护眼</string>
 </resources>
