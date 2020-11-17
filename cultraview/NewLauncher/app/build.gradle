@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.ctv.newlauncher"
+        applicationId "com.ctv.ctvlauncher"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
@@ -22,20 +22,29 @@ android {
     dependencies {
         compileOnly files("${SDK_DIR}/platforms/android-21/data/layoutlib.jar")
     }
-//    signingConfigs {
-//        release {
-//            storeFile file("F:/360MoveData/Users/honghaocheng/Desktop/LanuchandFQ/NewLauncher/app/build/outputs/apk/debug/my_8386.jks")
-//            storePassword '123456'
-//            keyAlias 'my_8386'
-//            keyPassword '123456'
-//        }
-//        debug {
-//            storeFile file("F:/360MoveData/Users/honghaocheng/Desktop/LanuchandFQ/NewLauncher/app/build/outputs/apk/debug/my_8386.jks")
-//            storePassword '123456'
-//            keyAlias 'my_8386'
-//            keyPassword '123456'
-//        }
-//    }
+
+
+//输出指定名称的apk
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def fileName
+            if(variant.buildType.name=="release"){
+                fileName = "ctvlaunch.apk"
+            } else {
+                fileName = "ctvlaunch.apk"
+            }
+            outputFileName = fileName
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("F:/360MoveData/Users/honghaocheng/Desktop/Launch_theme1/NewLauncher/my_8386.jks")
+            storePassword '123456'
+            keyAlias 'my_8386'
+            keyPassword '123456'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -59,5 +68,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     //    implementation files('libs/com.cultraview.tv_intermediates.jar')
     //    implementation files('libs/com.mstar.android_intermediates2.jar')
-    implementation files('libs/hhtapi.jar')
 }

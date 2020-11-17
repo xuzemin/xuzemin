@@ -6,4 +6,10 @@
     <integer name="config_tooltipAnimTime">150</integer>
     <integer name="fragment_animation_time">500</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
+
+    <integer name="dia_w">1600</integer>
+    <integer name="dia_h">840</integer>
+    <integer name="dia_x">0</integer>
+    <integer name="dia_y">-650</integer>
+
 </resources>

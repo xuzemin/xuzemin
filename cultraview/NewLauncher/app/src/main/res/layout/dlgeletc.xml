@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+
+    android:background="@drawable/dialog_bg"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/mdlg_tv"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+
+        android:text="应用置换清单" />
+
+    <GridView
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x900"
+        android:id="@+id/dlg_gv"
+        android:listSelector="@null"
+
+        android:numColumns="5"
+        />
+
+</LinearLayout>

@@ -7,10 +7,12 @@
     <dimen name="launcher_functionbutton_size">180dp</dimen>
     <dimen name="launcher_textdate_margintop">292dp</dimen>
     <dimen name="launcher_texttime_margintop">104dp</dimen>
+    <dimen name="launcher_textapm_margintop">80dp</dimen>
     <dimen name="launcher_texttime_paddingtopbottom">-30dp</dimen>
     <dimen name="launhcerappgride_viewpager_item_iconsize">45dp</dimen>
     <dimen name="launhcerappgride_viewpager_item_padding">24dp</dimen>
     <dimen name="launhcerappgride_viewpager_item_text_margintop">8dp</dimen>
+    <dimen name="launhcerappgride_viewpager_item_framework">70dp</dimen>
     <dimen name="launhcerappgride_viewpager_paddingleftright">54dp</dimen>
     <dimen name="launhcerappgride_viewpager_paddingtopbottom">54dp</dimen>
     <dimen name="launhcerappgride_viewpager_pageno_icon_marginleft">14dp</dimen>
@@ -22,7 +24,7 @@
     <dimen name="textsize_sbig">54sp</dimen>
     <dimen name="textsize_small">21sp</dimen>
     <dimen name="textsize_snormal">27sp</dimen>
-    <dimen name="textsize_ssbig">72sp</dimen>
+    <dimen name="textsize_ssbig">75sp</dimen>
     <dimen name="textsize_ssnormal">30sp</dimen>
     <dimen name="textsize_sssbig">96sp</dimen>
     <dimen name="textsize_sssnormal">33sp</dimen>

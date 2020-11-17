@@ -126,13 +126,13 @@
 
     <dimen name="mainbutton_item_distance">186px</dimen>
 
-    <dimen name="others_layout_item_main_width">290px</dimen>
-    <dimen name="others_layout_item_main_height">246px</dimen>
-    <dimen name="others_layout_item_width">200px</dimen>
+    <dimen name="others_layout_item_main_width">100px</dimen>
+    <dimen name="others_layout_item_main_height">200px</dimen>
+    <dimen name="others_layout_item_width">100px</dimen>
     <dimen name="grid_iv_margin">10dp</dimen>
-    <dimen name="others_item_height">40dp</dimen>
-    <dimen name="gv_item_text_size">52px</dimen>
-
+    <dimen name="others_item_height">20dp</dimen>
+    <dimen name="gv_item_text_size">32px</dimen>
+    <dimen name="net_work">70px</dimen>
 
     <dimen name="other_gridview_top">320px</dimen>
     <dimen name="others_gridview_width">3040px</dimen>
@@ -191,4 +191,34 @@
     <dimen name="im_margn">244px</dimen>
     <dimen name="item_text_size">60px</dimen>
     <dimen name="lltop">10px</dimen>
+
+
+
+    <dimen name="viewpage_marleft">50dp</dimen>
+    <dimen name="viewpage_h">300dp</dimen>
+    <dimen name="viewpage_martop">15dp</dimen>
+
+    <dimen name="rl_martop">1900px</dimen>
+    <dimen name="rl_boom_w">320px</dimen>
+    <dimen name="rl_boom_h">100px</dimen>
+    <dimen name="rl_im_w">40px</dimen>
+    <dimen name="rl_im_h">40px</dimen>
+    <dimen name="rl_te_size">40px</dimen>
+    <dimen name="rl_te_mar">40px</dimen>
+
+
+    <dimen name="gd_v_martop">120dp</dimen>
+    <dimen name="gd_v_h">1dp</dimen>
+    <dimen name="gd_v_w">2600px</dimen>
+    <dimen name="ll_view_matop">100dp</dimen>
+    <dimen name="ll_view_mbootm">60dp</dimen>
+    <dimen name="gd_tv_size">30dp</dimen>
+    <dimen name="gd_tv_matop">200px</dimen>
+    <dimen name="launhcerappgride_viewpager_height">300dp</dimen>
+    <dimen name="launcherappgride_ctv_viewpager_width">670dp</dimen>
+    <dimen name="launcher_functionbutton_radius">6dp</dimen>
+
+    <dimen name="dia_iv">100dp</dimen>
+    <dimen name="dia_tv">200px</dimen>
+    <dimen name="dia_ma_top">10dp</dimen>
 </resources>

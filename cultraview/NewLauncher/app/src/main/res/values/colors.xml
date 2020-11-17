@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
-    <color name="seekbar_background_color">#e6e6e6</color>
-    <color name="board_tempareture_green">#67e967</color>
-    <color name="board_tempareture_orange">#f16f30</color>
-    <color name="board_tempareture_red">#fb2d2d</color>
-    <color name="board_tempareture_bg">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="dia_bg">#9fcefd</color>
+    <color name="bm_f">#9a9a9a</color>
+    <color name="bm_t">#ffffff</color>
+    <color name="white_none">#00ffffff</color>
     </resources>

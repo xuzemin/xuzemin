@@ -14,5 +14,8 @@
     <integer name="videoWindowType_width">710</integer>
     <integer name="videoWindowType_height">386</integer>
 
-
+    <integer name="dia_w">800</integer>
+    <integer name="dia_h">420</integer>
+    <integer name="dia_x">0</integer>
+    <integer name="dia_y">-295</integer>
 </resources>

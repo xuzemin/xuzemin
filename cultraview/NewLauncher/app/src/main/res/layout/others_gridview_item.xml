@@ -13,7 +13,7 @@
             android:layout_marginTop="@dimen/grid_iv_margin" />
         <TextView
             android:id="@+id/others_item_tv"
-            android:layout_width="@dimen/others_layout_item_main_width"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/others_item_height"
             android:layout_gravity="center"
             android:gravity="center"

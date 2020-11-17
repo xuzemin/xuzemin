@@ -6,7 +6,7 @@
     <dimen name="date_top">27px</dimen>
 
 
-
+    <dimen name="net_work">35px</dimen>
 
     <dimen name="indicator_top">-170px</dimen>
 
@@ -133,4 +133,37 @@
     <dimen name="im_margn">122px</dimen>
     <dimen name="item_text_size">26px</dimen>
     <dimen name="lltop">15px</dimen>
+
+
+    //
+    <dimen name="viewpage_marleft">25dp</dimen>
+    <dimen name="viewpage_h">300dp</dimen>
+    <dimen name="viewpage_martop">15dp</dimen>
+
+
+    <dimen name="rl_martop">950px</dimen>
+    <dimen name="rl_boom_w">160px</dimen>
+    <dimen name="rl_boom_h">50px</dimen>
+    <dimen name="rl_im_w">20px</dimen>
+    <dimen name="rl_im_h">20px</dimen>
+    <dimen name="rl_te_size">20px</dimen>
+    <dimen name="rl_te_mar">20px</dimen>
+
+
+    <dimen name="gd_v_martop">120dp</dimen>
+    <dimen name="gd_v_h">1dp</dimen>
+    <dimen name="gd_v_w">1300px</dimen>
+    <dimen name="ll_view_matop">100dp</dimen>
+    <dimen name="ll_view_mbootm">60dp</dimen>
+    <dimen name="gd_tv_size">30dp</dimen>
+    <dimen name="gd_tv_matop">100px</dimen>
+    <dimen name="launhcerappgride_viewpager_height">300dp</dimen>
+    <dimen name="launcherappgride_ctv_viewpager_width">670dp</dimen>
+    <dimen name="launcher_functionbutton_radius">3dp</dimen>
+
+
+
+    <dimen name="dia_iv">50dp</dimen>
+    <dimen name="dia_tv">100px</dimen>
+    <dimen name="dia_ma_top">20dp</dimen>
 </resources>
