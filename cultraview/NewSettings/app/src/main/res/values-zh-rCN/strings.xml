@@ -503,6 +503,7 @@
     <string name="proxy_easytouch_opening">悬浮球正在开启</string>
     <string name="proxy_easytouch_closing">悬浮球正在关闭</string>
     <string name="text_shutdown">关机</string>
+    <string name="text_bootup">开机</string>
     <string name="text_monday">周一</string>
     <string name="text_tuesday">周二</string>
     <string name="text_wednesday">周三</string>

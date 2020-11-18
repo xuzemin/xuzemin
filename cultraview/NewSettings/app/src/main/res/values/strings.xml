@@ -501,6 +501,7 @@
     <string name="proxy_easytouch_opening">The levitation is opening</string>
     <string name="proxy_easytouch_closing">The levitation is closing</string>
     <string name="text_shutdown">Shutdown</string>
+    <string name="text_bootup">Bootup</string>
     <string name="text_monday">Monday</string>
     <string name="text_tuesday">Tuesday</string>
     <string name="text_wednesday">Wednesday</string>

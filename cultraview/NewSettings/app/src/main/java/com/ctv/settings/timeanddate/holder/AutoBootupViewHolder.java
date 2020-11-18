@@ -216,7 +216,7 @@ public class AutoBootupViewHolder extends BaseViewHolder implements View.OnClick
     private String getPlanTitle(TimeUtil timeUtil) {
         StringBuilder stringBuilder = new StringBuilder();
         String str = "　";
-        stringBuilder.append(mActivity.getString(R.string.text_shutdown));
+        stringBuilder.append(mActivity.getString(R.string.text_bootup));
         stringBuilder.append(str);
         if (mDateTime.minute < 10 && mDateTime.hour < 10) {
             stringBuilder.append("0" + mDateTime.hour + " : 0" + mDateTime.minute);
