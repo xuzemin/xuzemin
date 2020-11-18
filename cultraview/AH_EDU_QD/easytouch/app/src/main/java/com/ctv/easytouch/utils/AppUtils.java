@@ -707,7 +707,12 @@ public class AppUtils {
 //                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
 //                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
 //            }
-            TvCommonManager.getInstance().setUsbTouch(context, isOpen);
+            if (isOpen) {
+                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_ON");
+            }else{
+                TvCommonManager.getInstance().setTvosCommonCommand("SetUSBTOUCH_OFF");
+            }
+            //TvCommonManager.getInstance().setUsbTouch(context, isOpen);
         } catch (Exception e) {
             Log.e("qkmin", "setUSB error:" + e);
             e.printStackTrace();

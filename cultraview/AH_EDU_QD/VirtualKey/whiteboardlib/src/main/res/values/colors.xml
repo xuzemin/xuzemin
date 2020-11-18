@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffff</color>
+    <color name="white_transparent">#e5e5e5</color>
+    <color name="white_light_transparent">#32faffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_black">#C8000000</color>
+    <color name="black">#000000</color>
+    <color name="black_seventy_f">#A9A9A9</color>
+    <color name="gray">#eeeeee</color>
+    <color name="com_bg_gray">#aaaaaaaa</color>
+    <color name="btn_click_bg">#1b1c39</color>
+    <color name="btn_default_color">#707070</color>
+    <color name="text_default_color">#707070</color>
+    <color name="btn_menu_click_bg">#62b5f5</color>
+    <color name="blue">#33cccc</color>
+    <color name="black_light">#4a4f51</color>
+    <color name="main_color">#c8000000</color>
+    <color name="icon_bg_color">#403c3c3c</color>
+    <color name="bottom_bg_color">#2d000000</color>
+    <color name="text_bg_color">#ccffffff</color>
+    <color name="black_light_sub">#5b6064</color>
+
+    <color name="dialog_bg_color">#403c3c3c</color> <!-- 对话框背景颜色 -->
+    <color name="half_text_color">#64ffffff</color> <!-- 半透明 白色 -->
+
+    <color name="content_color">#9a9a9a</color> <!-- 内容背景颜色 -->
+
+
+    <color name="seekbar_progress_color">#2297ce</color> <!-- seekbar精度条颜色 -->
+    <color name="seekbar_track_color">#ffffff</color> <!-- seekbar背景颜色 -->
+
+    <color name="btn_selected_color">#2297ce</color>
+    <color name="colorPrimary">#3F51B5</color>
+</resources>

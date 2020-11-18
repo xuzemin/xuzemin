@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="473.3dip"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_bg_shape"
+        android:orientation="vertical" >
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="26.7dip"
+            android:text="@string/add_wifi_net"
+            android:textColor="@color/black"
+            android:textSize="@dimen/content_sp" />
+
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp" >
+
+        <TextView
+                android:id="@+id/wifi_add_ssid_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="40dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/wifi_net_ssid"
+                android:textColor="@color/black"
+                android:textSize="@dimen/content_sp" />
+
+        <EditText
+                android:id="@+id/wifi_add_ssid_edt"
+                android:layout_width="253.3dp"
+                android:layout_height="29.3dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="40dip"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                android:inputType="text"
+                android:paddingLeft="21dip"
+                android:paddingRight="21dip"
+                android:singleLine="true"
+                android:textColor="@drawable/item_text_color"
+                android:textColorHighlight="@color/edit_select"
+                android:textSize="@dimen/content_sp" />
+    </FrameLayout>
+
+    <FrameLayout
+            android:id="@+id/wifi_add_secure_fl"
+            android:layout_width="437.3dip"
+            android:layout_height="29.3dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="13.3dp"
+            android:background="@drawable/selector_item" >
+
+        <TextView
+                android:id="@+id/wifi_add_secure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="22dip"
+                android:gravity="left|center_vertical"
+                android:textColor="@color/black"
+                android:text="@string/wifi_secure"
+                android:textSize="@dimen/content_sp" />
+
+        <TextView
+                android:id="@+id/wifi_add_secure_sele_tv"
+                android:layout_width="177.3dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="60dip"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/content_sp" />
+
+        <ImageView
+                android:id="@+id/wifi_add_secure_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="60dip"
+                android:background="@drawable/l_and_r_bg"
+                android:focusable="true" />
+    </FrameLayout>
+
+    <FrameLayout
+            android:id="@+id/wifi_add_pwd_fl"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="13.3dp" >
+
+        <TextView
+                android:id="@+id/wifi_add_pwd_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="40dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/password"
+                android:textColor="@color/black"
+                android:textSize="@dimen/content_sp" />
+
+        <EditText
+                android:id="@+id/wifi_add_pwd_edt"
+                android:layout_width="253.3dp"
+                android:layout_height="29.3dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="40dip"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                android:inputType="text"
+                android:paddingLeft="21dip"
+                android:paddingRight="21dip"
+                android:singleLine="true"
+                android:textColor="@drawable/item_text_color"
+                android:textColorHighlight="@color/edit_select"
+                android:textSize="@dimen/content_sp" />
+    </FrameLayout>
+
+    <FrameLayout
+            android:id="@+id/wifi_add_show_pwd_fl"
+            android:layout_width="437.3dip"
+            android:layout_height="29.3dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="13.3dp"
+            android:background="@drawable/selector_item"
+            android:focusable="true" >
+
+        <TextView
+                android:id="@+id/wifi_add_show_pwd_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="22dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/show_password"
+                android:textColor="@color/black"
+                android:textSize="@dimen/content_sp" />
+
+        <ImageView
+                android:id="@+id/wifi_add_show_pwd_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="22dip"
+                android:background="@mipmap/off"
+                android:focusable="false" />
+    </FrameLayout>
+
+    <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dip"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+        <Button
+                android:id="@+id/wifi_add_save_btn"
+                android:layout_width="100dip"
+                android:layout_height="@dimen/toback_top"
+                android:textAllCaps="false"
+                android:background="@drawable/selector_btn_bg"
+                android:text="@android:string/ok"
+                android:textColor="@drawable/item_text_color_dialog"
+                android:textSize="17sp" />
+
+        <Button
+                android:id="@+id/wifi_add_cancle_btn"
+                android:layout_width="100dip"
+                android:layout_height="29.3dip"
+                android:layout_marginLeft="105.3dip"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:text="@android:string/cancel"
+                android:textColor="@drawable/item_text_color_dialog"
+                android:textSize="@dimen/content_sp" />
+    </LinearLayout>
+
+</LinearLayout>

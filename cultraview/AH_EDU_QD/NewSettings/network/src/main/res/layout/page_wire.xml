@@ -1,0 +1,349 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/ll_main_content_width_size"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_back_wire_layout" />
+
+    <FrameLayout
+        android:id="@+id/wire_open_switch_fl"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/ll_main_margin_top"
+        android:background="@drawable/selector_item"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:gravity="left|center_vertical"
+            android:text="@string/net_switch"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/wire_open_switch_iv"
+            style="@style/switch_image_style_new"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:background="@mipmap/off"
+            android:focusable="false" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/wire_open_ll"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/wire_auto_ip_fl"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/common_item_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top"
+            android:background="@drawable/selector_item"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="@dimen/fab_network_margin"
+                android:gravity="left|center_vertical"
+                android:text="@string/auto_ip"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_sp" />
+
+            <ImageView
+                android:id="@+id/wire_auto_ip_iv"
+                style="@style/switch_image_style_new"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="@dimen/dp_15"
+
+                android:background="@mipmap/off"
+                android:focusable="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/wire_ipv6_fl"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/common_item_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top"
+            android:visibility="gone"
+            android:background="@drawable/selector_item"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="@dimen/fab_network_margin"
+                android:gravity="left|center_vertical"
+                android:text="@string/ethernet_ipv6"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_sp" />
+
+            <ImageView
+                android:id="@+id/wire_ipv6_iv"
+
+                style="@style/switch_image_style_new"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="@dimen/dp_15"
+                android:background="@mipmap/off"
+                android:focusable="false" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/wire_ip_fl"
+            style="@style/wire_fl_sty">
+
+            <TextView
+                style="@style/wire_left_tv"
+                android:text="@string/ip_address"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/v6_ip_edt"
+                style="@style/wire_v6_edt"
+                android:textCursorDrawable="@drawable/cursor" />
+
+            <FrameLayout
+                android:id="@+id/v4_ip_fl"
+                style="@style/wire_v4_iv_style">
+
+                <EditText
+                    android:id="@+id/wire_ip_edt1"
+                    style="@style/wire_right_edt1"
+                    android:layout_width="@dimen/dp_42"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point1" />
+
+                <EditText
+                    android:id="@+id/wire_ip_edt2"
+                    style="@style/wire_right_edt2"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point2" />
+
+                <EditText
+                    android:id="@+id/wire_ip_edt3"
+                    style="@style/wire_right_edt3"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point3" />
+
+                <EditText
+                    android:id="@+id/wire_ip_edt4"
+                    style="@style/wire_right_edt4"
+                    android:textCursorDrawable="@drawable/cursor" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/wire_subnet_fl"
+            style="@style/wire_fl_sty">
+
+            <TextView
+                style="@style/wire_left_tv"
+                android:text="@string/subnet_mask" />
+
+            <EditText
+                android:id="@+id/v6_subnet_edt"
+                style="@style/wire_v6_edt"
+                android:textCursorDrawable="@drawable/cursor" />
+
+            <FrameLayout
+                android:id="@+id/v4_subnet_fl"
+                style="@style/wire_v4_iv_style">
+
+                <EditText
+                    android:id="@+id/wire_subnet_edt1"
+                    style="@style/wire_right_edt1"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point1" />
+
+                <EditText
+                    android:id="@+id/wire_subnet_edt2"
+                    style="@style/wire_right_edt2"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point2" />
+
+                <EditText
+                    android:id="@+id/wire_subnet_edt3"
+                    style="@style/wire_right_edt3"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point3" />
+
+                <EditText
+                    android:id="@+id/wire_subnet_edt4"
+                    style="@style/wire_right_edt4"
+                    android:textCursorDrawable="@drawable/cursor" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/wire_default_geteway_fl"
+            style="@style/wire_fl_sty">
+
+            <TextView
+                style="@style/wire_left_tv"
+                android:text="@string/default_geteway" />
+
+            <EditText
+                android:id="@+id/v6_efault_geteway_edt"
+                style="@style/wire_v6_edt"
+                android:textCursorDrawable="@drawable/cursor" />
+
+            <FrameLayout
+                android:id="@+id/v4_efault_geteway_fl"
+                style="@style/wire_v4_iv_style">
+
+                <EditText
+                    android:id="@+id/wire_default_geteway_edt1"
+                    style="@style/wire_right_edt1"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point1" />
+
+                <EditText
+                    android:id="@+id/wire_default_geteway_edt2"
+                    style="@style/wire_right_edt2"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point2" />
+
+                <EditText
+                    android:id="@+id/wire_default_geteway_edt3"
+                    style="@style/wire_right_edt3"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point3" />
+
+                <EditText
+                    android:id="@+id/wire_default_geteway_edt4"
+                    style="@style/wire_right_edt4"
+                    android:textCursorDrawable="@drawable/cursor" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/wire_first_dns_fl"
+            style="@style/wire_fl_sty">
+
+            <TextView
+                style="@style/wire_left_tv"
+                android:text="@string/first_dns" />
+
+            <EditText
+                android:id="@+id/v6_first_dns_edt"
+                style="@style/wire_v6_edt"
+                android:textCursorDrawable="@drawable/cursor" />
+
+            <FrameLayout
+                android:id="@+id/v4_first_dns_fl"
+                style="@style/wire_v4_iv_style">
+
+                <EditText
+                    android:id="@+id/wire_first_dns_edt1"
+                    style="@style/wire_right_edt1"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point1" />
+
+                <EditText
+                    android:id="@+id/wire_first_dns_edt2"
+                    style="@style/wire_right_edt2"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point2" />
+
+                <EditText
+                    android:id="@+id/wire_first_dns_edt3"
+                    style="@style/wire_right_edt3"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point3" />
+
+                <EditText
+                    android:id="@+id/wire_first_dns_edt4"
+                    style="@style/wire_right_edt4"
+                    android:textCursorDrawable="@drawable/cursor" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/wire_second_dns_fl"
+            style="@style/wire_fl_sty">
+
+            <TextView
+                style="@style/wire_left_tv"
+                android:text="@string/second_dns" />
+
+            <EditText
+                android:id="@+id/v6_second_dns_edt"
+                style="@style/wire_v6_edt"
+                android:textCursorDrawable="@drawable/cursor" />
+
+            <FrameLayout
+                android:id="@+id/v4_second_dns_fl"
+                style="@style/wire_v4_iv_style">
+
+                <EditText
+                    android:id="@+id/wire_second_dns_edt1"
+                    style="@style/wire_right_edt1"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point1" />
+
+                <EditText
+                    android:id="@+id/wire_second_dns_edt2"
+                    style="@style/wire_right_edt2"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point2" />
+
+                <EditText
+                    android:id="@+id/wire_second_dns_edt3"
+                    style="@style/wire_right_edt3"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <TextView style="@style/wire_right_point3" />
+
+                <EditText
+                    android:id="@+id/wire_second_dns_edt4"
+                    style="@style/wire_right_edt4"
+                    android:textCursorDrawable="@drawable/cursor" />
+            </FrameLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/wire_save_btn"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_30"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/selector_btn_bg"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="@drawable/item_text_color"
+        android:textSize="@dimen/content_sp" />
+
+</LinearLayout>

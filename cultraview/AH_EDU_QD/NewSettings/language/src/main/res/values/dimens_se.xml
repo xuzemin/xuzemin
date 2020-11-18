@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- security -->
+    <dimen name="se_item_height">49dip</dimen>
+    <dimen name="se_content_sp">19sp</dimen>
+    <dimen name="se_top_margin">26dip</dimen>
+    <dimen name="se_title_sp">25sp</dimen>
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lockscreen_ly"
+    android:layout_width="match_parent"
+    android:layout_height="408dip"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_theme_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/greneral_top_margin"
+        android:text="@string/greneral_lock_screen_setting"
+        android:textColor="@color/white"
+        android:textSize="@dimen/greneral_title_sp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/screen_lock_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/greneral_item_height"
+        android:layout_marginStart="@dimen/greneral_item_left_margin"
+        android:layout_marginTop="@dimen/greneral_top_margin"
+        android:layout_marginEnd="@dimen/greneral_item_iv_margin"
+        android:descendantFocusability="blocksDescendants"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:focusable="false"
+            android:text="@string/greneral_lock_screen_switch"
+            android:textColor="@color/white"
+            android:textSize="@dimen/greneral_content_sp" />
+
+        <ImageView
+            android:id="@+id/sys_swich_iv"
+            style="@style/switch_image_style_new"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/greneral_img"
+            android:focusable="false" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/greneral_list_width"
+        android:layout_height="1px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="3dip"
+        android:background="@drawable/greneral_list_divider"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/password_change"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/greneral_item_height"
+        android:layout_marginStart="@dimen/greneral_item_left_margin"
+        android:layout_marginTop="3dip"
+        android:layout_marginEnd="@dimen/greneral_item_iv_margin"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:focusable="false"
+            android:text="@string/greneral_set_password"
+            android:textColor="@color/white"
+            android:textSize="@dimen/greneral_content_sp" />
+
+        <ImageView
+            style="@style/more_image_style_new"
+            android:focusable="false" />
+    </RelativeLayout>
+
+</LinearLayout>

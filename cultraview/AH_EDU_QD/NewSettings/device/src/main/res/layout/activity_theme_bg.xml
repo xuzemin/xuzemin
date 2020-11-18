@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/top_back_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/ll_main_margin_top"
+        android:gravity="center">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="@dimen/ll_main_content_width_size"
+            android:layout_height="@dimen/dp_500"
+            android:layout_gravity="center"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/item_theme_bg" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="@dimen/dip_72"
+            android:layout_height="@dimen/dip_34"
+            android:layout_marginTop="@dimen/dip_22"
+            android:background="@drawable/selector_btn_bg"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/item_text_color"
+            android:textSize="@dimen/btn_sp" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="@dimen/dip_72"
+            android:layout_height="@dimen/dip_34"
+            android:layout_marginLeft="@dimen/dip_210"
+            android:layout_marginTop="@dimen/dip_22"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:text="@android:string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/item_text_color"
+            android:textSize="@dimen/btn_sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

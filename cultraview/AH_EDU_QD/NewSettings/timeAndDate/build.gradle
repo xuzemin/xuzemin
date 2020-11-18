@@ -1,0 +1,67 @@
+// module和lib控制
+if (isModule) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode versions.versionCode
+        versionName "1.0"
+
+        // 模块和lib控制
+        if (isModule) {
+            applicationId appIds.timeAndDate
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs "src/main/java"
+            java.srcDirs += 'src/main/kotlin'
+            jniLibs.srcDirs = ['libs']
+            res.srcDirs "src/main/res"
+
+            if (isModule) {// module app形式
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else { // lib形式
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "com.android.support:appcompat-v7:${versions.support}"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    api project(path: ':libCommon')
+    api project(path: ':resCommon')
+    implementation 'org.jsoup:jsoup:1.12.1'
+}

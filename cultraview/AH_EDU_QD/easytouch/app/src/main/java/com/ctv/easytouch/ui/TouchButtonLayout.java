@@ -5,13 +5,17 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ctv.easytouch.Constants;
@@ -19,6 +23,8 @@ import com.ctv.easytouch.R;
 import com.ctv.easytouch.been.AppInfo;
 import com.ctv.easytouch.control.FloatWindowManager;
 import com.ctv.easytouch.utils.*;
+import com.hht.android.sdk.ops.HHTOpsManager;
+import com.hht.android.sdk.source.HHTSourceManager;
 import com.mstar.android.tvapi.common.PictureManager;
 import com.mstar.android.tvapi.common.TvManager;
 import com.mstar.android.tvapi.common.vo.EnumScalerWindow;
@@ -27,6 +33,7 @@ import com.mstar.android.tvapi.common.vo.VideoWindowType;
 
 import java.lang.ref.WeakReference;
 import java.text.Format;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,11 +52,11 @@ public class TouchButtonLayout extends FrameLayout {
     View btnBack;// 返回x
     View btnHome;// 回到主页
     View btnAppSwitch;// 多功能切换键
-    View btnShowSetting;// 显示设置
+    View btnShowwhiteboard;// 白板
     View rlBtnWhiteBoard;//批注按钮的父布局
-    View btnUsered;//批注按钮的父布局
+    ImageView btnUsered;//批注按钮的父布局
     View btnCenter;// 中心按钮
-
+    ImageView btnUserHide;
     private ApkInfoUtils apkInfoUtils;
 
     // 对话框UI
@@ -67,9 +74,16 @@ public class TouchButtonLayout extends FrameLayout {
      * 用于更新小悬浮窗的位置
      */
     private WindowManager.LayoutParams mParams;// 浮窗的参数
+    public static boolean userFlag = false;
+    private TextView tvwhiteboard;
+    private TextView tvFavorites;
+    private TextView tvops;
+    private TextView tvhalf_screen;
+    private TextView tvBack;
+    private TextView tvHome;
+    private final WindowManager wm;
 
     public TouchButtonLayout(Context context) {
-
         super(context);
         View root = LayoutInflater.from(context).inflate(R.layout.easy_touch_view, this);
         btnImage = root.findViewById(R.id.easy_touch);
@@ -77,23 +91,35 @@ public class TouchButtonLayout extends FrameLayout {
 
         mHandler = new UIHandler(this);
         setOnTouchListener(mTouchListener);
-
+        wm = (WindowManager) context.getSystemService(
+                Context.WINDOW_SERVICE);
         initMenu();
     }
 
     private void initMenu() {
-
         apkInfoUtils = new ApkInfoUtils();
 
         btnBack = findViewById(R.id.btn_back);
         btnHome = findViewById(R.id.btn_home);
         btnAppSwitch = findViewById(R.id.btn_switch);
-        btnShowSetting = findViewById(R.id.btn_setting);
-        btnShowSetting = findViewById(R.id.btn_setting);
+        btnShowwhiteboard = findViewById(R.id.btn_whiteboard);
         rlBtnWhiteBoard = findViewById(R.id.btn_pan);
         btnUsered = findViewById(R.id.btn_usered);
         btnCenter = findViewById(R.id.btn_center);
+        btnUserHide = findViewById(R.id.btn_user_hide_tips);
 
+        tvwhiteboard = findViewById(R.id.txt_whiteboard);
+        tvFavorites = findViewById(R.id.id_tv_favorites);
+        tvops = findViewById(R.id.id_tv_ops);
+        tvhalf_screen = findViewById(R.id.id_tv_half_screen);
+        tvBack = findViewById(R.id.id_tv_back);
+        tvHome = findViewById(R.id.id_tv_home);
+
+        if (userFlag){
+            btnUserHide.setVisibility(VISIBLE);
+        }else {
+            btnUserHide.setVisibility(GONE);
+        }
         updateUseredIcon();
 
         setListener();
@@ -128,11 +154,11 @@ public class TouchButtonLayout extends FrameLayout {
         btnHome.setOnClickListener(mOnClickListener);
         btnAppSwitch.setOnClickListener(mOnClickListener);
 
-        btnShowSetting.setOnClickListener(mOnClickListener);
+        btnShowwhiteboard.setOnClickListener(mOnClickListener);
         rlBtnWhiteBoard.setOnClickListener(mOnClickListener);
         btnUsered.setOnClickListener(mOnClickListener);
         btnUsered.setOnLongClickListener(mOnLongClickListener);
-
+        btnUserHide.setOnClickListener(mOnClickListener);
         btnCenter.setOnClickListener(mOnClickListener);
     }
 
@@ -168,18 +194,37 @@ public class TouchButtonLayout extends FrameLayout {
      * @param isSmall
      */
     private void showWindow(boolean isSmall) {
+        userFlag = false;
         this.isSmall = isSmall;
         if (isSmall) { // 显示小图标
             btnImage.setVisibility(View.VISIBLE);
             menuView.setVisibility(View.GONE);
+
         } else { // 显示大图标
             btnImage.setVisibility(View.GONE);
             menuView.setVisibility(View.VISIBLE);
+            refreshLocal();
         }
-
+        btnUserHide.setVisibility(GONE);
         startTime = System.currentTimeMillis();
         endTime = System.currentTimeMillis();
         FloatWindowManager.showWindow(getContext(), isSmall);
+    }
+
+    private void refreshLocal() {
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+
+        DisplayMetrics metrics= new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(metrics);
+        config.locale = Locale.getDefault();
+        //resources.updateConfiguration(config, metrics);
+        tvwhiteboard.setText(getResources().getString(R.string.whiteboard));
+        tvops.setText(getResources().getString(R.string.ops));
+        tvHome.setText(R.string.home);
+        tvBack.setText(R.string.back);
+        tvhalf_screen.setText(R.string.half_screen);
+        tvFavorites.setText(R.string.favorites);
     }
 
     @Override
@@ -383,11 +428,16 @@ public class TouchButtonLayout extends FrameLayout {
         String packageName = (String) SPUtil.getData(getContext(), Constants.Companion.getUSERED_PACKAGE_NAME(), "");
         // 若是没有选择APP，则弹出选择对话框;反之，则启动APP
         if (TextUtils.isEmpty(packageName)) {
+            initSelectDialog();
             selectDialog.show();
         } else {
             // 启动APP
             apkInfoUtils.startApp(getContext(), packageName);
         }
+    }
+
+    private void removeApp() {
+        SPUtil.saveData(getContext(), Constants.Companion.getUSERED_PACKAGE_NAME(), "");
     }
 
     private void tag(String format, Object... strs) {
@@ -404,10 +454,11 @@ public class TouchButtonLayout extends FrameLayout {
         int id = v.getId();
         switch (id) {
             case R.id.btn_usered: {// 自定义
-
-                selectDialog.show();
-                dialogView.updateData();
-
+                String packageName = (String) SPUtil.getData(getContext(), Constants.Companion.getUSERED_PACKAGE_NAME(), "");
+                if (!TextUtils.isEmpty(packageName)) {
+                    userFlag = true;
+                    btnUserHide.setVisibility(VISIBLE);
+                }
                 break;
             }
         }
@@ -464,25 +515,33 @@ public class TouchButtonLayout extends FrameLayout {
                 switchHalfScreen(true);
                 break;
             }
-            case R.id.btn_setting: {// 显示更多设置界面
-                if (AppUtils.isActivityRunning(getContext(), "com.android.systemui.recents.RecentsActivity")) {
-                    // 任务界面
-                    AppUtils.keyEventBySystem(KeyEvent.KEYCODE_APP_SWITCH);
-
-                    mHandler.postDelayed(() -> {
-                        gotoMoreSettings();
-                    }, 500);
-                } else {
-                    gotoMoreSettings();
+            case R.id.btn_whiteboard: {// 打开白板
+                String mPackageName = "com.mphotool.whiteboard";
+                String mActivityName = "com.mphotool.whiteboard.activity.MainActivity";
+                AppUtils.noticeChangeSignal(getContext(), 34);
+                AppUtils.gotoOtherApp(getContext(), mPackageName, mActivityName);
+                break;
+            }
+            case R.id.btn_pan: {// 打开ops
+                //changeSignal(getContext(),26);
+                HHTOpsManager hhtOpsManager = HHTOpsManager.getInstance();
+                if(!hhtOpsManager.isOpsOk()){
+                    hhtOpsManager.setOpsPowerTurnOn();
                 }
+                HHTSourceManager.getInstance().startSourcebyKey("OPS");
                 break;
             }
-            case R.id.btn_pan: {// 打开批注
-                changeSignal(getContext(),26);
-                break;
-            }
+            case  R.id.btn_user_hide_tips:
             case R.id.btn_usered: {// 自定义
-                setUserAPPShow();
+                if (!userFlag) {
+                    setUserAPPShow();
+                } else {
+                    userFlag = false;
+                    removeApp();
+                    btnUserHide.setVisibility(GONE);
+                    btnUsered.setImageResource(R.drawable.btn_user_defined_normal);
+                }
+
                 break;
             }
             case R.id.btn_center: {// 点击中心，显示小图标
@@ -519,7 +578,6 @@ public class TouchButtonLayout extends FrameLayout {
         }
 
     }
-
 
     /**
      * 定时监听任务

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_back_layout" />
+
+
+    <EditText
+        android:id="@+id/device_name_et"
+        android:layout_width="@dimen/list_width"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_item_height"
+        android:background="@drawable/selector_btn_bg"
+        android:gravity="center"
+        android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+        android:inputType="text"
+        android:maxLength="16"
+        android:singleLine="true"
+        android:textColor="@color/item_text_color"
+        android:textColorHighlight="@color/edit_select"
+        android:textCursorDrawable="@drawable/cursor"
+        android:textSize="@dimen/content_sp" />
+
+    <LinearLayout
+        android:layout_width="@dimen/dip_402"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/device_name_save"
+            android:layout_width="@dimen/dip_72"
+            android:layout_height="@dimen/dip_34"
+            android:background="@drawable/selector_btn_bg"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/item_text_color"
+            android:textSize="@dimen/btn_sp" />
+
+        <Button
+            android:id="@+id/device_name_cancel"
+            android:layout_width="@dimen/dip_72"
+            android:layout_height="@dimen/dip_34"
+            android:layout_marginLeft="@dimen/dip_210"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:text="@android:string/cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/item_text_color"
+            android:textSize="@dimen/btn_sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Nút ảo</string>
+
+    <string name="update_message">请升级到V%1$s，%2$s</string>
+
+    <!-- 升级信息 -->
+    <!-- 测试URL-->
+    <!--<string name="check_apk_url">http://192.168.2.75:82/device/upgrade</string>-->
+    <!-- 正式URL-->
+    <string name="check_apk_url">http://www.bqldb.com:82/device/upgrade</string>
+    <string name="apk_file_name">Virtualkey.apk</string>
+    <string name="apk_name">virtualkey</string>
+
+    <!-- 动态权限管理 -->
+    <string name="permission_request">Yêu cầu cấp phép</string>
+    <string name="permission_check">Kiểm tra giấy phép</string>
+    <string name="rationale_ask_again">Ứng dụng này có thể không hoạt động mà không có quyền yêu cầu. Mở màn hình cài đặt ứng dụng để sửa đổi các quyền của ứng dụng.</string>
+    <string name="rationale_battery">Ứng dụng này yêu cầu cài đặt bỏ qua pin。</string>
+    <string name="rationale_call">Ứng dụng này cần gọi。</string>
+    <string name="rationale_camera">Ứng dụng này cần mở quyền máy ảnh。</string>
+    <string name="rationale_record_audio">Ứng dụng này yêu cầu sự cho phép ghi âm。</string>
+    <string name="rationale_sms">Ứng dụng này yêu cầu sự cho phép SMS。</string>
+    <string name="rationale_storage">Ứng dụng này cần đọc và ghi quyền SD。</string>
+
+    <string name="setting">Cài đặt</string>
+    <string name="cancel">Hủy bỏ</string>
+
+    <string name="please_insert_dongle">Vui lòng chèn một card mạng không dây</string>
+    <string name="device_do_not_support">Card mạng không dây không hỗ trợ các điểm truy cập wifi</string>
+    <string name="minute">Phút</string>
+    <string name="close">Tắt</string>
+    <string name="screen_protect_time">Thời gian bảo vệ màn hình</string>
+    <string name="no_signal_standby">Không có tín hiệu chờ</string>
+</resources>

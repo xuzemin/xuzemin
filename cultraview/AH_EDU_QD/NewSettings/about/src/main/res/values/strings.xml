@@ -1,0 +1,112 @@
+<resources>
+    <string name="about_tv">About</string>
+    <string name="app_name">About</string>
+    <string name="header_about">Header About</string>
+    <string name="boot_options">Boot Options</string>
+    <string name="system_restore_factory">System_restore_factory</string>
+    <string name="system_update">bin_files_update</string>
+    <string name="system_update_main">system update</string>
+    <string name="correct_device_name">The device name cannot be empty</string>
+    <string-array name="about_tv_item">
+        <item>CPU:</item>
+        <item>GPU:</item>
+        <item>MODEL:</item>
+        <item>Android version:</item>
+        <item>System version:</item>
+        <item>Memory Information (Available / Total):</item>
+        <item>Storage (Available / Total):</item>
+
+    </string-array>
+    <string name="cpu_infor_338_jav">Super16 core</string>
+    <string-array name="about_tv_item_cnc">
+        <item>System Android version:</item>
+        <item>System version:</item>
+        <item>Memory information (available / total):</item>
+        <item>CPU:</item>
+        <item>GPU:</item>
+    </string-array>
+    <string name="language_setting">Language Settings</string>
+    <string name="cache_clear">cache_clear</string>
+    <string name="about_us_str">About us:</string>
+    <string name="clear_cache">clear_cache</string>
+    <string name="cache_select_all">cache_select_all</string>
+    <string name="cache_select_none">cache_select_none</string>
+    <string name="cache_cleaner_ok">cache_cleaner_ok!</string>
+    <string name="cache_select_none_tip">cache_select_none_tip</string>
+    <string name="device_name">device_name：</string>
+    <string name="device_name2">device name2</string>
+    <string name="local_update">zip_files_update</string>
+    <string name="net_update">net update</string>
+    <string name="restore_tips">restore tips</string>
+    <string name="restore_tips_1">restore tips_1</string>
+    <string name="liltte_title">Reminder</string>
+    <string name="restore_tips_2">Restoring the factory clears user data on the device</string>
+    <string name="check_directry">Upgrade packages must be placed in the root directory of "Mobile Devices", and the file name must be "update_signed.zip"</string>
+    <string name="system_check_directry"> Upgrade packages must be placed in the root directory of "Mobile Devices", and the file name must be "MstarUpgrade.bin" </string>
+    <string name="current_version"> Current System Version: </string>
+    <string name="check_new_device"> Inspecting equipment: </string>
+    <string name="check_new_version"> New versions are being checked: </string>
+    <string name="check_file_failure"> No upgrade mirror packages were detected in your mobile device </string>
+    <string name="check_file_success"> Upgraded Image Pack File Matching Successfully </string>
+    <string name="update">Update</string>
+    <string name="update_mode">Update Mode</string>
+    <string name="language_input_setting">Language Inputsetting</string>
+    <string name="time_and_date">Time and Date</string>
+    <string name="system">System</string>
+
+    <string name="starting_up_set">Starting set</string>
+    <string name="wifi_display">Wifi Display</string>
+
+    <!--<string name="system_restore_factory">恢复出厂状态</string>-->
+    <string name="save">Save</string>
+    <string name="cancle">Cancel</string>
+    <string name="ok">OK</string>
+
+
+    <string name="restore_factory_system_reboot">The system is restarting ......</string>
+    <string-array name="system_update_item_mit">
+        <item>Zip_Files_Update</item>
+        <item>Bin_Files_Update</item>
+<!--        <item>Online upgrade</item>-->
+    </string-array>
+    <string-array name="starting_up_option_vals">
+        <item>Smart UI</item>
+        <item>VGA</item>
+        <item>HDMI1</item>
+        <item>HDMI2</item>
+        <item>HDMI3</item>
+        <item>INSIDE PC</item>
+    </string-array>
+    <string name="open_usb_upgrade_tip">Do you want to upgrade the system?</string>
+    <string name="please_plug_usb">Please Plug USB!</string>
+    <string name="upgrade_file_error">Upgrade file error!</string>
+    <string name="upgrade_sucessful">Upgrade Successful, Ready to Restart!</string>
+    <string name="update_system_tip"> The system is being upgraded, please wait a moment! </string>
+    <string name="upgrade_file_not_found">Upgrade file not found!</string>
+    <string name="not_network"> No network connection, no network upgrade! </string>
+
+    <string name="mobile_stoarge_device"> Portable storage device </string>
+    <string name="check_updatezip"> Upgrade package detected, confirm whether upgrade? </string>
+    <string name="no_update_file"> There are no up-to-date mirror files on your storage device </string>
+    <string name="check_failure"> Errors occurred during installation. Please replace the update package. </string>
+    <string name="check_success"> Verification success 。</string>
+    <string name="updated"> Please restart TV, the update program will continue after restart. ......</string>
+    <string name="check_package"> Checking Update Pack ......</string>
+    <string name="sdcard_insert"> Mobile device insertion detected </string>
+    <string name="sdcard_remove"> Mobile device removal or exception detected </string>
+    <string name="close_system_tip"> The system is restoring, please wait a moment! </string>
+
+    <string name="img">img</string>
+    <string name="cpu_infor_cv6a648">ARMv8-A *4core@1.4GHz</string>
+    <string name="cpu_infor_new">CA53 *2core@1.4GHz</string>
+    <string name="gpu_infor_new">MaliT720MP2*2core</string>
+    <string name="cpu_infor_338">CA7 *2core@1.3GHz</string>
+    <string name="gpu_infor_338">Mali 400*2core</string>
+    <string name="Gpu_info">Mali-T720 MP2</string>
+    <string name="sdcard_lable">Sdcard</string>
+    <string name="cpu_infor_538">ARMv7 *2core@1.2GHz</string>
+    <string name="cpu_info_8386">ARM CA73×2+CA53×2</string>
+    <string name="gpu_info_8386">Mali G51MP2</string>
+
+    <string name="gpu_infor_538">MaliT720MP2*2core</string>
+</resources>

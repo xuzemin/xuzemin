@@ -160,7 +160,7 @@ public class AppPageAdapter extends PagerAdapter implements AppPage.OnPageItemCl
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent sender = PendingIntent.getActivity(context, 0, intent, 0);
         PackageInstaller mPackageInstaller = context.getPackageManager().getPackageInstaller();
-        mPackageInstaller.uninstall(packageName, sender.getIntentSender());
+        mPackageInstaller.uninstall(packageName, sender.getIntentSender());// Ð¶ÔØAPK
     }
 
 }

@@ -6,24 +6,24 @@
     android:layout_margin="0dp"
     android:orientation="vertical">
 
-    <!--    设置-->
+    <!--    白板-->
     <ImageView
-        android:id="@+id/btn_setting"
+        android:id="@+id/btn_whiteboard"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:src="@drawable/btn_setting_normal" />
+        android:src="@drawable/btn_whiteboard_normal" />
 
     <TextView
-        android:id="@+id/txt_setting"
+        android:id="@+id/txt_whiteboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_setting"
+        android:layout_below="@id/btn_whiteboard"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="1dp"
-        android:text="@string/setting"
+        android:text="@string/whiteboard"
 
         android:textColor="@color/white"
         android:textSize="9sp" />
@@ -31,15 +31,24 @@
 
     <ImageView
         android:id="@+id/btn_usered"
-        android:layout_width="18dp"
-        android:layout_height="19dp"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
         android:layout_alignTop="@+id/btn_switch"
         android:layout_alignParentStart="true"
         android:layout_marginStart="1dp"
         android:src="@drawable/btn_user_defined_normal" />
-
+    <ImageView
+        android:id="@+id/btn_user_hide_tips"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_toRightOf="@+id/btn_usered"
+        android:layout_marginLeft="-5dp"
+        android:layout_alignTop="@+id/btn_switch"
+        android:visibility="gone"
+        android:src="@mipmap/btn_delete" />
 
     <TextView
+        android:id="@+id/id_tv_favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_usered"
@@ -63,6 +72,7 @@
         android:src="@drawable/btn_half_screen_normal" />
 
     <TextView
+        android:id="@+id/id_tv_half_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_switch"
@@ -82,6 +92,7 @@
         android:src="@drawable/btn_back_normal" />
 
     <TextView
+        android:id="@+id/id_tv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_back"
@@ -101,6 +112,7 @@
         android:src="@drawable/btn_ops_normal" />
 
     <TextView
+        android:id="@+id/id_tv_ops"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_pan"
@@ -116,12 +128,12 @@
         android:id="@+id/btn_home"
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
-        android:layout_above="@+id/txt_home"
+        android:layout_above="@+id/id_tv_home"
         android:layout_centerHorizontal="true"
         android:src="@drawable/btn_home_normal" />
 
     <TextView
-        android:id="@+id/txt_home"
+        android:id="@+id/id_tv_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

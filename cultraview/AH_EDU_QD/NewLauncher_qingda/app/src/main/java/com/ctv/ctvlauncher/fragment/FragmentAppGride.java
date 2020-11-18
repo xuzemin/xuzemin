@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -228,6 +229,16 @@ public class FragmentAppGride implements ViewPager.OnPageChangeListener {
  //       }
           initApps();
         this.viewPagerAppPage.addOnPageChangeListener(this);
+        contentView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(AppPageAdapter.isDelete){
+                    AppPageAdapter.isDelete = false;
+                    updateapp();
+                }
+                return false;
+            }
+        });
             start();
         gd_bottom_ll = contentView.findViewById(R.id.gd_bottom_ll);
         gd_bottom_ll.setOnFocusChangeListener(onFocusChangeListener);

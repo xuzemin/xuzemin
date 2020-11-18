@@ -1,0 +1,273 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/top_back_hotspot_layout" />
+
+    <FrameLayout
+        android:id="@+id/hotspot_type_fl"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/ll_main_margin_top"
+        android:background="@drawable/selector_item"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/hotspot_type_tv"
+            style="@style/item_textView"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:gravity="left|center_vertical"
+            android:text="@string/ap_type"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+
+        <ImageView
+            android:id="@+id/hotspot_type_iv"
+            android:layout_width="@dimen/dp_300"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginStart="@dimen/dp_50"
+            android:focusable="true"
+            android:src="@drawable/l_and_r_bg" />
+
+        <TextView
+            android:id="@+id/hotspot_type_sele_tv"
+            android:layout_width="@dimen/dp_300"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginStart="@dimen/dp_50"
+            android:gravity="center"
+            android:textSize="@dimen/content_sp"
+            android:textColor="@color/white"
+            android:text="@string/hot_spot_type_one"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/hotspot_open_fl"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/ll_main_margin_top"
+        android:background="@drawable/selector_item"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/hotspot_open_tv"
+            style="@style/item_textView"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:text="@string/hot_spot_type_one"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+
+        <ImageView
+            android:id="@+id/hotspot_open_iv"
+            style="@style/switch_image_style_new"
+            android:layout_gravity="right|center_vertical"
+            android:focusable="false" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top"
+        android:visibility="gone"
+        android:focusable="false">
+
+        <TextView
+            android:id="@+id/hotspot_ssid_value_tv"
+            style="@style/item_textView"
+            android:layout_width="220dp"
+            android:layout_marginStart="@dimen/fab_network_margin"
+            android:text="@string/ss_id1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+
+        <TextView
+            android:id="@+id/hotspot_secure_value_tv"
+            style="@style/item_textView"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/dp_260"
+            android:text="@string/wifi_secure1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/hotspot_ll"
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/hotspot_ssid_fl"
+            android:layout_width="@dimen/ll_main_content_width_size"
+            android:layout_height="@dimen/common_item_height"
+            android:focusable="false"
+            android:layout_gravity="right|center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/hotspot_ssid_tv"
+                style="@style/item_textView"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="@dimen/fab_network_margin"
+                android:gravity="left|center_vertical"
+                android:text="@string/ss_id"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_sp"
+
+                />
+
+            <EditText
+                android:id="@+id/hotspot_ssid_edt"
+                android:layout_width="@dimen/edit_wid"
+                android:layout_height="@dimen/edit_hei"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginStart="50dp"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                android:inputType="textNoSuggestions"
+                android:paddingLeft="@dimen/dip_20"
+                android:paddingRight="@dimen/dip_20"
+                android:singleLine="true"
+                android:focusable="true"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/edit_select"
+                android:textSize="@dimen/content_sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/hotspot_secure_fl"
+            style="@style/rl_item"
+            android:layout_height="@dimen/common_item_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top"
+            android:focusable="false"
+            android:background="@drawable/selector_item">
+
+            <TextView
+                android:id="@+id/hotspot_secure_tv"
+                style="@style/item_textView"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="@dimen/fab_network_margin"
+                android:gravity="left|center_vertical"
+                android:text="@string/wifi_secure"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_sp" />
+
+            <ImageView
+                android:id="@+id/hotspot_secure_iv"
+                android:layout_width="@dimen/dp_300"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginStart="@dimen/dp_50"
+                android:focusable="true"
+                android:src="@drawable/l_and_r_bg" />
+
+            <TextView
+                android:id="@+id/hotspot_secure_sele_tv"
+                android:layout_width="@dimen/dp_300"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginStart="@dimen/dp_50"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/hotspot_pwd_fl"
+            android:layout_width="@dimen/ll_main_content_width_size"
+            android:layout_height="@dimen/common_item_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top"
+            android:focusable="false"
+            >
+
+            <TextView
+                android:id="@+id/hotspot_pwd_tv"
+                style="@style/item_textView"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="@dimen/fab_network_margin"
+                android:gravity="left|center_vertical"
+                android:text="@string/password"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_sp" />
+
+            <EditText
+                android:id="@+id/hotspot_pwd_edt"
+                android:layout_width="@dimen/edit_wid"
+                android:layout_height="@dimen/edit_hei"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginStart="@dimen/dp_50"
+                android:background="@drawable/selector_btn_bg"
+                android:gravity="center"
+                android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_20"
+                android:singleLine="true"
+                android:focusable="true"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/edit_select"
+                android:textSize="@dimen/content_sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/hotspot_show_pwd_fl"
+            style="@style/rl_item"
+            android:layout_width="@dimen/ll_main_content_width_size"
+            android:layout_height="@dimen/common_item_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top"
+            android:background="@drawable/selector_item"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/hotspot_show_pwd_tv"
+                style="@style/item_textView"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="@dimen/fab_network_margin"
+                android:gravity="left|center_vertical"
+                android:text="@string/show_password"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content_sp" />
+
+            <ImageView
+                android:id="@+id/hotspot_show_pwd_iv"
+                style="@style/switch_image_style_new"
+                android:layout_gravity="right|center_vertical"
+                android:focusable="false" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="@dimen/ll_main_content_width_size"
+        android:layout_height="@dimen/common_item_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top">
+
+        <Button
+            android:id="@+id/hotspot_save_btn"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center"
+            android:background="@drawable/selector_btn_bg"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_sp" />
+    </FrameLayout>
+
+</LinearLayout>

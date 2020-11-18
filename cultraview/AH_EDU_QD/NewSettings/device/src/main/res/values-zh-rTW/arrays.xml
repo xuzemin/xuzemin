@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="themeStyle">
+        <item>主題一</item>
+        <item>主題二 </item>
+    </string-array>
+
+    <string-array name="themeBg">
+        <item>漸變</item>
+        <item>氣泡 </item>
+        <item>金屬</item>
+        <item>夜幕</item>
+        <item>簡潔</item>
+        <item>星空</item>
+    </string-array>
+</resources>

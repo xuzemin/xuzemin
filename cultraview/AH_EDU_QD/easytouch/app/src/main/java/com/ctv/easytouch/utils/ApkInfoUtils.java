@@ -39,8 +39,7 @@ public class ApkInfoUtils {
             "com.mstar.tv.tvplayer.ui",
             "com.ctv.sourcemenu",
             "mstar.factorymenu.ui.hh",
-            "com.ctv.settings",
-            "com.ctv.annotation",
+            "com.mphotool.whiteboard",
     };
 
     public List<AppInfo> scanInstallApp(Context context) {

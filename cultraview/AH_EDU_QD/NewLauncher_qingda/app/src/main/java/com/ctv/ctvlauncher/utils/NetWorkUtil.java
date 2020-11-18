@@ -15,8 +15,6 @@ import java.util.List;
 public class NetWorkUtil {
 
 
-
-
     public static boolean isNetworkConnected(Context context) {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context

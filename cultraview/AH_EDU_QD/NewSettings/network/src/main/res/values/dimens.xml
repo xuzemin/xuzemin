@@ -1,0 +1,66 @@
+<resources>
+
+    <dimen name="bg_radius">10dip</dimen>
+    <integer name="scale_time">400</integer>
+    <dimen name="img_margin_top">47.33dip</dimen>
+    <dimen name="img_delta">74.66dip</dimen>
+    <dimen name="action_bar_switch_padding">16dip</dimen>
+    <dimen name="list_width">620dip</dimen>
+    <dimen name="content_sp">20sp</dimen>
+    <dimen name="content_text_description">14sp</dimen>
+
+    <dimen name="fragment_width">850dp</dimen>
+    <dimen name="fragment_heigth">40dp</dimen>
+
+    <dimen name="network_item_width">800dp</dimen>
+
+    <dimen name="edit_wid">400dp</dimen>
+    <dimen name="edit_hei">40dp</dimen>
+
+    <dimen name="text_wid">150dp</dimen>
+    <dimen name="text_hei">40dp</dimen>
+    <dimen name="toback_top">30dp</dimen>
+
+    <dimen name="fragment_top">30dp</dimen>
+
+    <dimen name="margin_left">30dp</dimen>
+    <dimen name="margin_right">50dp</dimen>
+
+    <dimen name="fab_network_margin">25dp</dimen>
+    <dimen name="fab_network_second">60dp</dimen>
+
+    <dimen name="padding_left">20dp</dimen>
+    <dimen name="padding_right">20dp</dimen>
+
+    <dimen name="margin_top">0dp</dimen>
+    <dimen name="dp_600">600dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_42">42dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_260">260dp</dimen>
+    <dimen name="dip_20">20dip</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dip_15">15dip</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_220">220dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_105">105dp</dimen>
+
+    <dimen name="dp_55">55dp</dimen>
+    <dimen name="dp_145">145dp</dimen>
+
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dip_33">33dip</dimen>
+
+
+
+    <dimen name="dp_95">95dp</dimen>
+    <dimen name="dip_3">3dip</dimen>
+
+
+</resources>

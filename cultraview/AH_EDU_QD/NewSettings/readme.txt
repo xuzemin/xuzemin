@@ -1,0 +1,51 @@
+1、基本模块 (具体实现可参考服务器上/common/apps/NewSettings和NetworkSettingsActivity)
+设备      :亮度、音量、主题背景、主题风格、设备名称    （闵）
+网络      :有线、WIFI、PPoE、热点、蓝牙                         （徐）
+一般设置  :按键提示音、锁屏、U盘锁、悬浮球、四分屏、三键合一，五指息屏， U盘提示音，信源自动跳转  （陈）
+语言和输入:语言、键盘、输入法设置                              （王）
+时间和日期:24小时制、自动化获取、时区、时间格式、开关机时间    （高）
+安全和隐私：应用权限，未知来源，摄像头权限，U盘权限                      （王航）
+关于设备      :设备信息，系统升级、恢复出厂、开机选项                      （洪）
+
+2、基本工程结构
+1）分包功能
+2）lib中包含framework.jar、setting.jar、tvapi.jar、ctvapi.jar
+3）使用kotlin和Java混合开发
+4）已添加渠道配置，后续可以根据不同客户定制UI
+5）第三方版本统一管理配置dependencies.gradle，
+   在需要添加第三方库时，在dependencies.gradle中添加版本号，在模块中引用。
+
+3、其他模块集成
+1）组件之间通信
+   通过eventbus来实现组件和模块之间通信, 可以基本代替Handler处理消息
+2）日志记录
+   logutils可以记录保存日志，MyApp.kt中可以进行配置
+3）RecyclerView工具类
+   BaseRecyclerViewAdapterHelper 强大RecyclerView操作
+3）Glide 图片库
+   图片加载显示
+
+4、模块开发
+1）isModule控制是module还是lib
+   各自模块开发时，在dependencies.gradle中设置isModule为true；完整apk集成时，设置isModule为false
+2）模块开发时，编写对应activity和viewHolder,其中activity控制全局，viewHolder初始化UI、数据和监听。
+   模块开发时，可以在settings.gradle中注释掉其他模块，只编译本模块和依赖的模块。
+   具体可以参考security模块
+
+3) 兼容以前的API调用接口
+
+5、 开发规范
+1）tab用4个空格替代
+2）多写注释
+   类注释、方法注释、逻辑分支和循环的注释必须写，代码块注释可以选择性写。
+
+6、SVN操作
+
+1）设置忽略文件
+   build目录 *.iml  .gitignore  .gradle  .idea
+2) 提交代码之前，先更新代码，若是有文件冲突，先解决文件中的冲突，最后提交代码
+3）建议操作：
+    从服务器SVN下载代码到目录A，拷贝一份为目录B，将B导入到AS工具中；
+    在B上开发代码，用A来更新提交代码；
+    使用对比工具，比较A和B代码，解决冲突，然后将B的代码合入到A中，提交A的代码
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="item_width">200dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="bg_radius">10dp</dimen>
+
+    <dimen name="marginLeft">10dp</dimen>
+    <dimen name="marginRight">10dp</dimen>
+    <dimen name="marginStart">10dp</dimen>
+    <dimen name="marginEnd">10dp</dimen>
+
+    <!--  主布局尺寸 -->
+<!--    <dimen name="ll_main_size">850dp</dimen>-->
+    <dimen name="ll_main_width_size">1000dp</dimen>
+    <dimen name="ll_main_content_width_size">1000dp</dimen>
+    <dimen name="ll_main_margin_top">30dp</dimen>
+    <dimen name="ll_main_margin_bottom">30dp</dimen>
+
+    <!-- 模块的高度:根据item的个数确定，每个item高度为40dp, 其中模块的title的高当做一个item的高来计算 -->
+    <dimen name="module_height_item_x2">120dp</dimen>
+    <dimen name="module_height_item_x3">160dp</dimen>
+    <dimen name="module_height_item_x4">200dp</dimen>
+    <dimen name="module_height_item_x5">240dp</dimen>
+    <dimen name="module_height_item_x6">280dp</dimen>
+    <dimen name="module_height_item_x7">320dp</dimen>
+
+    <!-- 模块 titletextView的尺寸 -->
+    <dimen name="item_title_text_width">150dp</dimen>
+    <dimen name="item_title_text_textSize">12sp</dimen>
+
+    <!-- 模块 item左边textView的尺寸 -->
+    <dimen name="item_textView_width">150dp</dimen>
+    <dimen name="item_textView_margin_left">40dp</dimen>
+    <dimen name="item_textView_textSize">20sp</dimen>
+
+    <!-- 模块 item右边边textView的尺寸 -->
+    <dimen name="item_textViewRight_width">150dp</dimen>
+    <dimen name="item_textViewRight_margin_right">70dp</dimen>
+    <dimen name="item_textViewRight_textSize">20sp</dimen>
+
+    <!-- 模块 item右边更多按钮的尺寸 -->
+    <dimen name="item_more_image_width">30dp</dimen>
+    <dimen name="item_more_image_height">30dp</dimen>
+
+    <!-- 模块 item右边开关按钮的尺寸 -->
+    <dimen name="item_switch_image_width">58.5dp</dimen>
+    <dimen name="item_switch_image_height">30dp</dimen>
+
+    <!-- 分割线 -->
+    <dimen name="divider_line_height">0.5dp</dimen>
+
+    <integer name="scale_time">200</integer>
+
+
+    
+        <!-- greneral -->
+    <dimen name="greneral_top_margin">26dip</dimen>
+    <dimen name="greneral_title_sp">25sp</dimen>
+    <dimen name="greneral_item_height">49dip</dimen>
+    <dimen name="greneral_item_left_margin">36.7dip</dimen>
+    <dimen name="greneral_item_right_margin">36.7dip</dimen>
+    <dimen name="greneral_item_iv_margin">32.7dip</dimen>
+    <dimen name="greneral_content_sp">19sp</dimen>
+    <dimen name="greneral_btn_sp">17sp</dimen>
+    <dimen name="greneral_list_width">620dip</dimen>
+</resources>

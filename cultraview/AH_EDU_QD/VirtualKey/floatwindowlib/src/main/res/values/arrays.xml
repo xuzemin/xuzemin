@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- INPUT_SOURCE 名称-->
+    <string-array name="input_source_name_list_mh" tools:ignore="InconsistentArrays">
+        <item>VGA</item>
+        <item>ATV</item>
+        <item>AV1</item>
+        <item>AV2</item>
+        <item>AV3</item>
+        <item>AV4</item>
+        <item>AV5</item>
+        <item>AV6</item>
+        <item>AV7</item>
+        <item>HDMI2</item>
+        <item>AV MAX</item>
+
+        <item>S-VIDEO</item>
+        <item>S-VIDEO 2</item>
+        <item>S-VIDEO 3</item>
+        <item>S-VIDEO 4</item>
+        <item>S-VIDEO MAX</item>
+
+        <item>YPBRB</item>
+        <item>YPBRB 2</item>
+        <item>YPBRB 3</item>
+        <item>YPBRB MAX</item>
+
+        <item>SCART </item>
+        <item>SCART 2</item>
+        <item>SCART MAX</item>
+
+        <item>HDMI3</item>
+        <item>TYPE-C</item>
+        <item>HDMI</item>
+        <item>OPS</item>
+        <!--        <item>INSIDE PC</item>-->
+<!--        <item>VGA</item>-->
+        <item>DTV</item>
+        <item>DVI</item>
+        <item>DVI 2</item>
+        <item>DVI 3</item>
+        <item>DVI 4</item>
+        <item>DVI MAX</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+
+    <string-array name="input_source_name_list_ah" tools:ignore="InconsistentArrays">
+        <item>VGA</item>
+        <item>ATV</item>
+        <item>AV1</item>
+        <item>AV2</item>
+        <item>AV3</item>
+        <item>AV4</item>
+        <item>AV5</item>
+        <item>AV6</item>
+        <item>AV7</item>
+        <item>HDMI2</item>
+        <item>AV MAX</item>
+
+        <item>S-VIDEO</item>
+        <item>S-VIDEO 2</item>
+        <item>S-VIDEO 3</item>
+        <item>S-VIDEO 4</item>
+        <item>S-VIDEO MAX</item>
+
+        <item>YPBRB</item>
+        <item>YPBRB 2</item>
+        <item>YPBRB 3</item>
+        <item>YPBRB MAX</item>
+
+        <item>SCART </item>
+        <item>SCART 2</item>
+        <item>SCART MAX</item>
+
+        <item>HDMI</item>
+        <item>HDMI2</item>
+        <item>HDMI3</item>
+        <item>OPS</item>
+        <!--        <item>INSIDE PC</item>-->
+        <item>DTV</item>
+
+        <item>DVI</item>
+        <item>DVI 2</item>
+        <item>DVI 3</item>
+        <item>DVI 4</item>
+        <item>DVI MAX</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+
+    <!--&lt;!&ndash; INPUT_SOURCE image RES_ID&ndash;&gt;-->
+    <string-array name="input_source_str_list">
+        <item>signal_vga</item>
+        <item>signal_atv</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_av</item>
+        <item>signal_hdmi2</item>
+        <item>signal_av</item>
+
+        <item>signal_svideo</item>
+        <item>signal_svideo</item>
+        <item>signal_svideo</item>
+        <item>signal_svideo</item>
+        <item>signal_svideo</item>
+
+        <item>signal_ypbrb</item>
+        <item>signal_ypbrb</item>
+        <item>signal_ypbrb</item>
+        <item>signal_ypbrb</item>
+
+        <item>signal_scart</item>
+        <item>signal_scart 2</item>
+        <item>signal_scart max</item>
+
+        <item>signal_hdmi</item>
+        <item>signal_dp</item>
+        <item>signal_hdmi3</item>
+        <item>signal_ops</item>
+        <!--        <item>INSIDE PC</item>-->
+<!--        <item>signal_vga</item>-->
+        <item>signal_dtv</item>
+
+        <item>signal_dvi</item>
+        <item>signal_dvi</item>
+        <item>signal_dvi</item>
+        <item>signal_dvi</item>
+        <item>signal_dvi</item>
+        <!--        <item>PREHDMI</item>-->
+    </string-array>
+
+    <!--&lt;!&ndash; INPUT_SOURCE 值:与input_source_str_list一一对应. &ndash;&gt;-->
+    <integer-array name="input_source_int_list">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+
+
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>28</item>
+
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+    </integer-array>
+
+    <integer-array name="input_source_id_list">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+
+
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>28</item>
+
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+    </integer-array>
+<!--    <string-array name="input_source_name_list">-->
+<!--        <item>DTV</item>-->
+<!--        <item>ATV</item>-->
+<!--        <item>AV</item>-->
+<!--        <item>AV2</item>-->
+<!--        <item>YPBPR</item>-->
+
+<!--        <item>HDMI1</item>-->
+<!--        <item>HDMI2</item>-->
+<!--        <item>Inner PC</item>-->
+<!--        <item>VGA</item>-->
+
+<!--        <item>DP</item>-->
+<!--        <item>Prev HDMI</item>-->
+<!--        <item>Prev VGA</item>-->
+<!--    </string-array>-->
+
+<!--    &lt;!&ndash; INPUT_SOURCE 值:与input_source_str_list一一对应. &ndash;&gt;-->
+<!--    <integer-array name="input_source_id_list">-->
+<!--        <item>0</item>-->
+<!--        <item>1</item>-->
+<!--        <item>2</item>-->
+<!--        <item>3</item>-->
+<!--        <item>16</item>-->
+
+<!--        <item>23</item>-->
+<!--        <item>24</item>-->
+<!--        <item>25</item>-->
+<!--        <item>28</item>-->
+
+<!--        <item>29</item>-->
+<!--        <item>30</item>-->
+<!--        <item>31</item>-->
+<!--    </integer-array>-->
+
+<!--    &lt;!&ndash; INPUT_SOURCE image RES_ID&ndash;&gt;-->
+<!--    <string-array name="input_source_res_list">-->
+<!--        <item>signal_dtv_normal</item>-->
+<!--        <item>signal_atv_normal</item>-->
+<!--        <item>signal_av_normal</item>-->
+<!--        <item>signal_av_normal</item>-->
+<!--        <item>signal_ypbpr_normal</item>-->
+
+<!--        <item>signal_hdmi_normal</item>-->
+<!--        <item>signal_hdmi_normal</item>-->
+<!--        <item>signal_hdmi_normal</item>-->
+<!--        <item>signal_vga_normal</item>-->
+
+
+<!--        <item>signal_dp_normal</item>-->
+<!--        <item>signal_hdmi_normal</item>-->
+<!--        <item>signal_vga_normal</item>-->
+<!--    </string-array>-->
+
+
+    <!-- week info -->
+    <string-array name="week_info">
+        <item>SUNDAY</item>
+        <item>MONDAY</item>
+        <item>TUESDAY</item>
+        <item>WEDNESDAY</item>
+        <item>THURSDAY</item>
+        <item>FRIDAY</item>
+        <item>SATURDAY</item>
+    </string-array>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:clickable="true"
+    android:layout_marginTop="@dimen/dp_10"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dp_500"
+        android:layout_height="@dimen/dp_180"
+        android:layout_gravity="center"
+        android:scaleType="center" />
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_500"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:gravity="center"
+            android:text="Animation"
+            android:textSize="@dimen/sp_18" />
+
+        <ImageView
+            android:id="@+id/item_img_theme_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/ic_item_select"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>
+

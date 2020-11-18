@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="600dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:orientation="vertical"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/top_margin"
+            android:text="@string/device_name2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_sp" />
+
+    <EditText
+            android:id="@+id/device_name_et"
+            android:layout_width="@dimen/list_width"
+            android:layout_height="@dimen/item_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dip"
+            android:background="@drawable/edit_text_bg"
+            android:gravity="center"
+            android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen"
+            android:inputType="text"
+            android:maxLength="16"
+            android:singleLine="true"
+            android:textColor="@color/item_text_color"
+            android:textColorHighlight="@color/edit_select"
+            android:textCursorDrawable="@drawable/cursor"
+            android:textSize="@dimen/content_sp" />
+
+    <View
+            android:layout_width="@dimen/list_width"
+            android:layout_height="1px"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dip"
+            android:background="@drawable/list_divider" />
+
+    <LinearLayout
+            android:layout_width="402dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dip"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+    <Button
+            android:id="@+id/device_name_save"
+            android:layout_width="72dip"
+            android:layout_height="34.7dip"
+            android:textAllCaps="false"
+            android:layout_marginTop="22dip"
+            android:background="@drawable/selector_btn_bg"
+            android:text="@string/save"
+            android:textColor="@color/item_text_color"
+            android:textSize="@dimen/btn_sp" />
+
+    <Button
+            android:id="@+id/device_name_cancel"
+            android:layout_width="72dip"
+            android:layout_height="34.7dip"
+            android:layout_marginLeft="210dip"
+            android:layout_marginTop="22dip"
+            android:textAllCaps="false"
+            android:background="@drawable/selector_btn_bg"
+            android:gravity="center"
+            android:text="@android:string/cancel"
+            android:textColor="@color/item_text_color"
+            android:textSize="@dimen/btn_sp" />
+    </LinearLayout>
+</LinearLayout>

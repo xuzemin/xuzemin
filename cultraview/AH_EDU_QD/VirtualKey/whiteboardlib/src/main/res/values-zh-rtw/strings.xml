@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">VirtualKey</string>
+
+    <string name="folder_all">所有圖片</string>
+    <string name="folder_first">背景素材</string>
+    <string name="sketch_count_alert">畫板已達最大數量</string>
+    <string name="string_please_unlock">請解鎖</string>
+    <string name="msg_no_camera">No system camera found</string>
+    <string name="msg_amount_limit">Select images amount is limit</string>
+    <string name="action_done">Done</string>
+    <string name="action_button_string">%1$s(%2$d/%3$d)</string>
+    <string name="photo_unit">Shot</string>
+    <string name="error_image_not_exist">Image error</string>
+    <string name="error_no_permission">Has no permission</string>
+    <string name="permission_dialog_title">Permission Deny</string>
+    <string name="permission_dialog_ok">OK</string>
+    <string name="permission_dialog_cancel">CANCEL</string>
+    <string name="permission_rationale_write_storage">Storage write permission is needed to save the image.</string>
+
+    <string name="update_tip_last_app">升级虚拟按键APP</string>
+
+    <string name="cancel">取消</string>
+    <string name="update">更新</string>
+
+    <string name="saving_tip_save_sketch">保存批註內容</string>
+    <string name="open_whiteboard_tip">画板模式已经开启</string>
+    <string name="close_whiteboard_tip">画板模式已经关闭</string>
+
+    <string name="saving_tip_saving">保存中&#8230;</string>
+
+    <string name="encrypt_tip">想要更安全？点击加密</string>
+
+    <string name="menu_scan_share_tip">扫码二维码，查看会议记录</string>
+    <string name="menu_create_scan_error_tip">生成二维码失败</string>
+    <string name="doc_encrypt_text">密码:%1$s</string>
+
+    <string name="dialog_save_sure">确定</string>
+    <string name="dialog_save_cancel">取消</string>
+
+    <string name="dialog_ask_clear_all_title">清除批注内容?</string>
+
+    <string name="dialog_ask_save_all_title">输入文件名</string>
+
+    <string name="menu_create_error_tip">生成二维码失败!</string>
+    <string name="menu_upload_error_tip">上传文件失败!</string>
+
+    <string name="tip_is_empty_sketch">您还没有添加批注</string>
+
+    <string name="tip_save_successfully">保存路径:%1$s</string>
+    <string name="tip_screenshot_failed">截屏失败</string>
+
+    <string name="tip_save_file_not_null">文件名不能为空!</string>
+
+    <string name="title_more_app">更多應用</string>
+    <string name="title_tmp_show">温度显示</string>
+    <string name="title_eye_care">護眼</string>
+    <string name="setting">設置</string>
+    <string name="screenshot">截屏</string>
+    <string name="sketch_pad">画板</string>
+
+    <string name="title_change_signal">切換信號</string>
+
+    <string name="tip_password_not_empty">密码不能为空！</string>
+    <string name="tip_set_password">请设置密码!</string>
+    <string name="tip_add_content">您还没用添加批注内容</string>
+    <string name="tip_create_failed">生成图片失败！</string>
+    <string name="tip_save_failed">保存批注失败！</string>
+
+    <string name="tip_being_annotate">您正处于批注模式</string>
+
+    <string name="week">星期五</string>
+    <string name="day">2018/06/15</string>
+    <string name="hour_second">09:47</string>
+
+    <string name="notice">通知</string>
+    <string name="all_ignore">全部忽略</string>
+
+    <string name="apps_wire">有線</string>
+    <string name="apps_wireless">無線</string>
+    <string name="apps_hotspot">2.4G 熱點</string>
+    <string name="apps_hotspot_5">5G 熱點</string>
+    <string name="apps_settings">設置</string>
+    <string name="apps_screenshot">截屏</string>
+    <string name="apps_lock">锁屏</string>
+    <string name="apps_timer">計時器</string>
+    <string name="apps_record">錄屏</string>
+    <string name="apps_eyecare">護眼</string>
+    <string name="title_select_app">請選擇快捷應用</string>
+    <string name="apps_usred">自定義</string>
+    <string name="light_sense">自动光感</string>
+    <string name="apps_bluetooth">蓝牙</string>
+</resources>

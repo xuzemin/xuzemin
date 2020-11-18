@@ -211,7 +211,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 enterDocument();
                 break;
             case R.id.button_sharescreen:
-                    StartOPS();
+                changeSignal(this,26);
                 //    enterNetMeeting();
                 break;
             case R.id.network_state_iv:
@@ -385,6 +385,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onPause() {
         super.onPause();
+        resetDelete();
     }
 
     @Override
@@ -435,14 +436,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         if(this.viewMore.getVisibility() == View.VISIBLE){
             if(AppPageAdapter.isDelete){
-                AppPageAdapter.isDelete = false;
-                fragmentAppGride.updateapp();
+                resetDelete();
             }else{
                 exitViewMore();
             }
         }
         return true;
     }
+	
+    public void resetDelete(){
+        AppPageAdapter.isDelete = false;
+        fragmentAppGride.updateapp();
+    }
+
     private void enter_browser(){
         Intent launchIntentForPackage = getPackageManager().getLaunchIntentForPackage("com.android.browser");
         Log.d(TAG, "enter_browser: ");
@@ -463,6 +469,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             }
 
             public void onAnimationStart(Animation animation) {
+                resetDelete();
             }
 
             public void onAnimationEnd(Animation animation) {
@@ -496,17 +503,40 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         this.viewLauncher.requestFocus();
         Log.d("startgride", "打开grid");
     }
-    //启动ops add keww 20200929
-    private void StartOPS() {
-        Log.d("keww______________","StartOPS");
-        ComponentName componetName = new ComponentName("com.cultraview.ctvmenu", "com.cultraview.ctvmenu.ui.ProgressActivity");
-        Intent intent = new Intent();
-        intent.putExtra("task_tag", "input_source_changed");
-        intent.putExtra("inputSource", 26);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        intent.setComponent(componetName);
-        startActivity(intent);
+    /**
+     * 切换信号通道
+     *
+     * @param inputSource
+     * @param context
+     */
+    public static void changeSignal(final Context context, final int inputSource){
+        new Thread(new Runnable(){
+            @Override
+            public void run() {
+                Intent intent = new Intent("com.mstar.android.intent.action.START_TV_PLAYER");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                intent.putExtra("task_tag", "input_source_changed");
+                intent.putExtra("inputSrc", inputSource);
+                try {
+                    context.startActivity(intent);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+                try {
+                    Intent targetIntent;
+                    targetIntent = new Intent("mstar.tvsetting.ui.intent.action.RootActivity");
+                    targetIntent.putExtra("task_tag", "input_source_changed");
+                    /* DO NOT remove on_change_source extra!, it will cause mantis:1088498. */
+                    targetIntent.putExtra("no_change_source", true);
+                    targetIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (targetIntent != null){
+                        context.startActivity(targetIntent);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
     private void enterNetMeeting() {
         Intent launchIntentForPackage = getPackageManager().getLaunchIntentForPackage(bs_packName);
