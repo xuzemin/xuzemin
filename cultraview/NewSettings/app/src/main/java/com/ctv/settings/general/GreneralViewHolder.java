@@ -87,20 +87,19 @@ public class GreneralViewHolder extends BaseViewHolder implements View.OnClickLi
             int enable = Settings.System.getInt(mActivity.getContentResolver(), "EASY_TOUCH_OPEN_ENABLE",0);
             boolean status = GreneralUtils.getInstance(mActivity).getEasyTouchStatus();
             if(status){
-                if(enable == 1) {
-                    GreneralUtils.getInstance(mActivity).setEasyTouchEnable(false);
-                    refreshUI();
-                }else{
-                    Toast.makeText(mActivity,mActivity.getString(R.string.proxy_easytouch_opening),Toast.LENGTH_SHORT).show();
-                }
+//                if(enable == 1) {
+                GreneralUtils.getInstance(mActivity).setEasyTouchEnable(false);
+//                }else{
+//                    Toast.makeText(mActivity,mActivity.getString(R.string.proxy_easytouch_opening),Toast.LENGTH_SHORT).show();
+//                }
             }else{
                 if(enable == 0) {
                     GreneralUtils.getInstance(mActivity).setEasyTouchEnable(true);
-                    refreshUI();
                 }else{
                     Toast.makeText(mActivity,mActivity.getString(R.string.proxy_easytouch_closing),Toast.LENGTH_SHORT).show();
                 }
             }
+            refreshUI();
         } else if (view.getId() == R.id.item_four_screen) {
             GreneralUtils.getInstance(mActivity).
                     setFourScreenEnable(GreneralUtils.getInstance(mActivity).getFourScreenStatus() ? false : true);
