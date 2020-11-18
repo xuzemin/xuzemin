@@ -1,5 +1,6 @@
 package com.ctv.settings.general;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -19,6 +20,7 @@ import com.hht.android.sdk.device.HHTCommonManager.EnumEyeProtectionMode;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 
 ;import static com.hht.android.sdk.device.HHTCommonManager.EnumEyeProtectionMode.*;
 
@@ -269,13 +271,27 @@ public class GreneralUtils {
         return null;
     }
 
-    /**
+    /**FloatWindowService
      * 悬浮按钮状态获取
      * */
     public boolean getEasyTouchStatus(){
         int easyTouchOpen = Settings.System.getInt(mContext.getContentResolver(),
                 "EASY_TOUCH_OPEN", 1);
-        return easyTouchOpen == 1;
+        return easyTouchOpen == 1 && isServicesExisted(mContext,"com.ctv.easytouch.service.FloatWindowService");
+    }
+
+    public static boolean isServicesExisted(Context context, String serName) {
+        ActivityManager ac = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> serviceList = ac.getRunningServices(Integer.MAX_VALUE);
+        for (int i = 0; i < serviceList.size(); i++) {
+            ActivityManager.RunningServiceInfo serviceInfo = serviceList.get(i);
+            ComponentName serviceName = serviceInfo.service;
+            if (serviceName.getClassName().equals(serName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
