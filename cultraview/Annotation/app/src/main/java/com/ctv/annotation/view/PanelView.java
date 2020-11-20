@@ -2,6 +2,7 @@ package com.ctv.annotation.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.os.SystemProperties;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,11 +15,16 @@ import android.view.ViewConfiguration;
 
 import com.ctv.annotation.utils.Constants;
 import com.ctv.annotation.utils.StatusEnum;
+import com.hht.android.sdk.device.HHTCommonManager;
+import com.hht.android.sdk.picture.HHTPictureManager;
 
 public class PanelView extends SurfaceView implements SurfaceHolder.Callback , View.OnTouchListener {
     private SurfaceHolder holder = null;
     public Surface mSurface;
+    private int backlight_tmp = 0;
     public PanelManager mPanelManager = null;
+    private final String BACKLIGHT = "persist.sys.backlight";
+    private final String EYE_MODE = "persist.sys.eye_protection_mode";
     private PanelTouchStatusListener mPanelTouchStatusListener = null;
     SurfaceHolder mHolder;
 
@@ -78,11 +84,31 @@ public class PanelView extends SurfaceView implements SurfaceHolder.Callback , V
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
+
+
         if (mPanelManager.isCroping())
         {
-
             return true;
         }
+
+        if(HHTCommonManager.EnumEyeProtectionMode.EYE_WRITE_PROTECT.ordinal()
+                == HHTCommonManager.getInstance().getEyeProtectionMode()) {
+            if (event.getActionMasked() == 1) {
+                if(backlight_tmp > 50){
+                    setBacklight(backlight_tmp);
+                    backlight_tmp = 0;
+                }
+            } else if (event.getActionMasked() == 0) {
+                int backlight = Integer.parseInt(SystemProperties.get(BACKLIGHT));
+                if(50 < backlight){
+                    backlight_tmp = backlight;
+                    setBacklight(50);
+                }else{
+                    backlight_tmp = 0;
+                }
+            }
+        }
+
         mPanelManager.isLocked = true;
       //  Log.d(TAG, "PanelView   onTouch:  isLocked = "+ mPanelManager.isLocked );
         /**传递至PanelManager，处理擦除、选择等操作*/
@@ -127,5 +153,10 @@ public class PanelView extends SurfaceView implements SurfaceHolder.Callback , V
     public void destory()
     {
         mPanelManager.destory();
+    }
+
+    private void setBacklight(int brightness){
+        SystemProperties.set(BACKLIGHT, "" + brightness);
+        HHTPictureManager.getInstance().setBackLight(brightness);
     }
 }
