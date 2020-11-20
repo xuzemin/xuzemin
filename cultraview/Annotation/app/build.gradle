@@ -37,23 +37,16 @@ android {
         publishNonDefault true
     }
 
-
-
-
-
-
-
-
     //       签名
-//    signingConfigs {
-//        debug {
-//
-//            storeFile file('../my_8386.jks')
-//            storePassword '123456'
-//            keyAlias 'my_8386'
-//            keyPassword '123456'
-//        }
-//    }
+    signingConfigs {
+        debug {
+
+            storeFile file('../my_8386.jks')
+            storePassword '123456'
+            keyAlias 'my_8386'
+            keyPassword '123456'
+        }
+    }
 
   //  输出指定名称的apk
     android.applicationVariants.all { variant ->

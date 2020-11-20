@@ -2,6 +2,8 @@ package com.ctv.annotation.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemProperties;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -26,7 +28,33 @@ public class PanelView extends SurfaceView implements SurfaceHolder.Callback , V
     private final String BACKLIGHT = "persist.sys.backlight";
     private final String EYE_MODE = "persist.sys.eye_protection_mode";
     private PanelTouchStatusListener mPanelTouchStatusListener = null;
+    private static final int EVENT_EYE_PROTECT_OPEN = 0;
+    private static final int EVENT_EYE_PROTECT_CLOSE = 1;
     SurfaceHolder mHolder;
+    private Handler mhandle = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch(msg.what){
+                case EVENT_EYE_PROTECT_OPEN:
+                    int backlight = Integer.parseInt(SystemProperties.get(BACKLIGHT));
+                    if(50 < backlight){
+                        backlight_tmp = backlight;
+                        setBacklight(50);
+                    }else{
+                        backlight_tmp = 0;
+                    }
+                    break;
+                case EVENT_EYE_PROTECT_CLOSE:
+                    if(backlight_tmp > 50){
+                        setBacklight(backlight_tmp);
+                        backlight_tmp = 0;
+                    }
+                    break;
+
+            }
+        }
+    };
 
     public PanelView(Context context) {
         super(context);
@@ -84,8 +112,6 @@ public class PanelView extends SurfaceView implements SurfaceHolder.Callback , V
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
-
-
         if (mPanelManager.isCroping())
         {
             return true;
@@ -94,18 +120,11 @@ public class PanelView extends SurfaceView implements SurfaceHolder.Callback , V
         if(HHTCommonManager.EnumEyeProtectionMode.EYE_WRITE_PROTECT.ordinal()
                 == HHTCommonManager.getInstance().getEyeProtectionMode()) {
             if (event.getActionMasked() == 1) {
-                if(backlight_tmp > 50){
-                    setBacklight(backlight_tmp);
-                    backlight_tmp = 0;
-                }
+                mhandle.removeMessages(EVENT_EYE_PROTECT_OPEN);
+                mhandle.sendEmptyMessage(EVENT_EYE_PROTECT_CLOSE);
             } else if (event.getActionMasked() == 0) {
-                int backlight = Integer.parseInt(SystemProperties.get(BACKLIGHT));
-                if(50 < backlight){
-                    backlight_tmp = backlight;
-                    setBacklight(50);
-                }else{
-                    backlight_tmp = 0;
-                }
+                mhandle.removeMessages(EVENT_EYE_PROTECT_CLOSE);
+                mhandle.sendEmptyMessage(EVENT_EYE_PROTECT_OPEN);
             }
         }
 
