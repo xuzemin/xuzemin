@@ -227,6 +227,8 @@
 -keep class org.greenrobot.**{*;}
 
 -keep class com.ctv.utils.**{*;}
+-keep class com.hht.android.sdk.**{*;}
+-keep class com.mstar.android.**{*;}
 
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
     long producerIndex;

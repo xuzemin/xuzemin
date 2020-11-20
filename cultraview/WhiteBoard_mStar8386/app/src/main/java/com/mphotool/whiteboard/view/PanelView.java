@@ -3,6 +3,10 @@ package com.mphotool.whiteboard.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemProperties;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -10,6 +14,8 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 
+import com.hht.android.sdk.device.HHTCommonManager;
+import com.hht.android.sdk.picture.HHTPictureManager;
 import com.mphotool.whiteboard.activity.MainActivity;
 import com.mphotool.whiteboard.activity.WhiteBoardApplication;
 import com.mphotool.whiteboard.utils.BaseUtils;
@@ -20,6 +26,40 @@ public class PanelView extends SurfaceView implements Callback, View.OnTouchList
     private static final String TAG = "PanelView";
 
     public PanelManager mPanelManager = null;
+    private int backlight_tmp = 0;
+    private final String BACKLIGHT = "persist.sys.backlight";
+    private final String EYE_MODE = "persist.sys.eye_protection_mode";
+    private static final int EVENT_EYE_PROTECT_OPEN = 0;
+    private static final int EVENT_EYE_PROTECT_CLOSE = 1;
+    private Handler mhandle = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch(msg.what){
+                case EVENT_EYE_PROTECT_OPEN:
+                    int backlight = Integer.parseInt(SystemProperties.get(BACKLIGHT));
+                    if(50 < backlight){
+                        backlight_tmp = backlight;
+                        setBacklight(50);
+                    }else{
+                        backlight_tmp = 0;
+                    }
+                    break;
+                case EVENT_EYE_PROTECT_CLOSE:
+                    if(backlight_tmp > 50){
+                        setBacklight(backlight_tmp);
+                        backlight_tmp = 0;
+                    }
+                    break;
+
+            }
+        }
+    };
+
+    private void setBacklight(int brightness){
+        SystemProperties.set(BACKLIGHT, "" + brightness);
+        HHTPictureManager.getInstance().setBackLight(brightness);
+    }
 
     @Override
     public boolean isInTouchMode() {
@@ -123,6 +163,17 @@ public class PanelView extends SurfaceView implements Callback, View.OnTouchList
         {
             dbg("during crop , do nothing in onTouchEvent");
             return true;
+        }
+
+        if(HHTCommonManager.EnumEyeProtectionMode.EYE_WRITE_PROTECT.ordinal()
+                == HHTCommonManager.getInstance().getEyeProtectionMode()) {
+            if (event.getActionMasked() == 1) {
+                mhandle.removeMessages(EVENT_EYE_PROTECT_OPEN);
+                mhandle.sendEmptyMessage(EVENT_EYE_PROTECT_CLOSE);
+            } else if (event.getActionMasked() == 0) {
+                mhandle.removeMessages(EVENT_EYE_PROTECT_CLOSE);
+                mhandle.sendEmptyMessage(EVENT_EYE_PROTECT_OPEN);
+            }
         }
 
         if (mPanelTouchStatusListener != null)

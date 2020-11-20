@@ -37,18 +37,30 @@ android {
         }
     }
 
+    //以下是为了找到android.os.SystemProperties这个隐藏的类
+    String SDK_DIR = System.getenv("ANDROID_SDK_HOME")
+    //("TAG", "SDK_DIR = " + SDK_DIR );
+    if(SDK_DIR == null) {
+        Properties props = new Properties()
+        props.load(new FileInputStream(project.rootProject.file("local.properties")))
+        SDK_DIR = props.get('sdk.dir')
+    }
+    dependencies {
+        compileOnly files("${SDK_DIR}/platforms/android-21/data/layoutlib.jar")
+    }
+
     //签名
     
     signingConfigs {
          release {
-                storeFile file("D:/Android/mykey/my_8386.jks")
+                storeFile file("../my_8386.jks")
                 storePassword '123456'
                 keyAlias 'my_8386'
                 keyPassword '123456'
             }
 
           debug {
-            storeFile file("D:/Android/mykey/my_8386.jks")
+            storeFile file("../my_8386.jks")
             storePassword '123456'
             keyAlias 'my_8386'
             keyPassword '123456'
@@ -130,7 +142,7 @@ def getDate() {
 }
 
 def buildVersionName() {
-    return "6.4.3"
+    return "6.4.4"
 }
 
 dependencies {
