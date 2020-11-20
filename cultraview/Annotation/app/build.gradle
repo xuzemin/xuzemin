@@ -136,4 +136,5 @@ dependencies {
     implementation files('libs\\itextpdf5.4.3.jar')
     implementation files('libs\\zxing.jar')
     implementation files('libs\\mysdklibrary-release.aar')
+    implementation files('libs/hhtapi.jar')
 }
