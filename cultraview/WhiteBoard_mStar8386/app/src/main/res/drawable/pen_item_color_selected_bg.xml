@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:useLevel="false">
+
+    <!-- 描边 -->
+    <stroke
+        android:width="@dimen/pen_color_border"
+        android:color="#00c9f5"/>
+
+    <!-- 填充实心 -->
+    <gradient
+        android:endColor="#00000000"
+        android:startColor="#00000000"/>
+</shape>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="bgcolor1">#333b3e</color>
+    <color name="bgcolor2">#008b8b</color>
+    <color name="bgcolor3">#ffffff</color>
+    <color name="bgcolor4">#666666</color>
+    <color name="bgcolor5">#ff53595f</color>
+    <color name="bgcolor6">#b0c4de</color>
+    <color name="bgcolor7">#708090</color>
+    <color name="bgcolor8">#d2b48c</color>
+    <color name="bgcolor9">#556B2F</color>
+
+
+    <color name="color1">#ffffffff</color>
+    <color name="color10">#fffbff00</color>
+    <color name="color11">#ffe401ff</color>
+    <color name="color12">#f68f8f</color>
+    <color name="color13">#8cc453</color>
+    <color name="color14">#ce7777</color>
+    <color name="color15">#000000</color>
+    <color name="color2">#ff000000</color>
+    <color name="color3">#fff11809</color>
+    <color name="color4">#f59c43</color>
+    <color name="color5">#2570e1</color>
+    <color name="color6">#ff62feff</color>
+    <color name="color7">#2c9200</color>
+    <color name="color8">#ff54ff00</color>
+    <color name="color9">#ffb27419</color>
+
+    <color name="more_item_text_color">#f0f0f0</color>
+    <color name="dark_text_color">#ff000000</color>
+    <color name="default_pen_color">#ffffffff</color>
+    <color name="color_save_progress">#ff1782dd</color>
+
+    <color name="file_click_color">#d11782dd</color>
+    <color name="dark_gray">#ff333b3e</color>
+
+
+    <color name="stroke_line">#04aef1</color>
+    <color name="dialog_bg">#e32d2f31</color>
+    <color name="dialog_title">#ffffff</color>
+    <color name="grey">#999999</color>
+    <color name="dialog_btn_color">#ff1782dd</color>
+    <color name="dialog_btn_txt">#f0f0f0</color>
+    <color name="bg_window_out_of_range_stroke">#ffdbdbdb</color>
+    <color name="bg_top">#ff1782dd</color>
+    <color name="bg_file_select_top">#ffbbbbbb</color>
+    <color name="text_devices">#ff53595f</color>
+    <color name="bg_window_out_of_range_line">#ffbbbbbb</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="dim">#c0000000</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="translucent">#7fffffff</color>
+
+    <!-- home -->
+    <!-- dialog -->
+    <color name="dialog_line_divider">#ff96a5a8</color>
+    <color name="dialog_msg">#ffffff</color>
+    <color name="dialog_edit">#04aef1</color>
+    <!-- ppt arrow -->
+    <!-- floatView -->
+    <color name="floatview_bg">#B42d2f31</color>
+    <color name="floatview_stroke">#7f04aef1</color>
+    <color name="floatview_title">#ffffff</color>
+    <color name="line_divider">#ff96a5a8</color>
+    <color name="floatview_content_pressed">#04aef1</color>
+    <color name="floatview_content_default">#ffffff</color>
+
+    <color name="ktc_text_color">#808080</color>
+
+    <!-- movie controller -->
+    <color name="bg_video_seekBar_clip">#ff5ca3f9</color>
+    <color name="bg_video_seekBar_normal">#ffa6c9f5</color>
+
+    <!-- common dialog color begin -->
+    <color name="font_common_1">#424242</color>
+    <!-- common dialog color end -->
+
+    <color name="net_setting_dialog_bg">#3295DA</color>
+    <color name="net_setting_dialog_text_dark">#4ECFF4</color>
+    <color name="net_setting_dialog_text_bright">#F5FFFF</color>
+    <color name="net_setting_dialog_btn_bg">#3FB4E7</color>
+
+    <!-- 软件投屏颜色 begin-->
+    <color name="soft_back_bottom">#ffefefef</color>
+    <!--<color name="black">#ff000000</color>-->
+    <color name="gray">#A1A1A1</color>
+    <color name="dialog_theme_color">#ff80b3ca</color>
+    <color name="diaglog_text_color">#ff092836</color>
+    <color name="dialog_button_color_normal">#ff417484</color>
+    <color name="dialog_button_color_pressed">#550e5372</color>
+    <!-- 软件投屏颜色 end-->
+
+    <!-- /*horion 20180516 start*/-->
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlue">#1981E4</color>
+    <color name="colorDivision">#E2E4E4</color>
+    <color name="colorText">#000000</color>
+
+    <color name="root_bg">#ff999999</color>
+    <color name="drawboard_bg">#ff333b3e</color>
+
+    <color name="dialog_bg_color">#884a4a4a</color>
+    <color name="file_gray">#fff0f0f0</color>
+
+    <color name="colo_Transparent">#00000000</color>
+
+    <color name="notecolor">#282828</color>
+</resources>

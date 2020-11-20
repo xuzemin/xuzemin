@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:id="@+id/card_view"
+                                    android:layout_width="@dimen/preview_image_width"
+                                    android:layout_height="@dimen/preview_image_height"
+                                    android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginTop="2dp"
+                                    android:clickable="true"
+                                    app:cardBackgroundColor="#90000000"
+                                    app:cardCornerRadius="3dp"
+                                    app:cardElevation="16dp"
+                                    app:contentPadding="1dp">
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="@dimen/preview_image_width"
+        android:layout_height="@dimen/preview_image_height"/>
+
+    <RelativeLayout
+        android:layout_width="@dimen/preview_image_width"
+        android:layout_height="@dimen/preview_image_height">
+
+        <ImageView
+            android:id="@+id/page_flag"
+            android:layout_width="@dimen/preview_image_width"
+            android:layout_height="@dimen/preview_delete_height"
+            android:alpha="0.6"
+            android:background="@drawable/page_current_bg"/>
+
+        <ImageView
+            android:id="@+id/delete_panel"
+            android:layout_width="@dimen/preview_delete_width"
+            android:layout_height="@dimen/preview_delete_height"
+            android:layout_alignParentRight="true"
+            android:layout_margin="1dp"
+            android:background="@drawable/delete_page"/>
+
+        <TextView
+            android:id="@+id/page_number"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/preview_delete_height"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="4px"
+            android:textColor="#fff0f0f0"
+            android:textSize="@dimen/preview_text_size"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

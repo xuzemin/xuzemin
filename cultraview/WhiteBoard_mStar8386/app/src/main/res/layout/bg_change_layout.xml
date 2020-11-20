@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/pen_option_bg"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/y160"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5">
+
+
+        <LinearLayout
+            android:id="@+id/layout_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/style"
+                android:textColor="@color/bgcolor4"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/bg_shape1"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bg_shape1" />
+
+            <ImageView
+                android:id="@+id/bg_shape2"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bg_shape2" />
+
+            <ImageView
+                android:id="@+id/bg_shape3"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bg_shape3" />
+
+            <ImageView
+                android:id="@+id/bg_shape5"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bg_shape5" />
+
+            <ImageView
+                android:id="@+id/bg_shape4"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:src="@drawable/bg_shape4"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_shape_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_shape"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/color"
+                android:textColor="@color/bgcolor4"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/bgcolor1"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bgcolor1" />
+
+            <ImageView
+                android:id="@+id/bgcolor2"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bgcolor2" />
+
+            <ImageView
+                android:id="@+id/bgcolor3"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bgcolor3" />
+
+            <ImageView
+                android:id="@+id/bgcolor4"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginRight="@dimen/x5"
+                android:src="@drawable/bgcolor4"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/bgcolor5"
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/y65"
+                android:layout_marginLeft="@dimen/x5"
+                android:src="@drawable/bgcolor" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/color_bg_line"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/pen_3"
+        android:layout_alignBottom="@+id/pen_3"
+        android:layout_toRightOf="@+id/pen_3"
+        android:background="#ff66cccc"
+        android:layerType="software"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/color_right"
+        android:layout_width="@dimen/x200"
+        android:layout_height="@dimen/y160"
+        android:layout_margin="@dimen/x5"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <com.mphotool.whiteboard.view.menuviews.ColorPickerView
+                android:id="@+id/color_view"
+                android:layout_width="@dimen/x200"
+                android:layout_height="@dimen/y160"
+                android:layerType="software" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

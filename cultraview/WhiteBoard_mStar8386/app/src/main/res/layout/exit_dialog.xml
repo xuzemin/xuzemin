@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_update_dialog"
+              android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/y50"
+        android:layout_gravity="right"
+        android:background="@drawable/btn_cancel"/>
+
+    <TextView
+        android:id="@+id/text_msg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="3.0"
+        android:gravity="center"
+        android:lineSpacingExtra="20px"
+        android:text="@string/confirm_exit"
+        android:textColor="#fff0f0f0"
+        android:textSize="@dimen/dlg_msg_textsize"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.0"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/icon_padding"
+        android:paddingRight="@dimen/icon_padding">
+
+        <Button
+            android:id="@+id/button_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dlg_btn_margin"
+            android:layout_weight="1.0"
+            android:background="@drawable/update_btn_selector"
+            android:paddingBottom="@dimen/dlg_btn_padding"
+            android:paddingTop="@dimen/dlg_btn_padding"
+            android:text="@string/minimize"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dlg_btn_margin"
+            android:layout_weight="1.0"
+            android:background="@drawable/update_btn_selector"
+            android:paddingBottom="@dimen/dlg_btn_padding"
+            android:paddingTop="@dimen/dlg_btn_padding"
+            android:text="@string/exit"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+    </LinearLayout>
+</LinearLayout>

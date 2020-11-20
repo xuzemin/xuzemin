@@ -1,0 +1,87 @@
+<resources>
+    <dimen name="select_icon_width">@dimen/y36</dimen>
+    <dimen name="pen_color_item_margin">@dimen/y4</dimen>
+    <dimen name="pen_color_item_ring_width">@dimen/y3</dimen>
+    <dimen name="pen_color_item_radius">@dimen/y16</dimen>
+    <dimen name="icon_padding">@dimen/y10</dimen>
+    <dimen name="pen_and_erase_margin_bottom">@dimen/y10</dimen>
+    <dimen name="margin_parent_bottom">@dimen/y5</dimen>
+    <dimen name="page_layout_maring_right">@dimen/y15</dimen>
+    <dimen name="page_index_text_size">@dimen/y16</dimen>
+    <dimen name="scale_hint_size">@dimen/y22</dimen>
+    <dimen name="scale_reset_size">@dimen/y15</dimen>
+    <dimen name="pen_width_icon_r">@dimen/y16</dimen>
+    <dimen name="color_picker_width_margin_right">@dimen/y12</dimen>
+    <dimen name="pen_icon_size">@dimen/y70</dimen>
+    <dimen name="preview_image_height">@dimen/y180</dimen>
+    <dimen name="preview_image_width">@dimen/y320</dimen>
+    <dimen name="preview_layout_width">@dimen/y340</dimen>
+    <dimen name="preview_delete_height">@dimen/y36</dimen>
+    <dimen name="preview_delete_width">@dimen/y36</dimen>
+    <dimen name="preview_text_size">@dimen/y28</dimen>
+    <dimen name="eraser_option_text_size">@dimen/y14</dimen>
+    <dimen name="more_icon_size">@dimen/y60</dimen>
+    <dimen name="more_item_width">@dimen/y68</dimen>
+    <dimen name="more_text_size">@dimen/y14</dimen>
+    <dimen name="save_panel_dialog_height">@dimen/y420</dimen>
+    <dimen name="save_panel_dialog_width">@dimen/y780</dimen>
+    <dimen name="exit_dialog_height">@dimen/y360</dimen>
+    <dimen name="exit_dialog_width">@dimen/y640</dimen>
+    <dimen name="setting_dialog_height">@dimen/y380</dimen>
+    <dimen name="setting_dialog_width">@dimen/y720</dimen>
+    <dimen name="file_chooser_height">@dimen/y560</dimen>
+    <dimen name="file_chooser_width">@dimen/y900</dimen>
+    <dimen name="spot_size">@dimen/y8</dimen>
+    <dimen name="progress_width">@dimen/y250</dimen>
+    <dimen name="divider_height">@dimen/y1</dimen>
+    <dimen name="file_name_width">@dimen/y200</dimen>
+
+    <dimen name="text_size_14">@dimen/y18</dimen>
+    <dimen name="text_size_16">@dimen/y22</dimen>
+    <dimen name="text_size_20">@dimen/y26</dimen>
+
+    <dimen name="btn_pen_width">@dimen/y32</dimen>
+    <dimen name="btn_pen_margin">@dimen/y3</dimen>
+    <dimen name="btn_add_page">@dimen/y44</dimen>
+    <dimen name="text_page_index">@dimen/y60</dimen>
+    <dimen name="btn_more_function">@dimen/y60</dimen>
+    <dimen name="btn_operate">@dimen/y60</dimen>
+    <dimen name="slide_clean_width">@dimen/x173</dimen>
+    <dimen name="slide_clean_height">@dimen/y40</dimen>
+    <dimen name="slide_clean_icon">@dimen/y36</dimen>
+    <dimen name="slide_clean_text_width">@dimen/y79</dimen>
+    <dimen name="slide_clean_text_height">@dimen/y19</dimen>
+    <dimen name="qr_width">@dimen/y490</dimen>
+    <dimen name="qr_dialog_width">@dimen/y520</dimen>
+    <dimen name="snackbar_width">@dimen/y240</dimen>
+    <dimen name="snackbar_height">@dimen/y240</dimen>
+
+    <dimen name="edit_touch_tolerance">@dimen/y25</dimen>
+    <dimen name="edit_min_side">@dimen/y45</dimen>
+    <dimen name="crop_menu_margin">@dimen/y8</dimen>
+    <dimen name="crop_menu_width">@dimen/y110</dimen>
+    <dimen name="crop_menu_height">@dimen/y30</dimen>
+
+    <dimen name="dlg_btn_textsize">@dimen/y30</dimen>
+    <dimen name="dlg_btn_margin">@dimen/y5</dimen>
+    <dimen name="dlg_btn_padding">@dimen/y8</dimen>
+    <dimen name="dlg_msg_textsize">@dimen/y28</dimen>
+    <dimen name="edit_textsize">@dimen/y22</dimen>
+
+    <dimen name="eraser_width">@dimen/y50</dimen>
+
+    <dimen name="floatview_default_x">0px</dimen>
+    <dimen name="floatview_default_y">-150px</dimen>
+
+    <dimen name="pen_color_width">@dimen/y28</dimen>
+    <dimen name="pen_color_border">@dimen/y3</dimen>
+    <dimen name="bg_color_width">@dimen/y120</dimen>
+    <dimen name="bg_color_padding">@dimen/y16</dimen>
+    <dimen name="btn_eraser_value_width">@dimen/y44</dimen>
+    <dimen name="eraser_value_width">@dimen/y70</dimen>
+    <dimen name="eraser_edit_width">@dimen/y160</dimen>
+    <dimen name="eraser_edit_height">@dimen/y55</dimen>
+    <dimen name="eraser_edit_btn_width">@dimen/y64</dimen>
+    <dimen name="eraser_edit_btn_height">@dimen/y40</dimen>
+    <dimen name="setting_margin">@dimen/y10</dimen>
+</resources>

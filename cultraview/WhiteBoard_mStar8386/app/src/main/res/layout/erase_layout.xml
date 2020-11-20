@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+              android:background="@drawable/panel_bg"
+              android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/y5"
+              android:paddingLeft="@dimen/x10"
+              android:paddingRight="@dimen/x10"
+              android:paddingTop="@dimen/y5">
+
+    <ImageView
+        android:id="@+id/erase_size"
+        android:layout_width="@dimen/btn_operate"
+        android:layout_height="@dimen/btn_operate"
+        android:visibility="gone"
+        android:background="@drawable/erase_pressed"/>
+
+    <ImageView
+        android:id="@+id/erase_material"
+        android:layout_width="@dimen/btn_operate"
+        android:layout_height="@dimen/btn_operate"
+        android:layout_marginLeft="@dimen/icon_padding"
+        android:visibility="gone"
+        android:background="@drawable/erase_material_normal"/>
+
+
+    <View
+        android:layout_width="@dimen/x2"
+        android:layout_height="@dimen/btn_operate"
+        android:layout_marginLeft="@dimen/icon_padding"
+        android:layout_marginRight="@dimen/x5"
+        android:visibility="gone"
+        android:background="@drawable/dash_line"
+        android:layerType="software"/>
+
+    <RelativeLayout
+        android:layout_width="@dimen/slide_clean_width"
+        android:layout_height="@dimen/slide_clean_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/icon_padding"
+        android:layout_marginRight="@dimen/icon_padding"
+        android:background="@drawable/slide_clean_bg">
+
+        <com.mphotool.whiteboard.view.menuviews.SlideButton
+            android:id="@+id/clean_board_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x2"/>
+
+        <TextView
+            android:id="@+id/text_erase_on_key_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/scale_hint_size"
+            android:textColor="#33ccff"
+            android:text="@string/slide_clean"/>
+
+    </RelativeLayout>
+</LinearLayout>

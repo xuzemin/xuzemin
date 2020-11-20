@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_update_dialog"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/icon_padding">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30px"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_floder_name"
+            android:layout_width="@dimen/file_name_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="right|center_vertical"
+            android:paddingRight="15px"
+            android:text="@string/floder_name"
+            android:textColor="#f0f0f0"
+            android:textSize="@dimen/text_size_16"/>
+
+        <TextView
+            android:id="@+id/floder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/text_floder_name"
+            android:layout_toRightOf="@id/text_floder_name"
+            android:textColor="#f0f0f0"
+            android:textSize="@dimen/text_size_16"/>
+
+        <TextView
+            android:id="@+id/text_file_name"
+            android:layout_width="@dimen/file_name_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_floder_name"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="30px"
+            android:gravity="right|center_vertical"
+            android:paddingRight="15px"
+            android:text="@string/file_name"
+            android:textColor="#f0f0f0"
+            android:textSize="@dimen/text_size_16"/>
+
+        <EditText
+            android:id="@+id/edit_file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/text_file_name"
+            android:layout_marginBottom="-8px"
+            android:layout_marginRight="40px"
+            android:paddingLeft="10px"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:maxLength="30"
+            android:textColor="#f0f0f0"
+            android:layout_toRightOf="@id/text_file_name"
+            android:focusable="true"
+            android:gravity="bottom"
+            android:background="@drawable/edittext"
+            android:focusableInTouchMode="true"
+            android:textSize="@dimen/edit_textsize"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/update_btn_selector"
+            android:paddingBottom="10px"
+            android:paddingTop="10px"
+            android:text="@string/cancel"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/text_size_20"/>
+
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/update_btn_selector"
+            android:paddingBottom="10px"
+            android:paddingTop="10px"
+            android:text="@string/save"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/text_size_20"/>
+    </LinearLayout>
+</LinearLayout>

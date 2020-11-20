@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_update_dialog"
+              android:gravity="center_vertical"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/check_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:id="@+id/btn_check_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:clickable="true"
+            android:text="@string/check_update"
+            android:textColor="@drawable/image_menu_color"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+
+        <TextView
+            android:id="@+id/current_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5px"
+            android:clickable="true"
+            android:text="V1.0"
+            android:textColor="@drawable/image_menu_color"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+<!--        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x2"
+            android:background="#99f0f0f0"/>-->
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/ctv_4k2k_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btn_4k2k_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:text="@string/ctvdisplay_mode"
+            android:textColor="@drawable/image_menu_color"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+
+        <ImageView
+            android:clickable="true"
+            android:id="@+id/im_4k2k_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/checkbox_normal"/>
+        <View
+            android:id="@+id/divider_0"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x2"
+            android:background="#99f0f0f0"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/write_mode_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btn_write_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:text="@string/write_mode"
+            android:textColor="@drawable/image_menu_color"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+
+        <ImageView
+            android:clickable="true"
+            android:id="@+id/im_write_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/checkbox_normal"/>
+        <View
+            android:id="@+id/divider_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x2"
+            android:background="#99f0f0f0"/>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/set_multi_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btn_set_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:text="@string/set_multi"
+            android:textColor="@drawable/image_menu_color"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+
+        <ImageView
+            android:clickable="true"
+            android:id="@+id/im_set_multi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/checkbox_normal"/>
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x2"
+            android:background="#99f0f0f0"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/aute_erase_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:id="@+id/button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="5px"
+            android:gravity="center_vertical"
+            android:text="@string/enable_auto_erase"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+
+        <CheckBox
+            android:id="@+id/check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/setting_checkbox"/>
+        <View
+            android:id="@+id/divider_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x2"
+            android:background="#99f0f0f0"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/erase_value_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5px"
+            android:gravity="center_vertical"
+            android:text="@string/erase_value"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+
+
+        <TextView
+            android:id="@+id/btn_value_edit"
+            android:layout_width="@dimen/eraser_edit_btn_width"
+            android:layout_height="@dimen/eraser_edit_btn_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5px"
+            android:background="@drawable/bg_btn_edit"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="编辑"
+            android:textColor="@drawable/image_menu_color"
+            android:textSize="@dimen/edit_textsize"/>
+
+        <EditText
+            android:id="@+id/erase_value_edit"
+            android:layout_width="@dimen/eraser_edit_width"
+            android:layout_height="@dimen/eraser_edit_height"
+            android:layout_toLeftOf="@id/btn_value_edit"
+            android:background="@drawable/edittext"
+            android:digits="1234567890"
+            android:maxLength="4"
+            android:gravity="center_horizontal"
+            android:text="60"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/dlg_btn_textsize"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x2"
+            android:background="#99f0f0f0"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ff999999">
+
+    <com.mphotool.whiteboard.view.BaseGLSurfaceView
+        android:id="@+id/board_glsurfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.mphotool.whiteboard.view.DrawBoard
+        android:id="@+id/drawboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff333b3e">
+<!--    <com.mphotool.whiteboard.view.transform.DrawView
+        android:id="@+id/ball"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />-->
+        <LinearLayout
+            android:id="@+id/bottom_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <RelativeLayout
+                android:layout_width="@dimen/y65"
+                android:layout_height="@dimen/x65">
+
+                <View
+                    android:id="@+id/view_button_pen_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y5"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="3dp"
+                    android:background="#ffffff" />
+
+                <ImageView
+                    android:id="@+id/pen_selector"
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/y60"
+                    android:layout_alignEnd="@+id/view_button_pen_color"
+                    android:layout_alignRight="@+id/view_button_pen_color"
+                    android:layout_marginEnd="-3dp"
+                    android:layout_marginRight="-3dp"
+                    android:background="@drawable/pen_little_selector" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/clean_board"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/erase_by_size" />
+
+            <ImageView
+                android:id="@+id/Point_control"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/pen_point" />
+
+            <ImageView
+                android:id="@+id/selection"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/selection" />
+
+            <ImageView
+                android:id="@+id/change_bg"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/change_bg" />
+
+            <ImageView
+                android:id="@+id/math_icon"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/circle_bt"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/undo_board"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/undo" />
+
+            <ImageView
+                android:id="@+id/redo_board"
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/redo" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/pen_selector_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottom_buttons"
+            android:layout_alignLeft="@+id/bottom_buttons"
+            android:layout_marginBottom="@dimen/pen_and_erase_margin_bottom"
+            android:background="@drawable/pen_option_bg"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/pen_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical"
+                android:padding="@dimen/y6">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/btn_pen_margin">
+
+                    <ImageView
+                        android:id="@+id/pen_little"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_little" />
+
+                    <ImageView
+                        android:id="@+id/pen_little_ative"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_item_width_selected_bg" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/btn_pen_margin">
+
+                    <ImageView
+                        android:id="@+id/pen_middle"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_middle" />
+
+                    <ImageView
+                        android:id="@+id/pen_middle_active"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_item_width_selected_bg" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/btn_pen_margin">
+
+                    <ImageView
+                        android:id="@+id/pen_big"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_large" />
+
+                    <ImageView
+                        android:id="@+id/pen_big_active"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_item_width_selected_bg" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/btn_pen_margin">
+
+                    <ImageView
+                        android:id="@+id/pen_Overbig"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_overbig" />
+
+                    <ImageView
+                        android:id="@+id/pen_Overbig_active"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:background="@drawable/pen_item_width_selected_bg" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/pen_dash_line"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/pen_3"
+                android:layout_alignBottom="@+id/pen_3"
+                android:layout_margin="@dimen/y5"
+                android:layout_toRightOf="@+id/pen_3"
+                android:background="#ff66cccc"
+                android:layerType="software" />
+
+            <LinearLayout
+                android:id="@+id/pen_mode_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pen_color_item_ring_width"
+                android:layout_marginRight="@dimen/pen_color_item_radius"
+                android:layout_toRightOf="@+id/pen_dash_line"
+                android:orientation="vertical"
+                android:padding="@dimen/y6">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/color_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/y160"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
+                <View
+                    android:layout_width="@dimen/x150"
+                    android:layout_height="2dp"
+                    android:layout_alignTop="@+id/color_picker"
+                    android:layout_alignBottom="@+id/pen_4"
+                    android:layout_margin="@dimen/y5"
+                    android:background="#ff66cccc"
+                    android:layerType="software" />
+                <LinearLayout
+                    android:id="@+id/pen_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/pen_str"
+                        android:layout_width="@dimen/x45"
+                        android:layout_height="@dimen/y45"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/x15"
+                        android:text="@string/pen"/>
+                    <ImageView
+                        android:id="@+id/pen_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/pen_paint" />
+
+                    <ImageView
+                        android:id="@+id/pen_brush"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/pen_brush" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/pen_dash_line2"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/pen_dash_line"
+                android:layout_alignBottom="@+id/pen_dash_line"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_toRightOf="@+id/pen_mode_lay"
+                android:background="#ff66cccc"
+                android:layerType="software"
+                android:visibility="gone" />
+
+            <com.mphotool.whiteboard.view.menuviews.ColorPickerView
+                android:id="@+id/color_picker_view"
+                android:layout_width="@dimen/x200"
+                android:layout_height="@dimen/y200"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/color_picker_width_margin_right"
+                android:layout_toRightOf="@+id/pen_dash_line2"
+                android:layerType="software"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pen_mode_lay"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <com.mphotool.whiteboard.view.layerviews.PenWidth
+                    android:id="@+id/pen_width_preview"
+                    android:layout_width="@dimen/x32"
+                    android:layout_height="@dimen/y32"
+                    android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" />
+
+                <SeekBar
+                    android:id="@+id/pen_width_seekbar"
+                    android:layout_width="@dimen/x100"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                    android:background="#ff99ccff"
+                    android:max="@integer/pen_width_max"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_page_btns"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/text_page_index"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/page_layout_maring_right"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/add_panel"
+                android:layout_width="@dimen/btn_add_page"
+                android:layout_height="@dimen/btn_add_page"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/add_page" />
+
+            <ImageView
+                android:id="@+id/prev_panel"
+                android:layout_width="@dimen/btn_add_page"
+                android:layout_height="@dimen/btn_add_page"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/prev_page" />
+
+            <TextView
+                android:id="@+id/panel_index"
+                android:layout_width="@dimen/text_page_index"
+                android:layout_height="@dimen/text_page_index"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/page"
+                android:clickable="true"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="#ff000000"
+                android:textSize="@dimen/page_index_text_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/next_panel"
+                android:layout_width="@dimen/btn_add_page"
+                android:layout_height="@dimen/btn_add_page"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/next_page" />
+
+            <ImageView
+                android:id="@+id/delete_panel"
+                android:layout_width="@dimen/btn_add_page"
+                android:layout_height="@dimen/btn_add_page"
+                android:layout_marginLeft="@dimen/icon_padding"
+                android:background="@drawable/delete_page"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/preview_layout"
+            android:layout_width="@dimen/preview_layout_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/pen_icon_size"
+            android:background="#00000000"
+            android:visibility="invisible">
+
+            <com.mphotool.whiteboard.view.menuviews.SwipeRecyclerView
+                android:id="@+id/preview_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="@dimen/pen_icon_size"
+                android:background="@drawable/preview_bg"
+                android:minWidth="@dimen/preview_image_width"
+                android:minHeight="@dimen/preview_image_height" />
+        </RelativeLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/layout_page_btns"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/page_layout_maring_right">
+
+            <View
+                android:id="@+id/page_snackbar"
+                android:layout_width="@dimen/snackbar_width"
+                android:layout_height="@dimen/snackbar_height"
+                android:clickable="false" />
+        </android.support.design.widget.CoordinatorLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_menu_btns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/more_function"
+                android:layout_width="@dimen/btn_more_function"
+                android:layout_height="@dimen/btn_more_function"
+                android:background="@drawable/more_function" />
+
+        </LinearLayout>
+
+    </com.mphotool.whiteboard.view.DrawBoard>
+
+    <LinearLayout
+        android:id="@+id/scale_info"
+        android:layout_width="@dimen/x450"
+        android:layout_height="@dimen/x250"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colo_Transparent"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/board_scale_hint"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:textColor="@color/root_bg"
+            android:textSize="@dimen/y140"/>
+
+        <TextView
+            android:id="@+id/board_scale_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/board_reset"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/scale_reset_size"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <com.mphotool.whiteboard.view.imgedit.ImageEditView
+        android:id="@+id/image_edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/img_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@drawable/bg_welcome"/>
+
+    <ImageView
+        android:id="@+id/img_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#60000000"/>
+
+</RelativeLayout>
