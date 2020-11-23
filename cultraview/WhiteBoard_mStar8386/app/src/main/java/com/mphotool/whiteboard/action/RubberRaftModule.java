@@ -175,6 +175,10 @@ public class RubberRaftModule extends Action{
 
 //    private Bitmap mBackgroundBitmap;
     private void touchDown(int pid,float pX, float pY) {
+        if (pid != 0){
+            return;
+        }
+
         if (mEraserNeedUp) {
             mEraserNeedUp = false;
             return;
@@ -192,6 +196,10 @@ public class RubberRaftModule extends Action{
     }
 
     private void touchMove(int pointId, float x, float y) {
+        if (pointId != 0){
+            return;
+        }
+
         if (mTouchPointerId == -1) {
             touchDown(pointId, x, y);
         } else {
@@ -200,9 +208,6 @@ public class RubberRaftModule extends Action{
     }
 
     private void eraserMove(int pid, float pX, float pY) {
-        Boolean MoveEffective = false;
-        Rect mTemp = new Rect();
-        Canvas mCanvas = mManager.getCacheCanvas();
         float x = 0.0f;
         float y = 0.0f;
         if (mPrevPoint.mX == -1.0f) {
@@ -212,8 +217,15 @@ public class RubberRaftModule extends Action{
         }
         x = mPrevPoint.mX;
         y = mPrevPoint.mY;
-
         distance = Math.sqrt((double) (((x - pX) * (x - pX)) + ((y - pY) * (y - pY))));
+        BaseUtils.dbg(TAG, "distance=" + distance);
+        if (Math.abs((int)distance) < 2){
+            return;
+        }
+
+        Boolean MoveEffective = false;
+        Rect mTemp = new Rect();
+        Canvas mCanvas = mManager.getCacheCanvas();
 
         Rect eraseRect = new Rect((int) (pX - ((float) Constants.erase_value)), (int) (pY - ((float) Constants.erase_value)), (int) (((float) Constants.erase_value) + pX), (int) (((float) Constants.erase_value) + pY));
 
@@ -235,7 +247,6 @@ public class RubberRaftModule extends Action{
         }
 
         mLastEraseRect = getRubberRect((int) pX, (int) pY, (int) Constants.erase_value, (int) Constants.erase_value);
-//        BaseUtils.dbg(TAG, "distance=" + distance);
         if (distance > Constants.MIN_DISTANCE_BETWEEN_POINT) {
             int pointCount = ((int) (distance / Constants.MIN_DISTANCE_BETWEEN_POINT)) + 1;
             float deltaX = (pX - x) / ((float) pointCount);
@@ -263,6 +274,10 @@ public class RubberRaftModule extends Action{
     }
 
     private void touchUp(int pid, float pX, float pY) {
+        if (pid != 0){
+            return;
+        }
+
         mLastEraseRect = getRubberRect((int) pX, (int) pY, (int) Constants.erase_value, (int) Constants.erase_value);
         Rect upRect = PanelUtils.rectAddWidth(mLastEraseRect, 8);
 //        JniPainterUtil.nativeEraserUp(pid,pX,pY,mBackgroundBitmap);
@@ -273,8 +288,7 @@ public class RubberRaftModule extends Action{
                 m2.draw(mManager.getCacheCanvas());
             }
         }
-        //mManager.drawScreen(upRect);
-        mManager.repaintScreen(upRect);
+        mManager.drawScreen(upRect);
 
         mEraserNeedUp = true;
         mTouchPointerId = -1;
@@ -305,15 +319,18 @@ public class RubberRaftModule extends Action{
         // 绘制虚线框
         this.cachePath.close();
         Rect dirtyRect = PanelUtils.rectAddWidth(mRect, 500);
+
         mMger.getCacheCanvas().drawPath(cachePath, mRectPaint);
-       // mMger.getfbCanvas0().drawPath(cachePath, mRectPaint);
-      //  mMger.getfbCanvas1().drawPath(cachePath, mRectPaint);
-       // mMger.getfbCanvas2().drawPath(cachePath, mRectPaint);
+
+        // 加速
+//        mMger.getfbCanvas0().drawPath(cachePath, mRectPaint);
+//        mMger.getfbCanvas1().drawPath(cachePath, mRectPaint);
+//        mMger.getfbCanvas2().drawPath(cachePath, mRectPaint);
 
             // 处理path
-  //          mManager.drawScreen(dirtyRect);
-        mManager.repaintScreen(dirtyRect);
+//            mManager.drawScreen(dirtyRect);
 
+        mManager.repaintScreen(dirtyRect);
     }
 
     private void splitShapeByEraserRect(Polygon polygon) {
@@ -321,7 +338,7 @@ public class RubberRaftModule extends Action{
         List<Material> addShapes = new ArrayList();
         List<Material> materials = mManager.getMaterials();
         int size = materials.size();
-        BaseUtils.dbg(TAG, "000000 +　materials.size()=" + size);
+//        BaseUtils.dbg(TAG, "000000 +　materials.size()=" + size);
         long start = System.currentTimeMillis();
         for (int mindex = size - 1; mindex >= 0; mindex--) {
             Material tempShape = (Material) materials.get(mindex);
@@ -381,7 +398,7 @@ public class RubberRaftModule extends Action{
         if (!removeShapes.isEmpty() || !addShapes.isEmpty()) {
             mAfterMaterials.addAll(mManager.getMaterials());
         }
-        BaseUtils.dbg(TAG, "calculating time=" + (System.currentTimeMillis()-start) + "ms");
+//        BaseUtils.dbg(TAG, "calculating time=" + (System.currentTimeMillis()-start) + "ms");
     }
 
     public void undo(PanelManager manager) {
